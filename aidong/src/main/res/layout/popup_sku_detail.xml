@@ -145,6 +145,18 @@
                     android:textColor="@color/c9"
                     android:textSize="14sp" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/left_margin"
+                android:paddingRight="@dimen/right_margin">
+
+
                 <ImageView
                     android:id="@+id/iv_minus"
                     android:layout_width="32dp"
@@ -166,7 +178,18 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:background="@drawable/icon_add" />
+                <TextView
+                    android:id="@+id/txt_limit_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp" />
+
             </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"

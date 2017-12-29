@@ -147,6 +147,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private String pick_up_period;
     private String selectedUserCouponId;
     private String currentGoodsID;
+    private boolean is_virtual;
 
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderGoodsActivity.class);
@@ -168,6 +169,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         present = new ConfirmOrderPresentImpl(this, this);
         initVariable();
         initView();
+        setChangeViewInfo();
         setListener();
         if (needExpress) {
             bottomLayout.setVisibility(View.GONE);
@@ -204,14 +206,13 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             }
         }
 
-//        for (int i = 0; i < goodsList.size(); i++) {
-////            itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
-////                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
-////            goodsIdGymID.put(goodsList.get(i).getCode(), pickUpId);
-//            if (i == 0) {
-//                currentGoodsID = goodsList.get(i).getCode();
-//            }
-//        }
+        if (shopBeanList != null && !shopBeanList.isEmpty() && shopBeanList.get(0).getItem() != null
+                && ! shopBeanList.get(0).getItem().isEmpty()
+                && shopBeanList.get(0).getItem().get(0).is_virtual() ){
+            is_virtual = true;
+        }else {
+            is_virtual = false;
+        }
     }
 
     private void initView() {
@@ -247,13 +248,13 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         tvFinalPrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
 
-        shopAdapter = new ConfirmOrderShopAdapter(this);
+        shopAdapter = new ConfirmOrderShopAdapter(this,is_virtual);
         rvGoods.setLayoutManager(new LinearLayoutManager(this));
         rvGoods.setNestedScrollingEnabled(false);
         rvGoods.setAdapter(shopAdapter);
         shopAdapter.setData(shopBeanList);
 
-        setChangeViewInfo();
+
     }
 
     private void setChangeViewInfo() {
@@ -284,7 +285,9 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 }
             }
         }
-        present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
+
+
+
 
         if (needExpress) {
             addressLayout.setVisibility(View.VISIBLE);
@@ -329,6 +332,19 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             txt_receiving_left_identify.setText(R.string.send_the_meal_time);
             txt_self_delivery_identify.setText(R.string.send_the_meal_time);
         }
+
+        if (is_virtual){
+            //是虚拟商品
+            findViewById(R.id.layout_coupon).setVisibility(View.GONE);
+            emptyAddressLayout.setVisibility(View.GONE);
+            addressLayout.setVisibility(View.GONE);
+            selfDeliveryLayout.setVisibility(View.GONE);
+            llReceivingTime.setVisibility(View.GONE);
+        }else {
+            findViewById(R.id.layout_coupon).setVisibility(View.VISIBLE);
+            present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
+        }
+
     }
 
     private void setListener() {

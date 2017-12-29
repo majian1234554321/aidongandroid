@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.data.GoodsData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -39,6 +40,8 @@ public class GoodsListPrensetImpl {
         this.filterActivityView = filterActivityView;
         goodsModel = new GoodsModelImpl(context);
     }
+
+
 
     /**
      * 要修改成活的
@@ -109,5 +112,20 @@ public class GoodsListPrensetImpl {
                 }
             }
         }, goodsType,page, brandId, sort, gymId);
+    }
+
+
+    public void getVirtualGoodsList( String product_ids) {
+        goodsModel.getVirtualGoodsList(new BaseSubscriber<GoodsData>(context) {
+            @Override
+            public void onNext(GoodsData goodsData) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+        },product_ids);
     }
 }
