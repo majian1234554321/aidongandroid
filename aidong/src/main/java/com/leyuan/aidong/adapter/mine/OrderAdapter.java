@@ -196,7 +196,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             @Override
             protected void onNoDoubleClick(View v) {
                 if(orderListener != null){
-                    if(bean.is_food()){
+                    if(bean.is_food() || bean.is_virtual()){
                         ToastGlobal.showLongConsecutive(R.string.can_not_rebuy);
                     }else{
                         orderListener.onReBuyOrder(bean.getId());

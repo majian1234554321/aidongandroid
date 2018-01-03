@@ -312,7 +312,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                     ToastGlobal.showLongConsecutive("超过最大库存");
                 }
 
-                if (count >= limit ) {
+                if (count > limit ) {
                     count = limit;
                     ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
                     ToastGlobal.showLongConsecutive("超过限购数量");

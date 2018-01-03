@@ -11,12 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.home.GoodsRecommendAdapter;
+import com.leyuan.aidong.adapter.home.GoodsVirtualAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsVirtualListPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -40,7 +41,7 @@ public class GoodsVirtualListActivity extends BaseActivity implements GoodsActiv
     private int currPage = 1;
     private List<GoodsBean> goodsList;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private GoodsRecommendAdapter goodsAdapter;
+    private GoodsVirtualAdapter goodsAdapter;
     private GoodsVirtualListPresentImpl present;
 
     private String goodsType;
@@ -76,6 +77,12 @@ public class GoodsVirtualListActivity extends BaseActivity implements GoodsActiv
         product_ids = getIntent().getStringExtra("product_ids");
         present = new GoodsVirtualListPresentImpl(this,this);
 
+        ((SimpleTitleBar) findViewById(R.id.title_bar)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         initBroadCastReceiver();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
@@ -116,7 +123,7 @@ public class GoodsVirtualListActivity extends BaseActivity implements GoodsActiv
     private void initRecommendRecyclerView() {
         recommendView = (RecyclerView) findViewById(R.id.rv_recommend);
         goodsList = new ArrayList<>();
-        goodsAdapter = new GoodsRecommendAdapter(this, goodsType);
+        goodsAdapter = new GoodsVirtualAdapter(this, goodsType);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(goodsAdapter);
         recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this, 2);

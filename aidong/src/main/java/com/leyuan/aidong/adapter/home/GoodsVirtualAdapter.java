@@ -22,12 +22,12 @@ import java.util.List;
  * 营养品的RecyclerView适配器
  * Created by song on 2016/7/16.
  */
-public class GoodsRecommendAdapter extends RecyclerView.Adapter<GoodsRecommendAdapter.NurtureViewHolder>{
+public class GoodsVirtualAdapter extends RecyclerView.Adapter<GoodsVirtualAdapter.NurtureViewHolder>{
     private Context context;
     private List<GoodsBean> data = new ArrayList<>();
     String goodsType;
 
-    public GoodsRecommendAdapter(Context context,String goodsType) {
+    public GoodsVirtualAdapter(Context context, String goodsType) {
         this.context = context;
         this.goodsType = goodsType;
     }
@@ -57,8 +57,8 @@ public class GoodsRecommendAdapter extends RecyclerView.Adapter<GoodsRecommendAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,bean.getId(), goodsType);
-//                GoodsDetailActivity.start(context,bean.getId(), bean.getType());
+//                GoodsDetailActivity.start(context,bean.getId(), goodsType);
+                GoodsDetailActivity.start(context,bean.getId(), bean.getType());
             }
         });
     }
