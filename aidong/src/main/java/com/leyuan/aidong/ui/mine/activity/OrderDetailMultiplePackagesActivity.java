@@ -254,6 +254,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
             }
             for (GoodsBean goodsBean : parcelBean.getItem()) {
                 goodsCount += FormatUtil.parseInt(goodsBean.getAmount());
+                goodsBean.setIs_virtual(bean.is_virtual());
                 goodsList.add(goodsBean);
                 returnCount += goodsBean.getCan_return();
             }
@@ -407,7 +408,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 orderPresent.deleteOrder(orderId);
                 break;
             case R.id.tv_rebuy:
-                if (bean.is_food()) {
+                if (bean.is_food() || bean.is_virtual()) {
                     ToastGlobal.showLongConsecutive(R.string.can_not_rebuy);
                 } else {
                     orderPresent.reBuyOrder(orderId);

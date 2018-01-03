@@ -303,8 +303,15 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         if (courseData == null || courseData.getTimetable() == null) return;
         this.course = courseData.getTimetable();
         this.coupon_pack = courseData.getCoupon_pack();
-        txtCoursePackInfo.setText(coupon_pack.getTitle());
-        txtCoursePackPrice.setText(coupon_pack.getPrice()+"元/节!");
+
+        if(TextUtils.isEmpty(coupon_pack.getItemProduct())){
+            layoutCoursePack.setVisibility(View.GONE);
+        }else {
+            layoutCoursePack.setVisibility(View.VISIBLE);
+            txtCoursePackInfo.setText(coupon_pack.getTitle());
+            txtCoursePackPrice.setText(coupon_pack.getPrice()+"元/节!");
+        }
+
 
 
         banner.setData(course.getImage(), null);

@@ -27,11 +27,13 @@ public class CourseCouponPack {
 
     public String getItemProduct() {
         if(TextUtils.isEmpty(products)){
-            StringBuffer buffer = new StringBuffer();
-            for(String it : item){
-                buffer.append(it).append(',');
+            StringBuilder buffer = new StringBuilder();
+            if(item!=null && !item.isEmpty()){
+                for(String it : item){
+                    buffer.append(it).append(',');
+                }
+                buffer.deleteCharAt(buffer.length()-1);
             }
-            buffer.deleteCharAt(buffer.length()-1);
             products = buffer.toString();
         }
         return products;
