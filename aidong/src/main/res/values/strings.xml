@@ -342,4 +342,6 @@
     <string name="my_course">我的课程</string>
     <string name="my_campaign">我的活动</string>
     <string name="immediately_appoint_course">立即约课</string>
+    <string name="check_all">查看全部</string>
+    <string name="my_attention">我的关注</string>
 </resources>

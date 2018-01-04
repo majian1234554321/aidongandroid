@@ -35,6 +35,7 @@ import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
+import com.leyuan.aidong.ui.home.view.PersonHorizontalView;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
@@ -168,7 +169,8 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         recyclerView.addOnScrollListener(onScrollListener);
 
         //重点
-        View headView = null;
+        PersonHorizontalView headView = new PersonHorizontalView(getActivity());
+        headView.setLeftTitle(getResources().getString(R.string.my_attention));
         RecyclerViewUtils.setHeaderView(recyclerView,headView);
     }
 
