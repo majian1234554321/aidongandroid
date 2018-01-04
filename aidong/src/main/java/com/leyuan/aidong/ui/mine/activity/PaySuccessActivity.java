@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShareData;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
@@ -22,6 +24,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CouponShareView;
 import com.leyuan.aidong.ui.mvp.view.PaySuccessActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
@@ -35,6 +38,7 @@ import java.util.List;
  */
 public class PaySuccessActivity extends BaseActivity implements View.OnClickListener, PaySuccessActivityView, CouponShareView {
     private static final int COUPON_SHARE = 1;
+    private static final java.lang.String TAG = "PaySuccessActivity";
     private SimpleTitleBar titleBar;
     private TextView tvHome;
     private TextView tvOrder;
@@ -51,6 +55,15 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
         }
     };
 
+    boolean is_virtual;
+
+    public static void start(Context context, ShareData.ShareCouponInfo shareBean, boolean is_virtual) {
+        Intent intent = new Intent(context, PaySuccessActivity.class);
+        intent.putExtra("shareBean", shareBean);
+        intent.putExtra("is_virtual", is_virtual);
+        context.startActivity(intent);
+    }
+
     public static void start(Context context, ShareData.ShareCouponInfo shareBean) {
         Intent intent = new Intent(context, PaySuccessActivity.class);
         intent.putExtra("shareBean", shareBean);
@@ -61,6 +74,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         shareBean = (ShareData.ShareCouponInfo) getIntent().getSerializableExtra("shareBean");
+        is_virtual = getIntent().getBooleanExtra("is_virtual", false);
         setContentView(R.layout.activity_pay_success);
         RecommendPresent present = new RecommendPresentImpl(this, this);
         initView();
@@ -71,6 +85,21 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
         }
 
         present.pullToRefreshRecommendData(Constant.RECOMMEND_ORDER);
+
+        if (is_virtual) {
+            for(Activity activity : App.mActivities){
+                Logger.i(TAG,"stack activity name = " + activity.getClass().getSimpleName());
+                if(activity.getClass().getSimpleName().contains("CourseListActivityNew")) {
+                    tvHome.setText("继续约课");
+                    tvHome.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                        }
+                    });
+                }
+            }
+        }
     }
 
     private void initView() {

@@ -92,6 +92,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             if (action == null) return;
 
             switch (action) {
+
                 case Constant.BROADCAST_ACTION_LOGIN_SUCCESS:
                     coursePresent.getCourseDetail(code);
                     break;
@@ -104,7 +105,12 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
                     finish();
                     break;
-
+                case Constant.BROADCAST_ACTION_GOODS_PAY_FAIL:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS:
+                    finish();
+                    break;
 
                 case Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL:
                     coursePresent.getCourseDetail(code);
@@ -191,6 +197,9 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED);
+
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL);
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 

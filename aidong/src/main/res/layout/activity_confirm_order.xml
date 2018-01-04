@@ -222,7 +222,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <include layout="@layout/inc_bold_line" />
+            <include
+                android:id="@+id/inc_goods_line"
+                layout="@layout/inc_bold_line" />
 
             <LinearLayout
                 android:id="@+id/layout_coupon"
@@ -257,6 +259,7 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/view_coupon_line"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/line_color"
@@ -298,7 +301,9 @@
                     android:layout_gravity="center_vertical"/>
             </LinearLayout>
 
-            <include layout="@layout/inc_line_with_margin" />
+            <include
+                android:id="@+id/inc_line_with_margin"
+                layout="@layout/inc_line_with_margin" />
 
             <include layout="@layout/inc_bold_line" />
 

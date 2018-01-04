@@ -336,13 +336,19 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         if (is_virtual){
             //是虚拟商品
             findViewById(R.id.layout_coupon).setVisibility(View.GONE);
+            findViewById(R.id.inc_goods_line).setVisibility(View.GONE);
+            findViewById(R.id.view_coupon_line).setVisibility(View.GONE);
+            findViewById(R.id.inc_line_with_margin).setVisibility(View.GONE);
             emptyAddressLayout.setVisibility(View.GONE);
             addressLayout.setVisibility(View.GONE);
             selfDeliveryLayout.setVisibility(View.GONE);
             llReceivingTime.setVisibility(View.GONE);
         }else {
             findViewById(R.id.layout_coupon).setVisibility(View.VISIBLE);
+            findViewById(R.id.inc_goods_line).setVisibility(View.VISIBLE);
+            findViewById(R.id.view_coupon_line).setVisibility(View.VISIBLE);
             present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
+
         }
 
     }
@@ -456,7 +462,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
-            PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo());
+            PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo(),is_virtual);
             finish();
         }
 
@@ -471,7 +477,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         @Override
         public void onFree() {
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
-            PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo());
+            PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo(),is_virtual);
             ToastGlobal.showLong("支付成功");
             finish();
         }
