@@ -267,7 +267,7 @@
     <string name="no_install_QQ">没有安装QQ</string>
     <string name="message">消息</string>
     <string name="clear">清空</string>
-    <string name="can_not_rebuy">请从商城购买此商品</string>
+    <string name="can_not_rebuy">此商品暂不支持加入购物车</string>
     <string name="goods_can_not_add_into_cart">该商品暂不支持加入购物车</string>
     <string name="delete_cannot_reserve">删除后将无法恢复</string>
     <string name="are_you_sure_have_to_attend">是否确认已参加</string>

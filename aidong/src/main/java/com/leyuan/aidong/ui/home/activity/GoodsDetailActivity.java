@@ -429,7 +429,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
 
         if(bean.is_virtual){
-            tvCount.setText("请选择套券节数");
             addressLayout.setVisibility(View.GONE);
             layout_i_dong_weal.setVisibility(View.GONE);
         }
