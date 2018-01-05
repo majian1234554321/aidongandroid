@@ -1,8 +1,13 @@
 package com.leyuan.aidong.ui.home.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,8 +16,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.module.photopicker.boxing.Boxing;
+import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.home.activity.LocationActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -21,16 +35,26 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
+
 /**
  * Created by user on 2017/12/25.
  */
-public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProvider {
+public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProvider, View.OnClickListener {
     private ImageView ivLogo;
     private TextView tvLocation;
     private ImageView ivSearch;
 
     private List<View> allTabView = new ArrayList<>();
     private FragmentPagerItemAdapter adapter;
+
+    BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            tvLocation.setText(App.getInstance().getSelectedCity());
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +66,8 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
     }
 
     @Override
@@ -51,6 +77,9 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         ivLogo = (ImageView) view.findViewById(R.id.iv_logo);
         tvLocation = (TextView) view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
+
+        tvLocation.setOnClickListener(this);
+        ivSearch.setOnClickListener(this);
 
         final SmartTabLayout tabLayout = (SmartTabLayout) view.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
@@ -80,6 +109,11 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        tvLocation.setText(App.getInstance().getSelectedCity());
+    }
 
     @Override
     public void onDestroy() {
@@ -107,6 +141,47 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         }
         allTabView.add(tabView);
         return tabView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_search:
+                if(App.mInstance.isLogin()) {
+                    new MaterialDialog.Builder(getContext())
+                            .items(R.array.mediaType)
+                            .itemsCallback(new MaterialDialog.ListCallback() {
+                                @Override
+                                public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                    if (position == 0) {
+                                        takePhotos();
+                                    } else {
+                                        takeVideo();
+                                    }
+                                }
+                            }).show();
+                }else {
+                    ToastGlobal.showLong("请先登陆再来发帖");
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                }
+                break;
+            case R.id.tv_location:
+                startActivity(new Intent(getContext(), LocationActivity.class));
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void takePhotos(){
+        BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
+        multi.needCamera().maxCount(6).isNeedPaging();
+        Boxing.of(multi).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_SELECT_PHOTO);
+    }
+
+    private void takeVideo(){
+        BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
+        Boxing.of(videoConfig).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
     }
 
 }

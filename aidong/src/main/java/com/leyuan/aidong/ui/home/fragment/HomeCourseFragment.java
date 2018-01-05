@@ -8,10 +8,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 
+import com.kyleduo.switchbutton.SwitchButton;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class HomeCourseFragment extends BaseFragment {
     private FragmentManager fm;
     private List<Fragment> mFragments = new ArrayList<>();
     private FragmentTransaction ft;
+    private SwitchButton btCheckout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,16 +42,27 @@ public class HomeCourseFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_home_course, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        btCheckout = (SwitchButton) view.findViewById(R.id.bt_checkout);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         fm = getChildFragmentManager();
         mFragments.add(new HomeCourseListFragment());
         mFragments.add(new HomeStoreListFragment());
         showFragment(0);
+        btCheckout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Logger.i(TAG,"is checked = " + isChecked);
+                if(isChecked){
+                    showFragment(1);
+                }else {
+                    showFragment(0);
+                }
+            }
+        });
     }
 
     private void showFragment(int tag) {

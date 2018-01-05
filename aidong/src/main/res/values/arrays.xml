@@ -118,6 +118,11 @@
         <item>关注</item>
         <item>爱动广场</item>
     </string-array>
+    <string-array name="circleList">
+        <item>课程</item>
+        <item>活动</item>
+        <item>教练</item>
+    </string-array>
 
     <string-array name="reportType">
         <item>色情</item>

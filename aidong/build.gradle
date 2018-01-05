@@ -99,6 +99,7 @@ dependencies {
     compile 'com.gongwen:marqueelibrary:1.0.4'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.contrarywind:Android-PickerView:3.2.5'
+    compile 'com.kyleduo.switchbutton:library:2.0.0'
     compile project(':ijkplayer-exo')
     compile project(':ijkplayer-java')
     compile project(':photoview')

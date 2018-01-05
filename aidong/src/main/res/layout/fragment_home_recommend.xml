@@ -67,9 +67,12 @@
                          />
 
                     <TextView
+                        android:id="@+id/txt_check_all_course"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_centerVertical="true"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:text="@string/check_all"
                         android:textColor="@color/b3"
                         android:textSize="13sp"
@@ -124,10 +127,13 @@
                         />
 
                     <TextView
+                        android:id="@+id/txt_check_all_activity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/check_all"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:textColor="@color/b3"
                         android:textSize="13sp"
                         android:layout_alignParentRight="true"
@@ -140,7 +146,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_activity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="220dp"
                     />
             </LinearLayout>
 
@@ -184,8 +190,11 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/check_all"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:textColor="@color/b3"
                         android:textSize="13sp"
+                        android:id="@+id/txt_check_all_coach"
                         android:layout_alignParentRight="true"
                         android:drawableRight="@drawable/icon_right_arrow"
                         android:drawablePadding="5dp"
@@ -196,7 +205,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_star_coach"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="220dp"
                     />
             </LinearLayout>
 
