@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app ="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        <com.leyuan.custompullrefresh.CustomRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_venues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="45dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"/>
+        </com.leyuan.custompullrefresh.CustomRefreshLayout>
+
+        <com.leyuan.aidong.ui.discover.view.VenuesFilterView
+            android:id="@+id/filter_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+</LinearLayout>

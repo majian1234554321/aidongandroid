@@ -114,6 +114,8 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
         moreVenuesLayout = (RelativeLayout) view.findViewById(R.id.rl_more_venues);
         moreUserLayout = (RelativeLayout) view.findViewById(R.id.rl_more_user);
         moreNewsLayout = (RelativeLayout) view.findViewById(R.id.rl_more_news);
+
+
         rvVenues.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         rvUser.setLayoutManager(new GridLayoutManager(getContext(), 4));

@@ -344,4 +344,12 @@
     <string name="immediately_appoint_course">立即约课</string>
     <string name="check_all">查看全部</string>
     <string name="my_attention">我的关注</string>
+    <string name="current_month_clock_in_days">本月打卡(天)</string>
+    <string name="sport_record">运动记录</string>
+    <string name="go_to_class_num">上课次数</string>
+    <string name="expend_calories">消耗卡路里(cal)</string>
+    <string name="class_time_min">上课时间(min)</string>
+    <string name="selection_course">精选课程</string>
+    <string name="selection_activity">精选活动</string>
+    <string name="star_coach">明星教练</string>
 </resources>

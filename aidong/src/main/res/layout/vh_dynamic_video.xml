@@ -39,6 +39,8 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <include layout="@layout/inc_dynamic_bottom" />
+    <!--<include layout="@layout/inc_dynamic_bottom_old" />-->
+
+    <include layout="@layout/inc_dynamic_bottom"/>
 </LinearLayout>
 

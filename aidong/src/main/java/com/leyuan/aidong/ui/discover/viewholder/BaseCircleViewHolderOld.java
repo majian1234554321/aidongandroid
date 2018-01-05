@@ -1,18 +1,24 @@
 package com.leyuan.aidong.ui.discover.viewholder;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.baseadapter.BaseRecyclerViewHolder;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
+import com.leyuan.aidong.adapter.discover.DynamicCommentAdapter;
+import com.leyuan.aidong.adapter.discover.DynamicLikeAdapter;
 import com.leyuan.aidong.entity.CircleDynamicBean;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
@@ -30,7 +36,7 @@ import java.util.ArrayList;
  *
  * @author song
  */
-public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<DynamicBean> implements IChildViewHolder<DynamicBean> {
+public abstract class BaseCircleViewHolderOld extends BaseRecyclerViewHolder<DynamicBean> implements IChildViewHolder<DynamicBean> {
     private final FrameLayout layoutCmdMessage;
     private final ImageView imgCMDAvatar;
     private final TextView txtCmdMessageNum;
@@ -43,12 +49,23 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private ImageView ivCoachFlag;
     private ImageView ivFollow;
 
+    private TextView tvContent;
+    private LinearLayout likeLayout;
+    private LinearLayout commentLayout;
+    private RecyclerView likesRecyclerView;
+    private RecyclerView commentRecyclerView;
+    private ImageView ivLike;
+    private TextView tvLikeCount;
+    private TextView tvCommentCount;
+    private RelativeLayout bottomLikeLayout;
+    private RelativeLayout bottomCommentLayout;
+    private RelativeLayout bottomShareLayout;
 
     protected IDynamicCallback callback;
     private boolean showCommentLayout = true;
     private boolean showFollowButton = false;
 
-    public BaseCircleViewHolder(Context context, ViewGroup parent, int layoutResId) {
+    public BaseCircleViewHolderOld(Context context, ViewGroup parent, int layoutResId) {
         super(context, parent, layoutResId);
         onFindChildView(itemView);
         this.context = context;
@@ -63,7 +80,17 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         ivFollow = (ImageView) itemView.findViewById(R.id.iv_follow);
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         tvTime = (TextView) itemView.findViewById(R.id.tv_time);
-
+        tvContent = (TextView) itemView.findViewById(R.id.tv_content);
+        likeLayout = (LinearLayout) itemView.findViewById(R.id.like_layout);
+        likesRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_likes);
+        commentLayout = (LinearLayout) itemView.findViewById(R.id.ll_comment_layout);
+        commentRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_comment);
+        ivLike = (ImageView) itemView.findViewById(R.id.iv_like);
+        tvLikeCount = (TextView) itemView.findViewById(R.id.tv_like_count);
+        tvCommentCount = (TextView) itemView.findViewById(R.id.tv_comment_count);
+        bottomCommentLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_comment_layout);
+        bottomLikeLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_like_layout);
+        bottomShareLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_share_layout);
     }
 
 
@@ -105,7 +132,57 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         }
 
+        if (TextUtils.isEmpty(dynamic.content)) {
+            tvContent.setVisibility(View.GONE);
+        } else {
+            tvContent.setText(dynamic.content);
+            tvContent.setVisibility(View.VISIBLE);
+        }
 
+        if (dynamic.like.counter > 0) {
+            likeLayout.setVisibility(View.VISIBLE);
+            likesRecyclerView.setLayoutManager(new LinearLayoutManager
+                    (context, LinearLayoutManager.HORIZONTAL, false));
+            DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context, dynamic.id);
+            likeAdapter.setData(dynamic.like.item, dynamic.like.counter);
+            likesRecyclerView.setAdapter(likeAdapter);
+        } else {
+            likeLayout.setVisibility(View.GONE);
+        }
+
+        if (showCommentLayout) {
+            if (dynamic.comment.count > 0) {
+                commentLayout.setVisibility(View.VISIBLE);
+                DynamicCommentAdapter commonAdapter = new DynamicCommentAdapter(context);
+                commentRecyclerView.setAdapter(commonAdapter);
+                commonAdapter.setData(dynamic.comment.item, dynamic.comment.count);
+                commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                commonAdapter.setOnMoreCommentClickListener(new DynamicCommentAdapter.OnMoreCommentClickListener() {
+                    @Override
+                    public void onMoreCommentClick() {
+                        if (callback != null) {
+                            callback.onCommentClick(dynamic, position);
+                        }
+                    }
+
+                    @Override
+                    public void onCommentClick(CommentBean item) {
+                        if (callback != null) {
+                            callback.onCommentListClick(dynamic, position,item);
+                        }
+                    }
+                });
+            } else {
+                commentLayout.setVisibility(View.GONE);
+            }
+        } else {
+            commentLayout.setVisibility(View.GONE);
+        }
+
+        ivLike.setBackgroundResource(isLike(dynamic)
+                ? R.drawable.icon_liked : R.drawable.btn_praise_normal);
+        tvLikeCount.setText(String.valueOf(dynamic.like.counter));
+        tvCommentCount.setText(String.valueOf(dynamic.comment.count));
         onBindDataToChildView(dynamic, position, dynamic.getDynamicType());
 
         root.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +212,40 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         });
 
+        bottomLikeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callback != null) {
+                    callback.onLikeClick(position, dynamic.id, isLike(dynamic));
+//                    if (App.getInstance().isLogin() && !TextUtils.equals(App.getInstance().getUser().getId() + "", dynamic.publisher.getId())
+//                            && isLike(dynamic)) {
+//                        CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(),
+//                                App.getInstance().getUser().getName(), dynamic.id, null, dynamic.getUnifromCover(), 1, null,
+//                                dynamic.getDynamicTypeInteger(), null);
+//
+//                    }
+//                    callback.onLikeClick(dynamic);
+                }
+            }
+        });
+
+        bottomCommentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callback != null) {
+                    callback.onCommentClick(dynamic, position);
+                }
+            }
+        });
+
+        bottomShareLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callback != null) {
+                    callback.onShareClick(dynamic);
+                }
+            }
+        });
     }
 
     public void setCallback(IDynamicCallback callback) {

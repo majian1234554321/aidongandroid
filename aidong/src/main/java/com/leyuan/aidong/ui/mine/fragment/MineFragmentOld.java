@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +28,15 @@ import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
 import com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineCampaignActivityNew;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineCourseActivityNew;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mine.activity.FollowActivity;
 import com.leyuan.aidong.ui.mine.activity.LoveCoinActivity;
 import com.leyuan.aidong.ui.mine.activity.MessageActivity;
 import com.leyuan.aidong.ui.mine.activity.MyMemberCardActivity;
+import com.leyuan.aidong.ui.mine.activity.OrderActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity;
@@ -45,14 +49,14 @@ import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
 
-import static com.leyuan.aidong.R.id.button_login;
 
-
-public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView {
+public class MineFragmentOld extends BaseFragment implements View.OnClickListener, MineInfoView {
 
     private View rootView;
     private LinearLayout layout_no_login, linearLayout_guanzhu, linearLayout_beiguanzhu, layout_hot;
-    private ImageButton btn_shop_car, btn_message;
+    private ImageButton button_login, btn_shop_car, btn_message;
+    private RelativeLayout relativeLayout_my_logo;
+    private LinearLayout relativeLayout_yuyue, relativeLayout_dingdang;
     private ImageView imageView_head, img_new_message, img_new_shop;
     private ImageView imageView_xinbie;
     private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity;
@@ -70,6 +74,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             refreshLoginState();
         }
     };
+    private LinearLayout layout_appoint_course;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,16 +107,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         linearLayout_beiguanzhu = (LinearLayout) rootView.findViewById(R.id.linearLayout_beiguanzhu);
         layout_hot = (LinearLayout) rootView.findViewById(R.id.layout_hot);
 
+        button_login = (ImageButton) rootView.findViewById(R.id.button_login);
         btn_shop_car = (ImageButton) rootView.findViewById(R.id.btn_shop_car);
         btn_message = (ImageButton) rootView.findViewById(R.id.btn_message);
         img_new_message = (ImageView) rootView.findViewById(R.id.img_new_message);
         img_new_shop = (ImageView) rootView.findViewById(R.id.img_new_shop);
         txt_new_shop = (TextView) rootView.findViewById(R.id.txt_new_shop);
 
-//        relativeLayout_my_logo = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_my_logo);
-//        relativeLayout_yuyue = (LinearLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
-//        relativeLayout_dingdang = (LinearLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
-//        layout_appoint_course= (LinearLayout) rootView.findViewById(R.id.layout_appoint_course);
+        relativeLayout_my_logo = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_my_logo);
+        relativeLayout_yuyue = (LinearLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
+        relativeLayout_dingdang = (LinearLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
+        layout_appoint_course= (LinearLayout) rootView.findViewById(R.id.layout_appoint_course);
 
         imageView_head = (ImageView) rootView.findViewById(R.id.imageView_head);
         imageView_xinbie = (ImageView) rootView.findViewById(R.id.imageView_xinbie);
@@ -136,12 +142,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void setViewEvent() {
+        button_login.setOnClickListener(this);
         btn_shop_car.setOnClickListener(this);
         btn_message.setOnClickListener(this);
         imageView_head.setOnClickListener(this);
         linearLayout_guanzhu.setOnClickListener(this);
         linearLayout_beiguanzhu.setOnClickListener(this);
         layout_hot.setOnClickListener(this);
+        relativeLayout_yuyue.setOnClickListener(this);
+        relativeLayout_dingdang.setOnClickListener(this);
         item_my_coin.setOnClickListener(this);
         item_my_member_card.setOnClickListener(this);
         item_my_coupon.setOnClickListener(this);
@@ -150,6 +159,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         item_recommend_friend.setOnClickListener(this);
         item_after_sale.setOnClickListener(this);
         item_setting.setOnClickListener(this);
+        layout_appoint_course.setOnClickListener(this);
 
     }
 
@@ -169,12 +179,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
     private void refreshLoginState() {
         if (App.getInstance().isLogin()) {
+            relativeLayout_my_logo.setVisibility(View.VISIBLE);
             layout_no_login.setVisibility(View.GONE);
             user = App.getInstance().getUser();
             textView_name.setText(user.getName());
             presenter.getMineInfo();
             GlideLoader.getInstance().displayRoundAvatarImage(user.getAvatar(), imageView_head);
         } else {
+            relativeLayout_my_logo.setVisibility(View.GONE);
             layout_no_login.setVisibility(View.VISIBLE);
             txt_new_shop.setVisibility(View.GONE);
             textView_guanzhushu.setText("0");
@@ -190,7 +202,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case button_login:
+            case R.id.button_login:
+//                UiManager.activityJump(getActivity(), MyShowActivityNew.class);
                 UiManager.activityJump(getActivity(), LoginActivity.class);
                 break;
             case R.id.btn_shop_car:
@@ -202,26 +215,26 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.imageView_head:
                 UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
                 break;
-//            case relativeLayout_yuyue:
-//                if(App.getInstance().isLogin()){
-//                    AppointmentMineCampaignActivityNew.start(getActivity(),0);
-//                }else {
-//                    startActivity(new Intent(getActivity(), LoginActivity.class));
-//                }
-//
-//                break;
-//            case R.id.layout_appoint_course:
-//
-//                if(App.getInstance().isLogin()){
-//                    AppointmentMineCourseActivityNew.start(getActivity(),0);
-//                }else {
-//                    startActivity(new Intent(getActivity(), LoginActivity.class));
-//                }
-//
-//                break;
-//            case R.id.relativeLayout_dingdang:
-//                UiManager.activityCheckLoginJump(getActivity(), OrderActivity.class);
-//                break;
+            case R.id.relativeLayout_yuyue:
+                if(App.getInstance().isLogin()){
+                    AppointmentMineCampaignActivityNew.start(getActivity(),0);
+                }else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+
+                break;
+            case R.id.layout_appoint_course:
+
+                if(App.getInstance().isLogin()){
+                    AppointmentMineCourseActivityNew.start(getActivity(),0);
+                }else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+
+                break;
+            case R.id.relativeLayout_dingdang:
+                UiManager.activityCheckLoginJump(getActivity(), OrderActivity.class);
+                break;
             case R.id.item_my_coin:
                 UiManager.activityJump(getActivity(), LoveCoinActivity.class);
                 break;

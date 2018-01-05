@@ -22,7 +22,7 @@ import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.receivers.ChatMessageReceiver;
 import com.leyuan.aidong.receivers.NewPushMessageReceiver;
-import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
+import com.leyuan.aidong.ui.home.fragment.HomeCourseFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.home.fragment.StoreFragment;
 import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
@@ -135,8 +135,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fm = getSupportFragmentManager();
         mFragments.add(new HomeFragment());
 //        mFragments.add(new VideoHomeFragment());
+        mFragments.add(new HomeCourseFragment());
         mFragments.add(new StoreFragment());
-        mFragments.add(new DiscoverHomeFragment());
         mFragments.add(new MineFragment());
 
 //        mFragments.add( )
@@ -272,6 +272,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ft.commit();
     }
 
+    protected void resetTabBtn() {
+        tabNearLayout.setSelected(false);
+        tabFoundLayout.setSelected(false);
+        tabStoreLayout.setSelected(false);
+//        tabDiscoverLayout.setSelected(false);
+        tabMineLayout.setSelected(false);
+
+        tabNearLayout.setClickable(true);
+        tabFoundLayout.setClickable(true);
+        tabStoreLayout.setClickable(true);
+//        tabDiscoverLayout.setClickable(true);
+        tabMineLayout.setClickable(true);
+    }
+
     private void setTabSelection(int index) {
         resetTabBtn();
         switch (index) {
@@ -297,20 +311,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                tabDiscoverLayout.setClickable(false);
 //                break;
         }
-    }
-
-    protected void resetTabBtn() {
-        tabNearLayout.setSelected(false);
-        tabFoundLayout.setSelected(false);
-        tabStoreLayout.setSelected(false);
-//        tabDiscoverLayout.setSelected(false);
-        tabMineLayout.setSelected(false);
-
-        tabNearLayout.setClickable(true);
-        tabFoundLayout.setClickable(true);
-        tabStoreLayout.setClickable(true);
-//        tabDiscoverLayout.setClickable(true);
-        tabMineLayout.setClickable(true);
     }
 
     @Override

@@ -58,7 +58,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
 
         FragmentPagerItems pages = new FragmentPagerItems(getContext());
 
-        pages.add(FragmentPagerItem.of(null,HomeAttentionFragment.class));
+        pages.add(FragmentPagerItem.of(null,HomeRecommendFragment.class));
         pages.add(FragmentPagerItem.of(null,HomeAttentionFragment.class));
         pages.add(FragmentPagerItem.of(null,HomeAttentionFragment.class));
         adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
