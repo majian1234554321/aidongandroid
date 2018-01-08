@@ -14,7 +14,7 @@
         <cn.bingoogolapple.bgabanner.BGABanner
             android:id="@+id/banner_layout"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="350dp"
             android:background="@color/black"
             android:foreground="#10000000"
             android:visibility="visible"
