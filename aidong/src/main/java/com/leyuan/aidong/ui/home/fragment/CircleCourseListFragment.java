@@ -14,10 +14,11 @@ import com.leyuan.aidong.ui.BaseFragment;
  */
 public class CircleCourseListFragment extends BaseFragment {
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        inflater.inflate(R.layout.fragment_circle_course_list,container,false);
-        return super.onCreateView(inflater, container, savedInstanceState);
+
+        return inflater.inflate(R.layout.fragment_circle_course_list,container,false);
     }
 }
