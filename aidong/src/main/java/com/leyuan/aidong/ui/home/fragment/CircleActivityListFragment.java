@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
+import com.leyuan.aidong.adapter.home.CircleActivityListAdapter;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -20,19 +20,19 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 /**
  * Created by user on 2018/1/5.
  */
-public class CircleCourseListFragment extends BaseFragment {
+public class CircleActivityListFragment extends BaseFragment {
 
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private SwitcherLayout switcherLayout;
     private int currPage;
-    private HomeRecommendCourseAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
+    private CircleActivityListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_circle_course_list,container,false);
+        return inflater.inflate(R.layout.fragment_circle_activity_list,container,false);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class CircleCourseListFragment extends BaseFragment {
 
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_order);
-        adapter = new HomeRecommendCourseAdapter(getActivity());
+        adapter = new CircleActivityListAdapter(getActivity());
 
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

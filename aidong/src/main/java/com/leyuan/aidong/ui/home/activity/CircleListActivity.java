@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.fragment.CampaignFragment;
+import com.leyuan.aidong.ui.home.fragment.CircleActivityListFragment;
+import com.leyuan.aidong.ui.home.fragment.CircleCoachListFragment;
 import com.leyuan.aidong.ui.home.fragment.CircleCourseListFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -41,8 +42,8 @@ public class CircleListActivity extends BaseActivity implements SmartTabLayout.T
         FragmentPagerItems pages = new FragmentPagerItems(this);
 
         pages.add(FragmentPagerItem.of(null,CircleCourseListFragment.class));
-        pages.add(FragmentPagerItem.of(null,CampaignFragment.class));
-        pages.add(FragmentPagerItem.of(null,CampaignFragment.class));
+        pages.add(FragmentPagerItem.of(null,CircleActivityListFragment.class));
+        pages.add(FragmentPagerItem.of(null,CircleCoachListFragment.class));
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);

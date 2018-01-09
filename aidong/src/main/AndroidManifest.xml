@@ -301,6 +301,10 @@
         <activity
             android:name=".ui.home.activity.CourseActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.activity.CircleListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.CourseListActivityNew"
             android:screenOrientation="portrait" />

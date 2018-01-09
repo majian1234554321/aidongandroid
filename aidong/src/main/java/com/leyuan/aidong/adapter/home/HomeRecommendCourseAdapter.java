@@ -37,7 +37,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 6;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
