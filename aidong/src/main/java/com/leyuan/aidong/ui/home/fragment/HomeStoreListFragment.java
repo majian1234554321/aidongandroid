@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.discover.VenuesAdapter;
+import com.leyuan.aidong.adapter.discover.HeaderStoreListAdapter;
+import com.leyuan.aidong.adapter.discover.StoreListAdapter;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.VenuesBean;
@@ -23,6 +25,7 @@ import com.leyuan.aidong.ui.mvp.view.DiscoverVenuesActivityView;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
@@ -47,7 +50,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
     private VenuesFilterView filterView;
 
     private int currPage = 1;
-    private VenuesAdapter venuesAdapter;
+    private StoreListAdapter venuesAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private ArrayList<VenuesBean> data = new ArrayList<>();
 
@@ -55,7 +58,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
     private String brand_id;
     private String landmark;
     private String gymTypes;
-    private  String bussiness_area;
+    private String bussiness_area;
 
     @Nullable
     @Override
@@ -73,7 +76,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         venuesPresent.getGymBrand();
         venuesPresent.getBusinessCircle();
         venuesPresent.getGymTypes();
-        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark,bussiness_area, gymTypes);
+        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark, bussiness_area, gymTypes);
     }
 
     private void initView(View view) {
@@ -81,10 +84,11 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         initRecyclerView(view);
         initFilterView(view);
     }
+
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getActivity(), refreshLayout);
-        refreshLayout.setProgressViewOffset(true, 50,100);
+        refreshLayout.setProgressViewOffset(true, 50, 100);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -97,16 +101,28 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
     private void refreshData() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        venuesPresent.pullToRefreshData(brand_id, landmark,bussiness_area, gymTypes);
+        venuesPresent.pullToRefreshData(brand_id, landmark, bussiness_area, gymTypes);
     }
+
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_venues);
         data = new ArrayList<>();
-        venuesAdapter = new VenuesAdapter(getActivity());
+        venuesAdapter = new StoreListAdapter(getActivity());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(venuesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+
+        View headerView = View.inflate(getActivity(), R.layout.header_home_store_list, null);
+
+        TextView txtStoreTypeName = (TextView) headerView.findViewById(R.id.txt_store_type_name);
+        RecyclerView headerRecyclerView = (RecyclerView) headerView.findViewById(R.id.recyclerView);
+
+        headerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        HeaderStoreListAdapter headerStoreAdapter = new HeaderStoreListAdapter(getActivity());
+        headerRecyclerView.setAdapter(headerStoreAdapter);
+
+        RecyclerViewUtils.setHeaderView(recyclerView, headerView);
     }
 
     private void initFilterView(View view) {
@@ -119,7 +135,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
             }
 
             @Override
-            public void onBusinessCircleItemClick(String area,String address) {
+            public void onBusinessCircleItemClick(String area, String address) {
                 landmark = address;
                 bussiness_area = area;
                 refreshData();
@@ -138,7 +154,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                venuesPresent.requestMoreData(recyclerView, pageSize, currPage, brand_id, landmark,bussiness_area, gymTypes);
+                venuesPresent.requestMoreData(recyclerView, pageSize, currPage, brand_id, landmark, bussiness_area, gymTypes);
             }
         }
 
@@ -165,10 +181,11 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
 
     private void setListener() {
     }
+
     @Override
     public void setGymBrand(List<CategoryBean> gymBrandBeanList) {
         filterView.setBrandList(gymBrandBeanList);
-        if(brand_id !=null){
+        if (brand_id != null) {
             filterView.selectCategory(brand_id);
         }
     }
@@ -208,8 +225,8 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
 
     @Override
     public void showEmptyView() {
-        View view = View.inflate(getActivity(),R.layout.empty_venues,null);
-        switcherLayout.addCustomView(view,"empty");
+        View view = View.inflate(getActivity(), R.layout.empty_venues, null);
+        switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
     }
 }

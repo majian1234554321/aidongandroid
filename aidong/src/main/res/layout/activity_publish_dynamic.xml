@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
@@ -29,18 +30,18 @@
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="发布"
-            android:textSize="14sp"
             android:layout_marginRight="@dimen/right_margin"
+            android:background="@drawable/selector_button_send"
+            android:text="发布"
             android:textColor="@color/white"
-            android:background="@drawable/selector_button_send"/>
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/line_color"
-        android:layout_below="@+id/rl_top">
+        android:layout_below="@+id/rl_top"
+        android:background="@color/line_color">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,13 +70,13 @@
                     android:id="@+id/tv_content_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:text=""
-                    android:textSize="14sp"
-                    android:textColor="@color/c9"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/right_margin"
                     android:layout_marginRight="@dimen/right_margin"
-                    android:layout_marginBottom="@dimen/right_margin"/>
+                    android:text=""
+                    android:textColor="@color/c9"
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -83,11 +84,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingLeft="@dimen/media_margin"
-                android:paddingRight="@dimen/media_margin"
-                android:paddingBottom="@dimen/media_margin"
                 android:clipChildren="false"
-                android:clipToPadding="false"/>
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/media_margin"
+                android:paddingLeft="@dimen/media_margin"
+                android:paddingRight="@dimen/media_margin" />
 
             <Button
                 android:id="@+id/bt_publish"
@@ -100,7 +101,86 @@
                 android:text="@string/release"
                 android:textColor="@color/color_white"
                 android:textSize="16sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/shape_simi_circle_gray_solid"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:src="@drawable/circle_select_no" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="8dp"
+                        android:gravity="center_vertical"
+                        android:text="11111111111111"
+                        android:textColor="@color/c3"
+                        android:textSize="11sp" />
+
+                    <ImageButton
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/icon_close"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/shape_simi_circle_gray_solid"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:src="@drawable/circle_select_no" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="8dp"
+                        android:gravity="center_vertical"
+                        android:text="11111111111111"
+                        android:textColor="@color/c3"
+                        android:textSize="11sp" />
+
+                    <ImageButton
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/icon_close"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

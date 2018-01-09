@@ -120,9 +120,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         txt_check_all_coach.setOnClickListener(this);
         txtCheckAllActivity.setOnClickListener(this);
 
-
     }
-
 
     @Override
     public void onDestroy() {

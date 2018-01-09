@@ -105,6 +105,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragHelperCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
         mediaAdapter.setData(selectedMedia, isPhoto);
+
     }
 
     private void setListener() {
