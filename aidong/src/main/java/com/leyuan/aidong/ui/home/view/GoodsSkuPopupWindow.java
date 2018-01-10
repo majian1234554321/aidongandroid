@@ -268,7 +268,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 : R.drawable.icon_minus_gray);
         ivAdd.setBackgroundResource(FormatUtil.parseInt(count) == stock ? R.drawable.icon_add_gray
                 : R.drawable.icon_add);
-        if(limit > 0){
+        if (limit > 0) {
             txt_limit_number.setText("(限购" + limit + "张)");
         }
     }
@@ -307,13 +307,13 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 break;
             case R.id.iv_add:
                 count++;
-                if (count > stock ) {
+                if (count > stock) {
                     count = stock;
                     ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
                     ToastGlobal.showLongConsecutive("超过最大库存");
                 }
 
-                if (count > limit ) {
+                if (count > limit) {
                     count = limit;
                     ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
                     ToastGlobal.showLongConsecutive("超过限购数量");
@@ -339,7 +339,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 }
                 break;
             case R.id.tv_add_cart:
-                if(detailBean.is_virtual){
+                if (detailBean.is_virtual) {
                     ToastGlobal.showShortConsecutive(R.string.goods_can_not_add_into_cart);
                     return;
                 }
@@ -424,9 +424,14 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     public void addCartResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
             ToastGlobal.showLong(context.getString(R.string.add_cart_success));
+        } else if (baseBean.getStatus() == 0 && !TextUtils.isEmpty(baseBean.getMessage())) {
+            ToastGlobal.showShortConsecutive(baseBean.getMessage());
         } else {
-            ToastGlobal.showLong(context.getString(R.string.add_cart_failed));
+            ToastGlobal.showShortConsecutive(R.string.add_cart_failed);
         }
+//        else {
+//            ToastGlobal.showLong(context.getString(R.string.add_cart_failed));
+//        }
     }
 
     @Override
@@ -453,9 +458,9 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 selectedSkuCover = line.cover;
                 stock = line.getStock();
                 limit = line.getLimit_amount();
-                if(line.limit_amount >0){
+                if (line.limit_amount > 0) {
                     txt_limit_number.setText("(限购" + limit + "张)");
-                }else {
+                } else {
                     txt_limit_number.setText("");
                 }
                 tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count), stock));
