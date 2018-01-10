@@ -31,16 +31,16 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Filt
         this.type = type;
     }
 
-    public void setGoodsData(List<GoodsBean> beanList) {
-        this.goodList = beanList;
-    }
-
-
     @Override
     public int getItemCount() {
         if (goodList == null)
             return 0;
         return goodList.size();
+    }
+
+
+    public void setGoodsData(List<GoodsBean> beanList) {
+        this.goodList = beanList;
     }
 
     @Override

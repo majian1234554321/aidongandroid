@@ -27,6 +27,7 @@ import com.leyuan.aidong.ui.home.view.GoodsFilterView;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsListPrensetImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -204,9 +205,12 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
+    private java.lang.String TAG = "GoodsListActivity";
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
+
+            Logger.i(TAG,"onLoadNextPage");
             getListData(REQUEST_MORE_DATA);
         }
     };
@@ -234,14 +238,19 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void updateGoodsRecyclerView(List<GoodsBean> beanList) {
+
+        Logger.i(TAG,"updateGoodsRecyclerView is refresh : " + refreshLayout.isRefreshing());
         if(refreshLayout.isRefreshing()){
+
             goodsArray.clear();
             refreshLayout.setRefreshing(false);
+            Logger.i(TAG,"goodsArray.clear(); ");
         }
         goodsArray.addAll(beanList);
-        adapter.setGoodsData(beanList);
+        adapter.setGoodsData(goodsArray);
         wrapperAdapter.notifyDataSetChanged();
         switcherLayout.showContentLayout();
+        Logger.i(TAG,"goodsArray.size : " +goodsArray.size());
     }
 
     @Override
@@ -277,6 +286,7 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
 
                 break;
             case REQUEST_MORE_DATA:
+                Logger.i(TAG,"getListData case REQUEST_MORE_DATA");
                 currPage++;
                 if ( goodsArray.size() >= pageSize) {
                     goodsListPrenset.requestMoreGoodsData(recyclerView, pageSize, currPage, categoryId, sort, gymId);

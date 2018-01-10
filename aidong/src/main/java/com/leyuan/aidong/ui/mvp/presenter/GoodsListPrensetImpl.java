@@ -13,6 +13,7 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.GoodsModelImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
@@ -28,6 +29,7 @@ import static com.leyuan.aidong.utils.Constant.GOODS_TICKET;
  * Created by user on 2017/8/1.
  */
 public class GoodsListPrensetImpl {
+    private static final java.lang.String TAG = "GoodsListActivity";
     private GoodsModelImpl goodsModel;
     private GoodsFilterActivityView filterActivityView;
     private List<GoodsBean> nurtureBeanList = new ArrayList<>();
@@ -100,6 +102,8 @@ public class GoodsListPrensetImpl {
         goodsModel.getGoods(new RequestMoreSubscriber<GoodsData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(GoodsData nurtureDataBean) {
+
+                Logger.i(TAG,"requestMoreGoodsData onNext");
                 if (nurtureDataBean != null && nurtureDataBean.getProduct() != null) {
                     nurtureBeanList = nurtureDataBean.getProduct();
                 }
