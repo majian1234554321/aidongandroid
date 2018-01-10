@@ -1,4 +1,4 @@
-package com.leyuan.aidong.adapter.course;
+package com.leyuan.aidong.ui.course;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

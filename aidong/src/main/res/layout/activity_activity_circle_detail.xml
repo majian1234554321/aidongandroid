@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,40 +15,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/rel_top"
+            <com.leyuan.aidong.widget.CommonTitleLayout
                 android:layout_width="match_parent"
-                android:layout_height="360dp">
+                android:layout_height="45dp"
+                app:txtTitle="@string/details" />
 
-                <ImageView
-                    android:id="@+id/img_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="360dp"
-                    android:scaleType="centerCrop" />
-
-                <ImageView
-                    android:id="@+id/img_live_begin_or_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/live_not_start" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@color/semitransparent">
-
-                    <ImageView
-                        android:id="@+id/iv_back"
-                        android:layout_width="41dp"
-                        android:layout_height="41dp"
-                        android:src="@drawable/icon_back" />
-                </RelativeLayout>
-
-            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:text="111111111111111111111111111111111111111111111111"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
-            <include layout="@layout/item_home_recommend_course" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/icon_right_arrow"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/check_all"
+                android:textColor="@color/b3"
+                android:textSize="13sp" />
+
 
             <TextView
                 android:layout_width="wrap_content"

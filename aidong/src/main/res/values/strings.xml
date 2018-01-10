@@ -354,4 +354,10 @@
     <string name="star_coach">明星教练</string>
     <string name="attention">关注</string>
     <string name="my_location">我的位置</string>
+    <string name="relate_course_video">相关课程视频</string>
+    <string name="relate_dynamic">相关动态</string>
+    <string name="shine_image">晒图</string>
+    <string name="relate_goods">相关商品</string>
+    <string name="store_facilities">店内设施</string>
+    <string name="relate_course">相关课程</string>
 </resources>

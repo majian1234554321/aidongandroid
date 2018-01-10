@@ -120,6 +120,12 @@
             android:name=".ui.home.activity.CourseVideoDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.store.StoreDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.course.CourseCircleDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.home.activity.RelatedVideoActivity"
             android:screenOrientation="portrait" />
         <activity

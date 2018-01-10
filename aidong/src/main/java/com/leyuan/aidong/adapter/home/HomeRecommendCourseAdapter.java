@@ -11,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
+import com.leyuan.aidong.utils.UiManager;
 
 /**
  * Created by user on 2018/1/5.
@@ -32,7 +34,12 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UiManager.activityJump(context, CourseCircleDetailActivity.class);
+            }
+        });
     }
 
     @Override
