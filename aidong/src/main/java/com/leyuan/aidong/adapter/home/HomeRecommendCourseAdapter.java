@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -60,7 +60,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
         private ImageView imgStarThree;
         private ImageView imgStarFour;
         private ImageView imgStarFive;
-        private Button btAttention;
+        private ImageButton btAttention;
 
         public ViewHolder(View view) {
             super(view);
@@ -75,7 +75,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
             imgStarThree = (ImageView) view.findViewById(R.id.img_star_three);
             imgStarFour = (ImageView) view.findViewById(R.id.img_star_four);
             imgStarFive = (ImageView) view.findViewById(R.id.img_star_five);
-            btAttention = (Button) view.findViewById(R.id.bt_attention);
+            btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
         }
     }
 }

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rel_top"
+        android:layout_width="match_parent"
+        android:layout_height="360dp">
+
+        <ImageView
+            android:id="@+id/img_bg"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/img_live_begin_or_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_play" />
+
+    </RelativeLayout>
+
+
+    <include layout="@layout/item_home_recommend_course" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/course_intro"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_course_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="DDDDDDDDDDD"
+        android:textColor="@color/c3"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/txt_suggest_frequency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="DDDDDDDDDDD"
+        android:textColor="@color/c3"
+        android:textSize="14sp" />
+
+
+    <RelativeLayout
+        android:id="@+id/layout_attention"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_attention"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/txt_attention_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/icon_right_arrow"
+            android:text="@string/a_cache"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+   <include
+       android:id="@+id/inc_relative_coach"
+       layout="@layout/view_person_horizontal"/>
+
+    <LinearLayout
+        android:id="@+id/ll_relate_course_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp">
+
+
+            <TextView
+                android:id="@+id/txt_relate_course_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:text="@string/relate_course_video"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_check_all_video"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/icon_right_arrow"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/check_all"
+                android:textColor="@color/b3"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_relate_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_relate_dynamic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp">
+
+
+            <TextView
+                android:id="@+id/txt_relate_dynamic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:text="@string/relate_dynamic"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

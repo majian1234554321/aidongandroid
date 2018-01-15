@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <!--<com.leyuan.custompullrefresh.CustomRefreshLayout-->
+        <!--android:id="@+id/refreshLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:focusable="true"-->
+        <!--android:focusableInTouchMode="true">-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_dynamic_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/semitransparent">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:src="@drawable/icon_back" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    <!--</com.leyuan.custompullrefresh.CustomRefreshLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/shine_image"
+            android:gravity="center"
+            android:text="@string/shine_image" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/share"
+            android:gravity="center"
+            android:text="@string/share" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@color/main_red"
+
+            android:gravity="center"
+            android:text="@string/appoint_course_immediately"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

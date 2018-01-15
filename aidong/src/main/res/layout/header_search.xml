@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_background"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:src="@color/main_background"
+        />
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/shape_radius_white"
+        android:drawableLeft="@drawable/icon_search_gray"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:hint="@string/search_more_circle"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:textColorHint="@color/c9"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:text="@string/selection_course"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

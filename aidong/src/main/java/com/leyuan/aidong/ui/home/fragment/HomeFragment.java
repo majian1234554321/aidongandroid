@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,6 +24,8 @@ import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
+import com.leyuan.aidong.ui.discover.fragment.CircleFragment;
 import com.leyuan.aidong.ui.home.activity.LocationActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
@@ -35,6 +38,8 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+import static com.leyuan.aidong.utils.Constant.REQUEST_PUBLISH_DYNAMIC;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
@@ -59,7 +64,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container,false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
 
@@ -87,13 +92,13 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
 
         FragmentPagerItems pages = new FragmentPagerItems(getContext());
 
-        pages.add(FragmentPagerItem.of(null,HomeRecommendFragment.class));
-        pages.add(FragmentPagerItem.of(null,HomeAttentionFragment.class));
-        pages.add(FragmentPagerItem.of(null,HomeAttentionFragment.class));
+        pages.add(FragmentPagerItem.of(null, HomeRecommendFragment.class));
+        pages.add(FragmentPagerItem.of(null, HomeAttentionFragment.class));
+        pages.add(FragmentPagerItem.of(null, HomeAttentionFragment.class));
         adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);
-        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 //reset tip dot
@@ -103,16 +108,36 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
                 }
             }
         });
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
         tvLocation.setText(App.getInstance().getSelectedCity());
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
+                PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                        Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+
+                //ClipPhotosActivity.start(getContext(),Boxing.getResult(data));
+            } else if (requestCode == REQUEST_PUBLISH_DYNAMIC) {
+                Fragment page = adapter.getPage(1);
+                if (page instanceof CircleFragment) {
+                    ((CircleFragment) page).refreshData();
+                }
+            }
+        }
     }
 
     @Override
@@ -136,7 +161,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
 
         String[] campaignTab = getResources().getStringArray(R.array.homeTab);
         text.setText(campaignTab[position]);
-        if(position == 0){
+        if (position == 0) {
             text.setTypeface(Typeface.DEFAULT_BOLD);
         }
         allTabView.add(tabView);
@@ -147,7 +172,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_search:
-                if(App.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     new MaterialDialog.Builder(getContext())
                             .items(R.array.mediaType)
                             .itemsCallback(new MaterialDialog.ListCallback() {
@@ -160,7 +185,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
                                     }
                                 }
                             }).show();
-                }else {
+                } else {
                     ToastGlobal.showLong("请先登陆再来发帖");
                     startActivity(new Intent(getContext(), LoginActivity.class));
                 }
@@ -173,13 +198,13 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         }
     }
 
-    private void takePhotos(){
+    private void takePhotos() {
         BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
         multi.needCamera().maxCount(6).isNeedPaging();
         Boxing.of(multi).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_SELECT_PHOTO);
     }
 
-    private void takeVideo(){
+    private void takeVideo() {
         BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
         Boxing.of(videoConfig).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
     }

@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
+import com.leyuan.aidong.utils.UiManager;
 
 /**
  * Created by user on 2018/1/5.
@@ -28,7 +30,12 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UiManager.activityJump(context, ActivityCircleDetailActivity.class);
+            }
+        });
     }
 
     @Override

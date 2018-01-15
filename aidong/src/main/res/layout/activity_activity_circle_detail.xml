@@ -7,7 +7,8 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
 
         <LinearLayout
@@ -31,28 +32,48 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:drawablePadding="5dp"
-                android:drawableRight="@drawable/icon_right_arrow"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="@string/check_all"
-                android:textColor="@color/b3"
-                android:textSize="13sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:drawableLeft="@drawable/icon_attention_person_num"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="160 person attentioned"
+                    android:textColor="@color/b3"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/bt_attention"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/transpance"
+                    android:src="@drawable/icon_attention"
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    />
+
+
+            </RelativeLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:text="Dance QJ"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_marginRight="15dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_default"
+
+                />
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,6 +84,113 @@
                 android:text="DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
                 android:textColor="@color/c3"
                 android:textSize="14sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/icon_right_arrow"
+                android:text="@string/check_image_text_detail"
+                android:textColor="@color/main_red"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:src="@color/list_line_color" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Huodong price"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="1000 - 20000"
+                android:textColor="@color/main_red"
+                android:textSize="15sp"
+                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Huodong Time"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="2017-11-11 "
+                android:textColor="@color/c3"
+                android:textSize="15sp"
+               />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Huodong address"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="shanghai city"
+                android:textColor="@color/c3"
+                android:textSize="15sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="shanghai city nan fengcheng"
+                android:textColor="@color/b3"
+                android:textSize="13sp"
+                android:drawableLeft="@drawable/icon_address"
+                android:drawablePadding="5dp"
+                />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:src="@color/list_line_color" />
+
+
+
+
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -87,103 +215,6 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_selection_course"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginRight="15dp"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp">
-
-
-                    <TextView
-                        android:id="@+id/txt_selection_course"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-
-                        android:text="@string/selection_course"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_check_all_course"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/icon_right_arrow"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="@string/check_all"
-                        android:textColor="@color/b3"
-                        android:textSize="13sp" />
-
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_coach"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_relate_course_video"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginRight="15dp"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp">
-
-
-                    <TextView
-                        android:id="@+id/txt_relate_course_video"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-
-                        android:text="@string/relate_course_video"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_check_all_video"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/icon_right_arrow"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="@string/check_all"
-                        android:textColor="@color/b3"
-                        android:textSize="13sp" />
-
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_relate_video"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_relate_dynamic"
@@ -210,6 +241,21 @@
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/txt_check_all_video"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/icon_right_arrow"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/check_all"
+                        android:textColor="@color/b3"
+                        android:textSize="13sp" />
 
 
                 </RelativeLayout>
@@ -255,7 +301,7 @@
             android:background="@color/main_red"
 
             android:gravity="center"
-            android:text="@string/appoint_course_immediately"
+            android:text="@string/appoint_sign_up"
             android:textColor="@color/white" />
     </LinearLayout>
 </RelativeLayout>

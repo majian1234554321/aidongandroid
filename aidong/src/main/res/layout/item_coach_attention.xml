@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="85dp"
+    android:layout_height="160dp"
+    android:orientation="vertical">
+
+    <include layout="@layout/item_person_horizontal" />
+
+    <TextView
+        android:id="@+id/txt_attention_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:singleLine="true"
+        android:text="11 attention"
+        android:textColor="@color/b3"
+        android:textSize="13dp" />
+
+</LinearLayout>

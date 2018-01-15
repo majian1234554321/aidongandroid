@@ -360,4 +360,13 @@
     <string name="relate_goods">相关商品</string>
     <string name="store_facilities">店内设施</string>
     <string name="relate_course">相关课程</string>
+    <string name="check_image_text_detail">查看图文详情</string>
+    <string name="appoint_sign_up">预约报名</string>
+    <string name="do_not_have_sport_record">还没有运动记录</string>
+    <string name="event">活动</string>
+    <string name="search_more_circle">搜索更多圈子</string>
+    <string name="relate_coach">相关教练</string>
+    <string name="activity_price">活动价格</string>
+    <string name="activity_time">活动时间</string>
+    <string name="activity_location">活动地点</string>
 </resources>

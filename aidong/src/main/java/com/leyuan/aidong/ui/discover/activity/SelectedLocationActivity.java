@@ -12,6 +12,7 @@ import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
@@ -75,6 +76,8 @@ public class SelectedLocationActivity extends BaseActivity {
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
 
+        View headView =  View.inflate(this, R.layout.header_search, null);
+        RecyclerViewUtils.setHeaderView(recyclerView,headView);
 
     }
 

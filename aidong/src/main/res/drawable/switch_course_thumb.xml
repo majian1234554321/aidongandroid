@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:state_checked="true" android:state_enabled="false">-->
+    <!--<shape android:shape="oval">-->
+    <!--<solid android:color="#B8E2F8" />-->
+    <!--</shape>-->
+    <!--</item>-->
+    <!--<item android:state_enabled="false">-->
+    <!--<layer-list>-->
+    <!--<item android:bottom="6dp" android:left="4dp" android:right="4dp" android:top="6dp">-->
+    <!--<shape>-->
+    <!--<solid android:color="#DEDEDE" />-->
+    <!--<corners android:radius="1dp" />-->
+    <!--</shape>-->
+    <!--</item>-->
+    <!--</layer-list>-->
+    <!--</item>-->
+    <item android:drawable="@drawable/icon_bt_store" android:state_checked="true" />
+    <item android:drawable="@drawable/icon_bt_course_list" />
+
+</selector>

@@ -27,12 +27,14 @@ import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
 import com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mine.activity.FollowActivity;
 import com.leyuan.aidong.ui.mine.activity.LoveCoinActivity;
 import com.leyuan.aidong.ui.mine.activity.MessageActivity;
 import com.leyuan.aidong.ui.mine.activity.MyMemberCardActivity;
+import com.leyuan.aidong.ui.mine.activity.SportRecordActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity;
@@ -55,10 +57,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     private ImageButton btn_shop_car, btn_message;
     private ImageView imageView_head, img_new_message, img_new_shop;
     private ImageView imageView_xinbie;
-    private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity;
-//    , textView_yysl, textView_yyjrw, textView_dd, textView_ddjrw
+    private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity, txt_sport_record;
+    //    , textView_yysl, textView_yyjrw, textView_dd, textView_ddjrw
     private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address,
-            item_recommend_friend, item_after_sale, item_setting, item_my_member_card;
+            item_recommend_friend, item_after_sale, item_setting, item_my_member_card, item_my_orders;
     private UserCoach user;
     private ChatMessageReceiver chatMessageReceiver;
     private MineInfoPresenterImpl presenter;
@@ -120,6 +122,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         textView_guanzhushu = (TextView) rootView.findViewById(R.id.textView_guanzhushu);
         textView_beiguanzhushu = (TextView) rootView.findViewById(R.id.textView_beiguanzhushu);
         textView_popularity = (TextView) rootView.findViewById(R.id.textView_popularity);
+        txt_sport_record = (TextView) rootView.findViewById(R.id.txt_sport_record);
 //        textView_yysl = (TextView) rootView.findViewById(R.id.textView_yysl);
 //        textView_yyjrw = (TextView) rootView.findViewById(R.id.textView_yyjrw);
 //        textView_dd = (TextView) rootView.findViewById(R.id.textView_dd);
@@ -127,6 +130,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
         item_my_coin = (AidongMineItem) rootView.findViewById(R.id.item_my_coin);
         item_my_member_card = (AidongMineItem) rootView.findViewById(R.id.item_my_member_card);
+        item_my_orders = (AidongMineItem) rootView.findViewById(R.id.item_my_orders);
         item_my_coupon = (AidongMineItem) rootView.findViewById(R.id.item_my_coupon);
         item_sport_timing = (AidongMineItem) rootView.findViewById(R.id.item_sport_timing);
         item_address = (AidongMineItem) rootView.findViewById(R.id.item_address);
@@ -136,6 +140,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void setViewEvent() {
+        txt_sport_record.setOnClickListener(this);
         btn_shop_car.setOnClickListener(this);
         btn_message.setOnClickListener(this);
         imageView_head.setOnClickListener(this);
@@ -150,6 +155,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         item_recommend_friend.setOnClickListener(this);
         item_after_sale.setOnClickListener(this);
         item_setting.setOnClickListener(this);
+        item_my_orders.setOnClickListener(this);
 
     }
 
@@ -190,6 +196,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case button_login:
                 UiManager.activityJump(getActivity(), LoginActivity.class);
                 break;
@@ -201,6 +208,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.imageView_head:
                 UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
+                break;
+            case R.id.item_my_orders:
+                if (App.getInstance().isLogin()) {
+                    AppointmentMineActivityNew.start(getActivity(), 0);
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            case R.id.txt_sport_record:
+                UiManager.activityCheckLoginJump(getActivity(), SportRecordActivity.class);
+
                 break;
 //            case relativeLayout_yuyue:
 //                if(App.getInstance().isLogin()){

@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.PersonHorizontalAdapter;
+import com.leyuan.aidong.adapter.CoachAttentionAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendActivityAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
 import com.leyuan.aidong.ui.BaseFragment;
@@ -60,7 +60,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     };
     private HomeRecommendCourseAdapter courseAdapter;
     private HomeRecommendActivityAdapter activityAdapter;
-    private PersonHorizontalAdapter coachAdapter;
+    private CoachAttentionAdapter coachAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,7 +110,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
         courseAdapter = new HomeRecommendCourseAdapter(getActivity());
         activityAdapter = new HomeRecommendActivityAdapter(getActivity());
-        coachAdapter = new PersonHorizontalAdapter(getActivity());
+        coachAdapter = new CoachAttentionAdapter(getActivity());
 
         rvCourse.setAdapter(courseAdapter);
         rvActivity.setAdapter(activityAdapter);

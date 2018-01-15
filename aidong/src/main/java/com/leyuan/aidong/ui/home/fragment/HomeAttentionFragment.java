@@ -265,9 +265,9 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
             HomeAttentionFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
                 startActivityForResult(new Intent(getContext(),
-                        DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicBean)
-                        .putExtra("replyComment",item)
+                                DynamicDetailActivity.class)
+                                .putExtra("dynamic", dynamicBean)
+                                .putExtra("replyComment",item)
                         , REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;

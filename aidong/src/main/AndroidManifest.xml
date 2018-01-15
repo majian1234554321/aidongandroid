@@ -126,6 +126,9 @@
             android:name=".ui.course.CourseCircleDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.course.activity.RelativeVideoListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.home.activity.RelatedVideoActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -272,6 +275,9 @@
             android:name=".ui.mine.activity.UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.CoachInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.UpdateAddressActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -303,6 +309,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.PastCampaignActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.activity.ActivityCircleDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.CourseActivity"
@@ -352,6 +362,9 @@
             android:name=".ui.mine.activity.AppointCampaignDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.SportRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.home.activity.AppointCourseActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -390,6 +403,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.discover.activity.PublishDynamicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.SelectedLocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.SelectedCircleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.discover.activity.DynamicDetailActivity"
@@ -536,6 +555,7 @@
         <activity
             android:name=".ui.home.activity.CourseChooseSeat"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.home.activity.CourseQueueConfirmActivity"
             android:screenOrientation="portrait" />

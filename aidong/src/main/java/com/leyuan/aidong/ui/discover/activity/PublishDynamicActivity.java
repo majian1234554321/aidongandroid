@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.exoplayer.util.Util;
@@ -36,6 +37,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
 
@@ -61,6 +63,14 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     private PublishDynamicAdapter mediaAdapter;
     private ArrayList<BaseMedia> selectedMedia;
     private DynamicPresent dynamicPresent;
+
+    private LinearLayout layoutAddCircle;
+    private ImageView imgAddCircle;
+    private TextView txtAddCircle;
+    private LinearLayout layoutAddLocation;
+    private ImageView imgAddLocation;
+    private TextView txtLocation;
+
 
     public static void startForResult(Fragment fragment, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
         Intent starter = new Intent(fragment.getContext(), PublishDynamicActivity.class);
@@ -91,6 +101,16 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     }
 
     private void initView() {
+
+        layoutAddCircle = (LinearLayout) findViewById(R.id.layout_add_circle);
+        imgAddCircle = (ImageView) findViewById(R.id.img_add_circle);
+        txtAddCircle = (TextView) findViewById(R.id.txt_add_circle);
+
+        layoutAddLocation = (LinearLayout) findViewById(R.id.layout_add_location);
+        imgAddLocation = (ImageView) findViewById(R.id.img_add_location);
+        txtLocation = (TextView) findViewById(R.id.txt_location);
+
+
         ivBack = (ImageView) findViewById(R.id.iv_back);
         etContent = (EditText) findViewById(R.id.et_content);
         tvContentCount = (TextView) findViewById(R.id.tv_content_count);
@@ -109,6 +129,11 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     }
 
     private void setListener() {
+        findViewById(R.id.bt_circle_delete).setOnClickListener(this);
+        findViewById(R.id.bt_location_delete).setOnClickListener(this);
+        layoutAddCircle.setOnClickListener(this);
+        layoutAddLocation.setOnClickListener(this);
+
         ivBack.setOnClickListener(this);
         mediaAdapter.setOnItemClickListener(this);
         btSend.setOnClickListener(this);
@@ -128,6 +153,17 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                     return;
                 }
                 uploadToQiNiu();
+                break;
+            case R.id.bt_circle_delete:
+                break;
+            case R.id.bt_location_delete:
+                break;
+            case R.id.layout_add_circle:
+                UiManager.activityJump(this,SelectedLocationActivity.class);
+                break;
+            case R.id.layout_add_location:
+                UiManager.activityJump(this,SelectedCircleActivity.class);
+
                 break;
             default:
                 break;
@@ -149,8 +185,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         mediaAdapter.notifyItemRangeChanged(position, selectedMedia.size());
         btSend.setEnabled(!selectedMedia.isEmpty());
 
-        for(BaseMedia media:selectedMedia){
-            Logger.i("Publish","onDeleteMediaClick selectedMedia = " + media.getPath());
+        for (BaseMedia media : selectedMedia) {
+            Logger.i("Publish", "onDeleteMediaClick selectedMedia = " + media.getPath());
         }
 
     }
@@ -160,7 +196,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         if (!isPhoto) {
             Logger.i("baseMedia getPath = " + baseMedia.getPath());
             Intent intent = new Intent(this, PlayerActivity.class)
-                    .setData(Uri.parse("file://"+ baseMedia.getPath()))
+                    .setData(Uri.parse("file://" + baseMedia.getPath()))
                     .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER);
             startActivity(intent);
 
@@ -169,8 +205,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     private void uploadToQiNiu() {
         showProgressDialog();
-        for(BaseMedia media:selectedMedia){
-            Logger.i("Publish","uploadToQiNiu selectedMedia = " + media.getPath());
+        for (BaseMedia media : selectedMedia) {
+            Logger.i("Publish", "uploadToQiNiu selectedMedia = " + media.getPath());
         }
 
         UploadToQiNiuManager.getInstance().uploadMedia(isPhoto, selectedMedia, new IQiNiuCallback() {
@@ -220,8 +256,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             final List<BaseMedia> medias = Boxing.getResult(data);
             selectedMedia.clear();
             selectedMedia.addAll(medias);
-            for(BaseMedia media:selectedMedia){
-                Logger.i("Publish","onActivityResult selectedMedia = " + media.getPath());
+            for (BaseMedia media : selectedMedia) {
+                Logger.i("Publish", "onActivityResult selectedMedia = " + media.getPath());
             }
 
             mediaAdapter.setData(selectedMedia, isPhoto);

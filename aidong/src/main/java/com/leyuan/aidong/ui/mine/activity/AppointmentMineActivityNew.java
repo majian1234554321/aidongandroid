@@ -13,6 +13,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.fragment.AppointmentFragmentCourseNew;
 import com.leyuan.aidong.ui.mine.fragment.AppointmentFragmentEventNew;
+import com.leyuan.aidong.ui.mine.fragment.AppointmentFragmentGoods;
 import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
@@ -49,9 +50,12 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
         AppointmentFragmentCourseNew course = AppointmentFragmentCourseNew.newInstance(tranPosition);
 
         AppointmentFragmentEventNew event =  AppointmentFragmentEventNew.newInstance(tranPosition-3);
+        AppointmentFragmentGoods goods = AppointmentFragmentGoods.newInstance(tranPosition);
+
+
         mFragments.add(course);
         mFragments.add(event);
-
+        mFragments.add(goods);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
