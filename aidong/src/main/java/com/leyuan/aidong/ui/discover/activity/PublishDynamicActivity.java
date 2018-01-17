@@ -153,6 +153,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                     return;
                 }
                 uploadToQiNiu();
+
                 break;
             case R.id.bt_circle_delete:
                 break;

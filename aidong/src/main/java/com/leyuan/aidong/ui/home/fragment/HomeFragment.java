@@ -147,7 +147,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
 
     @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_text_with_notification, container, false);
+        View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_home_text_with_notification, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         TextView tip = (TextView) tabView.findViewById(R.id.tv_tab_tip);
         tip.setVisibility(View.GONE);

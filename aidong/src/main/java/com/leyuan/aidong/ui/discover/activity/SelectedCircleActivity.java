@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.discover.SelectLocationAdapter;
+import com.leyuan.aidong.adapter.discover.SelectCircleAdapter;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -29,7 +29,7 @@ public class SelectedCircleActivity extends BaseActivity {
 
     private int currPage = 1;
     private SwitcherLayout switcherLayout;
-    SelectLocationAdapter adapter;
+    SelectCircleAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
     @Override
@@ -67,7 +67,7 @@ public class SelectedCircleActivity extends BaseActivity {
     }
 
     private void initRecyclerView() {
-        adapter = new SelectLocationAdapter(this);
+        adapter = new SelectCircleAdapter(this);
 
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
