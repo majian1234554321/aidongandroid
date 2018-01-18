@@ -369,4 +369,5 @@
     <string name="activity_price">活动价格</string>
     <string name="activity_time">活动时间</string>
     <string name="activity_location">活动地点</string>
+    <string name="nealy_person">附近的人</string>
 </resources>

@@ -1,7 +1,5 @@
-package com.leyuan.aidong.ui.home.activity;
+package com.leyuan.aidong.ui.mine.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -27,18 +25,16 @@ import java.util.List;
 /**
  * Created by user on 2018/1/5.
  */
-public class CircleListActivity extends BaseActivity implements SmartTabLayout.TabProvider {
+public class MyAttentionListActivity extends BaseActivity implements SmartTabLayout.TabProvider {
 
     private List<View> allTabView = new ArrayList<>();
     private FragmentPagerItemAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int position = getIntent().getIntExtra("position",0);
-
         setContentView(R.layout.activity_circle_list);
-
 
         final SmartTabLayout tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -48,6 +44,7 @@ public class CircleListActivity extends BaseActivity implements SmartTabLayout.T
 
         pages.add(FragmentPagerItem.of(null,CircleCourseListFragment.class));
         pages.add(FragmentPagerItem.of(null,CircleActivityListFragment.class));
+        pages.add(FragmentPagerItem.of(null,CircleCoachListFragment.class));
         pages.add(FragmentPagerItem.of(null,CircleCoachListFragment.class));
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
@@ -66,7 +63,6 @@ public class CircleListActivity extends BaseActivity implements SmartTabLayout.T
                 }
             }
         });
-        viewPager.setCurrentItem(position);
     }
 
     @Override
@@ -84,11 +80,5 @@ public class CircleListActivity extends BaseActivity implements SmartTabLayout.T
         }
         allTabView.add(tabView);
         return tabView;
-    }
-
-    public static void start(Context context, int position) {
-        Intent intent = new Intent(context,CircleListActivity.class);
-        intent.putExtra("position",position);
-        context.startActivity(intent);
     }
 }

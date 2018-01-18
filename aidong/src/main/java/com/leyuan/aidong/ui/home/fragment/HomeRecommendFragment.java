@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,10 +21,16 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.CoachAttentionAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendActivityAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
+import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.home.activity.CircleListActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
+
+import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -61,6 +68,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     private HomeRecommendCourseAdapter courseAdapter;
     private HomeRecommendActivityAdapter activityAdapter;
     private CoachAttentionAdapter coachAdapter;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +108,20 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         txt_check_all_coach = (TextView) view.findViewById(R.id.txt_check_all_coach);
         txtCheckAllActivity = (TextView) view.findViewById(R.id.txt_check_all_activity);
 
+        banner.setAdapter(new BGABanner.Adapter() {
+            @Override
+            public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
+                GlideLoader.getInstance().displayImage(((BannerBean) model).getImage(), (ImageView) view);
+            }
+        });
+
+        banner.setDelegate(new BGABanner.Delegate() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
+                ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
+            }
+        });
+
         rvCourse.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvActivity.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         rvStarCoach.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -120,6 +142,17 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         txt_check_all_coach.setOnClickListener(this);
         txtCheckAllActivity.setOnClickListener(this);
 
+
+        List<BannerBean> bannerBeanList = SystemInfoUtils.getHomeBanner(getActivity());
+
+        if (bannerBeanList != null && !bannerBeanList.isEmpty()) {
+            banner.setVisibility(View.VISIBLE);
+            banner.setAutoPlayAble(bannerBeanList.size() > 1);
+            banner.setData(bannerBeanList, null);
+        } else {
+            banner.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -132,13 +165,14 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_check_all_course:
-                startActivity(new Intent(getActivity(),CircleListActivity.class));
+                CircleListActivity.start(getActivity(),0);
+
                 break;
             case R.id.txt_check_all_activity:
-                startActivity(new Intent(getActivity(),CircleListActivity.class));
+                CircleListActivity.start(getActivity(),1);
                 break;
             case R.id.txt_check_all_coach:
-                startActivity(new Intent(getActivity(),CircleListActivity.class));
+                CircleListActivity.start(getActivity(),2);
                 break;
         }
     }

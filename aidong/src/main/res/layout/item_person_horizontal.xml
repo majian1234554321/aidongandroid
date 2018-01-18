@@ -20,7 +20,7 @@
         android:layout_marginTop="15dp"
         android:paddingLeft="15dp"
         android:singleLine="true"
-        android:text="111111111"
+        android:text="会飞的"
         android:textColor="@color/c3"
         android:textSize="15dp" />
 

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.PersonHorizontalAdapter;
+import com.leyuan.aidong.ui.mine.activity.MyAttentionListActivity;
+import com.leyuan.aidong.utils.UiManager;
 
 /**
  * Created by user on 2018/1/4.
@@ -37,7 +39,7 @@ public class PersonHorizontalView extends RelativeLayout {
         initView(context);
     }
 
-    private void initView(Context context) {
+    private void initView(final Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_person_horizontal,this,true);
         txtLeftTitle = (TextView) view.findViewById(R.id.txt_left_title);
         txtCheckAll = (TextView) view.findViewById(R.id.txt_check_all);
@@ -46,7 +48,7 @@ public class PersonHorizontalView extends RelativeLayout {
         txtCheckAll.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                UiManager.activityJump(context,MyAttentionListActivity.class);
             }
         });
 

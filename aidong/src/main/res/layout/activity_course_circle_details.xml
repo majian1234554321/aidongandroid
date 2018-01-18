@@ -35,37 +35,5 @@
         </RelativeLayout>
     <!--</com.leyuan.custompullrefresh.CustomRefreshLayout>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/shine_image"
-            android:gravity="center"
-            android:text="@string/shine_image" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/share"
-            android:gravity="center"
-            android:text="@string/share" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:background="@color/main_red"
-
-            android:gravity="center"
-            android:text="@string/appoint_course_immediately"
-            android:textColor="@color/white" />
-    </LinearLayout>
-
+    <include layout="@layout/inc_bottom_share_image_appoint"/>
 </RelativeLayout>

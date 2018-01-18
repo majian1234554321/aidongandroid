@@ -13,18 +13,18 @@ import com.leyuan.aidong.R;
 /**
  * Created by user on 2018/1/4.
  */
-public class RelativeViedeoAdapter extends RecyclerView.Adapter<RelativeViedeoAdapter.ViewHolder> {
+public class DetailsRelativeViedeoAdapter extends RecyclerView.Adapter<DetailsRelativeViedeoAdapter.ViewHolder> {
 
 
     private final Context context;
 
-    public RelativeViedeoAdapter(Context context) {
+    public DetailsRelativeViedeoAdapter(Context context) {
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_relative_video, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_details_relative_video, parent, false);
 
         return new ViewHolder(view);
     }
@@ -36,7 +36,7 @@ public class RelativeViedeoAdapter extends RecyclerView.Adapter<RelativeViedeoAd
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 4;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

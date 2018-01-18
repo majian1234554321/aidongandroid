@@ -26,7 +26,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     private TextView txtCityAddress;
     private TextView txtLocationDetail;
     private RelativeLayout layoutAttention;
-    private TextView txtCheckAll;
+    private TextView txtCheckAll,txt_relate_dynamic,txt_check_all_dynamic;
     private RecyclerView rvAttention;
     private PersonAttentionAdapter adapterAttentionPerson;
     private Context context;
@@ -60,6 +60,8 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         txtCityAddress = (TextView) view.findViewById(R.id.txt_city_address);
         txtLocationDetail = (TextView) view.findViewById(R.id.txt_location_detail);
 
+        txt_relate_dynamic = (TextView) view.findViewById(R.id.txt_relate_dynamic);
+        txt_check_all_dynamic = (TextView) view.findViewById(R.id.txt_check_all_dynamic);
 
         initAttentionPerson(view);
     }

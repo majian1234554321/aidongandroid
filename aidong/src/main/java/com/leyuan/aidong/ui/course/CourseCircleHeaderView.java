@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.PersonHorizontalAdapter;
 import com.leyuan.aidong.adapter.home.PersonAttentionAdapter;
-import com.leyuan.aidong.adapter.video.RelativeViedeoAdapter;
+import com.leyuan.aidong.adapter.video.DetailsRelativeViedeoAdapter;
 import com.leyuan.aidong.ui.course.activity.RelativeVideoListActivity;
 import com.leyuan.aidong.utils.UiManager;
 
@@ -47,7 +47,10 @@ public class CourseCircleHeaderView extends RelativeLayout {
     private PersonHorizontalAdapter adapterRelativeCoach;
     private PersonAttentionAdapter adapterAttentionPerson;
     private Context context;
-    private RelativeViedeoAdapter relativeViedeoAdapter;
+    private DetailsRelativeViedeoAdapter relativeViedeoAdapter;
+    private TextView txt_use_equipment;
+    private TextView txt_target_population;
+    private TextView txt_suggest_match_course;
 
     public CourseCircleHeaderView(Context context) {
         this(context, null, 0);
@@ -71,6 +74,9 @@ public class CourseCircleHeaderView extends RelativeLayout {
         imgLiveBeginOrEnd = (ImageView) view.findViewById(R.id.img_live_begin_or_end);
         txtCourseIntro = (TextView) view.findViewById(R.id.txt_course_intro);
         txtSuggestFrequency = (TextView) view.findViewById(R.id.txt_suggest_frequency);
+        txt_use_equipment = (TextView) view.findViewById(R.id.txt_use_equipment);
+        txt_target_population = (TextView) view.findViewById(R.id.txt_target_population);
+        txt_suggest_match_course = (TextView) view.findViewById(R.id.txt_suggest_match_course);
 
         llRelateDynamic = (LinearLayout) view.findViewById(R.id.ll_relate_dynamic);
         txtRelateDynamic = (TextView) view.findViewById(R.id.txt_relate_dynamic);
@@ -78,27 +84,6 @@ public class CourseCircleHeaderView extends RelativeLayout {
         initAttentionPerson(view);
         initRelativeCoach(view);
         initRelativeCourseVideo(view);
-
-
-    }
-
-    private void initRelativeCourseVideo(View view) {
-
-        llRelateCourseVideo = (LinearLayout) view.findViewById(R.id.ll_relate_course_video);
-        txtRelateCourseVideo = (TextView) view.findViewById(R.id.txt_relate_course_video);
-        txtCheckAllVideo = (TextView) view.findViewById(R.id.txt_check_all_video);
-        rvRelateVideo = (RecyclerView) view.findViewById(R.id.rv_relate_video);
-
-        GridLayoutManager manager = new GridLayoutManager(context, 2);
-        rvRelateVideo.setLayoutManager(manager);
-        relativeViedeoAdapter = new RelativeViedeoAdapter(context);
-        rvRelateVideo.setAdapter(relativeViedeoAdapter);
-        txtCheckAllVideo.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiManager.activityJump(context,RelativeVideoListActivity.class);
-            }
-        });
 
     }
 
@@ -114,6 +99,27 @@ public class CourseCircleHeaderView extends RelativeLayout {
 
 
     }
+
+    private void initRelativeCourseVideo(View view) {
+
+        llRelateCourseVideo = (LinearLayout) view.findViewById(R.id.ll_relate_course_video);
+        txtRelateCourseVideo = (TextView) view.findViewById(R.id.txt_relate_course_video);
+        txtCheckAllVideo = (TextView) view.findViewById(R.id.txt_check_all_video);
+        rvRelateVideo = (RecyclerView) view.findViewById(R.id.rv_relate_video);
+
+        GridLayoutManager manager = new GridLayoutManager(context, 2);
+        rvRelateVideo.setLayoutManager(manager);
+        relativeViedeoAdapter = new DetailsRelativeViedeoAdapter(context);
+        rvRelateVideo.setAdapter(relativeViedeoAdapter);
+        txtCheckAllVideo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UiManager.activityJump(context,RelativeVideoListActivity.class);
+            }
+        });
+
+    }
+
 
     private void initRelativeCoach(View view) {
         incRelativeCoach = view.findViewById(R.id.inc_relative_coach);

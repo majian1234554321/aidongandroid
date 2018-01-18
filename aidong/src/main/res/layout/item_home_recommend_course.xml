@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
             android:singleLine="true"
-            android:text="1111"
+            android:text="索性 | 剪子 | 马健先"
             android:textColor="@color/text_color_common"
             android:textSize="13sp" />
 
@@ -120,12 +120,14 @@
 
     <ImageButton
         android:id="@+id/bt_attention"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@color/transpance"
+        android:scaleType="centerCrop"
         android:src="@drawable/icon_go_to_attention"
+        android:layout_marginRight="15dp"
 
        />
 

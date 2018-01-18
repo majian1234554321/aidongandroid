@@ -68,6 +68,7 @@ public class CourseBeanNew implements Parcelable {
         return tagString;
     }
 
+
     protected CourseBeanNew(Parcel in) {
         id = in.readString();
         name = in.readString();

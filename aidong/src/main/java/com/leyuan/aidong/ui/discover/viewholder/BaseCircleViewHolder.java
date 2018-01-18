@@ -42,6 +42,15 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private TextView tvTime;
     private ImageView ivCoachFlag;
     private ImageView ivFollow;
+    private LinearLayout layoutCourseOrActivity;
+    private ImageView imgCover;
+    private TextView txtTitle;
+    private TextView txtDesc;
+    private TextView txtTime;
+    private TextView txtLocation;
+    private TextView txtParse;
+    private TextView txtComment;
+
 
 
     protected IDynamicCallback callback;
@@ -64,6 +73,15 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         tvTime = (TextView) itemView.findViewById(R.id.tv_time);
 
+        layoutCourseOrActivity = (LinearLayout) itemView.findViewById(R.id.layout_course_or_activity);
+        imgCover = (ImageView) itemView.findViewById(R.id.img_cover);
+        txtTitle = (TextView) itemView.findViewById(R.id.txt_title);
+        txtDesc = (TextView) itemView.findViewById(R.id.txt_desc);
+        txtTime = (TextView) itemView.findViewById(R.id.txt_time);
+
+        txtLocation = (TextView) itemView.findViewById(R.id.txt_location);
+        txtParse = (TextView) itemView.findViewById(R.id.txt_parse);
+        txtComment = (TextView) itemView.findViewById(R.id.txt_comment);
     }
 
 
@@ -134,6 +152,8 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 }
             }
         });
+
+
 
     }
 

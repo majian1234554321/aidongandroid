@@ -63,5 +63,5 @@
             android:text="@string/appoint_course_immediately"
             android:textColor="@color/white" />
     </LinearLayout>
-
+    <include layout="@layout/inc_bottom_share_image_appoint"/>
 </RelativeLayout>

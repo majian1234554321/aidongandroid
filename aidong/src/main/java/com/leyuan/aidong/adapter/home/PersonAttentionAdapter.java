@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Utils;
 
 /**
  * Created by user on 2018/1/4.
@@ -31,18 +32,22 @@ public class PersonAttentionAdapter extends RecyclerView.Adapter<PersonAttention
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        if (position == 0) {
+            RecyclerView.LayoutParams fp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            fp.leftMargin = Utils.dip2px(context,15);
+            holder.itemView.setLayoutParams(fp);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 11;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgAvatar;
-        private TextView txtName,txt_attention_num;
+        private TextView txtName, txt_attention_num;
 
         public ViewHolder(View view) {
             super(view);

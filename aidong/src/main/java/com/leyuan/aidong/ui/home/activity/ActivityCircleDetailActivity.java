@@ -9,7 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
@@ -21,14 +23,19 @@ import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.CMDMessageManager;
+import com.leyuan.aidong.module.photopicker.boxing.Boxing;
+import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
+import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.home.view.ActivityCircleHeaderView;
+import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
@@ -50,16 +57,20 @@ import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESUL
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
+import static com.leyuan.aidong.utils.Constant.REQUEST_PUBLISH_DYNAMIC;
 import static com.leyuan.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
 
 /**
  * Created by user on 2018/1/9.
  */
 
-public class ActivityCircleDetailActivity extends BaseActivity implements SportCircleFragmentView {
-//    private SwitcherLayout switcherLayout;
+public class ActivityCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener {
+    //    private SwitcherLayout switcherLayout;
 //    private CustomRefreshLayout refreshLayout;
+    TextView txt_share_image, txt_share, txt_appoint_immediately;
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -71,6 +82,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
+    private GoodsSkuPopupWindow skuPopupWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +90,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
         setContentView(R.layout.activity_activity_circle_details);
         dynamicPresent = new DynamicPresentImpl(this, this);
-
+        initView();
         initSwipeRefreshLayout();
         initRecyclerView();
         sharePopupWindow = new SharePopupWindow(this);
@@ -86,6 +98,15 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         dynamicPresent.pullToRefreshData();
     }
 
+    private void initView() {
+        txt_share_image = (TextView) findViewById(R.id.txt_share_image);
+        txt_share = (TextView) findViewById(R.id.txt_share);
+        txt_appoint_immediately = (TextView) findViewById(R.id.txt_appoint_immediately);
+
+        txt_share_image.setOnClickListener(this);
+        txt_share.setOnClickListener(this);
+        txt_appoint_immediately.setOnClickListener(this);
+    }
 
     private void initSwipeRefreshLayout() {
 //        refreshLayout = (CustomRefreshLayout) findViewById(refreshLayout);
@@ -121,7 +142,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
         //重点
         ActivityCircleHeaderView headView = new ActivityCircleHeaderView(this);
-        RecyclerViewUtils.setHeaderView(recyclerView,headView);
+        RecyclerViewUtils.setHeaderView(recyclerView, headView);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -153,7 +174,65 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         wrapperAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txt_share_image:
+                if (App.mInstance.isLogin()) {
+                    new MaterialDialog.Builder(this)
+                            .items(R.array.mediaType)
+                            .itemsCallback(new MaterialDialog.ListCallback() {
+                                @Override
+                                public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                    if (position == 0) {
+                                        takePhotos();
+                                    } else {
+                                        takeVideo();
+                                    }
+                                }
+                            }).show();
+                } else {
+                    ToastGlobal.showLong("请先登陆再来发帖");
+                    startActivity(new Intent(this, LoginActivity.class));
 
+                }
+                break;
+            case R.id.txt_share:
+                sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
+                        "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
+                break;
+            case R.id.txt_appoint_immediately:
+//                showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToBuy);
+                ConfirmOrderCourseActivity.start(this, null);
+                break;
+        }
+    }
+
+    private void takePhotos() {
+        BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
+        multi.needCamera().maxCount(6).isNeedPaging();
+        Boxing.of(multi).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_PHOTO);
+    }
+
+    private void takeVideo() {
+        BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
+        Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
+    }
+
+    private List<String> selectedSkuValues = new ArrayList<>();
+
+    private void showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus status) {
+        //if(skuPopupWindow == null){
+//        String recommendId = "";
+//        if (TextUtils.isEmpty(recommendId)) {
+//            recommendId = null;
+//        }
+//        selectedSkuValues.add("1");
+//        skuPopupWindow = new GoodsSkuPopupWindow(this, new GoodsDetailBean(), status, selectedSkuValues, selectedCount,
+//                recommendId, goodsType);
+//        skuPopupWindow.setSelectSkuListener(this);
+//        skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
+    }
 
     @Override
     public void addLikeResult(int position, BaseBean baseBean) {
@@ -217,6 +296,10 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
             dynamicList.remove(clickPosition);
             circleDynamicAdapter.updateData(dynamicList);
             circleDynamicAdapter.notifyDataSetChanged();
+        } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
+            PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                    Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+
         }
     }
 
@@ -296,7 +379,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 startActivityForResult(new Intent(ActivityCircleDetailActivity.this,
                                 DynamicDetailActivity.class)
                                 .putExtra("dynamic", dynamicBean)
-                                .putExtra("replyComment",item)
+                                .putExtra("replyComment", item)
                         , REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
@@ -328,7 +411,6 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     cover, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
         }
     }
-
 
 
 }
