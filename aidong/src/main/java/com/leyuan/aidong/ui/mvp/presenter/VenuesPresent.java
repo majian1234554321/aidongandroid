@@ -52,6 +52,8 @@ public interface VenuesPresent {
      */
     void getVenuesDetail(SwitcherLayout switcherLayout, String id);
 
+    void getVenuesDetail(String id);
+
     /**
      * 获取场馆课程列表
      *

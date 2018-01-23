@@ -11,6 +11,7 @@
         android:layout_marginTop="25dp">
 
         <TextView
+            android:id="@+id/txt_current_month_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -36,6 +37,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/txt_clock_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -59,6 +61,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_go_course_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="120"
@@ -84,6 +87,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_class_total_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="160"
@@ -109,6 +113,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_expend_cal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="120"

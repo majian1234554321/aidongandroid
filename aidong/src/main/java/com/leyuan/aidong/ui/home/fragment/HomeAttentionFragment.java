@@ -36,6 +36,7 @@ import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.home.view.PersonHorizontalView;
+import com.leyuan.aidong.ui.mine.activity.MyAttentionListActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
@@ -97,7 +98,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
             }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
                 refreshData();
             }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
-//                refreshData();
+                refreshData();
             }
             Logger.i(TAG, "onReceive action = " + intent.getAction());
         }
@@ -171,6 +172,12 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         //重点
         PersonHorizontalView headView = new PersonHorizontalView(getActivity());
         headView.setLeftTitle(getResources().getString(R.string.my_attention));
+        headView.setCheckAllClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                MyAttentionListActivity.start(3);
+            }
+        });
         RecyclerViewUtils.setHeaderView(recyclerView,headView);
     }
 

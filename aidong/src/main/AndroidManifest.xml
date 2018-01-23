@@ -411,6 +411,9 @@
             android:name=".ui.discover.activity.SelectedCircleActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.MyAttentionListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.discover.activity.DynamicDetailActivity"
             android:screenOrientation="portrait" />
         <activity

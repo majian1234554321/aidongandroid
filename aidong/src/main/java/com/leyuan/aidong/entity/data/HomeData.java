@@ -1,28 +1,29 @@
 package com.leyuan.aidong.entity.data;
 
-import com.leyuan.aidong.entity.HomeBean;
+import com.leyuan.aidong.entity.CampaignBean;
+import com.leyuan.aidong.entity.CoachBean;
+import com.leyuan.aidong.entity.course.CourseBeanNew;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
- * 首页数据实体
- * Created by song on 2016/8/22.
+ * Created by user on 2018/1/22.
  */
 public class HomeData {
-    private List<HomeBean> home;
+    ArrayList<CourseBeanNew> course;
+    ArrayList<CampaignBean>  campaign;
+    ArrayList<CoachBean> coach;
 
-    public List<HomeBean> getHome() {
-        return home;
+
+    public ArrayList<CourseBeanNew> getCourse() {
+        return course;
     }
 
-    public void setHome(List<HomeBean> home) {
-        this.home = home;
+    public ArrayList<CampaignBean> getCampaign() {
+        return campaign;
     }
 
-    @Override
-    public String toString() {
-        return "HomeData{" +
-                "home=" + home +
-                '}';
+    public ArrayList<CoachBean> getCoach() {
+        return coach;
     }
 }

@@ -5,6 +5,7 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
+import com.leyuan.aidong.entity.data.HomeDataOld;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface HomeModel {
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getRecommendList(Subscriber<HomeData> subscriber, int page,String list);
+    void getRecommendList(Subscriber<HomeDataOld> subscriber, int page, String list);
 
     /**
      * 获取首页分类详情
@@ -29,6 +30,8 @@ public interface HomeModel {
      * @param page 页码
      */
     void getBrandDetail(Subscriber<BrandData> subscriber, String id, int page);
+
+    void getRecommendList(Subscriber<HomeData> subscriber);
 
     /**
      * 获取首页Banner

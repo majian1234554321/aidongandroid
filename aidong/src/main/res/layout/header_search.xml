@@ -13,12 +13,13 @@
         android:id="@+id/et_search"
         android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/shape_radius_white"
         android:drawableLeft="@drawable/icon_search_gray"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:gravity="center"
         android:hint="@string/search_more_circle"
         android:imeOptions="actionSearch"
@@ -27,13 +28,14 @@
         android:textSize="13sp" />
 
     <TextView
+        android:id="@+id/txt_search_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:paddingBottom="10dp"
         android:paddingLeft="15dp"
         android:paddingTop="15dp"
-        android:text="@string/selection_course"
+        android:text="@string/nearly_store"
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />

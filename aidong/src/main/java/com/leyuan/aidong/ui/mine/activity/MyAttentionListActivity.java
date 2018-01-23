@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -30,10 +32,16 @@ public class MyAttentionListActivity extends BaseActivity implements SmartTabLay
     private List<View> allTabView = new ArrayList<>();
     private FragmentPagerItemAdapter adapter;
 
+    public static void start(Context context, int position) {
+        Intent intent = new Intent(context,MyAttentionListActivity.class);
+        intent.putExtra("position",position);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int position = getIntent().getIntExtra("position",0);
         setContentView(R.layout.activity_circle_list);
 
         final SmartTabLayout tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
@@ -63,6 +71,8 @@ public class MyAttentionListActivity extends BaseActivity implements SmartTabLay
                 }
             }
         });
+
+        viewPager.setCurrentItem(position);
     }
 
     @Override
@@ -72,8 +82,7 @@ public class MyAttentionListActivity extends BaseActivity implements SmartTabLay
         TextView tip = (TextView) tabView.findViewById(R.id.tv_tab_tip);
         tip.setVisibility(View.GONE);
 
-
-        String[] campaignTab = getResources().getStringArray(R.array.circleList);
+        String[] campaignTab = getResources().getStringArray(R.array.attentinList);
         text.setText(campaignTab[position]);
         if(position == 0){
             text.setTypeface(Typeface.DEFAULT_BOLD);
@@ -81,4 +90,6 @@ public class MyAttentionListActivity extends BaseActivity implements SmartTabLay
         allTabView.add(tabView);
         return tabView;
     }
+
+
 }

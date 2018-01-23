@@ -29,7 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import com.baidu.platform.comapi.map.L;
+
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Logger;
 

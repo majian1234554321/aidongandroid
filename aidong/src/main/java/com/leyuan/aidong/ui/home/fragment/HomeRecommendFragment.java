@@ -22,9 +22,12 @@ import com.leyuan.aidong.adapter.CoachAttentionAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendActivityAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.data.HomeData;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.home.activity.CircleListActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.HomeRecommendPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.HomeRecommendView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
@@ -37,7 +40,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 /**
  * Created by user on 2017/12/28.
  */
-public class HomeRecommendFragment extends BaseFragment implements View.OnClickListener {
+public class HomeRecommendFragment extends BaseFragment implements View.OnClickListener, HomeRecommendView {
 
 
     private CustomRefreshLayout refreshLayout;
@@ -57,6 +60,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     private TextView txtStarCoachHint;
     private RecyclerView rvStarCoach;
     private TextView txtCheckAllActivity, txt_check_all_coach, txt_check_all_course;
+    HomeRecommendPresentImpl homePresent;
 
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
         @Override
@@ -142,6 +146,8 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         txt_check_all_coach.setOnClickListener(this);
         txtCheckAllActivity.setOnClickListener(this);
 
+        homePresent = new HomeRecommendPresentImpl(getActivity(), this);
+        homePresent.getRecommendList();
 
         List<BannerBean> bannerBeanList = SystemInfoUtils.getHomeBanner(getActivity());
 
@@ -152,6 +158,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         } else {
             banner.setVisibility(View.GONE);
         }
+
 
     }
 
@@ -165,15 +172,41 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_check_all_course:
-                CircleListActivity.start(getActivity(),0);
+                CircleListActivity.start(getActivity(), 0);
 
                 break;
             case R.id.txt_check_all_activity:
-                CircleListActivity.start(getActivity(),1);
+                CircleListActivity.start(getActivity(), 1);
                 break;
             case R.id.txt_check_all_coach:
-                CircleListActivity.start(getActivity(),2);
+                CircleListActivity.start(getActivity(), 2);
                 break;
         }
+    }
+
+    @Override
+    public void onGetData(HomeData homeData) {
+
+        if (homeData.getCourse() != null && !homeData.getCourse().isEmpty()) {
+            courseAdapter.setData(homeData.getCourse());
+            llSelectionCourse.setVisibility(View.VISIBLE);
+        } else {
+            llSelectionCourse.setVisibility(View.GONE);
+        }
+
+        if (homeData.getCampaign() != null && !homeData.getCampaign().isEmpty()) {
+            activityAdapter.setData(homeData.getCampaign());
+            llSelectionActivity.setVisibility(View.VISIBLE);
+        } else {
+            llSelectionActivity.setVisibility(View.GONE);
+        }
+
+        if (homeData.getCoach() != null && !homeData.getCoach().isEmpty()) {
+            coachAdapter.setData(homeData.getCoach());
+            llStarCoach.setVisibility(View.VISIBLE);
+        } else {
+            llStarCoach.setVisibility(View.GONE);
+        }
+
     }
 }

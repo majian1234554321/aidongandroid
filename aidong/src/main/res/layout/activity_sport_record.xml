@@ -38,7 +38,7 @@
             android:drawablePadding="5dp"
             android:drawableRight="@drawable/icon_arrow_down_coupon"
             android:gravity="center"
-            android:text="2017"
+            android:text="2017年"
             android:textColor="#fff"
             android:textSize="14sp" />
 
@@ -57,10 +57,8 @@
             app:stl_defaultTabTextColor="@color/gray_normal"
             app:stl_defaultTabTextHorizontalPadding="40dp"
             app:stl_defaultTabTextSize="17sp"
-            app:stl_indicatorColor="@color/main_red"
-            app:stl_indicatorInterpolation="smart"
-            app:stl_indicatorThickness="3dp"
-            app:stl_indicatorWidth="auto" />
+            app:stl_indicatorThickness="0dp"
+             />
 
     </FrameLayout>
 

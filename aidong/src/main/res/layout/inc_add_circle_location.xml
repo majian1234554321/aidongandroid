@@ -29,7 +29,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="8dp"
             android:gravity="center_vertical"
-            android:text="11111111111111"
+            android:text="@string/add_to_circle"
             android:textColor="@color/c3"
             android:textSize="11sp" />
 
@@ -40,7 +40,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="8dp"
             android:src="@drawable/icon_close"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:src="@drawable/circle_select_no" />
+            android:src="@drawable/icon_course_location" />
 
         <TextView
             android:id="@+id/txt_location"
@@ -67,7 +67,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="8dp"
             android:gravity="center_vertical"
-            android:text="11111111111111"
+            android:text="@string/add_location"
             android:textColor="@color/c3"
             android:textSize="11sp" />
 
@@ -78,7 +78,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="8dp"
             android:src="@drawable/icon_close"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
     </LinearLayout>
 

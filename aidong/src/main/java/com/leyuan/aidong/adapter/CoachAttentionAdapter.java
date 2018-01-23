@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CoachBean;
 import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
+
+import java.util.ArrayList;
 
 /**
  * Created by user on 2018/1/4.
@@ -18,6 +21,7 @@ public class CoachAttentionAdapter extends RecyclerView.Adapter<CoachAttentionAd
 
 
     private final Context context;
+    private ArrayList<CoachBean> coachs;
 
     public CoachAttentionAdapter(Context context) {
         this.context = context;
@@ -43,6 +47,10 @@ public class CoachAttentionAdapter extends RecyclerView.Adapter<CoachAttentionAd
     @Override
     public int getItemCount() {
         return 9;
+    }
+
+    public void setData(ArrayList<CoachBean> coach) {
+        this.coachs = coach;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
+import com.leyuan.aidong.entity.data.HomeDataOld;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.HomeModel;
@@ -102,11 +104,21 @@ public class HomePresentImpl implements HomePresent {
         homeFragmentView.updateCourseCategory(homeModel.getCourseCategory());
     }
 
-    @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout,String type) {
-        homeModel.getRecommendList(new CommonSubscriber<HomeData>(context,switcherLayout) {
+
+    public void getRecommendList(){
+        homeModel.getRecommendList(new ProgressSubscriber<HomeData>(context) {
             @Override
             public void onNext(HomeData homeData) {
+
+            }
+        });
+    }
+
+    @Override
+    public void commonLoadData(final SwitcherLayout switcherLayout,String type) {
+        homeModel.getRecommendList(new CommonSubscriber<HomeDataOld>(context,switcherLayout) {
+            @Override
+            public void onNext(HomeDataOld homeData) {
                 if(homeData != null && homeData.getHome() != null){
                     homeBeanList = homeData.getHome();
                 }
@@ -123,9 +135,9 @@ public class HomePresentImpl implements HomePresent {
 
     @Override
     public void pullToRefreshHomeData(String type) {
-        homeModel.getRecommendList(new RefreshSubscriber<HomeData>(context) {
+        homeModel.getRecommendList(new RefreshSubscriber<HomeDataOld>(context) {
             @Override
-            public void onNext(HomeData homeBean) {
+            public void onNext(HomeDataOld homeBean) {
                 if(homeBean != null && homeBean.getHome() != null){
                     if(homeFragmentView != null) {
                         homeFragmentView.updateRecyclerView(homeBean.getHome());
@@ -147,9 +159,9 @@ public class HomePresentImpl implements HomePresent {
 
     @Override
     public void requestMoreHomeData(RecyclerView recyclerView, final int pageSize, int page,String type) {
-        homeModel.getRecommendList(new RequestMoreSubscriber<HomeData>(context,recyclerView,pageSize) {
+        homeModel.getRecommendList(new RequestMoreSubscriber<HomeDataOld>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(HomeData homeBean) {
+            public void onNext(HomeDataOld homeBean) {
                 if(homeBean != null && homeBean.getHome()!= null){
                     if(homeFragmentView != null) {
                         homeFragmentView.updateRecyclerView(homeBean.getHome());

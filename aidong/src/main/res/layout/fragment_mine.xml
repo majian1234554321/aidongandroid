@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,9 +27,41 @@
                     android:id="@+id/layout_no_login"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/icon_avatar_default" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="30dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/login_or_register_immediately"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/find_your_club"
+                            android:textColor="@color/b3"
+                            android:layout_marginTop="10dp"
+                            android:textSize="14sp"
+                            />
+
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -38,7 +71,7 @@
                     android:id="@+id/relativeLayout_my_logo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imageView_head"
@@ -105,63 +138,6 @@
                                     android:textColor="@color/c3"
                                     android:textSize="@dimen/length22" />
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-
-                                    <ImageButton
-                                        android:id="@+id/btn_shop_car"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginLeft="15dp"
-                                        android:background="@color/transparent"
-                                        android:src="@drawable/mine_shopping_basket" />
-
-                                    <ImageView
-                                        android:id="@+id/img_new_shop"
-                                        android:layout_width="8dp"
-                                        android:layout_height="8dp"
-                                        android:layout_marginLeft="37dp"
-                                        android:layout_marginTop="5dp"
-                                        android:src="@drawable/shape_circle_red"
-                                        android:visibility="gone" />
-
-                                    <TextView
-                                        android:id="@+id/txt_new_shop"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="37dp"
-                                        android:layout_marginTop="5dp"
-                                        android:background="@drawable/mine_prompt"
-                                        android:gravity="center"
-                                        android:text="1"
-                                        android:textColor="@color/white"
-                                        android:textSize="10sp"
-                                        android:visibility="gone" />
-
-                                    <ImageView
-                                        android:id="@+id/img_new_message"
-                                        android:layout_width="8dp"
-                                        android:layout_height="8dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginRight="15dp"
-                                        android:layout_marginTop="5dp"
-                                        android:src="@drawable/shape_circle_red"
-                                        android:visibility="gone" />
-
-                                    <ImageButton
-                                        android:id="@+id/btn_message"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginRight="15dp"
-                                        android:background="@color/transparent"
-                                        android:src="@drawable/mine_message" />
-
-
-                                </RelativeLayout>
                             </LinearLayout>
 
                             <TextView
@@ -238,10 +214,7 @@
             </FrameLayout>
 
 
-
-           <include layout="@layout/inc_month_clock_info"/>
-
-
+            <include layout="@layout/inc_month_clock_info" />
 
 
             <ImageView
@@ -257,7 +230,6 @@
                 app:divider_visible="true"
                 app:img_tag="@drawable/mine_love_coin"
                 app:txt_name="我的爱币" />
-
 
 
             <com.leyuan.aidong.widget.AidongMineItem
@@ -329,5 +301,75 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:background="@color/black">
+
+        <ImageButton
+            android:id="@+id/btn_shop_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@color/transparent"
+            android:src="@drawable/mine_shopping_basket" />
+
+        <ImageView
+            android:id="@+id/img_new_shop"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/shape_circle_red"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_new_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="37dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/mine_prompt"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/img_new_message"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/shape_circle_red"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btn_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@color/transparent"
+            android:src="@drawable/mine_message" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:maxWidth="200dp"
+            android:text="@string/tabMine"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -370,4 +370,10 @@
     <string name="activity_time">活动时间</string>
     <string name="activity_location">活动地点</string>
     <string name="nealy_person">附近的人</string>
+    <string name="add_to_circle">添加到圈子</string>
+    <string name="add_location">添加地点</string>
+    <string name="nearly_store">附近门店</string>
+    <string name="search_nearly_location">搜索附近位置</string>
+    <string name="hot_recommend">热门推荐</string>
+    <string name="login_or_register_immediately">立即登录/注册</string>
 </resources>

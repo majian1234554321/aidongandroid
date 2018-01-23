@@ -11,8 +11,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
 import com.leyuan.aidong.utils.UiManager;
+
+import java.util.ArrayList;
 
 /**
  * Created by user on 2018/1/5.
@@ -21,6 +24,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 
 
     private final Context context;
+    private ArrayList<CourseBeanNew> course;
 
     public HomeRecommendCourseAdapter(Context context) {
         this.context = context;
@@ -44,7 +48,16 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 
     @Override
     public int getItemCount() {
+//        if(course == null)
+//            return 0;
+//        return course.size();
+
         return 6;
+    }
+
+    public void setData(ArrayList<CourseBeanNew> course) {
+        this.course = course;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

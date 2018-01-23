@@ -7,13 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.leyuan.aidong.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by user on 2018/1/5.
  */
 public class SelectLocationAdapter extends RecyclerView.Adapter<SelectLocationAdapter.ViewHolder> {
     private final Context context;
+    private ArrayList<PoiInfo> infos = new ArrayList<>();
 
     public SelectLocationAdapter(Context context) {
         this.context = context;
@@ -27,12 +32,19 @@ public class SelectLocationAdapter extends RecyclerView.Adapter<SelectLocationAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        PoiInfo info = infos.get(position);
+        holder.txtName.setText(info.name);
+        holder.txtLocation.setText(info.address);
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return infos.size();
+    }
+
+    public void setData(List<PoiInfo> allPoi) {
+        infos.clear();
+        infos.addAll(allPoi);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

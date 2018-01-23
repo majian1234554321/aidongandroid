@@ -15,14 +15,6 @@
         android:gravity="center"
         android:text="@string/shine_image" />
 
-    <TextView
-        android:id="@+id/txt_share"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/share"
-        android:gravity="center"
-        android:text="@string/share" />
 
     <TextView
         android:id="@+id/txt_appoint_immediately"

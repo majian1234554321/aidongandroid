@@ -32,6 +32,13 @@ public class CircleListActivity extends BaseActivity implements SmartTabLayout.T
     private List<View> allTabView = new ArrayList<>();
     private FragmentPagerItemAdapter adapter;
 
+
+    public static void start(Context context, int position) {
+        Intent intent = new Intent(context,CircleListActivity.class);
+        intent.putExtra("position",position);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,9 +93,4 @@ public class CircleListActivity extends BaseActivity implements SmartTabLayout.T
         return tabView;
     }
 
-    public static void start(Context context, int position) {
-        Intent intent = new Intent(context,CircleListActivity.class);
-        intent.putExtra("position",position);
-        context.startActivity(intent);
-    }
 }

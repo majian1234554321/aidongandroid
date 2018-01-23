@@ -7,6 +7,7 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
+import com.leyuan.aidong.entity.data.HomeDataOld;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.HomeService;
@@ -32,9 +33,9 @@ public class HomeModelImpl implements HomeModel {
     }
 
     @Override
-    public void getRecommendList(Subscriber<HomeData> subscriber, int page, String list) {
+    public void getRecommendList(Subscriber<HomeDataOld> subscriber, int page, String list) {
         homeService.getRecommendList(page, list)
-                .compose(RxHelper.<HomeData>transform())
+                .compose(RxHelper.<HomeDataOld>transform())
                 .subscribe(subscriber);
     }
 
@@ -44,6 +45,13 @@ public class HomeModelImpl implements HomeModel {
                 .compose(RxHelper.<BrandData>transform())
                 .subscribe(subscriber);
     }
+    @Override
+    public void getRecommendList(Subscriber<HomeData> subscriber){
+        homeService.getRecommendList()
+                .compose(RxHelper.<HomeData>transform())
+                .subscribe(subscriber);
+    }
+
 
     @Override
     public List<BannerBean> getHomeBanners() {

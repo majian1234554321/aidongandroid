@@ -207,6 +207,23 @@ public class VenuesPresentImpl implements VenuesPresent {
     }
 
     @Override
+    public void getVenuesDetail(String id) {
+        venuesModel.getVenuesDetail(new ProgressSubscriber<VenuesDetailData>(context) {
+            @Override
+            public void onNext(VenuesDetailData venuesDetailData) {
+                venuesDetailFragmentView.setVenuesDetail(venuesDetailData.getGym());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+
+            }
+        }, id);
+    }
+
+
+    @Override
     public void getCourses(final SwitcherLayout switcherLayout, String id, String day) {
         venuesModel.getCourses(new CommonSubscriber<CourseData>(context,switcherLayout) {
             @Override

@@ -180,6 +180,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
 
 
     private void setListener() {
+
     }
 
     @Override

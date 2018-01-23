@@ -68,7 +68,7 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
 
     @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_course_text, container, false);
+        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_sport_record, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         String[] campaignTab = getResources().getStringArray(R.array.months);
         text.setText(campaignTab[position]);

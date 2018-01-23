@@ -11,6 +11,12 @@ public class CampaignBean {
     private String start;
     private String landmark;
     private String view_count;
+
+    private String type;
+    private String image;
+    private String begin_date;
+
+
     
     public String getId() {
         return id;
@@ -58,5 +64,21 @@ public class CampaignBean {
 
     public void setView_count(String view_count) {
         this.view_count = view_count;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getBegin_date() {
+        return begin_date;
+    }
+
+    public String getView_count() {
+        return view_count;
     }
 }

@@ -145,9 +145,11 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
+
                 finish();
                 break;
             case R.id.bt_send:
+
                 if (FormatUtil.parseInt(tvContentCount.getText().toString()) > MAX_TEXT_COUNT) {
                     ToastGlobal.showLong(String.format(getString(R.string.too_many_text), MAX_TEXT_COUNT));
                     return;
@@ -160,11 +162,12 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             case R.id.bt_location_delete:
                 break;
             case R.id.layout_add_circle:
-                UiManager.activityJump(this,SelectedLocationActivity.class);
+
+                UiManager.activityJump(this,SelectedCircleActivity.class);
                 break;
             case R.id.layout_add_location:
-                UiManager.activityJump(this,SelectedCircleActivity.class);
 
+                UiManager.activityJump(this,SelectedLocationActivity.class);
                 break;
             default:
                 break;

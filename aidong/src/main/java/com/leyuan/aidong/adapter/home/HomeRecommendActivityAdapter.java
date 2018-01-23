@@ -9,14 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.utils.UiManager;
+
+import java.util.ArrayList;
 
 /**
  * Created by user on 2018/1/5.
  */
 public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecommendActivityAdapter.ViewHolder> {
     private final Context context;
+    private ArrayList<CampaignBean> campaigns;
 
     public HomeRecommendActivityAdapter(Context context) {
         this.context = context;
@@ -41,6 +45,11 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
     @Override
     public int getItemCount() {
         return 3;
+    }
+
+    public void setData(ArrayList<CampaignBean> campaign) {
+        this.campaigns = campaign;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

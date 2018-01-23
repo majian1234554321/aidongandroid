@@ -4,6 +4,7 @@ package com.leyuan.aidong.http.api;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
+import com.leyuan.aidong.entity.data.HomeDataOld;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -17,9 +18,17 @@ import rx.Observable;
 public interface HomeService {
 
     @GET("home")
-    Observable<BaseBean<HomeData>> getRecommendList(@Query("page") int page,@Query("list") String list);
+    Observable<BaseBean<HomeDataOld>> getRecommendList(@Query("page") int page, @Query("list") String list);
 
     @GET("home/{id}")
     Observable<BaseBean<BrandData>> getTypeDetail(@Path("id") String id, @Query("page") int page);
+
+
+    @GET("recommends_home")
+    Observable<BaseBean<HomeData>> getRecommendList();
+
+
+
+
 
 }

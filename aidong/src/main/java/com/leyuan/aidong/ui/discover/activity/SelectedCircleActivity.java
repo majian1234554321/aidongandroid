@@ -8,6 +8,7 @@ import android.view.View;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.SelectCircleAdapter;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.discover.view.SearchHeaderView;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -21,7 +22,7 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
  * Created by user on 2018/1/9.
  */
 
-public class SelectedCircleActivity extends BaseActivity {
+public class SelectedCircleActivity extends BaseActivity implements SearchHeaderView.OnSearchListener {
 
     private CommonTitleLayout layoutTitle;
     private CustomRefreshLayout refreshLayout;
@@ -75,8 +76,12 @@ public class SelectedCircleActivity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
-        View headView =  View.inflate(this, R.layout.header_search, null);
-        RecyclerViewUtils.setHeaderView(recyclerView,headView);
+
+        SearchHeaderView headView = new SearchHeaderView(this);
+        headView.setOnsearchListner(this);
+        headView.setSearchHint(getResources().getString(R.string.search_more_circle));
+        headView.setTxtSearchTitle(getResources().getString(R.string.hot_recommend));
+        RecyclerViewUtils.setHeaderView(recyclerView, headView);
 
     }
 
@@ -87,4 +92,8 @@ public class SelectedCircleActivity extends BaseActivity {
         }
     };
 
+    @Override
+    public void onSearch(String keyword) {
+
+    }
 }

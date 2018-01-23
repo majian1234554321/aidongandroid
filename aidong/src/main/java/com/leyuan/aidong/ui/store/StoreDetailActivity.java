@@ -1,9 +1,12 @@
 package com.leyuan.aidong.ui.store;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +17,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.discover.StoreListAdapter;
+import com.leyuan.aidong.entity.VenuesDetailBean;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.fragment.CourseListFragmentNew;
+import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
 import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -28,11 +38,13 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
+import static com.leyuan.aidong.R.id.tv_price_separator;
+
 /**
  * Created by user on 2018/1/9.
  */
 
-public class StoreDetailActivity extends BaseActivity implements View.OnClickListener, SmartTabLayout.TabProvider {
+public class StoreDetailActivity extends BaseActivity implements View.OnClickListener, SmartTabLayout.TabProvider, VenuesDetailFragmentView {
     private ImageView ivBack;
     private ImageView ivShare;
     private RelativeLayout rlContent;
@@ -61,23 +73,47 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView txtRelateCourse;
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
+
+
     private List<String> days;
     private FragmentPagerItemAdapter adapter;
     private List<View> allTabView = new ArrayList<>();
+
+    //详情相关
+    private String id;
+    private VenuesDetailBean venues;
+    private SharePopupWindow sharePopupWindow;
+    private StoreListAdapter venuesAdapter;
+
+    public static void start(Context context, String id) {
+        Intent starter = new Intent(context, StoreDetailActivity.class);
+        starter.putExtra("id", id);
+        context.startActivity(starter);
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_detail);
+        initView();
+        if (getIntent() != null) {
+            id = getIntent().getStringExtra("id");
+        }
+        initRelateCourse();
+        VenuesPresent venuesPresent = new VenuesPresentImpl(this, this);
+        venuesPresent.getVenuesDetail(id);
+        sharePopupWindow = new SharePopupWindow(this);
+    }
 
+    private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivShare = (ImageView) findViewById(R.id.iv_share);
         rlContent = (RelativeLayout) findViewById(R.id.rl_content);
         banner = (BGABanner) findViewById(R.id.banner);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvPrice = (TextView) findViewById(R.id.tv_price);
-        tvPriceSeparator = (TextView) findViewById(R.id.tv_price_separator);
+        tvPriceSeparator = (TextView) findViewById(tv_price_separator);
         tvDistance = (TextView) findViewById(R.id.tv_distance);
         txtAddress = (TextView) findViewById(R.id.txt_address);
         txtAddressDetail = (TextView) findViewById(R.id.txt_address_detail);
@@ -97,6 +133,59 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         ivWifi = (ImageView) findViewById(R.id.iv_wifi);
         ivBath = (ImageView) findViewById(R.id.iv_bath);
         ivFood = (ImageView) findViewById(R.id.iv_food);
+
+        rvOtherSubStore.setLayoutManager(new LinearLayoutManager(this));
+         venuesAdapter = new StoreListAdapter(this);
+        rvOtherSubStore.setAdapter(venuesAdapter);
+        rvOtherSubStore.setNestedScrollingEnabled(false);
+
+    }
+
+
+    @Override
+    public void setVenuesDetail(VenuesDetailBean venues) {
+        this.venues = venues;
+        tvName.setText(venues.getName());
+        if (venues.getPrice() == null) {
+            tvPrice.setText("");
+            tvPriceSeparator.setText("");
+        } else {
+            tvPrice.setText(venues.getPrice() + "元起");
+        }
+
+        tvDistance.setText(venues.getDistanceFormat());
+        txtAddress.setText(venues.getAddress());
+
+        if (venues.getBrother() != null && !venues.getBrother().isEmpty()) {
+            llOtherSubStore.setVisibility(View.VISIBLE);
+            txtSubStoreNum.setText("共" + venues.getBrother().size() + "家分店");
+            venuesAdapter.setData(venues.getBrother());
+            venuesAdapter.notifyDataSetChanged();
+        } else {
+            llOtherSubStore.setVisibility(View.GONE);
+        }
+
+        ivParking.setImageResource(venues.getService().contains("1") ? R.drawable.icon_parking :
+                R.drawable.icon_parking_gray);
+        ivWifi.setImageResource(venues.getService().contains("2") ? R.drawable.icon_wifi :
+                R.drawable.icon_wifi_gray);
+        ivBath.setImageResource(venues.getService().contains("3") ? R.drawable.icon_bath :
+                R.drawable.icon_bath_gray);
+        ivFood.setImageResource(venues.getService().contains("4") ? R.drawable.icon_food :
+                R.drawable.icon_food_gray);
+
+        banner.setAdapter(new BGABanner.Adapter() {
+            @Override
+            public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
+                GlideLoader.getInstance().displayImage(((String) model), (ImageView) view);
+            }
+        });
+
+        banner.setData(venues.getPhoto(), null);
+
+    }
+
+    private void initRelateCourse() {
         txtRelateCourse = (TextView) findViewById(R.id.txt_relate_course);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_user);
@@ -139,8 +228,6 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
 
             }
         });
-
-
     }
 
     @Override
@@ -162,4 +249,5 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         allTabView.add(tabView);
         return tabView;
     }
+
 }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,11 +55,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
     private View rootView;
     private LinearLayout layout_no_login, linearLayout_guanzhu, linearLayout_beiguanzhu, layout_hot;
+    private RelativeLayout relativeLayout_my_logo;
     private ImageButton btn_shop_car, btn_message;
     private ImageView imageView_head, img_new_message, img_new_shop;
     private ImageView imageView_xinbie;
     private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity, txt_sport_record;
     //    , textView_yysl, textView_yyjrw, textView_dd, textView_ddjrw
+    private TextView txtCurrentMonthTitle;
+    private TextView txtSportRecord;
+    private TextView txtClockNum;
+    private TextView txtGoCourseNum;
+    private TextView txtClassTotalTime;
+    private TextView txtExpendCal;
+
     private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address,
             item_recommend_friend, item_after_sale, item_setting, item_my_member_card, item_my_orders;
     private UserCoach user;
@@ -110,7 +119,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         img_new_shop = (ImageView) rootView.findViewById(R.id.img_new_shop);
         txt_new_shop = (TextView) rootView.findViewById(R.id.txt_new_shop);
 
-//        relativeLayout_my_logo = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_my_logo);
+        relativeLayout_my_logo = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_my_logo);
+        txtCurrentMonthTitle = (TextView) rootView.findViewById(R.id.txt_current_month_title);
+        txtSportRecord = (TextView) rootView.findViewById(R.id.txt_sport_record);
+        txtClockNum = (TextView) rootView.findViewById(R.id.txt_clock_num);
+        txtGoCourseNum = (TextView) rootView.findViewById(R.id.txt_go_course_num);
+        txtClassTotalTime = (TextView) rootView.findViewById(R.id.txt_class_total_time);
+        txtExpendCal = (TextView) rootView.findViewById(R.id.txt_expend_cal);
+
 //        relativeLayout_yuyue = (LinearLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
 //        relativeLayout_dingdang = (LinearLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
 //        layout_appoint_course= (LinearLayout) rootView.findViewById(R.id.layout_appoint_course);
@@ -156,6 +172,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         item_after_sale.setOnClickListener(this);
         item_setting.setOnClickListener(this);
         item_my_orders.setOnClickListener(this);
+        layout_no_login.setOnClickListener(this);
 
     }
 
@@ -175,12 +192,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
     private void refreshLoginState() {
         if (App.getInstance().isLogin()) {
+            relativeLayout_my_logo.setVisibility(View.VISIBLE);
             layout_no_login.setVisibility(View.GONE);
             user = App.getInstance().getUser();
             textView_name.setText(user.getName());
             presenter.getMineInfo();
             GlideLoader.getInstance().displayRoundAvatarImage(user.getAvatar(), imageView_head);
         } else {
+            relativeLayout_my_logo.setVisibility(View.GONE);
             layout_no_login.setVisibility(View.VISIBLE);
             txt_new_shop.setVisibility(View.GONE);
             textView_guanzhushu.setText("0");
@@ -196,8 +215,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-            case button_login:
+            case R.id.layout_no_login:
                 UiManager.activityJump(getActivity(), LoginActivity.class);
                 break;
             case R.id.btn_shop_car:

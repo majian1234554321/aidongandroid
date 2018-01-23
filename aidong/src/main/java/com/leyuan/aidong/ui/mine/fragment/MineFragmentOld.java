@@ -88,7 +88,7 @@ public class MineFragmentOld extends BaseFragment implements View.OnClickListene
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_mine, container, false);
+        rootView = inflater.inflate(R.layout.fragment_mine_old, container, false);
         initView();
         setViewEvent();
         initData();
