@@ -7,8 +7,8 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.CourseTypeListBean;
 import com.leyuan.aidong.entity.DistrictBean;
+import com.leyuan.aidong.entity.course.CourseDataNew;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
-import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.http.RetrofitHelper;
@@ -46,9 +46,9 @@ public class CourseModelImpl implements CourseModel {
     }
     @Deprecated
     @Override
-    public void getCourses(Subscriber<CourseData> subscriber, String day, String cat, String landmark, int page) {
+    public void getCourses(Subscriber<CourseDataNew> subscriber, String day, String cat, String landmark, int page) {
         courseService.getCourses(day,cat,landmark,page)
-                .compose(RxHelper.<CourseData>transform())
+                .compose(RxHelper.<CourseDataNew>transform())
                 .subscribe(subscriber);
     }
     @Deprecated

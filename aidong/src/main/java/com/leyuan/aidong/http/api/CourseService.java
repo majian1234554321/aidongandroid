@@ -3,8 +3,8 @@ package com.leyuan.aidong.http.api;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.CourseTypeListBean;
+import com.leyuan.aidong.entity.course.CourseDataNew;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
-import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 
@@ -26,8 +26,8 @@ public interface CourseService {
     //Observable<BaseBean<CourseData>> getCourses(@Query("cat") int category, @Query("day") int day, @Query("page") int page);
     @Deprecated
     @GET("market/courses")
-    Observable<BaseBean<CourseData>> getCourses(@Query("day") String day,@Query("cat") String cat,
-                                                @Query("landmark") String landmark, @Query("page") int page);
+    Observable<BaseBean<CourseDataNew>> getCourses(@Query("day") String day, @Query("cat") String cat,
+                                                   @Query("landmark") String landmark, @Query("page") int page);
     @Deprecated
     @GET("market/courses/{id}")
     Observable<BaseBean<CourseDetailData>> getCourseDetail(@Path("id") String id);

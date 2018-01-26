@@ -4,8 +4,8 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.CourseTypeListBean;
 import com.leyuan.aidong.entity.DistrictBean;
+import com.leyuan.aidong.entity.course.CourseDataNew;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
-import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 
@@ -38,7 +38,7 @@ public interface CourseModel {
      * @param day 从当前开始向后天数
      * @param page 页码
      */
-    void getCourses(Subscriber<CourseData> subscriber, String day, String cat,String landmark, int page);
+    void getCourses(Subscriber<CourseDataNew> subscriber, String day, String cat, String landmark, int page);
 
     /**
      * 获取课程详情

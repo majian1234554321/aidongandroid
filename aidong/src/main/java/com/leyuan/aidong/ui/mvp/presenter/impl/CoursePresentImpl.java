@@ -11,6 +11,7 @@ import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.entity.PayOrderBean;
 import com.leyuan.aidong.entity.ShareData;
+import com.leyuan.aidong.entity.course.CourseDataNew;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
@@ -115,12 +116,12 @@ public class CoursePresentImpl implements CoursePresent {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourses(new CommonSubscriber<CourseData>(context, switcherLayout) {
+        courseModel.getCourses(new CommonSubscriber<CourseDataNew>(context, switcherLayout) {
             @Override
-            public void onNext(CourseData courseData) {
-                if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
+            public void onNext(CourseDataNew courseData) {
+                if (courseData != null && courseData.getTimetable() != null && !courseData.getTimetable().isEmpty()) {
                     switcherLayout.showContentLayout();
-                    courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
+                    courserFragmentView.refreshRecyclerViewData(courseData.getTimetable());
                 } else {
                     courserFragmentView.showEmptyView();
                 }
