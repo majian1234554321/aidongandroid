@@ -195,6 +195,32 @@ public class CampaignPresentImpl implements CampaignPresent {
     }
 
     @Override
+    public void getCampaignDetail(String id) {
+        if (campaignModel == null) {
+            campaignModel = new CampaignModelImpl();
+        }
+        campaignModel.getCampaignDetail(new ProgressSubscriber<CampaignDetailData>(context) {
+            @Override
+            public void onNext(CampaignDetailData campaignDetailData) {
+                if (campaignDetailView != null) {
+                    if (campaignDetailData != null) {
+                        campaignDetailView.setCampaignDetail(campaignDetailData.getCampaign());
+                    } else {
+                        campaignDetailView.setCampaignDetail(null);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                campaignDetailView.setCampaignDetail(null);
+            }
+        }, id);
+    }
+
+
+    @Override
     public void buyCampaign(String id, String couponId, float integral, String payType, String contactName,
                             String contactMobile, final PayInterface.PayListener listener) {
         if (campaignModel == null) {

@@ -33,6 +33,14 @@ public class DynamicModelImpl implements DynamicModel {
                 .subscribe(subscriber);
     }
 
+
+    @Override
+    public void getDynamicsFollow(Subscriber<DynamicsData> subscriber, int page) {
+        dynamicService.getDynamicsFollow(page)
+                .compose(RxHelper.<DynamicsData>transform())
+                .subscribe(subscriber);
+    }
+
     @Override
     public void getDynamicDetail(Subscriber<DynamicsSingleData> subscriber, String id) {
         dynamicService.getDynamicDetail(id)

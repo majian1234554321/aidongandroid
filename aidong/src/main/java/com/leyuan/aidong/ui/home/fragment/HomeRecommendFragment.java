@@ -32,6 +32,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.List;
 
@@ -65,10 +66,11 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            refreshLayout.setRefreshing(true);
 
+            refreshData();
         }
     };
+
     private HomeRecommendCourseAdapter courseAdapter;
     private HomeRecommendActivityAdapter activityAdapter;
     private CoachAttentionAdapter coachAdapter;
@@ -160,12 +162,18 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         }
 
 
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(selectCityReceiver);
+    private void refreshData() {
+        refreshLayout.setRefreshing(true);
+        homePresent.getRecommendList();
     }
 
     @Override
@@ -186,10 +194,13 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onGetData(HomeData homeData) {
+        refreshLayout.setRefreshing(false);
+        if(homeData == null) return;
 
         if (homeData.getCourse() != null && !homeData.getCourse().isEmpty()) {
             courseAdapter.setData(homeData.getCourse());
             llSelectionCourse.setVisibility(View.VISIBLE);
+
         } else {
             llSelectionCourse.setVisibility(View.GONE);
         }
@@ -209,4 +220,11 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         }
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(selectCityReceiver);
+    }
+
 }

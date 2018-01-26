@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class GoodsSkuBean {
 
-
     public String code;               //商品规格
     public List<String> value;        //['规格-1-值','规格-2-值'...]
     public String cover;              //图片封面

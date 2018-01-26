@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.PersonAttentionAdapter;
+import com.leyuan.aidong.entity.CampaignDetailBean;
+import com.leyuan.aidong.utils.GlideLoader;
 
 /**
  * Created by user on 2018/1/11.
@@ -67,6 +69,30 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     }
 
 
+    public void setData(CampaignDetailBean campaignDetailBean) {
+        txtTitle.setText(campaignDetailBean.getName());
+        txtAttentionNum.setText(campaignDetailBean.getViewCount()+"人已关注");
+        if(campaignDetailBean.getImage() != null && ! campaignDetailBean.getImage().isEmpty()){
+            GlideLoader.getInstance().displayImage(campaignDetailBean.getImage().get(0),imgCover);
+
+        }
+        txtIntro.setText(campaignDetailBean.getIntroduce());
+        txtPrice.setText("￥"+campaignDetailBean.getPrice()+"-" +campaignDetailBean.getMarket_price());
+        txtTime.setText(campaignDetailBean.getStartTime()+"-"+campaignDetailBean.getEndTime());
+        txtCityAddress.setText(campaignDetailBean.getLandmark());
+        txtLocationDetail.setText(campaignDetailBean.getAddress());
+        if(campaignDetailBean.getApplicant() != null && !campaignDetailBean.getApplicant().isEmpty()){
+            layoutAttention.setVisibility(VISIBLE);
+            txtCheckAll.setText(campaignDetailBean.applied_count+"人已报名");
+            adapterAttentionPerson.setData(campaignDetailBean.getApplicant());
+        }else {
+            layoutAttention.setVisibility(GONE);
+        }
+
+
+    }
+
+
     private void initAttentionPerson(View view) {
         layoutAttention = (RelativeLayout) view.findViewById(R.id.layout_attention);
         rvAttention = (RecyclerView) view.findViewById(R.id.rv_attention);
@@ -83,17 +109,12 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_attention:
-                //TODO implement
+
                 break;
             case R.id.txt_check_detail:
-                //TODO implement
+
                 break;
         }
     }
 
-
-    public void setData() {
-
-
-    }
 }

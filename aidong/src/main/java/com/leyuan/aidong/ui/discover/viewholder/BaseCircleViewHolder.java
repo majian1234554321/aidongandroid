@@ -18,6 +18,8 @@ import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.discover.activity.CMDMessageActivity;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.Utils;
@@ -34,6 +36,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private final FrameLayout layoutCmdMessage;
     private final ImageView imgCMDAvatar;
     private final TextView txtCmdMessageNum;
+    private final LinearLayout layout_difficulty_star;
     protected Context context;
     private LinearLayout root;
     private ImageView ivAvatar;
@@ -56,6 +59,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     protected IDynamicCallback callback;
     private boolean showCommentLayout = true;
     private boolean showFollowButton = false;
+    private ArrayList<ImageView> starList = new ArrayList<>();
 
     public BaseCircleViewHolder(Context context, ViewGroup parent, int layoutResId) {
         super(context, parent, layoutResId);
@@ -79,9 +83,18 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         txtDesc = (TextView) itemView.findViewById(R.id.txt_desc);
         txtTime = (TextView) itemView.findViewById(R.id.txt_time);
 
+        layout_difficulty_star = (LinearLayout) itemView.findViewById(R.id.layout_difficulty_star);
+        starList.add((ImageView) itemView.findViewById(R.id.img_star_first));
+        starList.add((ImageView) itemView.findViewById(R.id.img_star_second));
+        starList.add((ImageView) itemView.findViewById(R.id.img_star_three));
+        starList.add((ImageView) itemView.findViewById(R.id.img_star_four));
+        starList.add((ImageView) itemView.findViewById(R.id.img_star_five));
+
         txtLocation = (TextView) itemView.findViewById(R.id.txt_location);
         txtParse = (TextView) itemView.findViewById(R.id.txt_parse);
         txtComment = (TextView) itemView.findViewById(R.id.txt_comment);
+
+
     }
 
 
@@ -123,7 +136,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         }
 
-
         onBindDataToChildView(dynamic, position, dynamic.getDynamicType());
 
         root.setOnClickListener(new View.OnClickListener() {
@@ -153,8 +165,61 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         });
 
+        //关联的课程活动圈子
+        if(dynamic.related != null){
+            layoutCourseOrActivity.setVisibility(View.VISIBLE);
+            GlideLoader.getInstance().displayImage(dynamic.related.extras.cover,imgCover);
+            txtTitle.setText(dynamic.related.extras.name);
 
+            if(Constant.COURSE.equals(dynamic.related.type)){
+                //类型是课程
 
+                txtTime.setVisibility(View.GONE);
+                layout_difficulty_star.setVisibility(View.VISIBLE);
+                txtDesc.setText(dynamic.related.extras.getTagString());
+                for (int i = 0; i < 5; i++) {
+                    if (i < FormatUtil.parseDouble(dynamic.related.extras.hard_degree)) {
+                        starList.get(i).setVisibility(View.VISIBLE);
+                    } else {
+                        starList.get(i).setVisibility(View.GONE);
+                    }
+                }
+
+            }else{
+                txtTime.setVisibility(View.VISIBLE);
+                layout_difficulty_star.setVisibility(View.GONE);
+
+                txtDesc.setText(dynamic.related.extras.landmark);
+                txtTime.setText(dynamic.related.extras.start);
+            }
+
+        }else {
+            layoutCourseOrActivity.setVisibility(View.GONE);
+        }
+        //位置，赞，评论
+        if(dynamic.postion !=null){
+            txtLocation.setText(dynamic.postion.p_name);
+        }
+
+        txtParse.setText(String.valueOf(dynamic.like.counter));
+        txtComment.setText(String.valueOf(dynamic.comment.count));
+        txtParse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callback != null) {
+                    callback.onLikeClick(position, dynamic.id, isLike(dynamic));
+                }
+            }
+        });
+
+        txtComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callback != null) {
+                    callback.onCommentClick(dynamic, position);
+                }
+            }
+        });
     }
 
     public void setCallback(IDynamicCallback callback) {

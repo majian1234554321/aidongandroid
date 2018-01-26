@@ -98,8 +98,42 @@ public class DynamicPresentImpl implements DynamicPresent {
     }
 
     @Override
+    public void commonLoadDataFollow(final SwitcherLayout switcherLayout) {
+        dynamicModel.getDynamicsFollow(new CommonSubscriber<DynamicsData>(context, switcherLayout) {
+            @Override
+            public void onNext(DynamicsData dynamicsData) {
+                if (dynamicsData != null) {
+                    dynamicBeanList = dynamicsData.getDynamic();
+                }
+                if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
+                    switcherLayout.showContentLayout();
+                    sportCircleFragmentView.updateRecyclerView(dynamicBeanList);
+                } else {
+                    switcherLayout.showEmptyLayout();
+                }
+            }
+        }, Constant.PAGE_FIRST);
+    }
+
+
+    @Override
     public void pullToRefreshData() {
         dynamicModel.getDynamics(new RefreshSubscriber<DynamicsData>(context) {
+            @Override
+            public void onNext(DynamicsData dynamicsData) {
+                if (dynamicsData != null) {
+                    dynamicBeanList = dynamicsData.getDynamic();
+                }
+                if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
+                    sportCircleFragmentView.updateRecyclerView(dynamicBeanList);
+                }
+            }
+        }, Constant.PAGE_FIRST);
+    }
+
+    @Override
+    public void pullToRefreshDataFollow() {
+        dynamicModel.getDynamicsFollow(new RefreshSubscriber<DynamicsData>(context) {
             @Override
             public void onNext(DynamicsData dynamicsData) {
                 if (dynamicsData != null) {

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
+import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.UiManager;
 
 import java.util.ArrayList;
@@ -38,6 +40,26 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        CourseBeanNew courseBean = course.get(position);
+        GlideLoader.getInstance().displayImage(courseBean.getCover(),holder.imgCoach);
+        holder.txtCourseName.setText(courseBean.getName());
+        holder.txtAttentionNum.setText(courseBean.getFollows_count()+"人关注");
+        holder.txtCourseDesc.setText(courseBean.getTagString()  );
+
+        for (int i = 0; i < 5; i++) {
+            if (i < FormatUtil.parseDouble(courseBean.getHard_degree())) {
+                holder.starList.get(i).setVisibility(View.VISIBLE);
+            } else {
+                holder.starList.get(i).setVisibility(View.GONE);
+            }
+        }
+        if(courseBean.isFollowed()){
+            holder.btAttention.setImageResource(R.drawable.icon_attented);
+        }else {
+            holder.btAttention.setImageResource(R.drawable.icon_attention);
+        }
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,11 +70,9 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 
     @Override
     public int getItemCount() {
-//        if(course == null)
-//            return 0;
-//        return course.size();
-
-        return 6;
+        if(course == null)
+            return 0;
+        return course.size();
     }
 
     public void setData(ArrayList<CourseBeanNew> course) {
@@ -68,12 +88,9 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
         private TextView txtAttentionNum;
         private TextView txtCourseDesc;
         private TextView txtCourseDifficulty;
-        private ImageView imgStarFirst;
-        private ImageView imgStarSecond;
-        private ImageView imgStarThree;
-        private ImageView imgStarFour;
-        private ImageView imgStarFive;
         private ImageButton btAttention;
+
+        private ArrayList<ImageView> starList = new ArrayList<>();
 
         public ViewHolder(View view) {
             super(view);
@@ -83,12 +100,13 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
             txtAttentionNum = (TextView) view.findViewById(R.id.txt_attention_num);
             txtCourseDesc = (TextView) view.findViewById(R.id.txt_course_desc);
             txtCourseDifficulty = (TextView) view.findViewById(R.id.txt_course_difficulty);
-            imgStarFirst = (ImageView) view.findViewById(R.id.img_star_first);
-            imgStarSecond = (ImageView) view.findViewById(R.id.img_star_second);
-            imgStarThree = (ImageView) view.findViewById(R.id.img_star_three);
-            imgStarFour = (ImageView) view.findViewById(R.id.img_star_four);
-            imgStarFive = (ImageView) view.findViewById(R.id.img_star_five);
             btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
+
+            starList.add((ImageView) view.findViewById(R.id.img_star_first));
+            starList.add((ImageView) view.findViewById(R.id.img_star_second));
+            starList.add((ImageView) view.findViewById(R.id.img_star_three));
+            starList.add((ImageView) view.findViewById(R.id.img_star_four));
+            starList.add((ImageView) view.findViewById(R.id.img_star_five));
         }
     }
 }

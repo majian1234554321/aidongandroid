@@ -49,6 +49,10 @@ public class CourseBeanNew implements Parcelable {
     String seatChoosed;
     int queue_number;//排队位置
 
+    boolean followed;
+    int follows_count;
+    String hard_degree;
+
     private StringBuffer tagString = new StringBuffer();
 
     public StringBuffer getTagString() {
@@ -314,6 +318,18 @@ public class CourseBeanNew implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public boolean isFollowed() {
+        return followed;
+    }
+
+    public int getFollows_count() {
+        return follows_count;
+    }
+
+    public String getHard_degree() {
+        return hard_degree;
     }
 
     @Override

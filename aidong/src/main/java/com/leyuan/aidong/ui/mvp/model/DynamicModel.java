@@ -21,6 +21,8 @@ public interface DynamicModel {
     void getDynamics(Subscriber<DynamicsData> subscriber, int page);
 
 
+    void getDynamicsFollow(Subscriber<DynamicsData> subscriber, int page);
+
     void getDynamicDetail(Subscriber<DynamicsSingleData> subscriber, String id);
 
     /**

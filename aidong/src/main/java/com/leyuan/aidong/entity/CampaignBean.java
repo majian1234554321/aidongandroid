@@ -12,6 +12,7 @@ public class CampaignBean {
     private String landmark;
     private String view_count;
 
+
     private String type;
     private String image;
     private String begin_date;

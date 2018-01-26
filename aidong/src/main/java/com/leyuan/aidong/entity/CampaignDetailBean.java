@@ -33,6 +33,16 @@ public class CampaignDetailBean implements Parcelable {
 
     private String created_at;              //订单生成时间
 
+    public String simple_intro;//文字介绍
+    public int applied_count;// 已报名人数,
+    public String skucode;//选中的规格的skucode
+    public String amount;//选择的数量
+    public String skuPrice;
+
+    public GoodsSpecBean spec;//规格
+
+
+
     public String getViewCount() {
         return view_count;
     }
@@ -243,6 +253,11 @@ public class CampaignDetailBean implements Parcelable {
         dest.writeParcelable(this.coordinate, flags);
         dest.writeString(this.view_count);
         dest.writeString(this.created_at);
+        dest.writeString(this.simple_intro);
+        dest.writeInt(this.applied_count);
+        dest.writeString(this.skucode);
+        dest.writeString(this.amount);
+        dest.writeString(this.skuPrice);
     }
 
     public CampaignDetailBean() {
@@ -268,6 +283,11 @@ public class CampaignDetailBean implements Parcelable {
         this.coordinate = in.readParcelable(CoordinateBean.class.getClassLoader());
         this.view_count = in.readString();
         this.created_at = in.readString();
+        this.simple_intro = in.readString();
+        this.applied_count = in.readInt();
+        this.skucode = in.readString();
+        this.amount = in.readString();
+        this.skuPrice = in.readString();
     }
 
     public static final Creator<CampaignDetailBean> CREATOR = new Creator<CampaignDetailBean>() {

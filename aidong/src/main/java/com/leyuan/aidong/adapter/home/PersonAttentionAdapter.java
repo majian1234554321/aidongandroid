@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Utils;
+
+import java.util.List;
 
 /**
  * Created by user on 2018/1/4.
@@ -18,6 +22,7 @@ public class PersonAttentionAdapter extends RecyclerView.Adapter<PersonAttention
 
 
     private final Context context;
+    private List<UserBean> users;
 
     public PersonAttentionAdapter(Context context) {
         this.context = context;
@@ -37,23 +42,36 @@ public class PersonAttentionAdapter extends RecyclerView.Adapter<PersonAttention
             fp.leftMargin = Utils.dip2px(context,15);
             holder.itemView.setLayoutParams(fp);
         }
+
+        final UserBean userBean = users.get(position);
+        GlideLoader.getInstance().displayImage(userBean.getAvatar(),holder.imgAvatar);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.start(context,userBean.getId());
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return 11;
+        if(users == null) return 0;
+        return users.size();
+    }
+
+    public void setData(List<UserBean> applicant) {
+        this.users = applicant;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgAvatar;
-        private TextView txtName, txt_attention_num;
 
         public ViewHolder(View view) {
             super(view);
             imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
-            txtName = (TextView) view.findViewById(R.id.txt_name);
-            txt_attention_num = (TextView) view.findViewById(R.id.txt_attention_num);
         }
     }
 }

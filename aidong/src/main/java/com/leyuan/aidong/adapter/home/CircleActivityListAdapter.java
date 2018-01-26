@@ -9,14 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
-import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.utils.GlideLoader;
+
+import java.util.List;
 
 /**
  * Created by user on 2018/1/5.
  */
 public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivityListAdapter.ViewHolder> {
     private final Context context;
+    private List<CampaignBean> data;
 
     public CircleActivityListAdapter(Context context) {
         this.context = context;
@@ -30,17 +34,28 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final CampaignBean bean = data.get(position);
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.imgCover);
+        holder.txtName.setText(bean.getName());
+        holder.txtTime.setText(bean.getLandmark()+" "+ bean.getStart());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UiManager.activityJump(context, ActivityCircleDetailActivity.class);
+                ActivityCircleDetailActivity.start(context,bean.getId());
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        if (data == null)
+            return 0;
+        return data.size();
+    }
+
+    public void setData(List<CampaignBean> data) {
+        this.data = data;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

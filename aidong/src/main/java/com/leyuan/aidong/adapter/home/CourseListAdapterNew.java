@@ -71,35 +71,6 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
             }
         }
 
-//        resetStart(holder);
-//
-//        switch (courseBean.getStrength()){
-//            case "5":
-//                resetStart(holder);
-//                break;
-//            case "4":
-//                holder.img_star_five.setVisibility(View.GONE);
-//
-//                break;
-//            case "3:":
-//
-//                holder.img_star_five.setVisibility(View.GONE);
-//                holder.img_star_four.setVisibility(View.GONE);
-//                break;
-//
-//            case "2":
-//                holder.img_star_five.setVisibility(View.GONE);
-//                holder.img_star_four.setVisibility(View.GONE);
-//                holder.img_star_three.setVisibility(View.GONE);
-//
-//                break;
-//            case "1":
-//                holder.img_star_five.setVisibility(View.GONE);
-//                holder.img_star_four.setVisibility(View.GONE);
-//                holder.img_star_three.setVisibility(View.GONE);
-//                holder.img_star_second.setVisibility(View.GONE);
-//                break;
-//        }
 
         switch (courseBean.getStatus()) {
 

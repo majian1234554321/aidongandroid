@@ -41,6 +41,8 @@ public interface CampaignPresent {
      */
     void getCampaignDetail(SwitcherLayout switcherLayout,String id);
 
+    void getCampaignDetail(String id);
+
     /**
      * 购买活动
      * @param id 活动id

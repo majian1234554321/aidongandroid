@@ -35,8 +35,8 @@ import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
+import com.leyuan.aidong.ui.home.activity.CircleListActivity;
 import com.leyuan.aidong.ui.home.view.PersonHorizontalView;
-import com.leyuan.aidong.ui.mine.activity.MyAttentionListActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
@@ -133,8 +133,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
 
     @Override
     public void fetchData() {
-        // dynamicPresent.pullToRefreshData();
-        dynamicPresent.commonLoadData(switcherLayout);
+        dynamicPresent.commonLoadDataFollow(switcherLayout);
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -149,7 +148,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dynamicPresent.commonLoadData(switcherLayout);
+                dynamicPresent.commonLoadDataFollow(switcherLayout);
             }
         });
     }
@@ -175,7 +174,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         headView.setCheckAllClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                MyAttentionListActivity.start(3);
+                CircleListActivity.start(getActivity(),0);
             }
         });
         RecyclerViewUtils.setHeaderView(recyclerView,headView);
@@ -196,7 +195,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         currPage = 1;
         refreshLayout.setRefreshing(true);
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        dynamicPresent.pullToRefreshData();
+        dynamicPresent.pullToRefreshDataFollow();
     }
 
     @Override
@@ -352,7 +351,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_LOGIN) {
-                dynamicPresent.pullToRefreshData();
+                dynamicPresent.pullToRefreshDataFollow();
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
                 startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
                         .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);

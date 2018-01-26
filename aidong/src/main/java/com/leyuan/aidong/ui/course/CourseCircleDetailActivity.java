@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -52,6 +53,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.R.id.txt_share;
 import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
@@ -69,7 +71,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
 public class CourseCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener {
     //    private SwitcherLayout switcherLayout;
 //    private CustomRefreshLayout refreshLayout;
-    TextView txt_share_image, txt_share, txt_appoint_immediately;
+    TextView txt_share_image, txt_appoint_immediately;
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -81,6 +83,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
+    private ImageButton bt_share;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,11 +102,11 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
     private void initView() {
         txt_share_image = (TextView) findViewById(R.id.txt_share_image);
-        txt_share = (TextView) findViewById(R.id.txt_share);
+        bt_share = (ImageButton) findViewById(R.id.bt_share);
         txt_appoint_immediately = (TextView) findViewById(R.id.txt_appoint_immediately);
 
         txt_share_image.setOnClickListener(this);
-        txt_share.setOnClickListener(this);
+        bt_share.setOnClickListener(this);
         txt_appoint_immediately.setOnClickListener(this);
     }
 
@@ -178,7 +181,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                     startActivity(new Intent(this, LoginActivity.class));
                 }
                 break;
-            case R.id.txt_share:
+            case txt_share:
                 sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
                         "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
                 break;

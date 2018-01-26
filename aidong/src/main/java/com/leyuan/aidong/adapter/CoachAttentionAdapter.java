@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CoachBean;
 import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,12 @@ public class CoachAttentionAdapter extends RecyclerView.Adapter<CoachAttentionAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+        CoachBean coachBean = coachs.get(position);
+        GlideLoader.getInstance().displayRoundAvatarImage(coachBean.getAvatar(),holder.imgAvatar);
+        holder.txtName.setText(coachBean.getName());
+        holder.txt_attention_num.setText(coachBean.getFollow_count()+"人关注");
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,11 +53,14 @@ public class CoachAttentionAdapter extends RecyclerView.Adapter<CoachAttentionAd
 
     @Override
     public int getItemCount() {
-        return 9;
+        if(coachs == null)
+            return 0;
+        return coachs.size();
     }
 
     public void setData(ArrayList<CoachBean> coach) {
         this.coachs = coach;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

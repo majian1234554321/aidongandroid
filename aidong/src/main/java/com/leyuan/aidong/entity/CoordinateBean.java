@@ -8,8 +8,9 @@ import android.os.Parcelable;
  * Created by song on 2017/3/13.
  */
 public class CoordinateBean implements Parcelable {
-    private String lat;
-    private String lng;
+    public String lat;
+    public String lng;
+    public String p_name;
 
     public String getLat() {
         return lat;

@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.home.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -8,7 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -17,8 +20,10 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.GoodsSkuBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.model.UserCoach;
@@ -35,15 +40,18 @@ import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.home.view.ActivityCircleHeaderView;
-import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
+import com.leyuan.aidong.ui.home.view.ActivitySkuPopupWindow;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -53,6 +61,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.R.id.txt_share;
 import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
@@ -67,10 +76,12 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * Created by user on 2018/1/9.
  */
 
-public class ActivityCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener {
+public class ActivityCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener, CampaignDetailActivityView, ActivitySkuPopupWindow.SelectSkuListener {
     //    private SwitcherLayout switcherLayout;
 //    private CustomRefreshLayout refreshLayout;
-    TextView txt_share_image, txt_share, txt_appoint_immediately;
+    TextView txt_share_image, txt_appoint_immediately;
+    CommonTitleLayout layout_title;
+    RelativeLayout rootLayout;
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -82,11 +93,17 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
-    private GoodsSkuPopupWindow skuPopupWindow;
+    private ActivitySkuPopupWindow skuPopupWindow;
+    private CampaignPresentImpl campaignPresent;
+    private String id;
+    ActivityCircleHeaderView headView;
+    private CampaignDetailBean campaignDetailBean;
+    private String selectedCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        id = getIntent().getStringExtra("id");
 
         setContentView(R.layout.activity_activity_circle_details);
         dynamicPresent = new DynamicPresentImpl(this, this);
@@ -95,16 +112,20 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         initRecyclerView();
         sharePopupWindow = new SharePopupWindow(this);
 //        dynamicPresent.commonLoadData(switcherLayout);
+        campaignPresent = new CampaignPresentImpl(this, this);
+        campaignPresent.getCampaignDetail(id);
         dynamicPresent.pullToRefreshData();
+
+
     }
 
     private void initView() {
+        rootLayout = (RelativeLayout) findViewById(R.id.root);
+        layout_title = (CommonTitleLayout) findViewById(R.id.layout_title);
         txt_share_image = (TextView) findViewById(R.id.txt_share_image);
-        txt_share = (TextView) findViewById(R.id.txt_share);
         txt_appoint_immediately = (TextView) findViewById(R.id.txt_appoint_immediately);
 
         txt_share_image.setOnClickListener(this);
-        txt_share.setOnClickListener(this);
         txt_appoint_immediately.setOnClickListener(this);
     }
 
@@ -141,7 +162,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         recyclerView.addOnScrollListener(onScrollListener);
 
         //重点
-        ActivityCircleHeaderView headView = new ActivityCircleHeaderView(this);
+        headView = new ActivityCircleHeaderView(this);
         RecyclerViewUtils.setHeaderView(recyclerView, headView);
     }
 
@@ -197,13 +218,25 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
                 }
                 break;
-            case R.id.txt_share:
+            case txt_share:
                 sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
                         "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
                 break;
             case R.id.txt_appoint_immediately:
-//                showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToBuy);
-                ConfirmOrderCourseActivity.start(this, null);
+
+                if (hasSku) {
+                    if (isSellOut) {
+                        showSkuPopupWindow(ActivitySkuPopupWindow.GoodsStatus.SellOut);
+                    } else {
+                        showSkuPopupWindow(ActivitySkuPopupWindow.GoodsStatus.ConfirmToBuy);
+                    }
+                }else{
+                    //直接到订单界面
+
+                }
+
+
+//                ConfirmOrderCourseActivity.start(this, null);
                 break;
         }
     }
@@ -219,19 +252,59 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
     }
 
-    private List<String> selectedSkuValues = new ArrayList<>();
 
-    private void showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus status) {
-        //if(skuPopupWindow == null){
-//        String recommendId = "";
-//        if (TextUtils.isEmpty(recommendId)) {
-//            recommendId = null;
-//        }
-//        selectedSkuValues.add("1");
-//        skuPopupWindow = new GoodsSkuPopupWindow(this, new GoodsDetailBean(), status, selectedSkuValues, selectedCount,
-//                recommendId, goodsType);
-//        skuPopupWindow.setSelectSkuListener(this);
-//        skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
+    @Override
+    public void setCampaignDetail(CampaignDetailBean campaignBean) {
+        this.campaignDetailBean = campaignBean;
+        if (campaignBean == null) {
+            //空白布局
+        } else {
+            headView.setData(campaignBean);
+            if (campaignBean.spec != null) {
+                //如果有规格可选
+                for (GoodsSkuBean goodsSkuBean : campaignBean.spec.item) {
+                    if (goodsSkuBean.getStock() != 0) {
+                        isSellOut = false;
+                        break;
+                    }
+                }
+                for (GoodsSkuBean goodsSkuBean : campaignBean.spec.item) {
+                    if (goodsSkuBean.value != null && !goodsSkuBean.value.isEmpty()) {
+                        hasSku = true;
+                        break;
+                    }
+                }
+
+
+            }
+
+        }
+    }
+
+    private List<String> selectedSkuValues = new ArrayList<>();
+    private boolean isSellOut = true;   //是否售罄
+    private boolean hasSku = false;     //该商品是否配置规格
+
+    private void showSkuPopupWindow(ActivitySkuPopupWindow.GoodsStatus status) {
+        skuPopupWindow = new ActivitySkuPopupWindow(this, campaignDetailBean, campaignDetailBean.spec, status, selectedSkuValues, selectedCount,
+                null);
+        skuPopupWindow.setSelectSkuListener(this);
+        skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
+    }
+
+    private boolean isAllSkuConfirm() {
+        return this.selectedSkuValues.size() == campaignDetailBean.spec.name.size();
+    }
+
+    @Override
+    public void onSelectSkuChanged(List<String> selectedSkuValues, String skuTip, String selectedCount, int stock, double price) {
+        if (isSellOut) {
+            return;
+        }
+        this.selectedCount = selectedCount;
+        if (selectedSkuValues != null) {
+            this.selectedSkuValues = selectedSkuValues;
+        }
     }
 
     @Override
@@ -291,15 +364,15 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 dynamicList.add(clickPosition, dynamicBean);
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
+            } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
+                PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                        Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+
             }
         } else if (resultCode == RESULT_DELETE) {
             dynamicList.remove(clickPosition);
             circleDynamicAdapter.updateData(dynamicList);
             circleDynamicAdapter.notifyDataSetChanged();
-        } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
-            PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
-                    Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
-
         }
     }
 
@@ -308,10 +381,17 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         sharePopupWindow.release();
+    }
+
+    public static void start(Context context, String id) {
+        Intent intent = new Intent(context, ActivityCircleDetailActivity.class);
+        intent.putExtra("id", id);
+        context.startActivity(intent);
     }
 
 

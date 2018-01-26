@@ -11,7 +11,13 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 public interface DynamicPresent {
 
     void commonLoadData(SwitcherLayout switcherLayout);
+
+    void commonLoadDataFollow(SwitcherLayout switcherLayout);
+
     void pullToRefreshData();
+
+    void pullToRefreshDataFollow();
+
     void requestMoreData(RecyclerView recyclerView, int size, int page);
 
     void getDynamicDetail(String id);

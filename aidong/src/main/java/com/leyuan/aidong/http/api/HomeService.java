@@ -17,10 +17,11 @@ import rx.Observable;
  */
 public interface HomeService {
 
-    @GET("home")
+//    @GET("home")
+    @GET("market_home")
     Observable<BaseBean<HomeDataOld>> getRecommendList(@Query("page") int page, @Query("list") String list);
 
-    @GET("home/{id}")
+    @GET("market_home/{id}")
     Observable<BaseBean<BrandData>> getTypeDetail(@Path("id") String id, @Query("page") int page);
 
 

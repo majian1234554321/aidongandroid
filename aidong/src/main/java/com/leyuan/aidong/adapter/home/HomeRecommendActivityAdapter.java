@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
-import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 
@@ -34,17 +34,29 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiManager.activityJump(context, ActivityCircleDetailActivity.class);
-            }
-        });
+        final CampaignBean campaignBean = campaigns.get(position);
+        if(campaignBean != null){
+            GlideLoader.getInstance().displayImage(campaignBean.getCover(),holder.imgCover);
+            holder.txtType.setText("【" +campaignBean.getType()+"】");
+            holder.txtType.setText(campaignBean.getBegin_date());
+            holder.txtName.setText(campaignBean.getName());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityCircleDetailActivity.start(context,campaignBean.getId());
+//                UiManager.activityJump(context, ActivityCircleDetailActivity.class);
+                }
+            });
+        }
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        if(campaigns == null)
+            return 0;
+        return campaigns.size();
     }
 
     public void setData(ArrayList<CampaignBean> campaign) {

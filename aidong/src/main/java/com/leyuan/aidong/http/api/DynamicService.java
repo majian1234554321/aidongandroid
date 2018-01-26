@@ -22,11 +22,16 @@ import rx.Observable;
  */
 public interface DynamicService {
 
+
     @GET("dynamics/{id}")
     Observable<BaseBean<DynamicsSingleData>> getDynamicDetail(@Path("id") String id);
 
     @GET("dynamics")
     Observable<BaseBean<DynamicsData>> getDynamics(@Query("page") int page);
+
+    @GET("follow_home")
+    Observable<BaseBean<DynamicsData>> getDynamicsFollow(@Query("page") int page);
+
 
     @FormUrlEncoded
     @POST("dynamics")
