@@ -18,7 +18,6 @@ import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.ParcelBean;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
-import com.leyuan.aidong.utils.NoDoubleClickListener;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 
@@ -58,7 +57,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
 
     @Override
     public OrderHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_order,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_order, parent, false);
         return new OrderHolder(view);
     }
 
@@ -70,7 +69,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         int count = 0;
         ArrayList<GoodsBean> goodsList = new ArrayList<>();
         ArrayList<ParcelBean> parcel = bean.getParcel();
-        if(parcel != null && !parcel.isEmpty()){
+        if (parcel != null && !parcel.isEmpty()) {
             for (ParcelBean parcelBean : parcel) {
                 goodsList.addAll(parcelBean.getItem());
                 for (GoodsBean goodsBean : parcelBean.getItem()) {
@@ -81,10 +80,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         ConfirmOrderGoodsAdapter goodAdapter = new ConfirmOrderGoodsAdapter(context);
         holder.recyclerView.setAdapter(goodAdapter);
         goodAdapter.setData(goodsList);
-        holder.count.setText(String.format(context.getString(R.string.goods_count),count));
+        holder.count.setText(String.format(context.getString(R.string.goods_count), count));
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPayAmount())));
-        holder.tvOrderId.setText(String.format(context.getString(R.string.order_no),bean.getId()));
+        holder.tvOrderId.setText(String.format(context.getString(R.string.order_no), bean.getId()));
 
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
@@ -140,7 +139,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(orderListener != null){
+                if (orderListener != null) {
                     orderListener.onPayOrder(bean.getId());
                 }
             }
@@ -149,7 +148,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         goodAdapter.setListener(new ConfirmOrderGoodsAdapter.OnOrderItemClickListener() {
             @Override
             public void onItemClick() {
-                if(orderListener != null){
+                if (orderListener != null) {
                     orderListener.onPayOrder(bean.getId());
                 }
             }
@@ -158,7 +157,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         holder.recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(orderListener != null){
+                if (orderListener != null) {
                     orderListener.onPayOrder(bean.getId());
                 }
             }
@@ -167,7 +166,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         holder.tvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(orderListener != null){
+                if (orderListener != null) {
                     orderListener.onPayOrder(bean.getId());
                 }
             }
@@ -176,7 +175,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         holder.tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(orderListener != null){
+                if (orderListener != null) {
                     orderListener.onCancelOrder(bean.getId());
                 }
             }
@@ -185,45 +184,67 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         holder.tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(orderListener != null){
+                if (orderListener != null) {
 
                     orderListener.onConfirmOrder(bean.getId());
                 }
             }
         });
 
-        holder.tvReBuy.setOnClickListener(new NoDoubleClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
-                if(orderListener != null){
-                    if(bean.is_food()){
-                        ToastGlobal.showLongConsecutive(R.string.can_not_rebuy);
-                    }else{
-                        orderListener.onReBuyOrder(bean.getId());
+        holder.tvReBuy.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (orderListener != null) {
+                            if (bean.is_food() || bean.is_virtual()) {
+                                ToastGlobal.showShortConsecutive(R.string.can_not_rebuy);
+                            } else {
+                                orderListener.onReBuyOrder(bean.getId());
+                            }
+
+                        }
                     }
+                });
+//        new View.OnClickListener() {
+//            @Override
+//            protected void onNoDoubleClick(View v) {
+//                if(orderListener != null){
+//                    if(bean.is_food() || bean.is_virtual()){
+//                        ToastGlobal.showLongConsecutive(R.string.can_not_rebuy);
+//                    }else{
+//                        orderListener.onReBuyOrder(bean.getId());
+//                    }
+//
+//                }
+//            }
+//        }
 
-                }
-            }
-        });
 
+        holder.tvDelete.setOnClickListener(new View.OnClickListener()
 
-        holder.tvDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(orderListener != null){
-                    orderListener.onDeleteOrder(bean.getId());
-                }
-            }
-        });
+                                           {
+                                               @Override
+                                               public void onClick(View v) {
+                                                   if (orderListener != null) {
+                                                       orderListener.onDeleteOrder(bean.getId());
+                                                   }
+                                               }
+                                           }
 
-        holder.timer.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
-            @Override
-            public void onEnd(CountdownView cv) {
-                if(orderListener != null){
-                    orderListener.onCountdownEnd(position);
-                }
-            }
-        });
+        );
+
+        holder.timer.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener()
+
+                                               {
+                                                   @Override
+                                                   public void onEnd(CountdownView cv) {
+                                                       if (orderListener != null) {
+                                                           orderListener.onCountdownEnd(position);
+                                                       }
+                                                   }
+                                               }
+
+        );
     }
 
     class OrderHolder extends RecyclerView.ViewHolder {
@@ -265,12 +286,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         this.orderListener = orderListener;
     }
 
-    public interface OrderListener{
+    public interface OrderListener {
         void onPayOrder(String id);
+
         void onCancelOrder(String id);
+
         void onDeleteOrder(String id);
+
         void onConfirmOrder(String id);
+
         void onReBuyOrder(String id);
+
         void onCountdownEnd(int position);
     }
 }

@@ -5,16 +5,19 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.data.FollowCampaignData;
+import com.leyuan.aidong.entity.data.FollowCourseData;
 import com.leyuan.aidong.entity.data.FollowData;
+import com.leyuan.aidong.entity.data.FollowUserData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
-import com.leyuan.aidong.ui.mvp.model.FollowModel;
 import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.view.AppointmentUserActivityView;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
+import com.leyuan.aidong.ui.mvp.view.UserInfoView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.SystemInfoUtils;
@@ -29,11 +32,12 @@ import java.util.List;
  */
 public class FollowPresentImpl implements FollowPresent {
     private Context context;
-    private FollowModel followModel;
+    private FollowModelImpl followModel;
     private FollowFragmentView followFragment;
     private List<UserBean> userBeanList = new ArrayList<>();
     private AppointmentUserActivityView appointmentUserActivityView;
     private RequestResponseCount requestResponse;
+    private UserInfoView userInfoView;
 
     public FollowPresentImpl(Context context) {
         this.context = context;
@@ -53,16 +57,78 @@ public class FollowPresentImpl implements FollowPresent {
     }
 
 
+    public void getUserFollow(String type, int page) {
+        followModel.getUserFollow(new ProgressSubscriber<FollowUserData>(context) {
+            @Override
+            public void onNext(FollowUserData followUserData) {
+                if (userInfoView != null) {
+                    userInfoView.onGetUserData(followUserData.getFollowings());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+        }, type, page);
+    }
+
+    public void getCampaignFollow(int page) {
+        followModel.getCampaignFollow(new ProgressSubscriber<FollowCampaignData>(context) {
+            @Override
+            public void onNext(FollowCampaignData followUserData) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+        }, page);
+    }
+
+    public void getCourseFollow(int page) {
+        followModel.getCourseFollow(new ProgressSubscriber<FollowCourseData>(context) {
+            @Override
+            public void onNext(FollowCourseData followUserData) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+        }, page);
+    }
+
+
+    public void getRecommendCoachList( int page) {
+        followModel.getRecommendCoachList(new ProgressSubscriber<FollowUserData>(context) {
+            @Override
+            public void onNext(FollowUserData followUserData) {
+                if (userInfoView != null) {
+                    userInfoView.onGetUserData(followUserData.getFollowings());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+        }, page);
+    }
+
+
     @Override
     public void getFollowList() {
         followModel.getFollow(new RefreshSubscriber<FollowData>(context) {
             @Override
             public void onNext(FollowData followData) {
-                if(followData != null ){
+                if (followData != null) {
                     Constant.followData = followData;
-                    SystemInfoUtils.putSystemInfoBean(context,followData,SystemInfoUtils.KEY_FOLLOW);
+                    SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
                 }
-                if(requestResponse != null){
+                if (requestResponse != null) {
                     requestResponse.onRequestResponse();
                 }
 
@@ -72,33 +138,33 @@ public class FollowPresentImpl implements FollowPresent {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                if(requestResponse != null){
+                if (requestResponse != null) {
                     requestResponse.onRequestResponse();
                 }
             }
-        },"followings",Constant.PAGE_FIRST);
+        }, "followings", Constant.PAGE_FIRST);
     }
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, final String type) {
-        followModel.getFollow(new CommonSubscriber<FollowData>(context,switcherLayout) {
+        followModel.getFollow(new CommonSubscriber<FollowData>(context, switcherLayout) {
             @Override
             public void onNext(FollowData followData) {
-                if(followData != null && !followData.getFollow().isEmpty()){
+                if (followData != null && !followData.getFollow().isEmpty()) {
                     userBeanList = followData.getFollow();
                 }
-                if(userBeanList != null && !userBeanList.isEmpty()){
-                    if("followings".equals(type)) {
+                if (userBeanList != null && !userBeanList.isEmpty()) {
+                    if ("followings".equals(type)) {
                         Constant.followData = followData;
                         SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
                     }
                     switcherLayout.showContentLayout();
                     followFragment.onRefreshData(userBeanList);
-                }else {
+                } else {
                     followFragment.showEmptyView();
                 }
             }
-        },type,Constant.PAGE_FIRST);
+        }, type, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -106,35 +172,35 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.getFollow(new RefreshSubscriber<FollowData>(context) {
             @Override
             public void onNext(FollowData followData) {
-                if(followData != null && !followData.getFollow().isEmpty()){
-                    if("followings".equals(type)) {
+                if (followData != null && !followData.getFollow().isEmpty()) {
+                    if ("followings".equals(type)) {
                         Constant.followData = followData;
                         SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
                     }
                     followFragment.onRefreshData(followData.getFollow());
                 }
             }
-        },type,Constant.PAGE_FIRST);
+        }, type, Constant.PAGE_FIRST);
     }
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, String type, int page) {
-        followModel.getFollow(new RequestMoreSubscriber<FollowData>(context,recyclerView,pageSize) {
+        followModel.getFollow(new RequestMoreSubscriber<FollowData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(FollowData followData) {
-                if(followData != null){
+                if (followData != null) {
                     userBeanList = followData.getFollow();
                 }
-                if(!userBeanList.isEmpty()){
+                if (!userBeanList.isEmpty()) {
                     followFragment.onLoadMoreData(userBeanList);
                 }
                 //没有更多数据了显示到底提示
-                if( userBeanList.size() < pageSize){
+                if (userBeanList.size() < pageSize) {
                     followFragment.showEndFooterView();
 
                 }
             }
-        },type,page);
+        }, type, page);
     }
 
     @Override
@@ -142,14 +208,14 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-               if(appointmentUserActivityView != null){
-                   appointmentUserActivityView.addFollowResult(baseBean);
-               }
-                if(followFragment != null) {
+                if (appointmentUserActivityView != null) {
+                    appointmentUserActivityView.addFollowResult(baseBean);
+                }
+                if (followFragment != null) {
                     followFragment.addFollowResult(baseBean);
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
@@ -157,17 +223,21 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(appointmentUserActivityView != null){
+                if (appointmentUserActivityView != null) {
                     appointmentUserActivityView.cancelFollowResult(baseBean);
                 }
-                if(followFragment != null) {
+                if (followFragment != null) {
                     followFragment.cancelFollowResult(baseBean);
                 }
             }
-        },id);
+        }, id);
     }
 
     public void setOnRequestResponse(RequestResponseCount requestResponse) {
         this.requestResponse = requestResponse;
+    }
+
+    public void setUserViewListener(UserInfoView userInfoView) {
+        this.userInfoView = userInfoView;
     }
 }

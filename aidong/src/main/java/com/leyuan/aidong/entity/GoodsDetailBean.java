@@ -55,13 +55,4 @@ public class GoodsDetailBean {
         this.goodsType =goodsType;
     }
 
-    @Deprecated
-    public void setDeliveryBeanByGoodsType(String goodsType) {
-//        if (TextUtils.equals(goodsType, Constant.GOODS_FOODS)){
-//            pick_up = new DeliveryBean();
-//            pick_up.setInfo(null);
-//            pick_up.setType(DELIVERY_EXPRESS);
-//            pick_up.setIs_send(true);
-//        }
-    }
 }

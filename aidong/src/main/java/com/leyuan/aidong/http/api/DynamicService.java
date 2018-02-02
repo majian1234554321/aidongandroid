@@ -1,11 +1,14 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.DynamicsSingleData;
 import com.leyuan.aidong.entity.data.LikeData;
+
+import java.util.ArrayList;
 
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -29,25 +32,33 @@ public interface DynamicService {
     @GET("dynamics")
     Observable<BaseBean<DynamicsData>> getDynamics(@Query("page") int page);
 
-    @GET("follow_home")
-    Observable<BaseBean<DynamicsData>> getDynamicsFollow(@Query("page") int page);
+    @GET("mine/following_dynamic")
+    Observable<BaseBean<ArrayList<DynamicBean>>> getDynamicsFollow(@Query("page") int page);
 
 
     @FormUrlEncoded
     @POST("dynamics")
     Observable<BaseBean<DiscoverData>> postImageDynamic(@Field("content") String content,
-                                                   @Field("image[]") String... image);
+                                                        @Field("type") String type,
+                                                        @Field("link_id") String link_id,
+                                                        @Field("position_name") String position_name,
+                                                        @Field("image[]") String... image
+
+    );
 
     @FormUrlEncoded
     @POST("dynamics")
     Observable<BaseBean<DiscoverData>> postVideoDynamic(@Field("content") String content,
-                                                   @Field("video") String video,
-                                                   @Field("qiniu") String qiniu,
-                                                   @Field("image[]") String... image);
+                                                        @Field("video") String video,
+                                                        @Field("qiniu") String qiniu,
+                                                        @Field("type") String type,
+                                                        @Field("link_id") String link_id,
+                                                        @Field("position_name") String position_name,
+                                                        @Field("image[]") String... image);
 
     @FormUrlEncoded
     @POST("dynamics/{id}/comments")
-    Observable<BaseBean> addComment(@Path("id") String id,@Field("content") String content);
+    Observable<BaseBean> addComment(@Path("id") String id, @Field("content") String content);
 
     @GET("dynamics/{id}/comments")
     Observable<BaseBean<CommentData>> getComments(@Path("id") String id, @Query("page") int page);
@@ -63,10 +74,11 @@ public interface DynamicService {
 
     @FormUrlEncoded
     @POST("dynamics/{id}/reports")
-    Observable<BaseBean> reportDynamic(@Path("id") String id,@Field("types") String type);
+    Observable<BaseBean> reportDynamic(@Path("id") String id, @Field("types") String type);
 
     @DELETE("dynamics/{id}")
     Observable<BaseBean> deleteDynamic(@Path("id") String id);
+
 
 }
 

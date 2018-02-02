@@ -46,6 +46,8 @@ import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
 
+import static com.leyuan.aidong.R.id.ll_express_info;
+import static com.leyuan.aidong.R.id.tv_delivery_time;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
@@ -158,7 +160,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         tvOrderNo = (TextView) findViewById(R.id.tv_order_no);
         timeLayout = (LinearLayout) findViewById(R.id.ll_timer);
         timer = (CountdownView) findViewById(R.id.timer);
-        expressInfoLayout = (LinearLayout) findViewById(R.id.ll_express_info);
+        expressInfoLayout = (LinearLayout) findViewById(ll_express_info);
         rlExpress = (RelativeLayout) findViewById(R.id.rl_express);
         tvExpressAddress = (TextView) findViewById(R.id.tv_express_address);
         tvExpressTime = (TextView) findViewById(R.id.tv_express_time);
@@ -172,7 +174,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
 //        rlQrCode = (RelativeLayout) findViewById(R.id.rl_qr_code);
 //        tvQrNum = (TextView) findViewById(R.id.tv_qr_num);
 //        ivCode = (ImageView) findViewById(R.id.iv_qr);
-        tvDeliveryTime = (ExtendTextView) findViewById(R.id.tv_delivery_time);
+        tvDeliveryTime = (ExtendTextView) findViewById(tv_delivery_time);
         selfDeliveryGoodsRecyclerView = (RecyclerView) findViewById(R.id.rv_self_delivery_goods);
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         tvExpressPrice = (ExtendTextView) findViewById(R.id.tv_express_price);
@@ -252,6 +254,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
             }
             for (GoodsBean goodsBean : parcelBean.getItem()) {
                 goodsCount += FormatUtil.parseInt(goodsBean.getAmount());
+                goodsBean.setIs_virtual(bean.is_virtual());
                 goodsList.add(goodsBean);
                 returnCount += goodsBean.getCan_return();
             }
@@ -352,6 +355,15 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 : bean.getStatus().equals(PAID) ? getString(R.string.paid)
                 : bean.getStatus().equals(FINISH) ? getString(R.string.order_finish)
                 : getString(R.string.order_close));
+
+        if(bean.is_virtual()){
+            expressInfoLayout.setVisibility(View.GONE);
+            findViewById(R.id.txt_self_delivery_info).setVisibility(View.GONE);
+            findViewById(R.id.line_black_self_delivery).setVisibility(View.GONE);
+            findViewById(R.id.tv_delivery_time).setVisibility(View.GONE);
+            selfDeliveryAdapter.setIsVirtual(bean.is_virtual());
+
+        }
     }
 
     @Override
@@ -396,7 +408,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 orderPresent.deleteOrder(orderId);
                 break;
             case R.id.tv_rebuy:
-                if (bean.is_food()) {
+                if (bean.is_food() || bean.is_virtual()) {
                     ToastGlobal.showLongConsecutive(R.string.can_not_rebuy);
                 } else {
                     orderPresent.reBuyOrder(orderId);

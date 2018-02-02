@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
-import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -37,8 +36,8 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
     private HomeRecommendCourseAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    private CoursePresent coursePresent;
-    private ArrayList<CourseBean> data = new ArrayList<>();
+    private CoursePresentImpl coursePresent;
+    private ArrayList<CourseBeanNew> data = new ArrayList<>();
 
 
     @Override
@@ -108,21 +107,21 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
 
 
     @Override
-    public void refreshRecyclerViewData(List<CourseBean> courseList) {
+    public void refreshRecyclerViewData(ArrayList<CourseBeanNew> courseList) {
         if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
         data.clear();
         data.addAll(courseList);
-        courseAdapter.setData(data);
+        adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
         switcherLayout.showContentLayout();
     }
 
     @Override
-    public void loadMoreRecyclerViewData(List<CourseBean> courseList) {
+    public void loadMoreRecyclerViewData(List<CourseBeanNew> courseList) {
         data.addAll(courseList);
-        courseAdapter.setData(data);
+        adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
 

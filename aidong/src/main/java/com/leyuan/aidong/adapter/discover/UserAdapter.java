@@ -61,7 +61,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     @Override
     public void onBindViewHolder(UserHolder holder, final int position) {
         final UserBean bean = data.get(position);
-        GlideLoader.getInstance().displayRoundAvatarImage(bean.getAvatar(), holder.cover);
+        GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.nickname.setText(bean.getName());
         holder.distance.setText(bean.getDistanceFormat());
 

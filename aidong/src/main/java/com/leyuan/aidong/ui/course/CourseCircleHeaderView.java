@@ -1,29 +1,43 @@
 package com.leyuan.aidong.ui.course;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.PersonHorizontalAdapter;
 import com.leyuan.aidong.adapter.home.PersonAttentionAdapter;
 import com.leyuan.aidong.adapter.video.DetailsRelativeViedeoAdapter;
+import com.leyuan.aidong.entity.course.CourseDetailBean;
 import com.leyuan.aidong.ui.course.activity.RelativeVideoListActivity;
+import com.leyuan.aidong.ui.home.activity.AppointmentUserActivity;
+import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.UiManager;
+
+import java.util.ArrayList;
+
+import static com.leyuan.aidong.R.id.img_coach;
+import static com.leyuan.aidong.R.id.img_live_begin_or_end;
+import static com.leyuan.aidong.R.id.txt_course_intro;
 
 /**
  * Created by user on 2018/1/11.
  */
-public class CourseCircleHeaderView extends RelativeLayout {
-
+public class CourseCircleHeaderView extends RelativeLayout implements View.OnClickListener {
 
     private RelativeLayout relTop;
     private ImageView imgBg;
@@ -32,7 +46,6 @@ public class CourseCircleHeaderView extends RelativeLayout {
     private TextView txtSuggestFrequency;
     private RelativeLayout layoutAttention;
     private RecyclerView rvAttention;
-    private TextView txtAttentionNum;
     private View incRelativeCoach;
     private LinearLayout llRelateCourseVideo;
     private TextView txtRelateCourseVideo;
@@ -40,6 +53,21 @@ public class CourseCircleHeaderView extends RelativeLayout {
     private RecyclerView rvRelateVideo;
     private LinearLayout llRelateDynamic;
     private TextView txtRelateDynamic;
+
+    private RelativeLayout rootView;
+    private TextView txtCourseName;
+    private TextView txtAttentionNum;
+    private TextView txtCourseDesc;
+    private TextView txtCourseDifficulty;
+    private ImageView imgStarFirst;
+    private ImageView imgStarSecond;
+    private ImageView imgStarThree;
+    private ImageView imgStarFour;
+    private ImageView imgStarFive;
+    private ImageView imageView6;
+    private ImageView imgCoach;
+    private ImageButton bt_attention;
+    private ArrayList<ImageView> starList = new ArrayList<>();
 
     private TextView txtRelativeCoach;
     private TextView txtChechAllCoach;
@@ -51,6 +79,8 @@ public class CourseCircleHeaderView extends RelativeLayout {
     private TextView txt_use_equipment;
     private TextView txt_target_population;
     private TextView txt_suggest_match_course;
+    private TextView txt_bt_attention_num;
+    private CourseDetailBean course;
 
     public CourseCircleHeaderView(Context context) {
         this(context, null, 0);
@@ -71,8 +101,26 @@ public class CourseCircleHeaderView extends RelativeLayout {
         this.context = context;
         relTop = (RelativeLayout) view.findViewById(R.id.rel_top);
         imgBg = (ImageView) view.findViewById(R.id.img_bg);
-        imgLiveBeginOrEnd = (ImageView) view.findViewById(R.id.img_live_begin_or_end);
-        txtCourseIntro = (TextView) view.findViewById(R.id.txt_course_intro);
+        imgLiveBeginOrEnd = (ImageView) view.findViewById(img_live_begin_or_end);
+
+        rootView = (RelativeLayout) view.findViewById(R.id.rootView);
+        txtCourseName = (TextView) view.findViewById(R.id.txt_course_name);
+        txtAttentionNum = (TextView) view.findViewById(R.id.txt_attention_num);
+        txt_bt_attention_num = (TextView) view.findViewById(R.id.txt_bt_attention_num);
+        txtCourseDesc = (TextView) view.findViewById(R.id.txt_course_desc);
+        txtCourseDifficulty = (TextView) view.findViewById(R.id.txt_course_difficulty);
+
+        starList.add((ImageView) view.findViewById(R.id.img_star_first));
+        starList.add((ImageView) view.findViewById(R.id.img_star_second));
+        starList.add((ImageView) view.findViewById(R.id.img_star_three));
+        starList.add((ImageView) view.findViewById(R.id.img_star_four));
+        starList.add((ImageView) view.findViewById(R.id.img_star_five));
+        bt_attention =  (ImageButton) view.findViewById(R.id.bt_attention);
+
+        imageView6 = (ImageView) view.findViewById(R.id.imageView6);
+        imgCoach = (ImageView) view.findViewById(img_coach);
+
+        txtCourseIntro = (TextView) view.findViewById(txt_course_intro);
         txtSuggestFrequency = (TextView) view.findViewById(R.id.txt_suggest_frequency);
         txt_use_equipment = (TextView) view.findViewById(R.id.txt_use_equipment);
         txt_target_population = (TextView) view.findViewById(R.id.txt_target_population);
@@ -82,9 +130,37 @@ public class CourseCircleHeaderView extends RelativeLayout {
         txtRelateDynamic = (TextView) view.findViewById(R.id.txt_relate_dynamic);
 
         initAttentionPerson(view);
-        initRelativeCoach(view);
+//        initRelativeCoach(view);
         initRelativeCourseVideo(view);
 
+        imgCoach.setVisibility(GONE);
+        imgLiveBeginOrEnd.setOnClickListener(this);
+        rootView.setOnClickListener(this);
+        txt_bt_attention_num.setOnClickListener(this);
+        view.findViewById(R.id.bt_attention).setOnClickListener(this);
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_live_begin_or_end:
+                Intent intent = new Intent(getContext(), PlayerActivity.class)
+                        .setData(Uri.parse(course.getId()))
+                        .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+                context.startActivity(intent);
+
+                break;
+            case R.id.rootView:
+                break;
+            case R.id.txt_bt_attention_num:
+
+                AppointmentUserActivity.start(context,course.getFollowers());
+                break;
+            case R.id.bt_attention:
+                break;
+        }
     }
 
     private void initAttentionPerson(View view) {
@@ -112,37 +188,67 @@ public class CourseCircleHeaderView extends RelativeLayout {
         relativeViedeoAdapter = new DetailsRelativeViedeoAdapter(context);
         rvRelateVideo.setAdapter(relativeViedeoAdapter);
         txtCheckAllVideo.setOnClickListener(new OnClickListener() {
-            @Override
             public void onClick(View v) {
-                UiManager.activityJump(context,RelativeVideoListActivity.class);
+                UiManager.activityJump(context, RelativeVideoListActivity.class);
             }
         });
 
     }
 
 
-    private void initRelativeCoach(View view) {
-        incRelativeCoach = view.findViewById(R.id.inc_relative_coach);
-        txtRelativeCoach = (TextView) view.findViewById(R.id.txt_left_title);
-        txtChechAllCoach = (TextView) view.findViewById(R.id.txt_check_all);
-        rvRelativeCoach = (RecyclerView) view.findViewById(R.id.recyclerView);
+//    private void initRelativeCoach(View view) {
+//        incRelativeCoach = view.findViewById(R.id.inc_relative_coach);
+//        txtRelativeCoach = (TextView) view.findViewById(R.id.txt_left_title);
+//        txtChechAllCoach = (TextView) view.findViewById(R.id.txt_check_all);
+//        rvRelativeCoach = (RecyclerView) view.findViewById(R.id.recyclerView);
+//
+//        txtRelativeCoach.setText(getResources().getString(R.string.relate_coach));
+//        txtChechAllCoach.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+//        rvRelativeCoach.setLayoutManager(manager);
+//        adapterRelativeCoach = new PersonHorizontalAdapter(context);
+//        rvRelativeCoach.setAdapter(adapterRelativeCoach);
+//    }
 
-        txtRelativeCoach.setText(getResources().getString(R.string.relate_coach));
-        txtChechAllCoach.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
+
+    public void setData(CourseDetailBean course) {
+        this.course = course;
+        if (course.getImage() != null && !course.getImage().isEmpty()) {
+            GlideLoader.getInstance().displayImage(course.getImage().get(0), imgBg);
+        }
+
+        txtCourseName.setText(course.getName());
+        txtAttentionNum.setText(course.getFollows_count() + "人关注");
+        txt_bt_attention_num.setText(course.getFollows_count() + "人已关注");
+        txtCourseDesc.setText(course.getTagString());
+
+
+        for (int i = 0; i < 5; i++) {
+            if (i < course.getStrength()) {
+                starList.get(i).setVisibility(View.VISIBLE);
+            } else {
+                starList.get(i).setVisibility(View.GONE);
             }
-        });
+        }
 
-        LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        rvRelativeCoach.setLayoutManager(manager);
-        adapterRelativeCoach = new PersonHorizontalAdapter(context);
-        rvRelativeCoach.setAdapter(adapterRelativeCoach);
-    }
-
-    public void setData() {
-
+        if(course.isFollowed()){
+            bt_attention.setImageResource(R.drawable.icon_attented);
+        }else {
+            bt_attention.setImageResource(R.drawable.icon_attention);
+        }
+        txtCourseIntro.setText(Html.fromHtml(course.getIntroduce()));
+        txtSuggestFrequency.setText("建议周频次: "+course.getFrequency()+"次/周");
+        txt_use_equipment.setText("使用机械: "+course.getInstrument());
+        txt_target_population.setText("针对人群: " + course.getCrowd());
+        txt_suggest_match_course.setText("建议课程搭配: " + course.getCollocation());
+        adapterAttentionPerson.setData(course.getFollowers());
 
     }
 }

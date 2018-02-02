@@ -3,9 +3,6 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
-import com.leyuan.aidong.entity.data.DynamicRelatedBean;
-import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.constant.DynamicType;
 
@@ -21,9 +18,9 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  */
 public class DynamicBean implements Parcelable {
 
-    @SerializedName("dynamic_id")
+//    @SerializedName("dynamic_id")
     public String id;
-    @SerializedName("content")
+//    @SerializedName("content")
     public String content;
 
     public List<String> image;
@@ -31,16 +28,17 @@ public class DynamicBean implements Parcelable {
     public DynamicVideoBean videos;
     public UserBean publisher;
 
-    @SerializedName("created_at")
+//    @SerializedName("created_at")
     public String published_at;
     public LikeUserListBean like;
     public CommentListBean comment;
 
     public boolean isLiked = false; //标记是否点赞
 
-    public ArrayList<UserCoach> extras;
-    public DynamicRelatedBean related;
+    public ArrayList<UserBean> extras;
+    public CampaignBean related;
     public CoordinateBean postion;
+    public String type;
 
     @DynamicType
     public int getDynamicType() {

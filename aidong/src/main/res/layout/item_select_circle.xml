@@ -58,15 +58,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/txt_course_difficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="难度系数: "
-                android:textColor="@color/text_color_common"
+                android:textColor="@color/b3"
                 android:textSize="13sp" />
 
             <ImageView

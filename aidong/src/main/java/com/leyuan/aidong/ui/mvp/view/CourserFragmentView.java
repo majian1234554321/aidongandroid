@@ -1,7 +1,8 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.entity.course.CourseBeanNew;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,9 +12,9 @@ import java.util.List;
 public interface CourserFragmentView {
 
 
-    void refreshRecyclerViewData(List<CourseBean> courseList);
+    void refreshRecyclerViewData(ArrayList<CourseBeanNew> courseList);
 
-    void loadMoreRecyclerViewData(List<CourseBean> courseList);
+    void loadMoreRecyclerViewData(List<CourseBeanNew> courseList);
 
     /**
      * 显示FooterView，提示没有任何内容了

@@ -10,7 +10,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:gravity="center_vertical"
-        android:text="Ai Dong"
+        android:text="@string/i_dong_self_support_store"
         android:textColor="@color/main_red"
         android:textSize="14sp" />
 

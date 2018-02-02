@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.DynamicsSingleData;
@@ -10,6 +11,8 @@ import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.DynamicService;
 import com.leyuan.aidong.ui.mvp.model.DynamicModel;
+
+import java.util.ArrayList;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,9 +38,9 @@ public class DynamicModelImpl implements DynamicModel {
 
 
     @Override
-    public void getDynamicsFollow(Subscriber<DynamicsData> subscriber, int page) {
+    public void getDynamicsFollow(Subscriber<ArrayList<DynamicBean>> subscriber, int page) {
         dynamicService.getDynamicsFollow(page)
-                .compose(RxHelper.<DynamicsData>transform())
+                .compose(RxHelper.<ArrayList<DynamicBean>>transform())
                 .subscribe(subscriber);
     }
 
@@ -49,14 +52,16 @@ public class DynamicModelImpl implements DynamicModel {
     }
 
     @Override
-    public void postDynamic(Subscriber<BaseBean> subscriber, String content, String video, String... image) {
+    public void postDynamic(Subscriber<BaseBean> subscriber, String content, String video, String type,
+                            String link_id,
+                            String position_name, String... image) {
         if (video != null) {
-            dynamicService.postVideoDynamic(content, video, "1", image)
+            dynamicService.postVideoDynamic(content, video, "1", type, link_id, position_name, image)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscriber);
         } else {
-            dynamicService.postImageDynamic(content, image)
+            dynamicService.postImageDynamic(content, type, link_id, position_name, image)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscriber);

@@ -44,7 +44,6 @@ public interface CourseService {
     @Deprecated
     @GET("market/courses/{id}/appointment")
     Observable<BaseBean<AppointmentDetailData>> getCourseAppointDetail(@Path("id") String id);
-    @Deprecated
     @GET("videos/{id}/relative_videos")
     Observable<BaseBean<CourseVideoData>> getCourseVideo(@Path("id") String id, @Query("relat") String relat,
                                                          @Query("video_id") String video_id,@Query("page") int page);

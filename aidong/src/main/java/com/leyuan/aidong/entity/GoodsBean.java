@@ -48,6 +48,7 @@ public class GoodsBean  implements Parcelable {
     private int stock;
     private String item;//退换条目和数量
     private boolean is_send;    //该商品是否支持快递
+    private boolean is_virtual; //是否是虚拟品
 
     public int getSoldState() {
         if (!online) {
@@ -223,6 +224,14 @@ public class GoodsBean  implements Parcelable {
         this.is_send = is_send;
     }
 
+    public boolean is_virtual() {
+        return is_virtual;
+    }
+
+    public void setIs_virtual(boolean is_virtual) {
+        this.is_virtual = is_virtual;
+    }
+
     public GoodsBean(String id, String name, String sku_code, String cover, String price,
                      String type, String amount, ArrayList<String> spec_value) {
         this.id = id;
@@ -289,6 +298,7 @@ public class GoodsBean  implements Parcelable {
         dest.writeInt(this.stock);
         dest.writeString(this.item);
         dest.writeByte(this.is_send ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.is_virtual?(byte) 1 : (byte) 0);
     }
 
     protected GoodsBean(Parcel in) {
@@ -312,6 +322,7 @@ public class GoodsBean  implements Parcelable {
         this.stock = in.readInt();
         this.item = in.readString();
         this.is_send = in.readByte() != 0;
+        this.is_virtual = in.readByte() != 0;
     }
 
     public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {

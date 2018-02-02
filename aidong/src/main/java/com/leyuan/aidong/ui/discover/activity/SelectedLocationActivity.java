@@ -17,11 +17,13 @@ import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.poi.PoiSortType;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.SelectLocationAdapter;
+import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.view.SearchHeaderView;
+import com.leyuan.aidong.ui.mvp.presenter.impl.SelectedLocationPrensentImpl;
+import com.leyuan.aidong.ui.mvp.view.SelectedLocationView;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -31,11 +33,13 @@ import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
+import java.util.ArrayList;
+
 /**
  * Created by user on 2018/1/9.
  */
 
-public class SelectedLocationActivity extends BaseActivity implements SearchHeaderView.OnSearchListener, OnGetPoiSearchResultListener {
+public class SelectedLocationActivity extends BaseActivity implements SearchHeaderView.OnSearchListener, OnGetPoiSearchResultListener, SelectedLocationView {
 
     private CommonTitleLayout layoutTitle;
     private CustomRefreshLayout refreshLayout;
@@ -46,6 +50,11 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
     SelectLocationAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private PoiSearch mPoiSearch;
+    SelectedLocationPrensentImpl prensent;
+    ArrayList<VenuesBean> venuesArray = new ArrayList<>();
+
+    boolean isSearch;
+    private String keyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +64,13 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
         refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
+        prensent = new SelectedLocationPrensentImpl(this, this);
 
         initSwipeRefreshLayout();
         initRecyclerView();
         initSwitcherLayout();
 
+        prensent.refreshVenuesNearly(currPage);
         initSearch();
 
     }
@@ -75,7 +85,14 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
             @Override
             public void onRefresh() {
                 currPage = 1;
-                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+                if (isSearch) {
+                    searchLocation(keyword, currPage - 1);
+                } else {
+
+                    RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+                    prensent.refreshVenuesNearly(currPage);
+                }
+
             }
         });
     }
@@ -85,6 +102,7 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
     }
@@ -111,38 +129,62 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
         @Override
         public void onLoadNextPage(View view) {
             currPage++;
+            if (isSearch) {
+                searchLocation(keyword, currPage - 1);
+            } else {
+                prensent.getVenuesNearlyMore(currPage);
+            }
+
         }
     };
 
     @Override
     public void onSearch(String keyword) {
+
+        isSearch = true;
+        currPage = 1;
+        this.keyword = keyword;
+
+        searchLocation(keyword, currPage - 1);
+
+    }
+
+    private void searchLocation(String keyword, int page) {
         PoiNearbySearchOption nearbySearchOption = new PoiNearbySearchOption()
                 .keyword(keyword)
                 .sortType(PoiSortType.distance_from_near_to_far)
                 .location(new LatLng(App.lat, App.lon))
                 .radius(500)
-                .pageNum(20);
+                .pageNum(page)
+                .pageCapacity(20);
         mPoiSearch.searchNearby(nearbySearchOption);
     }
 
     @Override
     public void onGetPoiResult(PoiResult result) {
+        refreshLayout.setRefreshing(false);
+        if (currPage == 1) {
+            venuesArray.clear();
+        }
+
         if (result == null || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
-            ToastGlobal.showShortConsecutive("未找到结果");
+//            ToastGlobal.showShortConsecutive("未找到结果");
             return;
         }
 
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-            adapter.setData(result.getAllPoi());
             for (PoiInfo info : result.getAllPoi()) {
                 Logger.i("PoiInfo : " + info.name + ", " + info.address);
+                VenuesBean venuesBean = new VenuesBean();
+                venuesBean.setName(info.name);
+                venuesBean.setAddress(info.address);
+                venuesArray.add(venuesBean);
             }
 
-//            for (PoiAddrInfo info : result.getAllAddr()) {
-//                Logger.i("PoiAddrInfo : " + info.name + ", " + info.address);
-//            }
+            adapter.setData(venuesArray);
 
         }
+
     }
 
     @Override
@@ -154,6 +196,23 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
     public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
 
     }
+
+
+    @Override
+    public void onRefreshData(ArrayList<VenuesBean> gym) {
+        refreshLayout.setRefreshing(false);
+
+        venuesArray.clear();
+        venuesArray.addAll(gym);
+        adapter.setData(venuesArray);
+    }
+
+    @Override
+    public void onGetMoreData(ArrayList<VenuesBean> gym) {
+        venuesArray.addAll(gym);
+        adapter.setData(venuesArray);
+    }
+
 
     @Override
     protected void onDestroy() {

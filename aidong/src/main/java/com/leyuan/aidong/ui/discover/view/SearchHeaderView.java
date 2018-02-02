@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ import com.leyuan.aidong.R;
 /**
  * Created by user on 2018/1/19.
  */
-public class SearchHeaderView extends RelativeLayout  {
+public class SearchHeaderView extends RelativeLayout {
 
     private OnSearchListener listener;
 
@@ -35,7 +36,7 @@ public class SearchHeaderView extends RelativeLayout  {
     private EditText etSearch;
     private TextView txtSearchTitle;
 
-    private void initView(Context context) {
+    private void initView(final Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.header_search, this, true);
         etSearch = (EditText) view.findViewById(R.id.et_search);
         txtSearchTitle = (TextView) view.findViewById(R.id.txt_search_title);
@@ -44,7 +45,10 @@ public class SearchHeaderView extends RelativeLayout  {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if(listener != null){
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
+                    if (listener != null) {
                         listener.onSearch(etSearch.getText().toString().trim());
                     }
                     return true;
@@ -61,18 +65,18 @@ public class SearchHeaderView extends RelativeLayout  {
         this.listener = listener;
     }
 
-    public void setSearchHint(String hint){
-        if(etSearch != null){
+    public void setSearchHint(String hint) {
+        if (etSearch != null) {
             etSearch.setHint(hint);
         }
     }
 
-    public void setTxtSearchTitle(String title){
+    public void setTxtSearchTitle(String title) {
         txtSearchTitle.setText(title);
     }
 
 
-    public interface OnSearchListener{
+    public interface OnSearchListener {
         void onSearch(String keyword);
     }
 }

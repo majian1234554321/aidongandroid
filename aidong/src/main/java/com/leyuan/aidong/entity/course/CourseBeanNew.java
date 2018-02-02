@@ -51,6 +51,8 @@ public class CourseBeanNew implements Parcelable {
 
     boolean followed;
     int follows_count;
+
+//    @SerializedName("strength")
     String hard_degree;
 
     private StringBuffer tagString = new StringBuffer();

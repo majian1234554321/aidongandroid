@@ -2,7 +2,10 @@ package com.leyuan.aidong.http.api;
 
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.data.FollowCampaignData;
+import com.leyuan.aidong.entity.data.FollowCourseData;
 import com.leyuan.aidong.entity.data.FollowData;
+import com.leyuan.aidong.entity.data.FollowUserData;
 
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -45,4 +48,23 @@ public interface FollowService {
      */
     @DELETE("mine/followings/{id}")
     Observable<BaseBean> cancelFollow(@Path("id") String id);
+
+
+//    @GET("mine/followings")
+//    Observable<BaseBean<FollowData>> getMyFollow(@Query("list") String type,@Query("page") int page);
+
+
+    @GET("mine/followings")
+    Observable<BaseBean<FollowUserData>> getUserFollow(@Query("list") String type, @Query("page") int page);
+
+    @GET("mine/followings")
+    Observable<BaseBean<FollowCampaignData>> getCampaignFollow(@Query("list") String type, @Query("page") int page);
+
+    @GET("mine/followings")
+    Observable<BaseBean<FollowCourseData>> getCourseFollow(@Query("list") String type, @Query("page") int page);
+
+    @GET("more_coach")
+    Observable<BaseBean<FollowUserData>> getRecommendCoachList(@Query("page") int page);
+
+
 }

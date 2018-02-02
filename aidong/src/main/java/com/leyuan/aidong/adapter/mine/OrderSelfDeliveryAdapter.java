@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
     private static final String CLOSE = "canceled";
     private String payStatus;
     private boolean isFood;
+    private boolean isVirtual;
 
     public OrderSelfDeliveryAdapter(Context context) {
         this.context = context;
@@ -119,6 +121,11 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
         holder.rvShop.setAdapter(goodsAdapter);
         goodsAdapter.setData(bean.getItem());
 
+        if(isVirtual){
+            holder.tv_delivery_time.setVisibility(View.GONE);
+            holder.rlQrCode.setVisibility(View.GONE);
+            holder.tvDeliveryType.setVisibility(View.GONE);
+        }
     }
 
     public void setPayStatus(String payStatus) {
@@ -127,6 +134,11 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
 
     public void setIsFood(boolean isFood) {
         this.isFood = isFood;
+    }
+
+    public void setIsVirtual(boolean virtual) {
+        this.isVirtual = virtual;
+        notifyDataSetChanged();
     }
 
     class CartHolder extends RecyclerView.ViewHolder {
@@ -138,6 +150,7 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
         private TextView tvQrNum;
         private ImageView ivCode;
         ExtendTextView tv_delivery_time;
+        LinearLayout layout_delivery_type;
 
         public CartHolder(View itemView) {
             super(itemView);
@@ -148,6 +161,7 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
             tvShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
             tvDeliveryType = (TextView) itemView.findViewById(R.id.tv_delivery_type);
             rvShop = (RecyclerView) itemView.findViewById(R.id.rv_shop);
+            layout_delivery_type = (LinearLayout)itemView.findViewById(R.id.layout_delivery_type);
         }
     }
 }

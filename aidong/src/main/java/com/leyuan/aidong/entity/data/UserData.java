@@ -11,10 +11,16 @@ import java.util.List;
 public class UserData {
 
     private List<UserBean> user;
+    private List<UserBean> coach;
+
+    public List<UserBean> getCoach() {
+        return coach;
+    }
 
     public List<UserBean> getUser() {
         return user;
     }
+
 
     public void setUser(List<UserBean> user) {
         this.user = user;

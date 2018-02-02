@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rel_top"
+        android:layout_width="match_parent"
+        android:layout_height="360dp">
+
+        <ImageView
+            android:id="@+id/img_bg"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:src="@color/black"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/img_live_begin_or_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/play_small" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/course_intro"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_course_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="钢管舞属于动作与机器相结合多少点卡了咯松井大辅卡拉，啊迪斯科解放和点卡收费就"
+        android:textColor="@color/c3"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/txt_suggest_frequency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="建议周频次: 2次/周"
+        android:textColor="@color/c3"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/txt_use_equipment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="使用机械: 纲领 踏板"
+        android:textColor="@color/c3"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/txt_target_population"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="针对人群:喜欢纲领的所有运动员"
+        android:textColor="@color/c3"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txt_suggest_match_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="建议课程搭配:MI Power Jump"
+        android:textColor="@color/c3"
+        android:textSize="14sp" />
+
+
+
+    <RelativeLayout
+        android:id="@+id/layout_attention"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginRight="15dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_attention"
+            android:layout_width="match_parent"
+            android:layout_marginRight="100dp"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:id="@+id/txt_bt_attention_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/icon_right_arrow"
+            android:text="200人已关注"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <!--<include-->
+    <!--android:id="@+id/inc_relative_coach"-->
+    <!--layout="@layout/view_person_horizontal"/>-->
+
+    <LinearLayout
+        android:id="@+id/ll_relate_course_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp">
+
+
+            <TextView
+                android:id="@+id/txt_relate_course_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:text="@string/relate_course_video"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_check_all_video"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/icon_right_arrow"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/check_all"
+                android:textColor="@color/b3"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_relate_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_relate_dynamic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp">
+
+
+            <TextView
+                android:id="@+id/txt_relate_dynamic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:text="@string/relate_dynamic"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

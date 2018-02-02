@@ -99,11 +99,11 @@ public class DynamicPresentImpl implements DynamicPresent {
 
     @Override
     public void commonLoadDataFollow(final SwitcherLayout switcherLayout) {
-        dynamicModel.getDynamicsFollow(new CommonSubscriber<DynamicsData>(context, switcherLayout) {
+        dynamicModel.getDynamicsFollow(new CommonSubscriber<ArrayList<DynamicBean>>(context, switcherLayout) {
             @Override
-            public void onNext(DynamicsData dynamicsData) {
+            public void onNext(ArrayList<DynamicBean> dynamicsData) {
                 if (dynamicsData != null) {
-                    dynamicBeanList = dynamicsData.getDynamic();
+                    dynamicBeanList = dynamicsData;
                 }
                 if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
                     switcherLayout.showContentLayout();
@@ -133,11 +133,11 @@ public class DynamicPresentImpl implements DynamicPresent {
 
     @Override
     public void pullToRefreshDataFollow() {
-        dynamicModel.getDynamicsFollow(new RefreshSubscriber<DynamicsData>(context) {
+        dynamicModel.getDynamicsFollow(new RefreshSubscriber<ArrayList<DynamicBean>>(context) {
             @Override
-            public void onNext(DynamicsData dynamicsData) {
+            public void onNext(ArrayList<DynamicBean> dynamicsData) {
                 if (dynamicsData != null) {
-                    dynamicBeanList = dynamicsData.getDynamic();
+                    dynamicBeanList = dynamicsData;
                 }
                 if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
                     sportCircleFragmentView.updateRecyclerView(dynamicBeanList);
@@ -189,30 +189,36 @@ public class DynamicPresentImpl implements DynamicPresent {
     }
 
     @Override
-    public void postDynamic(boolean isPhoto, String content, String... media) {
+    public void postDynamic(boolean isPhoto, String content, String type,
+                            String link_id,
+                            String position_name, String... media) {
         if (isPhoto) {
-            postImageDynamic(content, media);
+            postImageDynamic(content, type, link_id, position_name, media);
         } else {
-            postVideoDynamic(content, media[0]);
+            postVideoDynamic(content,  type, link_id, position_name,media[0]);
         }
     }
 
-    private void postImageDynamic(String content, String... image) {
+    private void postImageDynamic(String content, String type,
+                                  String link_id,
+                                  String position_name, String... image) {
         dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context, false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 publishDynamicActivityView.publishDynamicResult(baseBean);
             }
-        }, content, null, image);
+        }, content, null, type, link_id, position_name, image);
     }
 
-    private void postVideoDynamic(String content, String video) {
+    private void postVideoDynamic(String content,  String type,
+                                  String link_id,
+                                  String position_name,String video) {
         dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context, false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 publishDynamicActivityView.publishDynamicResult(baseBean);
             }
-        }, content, video, new String[]{});
+        }, content, video, type, link_id, position_name, new String[]{});
     }
 
     @Override

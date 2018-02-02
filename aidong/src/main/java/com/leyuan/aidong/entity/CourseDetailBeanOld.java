@@ -9,7 +9,8 @@ import java.util.List;
  * 课程详情实体
  * Created by song on 2016/8/13.
  */
-public class CourseDetailBean implements Parcelable {
+@Deprecated
+public class CourseDetailBeanOld implements Parcelable {
     private String code;        //课程编号
     private String name;        //课程名称
     private List<String> cover;       //封面
@@ -208,7 +209,7 @@ public class CourseDetailBean implements Parcelable {
     }
 
 
-    public CourseDetailBean() {
+    public CourseDetailBeanOld() {
     }
 
     @Override
@@ -240,7 +241,7 @@ public class CourseDetailBean implements Parcelable {
         dest.writeString(this.orderId);
     }
 
-    protected CourseDetailBean(Parcel in) {
+    protected CourseDetailBeanOld(Parcel in) {
         this.code = in.readString();
         this.name = in.readString();
         this.cover = in.createStringArrayList();
@@ -263,15 +264,15 @@ public class CourseDetailBean implements Parcelable {
         this.orderId = in.readString();
     }
 
-    public static final Creator<CourseDetailBean> CREATOR = new Creator<CourseDetailBean>() {
+    public static final Creator<CourseDetailBeanOld> CREATOR = new Creator<CourseDetailBeanOld>() {
         @Override
-        public CourseDetailBean createFromParcel(Parcel source) {
-            return new CourseDetailBean(source);
+        public CourseDetailBeanOld createFromParcel(Parcel source) {
+            return new CourseDetailBeanOld(source);
         }
 
         @Override
-        public CourseDetailBean[] newArray(int size) {
-            return new CourseDetailBean[size];
+        public CourseDetailBeanOld[] newArray(int size) {
+            return new CourseDetailBeanOld[size];
         }
     };
 }

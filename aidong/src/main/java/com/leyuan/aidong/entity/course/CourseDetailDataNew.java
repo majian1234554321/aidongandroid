@@ -6,6 +6,7 @@ package com.leyuan.aidong.entity.course;
 public class CourseDetailDataNew {
 
     CourseBeanNew timetable;
+    CourseCouponPack coupon_pack;
 
     public CourseBeanNew getTimetable() {
         return timetable;
@@ -13,5 +14,9 @@ public class CourseDetailDataNew {
 
     public void setTimetable(CourseBeanNew timetable) {
         this.timetable = timetable;
+    }
+
+    public CourseCouponPack getCoupon_pack() {
+        return coupon_pack;
     }
 }

@@ -19,7 +19,6 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.discover.activity.CMDMessageActivity;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.Utils;
@@ -53,7 +52,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private TextView txtLocation;
     private TextView txtParse;
     private TextView txtComment;
-
 
 
     protected IDynamicCallback callback;
@@ -100,7 +98,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
     @Override
     public void onBindData(final DynamicBean dynamic, final int position) {
-        if (position == 0  && context instanceof MainActivity && App.getInstance().isLogin() && App.getInstance().getCMDCirleDynamicBean()
+        if (position == 0 && context instanceof MainActivity && App.getInstance().isLogin() && App.getInstance().getCMDCirleDynamicBean()
                 != null && !App.getInstance().getCMDCirleDynamicBean().isEmpty()) {
 
             layoutCmdMessage.setVisibility(View.VISIBLE);
@@ -166,39 +164,37 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         });
 
         //关联的课程活动圈子
-        if(dynamic.related != null){
+        if (dynamic.type != null && dynamic.related != null) {
             layoutCourseOrActivity.setVisibility(View.VISIBLE);
-            GlideLoader.getInstance().displayImage(dynamic.related.extras.cover,imgCover);
-            txtTitle.setText(dynamic.related.extras.name);
 
-            if(Constant.COURSE.equals(dynamic.related.type)){
+            GlideLoader.getInstance().displayImage(dynamic.related.cover, imgCover);
+            txtTitle.setText(dynamic.related.name);
+            if (Constant.COURSE.equals(dynamic.type)) {
                 //类型是课程
-
                 txtTime.setVisibility(View.GONE);
                 layout_difficulty_star.setVisibility(View.VISIBLE);
-                txtDesc.setText(dynamic.related.extras.getTagString());
+                txtDesc.setText(dynamic.related.getTagString());
                 for (int i = 0; i < 5; i++) {
-                    if (i < FormatUtil.parseDouble(dynamic.related.extras.hard_degree)) {
+                    if (i < dynamic.related.hard_degree) {
                         starList.get(i).setVisibility(View.VISIBLE);
                     } else {
                         starList.get(i).setVisibility(View.GONE);
                     }
                 }
 
-            }else{
+            } else {
                 txtTime.setVisibility(View.VISIBLE);
                 layout_difficulty_star.setVisibility(View.GONE);
-
-                txtDesc.setText(dynamic.related.extras.landmark);
-                txtTime.setText(dynamic.related.extras.start);
+                txtDesc.setText(dynamic.related.landmark);
+                txtTime.setText(dynamic.related.start);
             }
 
-        }else {
+        } else {
             layoutCourseOrActivity.setVisibility(View.GONE);
         }
         //位置，赞，评论
-        if(dynamic.postion !=null){
-            txtLocation.setText(dynamic.postion.p_name);
+        if (dynamic.postion != null) {
+            txtLocation.setText(dynamic.postion.position_name);
         }
 
         txtParse.setText(String.valueOf(dynamic.like.counter));

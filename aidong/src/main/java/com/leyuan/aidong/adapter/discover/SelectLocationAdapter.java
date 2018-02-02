@@ -1,24 +1,25 @@
 package com.leyuan.aidong.adapter.discover;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.baidu.mapapi.search.core.PoiInfo;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.VenuesBean;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by user on 2018/1/5.
  */
 public class SelectLocationAdapter extends RecyclerView.Adapter<SelectLocationAdapter.ViewHolder> {
     private final Context context;
-    private ArrayList<PoiInfo> infos = new ArrayList<>();
+    private ArrayList<VenuesBean> infos;
 
     public SelectLocationAdapter(Context context) {
         this.context = context;
@@ -32,19 +33,31 @@ public class SelectLocationAdapter extends RecyclerView.Adapter<SelectLocationAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PoiInfo info = infos.get(position);
-        holder.txtName.setText(info.name);
-        holder.txtLocation.setText(info.address);
+        final VenuesBean info = infos.get(position);
+        holder.txtName.setText(info.getName());
+        holder.txtLocation.setText(info.getAddress());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("position_name", info.getName());
+                ((Activity) context).setResult(Activity.RESULT_OK, intent);
+                ((Activity) context).finish();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
+        if (infos == null)
+            return 0;
         return infos.size();
     }
 
-    public void setData(List<PoiInfo> allPoi) {
-        infos.clear();
-        infos.addAll(allPoi);
+    public void setData(ArrayList<VenuesBean> venues) {
+        infos = venues;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

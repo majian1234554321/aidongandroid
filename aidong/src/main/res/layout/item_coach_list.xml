@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/icon_coach"
+                android:gravity="center"
                 android:singleLine="true"
                 android:text="Mr Black"
                 android:textColor="@color/black"
@@ -48,9 +49,10 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="11111"
-                android:visibility="visible"
                 android:textColor="@color/b3"
                 android:textSize="12sp"
+                android:visibility="gone"
+
 
                 />
 
@@ -58,10 +60,10 @@
                 android:id="@+id/txt_intro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="111111111111111111111111111111111"
+                android:text="1111111111111111111111111111111"
                 android:textColor="@color/c3"
                 android:textSize="12sp"
 

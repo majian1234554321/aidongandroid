@@ -104,7 +104,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tvMarketPrice;
     private TextView tvGoodsName;
 
-    private LinearLayout couponLayout;
+    private LinearLayout couponLayout,layout_i_dong_weal;
     private RecyclerView couponView;
     private LinearLayout skuLayout;
     private TextView tvSelectSku;
@@ -248,6 +248,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         recommendCodeLayout = (LinearLayout) findViewById(R.id.ll_code);
         tvRecommendCode = (TextView) findViewById(R.id.tv_recommend_code);
         addressLayout = (LinearLayout) findViewById(R.id.ll_address);
+        layout_i_dong_weal  = (LinearLayout) findViewById(R.id.layout_i_dong_weal);
         tvAddressInfo = (TextView) findViewById(R.id.tv_address_info);
         tvDeliveryInfo = (TextView) findViewById(R.id.tv_delivery_info);
         ivArrow = (ImageView) findViewById(R.id.iv_arrow);
@@ -340,7 +341,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.tv_add_cart:
                 //|| ((GOODS_NUTRITION.equals(goodsType) && goodsIdInteger > Constant.GOODS_FOODS_START_INDEX))
-                if (GOODS_FOODS.equals(goodsType)) {
+                if (GOODS_FOODS.equals(goodsType) || bean.is_virtual) {
                     ToastGlobal.showShortConsecutive(R.string.goods_can_not_add_into_cart);
                 } else {
                     showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToAddCart);
@@ -360,7 +361,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         List<CouponBean> coupons = this.bean ==null?null:this.bean.coupon;
         this.bean = bean;
         this.bean.coupon = coupons;
-        bean.setDeliveryBeanByGoodsType(goodsType);
         bottomLayout.setVisibility(View.VISIBLE);
         bannerUrls.addAll(bean.image);
         bannerLayout.setData(bannerUrls, null);
@@ -377,13 +377,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvMarketPrice.setVisibility(View.GONE);
         }
         tvGoodsName.setText(bean.name);
-
-//        if (bean.coupon == null || bean.coupon.isEmpty()) {
-//            couponLayout.setVisibility(View.GONE);
-//        } else {
-//            couponAdapter.setData(bean.coupon);
-//            couponLayout.setVisibility(View.VISIBLE);
-//        }
 
         for (GoodsSkuBean goodsSkuBean : bean.spec.item) {
             if (goodsSkuBean.getStock() != 0) {
@@ -433,6 +426,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvSellOut.setVisibility(View.GONE);
             payLayout.setVisibility(View.VISIBLE);
             tvAddCart.setVisibility(View.VISIBLE);
+        }
+
+        if(bean.is_virtual){
+            addressLayout.setVisibility(View.GONE);
+            layout_i_dong_weal.setVisibility(View.GONE);
         }
 
         initFragments();

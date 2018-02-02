@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.course;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.course.CourseDetailBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
@@ -39,7 +41,9 @@ import com.leyuan.aidong.ui.home.activity.ConfirmOrderCourseActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
@@ -68,7 +72,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * Created by user on 2018/1/9.
  */
 
-public class CourseCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener {
+public class CourseCircleDetailActivity extends BaseActivity implements SportCircleFragmentView,CourseDetailActivityView, View.OnClickListener {
     //    private SwitcherLayout switcherLayout;
 //    private CustomRefreshLayout refreshLayout;
     TextView txt_share_image, txt_appoint_immediately;
@@ -84,11 +88,20 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
     private ImageButton bt_share;
+    CoursePresentImpl coursePresent;
+    String id="1";
+    private CourseCircleHeaderView headView;
+
+    public static void start(Context context, String id) {
+        Intent intent = new Intent(context,CourseCircleDetailActivity.class);
+        intent.putExtra("id",id);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        id = getIntent().getStringExtra("id");
         setContentView(R.layout.activity_course_circle_details);
         dynamicPresent = new DynamicPresentImpl(this, this);
 
@@ -98,6 +111,8 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         sharePopupWindow = new SharePopupWindow(this);
 //        dynamicPresent.commonLoadData(switcherLayout);
         dynamicPresent.pullToRefreshData();
+        coursePresent = new CoursePresentImpl(this,this);
+        coursePresent.getCourseDetail(id);
     }
 
     private void initView() {
@@ -144,7 +159,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         recyclerView.addOnScrollListener(onScrollListener);
 
         //重点
-        CourseCircleHeaderView headView = new CourseCircleHeaderView(this);
+        headView = new CourseCircleHeaderView(this);
         RecyclerViewUtils.setHeaderView(recyclerView, headView);
     }
 
@@ -181,7 +196,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                     startActivity(new Intent(this, LoginActivity.class));
                 }
                 break;
-            case txt_share:
+            case R.id.bt_share:
                 sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
                         "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
                 break;
@@ -220,6 +235,20 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         wrapperAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void setCourseDetail(CourseDetailBean courseDetailBean) {
+        headView.setData(courseDetailBean);
+    }
+
+    @Override
+    public void addFollowResult(BaseBean baseBean) {
+
+    }
+
+    @Override
+    public void cancelFollowResult(BaseBean baseBean) {
+
+    }
 
     @Override
     public void addLikeResult(int position, BaseBean baseBean) {
@@ -295,11 +324,17 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
+
+
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         sharePopupWindow.release();
     }
+
+
 
 
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {

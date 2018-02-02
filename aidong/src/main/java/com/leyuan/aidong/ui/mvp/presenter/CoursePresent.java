@@ -52,6 +52,8 @@ public interface CoursePresent {
      */
     void getCourseDetail(SwitcherLayout switcherLayout,String id);
 
+    void getCourseDetail(String id);
+
     /**
      * 购买课程
      * @param id 活动id

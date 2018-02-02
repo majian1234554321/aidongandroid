@@ -19,7 +19,6 @@ import com.leyuan.aidong.entity.AppointmentBean;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.ui.BaseLazyFragment;
 import com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentFragmentView;
@@ -192,11 +191,7 @@ public class AppointmentFragmentCampaignList extends BaseLazyFragment implements
 
         @Override
         public void onPayOrder(String type, String id) {
-            if ("course".equals(type)) {
-                AppointCourseDetailActivity.start(getContext(), id);
-            } else {
-                AppointCampaignDetailActivity.start(getContext(), id);
-            }
+            AppointCampaignDetailActivity.start(getContext(), id);
         }
 
         @Override

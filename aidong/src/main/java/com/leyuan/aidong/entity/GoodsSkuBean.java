@@ -39,4 +39,11 @@ public class GoodsSkuBean {
     public int getStock() {
         return stock > -1 ? stock : 999;
     }
+
+    /**
+     * @return 大于等于0返回自己,小于0表示不限库存,返回999
+     */
+    public int getLimit_amount() {
+        return limit_amount > -1 ? limit_amount : 9999;
+    }
 }

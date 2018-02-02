@@ -1,7 +1,8 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.CourseDetailBean;
+import com.leyuan.aidong.entity.CourseDetailBeanOld;
+import com.leyuan.aidong.entity.course.CourseDetailBean;
 
 /**
  * 课程详情

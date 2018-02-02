@@ -10,11 +10,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -52,6 +54,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         View.OnClickListener, PublishDynamicAdapter.OnItemClickListener, View.OnKeyListener {
     private static final int REQUEST_MEDIA = 1;
     private static final int MAX_TEXT_COUNT = 180;
+    private static final int REQUEST_CIRCLE = 101;
+    private static final int REQUEST_LOCATION = 102;
+    private static final int REQUEST_USER = 103;
 
     private ImageView ivBack;
     private EditText etContent;
@@ -70,6 +75,10 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     private LinearLayout layoutAddLocation;
     private ImageView imgAddLocation;
     private TextView txtLocation;
+    private ImageButton bt_circle_delete, bt_location_delete;
+    private String type;
+    private String link_id;
+    private String position_name;
 
 
     public static void startForResult(Fragment fragment, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
@@ -105,6 +114,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         layoutAddCircle = (LinearLayout) findViewById(R.id.layout_add_circle);
         imgAddCircle = (ImageView) findViewById(R.id.img_add_circle);
         txtAddCircle = (TextView) findViewById(R.id.txt_add_circle);
+        bt_circle_delete = (ImageButton) findViewById(R.id.bt_circle_delete);
+        bt_location_delete = (ImageButton) findViewById(R.id.bt_location_delete);
 
         layoutAddLocation = (LinearLayout) findViewById(R.id.layout_add_location);
         imgAddLocation = (ImageView) findViewById(R.id.img_add_location);
@@ -147,27 +158,46 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             case R.id.iv_back:
 
                 finish();
+
                 break;
+
             case R.id.bt_send:
 
                 if (FormatUtil.parseInt(tvContentCount.getText().toString()) > MAX_TEXT_COUNT) {
                     ToastGlobal.showLong(String.format(getString(R.string.too_many_text), MAX_TEXT_COUNT));
                     return;
                 }
+
                 uploadToQiNiu();
 
                 break;
             case R.id.bt_circle_delete:
+
+                this.type = null;
+                this.link_id = null;
+                imgAddCircle.setImageResource(R.drawable.circle_select_no);
+                txtAddCircle.setTextColor(R.color.c3);
+                txtAddCircle.setText(R.string.add_to_circle);
+                bt_circle_delete.setVisibility(View.GONE);
+
                 break;
+
             case R.id.bt_location_delete:
+
+                this.position_name = null;
+                imgAddLocation.setImageResource(R.drawable.icon_course_location);
+                txtLocation.setTextColor(R.color.c3);
+                txtLocation.setText(R.string.add_location);
+                bt_location_delete.setVisibility(View.GONE);
+
                 break;
             case R.id.layout_add_circle:
 
-                UiManager.activityJump(this,SelectedCircleActivity.class);
+                UiManager.activityJumpForResult(this, new Bundle(), SelectedCircleActivity.class, REQUEST_CIRCLE);
                 break;
             case R.id.layout_add_location:
 
-                UiManager.activityJump(this,SelectedLocationActivity.class);
+                UiManager.activityJumpForResult(this, new Bundle(), SelectedLocationActivity.class, REQUEST_LOCATION);
                 break;
             default:
                 break;
@@ -233,7 +263,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         for (int i = 0; i < qiNiuMediaUrls.size(); i++) {
             media[i] = qiNiuMediaUrls.get(i);
         }
-        dynamicPresent.postDynamic(isPhoto, content, media);
+        dynamicPresent.postDynamic(isPhoto, content, type, link_id, position_name, media);
     }
 
     @Override
@@ -254,18 +284,42 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (recyclerView == null || mediaAdapter == null) {
-                return;
-            }
-            final List<BaseMedia> medias = Boxing.getResult(data);
-            selectedMedia.clear();
-            selectedMedia.addAll(medias);
-            for (BaseMedia media : selectedMedia) {
-                Logger.i("Publish", "onActivityResult selectedMedia = " + media.getPath());
+            if (requestCode == REQUEST_CIRCLE) {
+                this.type = data.getStringExtra("type");
+                this.link_id = data.getStringExtra("link_id");
+                imgAddCircle.setImageResource(R.drawable.circle_selected);
+                txtAddCircle.setTextColor(R.color.main_red);
+                txtAddCircle.setText(data.getStringExtra("name"));
+                bt_circle_delete.setVisibility(View.VISIBLE);
+
+
+            } else if (requestCode == REQUEST_LOCATION) {
+
+                this.position_name = data.getStringExtra("position_name");
+
+                imgAddLocation.setImageResource(R.drawable.location_selected);
+                txtLocation.setTextColor(R.color.main_red);
+                txtLocation.setText(position_name);
+                bt_location_delete.setVisibility(View.VISIBLE);
+
+
+            } else {
+
+                if (recyclerView == null || mediaAdapter == null) {
+                    return;
+                }
+                final List<BaseMedia> medias = Boxing.getResult(data);
+                selectedMedia.clear();
+                selectedMedia.addAll(medias);
+                for (BaseMedia media : selectedMedia) {
+                    Logger.i("Publish", "onActivityResult selectedMedia = " + media.getPath());
+                }
+
+                mediaAdapter.setData(selectedMedia, isPhoto);
+                btSend.setEnabled(!selectedMedia.isEmpty());
             }
 
-            mediaAdapter.setData(selectedMedia, isPhoto);
-            btSend.setEnabled(!selectedMedia.isEmpty());
+
         }
     }
 
@@ -283,20 +337,27 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+//            Logger.i("beforeTextChanged : " + s + "");
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            byte[] bytes = s.toString().getBytes();
+//            byte[] bytes = s.toString().getBytes();
             tvContentCount.setText(String.valueOf(s.toString().length()));
             tvContentCount.setTextColor(s.length() > MAX_TEXT_COUNT ? getResources()
                     .getColor(R.color.main_red) : getResources().getColor(R.color.c9));
+            if (TextUtils.equals("@", s.toString().substring(start, start + count))) {
+                ToastGlobal.showShortConsecutive("跳到我关注人");
+
+                UiManager.activityJumpForResult(PublishDynamicActivity.this, new Bundle(), SelectedUserActivity.class, REQUEST_USER);
+            }
+
+//            Logger.i("onTextChanged : " + s + " start " + start + " before " + before + " count " + count + " sub " + );
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-
+//            Logger.i("afterTextChanged : " + s + "");
         }
     }
 }

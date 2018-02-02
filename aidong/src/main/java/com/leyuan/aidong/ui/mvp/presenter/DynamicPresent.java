@@ -22,7 +22,9 @@ public interface DynamicPresent {
 
     void getDynamicDetail(String id);
 
-    void postDynamic(boolean isPhoto, String content, String...media);
+    void postDynamic(boolean isPhoto, String content, String type,
+                     String link_id,
+                     String position_name, String...media);
 
     void addComment(String id,String content);
 

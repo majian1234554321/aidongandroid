@@ -1,24 +1,47 @@
 package com.leyuan.aidong.entity;
 
+import android.text.TextUtils;
+
+import java.util.ArrayList;
+
 /**
  * 活动实体
  * Created by song on 2016/8/18.
  */
 public class CampaignBean {
-    private String id;
-    private String name;
-    private String cover;
-    private String start;
-    private String landmark;
-    private String view_count;
+    public String id;
+    public String name;
+    public String cover;
+    public String start;
+    public String landmark;
+    public String follows_count;
+    public String type;
+    public ArrayList<String> image;
+    public String slogan;
+    public int hard_degree;
+    public int strength;
+    private ArrayList<String> tags;//  ["标签"]
+
+    private StringBuffer tagString = new StringBuffer();
+
+    public StringBuffer getTagString() {
+        if (tagString == null) {
+            tagString = new StringBuffer();
+        }
+        if (tagString.length() == 0) {
+            for (int i = 0; i < tags.size(); i++) {
+                if (i < tags.size() - 1) {
+                    tagString.append(tags.get(i)).append(" | ");
+                } else {
+                    tagString.append(tags.get(i));
+                }
+
+            }
+        }
+        return tagString;
+    }
 
 
-    private String type;
-    private String image;
-    private String begin_date;
-
-
-    
     public String getId() {
         return id;
     }
@@ -59,27 +82,36 @@ public class CampaignBean {
         this.landmark = landmark;
     }
 
-    public String getViewCount() {
-        return view_count;
-    }
-
-    public void setView_count(String view_count) {
-        this.view_count = view_count;
-    }
-
     public String getType() {
         return type;
     }
 
-    public String getImage() {
+    public String getTypeCZ() {
+        if (TextUtils.equals(type, "campaign")) {
+            return "活动";
+        } else if (TextUtils.equals(type, "contest")) {
+            return "赛事";
+        } else if (TextUtils.equals(type, "course")) {
+            return "课程";
+        }
+        return type;
+    }
+
+    public ArrayList<String> getImage() {
         return image;
     }
 
-    public String getBegin_date() {
-        return begin_date;
+
+    public String getFollows_count() {
+        return follows_count;
     }
 
-    public String getView_count() {
-        return view_count;
+    public String getSlogan() {
+        return slogan;
+    }
+
+    public boolean isCourse() {
+
+        return TextUtils.equals(type, "course");
     }
 }

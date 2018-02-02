@@ -29,7 +29,9 @@
     </RelativeLayout>
 
 
-    <include layout="@layout/item_home_recommend_course" />
+    <include
+
+        layout="@layout/item_home_recommend_course" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,7 +110,7 @@
             android:layout_height="60dp" />
 
         <TextView
-            android:id="@+id/txt_attention_num"
+            android:id="@+id/txt_bt_attention_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -121,9 +123,9 @@
 
     </RelativeLayout>
 
-   <include
-       android:id="@+id/inc_relative_coach"
-       layout="@layout/view_person_horizontal"/>
+   <!--<include-->
+       <!--android:id="@+id/inc_relative_coach"-->
+       <!--layout="@layout/view_person_horizontal"/>-->
 
     <LinearLayout
         android:id="@+id/ll_relate_course_video"

@@ -17,7 +17,7 @@ public class CoachBean implements Parcelable {
     private String introduce;//'教练介绍'
     private String contact;
     private String cover;
-    private String follow_count;
+    public int followers_count;
 
     public String getId() {
         return id;
@@ -87,10 +87,6 @@ public class CoachBean implements Parcelable {
         return cover;
     }
 
-    public String getFollow_count() {
-        return follow_count;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -107,7 +103,7 @@ public class CoachBean implements Parcelable {
         dest.writeString(this.introduce);
         dest.writeString(this.contact);
         dest.writeString(this.cover);
-        dest.writeString(this.follow_count);
+        dest.writeInt(this.followers_count);
     }
 
     public CoachBean() {
@@ -123,7 +119,7 @@ public class CoachBean implements Parcelable {
         this.introduce = in.readString();
         this.contact = in.readString();
         this.cover = in.readString();
-        this.follow_count = in.readString();
+        this.followers_count = in.readInt();
     }
 
     public static final Creator<CoachBean> CREATOR = new Creator<CoachBean>() {

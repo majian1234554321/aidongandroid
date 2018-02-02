@@ -17,7 +17,6 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
-import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.DialogUtils;
@@ -111,7 +110,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         if (TextUtils.isEmpty(type)) return;
         switch (type) {
             case "course":
-                CourseDetailActivity.start(this, id);
+                CourseListActivityNew.start(this, id);
                 break;
             case "campaign":
                 CampaignDetailActivity.start(this, id);

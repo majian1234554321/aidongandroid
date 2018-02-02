@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CircleCoachListAdapter;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.UserInfoView;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -17,17 +20,20 @@ import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
+import java.util.List;
+
 /**
  * Created by user on 2018/1/5.
  */
-public class CircleCoachListFragment extends BaseFragment {
+public class CircleCoachListFragment extends BaseFragment implements UserInfoView {
 
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private SwitcherLayout switcherLayout;
-    private int currPage;
+    private int currPage =1;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private CircleCoachListAdapter adapter;
+    FollowPresentImpl present;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +48,9 @@ public class CircleCoachListFragment extends BaseFragment {
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         initSwitcherLayout();
+        present = new FollowPresentImpl(getActivity());
+        present.setUserViewListener(this);
+        present.getCampaignFollow(currPage);
     }
 
 
@@ -52,6 +61,7 @@ public class CircleCoachListFragment extends BaseFragment {
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+                present.getCampaignFollow(currPage);
             }
         });
     }
@@ -83,9 +93,13 @@ public class CircleCoachListFragment extends BaseFragment {
         @Override
         public void onLoadNextPage(View view) {
             currPage++;
-
+            present.getCampaignFollow(currPage);
         }
     };
 
 
+    @Override
+    public void onGetUserData(List<UserBean> followings) {
+        adapter.setData(followings);
+    }
 }

@@ -25,7 +25,7 @@ public class CourseDetailPresentImpl {
         model.getCourseDetail(new BaseSubscriber<CourseDetailDataNew>(context) {
             @Override
             public void onNext(CourseDetailDataNew courseDetailDataNew) {
-                callback.onGetCourseDetail(courseDetailDataNew.getTimetable());
+                callback.onGetCourseDetail(courseDetailDataNew);
             }
 
             @Override

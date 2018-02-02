@@ -13,9 +13,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
-import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.UiManager;
 
 import java.util.ArrayList;
 
@@ -23,7 +21,6 @@ import java.util.ArrayList;
  * Created by user on 2018/1/5.
  */
 public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecommendCourseAdapter.ViewHolder> {
-
 
     private final Context context;
     private ArrayList<CourseBeanNew> course;
@@ -34,25 +31,27 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(context).inflate(R.layout.item_home_recommend_course, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CourseBeanNew courseBean = course.get(position);
+        final CourseBeanNew courseBean = course.get(position);
         GlideLoader.getInstance().displayImage(courseBean.getCover(),holder.imgCoach);
         holder.txtCourseName.setText(courseBean.getName());
         holder.txtAttentionNum.setText(courseBean.getFollows_count()+"人关注");
         holder.txtCourseDesc.setText(courseBean.getTagString()  );
 
         for (int i = 0; i < 5; i++) {
-            if (i < FormatUtil.parseDouble(courseBean.getHard_degree())) {
+            if (i < courseBean.getStrength()) {
                 holder.starList.get(i).setVisibility(View.VISIBLE);
             } else {
                 holder.starList.get(i).setVisibility(View.GONE);
             }
         }
+
         if(courseBean.isFollowed()){
             holder.btAttention.setImageResource(R.drawable.icon_attented);
         }else {
@@ -63,7 +62,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UiManager.activityJump(context, CourseCircleDetailActivity.class);
+                CourseCircleDetailActivity.start(context,courseBean.getId());
             }
         });
     }

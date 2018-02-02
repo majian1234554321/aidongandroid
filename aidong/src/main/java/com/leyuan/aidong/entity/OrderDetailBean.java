@@ -22,6 +22,11 @@ public class OrderDetailBean {
     private String pay_type;
     private String express_price;
     private String order_type;
+    private boolean is_virtual;
+
+    public boolean is_virtual() {
+        return is_virtual;
+    }
 
     public String getPayType() {
         return pay_type;

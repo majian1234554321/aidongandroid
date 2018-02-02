@@ -84,6 +84,13 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
             }
         });
 
+        if(bean.is_virtual()){
+            holder.ivMinus.setVisibility(View.GONE);
+            holder.ivAdd.setVisibility(View.GONE);
+            holder.tvCount.setText(""+amount);
+            bean.setItem(bean.getId() + "-" + amount);
+        }
+
     }
 
     @Override

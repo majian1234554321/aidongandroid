@@ -21,6 +21,7 @@ import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
  * Created by song on 2016/9/8.
  */
 public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderShopAdapter.CartHolder> {
+    private  boolean is_virtual;
     private Context context;
     private List<ShopBean> data = new ArrayList<>();
     private DeliveryTypeListener listener;
@@ -28,6 +29,11 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
 
     public ConfirmOrderShopAdapter(Context context) {
         this.context = context;
+    }
+
+    public ConfirmOrderShopAdapter(Context context, boolean is_virtual) {
+        this.context = context;
+        this.is_virtual = is_virtual;
     }
 
     public void setData(List<ShopBean> data) {
@@ -68,6 +74,11 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
                 }
             }
         });
+        if(is_virtual){
+            holder.tvDeliveryType.setVisibility(View.GONE);
+        }else {
+            holder.tvDeliveryType.setVisibility(View.VISIBLE);
+        }
     }
 
     class CartHolder extends RecyclerView.ViewHolder {

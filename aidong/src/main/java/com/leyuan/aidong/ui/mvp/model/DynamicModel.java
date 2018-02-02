@@ -1,10 +1,13 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.DynamicsSingleData;
 import com.leyuan.aidong.entity.data.LikeData;
+
+import java.util.ArrayList;
 
 import rx.Subscriber;
 
@@ -21,7 +24,7 @@ public interface DynamicModel {
     void getDynamics(Subscriber<DynamicsData> subscriber, int page);
 
 
-    void getDynamicsFollow(Subscriber<DynamicsData> subscriber, int page);
+    void getDynamicsFollow(Subscriber<ArrayList<DynamicBean>> subscriber, int page);
 
     void getDynamicDetail(Subscriber<DynamicsSingleData> subscriber, String id);
 
@@ -32,7 +35,9 @@ public interface DynamicModel {
      * @param video
      * @param image
      */
-    void postDynamic(Subscriber<BaseBean> subscriber,String content,String video,String...image);
+    void postDynamic(Subscriber<BaseBean> subscriber,String content,String video, String type,
+                     String link_id,
+                     String position_name,String...image);
 
 
     /**

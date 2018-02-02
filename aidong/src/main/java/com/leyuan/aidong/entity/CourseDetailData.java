@@ -1,6 +1,8 @@
 package com.leyuan.aidong.entity;
 
 
+import com.leyuan.aidong.entity.course.CourseDetailBean;
+
 @Deprecated
 public class CourseDetailData {
     private CourseDetailBean course;

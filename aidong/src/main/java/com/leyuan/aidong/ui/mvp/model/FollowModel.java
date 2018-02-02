@@ -1,7 +1,10 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.data.FollowCampaignData;
+import com.leyuan.aidong.entity.data.FollowCourseData;
 import com.leyuan.aidong.entity.data.FollowData;
+import com.leyuan.aidong.entity.data.FollowUserData;
 
 import rx.Subscriber;
 
@@ -11,6 +14,14 @@ import rx.Subscriber;
  */
 public interface FollowModel {
 
+
+    void getUserFollow(Subscriber<FollowUserData> subscriber, String type, int page);
+
+
+    void getCampaignFollow(Subscriber<FollowCampaignData> subscriber, int page);
+
+    void getCourseFollow(Subscriber<FollowCourseData> subscriber, int page);
+
     /**
      * 关注和粉丝
      * @param subscriber Subscriber
@@ -18,6 +29,7 @@ public interface FollowModel {
      * @param page 页码
      */
     void getFollow(Subscriber<FollowData> subscriber, String type, int page);
+
 
     /**
      * 添加关注

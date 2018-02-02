@@ -48,7 +48,7 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CampaignBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
-        holder.hot.setText(bean.getViewCount());
+        holder.hot.setText(bean.getFollows_count());
         holder.address.setText(bean.getLandmark());
         holder.time.setText(bean.getStart());
 

@@ -58,6 +58,7 @@ public class GoodsRecommendAdapter extends RecyclerView.Adapter<GoodsRecommendAd
             @Override
             public void onClick(View v) {
                 GoodsDetailActivity.start(context,bean.getId(), goodsType);
+//                GoodsDetailActivity.start(context,bean.getId(), bean.getType());
             }
         });
     }

@@ -6,14 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.entity.PayOrderBean;
 import com.leyuan.aidong.entity.ShareData;
+import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.course.CourseDataNew;
 import com.leyuan.aidong.entity.data.CouponData;
-import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
@@ -55,7 +54,7 @@ public class CoursePresentImpl implements CoursePresent {
     private FollowModel followModel;
     private CouponModel couponModel;
 
-    private List<CourseBean> courseBeanList;
+    private List<CourseBeanNew> courseBeanList;
     private CourserFragmentView courserFragmentView;                //课程列表View层对象
     private CourseActivityView coursesActivityView;                 //课程列表View层对象
     private CourseDetailActivityView courseDetailActivityView;      //课程详情View层对象
@@ -119,9 +118,9 @@ public class CoursePresentImpl implements CoursePresent {
         courseModel.getCourses(new CommonSubscriber<CourseDataNew>(context, switcherLayout) {
             @Override
             public void onNext(CourseDataNew courseData) {
-                if (courseData != null && courseData.getTimetable() != null && !courseData.getTimetable().isEmpty()) {
+                if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
                     switcherLayout.showContentLayout();
-                    courserFragmentView.refreshRecyclerViewData(courseData.getTimetable());
+                    courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
                 } else {
                     courserFragmentView.showEmptyView();
                 }
@@ -134,9 +133,9 @@ public class CoursePresentImpl implements CoursePresent {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourses(new RefreshSubscriber<CourseData>(context) {
+        courseModel.getCourses(new RefreshSubscriber<CourseDataNew>(context) {
             @Override
-            public void onNext(CourseData courseData) {
+            public void onNext(CourseDataNew courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
                     courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
                 } else {
@@ -151,13 +150,13 @@ public class CoursePresentImpl implements CoursePresent {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourses(new RequestMoreSubscriber<CourseData>(context, recyclerView, page) {
+        courseModel.getCourses(new RequestMoreSubscriber<CourseDataNew>(context, recyclerView, page) {
             @Override
-            public void onNext(CourseData courseData) {
+            public void onNext(CourseDataNew courseData) {
                 if (courseData != null && !courseData.getCourse().isEmpty()) {
                     courseBeanList = courseData.getCourse();
                 }
-                if (courseBeanList != null &&!courseBeanList.isEmpty()) {
+                if (courseBeanList != null && !courseBeanList.isEmpty()) {
                     courserFragmentView.loadMoreRecyclerViewData(courseBeanList);
                 }
                 //没有更多数据了显示到底提示
@@ -197,6 +196,29 @@ public class CoursePresentImpl implements CoursePresent {
                     courseDetailActivityView.setCourseDetail(courseDetailData.getCourse());
                 } else {
                     switcherLayout.showEmptyLayout();
+                }
+            }
+        }, id);
+    }
+
+
+    @Override
+    public void getCourseDetail(String id) {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
+        courseModel.getCourseDetail(new ProgressSubscriber<CourseDetailData>(context) {
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+
+            @Override
+            public void onNext(CourseDetailData courseDetailData) {
+                if (courseDetailData != null) {
+                    courseDetailActivityView.setCourseDetail(courseDetailData.getCourse());
+                } else {
                 }
             }
         }, id);
@@ -283,12 +305,12 @@ public class CoursePresentImpl implements CoursePresent {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourses(new RefreshSubscriber<CourseData>(context) {
+        courseModel.getCourses(new RefreshSubscriber<CourseDataNew>(context) {
             @Override
-            public void onNext(CourseData courseData) {
+            public void onNext(CourseDataNew courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
                     if (coursesActivityView != null) {
-                        coursesActivityView.setScrollPosition(courseData.getDate());
+//                        coursesActivityView.setScrollPosition(courseData.getDate());
                     }
                 }
             }
@@ -313,7 +335,7 @@ public class CoursePresentImpl implements CoursePresent {
             @Override
             public void onNext(CourseVideoData courseVideoData) {
                 if (courseVideoData != null && !courseVideoData.getVideos().isEmpty()) {
-                    videoDetailActivityView.updateRelateVideo(courseVideoData.getTitle(),courseVideoData.getVideos());
+                    videoDetailActivityView.updateRelateVideo(courseVideoData.getTitle(), courseVideoData.getVideos());
                 }
 
                 videoDetailActivityView.showContentView();
@@ -329,7 +351,7 @@ public class CoursePresentImpl implements CoursePresent {
     }
 
     @Override
-    public void pullToRefreshVideo(String id,String videoId) {
+    public void pullToRefreshVideo(String id, String videoId) {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
@@ -350,7 +372,7 @@ public class CoursePresentImpl implements CoursePresent {
     }
 
     @Override
-    public void loadMoreVideo(String id,String videoId, RecyclerView recyclerView, final int pageSize, int page) {
+    public void loadMoreVideo(String id, String videoId, RecyclerView recyclerView, final int pageSize, int page) {
         courseModel.getCourseVideo(new RequestMoreSubscriber<CourseVideoData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(CourseVideoData courseVideoData) {

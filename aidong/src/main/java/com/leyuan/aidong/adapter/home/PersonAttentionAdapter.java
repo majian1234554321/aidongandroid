@@ -44,7 +44,7 @@ public class PersonAttentionAdapter extends RecyclerView.Adapter<PersonAttention
         }
 
         final UserBean userBean = users.get(position);
-        GlideLoader.getInstance().displayImage(userBean.getAvatar(),holder.imgAvatar);
+        GlideLoader.getInstance().displayCircleImage(userBean.getAvatar(),holder.imgAvatar);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

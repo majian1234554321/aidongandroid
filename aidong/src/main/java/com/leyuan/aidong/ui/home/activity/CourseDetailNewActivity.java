@@ -19,6 +19,8 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
+import com.leyuan.aidong.entity.course.CourseCouponPack;
+import com.leyuan.aidong.entity.course.CourseDetailDataNew;
 import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -58,6 +60,11 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     private TextView txtCourseTime;
     private TextView txtCourseRoom;
     private TextView txtCourseLocation;
+
+    private RelativeLayout layoutCoursePack;
+    private TextView txtCoursePackInfo;
+    private TextView txtCoursePackPrice;
+
     //    private TextView tvDesc;
     private RelativeLayout layout_course_coach;
     private ImageView ivBack;
@@ -85,6 +92,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             if (action == null) return;
 
             switch (action) {
+
                 case Constant.BROADCAST_ACTION_LOGIN_SUCCESS:
                     coursePresent.getCourseDetail(code);
                     break;
@@ -97,7 +105,12 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
                     finish();
                     break;
-
+                case Constant.BROADCAST_ACTION_GOODS_PAY_FAIL:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS:
+                    finish();
+                    break;
 
                 case Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL:
                     coursePresent.getCourseDetail(code);
@@ -114,6 +127,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             }
         }
     };
+    private CourseCouponPack coupon_pack;
 
     public static void start(Context context, String code) {
         Intent starter = new Intent(context, CourseDetailNewActivity.class);
@@ -153,6 +167,11 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         txtCourseTime = (TextView) findViewById(R.id.txt_course_time);
         txtCourseRoom = (TextView) findViewById(R.id.txt_course_room);
         txtCourseLocation = (TextView) findViewById(R.id.txt_course_location);
+
+        layoutCoursePack = (RelativeLayout) findViewById(R.id.layout_course_pack);
+        txtCoursePackInfo = (TextView) findViewById(R.id.txt_course_pack_info);
+        txtCoursePackPrice = (TextView) findViewById(R.id.txt_course_pack_price);
+
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
@@ -179,9 +198,12 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED);
 
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL);
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS);
+
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 
-
+        layoutCoursePack.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         ivShare.setOnClickListener(this);
         llApply.setOnClickListener(this);
@@ -207,6 +229,9 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.layout_course_pack:
+                GoodsVirtualListActivity.start(this,coupon_pack.getItemProduct());
                 break;
             case R.id.iv_share:
                 String  image = "";
@@ -282,13 +307,24 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     }
 
     @Override
-    public void onGetCourseDetail(CourseBeanNew course) {
+    public void onGetCourseDetail(CourseDetailDataNew courseData) {
         DialogUtils.dismissDialog();
-        if (course == null) return;
-        this.course = course;
+        if (courseData == null || courseData.getTimetable() == null) return;
+        this.course = courseData.getTimetable();
+        this.coupon_pack = courseData.getCoupon_pack();
+
+        if(TextUtils.isEmpty(coupon_pack.getItemProduct())){
+            layoutCoursePack.setVisibility(View.GONE);
+        }else {
+            layoutCoursePack.setVisibility(View.VISIBLE);
+            txtCoursePackInfo.setText(coupon_pack.getTitle());
+            txtCoursePackPrice.setText(coupon_pack.getPrice()+"元/节!");
+        }
+
+
+
         banner.setData(course.getImage(), null);
         txtCourseName.setText(course.getName());
-
         if (course.getCoach() != null) {
             txtCoachName.setText(course.getCoach().getName());
             if (!TextUtils.isEmpty(course.getCoach().getIntroduce())) {
@@ -305,6 +341,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         txtCourseRoom.setText(course.getStore().getName()+"-"+course.getStore().getClassroom());
         txtCourseLocation.setText(course.getStore().getAddress());
         webView.setRichText(course.getIntroduce());
+
 
         switch (course.getStatus()) {
 

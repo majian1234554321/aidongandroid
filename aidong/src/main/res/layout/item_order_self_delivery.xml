@@ -51,6 +51,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/layout_delivery_type"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginRight="10dp"

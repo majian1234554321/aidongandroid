@@ -10,7 +10,9 @@ import com.leyuan.aidong.widget.SwitcherLayout;
  */
 public interface FollowPresent {
 
+
     void getFollowList();
+
     /**
      * 第一次加载数据
      * @param switcherLayout SwitcherLayout

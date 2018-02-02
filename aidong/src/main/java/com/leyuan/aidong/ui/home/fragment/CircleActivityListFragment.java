@@ -22,6 +22,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class CircleActivityListFragment extends BaseFragment implements Campaign
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private CircleActivityListAdapter campaignAdapter;
     private CampaignPresent campaignPresent;
-    private List<CampaignBean> data;
+    private List<CampaignBean> data = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

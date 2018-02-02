@@ -6,7 +6,7 @@ package com.leyuan.aidong.config;
  */
 public class UrlConfig {
     public static final boolean debug = true;
-    public static final boolean isMi = true;
+    public static final boolean isMi = false;
 
     private static String urlHtml;
     private static String urlHost;

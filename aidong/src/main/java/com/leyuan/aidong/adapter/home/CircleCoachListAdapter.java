@@ -10,13 +10,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
+import com.leyuan.aidong.utils.GlideLoader;
+
+import java.util.List;
 
 /**
  * Created by user on 2018/1/5.
  */
 public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachListAdapter.ViewHolder> {
+
     private final Context context;
+    private List<UserBean> users;
 
     public CircleCoachListAdapter(Context context) {
         this.context = context;
@@ -30,6 +36,12 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        UserBean user = users.get(position);
+        GlideLoader.getInstance().displayCircleImage(user.getAvatar(),holder.imgAvatar);
+        holder.txtCoachName.setText(user.getName());
+        holder.txt_attention_num.setText(user.follows_count+"人关注");
+//        holder.txtIntro.setText(user.get);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +52,12 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
 
     @Override
     public int getItemCount() {
-        return 6;
+        if (users == null) return 0;
+        return users.size();
+    }
+
+    public void setData(List<UserBean> followings) {
+        this.users = followings;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

@@ -53,6 +53,8 @@ public class HomeModelImpl implements HomeModel {
     }
 
 
+
+
     @Override
     public List<BannerBean> getHomeBanners() {
         return SystemInfoUtils.getHomeBanner(context);

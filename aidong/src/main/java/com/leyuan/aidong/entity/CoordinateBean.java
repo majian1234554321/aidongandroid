@@ -10,7 +10,7 @@ import android.os.Parcelable;
 public class CoordinateBean implements Parcelable {
     public String lat;
     public String lng;
-    public String p_name;
+    public String position_name;
 
     public String getLat() {
         return lat;
