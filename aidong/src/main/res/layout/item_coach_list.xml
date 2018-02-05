@@ -51,7 +51,7 @@
                 android:text="11111"
                 android:textColor="@color/b3"
                 android:textSize="12sp"
-                android:visibility="gone"
+                android:visibility="visible"
 
 
                 />
@@ -73,13 +73,13 @@
 
         <ImageButton
             android:id="@+id/bt_attention"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp"
             android:background="@color/transparent"
-            android:src="@drawable/icon_attented" />
-
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_attention" />
 
     </LinearLayout>
 

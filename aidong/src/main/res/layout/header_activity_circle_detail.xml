@@ -39,14 +39,14 @@
 
         <ImageButton
             android:id="@+id/bt_attention"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@color/transpance"
             android:src="@drawable/icon_attention"
-
-
+            android:scaleType="centerCrop"
+            android:layout_marginRight="15dp"
             />
 
 
@@ -236,6 +236,7 @@
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:text="@string/check_all"
+            android:visibility="invisible"
             android:textColor="@color/b3"
             android:textSize="13sp" />
 

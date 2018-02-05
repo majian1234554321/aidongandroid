@@ -3,7 +3,7 @@
     <item android:drawable="@drawable/icon_switch_bg_store" android:state_checked="true" android:state_enabled="false" />
     <item android:drawable="@drawable/icon_switch_bg_course" android:state_checked="false" android:state_enabled="false" />
 
-    <item android:drawable="@drawable/icon_switch_bg_store" android:state_checked="true" />
+    <item android:drawable="@drawable/icon_switch_bg_store" android:state_checked="true"  />
 
     <item android:drawable="@drawable/icon_switch_bg_course" />
 

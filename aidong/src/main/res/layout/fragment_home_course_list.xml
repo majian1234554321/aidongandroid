@@ -14,12 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stl_defaultTabTextColor="@color/gray_normal"
-        app:stl_defaultTabTextSize="16sp"
-        app:stl_defaultTabBackground="?attr/selectableItemBackground"
-        app:stl_indicatorColor="@color/course_oringe"
-        app:stl_indicatorInterpolation="smart"
-        app:stl_indicatorThickness="3dp"
-        app:stl_indicatorWidth="auto" />
+        app:stl_defaultTabTextHorizontalPadding="40dp"
+        app:stl_defaultTabTextSize="17sp"
+        app:stl_indicatorThickness="0dp"/>
 
     <FrameLayout
         android:layout_width="match_parent"

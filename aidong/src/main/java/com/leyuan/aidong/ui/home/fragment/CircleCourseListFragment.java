@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.home.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +10,15 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
+import com.leyuan.aidong.ui.mvp.view.FollowView;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -22,12 +28,11 @@ import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by user on 2018/1/5.
  */
-public class CircleCourseListFragment extends BaseFragment implements CourserFragmentView, OnRefreshListener {
+public class CircleCourseListFragment extends BaseFragment implements CourserFragmentView, OnRefreshListener, FollowView, HomeRecommendCourseAdapter.OnAttentionClickListener {
 
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -38,6 +43,8 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
 
     private CoursePresentImpl coursePresent;
     private ArrayList<CourseBeanNew> data = new ArrayList<>();
+    FollowPresentImpl followPresent;
+    private int clickedFollowPosition;
 
 
     @Override
@@ -56,6 +63,14 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
         coursePresent = new CoursePresentImpl(getContext(), this);
 
         coursePresent.commendLoadData(switcherLayout, null, null, null);
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        followPresent = new FollowPresentImpl(getActivity());
+        followPresent.setFollowListener(this);
     }
 
 
@@ -78,6 +93,7 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_order);
         adapter = new HomeRecommendCourseAdapter(getActivity());
+        adapter.setOnAttentionClickListener(this);
 
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -119,7 +135,7 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
     }
 
     @Override
-    public void loadMoreRecyclerViewData(List<CourseBeanNew> courseList) {
+    public void loadMoreRecyclerViewData(ArrayList<CourseBeanNew> courseList) {
         data.addAll(courseList);
         adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
@@ -145,6 +161,40 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
 
     public void scrollToTop() {
         recyclerView.scrollToPosition(0);
+    }
+
+    @Override
+    public void onCourseAttentionClick(String id, int position, boolean followed) {
+        if (followed) {
+            followPresent.cancelFollow(id, Constant.COURSE);
+        } else {
+            followPresent.addFollow(id, Constant.COURSE);
+        }
+        this.clickedFollowPosition = position;
+
+    }
+
+    @Override
+    public void addFollowResult(BaseBean baseBean) {
+        if (baseBean.getStatus() == 1) {
+            if (clickedFollowPosition < data.size() - 1) {
+                data.get(clickedFollowPosition).setFollowed(true);
+                wrapperAdapter.notifyDataSetChanged();
+                ToastGlobal.showShortConsecutive(R.string.attention_success);
+            }
+        }
+    }
+
+    @Override
+    public void cancelFollowResult(BaseBean baseBean) {
+        if (baseBean.getStatus() == 1) {
+            if (clickedFollowPosition < data.size() - 1) {
+                data.get(clickedFollowPosition).setFollowed(false);
+                wrapperAdapter.notifyDataSetChanged();
+                ToastGlobal.showShortConsecutive(R.string.attention_cancel_success);
+
+            }
+        }
     }
 
 }

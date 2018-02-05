@@ -109,6 +109,9 @@ public class Constant {
     public static final String BROADCAST_ACTION_CAMPAIGN_APPOINT_DELETE = "broadcast_action_campaign_appoint_delete";
     public static final String BROADCAST_ACTION_CAMPAIGN_APPOINT_CONFIRM = "broadcast_action_campaign_appoint_confirm";
     public static final String BROADCAST_ACTION_DELETE_DYNAMIC_SUCCESS = "broadcast_action_delete_dynamic_success";
+    public static final String USER = "user";
+    public static final String COACH = "coach";
+
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;
@@ -163,6 +166,7 @@ public class Constant {
     public static final String COUPON_COURSE = "course";
     public static final String COUPON_CAMPAIGN = "campaign";
     public static final String COUPON_CART = "cart";
+    public static final String DYNAMIC = "dynamic";
 
     //推荐商品位置
     public static final String RECOMMEND_EQUIPMENT = "equipment";

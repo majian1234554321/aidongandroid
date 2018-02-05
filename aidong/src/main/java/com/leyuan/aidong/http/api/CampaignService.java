@@ -33,7 +33,8 @@ public interface CampaignService {
                                                    @Field("integral") float integral,
                                                    @Field("pay_type") String payType,
                                                    @Field("contact_name") String contactName,
-                                                   @Field("contact_mobile") String contactMobile);
+                                                   @Field("contact_mobile") String contactMobile,
+                                                   @Field("amount") String amount);
 
     @GET("market/campaigns/{id}/appointment")
     Observable<BaseBean<AppointmentDetailData>> getCampaignAppointDetail(@Path("id") String id);

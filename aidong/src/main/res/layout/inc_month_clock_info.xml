@@ -64,7 +64,7 @@
                 android:id="@+id/txt_go_course_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="120"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -91,7 +91,7 @@
                 android:id="@+id/txt_class_total_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="160"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 

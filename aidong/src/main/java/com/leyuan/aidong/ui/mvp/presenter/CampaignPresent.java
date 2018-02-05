@@ -51,9 +51,10 @@ public interface CampaignPresent {
      * @param payType 支付类型
      * @param contactName 联系人
      * @param contactMobile 联系人电话
+     * @param amount
      */
-    void buyCampaign(String id,String couponId,float integral,String payType,String contactName,
-                     String contactMobile,PayInterface.PayListener listener);
+    void buyCampaign(String id, String couponId, float integral, String payType, String contactName,
+                     String contactMobile, PayInterface.PayListener listener, String amount);
 
 
     /**

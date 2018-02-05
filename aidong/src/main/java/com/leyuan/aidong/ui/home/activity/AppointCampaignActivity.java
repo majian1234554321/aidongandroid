@@ -195,7 +195,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                     ToastGlobal.showLong("请先绑定手机");
                 } else {
                     campaignPresent.buyCampaign(bean.getCampaignId(), couponId, integral,
-                            payType, userRealName, contactMobile, payListener);
+                            payType, userRealName, contactMobile, payListener, "1");
                 }
                 break;
             default:

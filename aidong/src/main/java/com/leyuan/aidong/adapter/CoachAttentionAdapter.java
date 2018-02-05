@@ -38,7 +38,7 @@ public class CoachAttentionAdapter extends RecyclerView.Adapter<CoachAttentionAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        CoachBean coachBean = coachs.get(position);
+        final CoachBean coachBean = coachs.get(position);
         GlideLoader.getInstance().displayRoundAvatarImage(coachBean.getAvatar(),holder.imgAvatar);
         holder.txtName.setText(coachBean.getName());
         holder.txt_attention_num.setText(coachBean.followers_count+"人关注");
@@ -46,7 +46,7 @@ public class CoachAttentionAdapter extends RecyclerView.Adapter<CoachAttentionAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CoachInfoActivity.start(context,"178902");
+                CoachInfoActivity.start(context,coachBean.getId());
             }
         });
     }

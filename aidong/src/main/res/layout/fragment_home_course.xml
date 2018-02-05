@@ -20,8 +20,8 @@
             app:kswBackDrawable="@drawable/switch_course_back"
             app:kswThumbDrawable="@drawable/switch_course_thumb"
             app:kswThumbHeight="30dp"
+            app:kswThumbMargin="-0.5dp"
             app:kswThumbWidth="65dp" />
-
 
     </RelativeLayout>
 

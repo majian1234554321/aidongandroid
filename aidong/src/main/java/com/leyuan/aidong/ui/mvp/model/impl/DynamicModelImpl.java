@@ -36,11 +36,19 @@ public class DynamicModelImpl implements DynamicModel {
                 .subscribe(subscriber);
     }
 
+    @Override
+    public void getRelativeDynamics(Subscriber<DynamicsData> subscriber, String type,String link_id,int page) {
+        dynamicService.getRelativeDynamics(type,link_id,page)
+                .compose(RxHelper.<DynamicsData>transform())
+                .subscribe(subscriber);
+    }
+
+
 
     @Override
-    public void getDynamicsFollow(Subscriber<ArrayList<DynamicBean>> subscriber, int page) {
+    public void getDynamicsFollow(Subscriber<DynamicsData> subscriber, int page) {
         dynamicService.getDynamicsFollow(page)
-                .compose(RxHelper.<ArrayList<DynamicBean>>transform())
+                .compose(RxHelper.<DynamicsData>transform())
                 .subscribe(subscriber);
     }
 

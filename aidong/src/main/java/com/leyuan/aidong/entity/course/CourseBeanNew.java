@@ -24,7 +24,7 @@ public class CourseBeanNew implements Parcelable {
     String name;// 课程名
     String class_time;//  上课时间 - 下课时间
     ArrayList<String> tags;//  ["标签"]
-    int strength;// 强度
+    int strength =5;// 强度
     CoachBean coach;
 
     boolean reservable = true;// 　是否可以预约#0-否　１-是
@@ -324,6 +324,10 @@ public class CourseBeanNew implements Parcelable {
 
     public boolean isFollowed() {
         return followed;
+    }
+
+    public void setFollowed(boolean followed) {
+        this.followed = followed;
     }
 
     public int getFollows_count() {

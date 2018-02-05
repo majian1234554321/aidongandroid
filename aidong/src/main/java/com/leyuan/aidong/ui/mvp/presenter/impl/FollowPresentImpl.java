@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.data.FollowCampaignData;
 import com.leyuan.aidong.entity.data.FollowCourseData;
 import com.leyuan.aidong.entity.data.FollowData;
@@ -16,7 +17,10 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.view.AppointmentUserActivityView;
+import com.leyuan.aidong.ui.mvp.view.CourseBeanNewDataView;
+import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
+import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.mvp.view.UserInfoView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.RequestResponseCount;
@@ -38,6 +42,10 @@ public class FollowPresentImpl implements FollowPresent {
     private AppointmentUserActivityView appointmentUserActivityView;
     private RequestResponseCount requestResponse;
     private UserInfoView userInfoView;
+    private FollowView followView;
+    private CourseBeanNewDataView courseListListener;
+    private CourserFragmentView courserFragmentView;
+    private ArrayList<CourseBeanNew> courseBeanList;
 
     public FollowPresentImpl(Context context) {
         this.context = context;
@@ -54,6 +62,15 @@ public class FollowPresentImpl implements FollowPresent {
         this.context = context;
         this.followFragment = followFragment;
         followModel = new FollowModelImpl();
+    }
+
+
+    public void setUserViewListener(UserInfoView userInfoView) {
+        this.userInfoView = userInfoView;
+    }
+
+    public void setFollowListener(FollowView followView) {
+        this.followView = followView;
     }
 
 
@@ -87,11 +104,39 @@ public class FollowPresentImpl implements FollowPresent {
         }, page);
     }
 
-    public void getCourseFollow(int page) {
+    public void getCourseFollowFirst() {
         followModel.getCourseFollow(new ProgressSubscriber<FollowCourseData>(context) {
             @Override
-            public void onNext(FollowCourseData followUserData) {
+            public void onNext(FollowCourseData courseData) {
+                if (courseData != null && courseData.getFollowings() != null && !courseData.getFollowings().isEmpty()) {
+                    courserFragmentView.refreshRecyclerViewData(courseData.getFollowings());
+                } else {
+                    courserFragmentView.showEmptyView();
+                }
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+
+            }
+        }, Constant.PAGE_FIRST);
+    }
+
+    public void getCourseFollowMore(int page) {
+        followModel.getCourseFollow(new ProgressSubscriber<FollowCourseData>(context) {
+            @Override
+            public void onNext(FollowCourseData courseData) {
+                if (courseData != null && !courseData.getFollowings().isEmpty()) {
+                    courseBeanList = courseData.getFollowings();
+                }
+                if (courseBeanList != null && !courseBeanList.isEmpty()) {
+                    courserFragmentView.loadMoreRecyclerViewData(courseBeanList);
+                }
+                //没有更多数据了显示到底提示
+//                if (courseBeanList != null && courseBeanList.size() < pageSize) {
+//                    courserFragmentView.showEndFooterView();
+//                }
             }
 
             @Override
@@ -102,12 +147,12 @@ public class FollowPresentImpl implements FollowPresent {
     }
 
 
-    public void getRecommendCoachList( int page) {
+    public void getRecommendCoachList(int page) {
         followModel.getRecommendCoachList(new ProgressSubscriber<FollowUserData>(context) {
             @Override
             public void onNext(FollowUserData followUserData) {
                 if (userInfoView != null) {
-                    userInfoView.onGetUserData(followUserData.getFollowings());
+                    userInfoView.onGetUserData(followUserData.getCoach());
                 }
             }
 
@@ -215,7 +260,23 @@ public class FollowPresentImpl implements FollowPresent {
                     followFragment.addFollowResult(baseBean);
                 }
             }
-        }, id);
+        }, id, Constant.USER);
+    }
+
+    @Override
+    public void addFollow(String id, String type) {
+        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if (followView != null) {
+                    followView.addFollowResult(baseBean);
+                }
+
+                if (followFragment != null) {
+                    followFragment.cancelFollowResult(baseBean);
+                }
+            }
+        }, id, type);
     }
 
     @Override
@@ -230,14 +291,34 @@ public class FollowPresentImpl implements FollowPresent {
                     followFragment.cancelFollowResult(baseBean);
                 }
             }
-        }, id);
+        }, id, Constant.USER);
+    }
+
+    @Override
+    public void cancelFollow(String id, String type) {
+        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if (followView != null) {
+                    followView.cancelFollowResult(baseBean);
+                }
+
+                if (followFragment != null) {
+                    followFragment.cancelFollowResult(baseBean);
+                }
+            }
+        }, id, type);
     }
 
     public void setOnRequestResponse(RequestResponseCount requestResponse) {
         this.requestResponse = requestResponse;
     }
 
-    public void setUserViewListener(UserInfoView userInfoView) {
-        this.userInfoView = userInfoView;
+    public void setCourseBeanNewDataView(CourseBeanNewDataView courseListListener) {
+        this.courseListListener = courseListListener;
+    }
+
+    public void setCourserFragmentView(CourserFragmentView courseFragmentView) {
+        this.courserFragmentView = courseFragmentView;
     }
 }

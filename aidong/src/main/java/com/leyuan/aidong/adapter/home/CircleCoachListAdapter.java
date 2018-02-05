@@ -36,16 +36,17 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        UserBean user = users.get(position);
-        GlideLoader.getInstance().displayCircleImage(user.getAvatar(),holder.imgAvatar);
+        final UserBean user = users.get(position);
+        GlideLoader.getInstance().displayCircleImage(user.getAvatar(), holder.imgAvatar);
         holder.txtCoachName.setText(user.getName());
-        holder.txt_attention_num.setText(user.follows_count+"人关注");
-//        holder.txtIntro.setText(user.get);
+        holder.txt_attention_num.setVisibility(View.VISIBLE);
+        holder.txt_attention_num.setText(user.followers_count + "人关注");
+        holder.txtIntro.setText(user.personal_intro);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CoachInfoActivity.start(context, "178902");
+                CoachInfoActivity.start(context, user.getId());
             }
         });
     }

@@ -75,17 +75,33 @@ public class FollowModelImpl implements FollowModel {
                 .subscribe(subscriber);
     }
 
+//    @Override
+//    public void addFollow(Subscriber<BaseBean> subscriber, String id) {
+//        followService.addFollow(id)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(subscriber);
+//    }
+
     @Override
-    public void addFollow(Subscriber<BaseBean> subscriber, String id) {
-        followService.addFollow(id)
+    public void addFollow(Subscriber<BaseBean> subscriber, String id, String type) {
+        followService.addFollow(id,type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
+//
+//    @Override
+//    public void cancelFollow(Subscriber<BaseBean> subscriber, String id) {
+//        followService.cancelFollow(id)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(subscriber);
+//    }
 
     @Override
-    public void cancelFollow(Subscriber<BaseBean> subscriber, String id) {
-        followService.cancelFollow(id)
+    public void cancelFollow(Subscriber<BaseBean> subscriber, String id, String type) {
+        followService.cancelFollow(id,type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

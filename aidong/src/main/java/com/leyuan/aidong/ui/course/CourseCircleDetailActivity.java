@@ -20,6 +20,7 @@ import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CommentBean;
+import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
@@ -37,13 +38,13 @@ import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
-import com.leyuan.aidong.ui.home.activity.ConfirmOrderCourseActivity;
+import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
-import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
+import com.leyuan.aidong.ui.mvp.view.CourseVideoView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
@@ -57,7 +58,6 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.R.id.txt_share;
 import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
@@ -72,7 +72,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * Created by user on 2018/1/9.
  */
 
-public class CourseCircleDetailActivity extends BaseActivity implements SportCircleFragmentView,CourseDetailActivityView, View.OnClickListener {
+public class CourseCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, CourseDetailActivityView, View.OnClickListener, CourseVideoView {
     //    private SwitcherLayout switcherLayout;
 //    private CustomRefreshLayout refreshLayout;
     TextView txt_share_image, txt_appoint_immediately;
@@ -83,18 +83,20 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     private DynamicBean invokeDynamicBean;
 
     private int currPage = 1;
-    private DynamicPresent dynamicPresent;
+    private DynamicPresentImpl dynamicPresent;
 
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
     private ImageButton bt_share;
     CoursePresentImpl coursePresent;
-    String id="1";
+    String id = "1", type = Constant.COURSE;
     private CourseCircleHeaderView headView;
+    private CourseDetailBean courseDetailBean;
+
 
     public static void start(Context context, String id) {
-        Intent intent = new Intent(context,CourseCircleDetailActivity.class);
-        intent.putExtra("id",id);
+        Intent intent = new Intent(context, CourseCircleDetailActivity.class);
+        intent.putExtra("id", id);
         context.startActivity(intent);
     }
 
@@ -110,9 +112,15 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         initRecyclerView();
         sharePopupWindow = new SharePopupWindow(this);
 //        dynamicPresent.commonLoadData(switcherLayout);
-        dynamicPresent.pullToRefreshData();
-        coursePresent = new CoursePresentImpl(this,this);
+        dynamicPresent.pullToRefreshRelativeDynamics(type, id);
+
+
+        coursePresent = new CoursePresentImpl(this, this);
+        coursePresent.setCourseVideoViewListener(this);
+
         coursePresent.getCourseDetail(id);
+
+        coursePresent.getRelateCourseVideo(id, null);
     }
 
     private void initView() {
@@ -168,7 +176,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         public void onLoadNextPage(View view) {
             currPage++;
             if (dynamicList != null && dynamicList.size() >= pageSize) {
-                dynamicPresent.requestMoreData(recyclerView, pageSize, currPage);
+                dynamicPresent.requestMoreRelativeData(recyclerView, pageSize, currPage, type, id);
             }
         }
     };
@@ -201,7 +209,8 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                         "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
                 break;
             case R.id.txt_appoint_immediately:
-                ConfirmOrderCourseActivity.start(this, null);
+
+                CourseListActivityNew.start(this,courseDetailBean.getCategory());
                 break;
         }
     }
@@ -221,7 +230,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         currPage = 1;
 //        refreshLayout.setRefreshing(true);
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        dynamicPresent.pullToRefreshData();
+        dynamicPresent.pullToRefreshRelativeDynamics(type, id);
     }
 
     @Override
@@ -237,7 +246,14 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
     @Override
     public void setCourseDetail(CourseDetailBean courseDetailBean) {
+        this.courseDetailBean = courseDetailBean;
         headView.setData(courseDetailBean);
+    }
+
+
+    @Override
+    public void updateRelateVideo(String title, List<CourseVideoBean> videos) {
+        headView.setRelativeVideoData(videos);
     }
 
     @Override
@@ -295,7 +311,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_LOGIN) {
-                dynamicPresent.pullToRefreshData();
+                dynamicPresent.pullToRefreshRelativeDynamics(type, id);
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
                 startActivityForResult(new Intent(this, DynamicDetailActivity.class)
                         .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
@@ -307,7 +323,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 dynamicList.add(clickPosition, dynamicBean);
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
-            }else if (resultCode == RESULT_DELETE) {
+            } else if (resultCode == RESULT_DELETE) {
                 dynamicList.remove(clickPosition);
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyDataSetChanged();
@@ -325,15 +341,11 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     }
 
 
-
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         sharePopupWindow.release();
     }
-
 
 
 

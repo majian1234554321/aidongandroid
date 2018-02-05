@@ -245,6 +245,23 @@ public class SearchPresentImpl implements SearchPresent{
         },keyword, Constant.PAGE_FIRST);
     }
 
+    public void commonSearcjUser(final SwitcherLayout switcherLayout, String keyword) {
+        searchModel.searchUserIt(new CommonSubscriber<UserData>(context,switcherLayout) {
+            @Override
+            public void onNext(UserData userData) {
+                if(userData != null){
+                    userList = userData.getUser();
+                }
+                if(userList.isEmpty()){
+                    userView.showEmptyView();
+                }else {
+                    switcherLayout.showContentLayout();
+                    userView.onRecyclerViewRefresh(userList);
+                }
+            }
+        },keyword, Constant.PAGE_FIRST);
+    }
+
     @Override
     public void commonLoadVenuesData(final SwitcherLayout switcherLayout, String keyword) {
         searchModel.searchVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
@@ -473,7 +490,7 @@ public class SearchPresentImpl implements SearchPresent{
                     userView.addFollowResult(baseBean);
                 }
             }
-        },id);
+        },id,Constant.USER);
     }
 
     @Override
@@ -488,6 +505,6 @@ public class SearchPresentImpl implements SearchPresent{
                     userView.cancelFollowResult(baseBean);
                 }
             }
-        },id);
+        },id,Constant.USER);
     }
 }

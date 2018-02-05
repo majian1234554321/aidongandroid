@@ -28,17 +28,39 @@ public interface FollowService {
      * @param type followings:我关注的人 followers:关注我的人
      * @return 用户集合
      */
-    @GET("mine/{type}")
-    Observable<BaseBean<FollowData>> getFollow(@Path("type") String type, @Query("page") int page);
+//    @GET("mine/{type}")
+//    Observable<BaseBean<FollowData>> getFollow(@Path("type") String type, @Query("page") int page);
+
+    @GET("mine/followings")
+    Observable<BaseBean<FollowData>> getFollow(@Query("list") String type, @Query("page") int page);
+
+//    /**
+//     * 添加关注
+//     * @param id 关注的用户id
+//     * @return 状态
+//     */
+//    @FormUrlEncoded
+//    @POST("mine/followings")
+//    Observable<BaseBean> addFollow(@Field("following_id") String id);
 
     /**
      * 添加关注
-     * @param id 关注的用户id
-     * @return 状态
+     * @param id 关注的id
+     * @param type :"user","coach","campaign","course"
+     * @return
      */
     @FormUrlEncoded
     @POST("mine/followings")
-    Observable<BaseBean> addFollow(@Field("following_id") String id);
+    Observable<BaseBean> addFollow(@Field("following_id") String id,@Field("type") String type);
+
+//
+//    /**
+//     * 取消关注
+//     * @param id 取消关注的用户id
+//     * @return 状态
+//     */
+//    @DELETE("mine/followings/{id}")
+//    Observable<BaseBean> cancelFollow(@Path("id") String id);
 
 
     /**
@@ -47,7 +69,7 @@ public interface FollowService {
      * @return 状态
      */
     @DELETE("mine/followings/{id}")
-    Observable<BaseBean> cancelFollow(@Path("id") String id);
+    Observable<BaseBean> cancelFollow(@Path("id") String id,@Query("type") String type);
 
 
 //    @GET("mine/followings")
@@ -65,6 +87,8 @@ public interface FollowService {
 
     @GET("more_coach")
     Observable<BaseBean<FollowUserData>> getRecommendCoachList(@Query("page") int page);
+
+
 
 
 }

@@ -222,7 +222,7 @@ public class CampaignPresentImpl implements CampaignPresent {
 
     @Override
     public void buyCampaign(String id, String couponId, float integral, String payType, String contactName,
-                            String contactMobile, final PayInterface.PayListener listener) {
+                            String contactMobile, final PayInterface.PayListener listener, String amount) {
         if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
@@ -234,7 +234,7 @@ public class CampaignPresentImpl implements CampaignPresent {
 
 
             }
-        }, id, couponId, integral, payType, contactName, contactMobile);
+        }, id, couponId, integral, payType, contactName, contactMobile, amount);
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.leyuan.aidong.utils.FormatUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * 用户
@@ -27,8 +28,32 @@ public class UserBean implements Parcelable, Serializable {
     public String user_id;
     public String personal_intro;
     public String type;
-    public int follows_count;
+    public int followers_count;
 
+    public String simple_intro;
+    public String image;
+
+    public int strength;
+    public ArrayList<String> tags;
+
+    private StringBuffer tagString = new StringBuffer();
+
+    public StringBuffer getTagString() {
+        if (tagString == null) {
+            tagString = new StringBuffer();
+        }
+        if (tagString.length() == 0 && tags != null) {
+            for (int i = 0; i < tags.size(); i++) {
+                if (i < tags.size() - 1) {
+                    tagString.append(tags.get(i)).append(" | ");
+                } else {
+                    tagString.append(tags.get(i));
+                }
+
+            }
+        }
+        return tagString;
+    }
 
     public UserBean(String id) {
         this.id = id;

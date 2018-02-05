@@ -203,8 +203,8 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                     ToastGlobal.showLong("请先绑定手机");
                 } else {
                     DialogUtils.showDialog(this, "", false);
-                    campaignPresent.buyCampaign(course.getCampaignId(), couponId, integral,
-                            payType, userCoach.getName(), userCoach.getMobile(), payListener);
+                    campaignPresent.buyCampaign(course.skucode, couponId, integral,
+                            payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount);
                 }
                 break;
         }

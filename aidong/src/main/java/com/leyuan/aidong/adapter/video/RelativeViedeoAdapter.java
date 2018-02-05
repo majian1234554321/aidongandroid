@@ -9,6 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CourseVideoBean;
+import com.leyuan.aidong.ui.course.CourseVideoDetailActivityNew;
+import com.leyuan.aidong.utils.GlideLoader;
+
+import java.util.List;
 
 /**
  * Created by user on 2018/1/4.
@@ -17,6 +22,7 @@ public class RelativeViedeoAdapter extends RecyclerView.Adapter<RelativeViedeoAd
 
 
     private final Context context;
+    private List<CourseVideoBean> videos;
 
     public RelativeViedeoAdapter(Context context) {
         this.context = context;
@@ -30,13 +36,30 @@ public class RelativeViedeoAdapter extends RecyclerView.Adapter<RelativeViedeoAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(RelativeViedeoAdapter.ViewHolder holder, int position) {
+        final CourseVideoBean bean = videos.get(position);
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.img_cover);
+        holder.txtSubTitle.setText(bean.getIntroduce());
+        holder.txtTitle.setText(bean.getName());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CourseVideoDetailActivityNew.start(context, bean.getId());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 9;
+        if (videos == null)
+            return 0;
+        return videos.size();
+    }
+
+    public void setData(List<CourseVideoBean> videos) {
+        this.videos = videos;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

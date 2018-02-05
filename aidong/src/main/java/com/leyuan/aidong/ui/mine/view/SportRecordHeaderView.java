@@ -43,5 +43,7 @@ public class SportRecordHeaderView extends RelativeLayout {
         txtGoCourseNum = (TextView) view.findViewById(R.id.txt_go_course_num);
         txtClassTotalTime = (TextView) view.findViewById(R.id.txt_class_total_time);
         txtExpendCal = (TextView) view.findViewById(R.id.txt_expend_cal);
+
+        txtSportRecord.setVisibility(GONE);
     }
 }

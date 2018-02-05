@@ -160,7 +160,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
             public void onNext(BaseBean baseBean) {
                 userInfoActivityView.addFollowResult(baseBean);
             }
-        }, userId);
+        }, userId,Constant.USER);
 
     }
 
@@ -175,7 +175,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
             public void onNext(BaseBean baseBean) {
                 userInfoActivityView.cancelFollowResult(baseBean);
             }
-        }, userId);
+        }, userId,Constant.USER);
     }
 
 

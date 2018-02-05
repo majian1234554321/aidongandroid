@@ -10,7 +10,9 @@ import com.leyuan.aidong.entity.data.VenuesData;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -58,4 +60,10 @@ public interface SearchService {
     Observable<BaseBean<UserData>> searchUser(@Field("keyword") String keyword,
                                               @Field("cat") String category,
                                               @Field("page") int page);
+
+
+    @GET("discoveries/search_person")
+    Observable<BaseBean<UserData>> searchUser(@Query("keyword") String keyword,
+                                              @Query("page") int page);
+
 }

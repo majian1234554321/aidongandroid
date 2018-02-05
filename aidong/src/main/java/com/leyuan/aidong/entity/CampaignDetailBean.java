@@ -40,6 +40,7 @@ public class CampaignDetailBean implements Parcelable {
     public String skuPrice;
 
     public GoodsSpecBean spec;//规格
+    public boolean followed;
 
 
 

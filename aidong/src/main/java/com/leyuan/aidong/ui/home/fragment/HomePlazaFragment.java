@@ -31,6 +31,7 @@ import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BasePageFragment;
+import com.leyuan.aidong.ui.discover.activity.DiscoverUserActivity;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
@@ -39,12 +40,15 @@ import com.leyuan.aidong.ui.home.view.PersonHorizontalView;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
+import com.leyuan.aidong.ui.mvp.view.UserInfoView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -70,7 +74,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * 爱动圈
  * Created by song on 2016/12/26.
  */
-public class HomePlazaFragment extends BasePageFragment implements SportCircleFragmentView {
+public class HomePlazaFragment extends BasePageFragment implements SportCircleFragmentView, UserInfoView {
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -102,6 +106,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
             Logger.i(TAG, "onReceive action = " + intent.getAction());
         }
     };
+    private PersonHorizontalView headView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,10 +129,15 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         return view;
     }
 
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharePopupWindow = new SharePopupWindow(getActivity());
+
+
+        DiscoverPresentImpl userPresent= new DiscoverPresentImpl(getActivity());
+        userPresent.getNearlyUserData(this);
     }
 
     @Override
@@ -169,8 +179,14 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         recyclerView.addOnScrollListener(onScrollListener);
 
         //重点
-        PersonHorizontalView headView = new PersonHorizontalView(getActivity());
+         headView = new PersonHorizontalView(getActivity());
         headView.setLeftTitle(getResources().getString(R.string.nealy_person));
+        headView.setCheckAllClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UiManager.activityJump(getActivity(), DiscoverUserActivity.class);
+            }
+        });
         RecyclerViewUtils.setHeaderView(recyclerView,headView);
     }
 
@@ -201,6 +217,11 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         dynamicList.addAll(dynamicBeanList);
         circleDynamicAdapter.updateData(dynamicList);
         wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onGetUserData(List<UserBean> followings) {
+        headView.setUserData(followings);
     }
 
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ import java.util.List;
  * 活动与课程已报名的人
  * Created by song on 2016/9/23.
  */
-public class AppointmentUserActivity extends BaseActivity implements UserAdapter.FollowListener,AppointmentUserActivityView {
+public class AppointmentUserActivity extends BaseActivity implements UserAdapter.FollowListener, AppointmentUserActivityView {
     private SimpleTitleBar titleBar;
     private RecyclerView rvUser;
     private RelativeLayout emptyLayout;
@@ -38,10 +39,18 @@ public class AppointmentUserActivity extends BaseActivity implements UserAdapter
     private int position;
     private UserAdapter userAdapter;
     private FollowPresent followPresent;
+    private String title;
 
-    public static void start(Context context,List<UserBean> userList) {
+    public static void start(Context context, List<UserBean> userList, String title) {
         Intent starter = new Intent(context, AppointmentUserActivity.class);
-        starter.putParcelableArrayListExtra("userList",(ArrayList)userList);
+        starter.putParcelableArrayListExtra("userList", (ArrayList) userList);
+        starter.putExtra("title", title);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context, List<UserBean> userList) {
+        Intent starter = new Intent(context, AppointmentUserActivity.class);
+        starter.putParcelableArrayListExtra("userList", (ArrayList) userList);
         context.startActivity(starter);
     }
 
@@ -49,21 +58,23 @@ public class AppointmentUserActivity extends BaseActivity implements UserAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_user);
-        followPresent = new FollowPresentImpl(this,this);
-        if(getIntent() != null){
+        followPresent = new FollowPresentImpl(this, this);
+        if (getIntent() != null) {
             data = getIntent().getParcelableArrayListExtra("userList");
+            title = getIntent().getStringExtra("title");
+
         }
-        titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
+        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         rvUser = (RecyclerView) findViewById(R.id.rv_user);
         emptyLayout = (RelativeLayout) findViewById(R.id.rl_empty);
         rvUser.setLayoutManager(new LinearLayoutManager(this));
         userAdapter = new UserAdapter(this);
         userAdapter.setFollowListener(this);
         rvUser.setAdapter(userAdapter);
-        if(data != null && !data.isEmpty()) {
+        if (data != null && !data.isEmpty()) {
             userAdapter.setData(data);
             emptyLayout.setVisibility(View.GONE);
-        }else {
+        } else {
             emptyLayout.setVisibility(View.VISIBLE);
         }
 
@@ -73,19 +84,22 @@ public class AppointmentUserActivity extends BaseActivity implements UserAdapter
                 finish();
             }
         });
+        if (!TextUtils.isEmpty(title)) {
+            titleBar.setTitle(title);
+        }
     }
 
     @Override
     public void onFollowClicked(int position) {
         this.position = position;
-        if(App.mInstance.isLogin()){
+        if (App.mInstance.isLogin()) {
             UserBean userBean = data.get(position);
-            if(SystemInfoUtils.isFollow(this,userBean)){
+            if (SystemInfoUtils.isFollow(this, userBean)) {
                 followPresent.cancelFollow(userBean.getId());
-            }else {
+            } else {
                 followPresent.addFollow(userBean.getId());
             }
-        }else {
+        } else {
             startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
         }
     }
@@ -99,8 +113,8 @@ public class AppointmentUserActivity extends BaseActivity implements UserAdapter
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == Constant.REQUEST_LOGIN){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constant.REQUEST_LOGIN) {
                 userAdapter.notifyDataSetChanged();
             }
         }
@@ -108,23 +122,23 @@ public class AppointmentUserActivity extends BaseActivity implements UserAdapter
 
     @Override
     public void addFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             SystemInfoUtils.addFollow(data.get(position));
             userAdapter.notifyDataSetChanged();
-            Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,R.string.follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.follow_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             SystemInfoUtils.removeFollow(data.get(position));
             userAdapter.notifyDataSetChanged();
-            Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,R.string.cancel_follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

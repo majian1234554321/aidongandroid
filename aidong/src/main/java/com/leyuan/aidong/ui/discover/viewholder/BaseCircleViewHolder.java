@@ -1,6 +1,8 @@
 package com.leyuan.aidong.ui.discover.viewholder;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,15 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.baseadapter.BaseRecyclerViewHolder;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
+import com.leyuan.aidong.adapter.discover.DynamicLikeAdapter;
 import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.discover.activity.CMDMessageActivity;
+import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
+import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
@@ -52,6 +57,8 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private TextView txtLocation;
     private TextView txtParse;
     private TextView txtComment;
+    private RecyclerView likesRecyclerView;
+    private LinearLayout likeLayout;
 
 
     protected IDynamicCallback callback;
@@ -92,7 +99,8 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         txtParse = (TextView) itemView.findViewById(R.id.txt_parse);
         txtComment = (TextView) itemView.findViewById(R.id.txt_comment);
 
-
+        likeLayout = (LinearLayout) itemView.findViewById(R.id.like_layout);
+        likesRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_likes);
     }
 
 
@@ -128,10 +136,21 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             if (showFollowButton) {
                 ivFollow.setVisibility(View.VISIBLE);
                 boolean isFollow = SystemInfoUtils.isFollow(context, dynamic.publisher.getId());
-                ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following : R.drawable.icon_follow);
+                ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_followed : R.drawable.icon_follow);
             } else {
                 ivFollow.setVisibility(View.GONE);
             }
+        }
+
+        if (dynamic.like !=null && dynamic.like.counter > 0 && (context instanceof DynamicDetailActivity || context instanceof DynamicDetailByIdActivity)) {
+            likeLayout.setVisibility(View.VISIBLE);
+            likesRecyclerView.setLayoutManager(new LinearLayoutManager
+                    (context, LinearLayoutManager.HORIZONTAL, false));
+            DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context, dynamic.id);
+            likeAdapter.setData(dynamic.like.item, dynamic.like.counter);
+            likesRecyclerView.setAdapter(likeAdapter);
+        } else {
+            likeLayout.setVisibility(View.GONE);
         }
 
         onBindDataToChildView(dynamic, position, dynamic.getDynamicType());

@@ -58,7 +58,7 @@ public class UserParseAdapter extends RecyclerView.Adapter<UserParseAdapter.User
             UserBean userBean = new UserBean();
             userBean.setId(bean.getId());
             holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, userBean)
-                    ? R.drawable.icon_following : R.drawable.icon_follow);
+                    ? R.drawable.icon_followed : R.drawable.icon_follow);
         }
 
         if ("0".equals(bean.getGender())) {   //男

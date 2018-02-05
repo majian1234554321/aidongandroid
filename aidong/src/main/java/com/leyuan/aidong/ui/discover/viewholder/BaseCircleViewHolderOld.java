@@ -126,7 +126,7 @@ public abstract class BaseCircleViewHolderOld extends BaseRecyclerViewHolder<Dyn
             if (showFollowButton) {
                 ivFollow.setVisibility(View.VISIBLE);
                 boolean isFollow = SystemInfoUtils.isFollow(context, dynamic.publisher.getId());
-                ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following : R.drawable.icon_follow);
+                ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_followed : R.drawable.icon_follow);
             } else {
                 ivFollow.setVisibility(View.GONE);
             }

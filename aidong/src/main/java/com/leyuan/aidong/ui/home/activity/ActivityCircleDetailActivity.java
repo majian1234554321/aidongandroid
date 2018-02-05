@@ -43,7 +43,6 @@ import com.leyuan.aidong.ui.home.view.ActivityCircleHeaderView;
 import com.leyuan.aidong.ui.home.view.ActivitySkuPopupWindow;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
-import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
@@ -89,16 +88,17 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
     private DynamicBean invokeDynamicBean;
 
     private int currPage = 1;
-    private DynamicPresent dynamicPresent;
+    private DynamicPresentImpl dynamicPresent;
 
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
     private ActivitySkuPopupWindow skuPopupWindow;
     private CampaignPresentImpl campaignPresent;
-    private String id;
+    String id = "1", type = Constant.CAMPAIGN;
     ActivityCircleHeaderView headView;
     private CampaignDetailBean campaignDetailBean;
     private String selectedCount;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,10 +111,11 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         initSwipeRefreshLayout();
         initRecyclerView();
         sharePopupWindow = new SharePopupWindow(this);
-//        dynamicPresent.commonLoadData(switcherLayout);
         campaignPresent = new CampaignPresentImpl(this, this);
         campaignPresent.getCampaignDetail(id);
-        dynamicPresent.pullToRefreshData();
+
+
+        dynamicPresent.pullToRefreshRelativeDynamics(type, id);
 
 
     }
@@ -124,8 +125,12 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         layout_title = (CommonTitleLayout) findViewById(R.id.layout_title);
         txt_share_image = (TextView) findViewById(R.id.txt_share_image);
         txt_appoint_immediately = (TextView) findViewById(R.id.txt_appoint_immediately);
+        txt_appoint_immediately.setText(R.string.appoint_sign_up);
 
+        layout_title.setLeftIconListener(this);
+        layout_title.setRightIconListener(this);
         txt_share_image.setOnClickListener(this);
+
         txt_appoint_immediately.setOnClickListener(this);
     }
 
@@ -171,7 +176,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         public void onLoadNextPage(View view) {
             currPage++;
             if (dynamicList != null && dynamicList.size() >= pageSize) {
-                dynamicPresent.requestMoreData(recyclerView, pageSize, currPage);
+                dynamicPresent.requestMoreRelativeData(recyclerView, pageSize, currPage, type, id);
             }
         }
     };
@@ -181,7 +186,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         currPage = 1;
 //        refreshLayout.setRefreshing(true);
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        dynamicPresent.pullToRefreshData();
+        dynamicPresent.pullToRefreshRelativeDynamics(type, id);
     }
 
     @Override
@@ -198,6 +203,13 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.img_left:
+                finish();
+                break;
+            case R.id.img_right:
+                sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
+                        "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
+                break;
             case R.id.txt_share_image:
                 if (App.mInstance.isLogin()) {
                     new MaterialDialog.Builder(this)
@@ -230,7 +242,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     } else {
                         showSkuPopupWindow(ActivitySkuPopupWindow.GoodsStatus.ConfirmToBuy);
                     }
-                }else{
+                } else {
                     //直接到订单界面
 
                 }
@@ -352,7 +364,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_LOGIN) {
-                dynamicPresent.pullToRefreshData();
+                dynamicPresent.pullToRefreshRelativeDynamics(type, id);
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
                 startActivityForResult(new Intent(this, DynamicDetailActivity.class)
                         .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
@@ -393,6 +405,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         intent.putExtra("id", id);
         context.startActivity(intent);
     }
+
 
 
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {

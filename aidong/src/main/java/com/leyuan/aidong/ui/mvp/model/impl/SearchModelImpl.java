@@ -94,6 +94,13 @@ public class SearchModelImpl implements SearchModel {
     }
 
     @Override
+    public void searchUserIt(Subscriber<UserData> subscriber, String keyword, int page) {
+        searchService.searchUser(keyword, page)
+                .compose(RxHelper.<UserData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
     public List<SearchHistoryBean> getSearchHistory() {
         return realm.where(SearchHistoryBean.class).findAll();
     }

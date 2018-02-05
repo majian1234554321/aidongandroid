@@ -33,6 +33,7 @@ import com.leyuan.aidong.ui.mvp.view.AppointCourseActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseVideoDetailActivityView;
+import com.leyuan.aidong.ui.mvp.view.CourseVideoView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.ui.mvp.view.RelatedVideoActivityView;
 import com.leyuan.aidong.utils.Constant;
@@ -54,7 +55,7 @@ public class CoursePresentImpl implements CoursePresent {
     private FollowModel followModel;
     private CouponModel couponModel;
 
-    private List<CourseBeanNew> courseBeanList;
+    private ArrayList<CourseBeanNew> courseBeanList;
     private CourserFragmentView courserFragmentView;                //课程列表View层对象
     private CourseActivityView coursesActivityView;                 //课程列表View层对象
     private CourseDetailActivityView courseDetailActivityView;      //课程详情View层对象
@@ -62,6 +63,7 @@ public class CoursePresentImpl implements CoursePresent {
     private CourseVideoDetailActivityView videoDetailActivityView;
     private RelatedVideoActivityView relatedVideoActivityView;
     private ShareData.ShareCouponInfo shareCouponInfo = new ShareData().new ShareCouponInfo();
+    private CourseVideoView courseVideoView;
 
 
     public CoursePresentImpl(Context context, RelatedVideoActivityView view) {
@@ -164,7 +166,7 @@ public class CoursePresentImpl implements CoursePresent {
                     courserFragmentView.showEndFooterView();
                 }
             }
-        }, day, category, landmark, pageSize);
+        }, day, category, landmark, page);
     }
 
     @Override
@@ -266,7 +268,7 @@ public class CoursePresentImpl implements CoursePresent {
                     courseDetailActivityView.addFollowResult(baseBean);
                 }
             }
-        }, id);
+        }, id,Constant.COURSE);
     }
 
     @Override
@@ -281,7 +283,7 @@ public class CoursePresentImpl implements CoursePresent {
                     courseDetailActivityView.cancelFollowResult(baseBean);
                 }
             }
-        }, id);
+        }, id,Constant.COURSE);
     }
 
     @Override
@@ -328,23 +330,31 @@ public class CoursePresentImpl implements CoursePresent {
             @Override
             public void onStart() {
                 super.onStart();
-                videoDetailActivityView.showLoadingView();
+                if (videoDetailActivityView != null)
+                    videoDetailActivityView.showLoadingView();
             }
 
 
             @Override
             public void onNext(CourseVideoData courseVideoData) {
                 if (courseVideoData != null && !courseVideoData.getVideos().isEmpty()) {
-                    videoDetailActivityView.updateRelateVideo(courseVideoData.getTitle(), courseVideoData.getVideos());
+                    if (videoDetailActivityView != null)
+                        videoDetailActivityView.updateRelateVideo(courseVideoData.getTitle(), courseVideoData.getVideos());
                 }
 
-                videoDetailActivityView.showContentView();
+                if (videoDetailActivityView != null)
+                    videoDetailActivityView.showContentView();
+
+                if(courseVideoView != null){
+                    courseVideoView.updateRelateVideo(courseVideoData.getTitle(), courseVideoData.getVideos());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                videoDetailActivityView.showErrorView();
+                if (videoDetailActivityView != null)
+                    videoDetailActivityView.showErrorView();
             }
 
         }, "relation", id, 1, videoId);
@@ -391,4 +401,7 @@ public class CoursePresentImpl implements CoursePresent {
         }, "all", id, page, videoId);
     }
 
+    public void setCourseVideoViewListener(CourseVideoView courseVideoView) {
+        this.courseVideoView = courseVideoView;
+    }
 }

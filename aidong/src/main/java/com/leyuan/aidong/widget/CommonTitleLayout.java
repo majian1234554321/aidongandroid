@@ -59,6 +59,10 @@ public class CommonTitleLayout extends RelativeLayout {
         txtRight.setOnClickListener(rightTextListener);
     }
 
+    public void setRightIconListener(OnClickListener leftIconListener) {
+        imgRight.setOnClickListener(leftIconListener);
+    }
+
     public void setleftIconVisible(boolean visible) {
         if (visible) {
             imgLeft.setVisibility(View.VISIBLE);

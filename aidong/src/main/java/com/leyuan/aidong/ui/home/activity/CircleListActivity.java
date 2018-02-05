@@ -74,6 +74,13 @@ public class CircleListActivity extends BaseActivity implements SmartTabLayout.T
             }
         });
         viewPager.setCurrentItem(position);
+
+        findViewById(R.id.img_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

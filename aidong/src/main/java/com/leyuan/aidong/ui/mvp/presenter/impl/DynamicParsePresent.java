@@ -10,6 +10,7 @@ import com.leyuan.aidong.ui.mvp.model.FollowModel;
 import com.leyuan.aidong.ui.mvp.model.impl.DynamicModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicParseUserView;
+import com.leyuan.aidong.utils.Constant;
 
 /**
  * Created by user on 2017/3/22.
@@ -46,7 +47,7 @@ public class DynamicParsePresent {
                     dynamicParseUserView.addFollowResult(baseBean);
                 }
             }
-        }, id);
+        }, id, Constant.DYNAMIC);
     }
 
     public void cancelFollow(String id) {
@@ -57,6 +58,6 @@ public class DynamicParsePresent {
                     dynamicParseUserView.cancelFollowResult(baseBean);
                 }
             }
-        }, id);
+        }, id,Constant.DYNAMIC);
     }
 }

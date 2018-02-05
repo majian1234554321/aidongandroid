@@ -11,20 +11,21 @@ import java.util.List;
  */
 public class FollowData implements Serializable{
 
+    private List<UserBean> followings;
     private List<UserBean> user;
 
     public List<UserBean> getFollow() {
-        return user;
+        return followings;
     }
 
     public void setFollower(List<UserBean> follower) {
-        this.user = follower;
+        this.followings = follower;
     }
 
     @Override
     public String toString() {
         return "FollowData{" +
-                "follower=" + user +
+                "follower=" + followings +
                 '}';
     }
 }

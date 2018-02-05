@@ -31,17 +31,21 @@ public interface FollowModel {
     void getFollow(Subscriber<FollowData> subscriber, String type, int page);
 
 
-    /**
-     * 添加关注
-     * @param subscriber Subscriber
-     * @param id 用户id
-     */
-    void addFollow(Subscriber<BaseBean> subscriber,String id);
+//    /**
+//     * 添加关注
+//     * @param subscriber Subscriber
+//     * @param id 用户id
+//     */
+//    void addFollow(Subscriber<BaseBean> subscriber,String id);
+//
+//    /**
+//     * 取消关注
+//     * @param subscriber Subscriber
+//     * @param id 用户id
+//     */
+//    void cancelFollow(Subscriber<BaseBean> subscriber,String id);
 
-    /**
-     * 取消关注
-     * @param subscriber Subscriber
-     * @param id 用户id
-     */
-    void cancelFollow(Subscriber<BaseBean> subscriber,String id);
+    void addFollow(Subscriber<BaseBean> subscriber, String id, String type);
+
+    void cancelFollow(Subscriber<BaseBean> subscriber, String id, String type);
 }

@@ -75,7 +75,7 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
     public void onBindViewHolder(UserHolder holder, int position) {
         if (getItemViewType(position) == TYPE_USER) {
             final UserBean bean = data.get(position);
-            GlideLoader.getInstance().displayRoundAvatarImage(bean.getAvatar(), holder.avatar);
+            GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.avatar);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

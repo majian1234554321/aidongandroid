@@ -13,10 +13,11 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.fragment.CircleActivityListFragment;
-import com.leyuan.aidong.ui.home.fragment.CircleCoachListFragment;
-import com.leyuan.aidong.ui.home.fragment.CircleCourseListFragment;
+import com.leyuan.aidong.ui.mine.fragment.MyAttentionCampaignListFragment;
+import com.leyuan.aidong.ui.mine.fragment.MyAttentionCourseListFragment;
+import com.leyuan.aidong.ui.mine.fragment.MyAttentionUserListFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -50,10 +51,13 @@ public class MyAttentionListActivity extends BaseActivity implements SmartTabLay
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
 
-        pages.add(FragmentPagerItem.of(null,CircleCourseListFragment.class));
-        pages.add(FragmentPagerItem.of(null,CircleActivityListFragment.class));
-        pages.add(FragmentPagerItem.of(null,CircleCoachListFragment.class));
-        pages.add(FragmentPagerItem.of(null,CircleCoachListFragment.class));
+        pages.add(FragmentPagerItem.of(null,MyAttentionCourseListFragment.class));
+        pages.add(FragmentPagerItem.of(null,MyAttentionCampaignListFragment.class));
+        pages.add(FragmentPagerItem.of(null,MyAttentionUserListFragment.class,new Bundler().
+                putString("type", "coaches").putString("type_cancel","coach").get()));
+
+        pages.add(FragmentPagerItem.of(null,MyAttentionUserListFragment.class,new Bundler().
+                putString("type", "follows").putString("type_cancel","user").get()));
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);
@@ -73,6 +77,12 @@ public class MyAttentionListActivity extends BaseActivity implements SmartTabLay
         });
 
         viewPager.setCurrentItem(position);
+        findViewById(R.id.img_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

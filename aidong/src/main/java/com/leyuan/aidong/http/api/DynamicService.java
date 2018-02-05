@@ -1,14 +1,11 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.DynamicsSingleData;
 import com.leyuan.aidong.entity.data.LikeData;
-
-import java.util.ArrayList;
 
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -32,8 +29,14 @@ public interface DynamicService {
     @GET("dynamics")
     Observable<BaseBean<DynamicsData>> getDynamics(@Query("page") int page);
 
+    @GET("dynamics/related_dynamic")
+    Observable<BaseBean<DynamicsData>> getRelativeDynamics(@Query("type") String type,
+                                                   @Query("link_id") String link_id,
+                                                   @Query("page") int page);
+
+
     @GET("mine/following_dynamic")
-    Observable<BaseBean<ArrayList<DynamicBean>>> getDynamicsFollow(@Query("page") int page);
+    Observable<BaseBean<DynamicsData>> getDynamicsFollow(@Query("page") int page);
 
 
     @FormUrlEncoded

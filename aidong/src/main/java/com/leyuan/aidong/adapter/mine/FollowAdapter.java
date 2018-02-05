@@ -53,7 +53,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
         holder.gender.setBackgroundResource("0".equals(bean.getGender()) ? R.drawable.icon_man
                 :R.drawable.icon_woman);
         holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, bean)
-                ? R.drawable.icon_following : R.drawable.icon_follow);
+                ? R.drawable.icon_followed : R.drawable.icon_follow);
 
         holder.follow.setOnClickListener(new View.OnClickListener() {
             @Override

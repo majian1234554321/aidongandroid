@@ -70,6 +70,8 @@ public interface SearchModel {
     void searchUser(Subscriber<UserData> subscriber, String keyword, int page);
 
 
+    void searchUserIt(Subscriber<UserData> subscriber, String keyword, int page);
+
     /**
      * 查找搜索历史
      */

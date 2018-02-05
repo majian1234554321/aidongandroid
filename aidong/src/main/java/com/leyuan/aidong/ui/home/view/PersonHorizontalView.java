@@ -11,12 +11,14 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.PersonHorizontalAdapter;
+import com.leyuan.aidong.entity.UserBean;
+
+import java.util.List;
 
 /**
  * Created by user on 2018/1/4.
  */
 public class PersonHorizontalView extends RelativeLayout {
-
 
 
     private TextView txtLeftTitle;
@@ -43,18 +45,13 @@ public class PersonHorizontalView extends RelativeLayout {
         txtCheckAll = (TextView) view.findViewById(R.id.txt_check_all);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
-
-
         LinearLayoutManager manager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(manager);
 
         adapter = new PersonHorizontalAdapter(context);
         recyclerView.setAdapter(adapter);
-        
-
 
     }
-
     
     public void setLeftTitle(String title){
         txtLeftTitle.setText(title);
@@ -62,5 +59,9 @@ public class PersonHorizontalView extends RelativeLayout {
 
     public void setCheckAllClickListener(OnClickListener onClickListener) {
         txtCheckAll.setOnClickListener(onClickListener);
+    }
+
+    public void setUserData(List<UserBean> userBeanList) {
+        adapter.setData(userBeanList);
     }
 }

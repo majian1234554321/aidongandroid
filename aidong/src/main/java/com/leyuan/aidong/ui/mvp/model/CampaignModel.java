@@ -35,9 +35,10 @@ public interface CampaignModel {
      * @param payType 支付类型
      * @param contactName 联系人
      * @param contactMobile 联系电话
+     * @param amount
      */
-    void buyCampaign(Subscriber<PayOrderData> subscriber,String id,String couponId,float integral,
-                     String payType,String contactName,String contactMobile);
+    void buyCampaign(Subscriber<PayOrderData> subscriber, String id, String couponId, float integral,
+                     String payType, String contactName, String contactMobile, String amount);
 
 
     /**

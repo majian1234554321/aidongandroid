@@ -188,7 +188,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
                 break;
             case R.id.tv_count:         //查看报名的人
-                AppointmentUserActivity.start(this, bean.getApplicant());
+                AppointmentUserActivity.start(this, bean.getApplicant(), "关注的人");
                 break;
             case R.id.ll_apply:         //报名
                 bottomToTargetActivity();

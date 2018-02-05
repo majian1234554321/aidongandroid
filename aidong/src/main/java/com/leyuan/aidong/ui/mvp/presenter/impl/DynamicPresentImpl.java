@@ -99,11 +99,11 @@ public class DynamicPresentImpl implements DynamicPresent {
 
     @Override
     public void commonLoadDataFollow(final SwitcherLayout switcherLayout) {
-        dynamicModel.getDynamicsFollow(new CommonSubscriber<ArrayList<DynamicBean>>(context, switcherLayout) {
+        dynamicModel.getDynamicsFollow(new CommonSubscriber<DynamicsData>(context, switcherLayout) {
             @Override
-            public void onNext(ArrayList<DynamicBean> dynamicsData) {
+            public void onNext(DynamicsData dynamicsData) {
                 if (dynamicsData != null) {
-                    dynamicBeanList = dynamicsData;
+                    dynamicBeanList = dynamicsData.getDynamic();
                 }
                 if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
                     switcherLayout.showContentLayout();
@@ -131,13 +131,28 @@ public class DynamicPresentImpl implements DynamicPresent {
         }, Constant.PAGE_FIRST);
     }
 
+    public void pullToRefreshRelativeDynamics(String type,String link_id) {
+        dynamicModel.getRelativeDynamics(new RefreshSubscriber<DynamicsData>(context) {
+            @Override
+            public void onNext(DynamicsData dynamicsData) {
+                if (dynamicsData != null) {
+                    dynamicBeanList = dynamicsData.getDynamic();
+                }
+                if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
+                    sportCircleFragmentView.updateRecyclerView(dynamicBeanList);
+                }
+            }
+        },type,link_id, Constant.PAGE_FIRST);
+    }
+
+
     @Override
     public void pullToRefreshDataFollow() {
-        dynamicModel.getDynamicsFollow(new RefreshSubscriber<ArrayList<DynamicBean>>(context) {
+        dynamicModel.getDynamicsFollow(new RefreshSubscriber<DynamicsData>(context) {
             @Override
-            public void onNext(ArrayList<DynamicBean> dynamicsData) {
+            public void onNext(DynamicsData dynamicsData) {
                 if (dynamicsData != null) {
-                    dynamicBeanList = dynamicsData;
+                    dynamicBeanList = dynamicsData.getDynamic();
                 }
                 if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
                     sportCircleFragmentView.updateRecyclerView(dynamicBeanList);
@@ -163,6 +178,24 @@ public class DynamicPresentImpl implements DynamicPresent {
                 }
             }
         }, page);
+    }
+
+    public void requestMoreRelativeData(RecyclerView recyclerView, final int size, int page,String type,String link_id) {
+        dynamicModel.getRelativeDynamics(new RequestMoreSubscriber<DynamicsData>(context, recyclerView, size) {
+            @Override
+            public void onNext(DynamicsData dynamicsData) {
+                if (dynamicsData != null) {
+                    dynamicBeanList = dynamicsData.getDynamic();
+                }
+                if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
+                    sportCircleFragmentView.updateRecyclerView(dynamicBeanList);
+                }
+                //没有更多数据了显示到底提示
+                if (dynamicBeanList != null && dynamicBeanList.size() < size) {
+                    sportCircleFragmentView.showEndFooterView();
+                }
+            }
+        },type,link_id, page);
     }
 
 
@@ -329,7 +362,7 @@ public class DynamicPresentImpl implements DynamicPresent {
                     dynamicDetailActivityView.cancelFollowResult(baseBean);
                 }
             }
-        }, id);
+        }, id,Constant.DYNAMIC);
     }
 
     @Override
@@ -344,7 +377,7 @@ public class DynamicPresentImpl implements DynamicPresent {
                     dynamicDetailActivityView.addFollowResult(baseBean);
                 }
             }
-        }, id);
+        }, id,Constant.DYNAMIC);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.mvp.view;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 课程列表
@@ -14,7 +13,7 @@ public interface CourserFragmentView {
 
     void refreshRecyclerViewData(ArrayList<CourseBeanNew> courseList);
 
-    void loadMoreRecyclerViewData(List<CourseBeanNew> courseList);
+    void loadMoreRecyclerViewData(ArrayList<CourseBeanNew> courseList);
 
     /**
      * 显示FooterView，提示没有任何内容了

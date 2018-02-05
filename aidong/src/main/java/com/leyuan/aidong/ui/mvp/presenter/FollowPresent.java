@@ -41,9 +41,13 @@ public interface FollowPresent {
      */
     void addFollow(String id);
 
+    void addFollow(String id, String type);
+
     /**
      * 取消关注
      * @param id user id
      */
     void cancelFollow(String id);
+
+    void cancelFollow(String id, String type);
 }

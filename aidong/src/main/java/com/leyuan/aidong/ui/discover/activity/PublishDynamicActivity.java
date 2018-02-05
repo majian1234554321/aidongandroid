@@ -79,6 +79,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     private String type;
     private String link_id;
     private String position_name;
+    private String user_id;
+    private String name;
 
 
     public static void startForResult(Fragment fragment, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
@@ -302,6 +304,11 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 txtLocation.setText(position_name);
                 bt_location_delete.setVisibility(View.VISIBLE);
 
+
+            } else if (requestCode == REQUEST_USER) {
+                this.user_id = data.getStringExtra("user_id");
+                this.name = data.getStringExtra("name");
+                etContent.setText(etContent.getText().toString() + name);
 
             } else {
 

@@ -26,7 +26,6 @@ import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by user on 2018/1/10.
@@ -59,7 +58,7 @@ public class SportRecordFragment extends BaseFragment implements CourserFragment
 
         coursePresent = new CoursePresentImpl(getContext(), this);
 
-//        coursePresent.commendLoadData(switcherLayout, null, null, null);
+        coursePresent.commendLoadData(switcherLayout, null, null, null);
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -127,7 +126,7 @@ public class SportRecordFragment extends BaseFragment implements CourserFragment
     }
 
     @Override
-    public void loadMoreRecyclerViewData(List<CourseBeanNew> courseList) {
+    public void loadMoreRecyclerViewData(ArrayList<CourseBeanNew> courseList) {
         data.addAll(courseList);
         adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
@@ -143,12 +142,12 @@ public class SportRecordFragment extends BaseFragment implements CourserFragment
         if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
-        View view = View.inflate(getContext(), R.layout.empty_course, null);
-        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
-        refreshLayout.setProgressViewOffset(true, 50, 100);
-        refreshLayout.setOnRefreshListener(this);
-        switcherLayout.addCustomView(view, "empty");
-        switcherLayout.showCustomLayout("empty");
+//        View view = View.inflate(getContext(), R.layout.empty_course, null);
+//        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
+//        refreshLayout.setProgressViewOffset(true, 50, 100);
+//        refreshLayout.setOnRefreshListener(this);
+//        switcherLayout.addCustomView(view, "empty");
+//        switcherLayout.showCustomLayout("empty");
     }
 
 }

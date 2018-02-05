@@ -378,4 +378,6 @@
     <string name="login_or_register_immediately">立即登录/注册</string>
     <string name="discount_info">优惠信息</string>
     <string name="i_dong_self_support_store">爱动自营门店</string>
+    <string name="attention_success">关注成功</string>
+    <string name="attention_cancel_success">取消关注成功</string>
 </resources>

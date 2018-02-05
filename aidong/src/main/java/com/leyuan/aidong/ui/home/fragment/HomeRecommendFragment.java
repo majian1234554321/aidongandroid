@@ -22,11 +22,14 @@ import com.leyuan.aidong.adapter.CoachAttentionAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendActivityAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.HomeData;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.home.activity.CircleListActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomeRecommendPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.mvp.view.HomeRecommendView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -41,7 +44,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 /**
  * Created by user on 2017/12/28.
  */
-public class HomeRecommendFragment extends BaseFragment implements View.OnClickListener, HomeRecommendView {
+public class HomeRecommendFragment extends BaseFragment implements View.OnClickListener, HomeRecommendView, HomeRecommendCourseAdapter.OnAttentionClickListener, FollowView {
 
 
     private CustomRefreshLayout refreshLayout;
@@ -74,6 +77,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     private HomeRecommendCourseAdapter courseAdapter;
     private HomeRecommendActivityAdapter activityAdapter;
     private CoachAttentionAdapter coachAdapter;
+    FollowPresentImpl followPresent;
 
 
     @Override
@@ -139,6 +143,8 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         courseAdapter = new HomeRecommendCourseAdapter(getActivity());
         activityAdapter = new HomeRecommendActivityAdapter(getActivity());
         coachAdapter = new CoachAttentionAdapter(getActivity());
+        courseAdapter.setOnAttentionClickListener(this);
+
 
         rvCourse.setAdapter(courseAdapter);
         rvActivity.setAdapter(activityAdapter);
@@ -147,6 +153,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         txt_check_all_course.setOnClickListener(this);
         txt_check_all_coach.setOnClickListener(this);
         txtCheckAllActivity.setOnClickListener(this);
+
 
         homePresent = new HomeRecommendPresentImpl(getActivity(), this);
         homePresent.getRecommendList();
@@ -169,6 +176,13 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
             }
         });
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        followPresent = new FollowPresentImpl(getActivity());
+        followPresent.setFollowListener(this);
     }
 
     private void refreshData() {
@@ -195,7 +209,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onGetData(HomeData homeData) {
         refreshLayout.setRefreshing(false);
-        if(homeData == null) return;
+        if (homeData == null) return;
 
         if (homeData.getCourse() != null && !homeData.getCourse().isEmpty()) {
             courseAdapter.setData(homeData.getCourse());
@@ -217,6 +231,34 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
             llStarCoach.setVisibility(View.VISIBLE);
         } else {
             llStarCoach.setVisibility(View.GONE);
+        }
+
+    }
+
+
+    @Override
+    public void addFollowResult(BaseBean baseBean) {
+
+        if (baseBean.getStatus() == 1) {
+            homePresent.getRecommendList();
+        }
+
+    }
+
+    @Override
+    public void cancelFollowResult(BaseBean baseBean) {
+
+        if (baseBean.getStatus() == 1) {
+            homePresent.getRecommendList();
+        }
+    }
+
+    @Override
+    public void onCourseAttentionClick(String id, int position, boolean followed) {
+        if (followed) {
+            followPresent.cancelFollow(id, Constant.COURSE);
+        } else {
+            followPresent.addFollow(id, Constant.COURSE);
         }
 
     }

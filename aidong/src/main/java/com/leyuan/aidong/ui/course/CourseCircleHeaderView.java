@@ -21,14 +21,15 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.PersonHorizontalAdapter;
 import com.leyuan.aidong.adapter.home.PersonAttentionAdapter;
 import com.leyuan.aidong.adapter.video.DetailsRelativeViedeoAdapter;
+import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.entity.course.CourseDetailBean;
 import com.leyuan.aidong.ui.course.activity.RelativeVideoListActivity;
 import com.leyuan.aidong.ui.home.activity.AppointmentUserActivity;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.UiManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.leyuan.aidong.R.id.img_coach;
 import static com.leyuan.aidong.R.id.img_live_begin_or_end;
@@ -153,12 +154,14 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
                 break;
             case R.id.rootView:
+
                 break;
             case R.id.txt_bt_attention_num:
 
-                AppointmentUserActivity.start(context,course.getFollowers());
+                AppointmentUserActivity.start(context,course.getFollowers(),"关注的人");
                 break;
             case R.id.bt_attention:
+
                 break;
         }
     }
@@ -189,7 +192,9 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         rvRelateVideo.setAdapter(relativeViedeoAdapter);
         txtCheckAllVideo.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                UiManager.activityJump(context, RelativeVideoListActivity.class);
+                RelativeVideoListActivity.start(context,course.getId());
+
+//                UiManager.activityJump(context, RelativeVideoListActivity.class);
             }
         });
 
@@ -248,7 +253,18 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         txt_use_equipment.setText("使用机械: "+course.getInstrument());
         txt_target_population.setText("针对人群: " + course.getCrowd());
         txt_suggest_match_course.setText("建议课程搭配: " + course.getCollocation());
-        adapterAttentionPerson.setData(course.getFollowers());
+
+        if(course.getFollowers() != null && !course.getFollowers().isEmpty()){
+            adapterAttentionPerson.setData(course.getFollowers());
+        }else {
+            layoutAttention.setVisibility(GONE);
+        }
+
+
+    }
+
+    public void setRelativeVideoData(List<CourseVideoBean> videos) {
+        relativeViedeoAdapter.setData(videos);
 
     }
 }

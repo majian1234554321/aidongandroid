@@ -205,7 +205,7 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
         } else {
             tvTitle.setText("TA的资料");
             ivFollowOrEdit.setBackgroundResource(SystemInfoUtils.isFollow(this, userId)
-                    ? R.drawable.icon_following : R.drawable.icon_follow);
+                    ? R.drawable.icon_followed : R.drawable.icon_follow);
             if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
             }
@@ -408,7 +408,7 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
             SystemInfoUtils.addFollow(new UserBean(userId));
-            ivFollowOrEdit.setBackgroundResource(R.drawable.icon_following);
+            ivFollowOrEdit.setBackgroundResource(R.drawable.icon_followed);
         } else {
             Toast.makeText(this, "关注失败", Toast.LENGTH_LONG).show();
         }

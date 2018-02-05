@@ -169,4 +169,28 @@
 
     </RelativeLayout>
 
+
+    <LinearLayout
+        android:id="@+id/like_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="9.5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_parse" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="7.5dp" />
+    </LinearLayout>
+
+
 </LinearLayout>

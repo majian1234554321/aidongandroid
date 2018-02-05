@@ -24,6 +24,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 
     private final Context context;
     private ArrayList<CourseBeanNew> course;
+    private OnAttentionClickListener listener;
 
     public HomeRecommendCourseAdapter(Context context) {
         this.context = context;
@@ -37,12 +38,12 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final CourseBeanNew courseBean = course.get(position);
-        GlideLoader.getInstance().displayImage(courseBean.getCover(),holder.imgCoach);
+        GlideLoader.getInstance().displayImage(courseBean.getCover(), holder.imgCoach);
         holder.txtCourseName.setText(courseBean.getName());
-        holder.txtAttentionNum.setText(courseBean.getFollows_count()+"人关注");
-        holder.txtCourseDesc.setText(courseBean.getTagString()  );
+        holder.txtAttentionNum.setText(courseBean.getFollows_count() + "人关注");
+        holder.txtCourseDesc.setText(courseBean.getTagString());
 
         for (int i = 0; i < 5; i++) {
             if (i < courseBean.getStrength()) {
@@ -52,9 +53,9 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
             }
         }
 
-        if(courseBean.isFollowed()){
+        if (courseBean.isFollowed()) {
             holder.btAttention.setImageResource(R.drawable.icon_attented);
-        }else {
+        } else {
             holder.btAttention.setImageResource(R.drawable.icon_attention);
         }
 
@@ -62,14 +63,22 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseCircleDetailActivity.start(context,courseBean.getId());
+                CourseCircleDetailActivity.start(context, courseBean.getId());
+            }
+        });
+        holder.btAttention.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onCourseAttentionClick(courseBean.getId(),position,courseBean.isFollowed());
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        if(course == null)
+        if (course == null)
             return 0;
         return course.size();
     }
@@ -77,6 +86,10 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
     public void setData(ArrayList<CourseBeanNew> course) {
         this.course = course;
         notifyDataSetChanged();
+    }
+
+    public void setOnAttentionClickListener(OnAttentionClickListener listener) {
+        this.listener = listener;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -107,5 +120,10 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
             starList.add((ImageView) view.findViewById(R.id.img_star_four));
             starList.add((ImageView) view.findViewById(R.id.img_star_five));
         }
+    }
+
+
+    public interface OnAttentionClickListener {
+        void onCourseAttentionClick(String id, int position, boolean followed);
     }
 }
