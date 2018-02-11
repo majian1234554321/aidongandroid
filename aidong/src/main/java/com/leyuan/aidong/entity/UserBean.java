@@ -36,6 +36,9 @@ public class UserBean implements Parcelable, Serializable {
     public int strength;
     public ArrayList<String> tags;
 
+    public boolean followed;
+    public int follows_count;
+
     private StringBuffer tagString = new StringBuffer();
 
     public StringBuffer getTagString() {

@@ -29,6 +29,8 @@ public class ProfileBean implements Parcelable {
     private String user_type;
     private String popularity;
     private String phone;
+    public boolean followed;
+    public int follows_count;
 
     public String getPhone() {
         return phone;
@@ -230,6 +232,9 @@ public class ProfileBean implements Parcelable {
         dest.writeString(this.user_type);
         dest.writeString(this.popularity);
         dest.writeString(this.phone);
+        dest.writeByte(this.followed ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.follows_count);
+
     }
 
     protected ProfileBean(Parcel in) {
@@ -254,6 +259,8 @@ public class ProfileBean implements Parcelable {
         this.user_type = in.readString();
         this.popularity = in.readString();
         this.phone = in.readString();
+        this.followed = in.readByte() != 0;
+        this.follows_count = in.readInt();
     }
 
     public static final Creator<ProfileBean> CREATOR = new Creator<ProfileBean>() {

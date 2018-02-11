@@ -229,10 +229,10 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         this.position = position;
         if (App.mInstance.isLogin()) {
             UserBean userBean = data.get(position);
-            if (SystemInfoUtils.isFollow(this, userBean)) {
-                userPresent.cancelFollow(userBean.getId());
+            if (userBean.followed) {
+                userPresent.cancelFollow(userBean.getId(),userBean.type);
             } else {
-                userPresent.addFollow(userBean.getId());
+                userPresent.addFollow(userBean.getId(),userBean.type);
             }
         } else {
             startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);

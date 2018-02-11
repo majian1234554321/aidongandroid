@@ -12,7 +12,6 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.home.AdvertisementActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
-import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
@@ -126,10 +125,10 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
             mineInfoPresenter.setOnRequestResponse(requestResponse);
             mineInfoPresenter.getMineInfo();
 
-            FollowPresentImpl followPresent = new FollowPresentImpl(this);
-            followPresent.setOnRequestResponse(requestResponse);
-            followPresent.getFollowList();
-            httpRequestIndex = 5;
+//            FollowPresentImpl followPresent = new FollowPresentImpl(this);
+//            followPresent.setOnRequestResponse(requestResponse);
+//            followPresent.getFollowList();
+            httpRequestIndex = 4;
         }
     }
 

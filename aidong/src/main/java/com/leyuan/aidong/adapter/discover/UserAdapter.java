@@ -72,7 +72,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
                 holder.follow.setVisibility(View.GONE);
             } else {
                 holder.follow.setVisibility(View.VISIBLE);
-                holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, bean)
+                holder.follow.setBackgroundResource(bean.followed
                         ? R.drawable.icon_followed : R.drawable.icon_follow);
             }
         }

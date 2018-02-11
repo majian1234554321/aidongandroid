@@ -23,7 +23,12 @@ public interface UserInfoPresent {
 
 
     void addFollow(String userId);
-    void addLike(String userId,int position);
+
+    void addFollow(String userId, String type);
+
+    void cancelFollow(String userId, String type);
+
+    void addLike(String userId, int position);
 
     void cancelFollow(String userId);
     void cancelLike(String userId,int position);

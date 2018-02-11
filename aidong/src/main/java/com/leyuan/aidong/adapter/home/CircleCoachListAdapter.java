@@ -23,6 +23,7 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
 
     private final Context context;
     private List<UserBean> users;
+    private OnAttentionClickListener listener;
 
     public CircleCoachListAdapter(Context context) {
         this.context = context;
@@ -35,18 +36,28 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final UserBean user = users.get(position);
         GlideLoader.getInstance().displayCircleImage(user.getAvatar(), holder.imgAvatar);
         holder.txtCoachName.setText(user.getName());
         holder.txt_attention_num.setVisibility(View.VISIBLE);
         holder.txt_attention_num.setText(user.followers_count + "人关注");
         holder.txtIntro.setText(user.personal_intro);
+        holder.btAttention.setImageResource(user.followed?R.drawable.icon_followed:R.drawable.icon_follow);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CoachInfoActivity.start(context, user.getId());
+            }
+        });
+
+        holder.btAttention.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onCourseAttentionClick(user.getId(), position, user.followed);
+                }
             }
         });
     }
@@ -75,5 +86,14 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
             btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
             txt_attention_num = (TextView) view.findViewById(R.id.txt_attention_num);
         }
+    }
+
+
+    public void setOnAttentionClickListener(OnAttentionClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnAttentionClickListener {
+        void onCourseAttentionClick(String id, int position, boolean followed);
     }
 }

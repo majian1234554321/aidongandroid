@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignBean;
+import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.List;
@@ -44,7 +46,11 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCircleDetailActivity.start(context,bean.getId());
+                if (Constant.CAMPAIGN.equals(bean.type)) {
+                    ActivityCircleDetailActivity.start(context, bean.getId());
+                } else if (Constant.CONTEST.equals(bean.type)) {
+                    ContestHomeActivity.start(context, bean.getId());
+                }
             }
         });
     }

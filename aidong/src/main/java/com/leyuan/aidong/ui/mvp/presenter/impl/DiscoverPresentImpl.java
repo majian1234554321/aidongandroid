@@ -251,4 +251,34 @@ public class DiscoverPresentImpl implements DiscoverPresent {
         }, id,"user");
     }
 
+
+    @Override
+    public void addFollow(String id,String type) {
+        if (followModel == null) {
+            followModel = new FollowModelImpl();
+        }
+        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if (baseBean != null) {
+                    discoverUserActivityView.addFollowResult(baseBean);
+                }
+            }
+        }, id,type);
+    }
+
+    @Override
+    public void cancelFollow(String id,String type) {
+        if (followModel == null) {
+            followModel = new FollowModelImpl();
+        }
+        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if (baseBean != null) {
+                    discoverUserActivityView.cancelFollowResult(baseBean);
+                }
+            }
+        }, id,type);
+    }
 }

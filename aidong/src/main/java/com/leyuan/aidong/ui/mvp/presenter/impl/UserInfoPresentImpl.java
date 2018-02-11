@@ -179,6 +179,36 @@ public class UserInfoPresentImpl implements UserInfoPresent {
     }
 
 
+    @Override
+    public void addFollow(String userId,String type) {
+        if (followModel == null) {
+            followModel = new FollowModelImpl();
+        }
+
+        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                userInfoActivityView.addFollowResult(baseBean);
+            }
+        }, userId,type);
+
+    }
+
+    @Override
+    public void cancelFollow(String userId,String type) {
+        if (followModel == null) {
+            followModel = new FollowModelImpl();
+        }
+
+        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                userInfoActivityView.cancelFollowResult(baseBean);
+            }
+        }, userId,type);
+    }
+
+
 
     @Override
     public void addLike(String id, final int position) {

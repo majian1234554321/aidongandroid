@@ -29,7 +29,6 @@ import com.leyuan.aidong.adapter.mine.UserInfoPhotoAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.ProfileBean;
-import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
@@ -50,7 +49,6 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
-import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -204,7 +202,7 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
             contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.dp_0));
         } else {
             tvTitle.setText("TA的资料");
-            ivFollowOrEdit.setBackgroundResource(SystemInfoUtils.isFollow(this, userId)
+            ivFollowOrEdit.setBackgroundResource(userInfoData.getProfile().followed
                     ? R.drawable.icon_followed : R.drawable.icon_follow);
             if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
@@ -274,10 +272,10 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
                 if (App.mInstance.isLogin()) {
                     if (isSelf) {
                         showEditDialog();
-                    } else if (SystemInfoUtils.isFollow(this, userId)) {
-                        userInfoPresent.cancelFollow(userId);
+                    } else if (userInfoData.getProfile().followed) {
+                        userInfoPresent.cancelFollow(userId,Constant.COACH);
                     } else {
-                        userInfoPresent.addFollow(userId);
+                        userInfoPresent.addFollow(userId,Constant.COACH);
                     }
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
@@ -407,7 +405,7 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            SystemInfoUtils.addFollow(new UserBean(userId));
+//            SystemInfoUtils.addFollow(new UserBean(userId));
             ivFollowOrEdit.setBackgroundResource(R.drawable.icon_followed);
         } else {
             Toast.makeText(this, "关注失败", Toast.LENGTH_LONG).show();
@@ -417,7 +415,7 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            SystemInfoUtils.removeFollow(new UserBean(userId));
+//            SystemInfoUtils.removeFollow(new UserBean(userId));
             ivFollowOrEdit.setBackgroundResource(R.drawable.icon_follow);
         } else {
             Toast.makeText(this, "取消关注失败", Toast.LENGTH_LONG).show();

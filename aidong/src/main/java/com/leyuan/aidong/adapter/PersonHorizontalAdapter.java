@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
 import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
@@ -59,7 +60,9 @@ public class PersonHorizontalAdapter extends RecyclerView.Adapter<PersonHorizont
                     ActivityCircleDetailActivity.start(context, bean.getId());
                 } else if (Constant.COACH.equals(bean.type)) {
                     CoachInfoActivity.start(context, bean.getId());
-                } else {
+                }  else if (Constant.CONTEST.equals(bean.type)) {
+                    ContestHomeActivity.start(context, bean.getId());
+                }else {
                     UserInfoActivity.start(context, bean.getId());
                 }
 

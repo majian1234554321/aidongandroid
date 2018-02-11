@@ -46,4 +46,8 @@ public interface DiscoverPresent {
      * @param id
      */
     void cancelFollow(String id);
+
+    void addFollow(String id, String type);
+
+    void cancelFollow(String id, String type);
 }

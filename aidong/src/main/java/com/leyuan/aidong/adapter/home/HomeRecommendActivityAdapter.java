@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignBean;
+import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -35,16 +37,20 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CampaignBean campaignBean = campaigns.get(position);
-        if(campaignBean != null){
-            GlideLoader.getInstance().displayImage(campaignBean.getCover(),holder.imgCover);
-            holder.txtType.setText("【" +campaignBean.getTypeCZ()+"】");
+        if (campaignBean != null) {
+            GlideLoader.getInstance().displayImage(campaignBean.getCover(), holder.imgCover);
+            holder.txtType.setText("【" + campaignBean.getTypeCZ() + "】");
             holder.txtTime.setText(campaignBean.getStart());
             holder.txtName.setText(campaignBean.getName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ActivityCircleDetailActivity.start(context,campaignBean.getId());
-//                UiManager.activityJump(context, ActivityCircleDetailActivity.class);
+
+                    if (Constant.CAMPAIGN.equals(campaignBean.type)) {
+                        ActivityCircleDetailActivity.start(context, campaignBean.getId());
+                    } else if (Constant.CONTEST.equals(campaignBean.type)) {
+                        ContestHomeActivity.start(context, campaignBean.getId());
+                    }
                 }
             });
         }
@@ -54,7 +60,7 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
 
     @Override
     public int getItemCount() {
-        if(campaigns == null)
+        if (campaigns == null)
             return 0;
         return campaigns.size();
     }
