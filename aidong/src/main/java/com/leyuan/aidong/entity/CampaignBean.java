@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
  * 活动实体
  * Created by song on 2016/8/18.
  */
-public class CampaignBean {
+public class CampaignBean implements Parcelable{
     public String id;
     public String name;
     public String cover;
@@ -23,6 +25,33 @@ public class CampaignBean {
     private ArrayList<String> tags;//  ["标签"]
 
     private StringBuffer tagString = new StringBuffer();
+
+    protected CampaignBean(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        cover = in.readString();
+        start = in.readString();
+        landmark = in.readString();
+        follows_count = in.readString();
+        type = in.readString();
+        image = in.createStringArrayList();
+        slogan = in.readString();
+        hard_degree = in.readInt();
+        strength = in.readInt();
+        tags = in.createStringArrayList();
+    }
+
+    public static final Creator<CampaignBean> CREATOR = new Creator<CampaignBean>() {
+        @Override
+        public CampaignBean createFromParcel(Parcel in) {
+            return new CampaignBean(in);
+        }
+
+        @Override
+        public CampaignBean[] newArray(int size) {
+            return new CampaignBean[size];
+        }
+    };
 
     public StringBuffer getTagString() {
         if (tagString == null) {
@@ -113,5 +142,26 @@ public class CampaignBean {
     public boolean isCourse() {
 
         return TextUtils.equals(type, "course");
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(cover);
+        dest.writeString(start);
+        dest.writeString(landmark);
+        dest.writeString(follows_count);
+        dest.writeString(type);
+        dest.writeStringList(image);
+        dest.writeString(slogan);
+        dest.writeInt(hard_degree);
+        dest.writeInt(strength);
+        dest.writeStringList(tags);
     }
 }

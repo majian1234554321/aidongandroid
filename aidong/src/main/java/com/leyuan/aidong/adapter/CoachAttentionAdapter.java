@@ -39,7 +39,7 @@ public class CoachAttentionAdapter extends RecyclerView.Adapter<CoachAttentionAd
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final CoachBean coachBean = coachs.get(position);
-        GlideLoader.getInstance().displayRoundAvatarImage(coachBean.getAvatar(),holder.imgAvatar);
+        GlideLoader.getInstance().displayCircleImage(coachBean.getAvatar(),holder.imgAvatar);
         holder.txtName.setText(coachBean.getName());
         holder.txt_attention_num.setText(coachBean.followers_count+"人关注");
 

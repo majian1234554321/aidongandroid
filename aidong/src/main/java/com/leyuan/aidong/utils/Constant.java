@@ -111,6 +111,7 @@ public class Constant {
     public static final String BROADCAST_ACTION_DELETE_DYNAMIC_SUCCESS = "broadcast_action_delete_dynamic_success";
     public static final String USER = "user";
     public static final String COACH = "coach";
+    public static final String CONTEST = "contest";
 
 
     public static List<VenuesBean> gyms;

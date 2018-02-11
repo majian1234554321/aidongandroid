@@ -22,6 +22,7 @@ import com.leyuan.aidong.ui.discover.view.VenuesFilterView;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverVenuesActivityView;
+import com.leyuan.aidong.ui.mvp.view.VenuesSelfSupportView;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -37,7 +38,7 @@ import java.util.List;
 /**
  * Created by user on 2018/1/4.
  */
-public class HomeStoreListFragment extends BaseFragment implements DiscoverVenuesActivityView {
+public class HomeStoreListFragment extends BaseFragment implements DiscoverVenuesActivityView, VenuesSelfSupportView {
     private static final int HIDE_THRESHOLD = 80;
 
     private int scrolledDistance;
@@ -59,6 +60,8 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
     private String landmark;
     private String gymTypes;
     private String bussiness_area;
+    private RecyclerView headerRecyclerView;
+    private HeaderStoreListAdapter headerStoreAdapter;
 
     @Nullable
     @Override
@@ -77,6 +80,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         venuesPresent.getBusinessCircle();
         venuesPresent.getGymTypes();
         venuesPresent.commonLoadData(switcherLayout, brand_id, landmark, bussiness_area, gymTypes);
+        venuesPresent.getSlefSupportVenues(this);
     }
 
     private void initView(View view) {
@@ -116,10 +120,10 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         View headerView = View.inflate(getActivity(), R.layout.header_home_store_list, null);
 
         TextView txtStoreTypeName = (TextView) headerView.findViewById(R.id.txt_store_type_name);
-        RecyclerView headerRecyclerView = (RecyclerView) headerView.findViewById(R.id.recyclerView);
+        headerRecyclerView = (RecyclerView) headerView.findViewById(R.id.recyclerView);
 
         headerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        HeaderStoreListAdapter headerStoreAdapter = new HeaderStoreListAdapter(getActivity());
+        headerStoreAdapter = new HeaderStoreListAdapter(getActivity());
         headerRecyclerView.setAdapter(headerStoreAdapter);
 
         RecyclerViewUtils.setHeaderView(recyclerView, headerView);
@@ -183,6 +187,12 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
 
     }
 
+
+    @Override
+    public void onGetSelfSupportVenues(ArrayList<VenuesBean> gym) {
+        headerStoreAdapter.setData(gym);
+    }
+
     @Override
     public void setGymBrand(List<CategoryBean> gymBrandBeanList) {
         filterView.setBrandList(gymBrandBeanList);
@@ -230,4 +240,5 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
     }
+
 }

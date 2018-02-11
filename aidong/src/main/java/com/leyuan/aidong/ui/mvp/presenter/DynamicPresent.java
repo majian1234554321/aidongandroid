@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.widget.SwitcherLayout;
 
+import java.util.Map;
+
 /**
  * 爱动圈
  * Created by song on 2016/12/26.
@@ -22,11 +24,19 @@ public interface DynamicPresent {
 
     void getDynamicDetail(String id);
 
+//    void postDynamic(boolean isPhoto, String content, String type,
+//                     String link_id,
+//                     String position_name, String...media);
+
     void postDynamic(boolean isPhoto, String content, String type,
                      String link_id,
-                     String position_name, String...media);
+                     String position_name, String latitude, String longitude, String... media);
 
-    void addComment(String id,String content);
+    void postDynamic(boolean isPhoto, String content, String type, String link_id,
+                     String position_name, String latitude, String longitude,
+                     Map<String, String> itUser, String... media);
+
+    void addComment(String id, String content);
 
     void pullToRefreshComments(String id);
     void requestMoreComments(RecyclerView recyclerView,String id,int page,int pageSize);

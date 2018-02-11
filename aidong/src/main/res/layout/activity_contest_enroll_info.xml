@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c2"
+    android:orientation="vertical">
+
+    <com.leyuan.aidong.widget.CommonTitleLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:txtTitle="@string/enrolment_info" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/c1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/contest_name"
+            android:textColor="@color/e6"
+            android:textSize="15sp"
+
+            />
+
+        <TextView
+            android:id="@+id/txt_contest_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="111111111111"
+            android:textColor="@color/e6"
+            android:textSize="15sp"
+
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:background="@color/c3" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/c1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/contest_time"
+            android:textColor="@color/e6"
+            android:textSize="15sp"
+
+            />
+
+        <TextView
+            android:id="@+id/txt_contest_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="111111111111"
+            android:textColor="@color/e6"
+            android:textSize="15sp"
+
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:background="@color/c3" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/c2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/mine_info"
+            android:textColor="@color/e6"
+            android:textSize="15sp"
+
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/c1">
+
+        <TextView
+            android:id="@+id/txt_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/name_colon"
+            android:textColor="@color/e6"
+            android:textSize="15sp"
+
+            />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:background="@color/c3" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_select_city"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/c1">
+
+        <TextView
+            android:id="@+id/txt_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="wodeweizhi:shanghai"
+            android:textColor="@color/e6"
+            android:textSize="15sp"
+
+            />
+
+        <Button
+            android:id="@+id/bt_select_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/icon_arrow_down"
+            android:text="@string/switch_city"
+            android:textColor="@color/c9"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:background="@color/transparent"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:background="@color/c3" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_contest_area"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/c1">
+
+        <TextView
+            android:id="@+id/txt_contest_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="suosuosaiqu : hua nan"
+            android:textColor="@color/e6"
+            android:textSize="15sp"
+
+            />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:background="@color/c3" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_select_group"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/c1">
+
+        <TextView
+            android:id="@+id/txt_belong_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="wodeweizhi:shanghai"
+            android:textColor="@color/e6"
+            android:textSize="15sp"
+
+            />
+
+        <Button
+            android:id="@+id/bt_select_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/icon_arrow_down"
+            android:text="@string/selecte"
+            android:textColor="@color/c9"
+            android:textSize="15sp"
+            android:gravity="right|center"
+            android:background="@color/transparent"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:background="@color/c3" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_enrol_post_video"
+        android:layout_width="315dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/shape_origin_contest_radius"
+        android:gravity="center"
+        android:text="@string/enrol_and_post_video"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/c9"
+        android:textSize="11sp"
+        android:text="@string/contest_enrol_and_post_video_hint"
+        />
+
+</LinearLayout>

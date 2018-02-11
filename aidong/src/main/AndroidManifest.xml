@@ -320,6 +320,25 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.competition.activity.ContestHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.competition.activity.ContestRankingListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.competition.activity.ContestOfficialInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.competition.activity.ContestEnrolmentInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.competition.activity.ContestDynamicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.iknow.android.TrimmerActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.home.activity.CircleListActivity"
             android:screenOrientation="portrait" />
         <activity

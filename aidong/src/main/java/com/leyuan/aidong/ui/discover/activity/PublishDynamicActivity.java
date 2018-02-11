@@ -29,6 +29,7 @@ import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.view.ItemDragHelperCallback;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
@@ -44,7 +45,9 @@ import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 发表动态
@@ -81,6 +84,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     private String position_name;
     private String user_id;
     private String name;
+    private String latitude = App.lat+"";
+    private String longitude = App.lon +"";
 
 
     public static void startForResult(Fragment fragment, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
@@ -196,6 +201,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             case R.id.layout_add_circle:
 
                 UiManager.activityJumpForResult(this, new Bundle(), SelectedCircleActivity.class, REQUEST_CIRCLE);
+
                 break;
             case R.id.layout_add_location:
 
@@ -259,13 +265,17 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         });
     }
 
+    Map<String, String> itUser = new HashMap<>();
+
     private void uploadToServer(List<String> qiNiuMediaUrls) {
         String content = etContent.getText().toString();
         String[] media = new String[qiNiuMediaUrls.size()];
         for (int i = 0; i < qiNiuMediaUrls.size(); i++) {
             media[i] = qiNiuMediaUrls.get(i);
         }
-        dynamicPresent.postDynamic(isPhoto, content, type, link_id, position_name, media);
+        dynamicPresent.postDynamic(isPhoto, content, type, link_id, position_name,latitude,longitude,itUser, media);
+
+
     }
 
     @Override
@@ -298,6 +308,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             } else if (requestCode == REQUEST_LOCATION) {
 
                 this.position_name = data.getStringExtra("position_name");
+                this.latitude = data.getStringExtra("latitude");
+                this.longitude = data.getStringExtra("longitude");
 
                 imgAddLocation.setImageResource(R.drawable.location_selected);
                 txtLocation.setTextColor(R.color.main_red);
@@ -308,6 +320,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             } else if (requestCode == REQUEST_USER) {
                 this.user_id = data.getStringExtra("user_id");
                 this.name = data.getStringExtra("name");
+                itUser.put( data.getStringExtra("name"),data.getStringExtra("user_id"));
+
                 etContent.setText(etContent.getText().toString() + name);
 
             } else {

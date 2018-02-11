@@ -17,11 +17,16 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
+            android:textColor="@color/c9"
             app:kswBackDrawable="@drawable/switch_course_back"
             app:kswThumbDrawable="@drawable/switch_course_thumb"
             app:kswThumbHeight="30dp"
             app:kswThumbMargin="-0.5dp"
-            app:kswThumbWidth="65dp" />
+            app:kswThumbWidth="65dp"
+            app:kswTextOff="门店"
+            app:kswTextOn="课程表"
+
+            />
 
     </RelativeLayout>
 

@@ -380,4 +380,17 @@
     <string name="i_dong_self_support_store">爱动自营门店</string>
     <string name="attention_success">关注成功</string>
     <string name="attention_cancel_success">取消关注成功</string>
+    <string name="official_information">官方资讯</string>
+    <string name="ranking_list">排行榜</string>
+    <string name="rule_of_contest">比赛规则</string>
+    <string name="enrolment_is_over">报名已结束</string>
+    <string name="enrolment_info">报名信息</string>
+    <string name="contest_name">赛事名称 :</string>
+    <string name="mine_info">我的信息</string>
+    <string name="enrol_and_post_video">确认报名-开始上传视频</string>
+    <string name="contest_time">赛事时间 :</string>
+    <string name="name_colon">姓名 :</string>
+    <string name="switch_city">切换城市</string>
+    <string name="selecte">选择</string>
+    <string name="contest_enrol_and_post_video_hint">温馨提示：每位用户前5次上传的视频将作为您的海选参数视频,其中得分最高的视频将录入海选成绩排行;超出次数视频则不计入海选参赛.</string>
 </resources>

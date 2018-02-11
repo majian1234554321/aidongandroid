@@ -430,6 +430,7 @@ public class SystemInfoUtils {
     public static boolean isFollow(Context context, String uid) {
         boolean isFollow = false;
         List<UserBean> followList = getFollowList(context);
+        if(followList == null) return false;
         for (UserBean userBean : followList) {
             if (userBean.getId().equals(uid)) {
                 isFollow = true;

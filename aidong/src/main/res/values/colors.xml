@@ -101,5 +101,10 @@
     <color name="course_oringe">#D51121</color>
     <color name="course_black">#010101</color>
     <color name="red_price">#d51121</color>
-
+    <color name="top_bottom">#42BAF8</color>
+    <color name="shadow_color">#7F000000</color>
+    <color name="origin_competion">#B8893F</color>
+    <color name="c2">#222222</color>
+    <color name="e6">#e6e6e6</color>
+    <color name="c1">#111111</color>
 </resources>

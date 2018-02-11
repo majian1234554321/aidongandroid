@@ -1,10 +1,12 @@
 package com.leyuan.aidong.entity;
 
+import java.io.Serializable;
+
 /**
  * 课程视频
  * Created by song on 2017/4/26.
  */
-public class CourseVideoBean {
+public class CourseVideoBean  implements Serializable{
 
     private String id;
     private String cat_id;

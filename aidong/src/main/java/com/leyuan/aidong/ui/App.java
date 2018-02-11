@@ -9,6 +9,9 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
+import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
+import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
+import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.database.DynamicDb;
 import com.leyuan.aidong.entity.CircleDynamicBean;
@@ -26,6 +29,11 @@ import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
@@ -36,6 +44,7 @@ import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import iknow.android.utils.BaseUtils;
 import io.realm.Realm;
 
 import static com.leyuan.aidong.utils.Constant.DEFAULT_CITY;
@@ -86,11 +95,15 @@ public class App extends MultiDexApplication {
 
         EmConfigManager.getInstance().initializeEaseUi(this);
         Realm.init(context);
-        if (UrlConfig.debug) {
+//        if (UrlConfig.debug) {
             Stetho.initializeWithDefaults(this);
-        }
+//        }
 
         RichText.initCacheDir(this);
+
+        BaseUtils.init(this);
+        initImageLoader(this);
+        initFFmpegBinary(this);
 
 //        Logger.i("md5", Md5Utils.createMd("ae2c037cd273f69bfb5c96902d95b151"));
     }
@@ -363,5 +376,31 @@ public class App extends MultiDexApplication {
         }
         setParseString(parseString);
 
+    }
+
+
+    public static void initImageLoader(Context context) {
+        int memoryCacheSize = (int) (Runtime.getRuntime().maxMemory() / 10);
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .memoryCache(new LRULimitedMemoryCache(memoryCacheSize))
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .build();
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config);
+    }
+
+    private void initFFmpegBinary(Context context) {
+
+        try {
+            FFmpeg.getInstance(context).loadBinary(new LoadBinaryResponseHandler() {
+                @Override
+                public void onFailure() {
+                }
+            });
+
+        } catch (FFmpegNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 }

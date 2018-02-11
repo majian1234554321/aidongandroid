@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.constant.DynamicType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
@@ -35,11 +34,11 @@ public class DynamicBean implements Parcelable {
 
     public boolean isLiked = false; //标记是否点赞
 
-    public ArrayList<UserBean> extras;
+
     public CampaignBean related;
     public CoordinateBean postion;
     public String type;
-
+    public UserBean[] extras;
     @DynamicType
     public int getDynamicType() {
         if (image != null && !image.isEmpty()) {
@@ -81,6 +80,11 @@ public class DynamicBean implements Parcelable {
         dest.writeParcelable(this.like, flags);
         dest.writeParcelable(this.comment, flags);
         dest.writeByte(this.isLiked ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.related,flags);
+        dest.writeParcelable(this.postion,flags);
+        dest.writeString(this.type);
+        dest.writeTypedArray(this.extras,flags);
+
     }
 
     public DynamicBean() {
@@ -96,6 +100,10 @@ public class DynamicBean implements Parcelable {
         this.like = in.readParcelable(LikeUserListBean.class.getClassLoader());
         this.comment = in.readParcelable(CommentListBean.class.getClassLoader());
         this.isLiked = in.readByte() != 0;
+        this.related = in.readParcelable(CampaignBean.class.getClassLoader());
+        this.postion = in.readParcelable(CoordinateBean.class.getClassLoader());
+        this.type = in.readString();
+        this.extras = in.createTypedArray(UserBean.CREATOR);
     }
 
     public static final Creator<DynamicBean> CREATOR = new Creator<DynamicBean>() {

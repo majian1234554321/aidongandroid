@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.DynamicsSingleData;
@@ -11,9 +10,17 @@ import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.DynamicService;
 import com.leyuan.aidong.ui.mvp.model.DynamicModel;
+import com.leyuan.aidong.utils.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -37,12 +44,11 @@ public class DynamicModelImpl implements DynamicModel {
     }
 
     @Override
-    public void getRelativeDynamics(Subscriber<DynamicsData> subscriber, String type,String link_id,int page) {
-        dynamicService.getRelativeDynamics(type,link_id,page)
+    public void getRelativeDynamics(Subscriber<DynamicsData> subscriber, String type, String link_id, int page) {
+        dynamicService.getRelativeDynamics(type, link_id, page)
                 .compose(RxHelper.<DynamicsData>transform())
                 .subscribe(subscriber);
     }
-
 
 
     @Override
@@ -62,19 +68,68 @@ public class DynamicModelImpl implements DynamicModel {
     @Override
     public void postDynamic(Subscriber<BaseBean> subscriber, String content, String video, String type,
                             String link_id,
-                            String position_name, String... image) {
+                            String position_name, String latitude, String longitude, String... image) {
         if (video != null) {
-            dynamicService.postVideoDynamic(content, video, "1", type, link_id, position_name, image)
+            dynamicService.postVideoDynamic(content, video, "1", type, link_id, position_name, latitude, longitude, image)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscriber);
         } else {
-            dynamicService.postImageDynamic(content, type, link_id, position_name, image)
+            dynamicService.postImageDynamic(content, type, link_id, position_name, latitude, longitude, image)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscriber);
+//
+//            ArrayList<String> images = new ArrayList<>();
+//            Collections.addAll(images, image);
+//            postDynamic(subscriber, video, content, type, link_id, position_name, latitude, longitude, images, null);
         }
 
+    }
+
+    @Override
+    public void postDynamic(Subscriber<BaseBean> subscriber, String video, String content, String type, String link_id,
+                                 String position_name, String latitude, String longitude, ArrayList<String> image, Map<String, String> itUser) {
+        JSONObject root = new JSONObject();
+        JSONArray arrayImage = new JSONArray(image);
+        JSONArray arrayUser = new JSONArray();
+
+        JSONObject userObj = new JSONObject();
+        try {
+            if (video != null) {
+                root.put("video", video);
+                root.put("qiniu", 1);
+            }
+            root.put("content", content);
+            root.put("type", type);
+            root.put("link_id", link_id);
+            root.put("position_name", position_name);
+            root.put("latitude", latitude);
+            root.put("longitude", longitude);
+
+            if (image != null)
+                root.put("image", arrayImage);
+
+            if (itUser != null) {
+                for (Map.Entry<String, String> code : itUser.entrySet()) {
+                    userObj.put("name", code.getKey());
+                    userObj.put("user_id", code.getValue());
+                    arrayUser.put(userObj);
+                }
+                root.put("extras", arrayUser);
+                Logger.i("root.put(\"extras\", arrayUser);");
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), root.toString());
+        dynamicService.postImageDynamic(requestBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 
     @Override

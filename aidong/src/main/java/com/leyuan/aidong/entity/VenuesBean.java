@@ -17,9 +17,15 @@ public class VenuesBean implements Parcelable {
     private String address;         //场馆地址
     private double distance;        //距离
     private String price;           //价格
-    private CoordinateBean coordinate;
+
+//    private CoordinateBean coordinate;
+
     private String admission;
     private String brand_name;
+    public String lat;
+    public String lng;
+    public String link_id;
+    public String cover;
 
     public String getAdmission() {
         return admission;
@@ -27,14 +33,6 @@ public class VenuesBean implements Parcelable {
 
     public void setAdmission(String admission) {
         this.admission = admission;
-    }
-
-    public CoordinateBean getCoordinate() {
-        return coordinate;
-    }
-
-    public void setCoordinate(CoordinateBean coordinate) {
-        this.coordinate = coordinate;
     }
 
     public String getId() {
@@ -139,10 +137,13 @@ public class VenuesBean implements Parcelable {
         dest.writeString(this.address);
         dest.writeDouble(this.distance);
         dest.writeString(this.price);
-        dest.writeParcelable(this.coordinate, flags);
         dest.writeString(this.admission);
         dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
         dest.writeString(brand_name);
+        dest.writeString(this.lat);
+        dest.writeString(this.lng);
+        dest.writeString(this.link_id);
+        dest.writeString(this.cover);
     }
 
     protected VenuesBean(Parcel in) {
@@ -152,10 +153,13 @@ public class VenuesBean implements Parcelable {
         this.address = in.readString();
         this.distance = in.readDouble();
         this.price = in.readString();
-        this.coordinate = in.readParcelable(CoordinateBean.class.getClassLoader());
         this.admission = in.readString();
         this.isChecked = in.readByte() != 0;
         this.brand_name = in.readString();
+        this.lat = in.readString();
+        this.lng = in.readString();
+        this.link_id = in.readString();
+        this.cover = in.readString();
     }
 
     public static final Creator<VenuesBean> CREATOR = new Creator<VenuesBean>() {

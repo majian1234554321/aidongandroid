@@ -7,6 +7,12 @@
     <attr name="imgRight" format="reference"/>
     <attr name="imgLeft" format="reference"/>
 
+    <declare-styleable name="HorizontalListView">
+        <attr name="hori_listview_dividerWidth" format="dimension" />
+        <attr name="android:divider" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:fadingEdgeLength" />
+    </declare-styleable>
 
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension"/>

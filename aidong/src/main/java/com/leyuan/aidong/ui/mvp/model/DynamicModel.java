@@ -6,6 +6,9 @@ import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.DynamicsSingleData;
 import com.leyuan.aidong.entity.data.LikeData;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import rx.Subscriber;
 
 /**
@@ -35,10 +38,15 @@ public interface DynamicModel {
      * @param video
      * @param image
      */
-    void postDynamic(Subscriber<BaseBean> subscriber,String content,String video, String type,
+//    void postDynamic(Subscriber<BaseBean> subscriber,String content,String video, String type,
+//                     String link_id,
+//                     String position_name,String...image);
+    void postDynamic(Subscriber<BaseBean> subscriber, String content, String video, String type,
                      String link_id,
-                     String position_name,String...image);
+                     String position_name, String latitude, String longitude, String... image);
 
+    void postDynamic(Subscriber<BaseBean> subscriber, String video, String content, String type, String link_id,
+                     String position_name, String latitude, String longitude, ArrayList<String> image, Map<String, String> itUser);
 
     /**
      * 发表评论

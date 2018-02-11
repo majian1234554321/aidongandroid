@@ -47,6 +47,8 @@ public interface VenuesModel {
      void getVenues(Subscriber<VenuesData> subscriber, int page,String brand_id,
                     String landmark,String area,String gymTypes);
 
+    void getSlefSupportVenues(Subscriber<VenuesData> subscriber, int page);
+
     /**
      * 获取场馆详情
      * @param subscribe 返回Subscriber

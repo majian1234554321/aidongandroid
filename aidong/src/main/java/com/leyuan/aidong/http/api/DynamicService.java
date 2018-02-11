@@ -7,6 +7,8 @@ import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.DynamicsSingleData;
 import com.leyuan.aidong.entity.data.LikeData;
 
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -39,15 +41,21 @@ public interface DynamicService {
     Observable<BaseBean<DynamicsData>> getDynamicsFollow(@Query("page") int page);
 
 
+    @POST("dynamics")
+    Observable<BaseBean<DiscoverData>> postImageDynamic(@Body RequestBody requestBody);
+
+
     @FormUrlEncoded
     @POST("dynamics")
     Observable<BaseBean<DiscoverData>> postImageDynamic(@Field("content") String content,
                                                         @Field("type") String type,
                                                         @Field("link_id") String link_id,
                                                         @Field("position_name") String position_name,
-                                                        @Field("image[]") String... image
+                                                        @Field("latitude") String latitude,
+                                                        @Field("longitude") String longitude,
+                                                        @Field("image[]") String... image);
 
-    );
+
 
     @FormUrlEncoded
     @POST("dynamics")
@@ -57,6 +65,8 @@ public interface DynamicService {
                                                         @Field("type") String type,
                                                         @Field("link_id") String link_id,
                                                         @Field("position_name") String position_name,
+                                                        @Field("latitude") String latitude,
+                                                        @Field("longitude") String longitude,
                                                         @Field("image[]") String... image);
 
     @FormUrlEncoded

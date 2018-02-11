@@ -78,7 +78,7 @@ public class RelativeVideoListActivity extends BaseActivity implements RelatedVi
 
     private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.rv_news);
-        adapter = new RelativeViedeoAdapter(this);
+        adapter = new RelativeViedeoAdapter(this,relativeId);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         recyclerView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(context, 2);

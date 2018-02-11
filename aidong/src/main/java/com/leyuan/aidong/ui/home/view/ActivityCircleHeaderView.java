@@ -161,6 +161,8 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         if (baseBean.getStatus() == 1) {
             bt_attention.setImageResource(R.drawable.icon_followed);
             ToastGlobal.showShortConsecutive(R.string.follow_success);
+        }else {
+            ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
     }
 
@@ -169,6 +171,8 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         if (baseBean.getStatus() == 1) {
             bt_attention.setImageResource(R.drawable.icon_follow);
             ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
+        }else {
+            ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
     }
 }

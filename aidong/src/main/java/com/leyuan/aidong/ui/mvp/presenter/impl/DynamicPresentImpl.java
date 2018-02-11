@@ -29,7 +29,9 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 爱动圈
@@ -224,34 +226,62 @@ public class DynamicPresentImpl implements DynamicPresent {
     @Override
     public void postDynamic(boolean isPhoto, String content, String type,
                             String link_id,
-                            String position_name, String... media) {
+                            String position_name, String latitude, String longitude, String... media) {
         if (isPhoto) {
-            postImageDynamic(content, type, link_id, position_name, media);
+            postImageDynamic(content, type, link_id, position_name,latitude,longitude, media);
         } else {
-            postVideoDynamic(content,  type, link_id, position_name,media[0]);
+            postVideoDynamic(content,  type, link_id, position_name,latitude,longitude,media[0]);
         }
     }
 
+
+    @Override
+    public void postDynamic(boolean isPhoto, String content, String type, String link_id,
+                            String position_name, String latitude, String longitude,
+                            Map<String, String> itUser, String... media) {
+        ArrayList<String> images = new ArrayList<>();
+        Collections.addAll(images, media);
+        if (isPhoto) {
+
+            dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context, false) {
+                @Override
+                public void onNext(BaseBean baseBean) {
+                    publishDynamicActivityView.publishDynamicResult(baseBean);
+                }
+            },null, content, type, link_id, position_name,latitude,longitude, images,itUser);
+
+        } else {
+            dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context, false) {
+                @Override
+                public void onNext(BaseBean baseBean) {
+                    publishDynamicActivityView.publishDynamicResult(baseBean);
+                }
+            },media[0], content, type, link_id, position_name,latitude,longitude, null,itUser);
+
+        }
+    }
+
+
     private void postImageDynamic(String content, String type,
-                                  String link_id,
-                                  String position_name, String... image) {
+                                       String link_id,
+                                       String position_name,String latitude,String longitude, String... image) {
         dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context, false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 publishDynamicActivityView.publishDynamicResult(baseBean);
             }
-        }, content, null, type, link_id, position_name, image);
+        }, content, null, type, link_id, position_name,latitude,longitude, image);
     }
 
     private void postVideoDynamic(String content,  String type,
                                   String link_id,
-                                  String position_name,String video) {
+                                  String position_name,String latitude,String longitude,String video) {
         dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context, false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 publishDynamicActivityView.publishDynamicResult(baseBean);
             }
-        }, content, video, type, link_id, position_name, new String[]{});
+        }, content, video, type, link_id, position_name,latitude,longitude,  new String[]{});
     }
 
     @Override

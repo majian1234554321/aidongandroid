@@ -37,14 +37,21 @@ public class CoordinateBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.lat);
         dest.writeString(this.lng);
+        dest.writeString(this.position_name);
     }
 
     public CoordinateBean() {
     }
 
+    public CoordinateBean(String lat, String lng) {
+        this.lat = lat;
+        this.lng = lng;
+    }
+
     protected CoordinateBean(Parcel in) {
         this.lat = in.readString();
         this.lng = in.readString();
+        this.position_name = in.readString();
     }
 
     public static final Parcelable.Creator<CoordinateBean> CREATOR = new Parcelable.Creator<CoordinateBean>() {

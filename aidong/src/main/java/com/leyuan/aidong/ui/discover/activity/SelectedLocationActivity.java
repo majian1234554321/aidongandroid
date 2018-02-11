@@ -174,10 +174,14 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
 
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
             for (PoiInfo info : result.getAllPoi()) {
-                Logger.i("PoiInfo : " + info.name + ", " + info.address);
+                Logger.i("PoiInfo : " + info.name + ", " + info.address+" ,lat = "
+                +info.location.latitude+", lon = " + info.location.longitude);
                 VenuesBean venuesBean = new VenuesBean();
                 venuesBean.setName(info.name);
                 venuesBean.setAddress(info.address);
+                venuesBean.lat = info.location.latitude +"";
+                venuesBean.lng = info.location.longitude +"";
+
                 venuesArray.add(venuesBean);
             }
 

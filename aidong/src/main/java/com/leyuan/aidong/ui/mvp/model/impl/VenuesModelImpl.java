@@ -58,6 +58,15 @@ public class VenuesModelImpl implements VenuesModel {
                 .subscribe(subscriber);
     }
 
+
+    @Override
+    public void getSlefSupportVenues(Subscriber<VenuesData> subscriber, int page) {
+        venuesService.getSlefSupportVenues(page)
+                .compose(RxHelper.<VenuesData>transform())
+                .subscribe(subscriber);
+    }
+
+
     @Override
     public void getVenuesDetail(Subscriber<VenuesDetailData> subscriber, String id) {
         venuesService.getVenuesDetail(id)

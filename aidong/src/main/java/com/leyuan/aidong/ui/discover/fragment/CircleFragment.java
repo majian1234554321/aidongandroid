@@ -126,6 +126,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharePopupWindow = new SharePopupWindow(getActivity());
+        dynamicPresent.commonLoadData(switcherLayout);
     }
 
     @Override

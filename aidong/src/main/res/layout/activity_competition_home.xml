@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rel_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/img_back"
+            style="@style/styleImageBack" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:maxWidth="200dp"
+            android:singleLine="true"
+            android:text="11111111111"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/img_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@color/transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/share_white_competition" />
+
+        <ImageButton
+            android:id="@+id/img_attention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/img_share"
+            android:background="@color/transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/attention_white" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp">
+
+            <ImageView
+                android:id="@+id/img_post_or_enrol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="25dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/post_video"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/layout_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+
+                    android:layout_width="230dp"
+                    android:layout_height="129dp">
+
+                    <ImageView
+                        android:id="@+id/img_end_cover"
+                        android:layout_width="230dp"
+                        android:layout_height="129dp"
+                        android:scaleType="centerCrop"
+                        android:src="@color/red_origin" />
+
+                    <Button
+                        android:id="@+id/bt_end_play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18sp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:drawablePadding="5dp"
+                        android:background="@drawable/shape_simi_circle_tranparent_solid"
+                        android:drawableLeft="@drawable/icon_play_competion"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="14:20"
+                        android:textColor="@color/origin_competion"
+                        android:textSize="12sp" />
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/enrolment_is_over"
+                    android:textColor="@color/c9"
+                    android:textSize="11dp" />
+
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_relate_dynamic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/relate_dynamic"
+                android:textColor="@color/origin_competion"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"
+
+                android:src="@color/origin_competion" />
+
+            <TextView
+                android:id="@+id/txt_official_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/official_information"
+                android:textColor="@color/origin_competion"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"
+
+                android:src="@color/origin_competion" />
+
+            <TextView
+                android:id="@+id/txt_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/ranking_list"
+                android:textColor="@color/origin_competion"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_rule"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:background="@drawable/shape_simi_circle_tranparent_solid"
+            android:drawableRight="@drawable/question_mark"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/rule_of_contest"
+            android:textColor="@color/c9"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

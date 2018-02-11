@@ -30,6 +30,14 @@ public interface VenuesService {
                                                @Query("landmark") String landmark,
                                                @Query("area") String area,
                                                @Query("gym_types") String gymTypes);
+    /**
+     * 获取场馆列表
+     *
+     * @param page 当前页数
+     * @return 场馆集合
+     */
+    @GET("gyms/self_support")
+    Observable<BaseBean<VenuesData>> getSlefSupportVenues(@Query("page") int page);
 
     /**
      * 获取场馆详情

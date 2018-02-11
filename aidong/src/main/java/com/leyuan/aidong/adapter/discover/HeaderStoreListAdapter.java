@@ -9,12 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.ui.store.StoreDetailActivity;
+import com.leyuan.aidong.utils.GlideLoader;
+
+import java.util.ArrayList;
 
 /**
  * Created by user on 2018/1/5.
  */
 public class HeaderStoreListAdapter extends RecyclerView.Adapter<HeaderStoreListAdapter.ViewHolder> {
     private final Context context;
+    private ArrayList<VenuesBean> venues;
 
     public HeaderStoreListAdapter(Context context) {
         this.context = context;
@@ -29,11 +35,27 @@ public class HeaderStoreListAdapter extends RecyclerView.Adapter<HeaderStoreList
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        final VenuesBean bean = venues.get(position);
+        GlideLoader.getInstance().displayImage(bean.cover, holder.imgCover);
+        holder.txtStoreName.setText(bean.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StoreDetailActivity.start(context, bean.getId());
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        if (venues == null) return 0;
+        return venues.size();
+    }
+
+    public void setData(ArrayList<VenuesBean> gym) {
+        this.venues = gym;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

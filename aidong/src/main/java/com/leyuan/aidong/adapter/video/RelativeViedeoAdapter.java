@@ -22,10 +22,12 @@ public class RelativeViedeoAdapter extends RecyclerView.Adapter<RelativeViedeoAd
 
 
     private final Context context;
+    private final String courseId;
     private List<CourseVideoBean> videos;
 
-    public RelativeViedeoAdapter(Context context) {
+    public RelativeViedeoAdapter(Context context, String id) {
         this.context = context;
+        this.courseId = id;
     }
 
     @Override
@@ -38,6 +40,7 @@ public class RelativeViedeoAdapter extends RecyclerView.Adapter<RelativeViedeoAd
     @Override
     public void onBindViewHolder(RelativeViedeoAdapter.ViewHolder holder, int position) {
         final CourseVideoBean bean = videos.get(position);
+
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.img_cover);
         holder.txtSubTitle.setText(bean.getIntroduce());
         holder.txtTitle.setText(bean.getName());
@@ -45,7 +48,7 @@ public class RelativeViedeoAdapter extends RecyclerView.Adapter<RelativeViedeoAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseVideoDetailActivityNew.start(context, bean.getId());
+                CourseVideoDetailActivityNew.start(context,courseId,bean);
             }
         });
     }

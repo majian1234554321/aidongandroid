@@ -21,12 +21,17 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.PersonHorizontalAdapter;
 import com.leyuan.aidong.adapter.home.PersonAttentionAdapter;
 import com.leyuan.aidong.adapter.video.DetailsRelativeViedeoAdapter;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.entity.course.CourseDetailBean;
 import com.leyuan.aidong.ui.course.activity.RelativeVideoListActivity;
 import com.leyuan.aidong.ui.home.activity.AppointmentUserActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +43,7 @@ import static com.leyuan.aidong.R.id.txt_course_intro;
 /**
  * Created by user on 2018/1/11.
  */
-public class CourseCircleHeaderView extends RelativeLayout implements View.OnClickListener {
+public class CourseCircleHeaderView extends RelativeLayout implements View.OnClickListener, FollowView {
 
     private RelativeLayout relTop;
     private ImageView imgBg;
@@ -82,6 +87,8 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     private TextView txt_suggest_match_course;
     private TextView txt_bt_attention_num;
     private CourseDetailBean course;
+
+    FollowPresentImpl followPresent;
 
     public CourseCircleHeaderView(Context context) {
         this(context, null, 0);
@@ -140,6 +147,9 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         txt_bt_attention_num.setOnClickListener(this);
         view.findViewById(R.id.bt_attention).setOnClickListener(this);
 
+        followPresent = new FollowPresentImpl(context);
+        followPresent.setFollowListener(this);
+
     }
 
 
@@ -161,6 +171,11 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
                 AppointmentUserActivity.start(context,course.getFollowers(),"关注的人");
                 break;
             case R.id.bt_attention:
+                if (course.isFollowed()) {
+                    followPresent.cancelFollow(course.getId(), Constant.COURSE);
+                } else {
+                    followPresent.addFollow(course.getId(), Constant.COURSE);
+                }
 
                 break;
         }
@@ -225,6 +240,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
     public void setData(CourseDetailBean course) {
         this.course = course;
+        relativeViedeoAdapter.setCourseID(course.getId());
         if (course.getImage() != null && !course.getImage().isEmpty()) {
             GlideLoader.getInstance().displayImage(course.getImage().get(0), imgBg);
         }
@@ -266,5 +282,25 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     public void setRelativeVideoData(List<CourseVideoBean> videos) {
         relativeViedeoAdapter.setData(videos);
 
+    }
+
+    @Override
+    public void addFollowResult(BaseBean baseBean) {
+        if (baseBean.getStatus() == 1) {
+            bt_attention.setImageResource(R.drawable.icon_followed);
+            ToastGlobal.showShortConsecutive(R.string.follow_success);
+        }else {
+            ToastGlobal.showShortConsecutive(baseBean.getMessage());
+        }
+    }
+
+    @Override
+    public void cancelFollowResult(BaseBean baseBean) {
+        if (baseBean.getStatus() == 1) {
+            bt_attention.setImageResource(R.drawable.icon_follow);
+            ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
+        }else {
+            ToastGlobal.showShortConsecutive(baseBean.getMessage());
+        }
     }
 }

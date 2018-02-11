@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.ui.mvp.view.VenuesSelfSupportView;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
@@ -44,6 +45,8 @@ public interface VenuesPresent {
      * @param page         页码
      */
     void requestMoreData(RecyclerView recyclerView, int pageSize, int page, String brand_id, String landmark,String area,String gymTypes);
+
+    void getSlefSupportVenues(VenuesSelfSupportView view);
 
     /**
      * 获取场馆详情

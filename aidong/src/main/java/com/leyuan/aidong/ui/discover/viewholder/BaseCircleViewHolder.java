@@ -20,12 +20,17 @@ import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
+import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.CMDMessageActivity;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
+import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
+import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.Utils;
 
 import java.util.ArrayList;
@@ -50,15 +55,15 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private ImageView ivCoachFlag;
     private ImageView ivFollow;
     private LinearLayout layoutCourseOrActivity;
-    private ImageView imgCover;
+    private ImageView imgCover,img_parse;
     private TextView txtTitle;
     private TextView txtDesc;
-    private TextView txtTime;
+    private TextView txtTime,tv_content;
     private TextView txtLocation;
     private TextView txtParse;
     private TextView txtComment;
     private RecyclerView likesRecyclerView;
-    private LinearLayout likeLayout;
+    private LinearLayout likeLayout,layout_parse;
 
 
     protected IDynamicCallback callback;
@@ -70,6 +75,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         super(context, parent, layoutResId);
         onFindChildView(itemView);
         this.context = context;
+
         layoutCmdMessage = (FrameLayout) itemView.findViewById(R.id.layout_cmd_message);
         imgCMDAvatar = (ImageView) itemView.findViewById(R.id.img_avatar);
         txtCmdMessageNum = (TextView) itemView.findViewById(R.id.txt_cmd_message_num);
@@ -81,6 +87,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         ivFollow = (ImageView) itemView.findViewById(R.id.iv_follow);
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         tvTime = (TextView) itemView.findViewById(R.id.tv_time);
+        tv_content = (TextView) itemView.findViewById(R.id.tv_content);
 
         layoutCourseOrActivity = (LinearLayout) itemView.findViewById(R.id.layout_course_or_activity);
         imgCover = (ImageView) itemView.findViewById(R.id.img_cover);
@@ -97,9 +104,12 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
         txtLocation = (TextView) itemView.findViewById(R.id.txt_location);
         txtParse = (TextView) itemView.findViewById(R.id.txt_parse);
+        img_parse = (ImageView) itemView.findViewById(R.id.img_parse);
         txtComment = (TextView) itemView.findViewById(R.id.txt_comment);
 
         likeLayout = (LinearLayout) itemView.findViewById(R.id.like_layout);
+        layout_parse = (LinearLayout) itemView.findViewById(R.id.layout_parse);
+
         likesRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_likes);
     }
 
@@ -125,6 +135,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         } else {
             layoutCmdMessage.setVisibility(View.GONE);
         }
+
         if (dynamic.publisher != null) {
             tvName.setText(dynamic.publisher.getName());
             GlideLoader.getInstance().displayRoundAvatarImage(dynamic.publisher.getAvatar(), ivAvatar);
@@ -142,7 +153,9 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         }
 
-        if (dynamic.like !=null && dynamic.like.counter > 0 && (context instanceof DynamicDetailActivity || context instanceof DynamicDetailByIdActivity)) {
+        tv_content.setText(dynamic.content);
+
+        if (dynamic.like != null && dynamic.like.counter > 0 && (context instanceof DynamicDetailActivity || context instanceof DynamicDetailByIdActivity)) {
             likeLayout.setVisibility(View.VISIBLE);
             likesRecyclerView.setLayoutManager(new LinearLayoutManager
                     (context, LinearLayoutManager.HORIZONTAL, false));
@@ -216,9 +229,11 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             txtLocation.setText(dynamic.postion.position_name);
         }
 
+        img_parse.setBackgroundResource(isLike(dynamic)
+                ? R.drawable.icon_parse : R.drawable.icon_parse);
         txtParse.setText(String.valueOf(dynamic.like.counter));
         txtComment.setText(String.valueOf(dynamic.comment.count));
-        txtParse.setOnClickListener(new View.OnClickListener() {
+        layout_parse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (callback != null) {
@@ -235,6 +250,34 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 }
             }
         });
+
+        layoutCourseOrActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dynamic.related == null) return;
+                if (Constant.CAMPAIGN.equals(dynamic.type)) {
+                    ActivityCircleDetailActivity.start(context, dynamic.related.getId());
+                } else if (Constant.COURSE.equals(dynamic.type)) {
+                    CourseCircleDetailActivity.start(context, dynamic.related.getId());
+                } else if (Constant.CONTEST.equals(dynamic.type)) {
+                    ContestHomeActivity.start(context, dynamic.related.getId());
+                }
+            }
+        });
+
+        txtLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dynamic.postion != null){
+                    MapActivity.start(context, "", "", dynamic.postion.position_name, dynamic.postion.getLat(), dynamic.postion.getLng());
+                }else {
+                    ToastGlobal.showShortConsecutive("地址错误");
+                }
+
+            }
+        });
+
+
     }
 
     public void setCallback(IDynamicCallback callback) {

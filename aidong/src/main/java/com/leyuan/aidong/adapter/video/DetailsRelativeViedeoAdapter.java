@@ -22,10 +22,16 @@ public class DetailsRelativeViedeoAdapter extends RecyclerView.Adapter<DetailsRe
 
 
     private final Context context;
+    private  String courseId;
     private List<CourseVideoBean> videos;
 
     public DetailsRelativeViedeoAdapter(Context context) {
         this.context = context;
+    }
+
+    public DetailsRelativeViedeoAdapter(Context context, String id) {
+        this.context = context;
+        this.courseId = id;
     }
 
     @Override
@@ -45,7 +51,7 @@ public class DetailsRelativeViedeoAdapter extends RecyclerView.Adapter<DetailsRe
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseVideoDetailActivityNew.start(context,bean.getId());
+                CourseVideoDetailActivityNew.start(context,courseId,bean);
             }
         });
     }
@@ -60,6 +66,10 @@ public class DetailsRelativeViedeoAdapter extends RecyclerView.Adapter<DetailsRe
     public void setData(List<CourseVideoBean> videos) {
         this.videos = videos;
         notifyDataSetChanged();
+    }
+
+    public void setCourseID(String courseId) {
+        this.courseId = courseId;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
