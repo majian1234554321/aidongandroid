@@ -49,7 +49,7 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
                     if (Constant.CAMPAIGN.equals(campaignBean.type)) {
                         ActivityCircleDetailActivity.start(context, campaignBean.getId());
                     } else if (Constant.CONTEST.equals(campaignBean.type)) {
-                        ContestHomeActivity.start(context, campaignBean.getId());
+                        ContestHomeActivity.start(context,campaignBean);
                     }
                 }
             });

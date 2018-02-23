@@ -130,7 +130,7 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
         }
         initView();
         setListener();
-        userInfoPresent.getUserInfo( userId);
+        userInfoPresent.getUserInfo(userId);
 
     }
 
@@ -273,9 +273,9 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
                     if (isSelf) {
                         showEditDialog();
                     } else if (userInfoData.getProfile().followed) {
-                        userInfoPresent.cancelFollow(userId,Constant.COACH);
+                        userInfoPresent.cancelFollow(userId, Constant.COACH);
                     } else {
-                        userInfoPresent.addFollow(userId,Constant.COACH);
+                        userInfoPresent.addFollow(userId, Constant.COACH);
                     }
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
@@ -407,6 +407,8 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
         if (baseBean.getStatus() == Constant.OK) {
 //            SystemInfoUtils.addFollow(new UserBean(userId));
             ivFollowOrEdit.setBackgroundResource(R.drawable.icon_followed);
+            userInfoData.getProfile().followed = true;
+
         } else {
             Toast.makeText(this, "关注失败", Toast.LENGTH_LONG).show();
         }
@@ -417,6 +419,7 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
         if (baseBean.getStatus() == Constant.OK) {
 //            SystemInfoUtils.removeFollow(new UserBean(userId));
             ivFollowOrEdit.setBackgroundResource(R.drawable.icon_follow);
+            userInfoData.getProfile().followed = false;
         } else {
             Toast.makeText(this, "取消关注失败", Toast.LENGTH_LONG).show();
         }

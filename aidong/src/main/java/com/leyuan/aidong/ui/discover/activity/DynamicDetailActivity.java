@@ -378,6 +378,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         if (baseBean.getStatus() == Constant.OK) {
             SystemInfoUtils.addFollow(dynamic.publisher);
             headerAdapter.notifyDataSetChanged();
+            ToastGlobal.showLongConsecutive("关注成功");
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
@@ -388,6 +389,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         if (baseBean.getStatus() == Constant.OK) {
             SystemInfoUtils.removeFollow(dynamic.publisher);
             headerAdapter.notifyDataSetChanged();
+            ToastGlobal.showLongConsecutive("取消关注成功");
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }

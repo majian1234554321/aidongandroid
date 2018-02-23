@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.R.id.txt_share;
+import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
@@ -207,8 +208,12 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 finish();
                 break;
             case R.id.img_right:
-                sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
-                        "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
+                if(campaignDetailBean != null){
+                    sharePopupWindow.showAtBottom("我分享了精彩活动： "+campaignDetailBean.getName()+",快来围观吧", campaignDetailBean.getIntroduce(),
+                           campaignDetailBean.getImage()!=null?campaignDetailBean.getImage().get(0):null, ConstantUrl.URL_SHARE_DYNAMIC );
+                }
+
+
                 break;
             case R.id.txt_share_image:
                 if (App.mInstance.isLogin()) {
@@ -231,6 +236,9 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 }
                 break;
             case txt_share:
+                if(campaignDetailBean != null){
+
+                }
                 sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
                         "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
                 break;
@@ -244,9 +252,13 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     }
                 } else {
                     //直接到订单界面
+                    ToastGlobal.showLongConsecutive("未获取到规格");
+                    campaignDetailBean.skucode = campaignDetailBean.getCampaignId();
+                    campaignDetailBean.amount = "1";
+                    campaignDetailBean.skuPrice = campaignDetailBean.getPrice();
+                    ConfirmOrderCampaignActivity.start(context,campaignDetailBean);
 
                 }
-
 
 //                ConfirmOrderCourseActivity.start(this, null);
                 break;

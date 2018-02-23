@@ -26,12 +26,13 @@ public interface CourseServiceNew {
     @GET("app/api/config")
     Observable<BaseBean<CourseFilterData>> getCourseFilterConfig();
 
-    @GET("app/api/timetables/")
+    @GET("app/api/timetables")
     Observable<BaseBean<CourseDataNew>> getCourseList(@Query("store") String store,
                                                       @Query("course") String course,
                                                       @Query("time") String time,
                                                       @Query("date") String date,
-                                                      @Query("page") String page);
+                                                      @Query("page") String page,
+                                                      @Query("mobile") String mobile);
 
     @GET("app/api/timetables/{id}")
     Observable<BaseBean<CourseDetailDataNew>> getCourseDetail(@Path("id") String id);

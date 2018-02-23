@@ -13,6 +13,7 @@ import com.leyuan.aidong.entity.data.CourseFilterData;
 import com.leyuan.aidong.http.RetrofitCourseHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CourseServiceNew;
+import com.leyuan.aidong.ui.App;
 
 import retrofit2.http.Path;
 import rx.Subscriber;
@@ -40,7 +41,8 @@ public class CourseModelNewImpl {
 
     public void getCourseList(Subscriber<CourseDataNew> subscriber, String store, String course, String time,
                               String date, String page) {
-        courseService.getCourseList(store, course, time, date, page)
+        String mobile = App.getInstance().isLogin()?App.getInstance().getUser().getMobile():"";
+        courseService.getCourseList(store, course, time, date, page,mobile)
                 .compose(RxHelper.<CourseDataNew>transform())
                 .subscribe(subscriber);
     }

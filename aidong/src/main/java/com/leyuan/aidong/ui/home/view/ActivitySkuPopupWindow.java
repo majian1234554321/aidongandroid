@@ -368,7 +368,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
 //    }
 
     public void buyImmediately() {
-        ToastGlobal.showLongConsecutive("跳到下单");
+//        ToastGlobal.showLongConsecutive("跳到下单");
         GoodsSkuBean line = getLine(selectedSkuValues);
         campaignDetailBean.skucode = line.code;
         campaignDetailBean.amount = tvCount.getText().toString().trim();

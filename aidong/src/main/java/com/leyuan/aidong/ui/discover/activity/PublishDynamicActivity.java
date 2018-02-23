@@ -320,7 +320,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             } else if (requestCode == REQUEST_USER) {
                 this.user_id = data.getStringExtra("user_id");
                 this.name = data.getStringExtra("name");
-                itUser.put( data.getStringExtra("name"),data.getStringExtra("user_id"));
+                itUser.put( name,user_id);
+
+                Logger.i(" itUser.put( name =  " + name+", user_id = " + user_id);
 
                 etContent.setText(etContent.getText().toString() + name);
 

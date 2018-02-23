@@ -1,5 +1,13 @@
 package com.leyuan.aidong.utils;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.view.View;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,5 +51,40 @@ public class StringUtils {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * 关键字高亮显示
+	 *
+	 * @param context 上下文
+	 * @param text    需要显示的文字
+	 * @param target  需要高亮的关键字
+	 * @param color   高亮颜色
+	 * @param start   头部增加高亮文字个数
+	 * @param end     尾部增加高亮文字个数
+	 * @return 处理完后的结果
+	 */
+	public static SpannableStringBuilder  highlight(Context context, String text, String target,
+											String color, int start, int end) {
+		SpannableStringBuilder spannableString = new SpannableStringBuilder (text);
+
+		Pattern pattern = Pattern.compile(target);
+		Matcher matcher = pattern.matcher(text);
+		while (matcher.find()) {
+			ClickableSpan clickableSpan = new ClickableSpan() {
+				@Override
+				public void onClick(View view) {
+					ToastGlobal.showShortConsecutive("点点点");
+				}
+			};
+
+			spannableString.setSpan(clickableSpan, matcher.start() - start, matcher.end() + end,
+					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+			ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor(color));
+			spannableString.setSpan(span, matcher.start() - start, matcher.end() + end,
+					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		}
+		return spannableString;
 	}
 }

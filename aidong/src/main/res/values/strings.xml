@@ -393,4 +393,9 @@
     <string name="switch_city">切换城市</string>
     <string name="selecte">选择</string>
     <string name="contest_enrol_and_post_video_hint">温馨提示：每位用户前5次上传的视频将作为您的海选参数视频,其中得分最高的视频将录入海选成绩排行;超出次数视频则不计入海选参赛.</string>
+    <string name="mass_election">海选</string>
+    <string name="finals">总决赛</string>
+    <string name="quarter_final">复赛</string>
+    <string name="quarter_final_enrol">复赛报名</string>
+    <string name="enroled">已报名</string>
 </resources>

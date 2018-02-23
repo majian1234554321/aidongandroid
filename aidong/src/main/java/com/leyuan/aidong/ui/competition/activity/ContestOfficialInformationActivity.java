@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.discover.NewsAdapter;
+import com.leyuan.aidong.adapter.contest.ContestOfficialInforAdapter;
 import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
@@ -38,7 +38,7 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
 
     private int currPage = 1;
     private List<NewsBean> data;
-    private NewsAdapter newsAdapter;
+    private ContestOfficialInforAdapter newsAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
     private DiscoverPresent discoverPresent;
@@ -75,7 +75,7 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
     private void initRecyclerView(){
         rvNews = (RecyclerView)findViewById(R.id.rv_news);
         data = new ArrayList<>();
-        newsAdapter = new NewsAdapter(this);
+        newsAdapter = new ContestOfficialInforAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(newsAdapter);
         rvNews.setAdapter(wrapperAdapter);
         rvNews.setLayoutManager(new LinearLayoutManager(this));

@@ -9,7 +9,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        app:stb_title="世界之窗" />
+        app:stb_title="@string/official_information" />
 
     <com.leyuan.custompullrefresh.CustomRefreshLayout
         android:id="@+id/refreshLayout"
@@ -18,8 +18,9 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_news"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white" />
+            android:background="@color/c1" />
     </com.leyuan.custompullrefresh.CustomRefreshLayout>
 </LinearLayout>

@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.PersonHorizontalAdapter;
+import com.leyuan.aidong.adapter.home.HomeAttentionHeaderAdapter;
 import com.leyuan.aidong.entity.UserBean;
 
 import java.util.List;
@@ -18,23 +18,23 @@ import java.util.List;
 /**
  * Created by user on 2018/1/4.
  */
-public class PersonHorizontalView extends RelativeLayout {
+public class HomeAttentionHeaderlView extends RelativeLayout {
 
 
     private TextView txtLeftTitle;
     private TextView txtCheckAll;
     private RecyclerView recyclerView;
-    private PersonHorizontalAdapter adapter;
+    private HomeAttentionHeaderAdapter adapter;
 
-    public PersonHorizontalView(Context context) {
+    public HomeAttentionHeaderlView(Context context) {
         this(context,null,0);
     }
 
-    public PersonHorizontalView(Context context, AttributeSet attrs) {
+    public HomeAttentionHeaderlView(Context context, AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public PersonHorizontalView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public HomeAttentionHeaderlView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
     }
@@ -48,7 +48,7 @@ public class PersonHorizontalView extends RelativeLayout {
         LinearLayoutManager manager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(manager);
 
-        adapter = new PersonHorizontalAdapter(context);
+        adapter = new HomeAttentionHeaderAdapter(context);
         recyclerView.setAdapter(adapter);
 
     }

@@ -1,9 +1,15 @@
 package com.leyuan.aidong.ui.discover.viewholder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -27,6 +33,7 @@ import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
@@ -34,6 +41,8 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -55,15 +64,15 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private ImageView ivCoachFlag;
     private ImageView ivFollow;
     private LinearLayout layoutCourseOrActivity;
-    private ImageView imgCover,img_parse;
+    private ImageView imgCover, img_parse;
     private TextView txtTitle;
     private TextView txtDesc;
-    private TextView txtTime,tv_content;
+    private TextView txtTime, tv_content;
     private TextView txtLocation;
     private TextView txtParse;
     private TextView txtComment;
     private RecyclerView likesRecyclerView;
-    private LinearLayout likeLayout,layout_parse;
+    private LinearLayout likeLayout, layout_parse;
 
 
     protected IDynamicCallback callback;
@@ -153,7 +162,16 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         }
 
-        tv_content.setText(dynamic.content);
+        if (dynamic.extras != null && dynamic.extras.length > 0) {
+            SpannableStringBuilder highlightText = highlight(dynamic.content, dynamic.extras, "#EA2D2D");
+
+            tv_content.setText(highlightText);
+            tv_content.setMovementMethod(LinkMovementMethod.getInstance());
+
+        } else {
+            tv_content.setText(dynamic.content);
+        }
+
 
         if (dynamic.like != null && dynamic.like.counter > 0 && (context instanceof DynamicDetailActivity || context instanceof DynamicDetailByIdActivity)) {
             likeLayout.setVisibility(View.VISIBLE);
@@ -260,7 +278,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 } else if (Constant.COURSE.equals(dynamic.type)) {
                     CourseCircleDetailActivity.start(context, dynamic.related.getId());
                 } else if (Constant.CONTEST.equals(dynamic.type)) {
-                    ContestHomeActivity.start(context, dynamic.related.getId());
+                    ContestHomeActivity.start(context, dynamic.related);
                 }
             }
         });
@@ -268,9 +286,9 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         txtLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dynamic.postion != null){
+                if (dynamic.postion != null) {
                     MapActivity.start(context, "", "", dynamic.postion.position_name, dynamic.postion.getLat(), dynamic.postion.getLng());
-                }else {
+                } else {
                     ToastGlobal.showShortConsecutive("地址错误");
                 }
 
@@ -308,4 +326,34 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         }
         return false;
     }
+
+
+    private SpannableStringBuilder highlight(String text, UserBean[] users,
+                                             String color) {
+        SpannableStringBuilder spannableString = new SpannableStringBuilder(text);
+
+
+        for (final UserBean user : users) {
+            Pattern pattern = Pattern.compile(user.getName());
+            Matcher matcher = pattern.matcher(text);
+            while (matcher.find()) {
+                ClickableSpan clickableSpan = new ClickableSpan() {
+                    @Override
+                    public void onClick(View view) {
+                        UserInfoActivity.start(context, user.user_id);
+                    }
+                };
+
+                spannableString.setSpan(clickableSpan, matcher.start() - 1, matcher.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor(color));
+                spannableString.setSpan(span, matcher.start() - 1, matcher.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+        }
+        return spannableString;
+    }
+
 }

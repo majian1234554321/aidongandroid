@@ -1,6 +1,7 @@
-package com.leyuan.aidong.ui.home.fragment;
+package com.leyuan.aidong.ui.competition.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,20 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.home.CircleCoachListAdapter;
+import com.leyuan.aidong.adapter.contest.ContestRankingListAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
-import com.leyuan.aidong.ui.mvp.view.FollowView;
-import com.leyuan.aidong.ui.mvp.view.UserInfoView;
-import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
@@ -32,57 +32,64 @@ import java.util.List;
 /**
  * Created by user on 2018/1/5.
  */
-public class CircleCoachListFragment extends BaseFragment implements UserInfoView, CircleCoachListAdapter.OnAttentionClickListener, FollowView {
+public class ContestRankingFragment extends BaseFragment implements OnRefreshListener, FollowFragmentView,ContestRankingListAdapter.OnAttentionClickListener {
 
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private SwitcherLayout switcherLayout;
-    private int currPage = 1;
+    private int currPage;
+    private ContestRankingListAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private CircleCoachListAdapter adapter;
-    FollowPresentImpl present;
+
+    //    private CoursePresentImpl coursePresent;
+    private ArrayList<UserBean> data = new ArrayList<>();
+    FollowPresentImpl followPresent;
     private int clickedFollowPosition;
-    ArrayList<UserBean> data = new ArrayList<>();
+    private String TYPE = "coaches";
+    private String TYPE_ATTENTION = "coach";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_circle_activity_list, container, false);
+        return inflater.inflate(R.layout.fragment_circle_course_list, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            TYPE = bundle.getString("type");
+//            TYPE_ATTENTION =  bundle.getString("type_cancel");
+//        }
 
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         initSwitcherLayout();
-        present = new FollowPresentImpl(getActivity());
-        present.setUserViewListener(this);
-        present.getRecommendCoachList(currPage);
-        present.setFollowListener(this);
-//        if()
-//        present.getUserFollow("");
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        followPresent = new FollowPresentImpl(getActivity(), this);
+        followPresent.commonLoadData(switcherLayout, TYPE);
     }
 
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                currPage = 1;
-                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.getRecommendCoachList(currPage);
-            }
-        });
+        refreshLayout.setOnRefreshListener(this);
     }
 
     private void initSwitcherLayout() {
         switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View    v) {
+
 
             }
         });
@@ -90,8 +97,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
 
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_order);
-        adapter = new CircleCoachListAdapter(getActivity());
-
+        adapter = new ContestRankingListAdapter(getActivity());
         adapter.setOnAttentionClickListener(this);
 
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
@@ -102,45 +108,83 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
+    @Override
+    public void onRefresh() {
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        followPresent.pullToRefreshData(TYPE);
+    }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
             currPage++;
-            present.getRecommendCoachList(currPage);
+            if (data != null && data.size() >= pageSize) {
+                followPresent.requestMoreData(recyclerView, pageSize, TYPE, currPage);
+            }
+
         }
     };
 
+    @Override
+    public void onRefreshData(List<UserBean> userBeanList) {
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
+        data.clear();
+        data.addAll(userBeanList);
+        adapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+        switcherLayout.showContentLayout();
+    }
 
     @Override
-    public void onGetUserData(List<UserBean> followings) {
-        data.clear();
-        data.addAll(followings);
+    public void onLoadMoreData(List<UserBean> userBeanList) {
+        data.addAll(userBeanList);
         adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override
+    public void showEndFooterView() {
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    @Override
+    public void showEmptyView() {
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
+        View view = View.inflate(getContext(), R.layout.empty_course, null);
+        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
+        refreshLayout.setProgressViewOffset(true, 50, 100);
+        refreshLayout.setOnRefreshListener(this);
+        switcherLayout.addCustomView(view, "empty");
+        switcherLayout.showCustomLayout("empty");
+    }
+
+    public void scrollToTop() {
+        recyclerView.scrollToPosition(0);
+    }
+
+    @Override
     public void onCourseAttentionClick(String id, int position, boolean followed) {
         if (followed) {
-            present.cancelFollow(id, Constant.COACH);
+            followPresent.cancelFollow(id, TYPE_ATTENTION);
         } else {
-            present.addFollow(id, Constant.COACH);
+            followPresent.addFollow(id, TYPE_ATTENTION);
         }
         this.clickedFollowPosition = position;
+
     }
 
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
             if (clickedFollowPosition < data.size() - 1) {
-                data.get(clickedFollowPosition).setFollow(true);
-
                 wrapperAdapter.notifyDataSetChanged();
                 ToastGlobal.showShortConsecutive(R.string.attention_success);
             }
-        } else {
-            ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
     }
 
@@ -151,8 +195,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
 
             if (clickedFollowPosition < data.size()) {
                 Logger.i("Myattention  cancelFollowResult");
-
-                data.get(clickedFollowPosition).setFollow(false);
+                data.remove(clickedFollowPosition);
                 adapter.notifyDataSetChanged();
                 ToastGlobal.showShortConsecutive(R.string.attention_cancel_success);
             } else {
@@ -164,4 +207,5 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
             }
         }
     }
+
 }

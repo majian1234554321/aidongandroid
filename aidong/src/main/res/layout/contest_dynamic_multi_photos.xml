@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/ll_root"
+    android:background="@color/c1">
+    <include layout="@layout/layout_cmd_dynamic_hint"/>
+    <include layout="@layout/contest_dynamic_header"/>
+
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="10dp">
+
+        <com.leyuan.aidong.widget.ninephotoview.PhotoLayout
+            android:id="@+id/circle_image_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+
+    </RelativeLayout>
+
+    <include layout="@layout/contest_dynamic_bottom"/>
+</LinearLayout>

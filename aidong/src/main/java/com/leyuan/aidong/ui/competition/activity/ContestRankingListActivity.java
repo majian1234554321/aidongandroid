@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.fragment.CourseListFragmentNew;
+import com.leyuan.aidong.ui.competition.fragment.ContestRankingFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -49,7 +49,7 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
 
 
         days.add("华东赛区");
-        days.add("华东赛区");
+        days.add("华南赛区");
         days.add("华东赛区");
 
         days.add("华东赛区");
@@ -59,53 +59,44 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
         for (int i = 0; i < days.size(); i++) {
-            CourseListFragmentNew courseFragment = new CourseListFragmentNew();
-            pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                    new Bundler().putString("date", days.get(i)).putString("category","all").get()
+            ContestRankingFragment fragment = new ContestRankingFragment();
+
+            pages.add(FragmentPagerItem.of(null, fragment.getClass(),
+                    new Bundler().putString("date", days.get(i)).putString("category", "all").get()
             ));
 
-//            if (!TextUtils.isEmpty(category)) {
-//                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-//                        new Bundler().putString("date", days.get(i))
-//                                .putString("category", category).get()));
-//            } else {
-//                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-//                        new Bundler().putString("date", days.get(i)).get()));
-//            }
-        }
-        adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
-        viewPager.setOffscreenPageLimit(6);
-        viewPager.setAdapter(adapter);
-        tabLayout.setCustomTabView(this);
-        tabLayout.setViewPager(viewPager);
-        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                for (int i = 0; i < allTabView.size(); i++) {
-                    View tabAt = tabLayout.getTabAt(i);
-                    TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+            adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+            viewPager.setOffscreenPageLimit(6);
+            viewPager.setAdapter(adapter);
+            tabLayout.setCustomTabView(this);
+            tabLayout.setViewPager(viewPager);
+//            tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+//                @Override
+//                public void onPageSelected(int position) {
+////                    for (int i = 0; i < allTabView.size(); i++) {
+////                        View tabAt = tabLayout.getTabAt(i);
+////                        TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
+////                        text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+////                    }
+//                }
+//            });
 
-                    //reset fragment
-                    CourseListFragmentNew page = (CourseListFragmentNew) adapter.getPage(position);
-                    page.scrollToTop();
-//                    filterView.animate().translationY(0).setInterpolator
-//                            (new DecelerateInterpolator(2)).start();
+            tabLayout.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
+                @Override
+                public void onTabClicked(int position) {
+
+
+
+
                 }
-            }
-        });
+            });
 
-        tabLayout.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClicked(int position) {
-            }
-        });
-
+        }
     }
 
     @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_course_text, container, false);
+        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_contest_text, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         text.setText(days.get(position));
         if (position == 0) {
@@ -114,4 +105,6 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
         allTabView.add(tabView);
         return tabView;
     }
+
+
 }

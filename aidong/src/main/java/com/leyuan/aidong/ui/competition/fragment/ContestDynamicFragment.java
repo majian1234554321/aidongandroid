@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.home.fragment;
+package com.leyuan.aidong.ui.competition.fragment;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -35,15 +35,11 @@ import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
-import com.leyuan.aidong.ui.home.view.HomeAttentionHeaderlView;
-import com.leyuan.aidong.ui.mine.activity.MyAttentionListActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
-import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
-import com.leyuan.aidong.ui.mvp.view.UserInfoView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
@@ -51,7 +47,6 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
@@ -73,7 +68,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * 爱动圈
  * Created by song on 2016/12/26.
  */
-public class HomeAttentionFragment extends BasePageFragment implements SportCircleFragmentView, UserInfoView {
+public class ContestDynamicFragment extends BasePageFragment implements SportCircleFragmentView {
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -100,12 +95,11 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
             }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
                 refreshData();
             }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
-                refreshData();
+//                refreshData();
             }
             Logger.i(TAG, "onReceive action = " + intent.getAction());
         }
     };
-    private HomeAttentionHeaderlView headView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -132,15 +126,13 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharePopupWindow = new SharePopupWindow(getActivity());
-
-        FollowPresentImpl followPresent = new FollowPresentImpl(getActivity());
-        followPresent.setUserViewListener(this);
-        followPresent.getUserFollow("following_relation",1);
+        dynamicPresent.commonLoadData(switcherLayout);
     }
 
     @Override
     public void fetchData() {
-        dynamicPresent.commonLoadDataFollow(switcherLayout);
+        // dynamicPresent.pullToRefreshData();
+        dynamicPresent.commonLoadData(switcherLayout);
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -155,7 +147,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dynamicPresent.commonLoadDataFollow(switcherLayout);
+                dynamicPresent.commonLoadData(switcherLayout);
             }
         });
     }
@@ -164,8 +156,8 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_dynamic_list);
         dynamicList = new ArrayList<>();
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext());
-        builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
-                .addType(MultiImageViewHolder.class, DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
+        builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.contest_dynamic_video)
+                .addType(MultiImageViewHolder.class, DYNAMIC_MULTI_IMAGE, R.layout.contest_dynamic_multi_photos)
                 .showFollowButton(false)
                 .showLikeAndCommentLayout(true)
                 .setDynamicCallback(new DynamicCallback());
@@ -174,17 +166,6 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
-
-        //重点
-         headView = new HomeAttentionHeaderlView(getActivity());
-        headView.setLeftTitle(getResources().getString(R.string.my_attention));
-        headView.setCheckAllClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                MyAttentionListActivity.start(getActivity(),0);
-            }
-        });
-        RecyclerViewUtils.setHeaderView(recyclerView,headView);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -202,7 +183,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         currPage = 1;
         refreshLayout.setRefreshing(true);
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        dynamicPresent.pullToRefreshDataFollow();
+        dynamicPresent.pullToRefreshData();
     }
 
     @Override
@@ -216,16 +197,11 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         wrapperAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onGetUserData(List<UserBean> followings) {
-        headView.setUserData(followings);
-    }
-
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
         public void onBackgroundClick(int position) {
-            HomeAttentionFragment.this.clickPosition = position;
+            ContestDynamicFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
                 startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
                         .putExtra("dynamic", dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
@@ -280,12 +256,12 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
 
         @Override
         public void onCommentListClick(DynamicBean dynamicBean, int position, CommentBean item) {
-            HomeAttentionFragment.this.clickPosition = position;
+            ContestDynamicFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
                 startActivityForResult(new Intent(getContext(),
-                                DynamicDetailActivity.class)
-                                .putExtra("dynamic", dynamicBean)
-                                .putExtra("replyComment",item)
+                        DynamicDetailActivity.class)
+                        .putExtra("dynamic", dynamicBean)
+                        .putExtra("replyComment",item)
                         , REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
@@ -295,7 +271,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
 
         @Override
         public void onCommentClick(DynamicBean dynamicBean, int position) {
-            HomeAttentionFragment.this.clickPosition = position;
+            ContestDynamicFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
                 startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
                         .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
@@ -363,7 +339,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_LOGIN) {
-                dynamicPresent.pullToRefreshDataFollow();
+                dynamicPresent.pullToRefreshData();
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
                 startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
                         .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);

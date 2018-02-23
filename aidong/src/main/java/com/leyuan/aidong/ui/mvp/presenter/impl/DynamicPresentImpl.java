@@ -392,7 +392,7 @@ public class DynamicPresentImpl implements DynamicPresent {
                     dynamicDetailActivityView.cancelFollowResult(baseBean);
                 }
             }
-        }, id,Constant.DYNAMIC);
+        }, id,Constant.USER);
     }
 
     @Override
@@ -407,7 +407,7 @@ public class DynamicPresentImpl implements DynamicPresent {
                     dynamicDetailActivityView.addFollowResult(baseBean);
                 }
             }
-        }, id,Constant.DYNAMIC);
+        }, id,Constant.USER);
     }
 
     @Override

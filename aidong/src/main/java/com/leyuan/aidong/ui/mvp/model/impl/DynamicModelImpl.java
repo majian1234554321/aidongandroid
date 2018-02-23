@@ -94,7 +94,7 @@ public class DynamicModelImpl implements DynamicModel {
         JSONArray arrayImage = new JSONArray(image);
         JSONArray arrayUser = new JSONArray();
 
-        JSONObject userObj = new JSONObject();
+
         try {
             if (video != null) {
                 root.put("video", video);
@@ -112,9 +112,12 @@ public class DynamicModelImpl implements DynamicModel {
 
             if (itUser != null) {
                 for (Map.Entry<String, String> code : itUser.entrySet()) {
+                    JSONObject userObj = new JSONObject();
                     userObj.put("name", code.getKey());
                     userObj.put("user_id", code.getValue());
                     arrayUser.put(userObj);
+
+                    Logger.i(" itUser. arrayUser.put(userObj);  name =  " + code.getKey()+", user_id = " + code.getValue());
                 }
                 root.put("extras", arrayUser);
                 Logger.i("root.put(\"extras\", arrayUser);");

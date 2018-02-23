@@ -47,7 +47,7 @@ public class DynamicParsePresent {
                     dynamicParseUserView.addFollowResult(baseBean);
                 }
             }
-        }, id, Constant.DYNAMIC);
+        }, id, Constant.USER);
     }
 
     public void cancelFollow(String id) {
@@ -58,6 +58,6 @@ public class DynamicParsePresent {
                     dynamicParseUserView.cancelFollowResult(baseBean);
                 }
             }
-        }, id,Constant.DYNAMIC);
+        }, id,Constant.USER);
     }
 }

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.UiManager;
 
@@ -26,11 +27,14 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     private TextView txtOfficialInfo;
     private TextView txtRank;
     private String contestId;
+    CampaignBean campaignBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contestId = getIntent().getStringExtra("contestId");
+
+        campaignBean = getIntent().getParcelableExtra("campaignBean");
 
         setContentView(R.layout.activity_competition_home);
 
@@ -45,6 +49,13 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         txtRank = (TextView) findViewById(R.id.txt_rank);
 
 
+        if(campaignBean!=null){
+            contestId = campaignBean.id;
+            txtTitle.setText(campaignBean.name);
+
+        }
+
+
         findViewById(R.id.img_back).setOnClickListener(this);
         findViewById(R.id.bt_end_play).setOnClickListener(this);
         findViewById(R.id.img_share).setOnClickListener(this);
@@ -54,6 +65,9 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         txtRelateDynamic.setOnClickListener(this);
         txtOfficialInfo.setOnClickListener(this);
         txtRank.setOnClickListener(this);
+
+
+
 
     }
 
@@ -67,11 +81,16 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.img_share:
 
+                UiManager.activityJump(this, ContestQuarterFinalEnrolActivity.class);
+
+
                 break;
             case R.id.img_attention:
 
                 break;
+
             case R.id.bt_end_play:
+
 
                 break;
             case R.id.img_post_or_enrol:
@@ -103,6 +122,12 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     public static void start(Context context, String contestId) {
         Intent intent = new Intent(context, ContestHomeActivity.class);
         intent.putExtra("contestId", contestId);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, CampaignBean campaignBean) {
+        Intent intent = new Intent(context, ContestHomeActivity.class);
+        intent.putExtra("campaignBean", campaignBean);
         context.startActivity(intent);
     }
 }

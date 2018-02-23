@@ -7,7 +7,7 @@ import android.view.View;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.discover.fragment.CircleFragment;
+import com.leyuan.aidong.ui.competition.fragment.ContestDynamicFragment;
 
 /**
  * 爱动时刻
@@ -21,7 +21,7 @@ public class ContestDynamicActivity extends BaseActivity{
         setContentView(R.layout.activity_contest_dynamic);
         String id = String.valueOf(App.mInstance.getUser().getId());
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.fl_container, new CircleFragment()).commit();
+        fm.beginTransaction().replace(R.id.fl_container, new ContestDynamicFragment()).commit();
 
         findViewById(R.id.title_bar).setOnClickListener(new View.OnClickListener() {
             @Override

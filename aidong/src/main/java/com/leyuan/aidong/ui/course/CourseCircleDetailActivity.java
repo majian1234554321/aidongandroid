@@ -128,6 +128,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         bt_share = (ImageButton) findViewById(R.id.bt_share);
         txt_appoint_immediately = (TextView) findViewById(R.id.txt_appoint_immediately);
 
+        findViewById(R.id.iv_back).setOnClickListener(this);
         txt_share_image.setOnClickListener(this);
         bt_share.setOnClickListener(this);
         txt_appoint_immediately.setOnClickListener(this);
@@ -185,6 +186,10 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.txt_share_image:
                 if (App.mInstance.isLogin()) {
                     new MaterialDialog.Builder(this)
@@ -210,7 +215,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 break;
             case R.id.txt_appoint_immediately:
 
-                CourseListActivityNew.start(this,courseDetailBean.getCategory());
+                CourseListActivityNew.start(this, courseDetailBean.getCategory());
                 break;
         }
     }
@@ -346,7 +351,6 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         super.onDestroy();
         sharePopupWindow.release();
     }
-
 
 
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {

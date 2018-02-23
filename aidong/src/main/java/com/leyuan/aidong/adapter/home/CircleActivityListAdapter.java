@@ -49,7 +49,7 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
                 if (Constant.CAMPAIGN.equals(bean.type)) {
                     ActivityCircleDetailActivity.start(context, bean.getId());
                 } else if (Constant.CONTEST.equals(bean.type)) {
-                    ContestHomeActivity.start(context, bean.getId());
+                    ContestHomeActivity.start(context, bean);
                 }
             }
         });

@@ -471,7 +471,7 @@ public class SystemInfoUtils {
     public static void addFollow(UserBean bean) {
         if (bean != null) {
             getFollowList(App.context).add(bean);
-//            Constant.followData.getFollow().add(bean);
+            Constant.followData.getFollow().add(bean);
         }
     }
 
