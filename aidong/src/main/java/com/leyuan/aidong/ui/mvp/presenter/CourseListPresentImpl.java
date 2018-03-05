@@ -28,7 +28,7 @@ public class CourseListPresentImpl {
         this.requestResponse = requestResponse;
     }
 
-    private void getCourseList( String store, String course, String time, String date, String page) {
+    private void getCourseList(String store, String course, String time, String date, String page) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -41,7 +41,28 @@ public class CourseListPresentImpl {
         }, store, course, time, date, page);
     }
 
-    public void pullRefreshCourseList( String store, String course, String time, String date) {
+
+    public void getCoachCourseList(String mobile) {
+        courseModel.getCoachCourseList(new BaseSubscriber<CourseDataNew>(context) {
+            @Override
+            public void onNext(CourseDataNew courseDataNew) {
+                if (courseDataNew != null) {
+                    listener.onGetRefreshCourseList(courseDataNew.getTimetable());
+                } else {
+                    listener.onGetRefreshCourseList(null);
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                listener.onGetRefreshCourseList(null);
+            }
+        }, mobile);
+    }
+
+    public void pullRefreshCourseList(String store, String course, String time, String date) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -61,7 +82,7 @@ public class CourseListPresentImpl {
         }, store, course, time, date, "1");
     }
 
-    public void loadMoreCourseList( String store, String course, String time, String date, String page) {
+    public void loadMoreCourseList(String store, String course, String time, String date, String page) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -78,7 +99,7 @@ public class CourseListPresentImpl {
                 super.onError(e);
                 listener.onGetMoreCourseList(null);
             }
-        },  store, course, time, date, page);
+        }, store, course, time, date, page);
     }
 
 

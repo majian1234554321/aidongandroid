@@ -1,11 +1,13 @@
 package com.leyuan.aidong.ui.discover.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +38,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
+import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
@@ -44,7 +47,7 @@ import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.KeyBoardUtil;
-import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -60,6 +63,7 @@ import java.util.List;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_SEND;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
+import static com.leyuan.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
 
 /**
  * 动态详情
@@ -101,6 +105,18 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         context.startActivity(intent);
     }
 
+    public static void startResultById(Fragment fragment, String dynamicId) {
+        Intent intent = new Intent(fragment.getContext(), DynamicDetailByIdActivity.class);
+        intent.putExtra(Constant.DYNAMIC_ID, dynamicId);
+        fragment.startActivityForResult(intent, REQUEST_REFRESH_DYNAMIC);
+    }
+
+    public static void startResultById(Activity activity, String dynamicId) {
+        Intent intent = new Intent(activity, DynamicDetailByIdActivity.class);
+        intent.putExtra(Constant.DYNAMIC_ID, dynamicId);
+        activity.startActivityForResult(intent, REQUEST_REFRESH_DYNAMIC);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +140,15 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             dynamicPresent.getDynamicDetail(dynamicId);
         }
         findViewById(R.id.iv_back).setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        if (dynamicId != null) {
+//            dynamicPresent.getDynamicDetail(dynamicId);
+//        }
+
     }
 
     private void initView() {
@@ -366,7 +391,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            SystemInfoUtils.addFollow(dynamic.publisher);
+//            SystemInfoUtils.addFollow(dynamic.publisher);
+            dynamic.publisher.followed = true;
             headerAdapter.notifyDataSetChanged();
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
@@ -376,7 +402,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            SystemInfoUtils.removeFollow(dynamic.publisher);
+//            SystemInfoUtils.removeFollow(dynamic.publisher);
+            dynamic.publisher.followed = false;
             headerAdapter.notifyDataSetChanged();
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
@@ -424,8 +451,13 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         }
 
         @Override
-        public void onAvatarClick(String id) {
-            UserInfoActivity.startForResult(DynamicDetailByIdActivity.this, id, Constant.REQUEST_USER_INFO);
+        public void onAvatarClick(String id, String userType) {
+            if (Constant.COACH.equals(userType)) {
+                CoachInfoActivity.startForResult(DynamicDetailByIdActivity.this, id, Constant.REQUEST_USER_INFO);
+            } else {
+                UserInfoActivity.startForResult(DynamicDetailByIdActivity.this, id, Constant.REQUEST_USER_INFO);
+            }
+
         }
 
         @Override
@@ -459,11 +491,12 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
         @Override
         public void onFollowClick(String id) {
-            boolean isFollow = SystemInfoUtils.isFollow(DynamicDetailByIdActivity.this, id);
-            if (isFollow) {
-                dynamicPresent.cancelFollow(id);
+//            boolean isFollow =dynamic.publisher.followed;
+
+            if (dynamic.publisher.followed) {
+                dynamicPresent.cancelFollow(id, dynamic.publisher.getUserTypeByUserType());
             } else {
-                dynamicPresent.addFollow(id);
+                dynamicPresent.addFollow(id, dynamic.publisher.getUserTypeByUserType());
             }
         }
 
@@ -526,8 +559,18 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constant.REQUEST_USER_INFO) {
-            headerAdapter.notifyDataSetChanged();
+
+        Logger.i("follow onActivityResult", "requestCode = " + requestCode + ", resultCode = " + resultCode);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constant.REQUEST_USER_INFO:
+
+                    dynamic.publisher.followed = data.getBooleanExtra(Constant.FOLLOW, dynamic.publisher.followed);
+                    Logger.i("follow","onActivityResult follow = " + dynamic.publisher.followed);
+                    headerAdapter.notifyDataSetChanged();
+                    break;
+            }
         }
+
     }
 }

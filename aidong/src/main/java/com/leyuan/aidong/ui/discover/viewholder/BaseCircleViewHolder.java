@@ -29,14 +29,12 @@ import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
 import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.CMDMessageActivity;
-import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.Utils;
 
@@ -155,8 +153,8 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                     ? R.drawable.icon_man : R.drawable.icon_woman);
             if (showFollowButton) {
                 ivFollow.setVisibility(View.VISIBLE);
-                boolean isFollow = SystemInfoUtils.isFollow(context, dynamic.publisher.getId());
-                ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_followed : R.drawable.icon_follow);
+//                boolean isFollow = SystemInfoUtils.isFollow(context, dynamic.publisher.getId());
+                ivFollow.setBackgroundResource(dynamic.publisher.followed ? R.drawable.icon_followed : R.drawable.icon_follow);
             } else {
                 ivFollow.setVisibility(View.GONE);
             }
@@ -173,7 +171,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         }
 
 
-        if (dynamic.like != null && dynamic.like.counter > 0 && (context instanceof DynamicDetailActivity || context instanceof DynamicDetailByIdActivity)) {
+        if (dynamic.like != null && dynamic.like.counter > 0 && ( context instanceof DynamicDetailByIdActivity)) {
             likeLayout.setVisibility(View.VISIBLE);
             likesRecyclerView.setLayoutManager(new LinearLayoutManager
                     (context, LinearLayoutManager.HORIZONTAL, false));
@@ -199,7 +197,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onAvatarClick(dynamic.publisher.getId());
+                    callback.onAvatarClick(dynamic.publisher.getId(),dynamic.publisher.getUserTypeByUserType());
                 }
             }
         });
@@ -340,6 +338,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 ClickableSpan clickableSpan = new ClickableSpan() {
                     @Override
                     public void onClick(View view) {
+
                         UserInfoActivity.start(context, user.user_id);
                     }
                 };

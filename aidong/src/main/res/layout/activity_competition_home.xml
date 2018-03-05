@@ -50,6 +50,13 @@
             android:src="@drawable/attention_white" />
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/img_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rel_title"
+        android:scaleType="centerCrop" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,9 +107,9 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="15dp"
-                        android:drawablePadding="5dp"
                         android:background="@drawable/shape_simi_circle_tranparent_solid"
                         android:drawableLeft="@drawable/icon_play_competion"
+                        android:drawablePadding="5dp"
                         android:gravity="center"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
@@ -190,6 +197,94 @@
             android:textSize="12sp" />
 
     </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/layout_invitation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/semitransparent_standard">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="255dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_radius_white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:text="@string/input_invitation_code"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:text="@string/input_invitation_code"
+                    android:textColor="@color/b3"
+                    android:textSize="13sp"
+
+                    />
+
+                <EditText
+                    android:id="@+id/edit_invitation_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/shape_stroke_b3_radius"
+                    android:gravity="center"
+                    android:hint="@string/please_input_invitation_code"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/b3"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/bt_enrol_semi_final"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/shape_origin_contest_circle"
+                    android:text="@string/enrol_immediatly"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/bt_close_invitation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
+                android:background="@color/transparent"
+                android:src="@drawable/icon_close"
+
+                />
+        </RelativeLayout>
+
+    </FrameLayout>
 
 
 </RelativeLayout>

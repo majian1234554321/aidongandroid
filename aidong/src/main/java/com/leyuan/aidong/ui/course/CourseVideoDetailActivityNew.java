@@ -112,7 +112,6 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
             txtCourseIntro.setText(courseVideoBean.getIntroduce());
         }
 
-
         findViewById(bt_share).setOnClickListener(this);
         txt_appoint_immediately.setOnClickListener(this);
         imgLiveBeginOrEnd.setOnClickListener(this);

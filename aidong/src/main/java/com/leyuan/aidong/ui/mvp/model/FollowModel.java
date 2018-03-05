@@ -45,6 +45,8 @@ public interface FollowModel {
 //     */
 //    void cancelFollow(Subscriber<BaseBean> subscriber,String id);
 
+    void getFollowers(Subscriber<FollowData> subscriber, int page);
+
     void addFollow(Subscriber<BaseBean> subscriber, String id, String type);
 
     void cancelFollow(Subscriber<BaseBean> subscriber, String id, String type);

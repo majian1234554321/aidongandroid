@@ -27,7 +27,7 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
     private ViewPager viewPager;
     private int currentItem;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private TextView bt_course_appoint, bt_event_appoint;
+    private TextView bt_course_appoint, bt_event_appoint,bt_goods_appoint;
     private int tranPosition;
 
 
@@ -40,10 +40,13 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
         setContentView(R.layout.activity_appointment_mine);
         bt_course_appoint = (TextView) findViewById(R.id.bt_course_appoint);
         bt_event_appoint = (TextView) findViewById(R.id.bt_event_appoint);
+        bt_goods_appoint = (TextView) findViewById(R.id.bt_goods_appoint);
 
         findViewById(R.id.iv_back).setOnClickListener(this);
         findViewById(R.id.bt_course_appoint).setOnClickListener(this);
         findViewById(R.id.bt_event_appoint).setOnClickListener(this);
+        findViewById(R.id.bt_goods_appoint).setOnClickListener(this);
+
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
 
@@ -90,6 +93,11 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
                 viewPager.setCurrentItem(currentItem);
 
                 break;
+            case R.id.bt_goods_appoint:
+                currentItem = 2;
+                viewPager.setCurrentItem(currentItem);
+
+                break;
         }
     }
 
@@ -108,10 +116,17 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
             case 0:
                 bt_course_appoint.setTextColor(getResources().getColor(R.color.white));
                 bt_event_appoint.setTextColor(getResources().getColor(R.color.c9));
+                bt_goods_appoint.setTextColor(getResources().getColor(R.color.c9));
                 break;
             case 1:
                 bt_course_appoint.setTextColor(getResources().getColor(R.color.c9));
                 bt_event_appoint.setTextColor(getResources().getColor(R.color.white));
+                bt_goods_appoint.setTextColor(getResources().getColor(R.color.c9));
+                break;
+            case 2:
+                bt_course_appoint.setTextColor(getResources().getColor(R.color.c9));
+                bt_event_appoint.setTextColor(getResources().getColor(R.color.c9));
+                bt_goods_appoint.setTextColor(getResources().getColor(R.color.white));
                 break;
         }
     }

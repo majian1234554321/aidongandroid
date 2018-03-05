@@ -22,6 +22,10 @@ public class FollowData implements Serializable{
         this.followings = follower;
     }
 
+    public List<UserBean> getUser() {
+        return user;
+    }
+
     @Override
     public String toString() {
         return "FollowData{" +

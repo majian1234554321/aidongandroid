@@ -8,7 +8,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        app:stb_title="世界之窗"/>
+        app:stb_title="相关视频列表"/>
 
     <com.leyuan.custompullrefresh.CustomRefreshLayout
         android:id="@+id/refreshLayout"

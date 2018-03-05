@@ -65,5 +65,7 @@ public interface CampaignPresent {
 
     void getCampaignAvailableCoupon(String id);
 
+    void getCampaignAvailableCoupon(String skuCode, String amount);
+
     ShareData.ShareCouponInfo getShareInfo();
 }

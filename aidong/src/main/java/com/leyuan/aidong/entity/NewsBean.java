@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,10 +9,19 @@ import java.io.Serializable;
  * Created by song on 2016/11/5.
  */
 public class NewsBean implements Serializable{
+
+    @SerializedName("id")
     private String id;
+    @SerializedName("title")
     private String title;
+
+    @SerializedName("body")
     private String body;
+
+    @SerializedName("cover")
     private String cover;
+
+    @SerializedName("published_at")
     private String datetime;
 
     public String getId() {

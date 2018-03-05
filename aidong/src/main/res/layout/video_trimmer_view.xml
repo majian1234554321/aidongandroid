@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/c1"
     android:orientation="vertical">
+
 
     <RelativeLayout
         android:id="@+id/layout_surface_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/layout"
-        android:background="@android:color/black"
+        android:background="@color/c1"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -27,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white">
+        android:background="@color/c1">
 
 
         <TextView
@@ -35,16 +37,16 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center"
-            android:text="拖动选择你要发表的15秒以内片段"
-            android:textColor="#444444"
+            android:text="拖动选择您要裁剪的视频"
+            android:textColor="@color/b3"
             android:textSize="12dp" />
 
         <com.iknow.android.widget.VideoThumbHorizontalListView
             android:id="@+id/video_thumb_listview"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="15dp"
             android:layout_below="@+id/video_shoot_tip"
+            android:layout_marginTop="15dp"
             android:paddingLeft="6dp"
             android:paddingRight="6dp" />
 
@@ -53,13 +55,13 @@
             style="@style/Video_Trim_SeekBar"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:visibility="visible"
-            android:max="1000"
             android:layout_alignTop="@+id/video_thumb_listview"
             android:layout_below="@+id/video_shoot_tip"
+            android:layout_marginTop="15dp"
+            android:max="1000"
             android:progressDrawable="@android:color/transparent"
-            android:secondaryProgress="0" />
+            android:secondaryProgress="0"
+            android:visibility="visible" />
 
         <com.iknow.android.widget.RangeSeekBarView
             android:id="@+id/timeLineBar"
@@ -86,7 +88,8 @@
                 android:padding="10dp"
                 android:text="返回"
                 android:textColor="@android:color/black"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/icon_video_play"
@@ -96,18 +99,55 @@
                 android:padding="12dp"
                 android:src="@drawable/icon_video_play_black" />
 
-            <TextView
-                android:id="@+id/finishBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="完成"
-                android:textColor="@android:color/black"
-                android:textSize="16dp" />
+            <!--<TextView-->
+            <!--android:id="@+id/finishBtn"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:text="完成"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--android:textSize="16dp" />-->
 
         </FrameLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/img_left"
+            style="@style/styleImageBack" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:maxWidth="200dp"
+            android:singleLine="true"
+            android:text="裁剪"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/finishBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:text="完成"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
 
     </RelativeLayout>
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.home.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import com.leyuan.aidong.adapter.home.CircleCoachListAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.mvp.view.UserInfoView;
@@ -29,6 +31,8 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by user on 2018/1/5.
  */
@@ -43,6 +47,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
     FollowPresentImpl present;
     private int clickedFollowPosition;
     ArrayList<UserBean> data = new ArrayList<>();
+    private int itemClickedPosition;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,10 +119,16 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
 
     @Override
     public void onGetUserData(List<UserBean> followings) {
-        data.clear();
+
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+            data.clear();
+        }
+
         data.addAll(followings);
         adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -131,12 +142,20 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
     }
 
     @Override
+    public void onItemClick(String id, int position) {
+        itemClickedPosition = position;
+        UserInfoActivity.startForResult(this, id, Constant.REQUEST_USER_INFO);
+    }
+
+    @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
-            if (clickedFollowPosition < data.size() - 1) {
-                data.get(clickedFollowPosition).setFollow(true);
 
-                wrapperAdapter.notifyDataSetChanged();
+            if (clickedFollowPosition < data.size() - 1) {
+
+                data.get(clickedFollowPosition).followed = true;
+                adapter.notifyItemChanged(clickedFollowPosition);
+//                wrapperAdapter.notifyDataSetChanged();
                 ToastGlobal.showShortConsecutive(R.string.attention_success);
             }
         } else {
@@ -152,8 +171,9 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
             if (clickedFollowPosition < data.size()) {
                 Logger.i("Myattention  cancelFollowResult");
 
-                data.get(clickedFollowPosition).setFollow(false);
-                adapter.notifyDataSetChanged();
+
+                data.get(clickedFollowPosition).followed = false;
+                adapter.notifyItemChanged(clickedFollowPosition);
                 ToastGlobal.showShortConsecutive(R.string.attention_cancel_success);
             } else {
                 if (TextUtils.isEmpty(baseBean.getMessage())) {
@@ -163,5 +183,25 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
                 }
             }
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Logger.i("follow onActivityResult", "requestCode = " + requestCode + ", resultCode = " + resultCode);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constant.REQUEST_USER_INFO:
+
+                    CircleCoachListFragment.this.data.get(itemClickedPosition).followed =
+                            data.getBooleanExtra(Constant.FOLLOW, CircleCoachListFragment.this.data.get(itemClickedPosition).followed);
+                    Logger.i("follow", "onActivityResult follow = " + CircleCoachListFragment.this.data.get(itemClickedPosition).followed);
+                    adapter.notifyItemChanged(itemClickedPosition);
+
+
+                    break;
+            }
+        }
+
     }
 }

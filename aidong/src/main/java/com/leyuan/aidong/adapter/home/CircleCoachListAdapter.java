@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
-import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.List;
@@ -43,12 +42,15 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
         holder.txt_attention_num.setVisibility(View.VISIBLE);
         holder.txt_attention_num.setText(user.followers_count + "人关注");
         holder.txtIntro.setText(user.personal_intro);
-        holder.btAttention.setImageResource(user.followed?R.drawable.icon_followed:R.drawable.icon_follow);
+        holder.btAttention.setImageResource(user.followed ? R.drawable.icon_followed : R.drawable.icon_follow);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CoachInfoActivity.start(context, user.getId());
+                if (listener != null) {
+                    listener.onItemClick(user.getId(), position);
+                }
+//                CoachInfoActivity.start(context, user.getId());
             }
         });
 
@@ -95,5 +97,7 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
 
     public interface OnAttentionClickListener {
         void onCourseAttentionClick(String id, int position, boolean followed);
+
+        void onItemClick(String id, int position);
     }
 }

@@ -17,7 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.iknow.android.interfaces.OnProgressVideoListener;
@@ -28,6 +27,7 @@ import com.iknow.android.widget.RangeSeekBarView;
 import com.iknow.android.widget.Thumb;
 import com.iknow.android.widget.VideoThumbHorizontalListView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -327,6 +327,17 @@ public class VideoTrimmerView extends FrameLayout {
                 }
         );
 
+        findViewById(R.id.img_left).setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onCancelClicked();
+                    }
+                }
+        );
+
+
+
         findViewById(R.id.finishBtn).setOnClickListener(
                 new OnClickListener() {
                     @Override
@@ -414,9 +425,12 @@ public class VideoTrimmerView extends FrameLayout {
     }
 
     private void onSaveClicked() {
-        if (mEndPosition/1000 - mStartPosition/1000 < TrimVideoUtil.MIN_TIME_FRAME) {
-            Toast.makeText(mContext, "视频长不足5秒,无法上传", Toast.LENGTH_SHORT).show();
-        }else{
+        if (mEndPosition/1000 - mStartPosition/1000 < TrimVideoUtil.MIN_TIME_FRAME ) {
+            ToastGlobal.showLongConsecutive("视频时间不可小于5秒");
+        }  else if( mEndPosition/1000 - mStartPosition/1000 > 60 ){
+            ToastGlobal.showLongConsecutive("视频时间不可大于60秒");
+        }
+        else{
             mVideoView.pause();
             TrimVideoUtil.trimVideo(mContext, mSrc.getPath(), getTrimmedVideoPath(), mStartPosition, mEndPosition, mOnTrimVideoListener);
         }

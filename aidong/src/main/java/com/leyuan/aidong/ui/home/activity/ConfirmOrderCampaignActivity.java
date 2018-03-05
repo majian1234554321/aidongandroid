@@ -106,7 +106,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         initData();
 
         campaignPresent = new CampaignPresentImpl(this, this);
-        campaignPresent.getCampaignAvailableCoupon(course.getCampaignId());
+        campaignPresent.getCampaignAvailableCoupon(course.skucode,course.amount);
     }
 
 

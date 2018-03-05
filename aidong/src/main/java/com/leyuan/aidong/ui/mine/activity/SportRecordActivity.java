@@ -29,6 +29,7 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
 
     private FragmentPagerItemAdapter adapter;
     private List<View> allTabView = new ArrayList<>();
+    private String year = "2018";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
         for (int i = 0; i < 12; i++) {
             SportRecordFragment courseFragment = new SportRecordFragment();
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                    new Bundler().putInt("date", i).get()
+                    new Bundler().putInt("month", i+1).putString("year", year).get()
             ));
 
         }
@@ -72,7 +73,7 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         String[] campaignTab = getResources().getStringArray(R.array.months);
         text.setText(campaignTab[position]);
-        if(position == 0){
+        if (position == 0) {
             text.setTypeface(Typeface.DEFAULT_BOLD);
         }
         allTabView.add(tabView);

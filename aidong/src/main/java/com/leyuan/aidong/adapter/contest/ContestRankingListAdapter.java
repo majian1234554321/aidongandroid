@@ -10,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.UserBean;
-import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
+import com.leyuan.aidong.entity.campaign.RankingBean;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.List;
@@ -24,7 +22,7 @@ import java.util.List;
 public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRankingListAdapter.ViewHolder> {
 
     private final Context context;
-    private List<UserBean> users;
+    private List<RankingBean> users;
     private OnAttentionClickListener listener;
 
     public ContestRankingListAdapter(Context context) {
@@ -39,21 +37,15 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final UserBean user = users.get(position);
-        GlideLoader.getInstance().displayCircleImage(user.getAvatar(), holder.imgAvatar);
-        holder.txtCoachName.setText(user.getName());
-        holder.txtIntro.setText(user.personal_intro);
-
+        final RankingBean user = users.get(position);
+        GlideLoader.getInstance().displayCircleImage(user.avatar, holder.imgAvatar);
+        holder.txtCoachName.setText(user.name);
+        holder.txtIntro.setText(user.score + "分");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (Constant.COACH.equals(user.type)) {
-                    CoachInfoActivity.start(context, user.getId());
-                } else {
-                    UserInfoActivity.start(context, user.getId());
-                }
+                UserInfoActivity.start(context, user.id);
 
             }
         });
@@ -62,7 +54,7 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onCourseAttentionClick(user.getId(), position, true);
+                    listener.onCourseAttentionClick(user.id, position, true);
                 }
             }
         });
@@ -74,8 +66,9 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
         return users.size();
     }
 
-    public void setData(List<UserBean> followings) {
+    public void setData(List<RankingBean> followings) {
         this.users = followings;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

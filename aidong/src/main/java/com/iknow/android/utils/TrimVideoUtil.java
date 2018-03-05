@@ -14,7 +14,9 @@ import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.iknow.android.interfaces.OnTrimVideoListener;
 import com.iknow.android.models.VideoInfo;
+import com.leyuan.aidong.utils.Logger;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +36,8 @@ public class TrimVideoUtil {
     private static final int thumb_Height = UnitConverter.dpToPx(60);
     private static final long one_frame_time = 1000000;
 
-    public static void trimVideo(Context context, String inputFile, String outputFile, long startMs, long endMs, final OnTrimVideoListener callback) {
+    public static void trimVideo(Context context, final String inputFile, final String outputFile, long startMs, long endMs, final OnTrimVideoListener callback) {
+
         final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         final String outputName = "trimmedVideo_" + timeStamp + ".mp4";
 
@@ -54,11 +57,16 @@ public class TrimVideoUtil {
             FFmpeg.getInstance(context).execute(command, new ExecuteBinaryResponseHandler() {
                 @Override
                 public void onFailure(String s) {
+
                 }
 
                 @Override
                 public void onSuccess(String s) {
-                    callback.onFinishTrim(null);
+
+                    Logger.i("contest video ", "inputFile = " + inputFile + ", outputFile, outputName = " + outputFile + "/" + outputName);
+
+
+                    callback.onFinishTrim(new File(outputFile, outputName).getAbsolutePath());
                 }
 
                 @Override
@@ -78,40 +86,40 @@ public class TrimVideoUtil {
     public static void backgroundShootVideoThumb(final Context context, final Uri videoUri, final SingleCallback<ArrayList<Bitmap>, Integer> callback) {
         final ArrayList<Bitmap> thumbnailList = new ArrayList<>();
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0L, "") {
-               @Override
-               public void execute() {
-                   try {
-                       MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-                       mediaMetadataRetriever.setDataSource(context, videoUri);
-                       // Retrieve media data use microsecond
-                       long videoLengthInMs = Long.parseLong(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) * 1000;
-                       long numThumbs = videoLengthInMs < one_frame_time ? 1 : (videoLengthInMs / one_frame_time);
-                       final long interval = videoLengthInMs / numThumbs;
+                                       @Override
+                                       public void execute() {
+                                           try {
+                                               MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+                                               mediaMetadataRetriever.setDataSource(context, videoUri);
+                                               // Retrieve media data use microsecond
+                                               long videoLengthInMs = Long.parseLong(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) * 1000;
+                                               long numThumbs = videoLengthInMs < one_frame_time ? 1 : (videoLengthInMs / one_frame_time);
+                                               final long interval = videoLengthInMs / numThumbs;
 
-                       //每次截取到3帧之后上报
-                       for (long i = 0; i < numThumbs; ++i) {
-                           Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(i * interval, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-                           try {
-                               bitmap = Bitmap.createScaledBitmap(bitmap, thumb_Width, thumb_Height, false);
-                           } catch (Exception e) {
-                               e.printStackTrace();
-                           }
-                           thumbnailList.add(bitmap);
-                           if (thumbnailList.size() == 3) {
-                               callback.onSingleCallback((ArrayList<Bitmap>) thumbnailList.clone(), (int) interval);
-                               thumbnailList.clear();
-                           }
-                       }
-                       if (thumbnailList.size() > 0) {
-                           callback.onSingleCallback((ArrayList<Bitmap>) thumbnailList.clone(), (int) interval);
-                           thumbnailList.clear();
-                       }
-                       mediaMetadataRetriever.release();
-                   } catch (final Throwable e) {
-                       Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
-                   }
-               }
-           }
+                                               //每次截取到3帧之后上报
+                                               for (long i = 0; i < numThumbs; ++i) {
+                                                   Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(i * interval, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+                                                   try {
+                                                       bitmap = Bitmap.createScaledBitmap(bitmap, thumb_Width, thumb_Height, false);
+                                                   } catch (Exception e) {
+                                                       e.printStackTrace();
+                                                   }
+                                                   thumbnailList.add(bitmap);
+                                                   if (thumbnailList.size() == 3) {
+                                                       callback.onSingleCallback((ArrayList<Bitmap>) thumbnailList.clone(), (int) interval);
+                                                       thumbnailList.clear();
+                                                   }
+                                               }
+                                               if (thumbnailList.size() > 0) {
+                                                   callback.onSingleCallback((ArrayList<Bitmap>) thumbnailList.clone(), (int) interval);
+                                                   thumbnailList.clear();
+                                               }
+                                               mediaMetadataRetriever.release();
+                                           } catch (final Throwable e) {
+                                               Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                                           }
+                                       }
+                                   }
         );
 
     }
@@ -125,8 +133,8 @@ public class TrimVideoUtil {
         ContentResolver contentResolver = mContext.getContentResolver();
         try {
             Cursor cursor = contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null,
-                            null, null, MediaStore.Video.Media.DATE_MODIFIED + " desc");
-            if(cursor != null) {
+                    null, null, MediaStore.Video.Media.DATE_MODIFIED + " desc");
+            if (cursor != null) {
                 while (cursor.moveToNext()) {
                     video = new VideoInfo();
                     if (cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION)) != 0) {

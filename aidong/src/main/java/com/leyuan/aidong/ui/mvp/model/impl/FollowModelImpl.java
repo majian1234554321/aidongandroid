@@ -75,6 +75,15 @@ public class FollowModelImpl implements FollowModel {
                 .subscribe(subscriber);
     }
 
+    @Override
+    public void getFollowers(Subscriber<FollowData> subscriber, int page) {
+        followService.getFollowers(page)
+                .compose(RxHelper.<FollowData>transform())
+                .subscribe(subscriber);
+    }
+
+
+
 //    @Override
 //    public void addFollow(Subscriber<BaseBean> subscriber, String id) {
 //        followService.addFollow(id)

@@ -6,7 +6,7 @@ public interface OnTrimVideoListener {
 
     void onStartTrim();
 
-    void onFinishTrim(final Uri uri);
+    void onFinishTrim(final String uri);
 
     void onCancel();
 }

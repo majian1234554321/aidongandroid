@@ -16,6 +16,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
@@ -31,15 +34,15 @@ import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BasePageFragment;
-import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
+import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
+import com.leyuan.aidong.ui.home.activity.CircleListActivity;
 import com.leyuan.aidong.ui.home.view.HomeAttentionHeaderlView;
 import com.leyuan.aidong.ui.mine.activity.MyAttentionListActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
-import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
@@ -48,6 +51,7 @@ import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -61,7 +65,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
@@ -77,13 +80,19 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
+    private RelativeLayout layoutAttentionEmpty;
+    private TextView txtEmptyHint;
+    private ImageView btEmptyConfirm;
+
+
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<DynamicBean> dynamicList;
     private DynamicBean invokeDynamicBean;
 
     private int currPage = 1;
-    private DynamicPresent dynamicPresent;
+
+    private DynamicPresentImpl dynamicPresent;
 
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
@@ -97,32 +106,54 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
                 refreshData();
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
                 refreshData();
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
                 refreshData();
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_LOGIN_SUCCESS)) {
+                refreshData();
+                followPresent.getUserFollow("following_relation", 1);
+
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
                 refreshData();
             }
+
             Logger.i(TAG, "onReceive action = " + intent.getAction());
         }
     };
     private HomeAttentionHeaderlView headView;
+    private FollowPresentImpl followPresent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BROADCAST_ACTION_SELECTED_CITY);
-        filter.addAction(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE);
-        filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);
+//        filter.addAction(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE);
+//        filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);
         filter.addAction(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_EXIT_LOGIN);
+        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(circleFragmentReceiver, filter);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_circle, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_attention, container, false);
         dynamicPresent = new DynamicPresentImpl(getContext(), this);
+        layoutAttentionEmpty = (RelativeLayout) view.findViewById(R.id.layout_attention_empty);
+        txtEmptyHint = (TextView) view.findViewById(R.id.txt_empty_hint);
+        btEmptyConfirm = (ImageView) view.findViewById(R.id.bt_empty_confirm);
+        btEmptyConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (App.getInstance().isLogin()) {
+                    CircleListActivity.start(getActivity(), 0);
+                } else {
+                    UiManager.activityJump(getActivity(), LoginActivity.class);
+                }
+            }
+        });
+
+
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         return view;
@@ -133,9 +164,9 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         super.onActivityCreated(savedInstanceState);
         sharePopupWindow = new SharePopupWindow(getActivity());
 
-        FollowPresentImpl followPresent = new FollowPresentImpl(getActivity());
+        followPresent = new FollowPresentImpl(getActivity());
         followPresent.setUserViewListener(this);
-        followPresent.getUserFollow("following_relation",1);
+        followPresent.getUserFollow("following_relation", 1);
     }
 
     @Override
@@ -176,15 +207,15 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         recyclerView.addOnScrollListener(onScrollListener);
 
         //重点
-         headView = new HomeAttentionHeaderlView(getActivity());
+        headView = new HomeAttentionHeaderlView(getActivity());
         headView.setLeftTitle(getResources().getString(R.string.my_attention));
-        headView.setCheckAllClickListener(new View.OnClickListener(){
+        headView.setCheckAllClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyAttentionListActivity.start(getActivity(),0);
+                MyAttentionListActivity.start(getActivity(), 0);
             }
         });
-        RecyclerViewUtils.setHeaderView(recyclerView,headView);
+        RecyclerViewUtils.setHeaderView(recyclerView, headView);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -192,7 +223,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         public void onLoadNextPage(View view) {
             currPage++;
             if (dynamicList != null && dynamicList.size() >= pageSize) {
-                dynamicPresent.requestMoreData(recyclerView, pageSize, currPage);
+                dynamicPresent.requestMoreDataFollow(recyclerView, pageSize, currPage);
             }
         }
     };
@@ -211,9 +242,29 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
             dynamicList.clear();
             refreshLayout.setRefreshing(false);
         }
-        dynamicList.addAll(dynamicBeanList);
-        circleDynamicAdapter.updateData(dynamicList);
-        wrapperAdapter.notifyDataSetChanged();
+
+        if (dynamicBeanList == null || dynamicBeanList.isEmpty()) {
+            layoutAttentionEmpty.setVisibility(View.VISIBLE);
+            if (App.getInstance().isLogin()) {
+                txtEmptyHint.setText("还没有关注任何内容");
+                btEmptyConfirm.setImageResource(R.drawable.icon_go_to_attention);
+
+
+            } else {
+
+                txtEmptyHint.setText("立即登陆查看您关注的内容");
+                btEmptyConfirm.setImageResource(R.drawable.icon_login_immediatly_red);
+            }
+
+        } else {
+
+            layoutAttentionEmpty.setVisibility(View.GONE);
+            dynamicList.addAll(dynamicBeanList);
+            circleDynamicAdapter.updateData(dynamicList);
+            wrapperAdapter.notifyDataSetChanged();
+        }
+
+
     }
 
     @Override
@@ -227,8 +278,11 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         public void onBackgroundClick(int position) {
             HomeAttentionFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
+
+                DynamicDetailByIdActivity.startResultById(HomeAttentionFragment.this, dynamicList.get(position).id);
+
+//                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+//                        .putExtra("dynamic", dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicList.get(position);
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -236,7 +290,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         }
 
         @Override
-        public void onAvatarClick(String id) {
+        public void onAvatarClick(String id, String userType) {
             UserInfoActivity.start(getContext(), id);
         }
 
@@ -282,11 +336,13 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         public void onCommentListClick(DynamicBean dynamicBean, int position, CommentBean item) {
             HomeAttentionFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(),
-                                DynamicDetailActivity.class)
-                                .putExtra("dynamic", dynamicBean)
-                                .putExtra("replyComment",item)
-                        , REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(HomeAttentionFragment.this, dynamicBean.id);
+
+//                startActivityForResult(new Intent(getContext(),
+//                                DynamicDetailActivity.class)
+//                                .putExtra("dynamic", dynamicBean)
+//                                .putExtra("replyComment",item)
+//                        , REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -297,8 +353,10 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         public void onCommentClick(DynamicBean dynamicBean, int position) {
             HomeAttentionFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(HomeAttentionFragment.this, dynamicList.get(position).id);
+
+//                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+//                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -365,8 +423,10 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
             if (requestCode == REQUEST_LOGIN) {
                 dynamicPresent.pullToRefreshDataFollow();
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
-                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(HomeAttentionFragment.this, invokeDynamicBean.id);
+
+//                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+//                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
             } else if (requestCode == REQUEST_REFRESH_DYNAMIC) {
 
                 //更新动态详情
@@ -376,7 +436,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
             }
-        } else if (resultCode == RESULT_DELETE) {
+        } else if (resultCode == DynamicDetailByIdActivity.RESULT_DELETE) {
             dynamicList.remove(clickPosition);
             circleDynamicAdapter.updateData(dynamicList);
             circleDynamicAdapter.notifyDataSetChanged();

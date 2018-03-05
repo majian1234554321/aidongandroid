@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:textSize="17sp"
             android:textColor="@color/white"
-            android:text="详情"
+            android:text="动态详情"
             android:layout_centerInParent="true"/>
 
         <TextView

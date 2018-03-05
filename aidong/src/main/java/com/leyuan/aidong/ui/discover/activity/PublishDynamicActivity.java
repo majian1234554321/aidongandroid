@@ -370,7 +370,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             tvContentCount.setTextColor(s.length() > MAX_TEXT_COUNT ? getResources()
                     .getColor(R.color.main_red) : getResources().getColor(R.color.c9));
             if (TextUtils.equals("@", s.toString().substring(start, start + count))) {
-                ToastGlobal.showShortConsecutive("跳到我关注人");
+//                ToastGlobal.showShortConsecutive("跳到我关注人");
 
                 UiManager.activityJumpForResult(PublishDynamicActivity.this, new Bundle(), SelectedUserActivity.class, REQUEST_USER);
             }

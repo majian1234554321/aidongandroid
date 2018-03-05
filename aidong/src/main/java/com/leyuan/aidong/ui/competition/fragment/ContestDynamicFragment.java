@@ -31,7 +31,8 @@ import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BasePageFragment;
-import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
+import com.leyuan.aidong.ui.competition.activity.ContestDynamicDetailActivity;
+import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
@@ -56,7 +57,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
@@ -145,9 +145,12 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
             }
         });
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
                 dynamicPresent.commonLoadData(switcherLayout);
+
             }
         });
     }
@@ -203,8 +206,10 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         public void onBackgroundClick(int position) {
             ContestDynamicFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
+                ContestDynamicDetailActivity.startResultById(ContestDynamicFragment.this, dynamicList.get(position).id);
+
+//                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+//                        .putExtra("dynamic", dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicList.get(position);
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -212,7 +217,7 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         }
 
         @Override
-        public void onAvatarClick(String id) {
+        public void onAvatarClick(String id, String userType) {
             UserInfoActivity.start(getContext(), id);
         }
 
@@ -258,11 +263,13 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         public void onCommentListClick(DynamicBean dynamicBean, int position, CommentBean item) {
             ContestDynamicFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(),
-                        DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicBean)
-                        .putExtra("replyComment",item)
-                        , REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(ContestDynamicFragment.this, dynamicBean.id);
+
+//                startActivityForResult(new Intent(getContext(),
+//                        DynamicDetailActivity.class)
+//                        .putExtra("dynamic", dynamicBean)
+//                        .putExtra("replyComment",item)
+//                        , REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -273,8 +280,10 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         public void onCommentClick(DynamicBean dynamicBean, int position) {
             ContestDynamicFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(ContestDynamicFragment.this, dynamicBean.id);
+
+//                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+//                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -341,8 +350,11 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
             if (requestCode == REQUEST_LOGIN) {
                 dynamicPresent.pullToRefreshData();
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
-                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
+
+                DynamicDetailByIdActivity.startResultById(ContestDynamicFragment.this, invokeDynamicBean.id);
+
+//                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+//                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
             } else if (requestCode == REQUEST_REFRESH_DYNAMIC) {
 
                 //更新动态详情
@@ -352,7 +364,7 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
             }
-        } else if (resultCode == RESULT_DELETE) {
+        } else if (resultCode == DynamicDetailByIdActivity.RESULT_DELETE) {
             dynamicList.remove(clickPosition);
             circleDynamicAdapter.updateData(dynamicList);
             circleDynamicAdapter.notifyDataSetChanged();

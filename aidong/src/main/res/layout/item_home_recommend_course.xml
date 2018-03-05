@@ -26,8 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="111111111111"
-                android:maxLength="15"
+                android:text="11111111111111111111111"
+                android:maxLength="22"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -39,6 +39,7 @@
                 android:layout_marginLeft="8dp"
                 android:singleLine="true"
                 android:text="1 attention"
+                android:visibility="gone"
                 android:textColor="@color/text_color_common"
                 android:textSize="13sp" />
         </LinearLayout>

@@ -1,7 +1,6 @@
 package com.leyuan.aidong.entity.course;
 
 import com.leyuan.aidong.entity.UserBean;
-import com.leyuan.aidong.entity.video.VideoDetail;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ public class CourseDetailBean {
     int strength;//: "难度系数"，
 
     String introduce;//: 课程简介
-    ArrayList<VideoDetail> video;//: 课程视频
+    String video;//: 课程视频
     String instrument;//: "",
     String caution;//: "",
     String equipment;//: "",
@@ -83,7 +82,7 @@ public class CourseDetailBean {
         return instrument;
     }
 
-    public ArrayList<VideoDetail> getVideo() {
+    public String getVideo() {
         return video;
     }
 

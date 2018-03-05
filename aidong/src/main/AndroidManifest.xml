@@ -323,6 +323,16 @@
             android:name=".ui.competition.activity.ContestHomeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.competition.activity.ContestQuarterFinalEnrolActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.competition.activity.ContestQuarterFinalEnroledRecordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.competition.activity.ContestSemiFinalEnrolmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.competition.activity.ContestRankingListActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -333,6 +343,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.competition.activity.ContestDynamicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.competition.activity.ContestDynamicDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.iknow.android.TrimmerActivity"
@@ -425,9 +438,9 @@
         <activity
             android:name=".ui.mine.activity.MyAttentionListActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.discover.activity.DynamicDetailActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".ui.discover.activity.DynamicDetailActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.discover.activity.DynamicDetailByIdActivity"
             android:screenOrientation="portrait" />
@@ -718,7 +731,7 @@
         <!-- 设置环信应用的AppKey debug:	leyuan-aidong#aidongouternettest  preRelease: leyuan-aidong#aidongprerelease   release : leyuan-aidong#aidong -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="leyuan-aidong#aidong" />
+            android:value="leyuan-aidong#aidongouternettest" />
         <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"

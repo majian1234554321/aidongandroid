@@ -29,6 +29,12 @@ public class HomeRecommendPresentImpl {
             public void onNext(HomeData homeData) {
                 HomeRecommendView.onGetData(homeData);
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                HomeRecommendView.onGetData(null);
+            }
         });
     }
 

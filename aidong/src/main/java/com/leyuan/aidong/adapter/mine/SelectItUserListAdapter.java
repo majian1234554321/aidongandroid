@@ -42,7 +42,7 @@ public class SelectItUserListAdapter extends RecyclerView.Adapter<SelectItUserLi
         final UserBean user = users.get(position);
         GlideLoader.getInstance().displayCircleImage(user.getAvatar(), holder.imgAvatar);
         holder.txtCoachName.setText(user.getName());
-        holder.txtIntro.setText(user.personal_intro);
+        holder.txtIntro.setText(user.signature == null ? user.personal_intro : user.signature);
         holder.btAttention.setVisibility(View.GONE);
         if (Constant.COACH.equals(user.type)) {
             holder.img_coach_tag.setVisibility(View.VISIBLE);

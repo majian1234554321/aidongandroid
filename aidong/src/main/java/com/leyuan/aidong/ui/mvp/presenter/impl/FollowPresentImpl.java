@@ -166,29 +166,49 @@ public class FollowPresentImpl implements FollowPresent {
 
     @Override
     public void getFollowList() {
-        followModel.getFollow(new RefreshSubscriber<FollowData>(context) {
+        //旧的获取关注的人列表
+//        followModel.getFollow(new RefreshSubscriber<FollowData>(context) {
+//            @Override
+//            public void onNext(FollowData followData) {
+//                if (followData != null) {
+//                    Constant.followData = followData;
+//                    SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
+//                }
+//                if (requestResponse != null) {
+//                    requestResponse.onRequestResponse();
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                super.onError(e);
+//                if (requestResponse != null) {
+//                    requestResponse.onRequestResponse();
+//                }
+//            }
+//        }, "followings", Constant.PAGE_FIRST);
+    }
+
+    @Override
+    public void getFollowers(final int pageSize) {
+        followModel.getFollowers(new RefreshSubscriber<FollowData>(context) {
             @Override
             public void onNext(FollowData followData) {
-                if (followData != null) {
-                    Constant.followData = followData;
-                    SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
+                if (followData == null) {
+                    followFragment.onRefreshData(new ArrayList<UserBean>());
+                    return;
                 }
-                if (requestResponse != null) {
-                    requestResponse.onRequestResponse();
-                }
-
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                super.onError(e);
-                if (requestResponse != null) {
-                    requestResponse.onRequestResponse();
+                if (pageSize == 1) {
+                    followFragment.onRefreshData(followData.getUser());
+                } else {
+                    followFragment.onLoadMoreData(followData.getUser());
                 }
             }
-        }, "followings", Constant.PAGE_FIRST);
+        }, pageSize);
     }
+
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, final String type) {
@@ -273,7 +293,7 @@ public class FollowPresentImpl implements FollowPresent {
                 }
 
                 if (followFragment != null) {
-                    followFragment.cancelFollowResult(baseBean);
+                    followFragment.addFollowResult(baseBean);
                 }
             }
         }, id, type);

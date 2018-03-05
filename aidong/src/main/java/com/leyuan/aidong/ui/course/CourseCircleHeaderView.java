@@ -123,7 +123,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         starList.add((ImageView) view.findViewById(R.id.img_star_three));
         starList.add((ImageView) view.findViewById(R.id.img_star_four));
         starList.add((ImageView) view.findViewById(R.id.img_star_five));
-        bt_attention =  (ImageButton) view.findViewById(R.id.bt_attention);
+        bt_attention = (ImageButton) view.findViewById(R.id.bt_attention);
 
         imageView6 = (ImageView) view.findViewById(R.id.imageView6);
         imgCoach = (ImageView) view.findViewById(img_coach);
@@ -168,7 +168,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
                 break;
             case R.id.txt_bt_attention_num:
 
-                AppointmentUserActivity.start(context,course.getFollowers(),"关注的人");
+                AppointmentUserActivity.start(context, course.getFollowers(), "关注的人");
                 break;
             case R.id.bt_attention:
                 if (course.isFollowed()) {
@@ -207,7 +207,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         rvRelateVideo.setAdapter(relativeViedeoAdapter);
         txtCheckAllVideo.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                RelativeVideoListActivity.start(context,course.getId());
+                RelativeVideoListActivity.start(context, course.getId());
 
 //                UiManager.activityJump(context, RelativeVideoListActivity.class);
             }
@@ -237,7 +237,6 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 //    }
 
 
-
     public void setData(CourseDetailBean course) {
         this.course = course;
         relativeViedeoAdapter.setCourseID(course.getId());
@@ -259,20 +258,20 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             }
         }
 
-        if(course.isFollowed()){
+        if (course.isFollowed()) {
             bt_attention.setImageResource(R.drawable.icon_attented);
-        }else {
+        } else {
             bt_attention.setImageResource(R.drawable.icon_attention);
         }
         txtCourseIntro.setText(Html.fromHtml(course.getIntroduce()));
-        txtSuggestFrequency.setText("建议周频次: "+course.getFrequency()+"次/周");
-        txt_use_equipment.setText("使用机械: "+course.getInstrument());
+        txtSuggestFrequency.setText("建议周频次: " + course.getFrequency() + "次/周");
+        txt_use_equipment.setText("使用机械: " + course.getInstrument());
         txt_target_population.setText("针对人群: " + course.getCrowd());
         txt_suggest_match_course.setText("建议课程搭配: " + course.getCollocation());
 
-        if(course.getFollowers() != null && !course.getFollowers().isEmpty()){
+        if (course.getFollowers() != null && !course.getFollowers().isEmpty()) {
             adapterAttentionPerson.setData(course.getFollowers());
-        }else {
+        } else {
             layoutAttention.setVisibility(GONE);
         }
 
@@ -280,8 +279,14 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     }
 
     public void setRelativeVideoData(List<CourseVideoBean> videos) {
-        relativeViedeoAdapter.setData(videos);
+//        if (videos != null && !videos.isEmpty()) {
+//            llRelateCourseVideo.setVisibility(VISIBLE);
+//            relativeViedeoAdapter.setData(videos);
+//        } else {
+//            llRelateCourseVideo.setVisibility(GONE);
+//        }
 
+        relativeViedeoAdapter.setData(videos);
     }
 
     @Override
@@ -289,7 +294,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         if (baseBean.getStatus() == 1) {
             bt_attention.setImageResource(R.drawable.icon_followed);
             ToastGlobal.showShortConsecutive(R.string.follow_success);
-        }else {
+        } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
     }
@@ -299,7 +304,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         if (baseBean.getStatus() == 1) {
             bt_attention.setImageResource(R.drawable.icon_follow);
             ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
-        }else {
+        } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
     }

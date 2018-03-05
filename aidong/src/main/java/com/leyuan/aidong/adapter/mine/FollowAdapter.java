@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
 
     @Override
     public UserHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_follow,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_follow, parent, false);
         return new UserHolder(view);
     }
 
@@ -51,20 +50,20 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
         holder.nickname.setText(bean.getName());
         holder.distance.setText(bean.getSignature());
         holder.gender.setBackgroundResource("0".equals(bean.getGender()) ? R.drawable.icon_man
-                :R.drawable.icon_woman);
-        holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, bean)
+                : R.drawable.icon_woman);
+        holder.follow.setBackgroundResource(bean.followed
                 ? R.drawable.icon_followed : R.drawable.icon_follow);
 
         holder.follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(SystemInfoUtils.isFollow(context,bean)){
-                    if(followListener!= null){
-                        followListener.onCancelFollow(bean.getId(),position);
+                if (bean.followed) {
+                    if (followListener != null) {
+                        followListener.onCancelFollow(bean.getId(), position);
                     }
-                }else {
-                    if(followListener!= null){
-                        followListener.onAddFollow(bean.getId(),position);
+                } else {
+                    if (followListener != null) {
+                        followListener.onAddFollow(bean.getId(), position);
                     }
                 }
             }
@@ -73,8 +72,8 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(followListener != null){
-                    followListener.onItemClick(bean.getId());
+                if (followListener != null) {
+                    followListener.onItemClick(bean,position);
                 }
             }
         });
@@ -102,12 +101,14 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
     }
 
     public interface FollowListener {
-        void onAddFollow(String id,int position);
-        void onCancelFollow(String id,int position);
-        void onItemClick(String id);
+        void onAddFollow(String id, int position);
+
+        void onCancelFollow(String id, int position);
+
+        void onItemClick(UserBean userBean, int position);
     }
 
-    public static class SimpleFollowListener implements FollowListener{
+    public static class SimpleFollowListener implements FollowListener {
         @Override
         public void onAddFollow(String id, int position) {
 
@@ -119,7 +120,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
         }
 
         @Override
-        public void onItemClick(String id) {
+        public void onItemClick(UserBean userBean, int position) {
 
         }
     }

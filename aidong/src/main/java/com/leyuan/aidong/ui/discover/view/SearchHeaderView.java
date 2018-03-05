@@ -75,6 +75,10 @@ public class SearchHeaderView extends RelativeLayout {
         txtSearchTitle.setText(title);
     }
 
+    public void setTxtSearchTitleVisible(int gone) {
+        txtSearchTitle.setVisibility(gone);
+    }
+
 
     public interface OnSearchListener {
         void onSearch(String keyword);

@@ -54,7 +54,7 @@ public class SelectedUserActivity extends BaseActivity implements OnRefreshListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.selected_location_activity);
+        setContentView(R.layout.selected_user_activity);
 
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
         refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
@@ -108,8 +108,9 @@ public class SelectedUserActivity extends BaseActivity implements OnRefreshListe
 
         SearchHeaderView headView = new SearchHeaderView(this);
         headView.setOnsearchListner(this);
-        headView.setSearchHint(getResources().getString(R.string.search_more_circle));
+        headView.setSearchHint(getResources().getString(R.string.search_more_person));
         headView.setTxtSearchTitle(getResources().getString(R.string.hot_recommend));
+        headView.setTxtSearchTitleVisible(View.GONE);
         RecyclerViewUtils.setHeaderView(recyclerView, headView);
 
     }

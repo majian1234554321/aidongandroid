@@ -39,6 +39,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.fragment.CoachCourseFragment;
 import com.leyuan.aidong.ui.mine.fragment.UserDynamicFragment;
 import com.leyuan.aidong.ui.mine.fragment.UserInfoFragment;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
@@ -118,9 +119,16 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         context.startActivityForResult(starter, request_code);
     }
 
+    public static void startForResult(Fragment fragment, String userId, int request_code) {
+        Intent starter = new Intent(fragment.getContext(), UserInfoActivity.class);
+        starter.putExtra("userId", userId);
+        fragment.startActivityForResult(starter, request_code);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_user_info);
         userInfoPresent = new UserInfoPresentImpl(this, this);
         if (getIntent() != null) {
@@ -227,6 +235,15 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             UserInfoFragment userInfoFragment = new UserInfoFragment();
             pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
                     new Bundler().putString("userId", userId).get()));
+
+
+            if (Constant.COACH.equals(userInfoData.getProfile().getUserTypeByUserType())) {
+                CoachCourseFragment courseFragment = new CoachCourseFragment();
+                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
+                        new Bundler().putString("mobile", userInfoData.getProfile().mobile).get()));
+            }
+
+
             pages.add(FragmentPagerItem.of(null, userInfoFragment.getClass(),
                     new Bundler().putParcelable("profile", userInfoData.getProfile()).get()));
             adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
@@ -240,7 +257,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
-                finish();
+
+                finishSetResult();
+
                 break;
             case R.id.dv_avatar:
                 List<String> urls = new ArrayList<>();
@@ -269,9 +288,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     if (isSelf) {
                         showEditDialog();
                     } else if (userInfoData.getProfile().followed) {
-                        userInfoPresent.cancelFollow(userId);
+                        userInfoPresent.cancelFollow(userId, userInfoData.getProfile().getUserTypeByUserType());
                     } else {
-                        userInfoPresent.addFollow(userId);
+                        userInfoPresent.addFollow(userId, userInfoData.getProfile().getUserTypeByUserType());
                     }
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
@@ -289,6 +308,23 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         }
     }
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        finishSetResult();
+    }
+
+    private void finishSetResult() {
+
+
+//        Logger.i("follow","finishSetResult follow = " +userInfoData.getProfile().followed);
+        Intent intentResult = new Intent();
+        if (userInfoData != null) {
+            intentResult.putExtra(Constant.FOLLOW, userInfoData.getProfile().followed);
+        }
+        setResult(RESULT_OK, intentResult);
+        finish();
+    }
 
     private void showCallUpDialog(final String phoneNum) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -402,6 +438,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
 //            SystemInfoUtils.addFollow(new UserBean(userId));
+            userInfoData.getProfile().followed = true;
             ivFollowOrEdit.setBackgroundResource(R.drawable.icon_followed);
         } else {
             Toast.makeText(this, "关注失败", Toast.LENGTH_LONG).show();
@@ -411,6 +448,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
+            userInfoData.getProfile().followed = false;
 //            SystemInfoUtils.removeFollow(new UserBean(userId));
             ivFollowOrEdit.setBackgroundResource(R.drawable.icon_follow);
         } else {
@@ -428,6 +466,10 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         View tabView = LayoutInflater.from(this).inflate(R.layout.tab_user_info, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         String[] campaignTab = getResources().getStringArray(R.array.infoTab);
+
+        if (userInfoData != null && userInfoData.getProfile() != null && Constant.COACH.equals(userInfoData.getProfile().getUserTypeByUserType())) {
+            campaignTab = getResources().getStringArray(R.array.coachInfoTab);
+        }
         text.setText(campaignTab[position]);
         return tabView;
     }

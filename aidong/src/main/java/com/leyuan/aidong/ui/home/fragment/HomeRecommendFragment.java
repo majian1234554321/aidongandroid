@@ -84,6 +84,8 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
+        filter.addAction(Constant.BROADCAST_ACTION_EXIT_LOGIN);
+        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
     }
 

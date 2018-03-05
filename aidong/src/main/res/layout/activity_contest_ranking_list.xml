@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="nanzizu"
+                android:text="男子组"
                 android:textColor="#fff"
                 android:textSize="14sp" />
 
@@ -91,6 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/transparent"
             android:gravity="center"
             android:text="@string/mass_election"
             android:textColor="@color/white"
@@ -120,11 +121,24 @@
 
     </LinearLayout>
 
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/layout_my_ranking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="visible">
+
+            <include layout="@layout/inc_contest_ranking_mine" />
+        </FrameLayout>
+    </RelativeLayout>
 
 </LinearLayout>

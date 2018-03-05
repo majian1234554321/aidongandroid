@@ -22,7 +22,6 @@ import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverUserActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -74,6 +73,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_discover_user);
         userPresent = new DiscoverPresentImpl(this, this);
 
@@ -115,7 +115,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     protected void onResume() {
         super.onResume();
-        if(userAdapter != null){
+        if (userAdapter != null) {
             userAdapter.refreshClickedPosition();
         }
     }
@@ -230,9 +230,9 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         if (App.mInstance.isLogin()) {
             UserBean userBean = data.get(position);
             if (userBean.followed) {
-                userPresent.cancelFollow(userBean.getId(),userBean.type);
+                userPresent.cancelFollow(userBean.getId(), userBean.type);
             } else {
-                userPresent.addFollow(userBean.getId(),userBean.type);
+                userPresent.addFollow(userBean.getId(), userBean.type);
             }
         } else {
             startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
@@ -242,8 +242,15 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            SystemInfoUtils.addFollow(data.get(position));
-            userAdapter.notifyDataSetChanged();
+//            SystemInfoUtils.addFollow(data.get(position));
+
+
+            data.get(position).followed = true;
+            userAdapter.notifyItemChanged(position);
+
+//            userAdapter.notifyDataSetChanged();
+
+
             ToastGlobal.showLong(R.string.follow_success);
         } else {
             ToastGlobal.showLong(R.string.follow_fail);
@@ -253,8 +260,14 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            SystemInfoUtils.removeFollow(data.get(position));
-            userAdapter.notifyDataSetChanged();
+
+//            SystemInfoUtils.removeFollow(data.get(position));
+//            userAdapter.notifyDataSetChanged();
+
+            data.get(position).followed = false;
+            userAdapter.notifyItemChanged(position);
+
+
             ToastGlobal.showLong(R.string.cancel_follow_success);
         } else {
             ToastGlobal.showLong(R.string.cancel_follow_fail);

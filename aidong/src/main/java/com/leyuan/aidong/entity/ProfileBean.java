@@ -3,6 +3,8 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.leyuan.aidong.utils.Constant;
+
 /**
  * 用户资料
  * Created by song on 2017/1/16.
@@ -31,6 +33,7 @@ public class ProfileBean implements Parcelable {
     private String phone;
     public boolean followed;
     public int follows_count;
+    public String mobile;
 
     public String getPhone() {
         return phone;
@@ -234,6 +237,7 @@ public class ProfileBean implements Parcelable {
         dest.writeString(this.phone);
         dest.writeByte(this.followed ? (byte) 1 : (byte) 0);
         dest.writeInt(this.follows_count);
+        dest.writeString(this.mobile);
 
     }
 
@@ -261,6 +265,7 @@ public class ProfileBean implements Parcelable {
         this.phone = in.readString();
         this.followed = in.readByte() != 0;
         this.follows_count = in.readInt();
+        this.mobile = in.readString();
     }
 
     public static final Creator<ProfileBean> CREATOR = new Creator<ProfileBean>() {
@@ -274,4 +279,8 @@ public class ProfileBean implements Parcelable {
             return new ProfileBean[size];
         }
     };
+
+    public String getUserTypeByUserType() {
+        return "Coach".equals(user_type) || "coach".equals(user_type)? Constant.COACH:Constant.USER;
+    }
 }

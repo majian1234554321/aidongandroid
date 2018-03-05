@@ -47,6 +47,14 @@ public class CourseModelNewImpl {
                 .subscribe(subscriber);
     }
 
+
+
+    public void getCoachCourseList(Subscriber<CourseDataNew> subscriber, String mobile) {
+        courseService.getCoachCourseList(mobile)
+                .compose(RxHelper.<CourseDataNew>transform())
+                .subscribe(subscriber);
+    }
+
     public void getCourseDetail(Subscriber<CourseDetailDataNew> subscriber, String id) {
         courseService.getCourseDetail(id)
                 .compose(RxHelper.<CourseDetailDataNew>transform())

@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="wodeweizhi:shanghai"
+            android:text="我的位置:shanghai"
             android:textColor="@color/e6"
             android:textSize="15sp"
 
@@ -163,14 +163,13 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:background="@color/transparent"
             android:drawablePadding="10dp"
             android:drawableRight="@drawable/icon_arrow_down"
+            android:gravity="center"
             android:text="@string/switch_city"
             android:textColor="@color/c9"
-            android:textSize="15sp"
-            android:gravity="center"
-            android:background="@color/transparent"
-            />
+            android:textSize="15sp" />
 
         <View
             android:layout_width="match_parent"
@@ -193,7 +192,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="suosuosaiqu : hua nan"
+            android:text="所属赛区 : hua nan"
             android:textColor="@color/e6"
             android:textSize="15sp"
 
@@ -216,12 +215,13 @@
         android:background="@color/c1">
 
         <TextView
+
             android:id="@+id/txt_belong_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="wodeweizhi:shanghai"
+            android:text="选择分组:shanghai"
             android:textColor="@color/e6"
             android:textSize="15sp"
 
@@ -235,14 +235,13 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:background="@color/transparent"
             android:drawablePadding="5dp"
             android:drawableRight="@drawable/icon_arrow_down"
+            android:gravity="right|center"
             android:text="@string/selecte"
             android:textColor="@color/c9"
-            android:textSize="15sp"
-            android:gravity="right|center"
-            android:background="@color/transparent"
-            />
+            android:textSize="15sp" />
 
         <View
             android:layout_width="match_parent"
@@ -273,9 +272,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:textColor="@color/c9"
-        android:textSize="11sp"
         android:text="@string/contest_enrol_and_post_video_hint"
-        />
+        android:textColor="@color/c9"
+        android:textSize="11sp" />
 
 </LinearLayout>

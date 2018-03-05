@@ -28,8 +28,8 @@ public interface FollowService {
      * @param type followings:我关注的人 followers:关注我的人
      * @return 用户集合
      */
-//    @GET("mine/{type}")
-//    Observable<BaseBean<FollowData>> getFollow(@Path("type") String type, @Query("page") int page);
+    @GET("mine/followers")
+    Observable<BaseBean<FollowData>> getFollowers( @Query("page") int page);
 
     @GET("mine/followings")
     Observable<BaseBean<FollowData>> getFollow(@Query("list") String type, @Query("page") int page);

@@ -3,6 +3,7 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class UserBean implements Parcelable, Serializable {
     private String gender;      //性别
     private double distance;    //距离
     private boolean isFollow;   //是否关注
-    private String signature;
+    public String signature;
     private String user_type;
 
     //compat
@@ -36,10 +37,46 @@ public class UserBean implements Parcelable, Serializable {
     public int strength;
     public ArrayList<String> tags;
 
+    public boolean following;//判断关注我的人 我是否关注他
     public boolean followed;
     public int follows_count;
 
     private StringBuffer tagString = new StringBuffer();
+
+    protected UserBean(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        avatar = in.readString();
+        gender = in.readString();
+        distance = in.readDouble();
+        isFollow = in.readByte() != 0;
+        signature = in.readString();
+        user_type = in.readString();
+        publisher_id = in.readString();
+        user_id = in.readString();
+        personal_intro = in.readString();
+        type = in.readString();
+        followers_count = in.readInt();
+        simple_intro = in.readString();
+        image = in.readString();
+        strength = in.readInt();
+        tags = in.createStringArrayList();
+        following = in.readByte() != 0;
+        followed = in.readByte() != 0;
+        follows_count = in.readInt();
+    }
+
+    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
+        @Override
+        public UserBean createFromParcel(Parcel in) {
+            return new UserBean(in);
+        }
+
+        @Override
+        public UserBean[] newArray(int size) {
+            return new UserBean[size];
+        }
+    };
 
     public StringBuffer getTagString() {
         if (tagString == null) {
@@ -71,7 +108,7 @@ public class UserBean implements Parcelable, Serializable {
     }
 
     public String getId() {
-        return id;
+        return id == null ? user_id : id;
     }
 
     public void setId(String id) {
@@ -151,36 +188,31 @@ public class UserBean implements Parcelable, Serializable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.avatar);
-        dest.writeString(this.gender);
-        dest.writeDouble(this.distance);
-        dest.writeByte(this.isFollow ? (byte) 1 : (byte) 0);
-        dest.writeString(this.signature);
-        dest.writeString(this.user_type);
+
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(avatar);
+        dest.writeString(gender);
+        dest.writeDouble(distance);
+        dest.writeByte((byte) (isFollow ? 1 : 0));
+        dest.writeString(signature);
+        dest.writeString(user_type);
+        dest.writeString(publisher_id);
+        dest.writeString(user_id);
+        dest.writeString(personal_intro);
+        dest.writeString(type);
+        dest.writeInt(followers_count);
+        dest.writeString(simple_intro);
+        dest.writeString(image);
+        dest.writeInt(strength);
+        dest.writeStringList(tags);
+        dest.writeByte((byte) (following ? 1 : 0));
+        dest.writeByte((byte) (followed ? 1 : 0));
+        dest.writeInt(follows_count);
     }
 
-    protected UserBean(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.avatar = in.readString();
-        this.gender = in.readString();
-        this.distance = in.readDouble();
-        this.isFollow = in.readByte() != 0;
-        this.signature = in.readString();
-        this.user_type = in.readString();
+
+    public String getUserTypeByUserType() {
+        return "Coach".equals(user_type) || "coach".equals(user_type) ? Constant.COACH : Constant.USER;
     }
-
-    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
-        @Override
-        public UserBean createFromParcel(Parcel source) {
-            return new UserBean(source);
-        }
-
-        @Override
-        public UserBean[] newArray(int size) {
-            return new UserBean[size];
-        }
-    };
 }

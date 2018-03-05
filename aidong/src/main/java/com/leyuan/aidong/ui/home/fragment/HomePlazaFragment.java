@@ -32,7 +32,7 @@ import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.discover.activity.DiscoverUserActivity;
-import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
+import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
@@ -62,7 +62,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
@@ -101,7 +100,9 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
             }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
                 refreshData();
             }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
-//                refreshData();
+                refreshData();
+            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_LOGIN_SUCCESS)) {
+                refreshData();
             }
             Logger.i(TAG, "onReceive action = " + intent.getAction());
         }
@@ -117,6 +118,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);
         filter.addAction(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_EXIT_LOGIN);
+        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(circleFragmentReceiver, filter);
     }
 
@@ -230,8 +232,12 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         public void onBackgroundClick(int position) {
             HomePlazaFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
+                Logger.i("HOMEPLAZAFRAGMENT","onBackgroundClick isLogin");
+
+                DynamicDetailByIdActivity.startResultById(HomePlazaFragment.this, dynamicList.get(position).id);
+
+//                startActivityForResult(new Intent(getContext(), DynamicDetailByIdActivity.class)
+//                        .putExtra(Constant.DYNAMIC_ID, dynamicList.get(position).id), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicList.get(position);
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -239,7 +245,8 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         }
 
         @Override
-        public void onAvatarClick(String id) {
+        public void onAvatarClick(String id, String userType) {
+
             UserInfoActivity.start(getContext(), id);
         }
 
@@ -284,12 +291,19 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         @Override
         public void onCommentListClick(DynamicBean dynamicBean, int position, CommentBean item) {
             HomePlazaFragment.this.clickPosition = position;
+
+
+            Logger.i("HOMEPLAZAFRAGMENT","onCommentListClick isLogin");
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(),
-                                DynamicDetailActivity.class)
-                                .putExtra("dynamic", dynamicBean)
-                                .putExtra("replyComment",item)
-                        , REQUEST_REFRESH_DYNAMIC);
+
+                DynamicDetailByIdActivity.startResultById(HomePlazaFragment.this, dynamicList.get(position).id);
+
+//                startActivityForResult(new Intent(getContext(),
+//                                DynamicDetailByIdActivity.class)
+//                                .putExtra(Constant.DYNAMIC_ID, dynamicList.get(position).id)
+////                                .putExtra("dynamic", dynamicBean)
+////                                .putExtra("replyComment",item)
+//                        , REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -299,9 +313,15 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         @Override
         public void onCommentClick(DynamicBean dynamicBean, int position) {
             HomePlazaFragment.this.clickPosition = position;
+
+            Logger.i("HOMEPLAZAFRAGMENT","onCommentClick isLogin");
+
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(HomePlazaFragment.this, dynamicList.get(position).id);
+
+
+//                startActivityForResult(new Intent(getContext(), DynamicDetailByIdActivity.class)
+//                        .putExtra(Constant.DYNAMIC_ID, dynamicList.get(position).id), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -368,8 +388,10 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
             if (requestCode == REQUEST_LOGIN) {
                 dynamicPresent.pullToRefreshData();
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
-                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(HomePlazaFragment.this, invokeDynamicBean.id);
+
+//                startActivityForResult(new Intent(getContext(), DynamicDetailByIdActivity.class)
+//                        .putExtra(Constant.DYNAMIC_ID, invokeDynamicBean.id), REQUEST_REFRESH_DYNAMIC);
             } else if (requestCode == REQUEST_REFRESH_DYNAMIC) {
 
                 //更新动态详情
@@ -379,7 +401,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
             }
-        } else if (resultCode == RESULT_DELETE) {
+        } else if (resultCode == DynamicDetailByIdActivity.RESULT_DELETE) {
             dynamicList.remove(clickPosition);
             circleDynamicAdapter.updateData(dynamicList);
             circleDynamicAdapter.notifyDataSetChanged();

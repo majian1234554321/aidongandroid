@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.data.SportRecordMonthData;
 
 /**
  * Created by user on 2018/1/29.
@@ -22,11 +23,11 @@ public class SportRecordHeaderView extends RelativeLayout {
     private TextView txtExpendCal;
 
     public SportRecordHeaderView(Context context) {
-        this(context,null,0);
+        this(context, null, 0);
     }
 
     public SportRecordHeaderView(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public SportRecordHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -35,7 +36,8 @@ public class SportRecordHeaderView extends RelativeLayout {
     }
 
     private void initView(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.inc_month_clock_info,this,true);
+
+        View view = LayoutInflater.from(context).inflate(R.layout.inc_month_clock_info, this, true);
 
         txtCurrentMonthTitle = (TextView) view.findViewById(R.id.txt_current_month_title);
         txtSportRecord = (TextView) view.findViewById(R.id.txt_sport_record);
@@ -45,5 +47,12 @@ public class SportRecordHeaderView extends RelativeLayout {
         txtExpendCal = (TextView) view.findViewById(R.id.txt_expend_cal);
 
         txtSportRecord.setVisibility(GONE);
+    }
+
+    public void setData(SportRecordMonthData athletic) {
+        if (athletic == null) return;
+        txtClockNum.setText(athletic.days);
+        txtGoCourseNum.setText(athletic.frequency);
+        txtClassTotalTime.setText(athletic.during);
     }
 }

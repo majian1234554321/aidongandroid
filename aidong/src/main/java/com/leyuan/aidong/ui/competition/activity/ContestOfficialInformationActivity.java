@@ -11,8 +11,8 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.contest.ContestOfficialInforAdapter;
 import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
-import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.ContestInfoView;
 import com.leyuan.aidong.ui.mvp.view.SportNewsActivityView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -30,7 +30,7 @@ import java.util.List;
  * 运动之窗资讯列表
  * Created by song on 2016/10/17.
  */
-public class ContestOfficialInformationActivity extends BaseActivity implements SportNewsActivityView{
+public class ContestOfficialInformationActivity extends BaseActivity implements SportNewsActivityView, ContestInfoView {
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
@@ -40,16 +40,24 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
     private List<NewsBean> data;
     private ContestOfficialInforAdapter newsAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
+    ContestPresentImpl contestPresent;
+    String contestId;
 
-    private DiscoverPresent discoverPresent;
+    public static void start(Context context, String contestId) {
+
+        Intent intent = new Intent(context, ContestOfficialInformationActivity.class);
+        intent.putExtra("contestId", contestId);
+        context.startActivity(intent);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sport_news);
-        discoverPresent = new DiscoverPresentImpl(this,this);
+        contestId = getIntent().getStringExtra("contestId");
 
-        titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
+        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,22 +66,25 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
         });
         initSwipeRefreshLayout();
         initRecyclerView();
-        discoverPresent.commonLoadNewsData(switcherLayout);
+        contestPresent = new ContestPresentImpl(this);
+        contestPresent.setContestInfoView(this);
+        contestPresent.getContestInfo(contestId);
+
     }
 
-    private void initSwipeRefreshLayout(){
-        refreshLayout = (CustomRefreshLayout)findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(this,refreshLayout);
+    private void initSwipeRefreshLayout() {
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(this, refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                discoverPresent.pullToRefreshNewsData();
+                contestPresent.getContestInfo(contestId);
             }
         });
     }
 
-    private void initRecyclerView(){
-        rvNews = (RecyclerView)findViewById(R.id.rv_news);
+    private void initRecyclerView() {
+        rvNews = (RecyclerView) findViewById(R.id.rv_news);
         data = new ArrayList<>();
         newsAdapter = new ContestOfficialInforAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(newsAdapter);
@@ -82,19 +93,32 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
         rvNews.addOnScrollListener(onScrollListener);
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (data != null && data.size() >= pageSize) {
-                discoverPresent.requestMoreNewsData(rvNews,pageSize,currPage);
+                contestPresent.getContestInfo(contestId);
             }
         }
     };
 
+
+    @Override
+    public void onGetContestInfoData(ArrayList<NewsBean> info) {
+        if (refreshLayout.isRefreshing()) {
+            data.clear();
+            refreshLayout.setRefreshing(false);
+        }
+        if (info != null)
+            data.addAll(info);
+        newsAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void updateRecyclerView(List<NewsBean> newsBeanList) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             data.clear();
             refreshLayout.setRefreshing(false);
         }
@@ -108,11 +132,5 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
         RecyclerViewStateUtils.setFooterViewState(rvNews, LoadingFooter.State.TheEnd);
     }
 
-    public static void start(Context context, String contestId) {
 
-        Intent intent = new Intent(context, ContestOfficialInformationActivity.class);
-        intent.putExtra("contestId", contestId);
-        context.startActivity(intent);
-
-    }
 }

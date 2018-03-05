@@ -198,7 +198,7 @@ public abstract class BaseCircleViewHolderOld extends BaseRecyclerViewHolder<Dyn
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onAvatarClick(dynamic.publisher.getId());
+                    callback.onAvatarClick(dynamic.publisher.getId(), dynamic.publisher.getUserTypeByUserType());
                 }
             }
         });

@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,8 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
-import com.leyuan.aidong.ui.discover.fragment.VenuesCourseNewFragment;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.fragment.CoachCourseFragment;
 import com.leyuan.aidong.ui.mine.fragment.UserDynamicFragment;
 import com.leyuan.aidong.ui.mine.fragment.UserInfoFragment;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
@@ -49,6 +50,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -117,6 +119,12 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
         Intent starter = new Intent(context, CoachInfoActivity.class);
         starter.putExtra("userId", userId);
         context.startActivityForResult(starter, request_code);
+    }
+
+    public static void startForResult(Fragment fragment, String userId, int request_code) {
+        Intent starter = new Intent(fragment.getContext(), CoachInfoActivity.class);
+        starter.putExtra("userId", userId);
+        fragment.startActivityForResult(starter, request_code);
     }
 
     @Override
@@ -225,12 +233,19 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
         } else {
             FragmentPagerItems pages = new FragmentPagerItems(this);
             UserDynamicFragment dynamicFragment = new UserDynamicFragment();
-            VenuesCourseNewFragment courseFragment = new VenuesCourseNewFragment();
+
             UserInfoFragment userInfoFragment = new UserInfoFragment();
             pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
                     new Bundler().putString("userId", userId).get()));
-            pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                    new Bundler().putString("id", userId).get()));
+
+
+            if (Constant.COACH.equals(userInfoData.getProfile().getUserTypeByUserType())) {
+                CoachCourseFragment courseFragment = new CoachCourseFragment();
+                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
+                        new Bundler().putString("mobile", userInfoData.getProfile().mobile).get()));
+            }
+
+
             pages.add(FragmentPagerItem.of(null, userInfoFragment.getClass(),
                     new Bundler().putParcelable("profile", userInfoData.getProfile()).get()));
             adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
@@ -240,11 +255,33 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        finishSetResult();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
+
+    }
+
+    private void finishSetResult() {
+        Intent intentResult = new Intent();
+
+        Logger.i("follow", "finishSetResult follow = " + userInfoData.getProfile().followed);
+        intentResult.putExtra(Constant.FOLLOW, userInfoData.getProfile().followed);
+        setResult(RESULT_OK, intentResult);
+        finish();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
-                finish();
+                finishSetResult();
                 break;
             case R.id.dv_avatar:
                 List<String> urls = new ArrayList<>();
@@ -273,9 +310,9 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
                     if (isSelf) {
                         showEditDialog();
                     } else if (userInfoData.getProfile().followed) {
-                        userInfoPresent.cancelFollow(userId, Constant.COACH);
+                        userInfoPresent.cancelFollow(userId, userInfoData.getProfile().getUserTypeByUserType());
                     } else {
-                        userInfoPresent.addFollow(userId, Constant.COACH);
+                        userInfoPresent.addFollow(userId, userInfoData.getProfile().getUserTypeByUserType());
                     }
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);

@@ -33,7 +33,7 @@ import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
+import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
@@ -58,7 +58,6 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
@@ -318,8 +317,10 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
             if (requestCode == REQUEST_LOGIN) {
                 dynamicPresent.pullToRefreshRelativeDynamics(type, id);
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
-                startActivityForResult(new Intent(this, DynamicDetailActivity.class)
-                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(CourseCircleDetailActivity.this, invokeDynamicBean.id);
+
+//                startActivityForResult(new Intent(this, DynamicDetailActivity.class)
+//                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
             } else if (requestCode == REQUEST_REFRESH_DYNAMIC) {
 
                 //更新动态详情
@@ -328,7 +329,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 dynamicList.add(clickPosition, dynamicBean);
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
-            } else if (resultCode == RESULT_DELETE) {
+            } else if (resultCode == DynamicDetailByIdActivity.RESULT_DELETE) {
                 dynamicList.remove(clickPosition);
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyDataSetChanged();
@@ -359,8 +360,12 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         public void onBackgroundClick(int position) {
             CourseCircleDetailActivity.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(CourseCircleDetailActivity.this, DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
+
+                DynamicDetailByIdActivity.startResultById(CourseCircleDetailActivity.this, dynamicList.get(position).id);
+
+
+//                startActivityForResult(new Intent(CourseCircleDetailActivity.this, DynamicDetailActivity.class)
+//                        .putExtra("dynamic", dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicList.get(position);
                 startActivityForResult(new Intent(CourseCircleDetailActivity.this, LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -368,7 +373,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         }
 
         @Override
-        public void onAvatarClick(String id) {
+        public void onAvatarClick(String id, String userType) {
             UserInfoActivity.start(CourseCircleDetailActivity.this, id);
         }
 
@@ -414,11 +419,13 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         public void onCommentListClick(DynamicBean dynamicBean, int position, CommentBean item) {
             CourseCircleDetailActivity.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(CourseCircleDetailActivity.this,
-                                DynamicDetailActivity.class)
-                                .putExtra("dynamic", dynamicBean)
-                                .putExtra("replyComment", item)
-                        , REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(CourseCircleDetailActivity.this, dynamicBean.id);
+
+//                startActivityForResult(new Intent(CourseCircleDetailActivity.this,
+//                                DynamicDetailActivity.class)
+//                                .putExtra("dynamic", dynamicBean)
+//                                .putExtra("replyComment", item)
+//                        , REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(CourseCircleDetailActivity.this, LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -429,8 +436,10 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         public void onCommentClick(DynamicBean dynamicBean, int position) {
             CourseCircleDetailActivity.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(CourseCircleDetailActivity.this, DynamicDetailActivity.class)
-                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
+                DynamicDetailByIdActivity.startResultById(CourseCircleDetailActivity.this, dynamicBean.id);
+
+//                startActivityForResult(new Intent(CourseCircleDetailActivity.this, DynamicDetailActivity.class)
+//                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(CourseCircleDetailActivity.this, LoginActivity.class), REQUEST_TO_DYNAMIC);

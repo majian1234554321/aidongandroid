@@ -7,23 +7,39 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.iknow.android.TrimmerActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.campaign.ContestBean;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.home.activity.LocationActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.ContestEnrolView;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
+import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import static com.leyuan.aidong.R.id.txt_city;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
 /**
  * Created by user on 2018/2/6.
  */
-public class ContestEnrolmentInfoActivity extends BaseActivity implements View.OnClickListener {
+public class ContestEnrolmentInfoActivity extends BaseActivity implements View.OnClickListener, ContestEnrolView {
 
     private CommonTitleLayout titleLayout;
     private TextView txtContestName;
@@ -36,11 +52,36 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
     private TextView txtContestArea;
     private RelativeLayout layoutSelectGroup;
     private TextView txtBelongGroup;
+    private String contestId;
+    ContestBean contestBean;
+    private String city;
+    private String area;
+    private String gender;
+
+    ContestPresentImpl contestPresent;
+    private ArrayList<BaseMedia> selectedMedia;
+
+
+    public static void start(Context context, String contestId, String name, String start, ContestBean contest) {
+
+        Intent intent = new Intent(context, ContestEnrolmentInfoActivity.class);
+        intent.putExtra("contestId", contestId);
+        intent.putExtra("name", name);
+        intent.putExtra("start", start);
+        intent.putExtra("contest", contest);
+
+        context.startActivity(intent);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contest_enroll_info);
+
+        contestId = getIntent().getStringExtra("contestId");
+        contestBean = getIntent().getParcelableExtra("contest");
+
 
         titleLayout = (CommonTitleLayout) findViewById(R.id.title_layout);
         txtContestName = (TextView) findViewById(R.id.txt_contest_name);
@@ -48,7 +89,7 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
         layoutUserName = (RelativeLayout) findViewById(R.id.layout_user_name);
         txtUserName = (TextView) findViewById(R.id.txt_user_name);
         layoutSelectCity = (RelativeLayout) findViewById(R.id.layout_select_city);
-        txtCity = (TextView) findViewById(R.id.txt_city);
+        txtCity = (TextView) findViewById(txt_city);
         findViewById(R.id.bt_select_city).setOnClickListener(this);
         layoutContestArea = (RelativeLayout) findViewById(R.id.layout_contest_area);
         txtContestArea = (TextView) findViewById(R.id.txt_contest_area);
@@ -56,46 +97,143 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
         txtBelongGroup = (TextView) findViewById(R.id.txt_belong_group);
         findViewById(R.id.bt_select_group).setOnClickListener(this);
         findViewById(R.id.bt_enrol_post_video).setOnClickListener(this);
+
+        txtContestName.setText(getIntent().getStringExtra("name"));
+        txtContestTime.setText(getIntent().getStringExtra("start"));
+        txtUserName.setText("姓名: " + App.getInstance().getUser().getName());
+
+//        this.city = App.getInstance().getLocationCity();
+//        this.area = contestBean.getAreaByCity(city);
+//        txtCity.setText("我的位置: " + city);
+//        txtContestArea.setText("所属赛区: " + area);
+
+        if (App.getInstance().getUser().getGender() == Constant.MAN_GENDER) {
+            txtBelongGroup.setText("选择分组: 男子组");
+        } else {
+            txtBelongGroup.setText("选择分组: 女子组");
+        }
+
+        contestPresent = new ContestPresentImpl(this);
+        contestPresent.setContestEnrolView(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.city = App.getInstance().getLocationCity();
+        this.area = contestBean.getAreaByCity(city);
+        txtCity.setText("我的位置: " + city);
+        txtContestArea.setText("所属赛区: " + area);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_select_city:
+                UiManager.activityJump(this, LocationActivity.class);
+
                 break;
             case R.id.bt_select_group:
+                showGenderDialog();
+
                 break;
             case R.id.bt_enrol_post_video:
-                BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
-                Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
+                contestPresent.contestEnrol(contestId, App.getInstance().getUser().getName(), gender, area);
+
 
                 break;
         }
     }
 
-    public static void start(Context context, String contestId) {
+    private void showGenderDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.confirm_gender)
+                .items(R.array.gender)
+                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        txtBelongGroup.setText((which == 0) ? "选择分组: 男子组" : "选择分组: 女子组");
+                        gender = (which == 0) ? "0" : "1";
+                        return false;
+                    }
+                })
+                .positiveText(R.string.sure)
+                .show();
+    }
 
-        Intent intent = new Intent(context, ContestEnrolmentInfoActivity.class);
-        intent.putExtra("contestId", contestId);
-        context.startActivity(intent);
+
+    @Override
+    public void onContestEnrolResult(BaseBean baseBean) {
+        if (baseBean.getStatus() == 1) {
+
+        } else {
+
+            ToastGlobal.showLongConsecutive(baseBean.getMessage());
+        }
+
+        BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
+        Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
 
     }
+
+    @Override
+    public void onPostVideoResult(BaseBean baseBean) {
+        DialogUtils.dismissDialog();
+
+        if (baseBean.getStatus() == 1) {
+            ToastGlobal.showLongConsecutive("上传并报名成功");
+            finish();
+        } else {
+            ToastGlobal.showLongConsecutive(baseBean.getMessage());
+        }
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if ( requestCode == REQUEST_SELECT_VIDEO) {
-                ArrayList<BaseMedia> selectedMedia =  Boxing.getResult(data);
-                if(selectedMedia != null && selectedMedia.size() > 0){
-                    TrimmerActivity.go(this,selectedMedia.get(0).getPath());
+            if (requestCode == REQUEST_SELECT_VIDEO) {
+                selectedMedia = Boxing.getResult(data);
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
                 }
 
+            } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
+                DialogUtils.showDialog(this, "", true);
+                Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
+                if (selectedMedia != null && selectedMedia.size() > 0) {
 
-//                PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
-//                        Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+                    selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
 
+                    uploadVideo();
+
+
+                }
             }
         }
     }
+
+    private void uploadVideo() {
+
+        Logger.i("contest video ", "uploadVideo");
+        UploadToQiNiuManager.getInstance().uploadMediaVideo(selectedMedia, new IQiNiuCallback() {
+            @Override
+            public void onSuccess(List<String> urls) {
+                Logger.i("contest video ", "uploadVideo  onSuccess urls .size = " + urls.size());
+
+                if (urls != null && urls.size() > 0)
+                    contestPresent.postVideo(contestId, urls.get(0));
+
+            }
+
+            @Override
+            public void onFail() {
+                dismissProgressDialog();
+                ToastGlobal.showLong("上传失败");
+            }
+        });
+    }
+
 }

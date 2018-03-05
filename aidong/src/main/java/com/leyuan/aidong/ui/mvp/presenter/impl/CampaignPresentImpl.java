@@ -267,6 +267,21 @@ public class CampaignPresentImpl implements CampaignPresent {
         }, Constant.COUPON_CAMPAIGN + "_" + id + "_1_0");
     }
 
+    @Override
+    public void getCampaignAvailableCoupon(String skuCode,String amount) {
+        if (couponModel == null) {
+            couponModel = new CouponModelImpl();
+        }
+        couponModel.getGoodsAvailableCoupon(new ProgressSubscriber<CouponData>(context, false) {
+            @Override
+            public void onNext(CouponData couponData) {
+                if (couponData != null) {
+                    appointCampaignActivityView.setCampaignCouponResult(couponData.getCoupon());//maybe null
+                }
+            }
+        }, Constant.COUPON_CAMPAIGN + "_" + skuCode + "_"+amount);
+    }
+
     private void createShareBeanByOrder(PayOrderData payOrderData) {
         if (payOrderData.getOrder() != null) {
             PayOrderBean payOrderBean = payOrderData.getOrder();

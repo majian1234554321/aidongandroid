@@ -16,6 +16,8 @@ public interface DynamicPresent {
 
     void commonLoadDataFollow(SwitcherLayout switcherLayout);
 
+    void requestMoreDataFollow(RecyclerView recyclerView, int size, int page);
+
     void pullToRefreshData();
 
     void pullToRefreshDataFollow();
@@ -47,7 +49,7 @@ public interface DynamicPresent {
 
     void reportDynamic(String id,String type);
 
-    void addFollow(String id);
-    void cancelFollow(String id);
+    void addFollow(String id,String type);
+    void cancelFollow(String id,String type);
     void deleteDynamic(String id);
 }

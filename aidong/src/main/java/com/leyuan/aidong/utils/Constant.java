@@ -112,6 +112,8 @@ public class Constant {
     public static final String USER = "user";
     public static final String COACH = "coach";
     public static final String CONTEST = "contest";
+    public static final String FOLLOW = "follow";
+    public static final int REQUEST_VIDEO_TRIMMER = 302;
 
 
     public static List<VenuesBean> gyms;
@@ -194,6 +196,7 @@ public class Constant {
     public static final String KDNCONTENTTYPE = "kDNContentType";
     public static final String KDNREPLYSITENICKNAME = "kDNreplySiteNickName";
     public static final String BROADCAST_ACTION_RECEIVER_CMD_MESSAGE = "broadcast_action_receiver_cmd_message";
+    public static int MAN_GENDER = 0;
 
 
     public static class Chat {

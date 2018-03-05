@@ -398,4 +398,9 @@
     <string name="quarter_final">复赛</string>
     <string name="quarter_final_enrol">复赛报名</string>
     <string name="enroled">已报名</string>
+    <string name="input_invitation_code">输入邀请码</string>
+    <string name="please_input_invitation_code">请输入邀请码</string>
+    <string name="enrol_immediatly">立即报名</string>
+    <string name="my_ranking">我的排名</string>
+    <string name="search_more_person">搜索更多的人</string>
 </resources>

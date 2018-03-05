@@ -13,6 +13,8 @@ public interface FollowPresent {
 
     void getFollowList();
 
+    void getFollowers(int pageSize);
+
     /**
      * 第一次加载数据
      * @param switcherLayout SwitcherLayout
