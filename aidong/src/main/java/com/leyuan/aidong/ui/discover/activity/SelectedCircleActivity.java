@@ -64,7 +64,12 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
         circlePrensenter.setSelectedCircleListener(this);
         circlePrensenter.getRecommendCircle();
 
-
+        layoutTitle.setLeftIconListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initSwipeRefreshLayout() {

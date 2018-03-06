@@ -12,6 +12,7 @@
             style="@style/styleImageBack"/>
 
         <TextView
+            android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_title"
@@ -52,6 +53,7 @@
         android:paddingLeft="@dimen/left_margin"
         android:paddingRight="@dimen/right_margin"
         android:paddingTop="5dp"
+        android:visibility="visible"
         android:paddingBottom="5dp"
         android:text="06-16 09:09"/>
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CoachBean;
-import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class CoachAttentionAdapter extends RecyclerView.Adapter<CoachAttentionAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CoachInfoActivity.start(context,coachBean.getId());
+                UserInfoActivity.start(context,coachBean.getId());
             }
         });
     }

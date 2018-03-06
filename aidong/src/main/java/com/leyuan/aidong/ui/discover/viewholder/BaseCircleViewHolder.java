@@ -137,7 +137,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             ArrayList<CircleDynamicBean> beanList = App.getInstance().getCMDCirleDynamicBean();
             CircleDynamicBean bean = beanList.get(beanList.size() - 1);
 
-            GlideLoader.getInstance().displayRoundAvatarImage(bean.getFromAvatar(), imgCMDAvatar);
+            GlideLoader.getInstance().displayCircleImage(bean.getFromAvatar(), imgCMDAvatar);
             txtCmdMessageNum.setText(beanList.size() + "条新消息");
         } else {
             layoutCmdMessage.setVisibility(View.GONE);
@@ -145,7 +145,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
         if (dynamic.publisher != null) {
             tvName.setText(dynamic.publisher.getName());
-            GlideLoader.getInstance().displayRoundAvatarImage(dynamic.publisher.getAvatar(), ivAvatar);
+            GlideLoader.getInstance().displayCircleImage(dynamic.publisher.getAvatar(), ivAvatar);
             tvTime.setText(Utils.getData(dynamic.published_at));
             ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.getUser_type())
                     ? View.VISIBLE : View.GONE);
@@ -233,7 +233,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             } else {
                 txtTime.setVisibility(View.VISIBLE);
                 layout_difficulty_star.setVisibility(View.GONE);
-                txtDesc.setText(dynamic.related.landmark);
+                txtDesc.setText(dynamic.related.slogan);
                 txtTime.setText(dynamic.related.start);
             }
 
@@ -241,12 +241,15 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             layoutCourseOrActivity.setVisibility(View.GONE);
         }
         //位置，赞，评论
-        if (dynamic.postion != null) {
+        if (dynamic.postion != null && ! TextUtils.isEmpty(dynamic.postion.position_name)) {
+            txtLocation.setVisibility(View.VISIBLE);
             txtLocation.setText(dynamic.postion.position_name);
+        }else {
+            txtLocation.setVisibility(View.GONE);
         }
 
         img_parse.setBackgroundResource(isLike(dynamic)
-                ? R.drawable.icon_parse : R.drawable.icon_parse);
+                ? R.drawable.icon_parsed : R.drawable.icon_parse);
         txtParse.setText(String.valueOf(dynamic.like.counter));
         txtComment.setText(String.valueOf(dynamic.comment.count));
         layout_parse.setOnClickListener(new View.OnClickListener() {

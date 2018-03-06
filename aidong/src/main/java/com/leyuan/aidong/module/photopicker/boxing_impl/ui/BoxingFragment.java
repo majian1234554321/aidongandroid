@@ -52,6 +52,7 @@ import com.leyuan.aidong.module.photopicker.boxing_impl.adapter.BoxingAlbumAdapt
 import com.leyuan.aidong.module.photopicker.boxing_impl.adapter.BoxingMediaAdapter;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.MediaItemLayout;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
@@ -428,9 +429,11 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
         }
 
         private void videoClick(BaseMedia media) {
-            if (((VideoMedia) media).getOriginalDuration() >= 1000 * 16) {
-                Toast.makeText(getContext(), "视频大于15s,暂不支持", Toast.LENGTH_LONG).show();
-            } else if (((VideoMedia) media).getOriginalDuration() < 1000 * 4) {
+//            if (((VideoMedia) media).getOriginalDuration() >= Constant.UPLOAD_VIDEO_MAX_DURATION) {
+//                Toast.makeText(getContext(), "视频大于60s,暂不支持", Toast.LENGTH_LONG).show();
+//            } else
+
+            if (((VideoMedia) media).getOriginalDuration() < Constant.UPLOAD_VIDEO_MIN_DURATION) {
                 Toast.makeText(getContext(), "视频少于5s,暂不支持", Toast.LENGTH_LONG).show();
             } else {
                 ArrayList<BaseMedia> iMedias = new ArrayList<>();

@@ -28,11 +28,9 @@
                 layout="@layout/inc_course_image_text" />
 
 
-
             <include
                 android:id="@+id/layout_course_location"
                 layout="@layout/inc_course_location_phone" />
-
 
 
             <RelativeLayout
@@ -78,6 +76,43 @@
 
 
                 </RelativeLayout>
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pref_0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:src="@color/common_divider_color" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/layout_remark"
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="备注信息"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edit_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="15dp"
+                    android:hint="请输入需要备注的内容"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/c9"
+                    android:textSize="15sp" />
 
 
                 <ImageView

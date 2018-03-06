@@ -72,7 +72,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:text="挨冻骑行,室友是大连房价打算啊圣诞快乐房价的拉萨附近啊顶楼上看风景啊看都洒了空间"
+        android:text="挨冻骑行,顶楼上看风景啊看都洒了空间"
         android:textColor="@color/c3"
         android:textSize="14sp" />
 
@@ -82,7 +82,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
         android:background="@color/transparent"
         android:drawablePadding="5dp"
         android:drawableRight="@drawable/icon_right_arrow"

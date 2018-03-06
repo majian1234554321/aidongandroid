@@ -12,7 +12,6 @@ import com.leyuan.aidong.adapter.mine.FollowMeAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseLazyFragment;
-import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
@@ -171,7 +170,7 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
             } else {
 //                CoachInfoActivity.start(getContext(), userBean.getId());
 
-                CoachInfoActivity.startForResult(FollowerFragment.this, userBean.getId(), Constant.REQUEST_USER_INFO);
+                UserInfoActivity.startForResult(FollowerFragment.this, userBean.getId(), Constant.REQUEST_USER_INFO);
             }
 
         }

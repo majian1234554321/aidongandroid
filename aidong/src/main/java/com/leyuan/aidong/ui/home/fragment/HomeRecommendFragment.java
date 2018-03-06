@@ -24,9 +24,11 @@ import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.HomeData;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.home.activity.CircleListActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomeRecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowView;
@@ -34,6 +36,7 @@ import com.leyuan.aidong.ui.mvp.view.HomeRecommendView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
@@ -257,6 +260,12 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onCourseAttentionClick(String id, int position, boolean followed) {
+
+        if(!App.getInstance().isLogin()){
+            UiManager.activityJump(getActivity(), LoginActivity.class);
+            return;
+        }
+
         if (followed) {
             followPresent.cancelFollow(id, Constant.COURSE);
         } else {

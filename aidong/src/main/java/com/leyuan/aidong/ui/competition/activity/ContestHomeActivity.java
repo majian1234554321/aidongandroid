@@ -156,9 +156,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.txt_relate_dynamic:
-
-                UiManager.activityJump(this, ContestDynamicActivity.class);
-
+                ContestDynamicActivity.start(this,contestId);
                 break;
 
             case R.id.txt_official_info:

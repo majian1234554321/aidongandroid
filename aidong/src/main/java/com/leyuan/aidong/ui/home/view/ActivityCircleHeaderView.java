@@ -16,12 +16,18 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.PersonAttentionAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CampaignDetailBean;
+import com.leyuan.aidong.entity.NewsBean;
+import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.discover.activity.NewsDetailActivity;
+import com.leyuan.aidong.ui.home.activity.AppointmentUserActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.utils.UiManager;
 
 /**
  * Created by user on 2018/1/11.
@@ -93,7 +99,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     public void setData(CampaignDetailBean campaignDetailBean) {
         this.campaignDetailBean = campaignDetailBean;
         txtTitle.setText(campaignDetailBean.getName());
-        txtAttentionNum.setText(campaignDetailBean.getViewCount() + "人已关注");
+        txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
         if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()) {
             GlideLoader.getInstance().displayImage(campaignDetailBean.getImage().get(0), imgCover);
 
@@ -112,7 +118,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         txtLocationDetail.setText(campaignDetailBean.getAddress());
         if (campaignDetailBean.getApplicant() != null && !campaignDetailBean.getApplicant().isEmpty()) {
             layoutAttention.setVisibility(VISIBLE);
-            txtCheckAll.setText(campaignDetailBean.applied_count + "人已报名");
+            txtCheckAll.setText(campaignDetailBean.getApplicant().size() + "人已报名");
             adapterAttentionPerson.setData(campaignDetailBean.getApplicant());
         } else {
             layoutAttention.setVisibility(GONE);
@@ -126,6 +132,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         layoutAttention = (RelativeLayout) view.findViewById(R.id.layout_attention);
         rvAttention = (RecyclerView) view.findViewById(R.id.rv_attention);
         txtCheckAll = (TextView) view.findViewById(R.id.txt_check_all);
+        txtCheckAll.setOnClickListener(this);
 
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         rvAttention.setLayoutManager(manager);
@@ -137,7 +144,17 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.txt_check_all:
+                AppointmentUserActivity.start(context, campaignDetailBean.getApplicant(), "已报名的人");
+                break;
+
             case R.id.bt_attention:
+
+                if (!App.getInstance().isLogin()) {
+                    UiManager.activityJump(context, LoginActivity.class);
+                    return;
+                }
+
                 if (campaignDetailBean.followed) {
                     followPresent.cancelFollow(campaignDetailBean.getCampaignId(), Constant.CAMPAIGN);
                 } else {
@@ -147,6 +164,9 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
                 break;
             case R.id.txt_check_detail:
 
+                NewsBean newsBean = new NewsBean(campaignDetailBean.getName(), campaignDetailBean.getIntroduce()
+                        , null, null, "图文详情", campaignDetailBean.getCampaignId());
+                NewsDetailActivity.start(context, newsBean);
                 break;
             case R.id.txt_location_detail:
                 MapActivity.start(context, campaignDetailBean.getName(), campaignDetailBean.getLandmark(),
@@ -159,9 +179,11 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
+            campaignDetailBean.follows_count ++;
+            txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
             bt_attention.setImageResource(R.drawable.icon_followed);
             ToastGlobal.showShortConsecutive(R.string.follow_success);
-        }else {
+        } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
     }
@@ -169,9 +191,11 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
+            campaignDetailBean.follows_count --;
+            txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
             bt_attention.setImageResource(R.drawable.icon_follow);
             ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
-        }else {
+        } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
     }

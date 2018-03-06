@@ -234,6 +234,8 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         refreshLayout.setRefreshing(true);
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
         dynamicPresent.pullToRefreshDataFollow();
+        followPresent.getUserFollow("following_relation", 1);
+
     }
 
     @Override

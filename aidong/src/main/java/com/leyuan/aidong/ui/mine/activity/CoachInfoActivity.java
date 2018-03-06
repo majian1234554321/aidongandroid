@@ -74,6 +74,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
  * 用户资料
  * Created by song on 2016/12/27.
  */
+@Deprecated
 public class CoachInfoActivity extends BaseActivity implements UserInfoActivityView, View.OnClickListener,
         SmartTabLayout.TabProvider, UserInfoPhotoAdapter.OnItemClickListener {
     public static final int REQUEST_UPDATE_PHOTO = 1024;
@@ -188,7 +189,7 @@ public class CoachInfoActivity extends BaseActivity implements UserInfoActivityV
     }
 
     private void setView() {
-        GlideLoader.getInstance().displayRoundAvatarImage(userInfoData.getProfile().getAvatar(), ivAvatar);
+        GlideLoader.getInstance().displayCircleImage(userInfoData.getProfile().getAvatar(), ivAvatar);
         tvName.setText(userInfoData.getProfile().getName());
         tvSignature.setText(TextUtils.isEmpty(userInfoData.getProfile().getSignature())
                 ? "这个人很懒，什么都没有留下" : userInfoData.getProfile().getSignature());

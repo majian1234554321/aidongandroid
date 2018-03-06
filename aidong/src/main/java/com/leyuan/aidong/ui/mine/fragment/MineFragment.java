@@ -34,6 +34,7 @@ import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mine.activity.FollowActivity;
 import com.leyuan.aidong.ui.mine.activity.LoveCoinActivity;
 import com.leyuan.aidong.ui.mine.activity.MessageActivity;
+import com.leyuan.aidong.ui.mine.activity.MyAttentionListActivity;
 import com.leyuan.aidong.ui.mine.activity.MyMemberCardActivity;
 import com.leyuan.aidong.ui.mine.activity.SportRecordActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
@@ -47,8 +48,6 @@ import com.leyuan.aidong.utils.Md5Utils;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
-
-import static com.leyuan.aidong.R.id.button_login;
 
 
 public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView {
@@ -197,7 +196,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             user = App.getInstance().getUser();
             textView_name.setText(user.getName());
             presenter.getMineInfo();
-            GlideLoader.getInstance().displayRoundAvatarImage(user.getAvatar(), imageView_head);
+            GlideLoader.getInstance().displayCircleImage(user.getAvatar(), imageView_head);
         } else {
             relativeLayout_my_logo.setVisibility(View.GONE);
             layout_no_login.setVisibility(View.VISIBLE);
@@ -237,6 +236,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.txt_sport_record:
                 UiManager.activityCheckLoginJump(getActivity(), SportRecordActivity.class);
 
+                break;
+            case R.id.layout_hot:
+                UiManager.activityCheckLoginJump(getActivity(), AiDongMomentActivity.class);
                 break;
 //            case relativeLayout_yuyue:
 //                if(App.getInstance().isLogin()){
@@ -289,7 +291,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
                 break;
             case R.id.linearLayout_guanzhu:
-                UiManager.activityCheckLoginJump(getActivity(), FollowActivity.class);
+                MyAttentionListActivity.start(getActivity(), 0);
+
+//                UiManager.activityCheckLoginJump(getActivity(), FollowActivity.class);
                 break;
             case R.id.linearLayout_beiguanzhu:
                 if (App.mInstance.isLogin()) {

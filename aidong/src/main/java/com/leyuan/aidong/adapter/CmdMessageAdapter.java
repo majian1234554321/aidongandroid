@@ -40,7 +40,7 @@ public class CmdMessageAdapter extends RecyclerView.Adapter<CmdMessageAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CircleDynamicBean bean = beanList.get(position);
-        GlideLoader.getInstance().displayRoundAvatarImage(bean.getFromAvatar(), holder.imgAvatar);
+        GlideLoader.getInstance().displayCircleImage(bean.getFromAvatar(), holder.imgAvatar);
         GlideLoader.getInstance().displayImage(bean.getImageUrl(), holder.imgCover);
         holder.txtTime.setText(bean.getTime());
 

@@ -122,7 +122,15 @@ public class CourseDetailBean {
         return followed;
     }
 
+    public void setFollowed(boolean followed) {
+        this.followed = followed;
+    }
+
     public int getFollows_count() {
         return follows_count;
+    }
+
+    public void setFollows_count(int follows_count) {
+        this.follows_count = follows_count;
     }
 }

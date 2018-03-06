@@ -97,6 +97,7 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
         txtBelongGroup = (TextView) findViewById(R.id.txt_belong_group);
         findViewById(R.id.bt_select_group).setOnClickListener(this);
         findViewById(R.id.bt_enrol_post_video).setOnClickListener(this);
+        titleLayout.setLeftIconListener(this);
 
         txtContestName.setText(getIntent().getStringExtra("name"));
         txtContestTime.setText(getIntent().getStringExtra("start"));
@@ -130,6 +131,11 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_left:
+
+                finish();
+
+                break;
             case R.id.bt_select_city:
                 UiManager.activityJump(this, LocationActivity.class);
 

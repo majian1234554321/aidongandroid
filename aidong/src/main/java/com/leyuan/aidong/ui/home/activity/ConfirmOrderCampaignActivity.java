@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -30,6 +31,7 @@ import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CommonTitleLayout;
@@ -68,6 +70,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
     private TextView txtRoomName;
     private TextView txtCourseLocation;
     private ImageView img_telephone;
+    private EditText edit_remark;
 
 
     private String couponId;
@@ -106,7 +109,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         initData();
 
         campaignPresent = new CampaignPresentImpl(this, this);
-        campaignPresent.getCampaignAvailableCoupon(course.skucode,course.amount);
+        campaignPresent.getCampaignAvailableCoupon(course.skucode, course.amount);
     }
 
 
@@ -122,6 +125,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         txtRoomName = (TextView) findViewById(R.id.txt_room_name);
         txtCourseLocation = (TextView) findViewById(R.id.txt_course_location);
         img_telephone = (ImageView) findViewById(R.id.img_telephone);
+        edit_remark = (EditText) findViewById(R.id.edit_remark);
 
         layoutCourseLocation = (RelativeLayout) findViewById(R.id.layout_course_location);
         layoutCourseCoupon = (RelativeLayout) findViewById(R.id.layout_course_coupon);
@@ -166,6 +170,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         layoutCourseLocation.setOnClickListener(this);
         img_telephone.setOnClickListener(this);
         layoutTitle.setLeftIconListener(this);
+        txtCourseLocation.setOnClickListener(this);
     }
 
     @Override
@@ -184,7 +189,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 break;
             case R.id.img_telephone:
 
-//                TelephoneManager.callImmediate(this, course.get);
+                TelephoneManager.callImmediate(this, "");
                 break;
             case R.id.layout_course_coupon:
 
@@ -206,6 +211,11 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
                             payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount);
                 }
+                break;
+            case R.id.txt_course_location:
+                MapActivity.start(this, course.getName(), course.getOrganizer(), course.getAddress(),
+                        course.getCoordinate().getLat(), course.getCoordinate().getLng());
+
                 break;
         }
     }

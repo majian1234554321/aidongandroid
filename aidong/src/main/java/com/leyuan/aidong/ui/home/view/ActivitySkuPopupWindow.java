@@ -47,7 +47,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
     private CampaignDetailBean campaignDetailBean;
     private GoodsSpecBean specBean;
     private String selectedSkuCover;
-
+    private int limit;
 
     public enum GoodsStatus {
         SellOut,            //售罄状态
@@ -67,6 +67,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
     private ImageView ivMinus;
     private TextView tvCount;
     private ImageView ivAdd;
+    private TextView txt_limit_number;
     private TextView tvConfirm;
     private TextView tvAdd;
     private LinearLayout buyLayout;
@@ -169,7 +170,8 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
             GoodsSkuBean line = getLine(selectedValues);
             price = FormatUtil.parseDouble(line.price);
             stock = line.getStock();
-            confirmedSkuCover = line.cover;
+            limit = line.getLimit_amount();
+//            confirmedSkuCover = line.cover;
         } else {                     //未选中sku
             skuTip = new StringBuilder();
             for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
@@ -190,8 +192,11 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
             }
             totalStock += goodsSkuBean.getStock();
         }
-        if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty())
+        if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()){
             unConfirmedSkuCover = campaignDetailBean.getImage().get(0);
+            confirmedSkuCover= campaignDetailBean.getImage().get(0);
+        }
+
     }
 
     private void initView(View view) {
@@ -205,6 +210,8 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         ivMinus = (ImageView) view.findViewById(R.id.iv_minus);
         tvCount = (TextView) view.findViewById(R.id.tv_count);
         ivAdd = (ImageView) view.findViewById(R.id.iv_add);
+        txt_limit_number = (TextView) view.findViewById(R.id.txt_limit_number);
+
         tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
         tvAdd = (TextView) view.findViewById(R.id.tv_add_cart);
         buyLayout = (LinearLayout) view.findViewById(R.id.ll_buy);
@@ -258,6 +265,10 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                 : R.drawable.icon_minus_gray);
         ivAdd.setBackgroundResource(FormatUtil.parseInt(count) == stock ? R.drawable.icon_add_gray
                 : R.drawable.icon_add);
+
+        if (limit > 0) {
+            txt_limit_number.setText("(限购" + limit + "张)");
+        }
     }
 
     private void setListener() {
@@ -282,23 +293,32 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                 dismiss();
                 break;
             case R.id.iv_minus:
+
                 count--;
                 if (count <= 1) {
                     count = 1;
                     ivMinus.setBackgroundResource(R.drawable.icon_minus_gray);
                 }
-                if (count < stock) {
+                if (count < stock && count < limit) {
                     ivAdd.setBackgroundResource(R.drawable.icon_add);
                 }
                 tvCount.setText(String.valueOf(count));
                 break;
             case R.id.iv_add:
                 count++;
-                if (count >= stock) {
+                if (count > stock) {
                     count = stock;
                     ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
-                    ToastGlobal.showLong("超过最大库存");
+                    ToastGlobal.showLongConsecutive("超过最大库存");
                 }
+
+                if (count > limit) {
+                    count = limit;
+                    ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
+                    ToastGlobal.showLongConsecutive("超过限购数量");
+                }
+
+
                 if (count > 1) {
                     ivMinus.setBackgroundResource(R.drawable.icon_minus);
                 }
@@ -407,9 +427,16 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                 tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),
                         FormatUtil.parseDouble(line.price)));
                 tvStock.setText(String.format(context.getString(R.string.stock_count), line.getStock() + ""));
-                GlideLoader.getInstance().displayImage(line.cover, dvGoodsCover);
+                GlideLoader.getInstance().displayImage(confirmedSkuCover, dvGoodsCover);
                 selectedSkuCover = line.cover;
                 stock = line.getStock();
+                limit = line.getLimit_amount();
+                if (line.limit_amount > 0) {
+                    txt_limit_number.setText("(限购" + limit + "张)");
+                } else {
+                    txt_limit_number.setText("");
+                }
+
                 tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count), stock));
                 tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
                 if (Integer.parseInt(tvCount.getText().toString()) > stock) {

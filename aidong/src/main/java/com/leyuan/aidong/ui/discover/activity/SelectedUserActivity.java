@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.SelectItUserListAdapter;
@@ -67,6 +68,12 @@ public class SelectedUserActivity extends BaseActivity implements OnRefreshListe
         present = new SelectedUserPrensenterImpl(this, this);
         present.commonLoadData(switcherLayout, TYPE);
 
+        layoutTitle.setLeftIconListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
@@ -155,7 +162,8 @@ public class SelectedUserActivity extends BaseActivity implements OnRefreshListe
             refreshLayout.setRefreshing(false);
         }
         data.clear();
-        data.addAll(userBeanList);
+        if (userBeanList != null)
+            data.addAll(userBeanList);
         adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
         switcherLayout.showContentLayout();
@@ -178,12 +186,13 @@ public class SelectedUserActivity extends BaseActivity implements OnRefreshListe
         if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
-        View view = View.inflate(this, R.layout.empty_course, null);
-        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
-        refreshLayout.setProgressViewOffset(true, 50, 100);
-        refreshLayout.setOnRefreshListener(this);
-        switcherLayout.addCustomView(view, "empty");
-        switcherLayout.showCustomLayout("empty");
+//        View view = View.inflate(this, R.layout.empty_course, null);
+//        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
+//        refreshLayout.setProgressViewOffset(true, 50, 100);
+//        refreshLayout.setOnRefreshListener(this);
+//        switcherLayout.addCustomView(view, "empty");
+//        switcherLayout.showCustomLayout("empty");
+
     }
 
     @Override
@@ -193,6 +202,16 @@ public class SelectedUserActivity extends BaseActivity implements OnRefreshListe
 
     @Override
     public void showEmptyView() {
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
 
+        View view = View.inflate(this, R.layout.empty_course, null);
+        ((TextView)view.findViewById(R.id.txt_type)).setText("没有关注的人");
+        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
+        refreshLayout.setProgressViewOffset(true, 50, 100);
+        refreshLayout.setOnRefreshListener(this);
+        switcherLayout.addCustomView(view, "empty");
+        switcherLayout.showCustomLayout("empty");
     }
 }

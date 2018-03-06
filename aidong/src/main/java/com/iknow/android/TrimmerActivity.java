@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.iknow.android.interfaces.OnTrimVideoListener;
@@ -15,6 +16,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ContestEnrolView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
 
 import java.io.File;
@@ -35,6 +37,16 @@ public class TrimmerActivity extends BaseActivity implements OnTrimVideoListener
             Bundle bundle = new Bundle();
             bundle.putString("path", videoPath);
             Intent intent = new Intent(from, TrimmerActivity.class);
+            intent.putExtras(bundle);
+            from.startActivityForResult(intent, request_code);
+        }
+    }
+
+    public static void startForResult(Fragment from, String videoPath, int request_code) {
+        if (!TextUtils.isEmpty(videoPath)) {
+            Bundle bundle = new Bundle();
+            bundle.putString("path", videoPath);
+            Intent intent = new Intent(from.getActivity(), TrimmerActivity.class);
             intent.putExtras(bundle);
             from.startActivityForResult(intent, request_code);
         }
@@ -81,12 +93,14 @@ public class TrimmerActivity extends BaseActivity implements OnTrimVideoListener
 
     @Override
     public void onStartTrim() {
+
+        DialogUtils.showDialog(this,"",true);
     }
 
     @Override
     public void onFinishTrim(String path) {
         Logger.i("contest video ", "onFinishTrim  path = " + path);
-
+        DialogUtils.dismissDialog();
         Intent intent = new Intent();
         intent.putExtra(Constant.VIDEO_PATH, path);
         setResult(RESULT_OK, intent);

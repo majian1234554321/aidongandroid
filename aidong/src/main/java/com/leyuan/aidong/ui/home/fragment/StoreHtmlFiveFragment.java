@@ -24,7 +24,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
-import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsBrandRecommendActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
@@ -196,7 +196,9 @@ public class StoreHtmlFiveFragment extends BaseFragment {
                     CourseListActivityNew.start(getActivity(),link[0]);
                     break;
                 case "campaign":
-                    CampaignDetailActivity.start(getActivity(), link[0]);
+
+                    ActivityCircleDetailActivity.start(getActivity(), link[0]);
+//                    CampaignDetailActivity.start(getActivity(), link[0]);
                     break;
                 case "goods":
                     GoodsDetailActivity.start(getActivity(), link[0], link[1]);

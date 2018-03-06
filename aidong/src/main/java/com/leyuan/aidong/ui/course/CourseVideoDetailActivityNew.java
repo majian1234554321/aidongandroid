@@ -14,12 +14,14 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.exoplayer.util.Util;
+import com.iknow.android.TrimmerActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.video.DetailsRelativeViedeoAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -31,9 +33,13 @@ import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseVideoDetailActivityView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.R.id.bt_share;
@@ -45,13 +51,13 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
  * Created by user on 2018/1/9.
  */
 
-public class CourseVideoDetailActivityNew extends BaseActivity implements View.OnClickListener,CourseVideoDetailActivityView {
+public class CourseVideoDetailActivityNew extends BaseActivity implements View.OnClickListener, CourseVideoDetailActivityView {
 
     private ImageView ivBack;
     private RelativeLayout relTop;
     private ImageView imgBg;
     private ImageView imgLiveBeginOrEnd;
-    private TextView txtCourseIntro,txt_course_name,txt_course_sub_name;
+    private TextView txtCourseIntro, txt_course_name, txt_course_sub_name;
     private LinearLayout llRelateCourseVideo;
     private TextView txtRelateCourseVideo;
     private TextView txtCheckAllVideo;
@@ -64,6 +70,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
     CourseVideoBean courseVideoBean;
 
     CoursePresentImpl coursePresent;
+    private ArrayList<BaseMedia> selectedMedia;
 
     public static void start(Context context, String id) {
         Intent intent = new Intent(context, CourseVideoDetailActivityNew.class);
@@ -105,10 +112,10 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         txt_share_image = (TextView) findViewById(R.id.txt_share_image);
         txt_appoint_immediately = (TextView) findViewById(R.id.txt_appoint_immediately);
 
-        if(courseVideoBean != null){
-            GlideLoader.getInstance().displayImage(courseVideoBean.getCover(),imgBg);
+        if (courseVideoBean != null) {
+            GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), imgBg);
             txt_course_name.setText(courseVideoBean.getName());
-            txt_course_sub_name.setText("#"+courseVideoBean.getName()+"#");
+            txt_course_sub_name.setText("#" + courseVideoBean.getName() + "#");
             txtCourseIntro.setText(courseVideoBean.getIntroduce());
         }
 
@@ -134,8 +141,8 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
             }
         });
 
-        coursePresent = new CoursePresentImpl(this,this);
-        coursePresent.getRelateCourseVideo(courseId,courseVideoBean.getId());
+        coursePresent = new CoursePresentImpl(this, this);
+        coursePresent.getRelateCourseVideo(courseId, courseVideoBean.getId());
 
     }
 
@@ -199,10 +206,24 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         super.onActivityResult(requestCode, resultCode, data);
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
+            if (requestCode == REQUEST_SELECT_PHOTO) {
                 PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
                         Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
 
+            } else if (requestCode == REQUEST_SELECT_VIDEO) {
+                selectedMedia = Boxing.getResult(data);
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                }
+
+            } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
+                DialogUtils.showDialog(this, "", true);
+                Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
+                    PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                            selectedMedia, REQUEST_PUBLISH_DYNAMIC);
+                }
             }
         }
     }

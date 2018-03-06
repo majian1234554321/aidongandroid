@@ -50,7 +50,7 @@ public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapte
         CommentBean comment = mComments.get(position);
         final String name = comment.getPublisher().getName();
 
-        GlideLoader.getInstance().displayRoundAvatarImage(comment.getPublisher().getAvatar(), holder.img_avatar);
+        GlideLoader.getInstance().displayCircleImage(comment.getPublisher().getAvatar(), holder.img_avatar);
 
         holder.txt_user.setText("" + name);
         holder.txt_content.setText("" + comment.getContent());

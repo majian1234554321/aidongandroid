@@ -13,6 +13,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.SearchModelImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ public class SelectedUserPrensenterImpl {
                 if (followData != null && !followData.getFollow().isEmpty()) {
                     userBeanList = followData.getFollow();
                 }
+
+
+                Logger.i("commonLoadData","userBeanList == " +userBeanList);
                 if (userBeanList != null && !userBeanList.isEmpty()) {
                     switcherLayout.showContentLayout();
                     followFragment.onRefreshData(userBeanList);

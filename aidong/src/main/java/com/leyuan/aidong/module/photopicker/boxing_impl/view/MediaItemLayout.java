@@ -37,6 +37,7 @@ import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.ImageMedia;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.WindowManagerHelper;
 import com.leyuan.aidong.module.photopicker.boxing_impl.utils.OptAnimationLoader;
+import com.leyuan.aidong.utils.Constant;
 
 
 /**
@@ -153,9 +154,10 @@ public class MediaItemLayout extends FrameLayout {
         if (mCoverImg == null || TextUtils.isEmpty(path)) {
             return;
         }
-        if(during >= 1000 * 16){
-            disabledLayout.setVisibility(VISIBLE);
-        }else if(during < 1000 * 4) {
+//        if(during >= Constant.UPLOAD_VIDEO_MAX_DURATION){
+//            disabledLayout.setVisibility(VISIBLE);
+//        }else
+        if(during < Constant.UPLOAD_VIDEO_MIN_DURATION) {
             disabledLayout.setVisibility(VISIBLE);
         }else {
             disabledLayout.setVisibility(GONE);

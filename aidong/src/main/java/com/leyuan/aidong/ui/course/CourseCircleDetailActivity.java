@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.exoplayer.util.Util;
+import com.iknow.android.TrimmerActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
@@ -29,6 +30,7 @@ import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -48,6 +50,8 @@ import com.leyuan.aidong.ui.mvp.view.CourseVideoView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -91,6 +95,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     String id = "1", type = Constant.COURSE;
     private CourseCircleHeaderView headView;
     private CourseDetailBean courseDetailBean;
+    private ArrayList<BaseMedia> selectedMedia;
 
 
     public static void start(Context context, String id) {
@@ -209,8 +214,15 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 }
                 break;
             case R.id.bt_share:
-                sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
-                        "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
+                if (courseDetailBean == null) return;
+                String image = "";
+                if (courseDetailBean.getImage() != null && courseDetailBean.getImage().size() > 0) {
+                    image = courseDetailBean.getImage().get(0);
+                }
+
+                sharePopupWindow.showAtBottom(courseDetailBean.getName(), courseDetailBean.getIntroduce(),
+                        image, ConstantUrl.URL_SHARE_COURSE + courseDetailBean.getId() + "/course");
+
                 break;
             case R.id.txt_appoint_immediately:
 
@@ -243,9 +255,11 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 //            dynamicList.clear();
 //            refreshLayout.setRefreshing(false);
 //        }
+
         dynamicList.addAll(dynamicBeanList);
         circleDynamicAdapter.updateData(dynamicList);
         wrapperAdapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(0);
     }
 
     @Override
@@ -333,10 +347,24 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 dynamicList.remove(clickPosition);
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyDataSetChanged();
-            } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
+            } else if (requestCode == REQUEST_SELECT_PHOTO) {
                 PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
                         Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
 
+            } else if (requestCode == REQUEST_SELECT_VIDEO) {
+                selectedMedia = Boxing.getResult(data);
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                }
+
+            } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
+                DialogUtils.showDialog(this, "", true);
+                Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
+                    PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                            selectedMedia, REQUEST_PUBLISH_DYNAMIC);
+                }
             }
         }
     }

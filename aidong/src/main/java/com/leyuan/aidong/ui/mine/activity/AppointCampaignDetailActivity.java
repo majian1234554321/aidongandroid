@@ -22,8 +22,8 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
-import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
@@ -487,7 +487,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 present.deleteAppoint(bean.getId());
                 break;
             case R.id.rl_detail:
-                CampaignDetailActivity.start(this, bean.getLinkId());
+
+                ActivityCircleDetailActivity.start(this, bean.getLinkId());
+//                CampaignDetailActivity.start(this, bean.getLinkId());
                 break;
             case R.id.dv_qr:
                 if (UN_JOIN.equals(status)) {

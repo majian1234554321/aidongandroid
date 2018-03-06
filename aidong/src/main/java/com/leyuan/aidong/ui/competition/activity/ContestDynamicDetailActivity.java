@@ -39,7 +39,6 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
-import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
@@ -454,7 +453,7 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
         @Override
         public void onAvatarClick(String id, String userType) {
             if (Constant.COACH.equals(userType)) {
-                CoachInfoActivity.startForResult(ContestDynamicDetailActivity.this, id, Constant.REQUEST_USER_INFO);
+                UserInfoActivity.startForResult(ContestDynamicDetailActivity.this, id, Constant.REQUEST_USER_INFO);
             } else {
                 UserInfoActivity.startForResult(ContestDynamicDetailActivity.this, id, Constant.REQUEST_USER_INFO);
             }

@@ -16,7 +16,7 @@ import android.view.Gravity;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
-import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.DialogUtils;
@@ -113,7 +113,8 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 CourseListActivityNew.start(this, id);
                 break;
             case "campaign":
-                CampaignDetailActivity.start(this, id);
+                ActivityCircleDetailActivity.start(this, id);
+//                CampaignDetailActivity.start(this, id);
                 break;
             case "event":
                 Logger.e("TAG", "developing");
@@ -165,7 +166,8 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 CourseListActivityNew.start(this,bannerBean.getLink());
                 break;
             case "23":
-                CampaignDetailActivity.start(this, bannerBean.getLink());
+                ActivityCircleDetailActivity.start(this, bannerBean.getLink());
+//                CampaignDetailActivity.start(this, bannerBean.getLink());
                 break;
             case "24":
                 GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_EQUIPMENT);

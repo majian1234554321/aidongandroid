@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 
 /**
  * Created by user on 2018/1/5.
@@ -34,7 +34,7 @@ public class SelectUserListAdapter extends RecyclerView.Adapter<SelectUserListAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CoachInfoActivity.start(context, "178902");
+                UserInfoActivity.start(context, "178902");
             }
         });
     }

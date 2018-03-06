@@ -466,14 +466,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_visible="true"
-                app:img_tag="@drawable/mine_love_sport_timing"
+                app:img_tag="@drawable/mine_private"
                 app:txt_name="爱动时刻" />
 
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:img_tag="@drawable/mine_shopping_address"
+                app:img_tag="@drawable/mine_private"
                 app:txt_name="收货地址" />
 
             <com.leyuan.aidong.widget.AidongMineItem

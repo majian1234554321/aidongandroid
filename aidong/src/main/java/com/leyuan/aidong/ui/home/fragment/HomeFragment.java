@@ -18,9 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.iknow.android.TrimmerActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
@@ -29,6 +31,7 @@ import com.leyuan.aidong.ui.discover.fragment.CircleFragment;
 import com.leyuan.aidong.ui.home.activity.LocationActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -60,6 +63,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
             tvLocation.setText(App.getInstance().getSelectedCity());
         }
     };
+    private ArrayList<BaseMedia> selectedMedia;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,18 +130,64 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
-                PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
-                        Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
 
-                //ClipPhotosActivity.start(getContext(),Boxing.getResult(data));
-            } else if (requestCode == REQUEST_PUBLISH_DYNAMIC) {
-                Fragment page = adapter.getPage(1);
-                if (page instanceof CircleFragment) {
-                    ((CircleFragment) page).refreshData();
-                }
+            switch (requestCode) {
+                case REQUEST_SELECT_PHOTO:
+                    PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                            Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+                    break;
+                case REQUEST_SELECT_VIDEO:
+                    selectedMedia = Boxing.getResult(data);
+                    if (selectedMedia != null && selectedMedia.size() > 0) {
+                        TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                    }
+                    break;
+                case Constant.REQUEST_VIDEO_TRIMMER:
+                    Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
+                    selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
+
+                    PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                            selectedMedia, REQUEST_PUBLISH_DYNAMIC);
+                    break;
+                case REQUEST_PUBLISH_DYNAMIC:
+
+                    //有问题，要改
+                    Fragment page = adapter.getPage(1);
+                    if (page instanceof CircleFragment) {
+                        ((CircleFragment) page).refreshData();
+                    }
+
+                    break;
             }
+
         }
+//        if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
+//            PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+//                    Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+//
+//            //ClipPhotosActivity.start(getContext(),Boxing.getResult(data));
+//        } else if (requestCode == REQUEST_SELECT_VIDEO) {
+//            selectedMedia = Boxing.getResult(data);
+//            if (selectedMedia != null && selectedMedia.size() > 0) {
+//                TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+//            }
+//
+//        } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
+//            Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
+//            if (selectedMedia != null && selectedMedia.size() > 0) {
+//
+//                selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
+//
+//                uploadVideo();
+//
+//
+//            } else if (requestCode == REQUEST_PUBLISH_DYNAMIC) {
+//                Fragment page = adapter.getPage(1);
+//                if (page instanceof CircleFragment) {
+//                    ((CircleFragment) page).refreshData();
+//                }
+//            }
+//        }
     }
 
     @Override

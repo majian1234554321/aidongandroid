@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
-import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -55,7 +54,7 @@ public class MyAttentionUserListAdapter extends RecyclerView.Adapter<MyAttention
             public void onClick(View v) {
 
                 if (Constant.COACH.equals(user.type)) {
-                    CoachInfoActivity.start(context, user.getId());
+                    UserInfoActivity.start(context, user.getId());
                 } else {
                     UserInfoActivity.start(context, user.getId());
                 }

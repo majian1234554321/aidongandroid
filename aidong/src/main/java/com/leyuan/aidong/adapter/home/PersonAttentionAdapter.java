@@ -39,16 +39,16 @@ public class PersonAttentionAdapter extends RecyclerView.Adapter<PersonAttention
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (position == 0) {
             RecyclerView.LayoutParams fp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-            fp.leftMargin = Utils.dip2px(context,15);
+            fp.leftMargin = Utils.dip2px(context, 15);
             holder.itemView.setLayoutParams(fp);
         }
 
         final UserBean userBean = users.get(position);
-        GlideLoader.getInstance().displayCircleImage(userBean.getAvatar(),holder.imgAvatar);
+        GlideLoader.getInstance().displayCircleImage(userBean.getAvatar(), holder.imgAvatar);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfoActivity.start(context,userBean.getId());
+                UserInfoActivity.start(context, userBean.getId());
             }
         });
 
@@ -56,8 +56,8 @@ public class PersonAttentionAdapter extends RecyclerView.Adapter<PersonAttention
 
     @Override
     public int getItemCount() {
-        if(users == null) return 0;
-        return users.size();
+        if (users == null) return 0;
+        return users.size() > 5 ? 5 : users.size();
     }
 
     public void setData(List<UserBean> applicant) {

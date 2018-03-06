@@ -73,6 +73,12 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
         prensent.refreshVenuesNearly(currPage);
         initSearch();
 
+        layoutTitle.setLeftIconListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initSearch() {

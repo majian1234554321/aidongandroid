@@ -21,6 +21,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.configuration.PredefinedCaptureConfigurations.CaptureQuality;
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.configuration.PredefinedCaptureConfigurations.CaptureResolution;
+import com.leyuan.aidong.utils.Constant;
 
 public class CaptureConfiguration implements Parcelable {
 
@@ -29,7 +30,7 @@ public class CaptureConfiguration implements Parcelable {
 
     public static final int NO_DURATION_LIMIT = -1;
     public static final int NO_FILESIZE_LIMIT = -1;
-    public static final int DEFAULT_DURATION = 15;
+    public static final int DEFAULT_DURATION = Constant.CAMERA_VIDEO_MAX_DURATION;
 
     private int mVideoWidth = PredefinedCaptureConfigurations.WIDTH_720P;
     private int mVideoHeight = PredefinedCaptureConfigurations.HEIGHT_720P;

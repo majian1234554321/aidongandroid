@@ -12,7 +12,6 @@ import com.leyuan.aidong.adapter.mine.FollowAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseLazyFragment;
-import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
@@ -152,7 +151,7 @@ public class FollowingFragment extends BaseLazyFragment implements FollowFragmen
             FollowingFragment.this.position = position;
 
             UserBean userBean = data.get(position);
-            present.cancelFollow(id, userBean.getUserTypeByUserType());
+            present.cancelFollow(id, userBean.type);
         }
 
         @Override
@@ -166,7 +165,7 @@ public class FollowingFragment extends BaseLazyFragment implements FollowFragmen
             } else {
 //                CoachInfoActivity.start(getContext(), userBean.getId());
 
-                CoachInfoActivity.startForResult(FollowingFragment.this, userBean.getId(), Constant.REQUEST_USER_INFO);
+                UserInfoActivity.startForResult(FollowingFragment.this, userBean.getId(), Constant.REQUEST_USER_INFO);
             }
 
         }

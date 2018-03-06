@@ -1,161 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootView"
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="115dp"
-    android:background="@color/white"
-    android:orientation="horizontal">
+    android:background="@color/white">
+
 
     <LinearLayout
-        android:layout_width="108dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/img_coach"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="14dp"
-
-            />
-
-        <TextView
-            android:id="@+id/txt_coach_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="14dp"
-            android:singleLine="true"
-            android:maxWidth="90dp"
-            android:textColor="@color/txt_black"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txt_course_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/txt_course_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:textColor="@color/course_oringe"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/txt_course_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:textColor="@color/text_color_common"
-            android:singleLine="true"
-            android:textSize="13sp" />
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_width="108dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_coach"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="14dp"
+
+                />
 
             <TextView
-                android:id="@+id/txt_course_difficulty"
+                android:id="@+id/txt_coach_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="难度系数: "
-                android:textColor="@color/text_color_common"
-                android:textSize="13sp" />
-
-            <ImageView
-                android:id="@+id/img_star_first"
-                android:layout_marginLeft="1dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_star_bar"
-                />
-            <ImageView
-                android:id="@+id/img_star_second"
-                android:layout_marginLeft="1dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_star_bar"
-                />
-            <ImageView
-                android:id="@+id/img_star_three"
-                android:layout_marginLeft="1dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_star_bar"
-                />
-            <ImageView
-                android:id="@+id/img_star_four"
-                android:layout_marginLeft="1dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_star_bar"
-                />
-            <ImageView
-                android:id="@+id/img_star_five"
-                android:layout_marginLeft="1dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_star_bar"
-                />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="14dp"
+                android:maxWidth="90dp"
+                android:singleLine="true"
+                android:textColor="@color/txt_black"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="80dp"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/img_course_state"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            />
-
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_course_origin_price"
+                android:id="@+id/txt_course_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/course_black"
+                android:layout_marginTop="8dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txt_course_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/course_oringe"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/txt_course_member_price"
+                android:id="@+id/txt_course_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/course_oringe"
-                android:textSize="12sp" />
+                android:layout_marginTop="6dp"
+                android:singleLine="true"
+                android:textColor="@color/text_color_common"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_course_difficulty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="难度系数: "
+                    android:textColor="@color/text_color_common"
+                    android:textSize="13sp" />
+
+                <ImageView
+
+                    android:id="@+id/img_star_first"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/icon_star_bar" />
+
+                <ImageView
+                    android:id="@+id/img_star_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/icon_star_bar" />
+
+                <ImageView
+                    android:id="@+id/img_star_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/icon_star_bar" />
+
+                <ImageView
+                    android:id="@+id/img_star_four"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/icon_star_bar" />
+
+                <ImageView
+                    android:id="@+id/img_star_five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/icon_star_bar" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/img_course_state"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_course_origin_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/course_black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_course_member_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/course_oringe"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="15dp"
+        android:background="@color/line_color" />
+</RelativeLayout>

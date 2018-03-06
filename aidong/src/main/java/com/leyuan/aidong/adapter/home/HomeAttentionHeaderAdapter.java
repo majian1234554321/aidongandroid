@@ -14,7 +14,6 @@ import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
 import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CircleListActivity;
-import com.leyuan.aidong.ui.mine.activity.CoachInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -49,6 +48,7 @@ public class HomeAttentionHeaderAdapter extends RecyclerView.Adapter<HomeAttenti
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     CircleListActivity.start(context, 0);
 
                 }
@@ -75,7 +75,7 @@ public class HomeAttentionHeaderAdapter extends RecyclerView.Adapter<HomeAttenti
                 } else if (Constant.CAMPAIGN.equals(bean.type)) {
                     ActivityCircleDetailActivity.start(context, bean.getId());
                 } else if (Constant.COACH.equals(bean.type)) {
-                    CoachInfoActivity.start(context, bean.getId());
+                    UserInfoActivity.start(context, bean.getId());
                 } else if (Constant.CONTEST.equals(bean.type)) {
                     ContestHomeActivity.start(context, bean.getId());
                 } else {

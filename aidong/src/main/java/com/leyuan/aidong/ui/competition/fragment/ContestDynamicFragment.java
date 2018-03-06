@@ -38,7 +38,7 @@ import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
-import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
@@ -78,10 +78,13 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
     private DynamicBean invokeDynamicBean;
 
     private int currPage = 1;
-    private DynamicPresent dynamicPresent;
+    private ContestPresentImpl contestDynamicPresent;
+
+    private DynamicPresentImpl dynamicPresent;
 
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
+
 
     BroadcastReceiver circleFragmentReceiver = new BroadcastReceiver() {
         @Override
@@ -100,6 +103,15 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
             Logger.i(TAG, "onReceive action = " + intent.getAction());
         }
     };
+    private String contestId;
+
+    public static ContestDynamicFragment newInstance(String contestId) {
+        ContestDynamicFragment fragment = new ContestDynamicFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("contestId", contestId);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,14 +123,23 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         filter.addAction(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_EXIT_LOGIN);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(circleFragmentReceiver, filter);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_circle, container, false);
-        dynamicPresent = new DynamicPresentImpl(getContext(), this);
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            contestId = bundle.getString("contestId");
+        }
+
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
+
         return view;
     }
 
@@ -126,13 +147,18 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharePopupWindow = new SharePopupWindow(getActivity());
-        dynamicPresent.commonLoadData(switcherLayout);
+
+
+        dynamicPresent = new DynamicPresentImpl(getActivity(),this);
+        contestDynamicPresent = new ContestPresentImpl(getActivity());
+        contestDynamicPresent.setContestDynamicView(this);
+        contestDynamicPresent.getContestDynamics(contestId,currPage);
     }
 
     @Override
     public void fetchData() {
-        // dynamicPresent.pullToRefreshData();
-        dynamicPresent.commonLoadData(switcherLayout);
+        currPage =1;
+        contestDynamicPresent.getContestDynamics(contestId,currPage);
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -149,7 +175,8 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
             @Override
             public void onClick(View v) {
 
-                dynamicPresent.commonLoadData(switcherLayout);
+                currPage =1;
+                contestDynamicPresent.getContestDynamics(contestId,currPage);
 
             }
         });
@@ -176,7 +203,9 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         public void onLoadNextPage(View view) {
             currPage++;
             if (dynamicList != null && dynamicList.size() >= pageSize) {
-                dynamicPresent.requestMoreData(recyclerView, pageSize, currPage);
+
+                contestDynamicPresent.getContestDynamics(contestId,currPage);
+
             }
         }
     };
@@ -186,7 +215,7 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         currPage = 1;
         refreshLayout.setRefreshing(true);
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        dynamicPresent.pullToRefreshData();
+        contestDynamicPresent.getContestDynamics(contestId,currPage);
     }
 
     @Override
@@ -195,6 +224,7 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
             dynamicList.clear();
             refreshLayout.setRefreshing(false);
         }
+        if(dynamicBeanList != null)
         dynamicList.addAll(dynamicBeanList);
         circleDynamicAdapter.updateData(dynamicList);
         wrapperAdapter.notifyDataSetChanged();
@@ -348,7 +378,8 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_LOGIN) {
-                dynamicPresent.pullToRefreshData();
+                currPage = 1;
+                contestDynamicPresent.getContestDynamics(contestId,currPage);
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
 
                 DynamicDetailByIdActivity.startResultById(ContestDynamicFragment.this, invokeDynamicBean.id);

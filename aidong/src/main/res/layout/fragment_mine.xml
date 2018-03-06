@@ -200,6 +200,7 @@
                                     android:layout_marginLeft="5dp"
                                     android:gravity="center"
                                     android:text="0"
+                                    android:singleLine="true"
                                     android:textColor="@color/c3"
                                     android:textSize="@dimen/length22" />
                             </LinearLayout>
@@ -247,7 +248,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="visible"
                 app:divider_visible="true"
-                app:img_tag="@drawable/mine_love_coin"
+                app:img_tag="@drawable/mine_order"
                 app:txt_name="我的订单" />
 
             <com.leyuan.aidong.widget.AidongMineItem
@@ -263,14 +264,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_visible="true"
-                app:img_tag="@drawable/mine_love_sport_timing"
-                app:txt_name="爱动时刻" />
+                app:img_tag="@drawable/mine_private"
+                app:txt_name="私人定制" />
 
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:img_tag="@drawable/mine_shopping_address"
+                android:layout_marginTop="@dimen/pref_10dp"
                 app:txt_name="收货地址" />
 
             <com.leyuan.aidong.widget.AidongMineItem
@@ -287,7 +289,6 @@
                 android:id="@+id/item_after_sale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pref_10dp"
                 app:divider_visible="true"
                 app:img_tag="@drawable/mine_after_sale"
                 app:txt_name="售后/退款" />

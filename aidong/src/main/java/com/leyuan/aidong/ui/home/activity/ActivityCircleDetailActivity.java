@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.exoplayer.util.Util;
+import com.iknow.android.TrimmerActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
@@ -30,6 +31,7 @@ import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -49,6 +51,8 @@ import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -97,6 +101,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
     ActivityCircleHeaderView headView;
     private CampaignDetailBean campaignDetailBean;
     private String selectedCount;
+    private ArrayList<BaseMedia> selectedMedia;
 
 
     @Override
@@ -206,9 +211,15 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 finish();
                 break;
             case R.id.img_right:
-                if(campaignDetailBean != null){
-                    sharePopupWindow.showAtBottom("我分享了精彩活动： "+campaignDetailBean.getName()+",快来围观吧", campaignDetailBean.getIntroduce(),
-                           campaignDetailBean.getImage()!=null?campaignDetailBean.getImage().get(0):null, ConstantUrl.URL_SHARE_DYNAMIC );
+                if (campaignDetailBean != null) {
+
+                    String image = "";
+                    if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()) {
+                        image = campaignDetailBean.getImage().get(0);
+                    }
+
+                    sharePopupWindow.showAtBottom(campaignDetailBean.getName() + Constant.I_DONG_FITNESS, campaignDetailBean.getIntroduce(),
+                            image, ConstantUrl.URL_SHARE_CAMPAIGN + campaignDetailBean.getCampaignId());
                 }
 
 
@@ -234,7 +245,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 }
                 break;
             case txt_share:
-                if(campaignDetailBean != null){
+                if (campaignDetailBean != null) {
 
                 }
                 sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
@@ -298,7 +309,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     }
                 }
 
-                if(!hasSku){
+                if (!hasSku) {
                     txt_appoint_immediately.setText(R.string.campaign_status_end);
                 }
 
@@ -383,7 +394,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 dynamicPresent.pullToRefreshRelativeDynamics(type, id);
 
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
-                DynamicDetailByIdActivity.startResultById(ActivityCircleDetailActivity.this,invokeDynamicBean.id);
+                DynamicDetailByIdActivity.startResultById(ActivityCircleDetailActivity.this, invokeDynamicBean.id);
 
 //                startActivityForResult(new Intent(this, DynamicDetailActivity.class)
 //                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
@@ -395,10 +406,24 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 dynamicList.add(clickPosition, dynamicBean);
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
-            } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
+            } else if (requestCode == REQUEST_SELECT_PHOTO) {
                 PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
                         Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
 
+            } else if (requestCode == REQUEST_SELECT_VIDEO) {
+                selectedMedia = Boxing.getResult(data);
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                }
+
+            } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
+                DialogUtils.showDialog(this, "", true);
+                Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
+                    PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                            selectedMedia, REQUEST_PUBLISH_DYNAMIC);
+                }
             }
         } else if (resultCode == DynamicDetailByIdActivity.RESULT_DELETE) {
             dynamicList.remove(clickPosition);
@@ -426,14 +451,13 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
     }
 
 
-
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
         public void onBackgroundClick(int position) {
             ActivityCircleDetailActivity.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                DynamicDetailByIdActivity.startResultById(ActivityCircleDetailActivity.this,dynamicList.get(position).id);
+                DynamicDetailByIdActivity.startResultById(ActivityCircleDetailActivity.this, dynamicList.get(position).id);
 
 
 //                startActivityForResult(new Intent(ActivityCircleDetailActivity.this, DynamicDetailActivity.class)
@@ -491,7 +515,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         public void onCommentListClick(DynamicBean dynamicBean, int position, CommentBean item) {
             ActivityCircleDetailActivity.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                DynamicDetailByIdActivity.startResultById(ActivityCircleDetailActivity.this,dynamicBean.id);
+                DynamicDetailByIdActivity.startResultById(ActivityCircleDetailActivity.this, dynamicBean.id);
 
 
 //                startActivityForResult(new Intent(ActivityCircleDetailActivity.this,
@@ -510,7 +534,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
             ActivityCircleDetailActivity.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
 
-                DynamicDetailByIdActivity.startResultById(ActivityCircleDetailActivity.this,dynamicBean.id);
+                DynamicDetailByIdActivity.startResultById(ActivityCircleDetailActivity.this, dynamicBean.id);
 
 //                startActivityForResult(new Intent(ActivityCircleDetailActivity.this, DynamicDetailActivity.class)
 //                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
@@ -528,6 +552,8 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
             } else {
                 cover = dynamic.videos.cover;
             }
+
+
             sharePopupWindow.showAtBottom("我分享了" + dynamic.publisher.getName() + "的动态，速速围观", dynamic.content,
                     cover, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
         }

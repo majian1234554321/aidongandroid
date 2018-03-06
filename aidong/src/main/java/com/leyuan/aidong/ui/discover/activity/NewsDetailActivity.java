@@ -33,14 +33,15 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
     private SharePopupWindow sharePopupWindow;
     private RichWebView webView;
 
-    @Deprecated
-    private static void start(Context context, String title, String date, String body) {
-        Intent starter = new Intent(context, NewsDetailActivity.class);
-        starter.putExtra("title", title);
-        starter.putExtra("date", date);
-        starter.putExtra("body", body);
-        context.startActivity(starter);
-    }
+//    @Deprecated
+//    private static void start(Context context, String title,String subtitle, String date, String body) {
+//        Intent starter = new Intent(context, NewsDetailActivity.class);
+//        starter.putExtra("title", title);
+//        starter.putExtra("date", date);
+//        starter.putExtra("body", body);
+//        starter.putExtra("subtitle", subtitle);
+//        context.startActivity(starter);
+//    }
 
     public static void start(Context context, NewsBean bean) {
         Intent starter = new Intent(context, NewsDetailActivity.class);
@@ -69,6 +70,7 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivShare = (ImageView) findViewById(R.id.iv_share);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
+        TextView txt_title = (TextView) findViewById(R.id.txt_title);
         TextView tvDate = (TextView) findViewById(R.id.tv_date);
 
         webView = (RichWebView)findViewById(R.id.web_view);
@@ -79,6 +81,10 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
 
             Logger.i("RichText"," body = " + body);
             webView.setRichText(body);
+            txt_title.setText(bean.getTitleAll());
+            if(TextUtils.isEmpty(date)){
+                tvDate.setVisibility(View.GONE);
+            }
 //            RichText.from(body).placeHolder(R.drawable.place_holder_logo)
 //                    .error(R.drawable.place_holder_logo).into(tvNews);
         }

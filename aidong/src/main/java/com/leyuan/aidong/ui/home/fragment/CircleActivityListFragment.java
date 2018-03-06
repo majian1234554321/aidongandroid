@@ -51,6 +51,7 @@ public class CircleActivityListFragment extends BaseFragment implements Campaign
         campaignPresent = new CampaignPresentImpl(getActivity(),this);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
+
         initSwitcherLayout();
         campaignPresent.commonLoadData(switcherLayout,null);
     }

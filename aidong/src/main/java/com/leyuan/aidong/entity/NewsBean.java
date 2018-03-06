@@ -24,6 +24,21 @@ public class NewsBean implements Serializable{
     @SerializedName("published_at")
     private String datetime;
 
+    private String titleAll;
+
+    public NewsBean(String title, String body, String cover, String datetime, String titleAll, String id) {
+        this.title = title;
+        this.body = body;
+        this.cover = cover;
+        this.datetime = datetime;
+        this.titleAll = titleAll;
+        this.id = id;
+    }
+
+    public String getTitleAll() {
+        return titleAll;
+    }
+
     public String getId() {
         return id;
     }

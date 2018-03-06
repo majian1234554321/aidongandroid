@@ -25,7 +25,7 @@ public class CampaignDetailBean implements Parcelable {
     private String market_price;            //活动指导价
     private String entry_start_time;       //报名开始时间
     private String entry_end_time;         //报名截至时间
-    private List<UserBean> appicant;        //报名的人
+    private List<UserBean> appointed;        //报名的人
 
     private String status = "";
     private CoordinateBean coordinate;
@@ -41,6 +41,7 @@ public class CampaignDetailBean implements Parcelable {
 
     public GoodsSpecBean spec;//规格
     public boolean followed;
+    public int follows_count;
 
 
 
@@ -181,11 +182,11 @@ public class CampaignDetailBean implements Parcelable {
     }
 
     public List<UserBean> getApplicant() {
-        return appicant;
+        return appointed;
     }
 
     public void setApplicant(ArrayList<UserBean> applicant) {
-        this.appicant = applicant;
+        this.appointed = applicant;
     }
 
     public String getCreated_at() {
@@ -249,7 +250,7 @@ public class CampaignDetailBean implements Parcelable {
         dest.writeString(this.market_price);
         dest.writeString(this.entry_start_time);
         dest.writeString(this.entry_end_time);
-        dest.writeTypedList(this.appicant);
+        dest.writeTypedList(this.appointed);
         dest.writeString(this.status);
         dest.writeParcelable(this.coordinate, flags);
         dest.writeString(this.view_count);
@@ -259,6 +260,7 @@ public class CampaignDetailBean implements Parcelable {
         dest.writeString(this.skucode);
         dest.writeString(this.amount);
         dest.writeString(this.skuPrice);
+        dest.writeInt(this.follows_count);
     }
 
     public CampaignDetailBean() {
@@ -279,7 +281,7 @@ public class CampaignDetailBean implements Parcelable {
         this.market_price = in.readString();
         this.entry_start_time = in.readString();
         this.entry_end_time = in.readString();
-        this.appicant = in.createTypedArrayList(UserBean.CREATOR);
+        this.appointed = in.createTypedArrayList(UserBean.CREATOR);
         this.status = in.readString();
         this.coordinate = in.readParcelable(CoordinateBean.class.getClassLoader());
         this.view_count = in.readString();
@@ -289,6 +291,7 @@ public class CampaignDetailBean implements Parcelable {
         this.skucode = in.readString();
         this.amount = in.readString();
         this.skuPrice = in.readString();
+        this.follows_count = in.readInt();
     }
 
     public static final Creator<CampaignDetailBean> CREATOR = new Creator<CampaignDetailBean>() {

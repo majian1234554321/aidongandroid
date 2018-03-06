@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.iknow.android.TrimmerActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.UserInfoPhotoAdapter;
 import com.leyuan.aidong.entity.BaseBean;
@@ -32,6 +33,7 @@ import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.App;
@@ -47,8 +49,10 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserInfoActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -106,6 +110,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private FragmentPagerItemAdapter adapter;
     private boolean needRefreshFragment = false;
     private String contact;
+    private ArrayList<BaseMedia> selectedMedia;
 
     public static void start(Context context, String userId) {
         Intent starter = new Intent(context, UserInfoActivity.class);
@@ -405,7 +410,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             if (requestCode == Constant.REQUEST_LOGIN) {
                 isSelf = isSelf(userId);
                 userInfoPresent.getUserInfo(switcherLayout, userId);
-            } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
+            } else if (requestCode == REQUEST_SELECT_PHOTO) {
                 PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
                         Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
             } else if (requestCode == REQUEST_PUBLISH_DYNAMIC) {
@@ -419,6 +424,20 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             } else if (requestCode == REQUEST_UPDATE_INFO) {
                 needRefreshFragment = true;
                 userInfoPresent.getUserInfo(userId);
+            } else if (requestCode == REQUEST_SELECT_VIDEO) {
+                selectedMedia = Boxing.getResult(data);
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                }
+
+            } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
+                DialogUtils.showDialog(this, "", true);
+                Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
+                    PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                            selectedMedia, REQUEST_PUBLISH_DYNAMIC);
+                }
             }
         }
     }

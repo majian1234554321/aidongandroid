@@ -111,6 +111,13 @@ public class ContestQuarterFinalEnrolActivity extends BaseActivity implements On
         coursePresent = new ContestPresentImpl(this);
         coursePresent.setContestSchedulesView(this);
         coursePresent.getContestSchedules(contestId, currPage);
+
+        imgLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

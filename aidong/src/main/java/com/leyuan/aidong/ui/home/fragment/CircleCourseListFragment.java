@@ -12,13 +12,16 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -165,6 +168,13 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
 
     @Override
     public void onCourseAttentionClick(String id, int position, boolean followed) {
+
+        if(!App.getInstance().isLogin()){
+            UiManager.activityJump(getActivity(), LoginActivity.class);
+            return;
+        }
+
+
         if (followed) {
             followPresent.cancelFollow(id, Constant.COURSE);
         } else {

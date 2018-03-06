@@ -114,7 +114,9 @@ public class Constant {
     public static final String CONTEST = "contest";
     public static final String FOLLOW = "follow";
     public static final int REQUEST_VIDEO_TRIMMER = 302;
-
+    public static final int UPLOAD_VIDEO_MAX_DURATION = 61 * 1000;
+    public static final int UPLOAD_VIDEO_MIN_DURATION = 4 * 1000;
+    public static final int CAMERA_VIDEO_MAX_DURATION = 60;
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

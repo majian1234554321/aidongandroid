@@ -7,6 +7,7 @@ import com.leyuan.aidong.entity.data.ContestData;
 import com.leyuan.aidong.entity.data.ContestEnrolRecordData;
 import com.leyuan.aidong.entity.data.ContestInfoData;
 import com.leyuan.aidong.entity.data.ContestSchedulesData;
+import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.RankingData;
 import com.leyuan.aidong.entity.data.RegisterData;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
@@ -16,6 +17,7 @@ import com.leyuan.aidong.ui.mvp.view.ContestHomeView;
 import com.leyuan.aidong.ui.mvp.view.ContestInfoView;
 import com.leyuan.aidong.ui.mvp.view.ContestRankingView;
 import com.leyuan.aidong.ui.mvp.view.ContestSchedulesView;
+import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 
 /**
  * Created by user on 2018/2/23.
@@ -30,6 +32,7 @@ public class ContestPresentImpl {
     private ContestEnrolView contestEnrolView;
     private ContestRankingView contestRankingView;
     private ContestInfoView contestInfoView;
+    private SportCircleFragmentView contestDynamicView;
 
     public ContestPresentImpl(Context context) {
         this.context = context;
@@ -54,6 +57,10 @@ public class ContestPresentImpl {
 
     public void setContestInfoView(ContestInfoView contestInfoView) {
         this.contestInfoView = contestInfoView;
+    }
+
+    public void setContestDynamicView(SportCircleFragmentView contestDynamicView) {
+        this.contestDynamicView = contestDynamicView;
     }
 
     public void getContestSchedules(String id, int page) {
@@ -238,6 +245,24 @@ public class ContestPresentImpl {
                 super.onError(e);
             }
         }, id);
+    }
+
+    public void getContestDynamics(String id, int page) {
+
+        contestModel.getContestDynamics(new ProgressSubscriber<DynamicsData>(context) {
+            @Override
+            public void onNext(DynamicsData dynamicsData) {
+                if (contestDynamicView != null) {
+                    contestDynamicView.updateRecyclerView(dynamicsData.getDynamic());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+        }, id, page);
+
     }
 
 }
