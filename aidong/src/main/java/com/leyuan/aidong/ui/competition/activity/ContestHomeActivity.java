@@ -14,28 +14,44 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.exoplayer.util.Util;
+import com.iknow.android.TrimmerActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.entity.campaign.ContestBean;
+import com.leyuan.aidong.module.photopicker.boxing.Boxing;
+import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.ContestEnrolView;
 import com.leyuan.aidong.ui.mvp.view.ContestHomeView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
+import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.leyuan.aidong.R.id.img_post_or_enrol;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
 /**
  * Created by user on 2018/2/6.
  */
 
-public class ContestHomeActivity extends BaseActivity implements View.OnClickListener, ContestHomeView {
+public class ContestHomeActivity extends BaseActivity implements View.OnClickListener, ContestHomeView, ContestEnrolView {
 
 
     private RelativeLayout relTitle;
@@ -57,6 +73,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     private ContestBean contest;
     private String invitationCode;
     private SharePopupWindow sharePopupWindow;
+    private ArrayList<BaseMedia> selectedMedia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +103,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         }
         contestPresent = new ContestPresentImpl(this);
         contestPresent.setContestHomeView(this);
+        contestPresent.setContestEnrolView(this);
         contestPresent.getContestDetail(contestId);
 
 
@@ -138,7 +156,13 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 if (!App.getInstance().isLogin()) {
                     UiManager.activityJump(this, LoginActivity.class);
                 } else if ("preliminary".equals(contest.status)) {
-                    ContestEnrolmentInfoActivity.start(this, contestId, campaignBean.name, campaignBean.start, contest);
+                    if(contest.joined){
+                        BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
+                        Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
+                    }else {
+                        ContestEnrolmentInfoActivity.start(this, contestId, campaignBean.name, campaignBean.start, contest);
+                    }
+
                 } else if ("semi_finals".equals(contest.status)) {
                     if (contest.joined) {
                         //已参加，有复赛资格
@@ -237,5 +261,67 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         } else {
             ToastGlobal.showLongConsecutive("无效的邀请码");
         }
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_SELECT_VIDEO) {
+                selectedMedia = Boxing.getResult(data);
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                }
+
+            } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
+                DialogUtils.showDialog(this, "", true);
+                Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
+                if (selectedMedia != null && selectedMedia.size() > 0) {
+
+                    selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
+
+                    uploadVideo();
+
+
+                }
+            }
+        }
+    }
+
+    private void uploadVideo() {
+
+        Logger.i("contest video ", "uploadVideo");
+        UploadToQiNiuManager.getInstance().uploadMediaVideo(selectedMedia, new IQiNiuCallback() {
+            @Override
+            public void onSuccess(List<String> urls) {
+                Logger.i("contest video ", "uploadVideo  onSuccess urls .size = " + urls.size());
+
+                if (urls != null && urls.size() > 0){
+                    DialogUtils.showDialog(ContestHomeActivity.this,"",true);
+                    contestPresent.postVideo(contestId, urls.get(0));
+                }
+
+
+            }
+
+            @Override
+            public void onFail() {
+                dismissProgressDialog();
+                ToastGlobal.showLong("上传失败");
+            }
+        });
+    }
+
+    @Override
+    public void onContestEnrolResult(BaseBean baseBean) {
+        DialogUtils.dismissDialog();
+    }
+
+    @Override
+    public void onPostVideoResult(BaseBean baseBean) {
+        DialogUtils.dismissDialog();
+        ToastGlobal.showLong("视频上传成功");
     }
 }

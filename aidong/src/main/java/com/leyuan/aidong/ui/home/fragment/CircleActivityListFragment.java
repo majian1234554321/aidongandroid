@@ -48,21 +48,26 @@ public class CircleActivityListFragment extends BaseFragment implements Campaign
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         campaignPresent = new CampaignPresentImpl(getActivity(),this);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
 
         initSwitcherLayout();
         campaignPresent.commonLoadData(switcherLayout,null);
+
     }
 
 
     private void initSwipeRefreshLayout(View view) {
+
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(this);
+
     }
 
     private void initSwitcherLayout() {
+
         switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
@@ -71,6 +76,7 @@ public class CircleActivityListFragment extends BaseFragment implements Campaign
 
             }
         });
+
     }
 
     private void initRecyclerView(View view) {

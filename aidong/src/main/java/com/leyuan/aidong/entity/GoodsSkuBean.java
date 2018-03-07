@@ -16,6 +16,7 @@ public class GoodsSkuBean {
     public String price;              //商品详情
     public VenuesBean gym;
     public int limit_amount;//限购数量
+    public String remark;
 
 
 

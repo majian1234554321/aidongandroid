@@ -67,7 +67,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
     private ImageView ivMinus;
     private TextView tvCount;
     private ImageView ivAdd;
-    private TextView txt_limit_number;
+    private TextView txt_limit_number,txt_spec_remark;
     private TextView tvConfirm;
     private TextView tvAdd;
     private LinearLayout buyLayout;
@@ -211,6 +211,9 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         tvCount = (TextView) view.findViewById(R.id.tv_count);
         ivAdd = (ImageView) view.findViewById(R.id.iv_add);
         txt_limit_number = (TextView) view.findViewById(R.id.txt_limit_number);
+        txt_spec_remark = (TextView) view.findViewById(R.id.txt_spec_remark);
+        txt_spec_remark.setVisibility(View.VISIBLE);
+
 
         tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
         tvAdd = (TextView) view.findViewById(R.id.tv_add_cart);
@@ -269,6 +272,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         if (limit > 0) {
             txt_limit_number.setText("(限购" + limit + "张)");
         }
+        txt_spec_remark.setText("");
     }
 
     private void setListener() {
@@ -393,6 +397,8 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         campaignDetailBean.skucode = line.code;
         campaignDetailBean.amount = tvCount.getText().toString().trim();
         campaignDetailBean.skuPrice = line.price;
+        campaignDetailBean.skuTime  = line.value.get(0)+" "+line.value.get(1);
+
         ConfirmOrderCampaignActivity.start(context,campaignDetailBean);
 
 
@@ -436,6 +442,8 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                 } else {
                     txt_limit_number.setText("");
                 }
+                txt_spec_remark.setText(line.remark);
+
 
                 tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count), stock));
                 tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);

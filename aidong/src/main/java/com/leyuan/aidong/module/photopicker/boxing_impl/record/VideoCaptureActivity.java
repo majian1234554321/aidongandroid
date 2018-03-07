@@ -169,6 +169,7 @@ public class VideoCaptureActivity extends Activity implements RecordingButtonInt
 
     @Override
     public void onSwitchCamera(boolean isFrontFacingSelected) {
+
         Intent intent = new Intent(VideoCaptureActivity.this, VideoCaptureActivity.class);
         intent.putExtras(getIntent().getExtras());      //Pass all the current intent parameters
         intent.putExtra(EXTRA_FRONTFACINGCAMERASELECTED, isFrontFacingSelected);

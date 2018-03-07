@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -21,58 +22,70 @@
             android:textColor="@color/white"
             android:textSize="17sp" />
 
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="私信"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+
         <ImageView
             android:id="@+id/iv_publish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_camera"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:padding="5dp"
+            android:src="@drawable/icon_camera"
             android:tint="@color/white"
-            android:visibility="gone"
-            android:layout_centerVertical="true"/>
+            android:visibility="gone" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_contact"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_contact"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:visibility="gone">-->
 
-        <TextView
-            android:id="@+id/tv_message"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="私信"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:background="@color/c3"
-            android:gravity="center" />
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/tv_message"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:text="私信"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textSize="15sp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textColor="@color/white"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:background="@color/c3"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:gravity="center" />&ndash;&gt;-->
 
-        <TextView
-            android:id="@+id/tv_call"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="打电话"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:background="@color/main_red"
-            android:gravity="center"/>
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_call"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/main_red"-->
+            <!--android:gravity="center"-->
+            <!--android:text="打电话"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="15sp" />-->
+    <!--</LinearLayout>-->
 
     <RelativeLayout
         android:id="@+id/rl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="50dp"
-        android:paddingTop="@dimen/height_top_bar"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingTop="@dimen/height_top_bar">
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -108,12 +121,12 @@
                                 android:id="@+id/tv_add_image"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="添加背景图,展示你的资料"
-                                android:textColor="@color/white"
-                                android:textSize="15sp"
+                                android:layout_centerInParent="true"
                                 android:drawablePadding="50dp"
                                 android:drawableTop="@drawable/icon_add_photo"
-                                android:layout_centerInParent="true"/>
+                                android:text="添加背景图,展示你的资料"
+                                android:textColor="@color/white"
+                                android:textSize="15sp" />
 
                         </RelativeLayout>
 
@@ -136,82 +149,103 @@
                             android:id="@+id/dv_avatar"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:layout_centerVertical="true" />
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/icon_avatar_default" />
 
-
-                        <RelativeLayout
-                            android:id="@+id/ll_name"
+                        <ImageView
+                            android:id="@+id/iv_gender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="25dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_alignBottom="@id/dv_avatar"
+                            android:layout_alignRight="@id/dv_avatar"
+                            android:layout_margin="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/icon_man"
+                            android:scaleType="centerCrop" />
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
                             android:layout_toRightOf="@id/dv_avatar"
-                            android:layout_toLeftOf="@+id/iv_follow_or_edit"
-                            android:orientation="horizontal"
-                            android:padding="1dp">
+                            android:layout_marginLeft="20dp"
+                            android:layout_centerVertical="true"
+
+                            >
+                            <RelativeLayout
+                                android:id="@+id/ll_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
+                                android:padding="1dp">
+
+                                <TextView
+                                    android:id="@+id/tv_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:includeFontPadding="false"
+                                    android:singleLine="true"
+                                    android:text="name"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+
+
+                                <ImageView
+                                    android:id="@+id/iv_coach_flag"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@id/tv_name"
+                                    android:background="@drawable/icon_coach"
+                                    android:scaleType="centerCrop"
+                                    android:visibility="gone" />
+
+                            </RelativeLayout>
 
                             <TextView
-                                android:id="@+id/tv_name"
+                                android:id="@+id/tv_attention_num"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="name"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="8dp"
                                 android:singleLine="true"
-                                android:textColor="@color/black"
-                                android:textSize="15sp"
-                                android:layout_centerVertical="true"
-                                android:includeFontPadding="false" />
+                                android:text="2.4"
+                                android:textColor="@color/c9"
+                                android:textSize="15sp" />
 
-                            <ImageView
-                                android:id="@+id/iv_gender"
+
+                            <TextView
+                                android:id="@+id/tv_signature"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/icon_man"
-                                android:scaleType="centerCrop"
-                                android:layout_centerVertical="true"
-                                android:layout_toRightOf="@id/tv_name"
-                                android:layout_marginLeft="10dp" />
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="8dp"
+                                android:singleLine="true"
+                                android:text="2.4"
+                                android:textColor="@color/c9"
+                                android:textSize="15sp" />
 
-                            <ImageView
-                                android:id="@+id/iv_coach_flag"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/icon_coach"
-                                android:scaleType="centerCrop"
-                                android:layout_centerVertical="true"
-                                android:layout_toRightOf="@id/iv_gender"
-                                android:layout_marginLeft="10dp"
-                                android:visibility="gone"/>
+                        </LinearLayout>
 
-                        </RelativeLayout>
-
-                        <TextView
-                            android:id="@+id/tv_signature"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignLeft="@+id/ll_name"
-                            android:layout_below="@+id/ll_name"
-                            android:layout_marginTop="15dp"
-                            android:text="2.4"
-                            android:singleLine="true"
-                            android:layout_marginRight="20dp"
-                            android:layout_toLeftOf="@+id/iv_follow_or_edit"
-                            android:textColor="@color/c9"
-                            android:textSize="15sp" />
 
                         <ImageView
                             android:id="@+id/iv_follow_or_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:background="@drawable/icon_follow"
-                            android:visibility="visible"
-                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true">
-                        </ImageView>
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/icon_follow"
+                            android:orientation="vertical"
+                            android:visibility="visible"></ImageView>
                     </RelativeLayout>
-                    <include layout="@layout/inc_line"/>
+
+                    <include layout="@layout/inc_line" />
                 </LinearLayout>
 
                 <com.ogaclejapan.smarttablayout.SmartTabLayout
@@ -219,8 +253,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/height_top_bar"
                     android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
                     android:background="@color/white"
+                    android:gravity="center_horizontal"
                     app:stl_defaultTabTextColor="@color/gray_normal"
                     app:stl_defaultTabTextSize="17sp"
                     app:stl_dividerColor="@color/transparent"
@@ -228,8 +262,8 @@
                     app:stl_indicatorInterpolation="smart"
                     app:stl_indicatorThickness="3dp"
                     app:stl_indicatorWidth="auto"
-                    app:stl_underlineThickness="1dp"
-                    app:stl_underlineColor = "@color/transparent"/>
+                    app:stl_underlineColor="@color/transparent"
+                    app:stl_underlineThickness="1dp" />
 
             </android.support.design.widget.AppBarLayout>
 

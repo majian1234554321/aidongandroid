@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 
 /**
@@ -17,7 +18,7 @@ import com.leyuan.aidong.utils.DensityUtil;
  * Created by song on 2017/3/2.
  */
 public class RingProgressBar extends View {
-    private double max = 150;
+    private double max = Constant.CAMERA_VIDEO_PROGRESS_MAX_DURATION;
     private double progress = 0;
     private double angle;
     private Paint paint;

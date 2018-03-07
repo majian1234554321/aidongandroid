@@ -36,6 +36,12 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
         refreshLayout.setColorSchemeResources(R.color.black, R.color.red, R.color.orange, R.color.gray);
     }*/
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Logger.w("className", getClass().getSimpleName());
+    }
+
     /**
      * 广告跳转目标页
      *

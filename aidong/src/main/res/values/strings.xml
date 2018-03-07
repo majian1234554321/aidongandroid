@@ -403,4 +403,6 @@
     <string name="enrol_immediatly">立即报名</string>
     <string name="my_ranking">我的排名</string>
     <string name="search_more_person">搜索更多的人</string>
+    <string name="person_intro">个人介绍</string>
+    <string name="person_dynamic">个人动态</string>
 </resources>

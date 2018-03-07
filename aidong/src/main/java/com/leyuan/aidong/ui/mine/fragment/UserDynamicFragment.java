@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.exoplayer.util.Util;
@@ -31,6 +33,7 @@ import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
@@ -60,6 +63,9 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
+    private LinearLayout layoutPersonIntro;
+    private TextView txtCourseIntro;
+
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<DynamicBean> dynamicList = new ArrayList<>();
@@ -70,6 +76,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private int clickPosition;
     private DynamicBean invokeDynamicBean;
     private SharePopupWindow sharePopupWindow;
+    private String intro;
 
     public static UserDynamicFragment newInstance(String id) {
         Bundle args = new Bundle();
@@ -90,7 +97,17 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         Bundle bundle = getArguments();
         if (bundle != null) {
             useId = bundle.getString("userId");
+            intro = bundle.getString("intro");
         }
+
+        layoutPersonIntro = (LinearLayout) view.findViewById(R.id.layout_person_intro);
+        txtCourseIntro = (TextView) view.findViewById(R.id.txt_course_intro);
+        if(getActivity() instanceof UserInfoActivity && intro != null){
+            layoutPersonIntro.setVisibility(View.VISIBLE);
+            txtCourseIntro.setText(intro);
+
+        }
+
         userInfoPresent = new UserInfoPresentImpl(getContext(), this);
         initRecyclerView(view);
         userInfoPresent.pullToRefreshDynamic(useId);

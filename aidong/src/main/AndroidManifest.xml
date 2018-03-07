@@ -279,9 +279,9 @@
         <activity
             android:name=".ui.mine.activity.UserInfoActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.CoachInfoActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".ui.mine.activity.CoachInfoActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.mine.activity.UpdateAddressActivity"
             android:screenOrientation="portrait" />

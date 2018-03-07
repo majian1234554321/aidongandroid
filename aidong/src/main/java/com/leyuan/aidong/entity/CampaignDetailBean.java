@@ -42,7 +42,7 @@ public class CampaignDetailBean implements Parcelable {
     public GoodsSpecBean spec;//规格
     public boolean followed;
     public int follows_count;
-
+    public String skuTime;
 
 
     public String getViewCount() {
@@ -261,6 +261,7 @@ public class CampaignDetailBean implements Parcelable {
         dest.writeString(this.amount);
         dest.writeString(this.skuPrice);
         dest.writeInt(this.follows_count);
+        dest.writeString(skuTime);
     }
 
     public CampaignDetailBean() {
@@ -292,6 +293,7 @@ public class CampaignDetailBean implements Parcelable {
         this.amount = in.readString();
         this.skuPrice = in.readString();
         this.follows_count = in.readInt();
+        this.skuTime = in.readString();
     }
 
     public static final Creator<CampaignDetailBean> CREATOR = new Creator<CampaignDetailBean>() {

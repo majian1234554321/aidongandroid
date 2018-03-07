@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +53,6 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.TelephoneManager;
-import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -87,7 +85,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private SwitcherLayout switcherLayout;
     private RelativeLayout contentLayout;
     private RelativeLayout emptyPhotoLayout;
-    private TextView tvAddImage;
+    private TextView tvAddImage,tv_attention_num;
     private RecyclerView rvPhoto;
     private ImageView ivAvatar;
     private ImageView ivGender;
@@ -97,8 +95,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private ImageView ivFollowOrEdit;
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
-    private LinearLayout contactLayout;
-    private TextView tvCall;
+//    private LinearLayout contactLayout;
+//    private TextView tvCall;
     private TextView tvMessage;
 
     private String userId;
@@ -164,8 +162,10 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         ivFollowOrEdit = (ImageView) findViewById(R.id.iv_follow_or_edit);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_user);
-        contactLayout = (LinearLayout) findViewById(R.id.ll_contact);
-        tvCall = (TextView) findViewById(R.id.tv_call);
+//        contactLayout = (LinearLayout) findViewById(R.id.ll_contact);
+//        tvCall = (TextView) findViewById(R.id.tv_call);
+        tv_attention_num =  (TextView) findViewById(R.id.tv_attention_num);
+
         wallAdapter = new UserInfoPhotoAdapter(this, isSelf);
         rvPhoto.setAdapter(wallAdapter);
         rvPhoto.setLayoutManager(new GridLayoutManager(this, 4));
@@ -177,7 +177,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         ivPublish.setOnClickListener(this);
         tvAddImage.setOnClickListener(this);
         tvMessage.setOnClickListener(this);
-        tvCall.setOnClickListener(this);
+//        tvCall.setOnClickListener(this);
         ivFollowOrEdit.setOnClickListener(this);
         wallAdapter.setListener(this);
         ivAvatar.setOnClickListener(this);
@@ -194,6 +194,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private void setView() {
         GlideLoader.getInstance().displayRoundAvatarImage(userInfoData.getProfile().getAvatar(), ivAvatar);
         tvName.setText(userInfoData.getProfile().getName());
+        tv_attention_num.setText(userInfoData.getProfile().follows_count+"人关注");
+
         tvSignature.setText(TextUtils.isEmpty(userInfoData.getProfile().getSignature())
                 ? "这个人很懒，什么都没有留下" : userInfoData.getProfile().getSignature());
         ivGender.setBackgroundResource("0".equals(userInfoData.getProfile().getGender())
@@ -210,8 +212,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 emptyPhotoLayout.setVisibility(View.VISIBLE);
             }
             ivPublish.setVisibility(View.VISIBLE);
-            contactLayout.setVisibility(View.GONE);
+//            contactLayout.setVisibility(View.GONE);
             contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.dp_0));
+            tvMessage.setVisibility(View.GONE);
         } else {
             tvTitle.setText("TA的资料");
             ivFollowOrEdit.setBackgroundResource(userInfoData.getProfile().followed
@@ -220,10 +223,12 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 wallAdapter.setData(userInfoData.getPhotoWall());
             }
             ivPublish.setVisibility(View.GONE);
-            contactLayout.setVisibility(View.VISIBLE);
-            tvCall.setVisibility("Coach".equalsIgnoreCase(userInfoData.getProfile().getUserType())
-                    ? View.VISIBLE : View.GONE);
-            contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.pref_50dp));
+//            contactLayout.setVisibility(View.GONE);
+//            tvCall.setVisibility("Coach".equalsIgnoreCase(userInfoData.getProfile().getUserType())
+//                    ? View.VISIBLE : View.GONE);
+            contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.dp_0));
+//            contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.pref_50dp));
+            tvMessage.setVisibility(View.VISIBLE);
         }
     }
 
@@ -238,14 +243,18 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             FragmentPagerItems pages = new FragmentPagerItems(this);
             UserDynamicFragment dynamicFragment = new UserDynamicFragment();
             UserInfoFragment userInfoFragment = new UserInfoFragment();
-            pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
-                    new Bundler().putString("userId", userId).get()));
 
 
             if (Constant.COACH.equals(userInfoData.getProfile().getUserTypeByUserType())) {
+                pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
+                        new Bundler().putString("userId", userId).putString("intro","教练简介暂无") .get()));
+
                 CoachCourseFragment courseFragment = new CoachCourseFragment();
                 pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
                         new Bundler().putString("mobile", userInfoData.getProfile().mobile).get()));
+            }else {
+                pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
+                        new Bundler().putString("userId", userId).get()));
             }
 
 
@@ -301,13 +310,13 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
                 }
                 break;
-            case R.id.tv_call:
-                if (TextUtils.isEmpty(userInfoData.getProfile().getPhone())) {
-                    ToastGlobal.showLong("该教练没有录入电话号码");
-                    return;
-                }
-                showCallUpDialog(userInfoData.getProfile().getPhone());
-                break;
+//            case R.id.tv_call:
+//                if (TextUtils.isEmpty(userInfoData.getProfile().getPhone())) {
+//                    ToastGlobal.showLong("该教练没有录入电话号码");
+//                    return;
+//                }
+//                showCallUpDialog(userInfoData.getProfile().getPhone());
+//                break;
             default:
                 break;
         }
@@ -320,7 +329,6 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
     private void finishSetResult() {
-
 
 //        Logger.i("follow","finishSetResult follow = " +userInfoData.getProfile().followed);
         Intent intentResult = new Intent();

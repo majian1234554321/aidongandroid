@@ -90,6 +90,7 @@
             <RelativeLayout
                 android:id="@+id/layout_remark"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="80dp">
 
                 <TextView
@@ -109,6 +110,8 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="15dp"
                     android:hint="请输入需要备注的内容"
+                    android:gravity="center_vertical"
+                    android:background="@color/transparent"
                     android:paddingLeft="15dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"

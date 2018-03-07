@@ -140,6 +140,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
     }
 
     private void initData() {
+        findViewById(R.id.layout_remark).setVisibility(View.VISIBLE);
 
         DialogUtils.showDialog(this, "", false);
         totalPrice = FormatUtil.parseInt(course.amount) * FormatUtil.parseDouble(course.skuPrice);
@@ -151,7 +152,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         userCoach = App.getInstance().getUser();
 
         txtCourseName.setText(course.getName());
-        txtCoachName.setText(course.getStartTime() + "-" + course.getEndTime());
+        txtCoachName.setText(course.skuTime);
         if (course.getImage() != null && course.getImage().size() > 0) {
             GlideLoader.getInstance().displayImage(course.getImage().get(0), imgCourse);
         }
@@ -250,7 +251,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         @Override
         public void onSuccess(String code, Object object) {
             DialogUtils.dismissDialog();
-            LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
+            LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
 
             AppointCourseSuccessActivity.start(ConfirmOrderCampaignActivity.this, course.getStartTime(), true, null);
             Toast.makeText(ConfirmOrderCampaignActivity.this, "支付成功", Toast.LENGTH_LONG).show();
@@ -264,7 +265,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
             DialogUtils.dismissDialog();
 
-            LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL));
+            LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_FAILED));
 
             Toast.makeText(ConfirmOrderCampaignActivity.this, "支付失败", Toast.LENGTH_LONG).show();
 
@@ -276,7 +277,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         @Override
         public void onFree() {
             DialogUtils.dismissDialog();
-            LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
+            LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
             AppointCourseSuccessActivity.start(ConfirmOrderCampaignActivity.this, course.getStartTime(), true, null);
             Toast.makeText(ConfirmOrderCampaignActivity.this, "预约成功", Toast.LENGTH_LONG).show();
             finish();

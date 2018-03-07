@@ -1,12 +1,15 @@
 package com.leyuan.aidong.ui.home.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -60,6 +63,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewA
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +107,42 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
     private String selectedCount;
     private ArrayList<BaseMedia> selectedMedia;
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action == null) return;
+
+            switch (action) {
+
+                case Constant.BROADCAST_ACTION_LOGIN_SUCCESS:
+
+                    campaignPresent.getCampaignDetail(id);
+
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_CAMPAIGN_PAY_FAILED:
+                    finish();
+                    break;
+
+                case Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL:
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE:
+                    break;
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,7 +161,30 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
         dynamicPresent.pullToRefreshRelativeDynamics(type, id);
 
+        initListener();
 
+
+    }
+
+    private void initListener() {
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
+
+        filter.addAction(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_FAILED);
+
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL);
+
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE);
+
+
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL);
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }
 
     private void initView() {
@@ -139,6 +202,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
     }
 
     private void initSwipeRefreshLayout() {
+
 //        refreshLayout = (CustomRefreshLayout) findViewById(refreshLayout);
 //        switcherLayout = new SwitcherLayout(this, refreshLayout);
 //        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -441,6 +505,8 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
     @Override
     public void onDestroy() {
         super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        RichText.clear(this);
         sharePopupWindow.release();
     }
 
