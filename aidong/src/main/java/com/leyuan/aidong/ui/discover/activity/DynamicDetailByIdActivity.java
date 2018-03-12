@@ -27,6 +27,7 @@ import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicDetailAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
@@ -307,15 +308,15 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
             if (replyUser != null) {
                 CMDMessageManager.sendCMDMessage(replyUser.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                        , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
                 if (!TextUtils.equals(replyUser.getId(), dynamic.publisher.getId())) {
                     CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                            , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                            , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
                 }
                 replyUser = null;
             } else {
                 CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                        , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
             }
 
         } else {
@@ -518,7 +519,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             headerAdapter.notifyItemChanged(position);
 
             CMDMessageManager.sendCMDMessage(dynamicBean.publisher.getId(), App.getInstance().getUser().getAvatar(),
-                    App.getInstance().getUser().getName(), dynamicBean.id, null, dynamicBean.getUnifromCover(), 1, null,
+                    App.getInstance().getUser().getName(), dynamicBean.id, null, dynamicBean.getUnifromCover(), CircleDynamicBean.ActionType.PARSE, null,
                     dynamicBean.getDynamicTypeInteger(), null);
 
             //返回新增点赞 刷新动态列表

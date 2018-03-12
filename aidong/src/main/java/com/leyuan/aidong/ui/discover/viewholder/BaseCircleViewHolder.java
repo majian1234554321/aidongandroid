@@ -335,8 +335,12 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
 
         for (final UserBean user : users) {
-            Pattern pattern = Pattern.compile(user.getName());
+            Pattern pattern = Pattern.compile(user.getName().replaceAll("\\*",""));
             Matcher matcher = pattern.matcher(text);
+
+//            String quote = Pattern.quote(user.getName());
+//            return Pattern.matches(quote, text);
+
             while (matcher.find()) {
                 ClickableSpan clickableSpan = new ClickableSpan() {
                     @Override

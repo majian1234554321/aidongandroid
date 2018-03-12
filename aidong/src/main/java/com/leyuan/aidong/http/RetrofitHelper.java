@@ -50,8 +50,18 @@ public class RetrofitHelper {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder builder = chain.request().newBuilder();
-                        if (App.getInstance().isLogin() && App.getInstance().getToken() != null) {
-                            builder.addHeader("token", App.getInstance().getToken());
+//                        if (App.getInstance().isLogin() && App.getInstance().getToken() != null) {
+//                            builder.addHeader("token", App.getInstance().getToken());
+//
+//                            if (App.getInstance().getUser().getMobile() != null)
+//                                builder.addHeader("mobile", App.getInstance().getUser().getMobile());
+//                        }
+
+                        if (App.getInstance().isLogin()) {
+                            if (App.getInstance().getToken() != null)
+                                builder.addHeader("token", App.getInstance().getToken());
+                            if (App.getInstance().getUser().getMobile() != null)
+                                builder.addHeader("mobile", App.getInstance().getUser().getMobile());
                         }
                         builder.addHeader("city", URLEncoder.encode(App.getInstance().getSelectedCity(), "UTF-8"));
                         builder.addHeader("lat", String.valueOf(App.lat));

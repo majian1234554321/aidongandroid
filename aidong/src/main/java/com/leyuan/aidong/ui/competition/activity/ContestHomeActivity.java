@@ -257,9 +257,9 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onCheckInvitationCodeResult(boolean registed) {
         if (registed) {
-            ContestSemiFinalEnrolmentActivity.start(this, contestId, campaignBean.name, campaignBean.start, contest, invitationCode);
+            ContestQuarterFinalEnrolActivity.start(this, contestId);
         } else {
-            ToastGlobal.showLongConsecutive("无效的邀请码");
+            ContestSemiFinalEnrolmentActivity.start(this, contestId, campaignBean.name, campaignBean.start, contest, invitationCode);
         }
     }
 

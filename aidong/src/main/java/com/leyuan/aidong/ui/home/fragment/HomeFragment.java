@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.leyuan.aidong.ui.discover.fragment.CircleFragment;
 import com.leyuan.aidong.ui.home.activity.LocationActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -60,10 +62,35 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            tvLocation.setText(App.getInstance().getSelectedCity());
+
+            if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE)) {
+
+                tabLayout.getTabAt(2).findViewById(R.id.tv_tab_tip).setVisibility(View.VISIBLE);
+
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
+
+                tabLayout.getTabAt(2).findViewById(R.id.tv_tab_tip).setVisibility(View.GONE);
+
+            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
+
+                tabLayout.getTabAt(2).findViewById(R.id.tv_tab_tip).setVisibility(View.GONE);
+
+            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_LOGIN_SUCCESS)) {
+
+                tabLayout.getTabAt(2).findViewById(R.id.tv_tab_tip).setVisibility(App.getInstance().getCMDCirleDynamicBean() == null ||
+                        App.getInstance().getCMDCirleDynamicBean().isEmpty() ? View.GONE : View.VISIBLE);
+
+            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY))  {
+
+                tvLocation.setText(App.getInstance().getSelectedCity());
+
+            }
+
+
         }
     };
     private ArrayList<BaseMedia> selectedMedia;
+    private SmartTabLayout tabLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +103,11 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
+        filter.addAction(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE);
+        filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);
+        filter.addAction(Constant.BROADCAST_ACTION_EXIT_LOGIN);
+        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
+
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
     }
 
@@ -90,7 +122,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         tvLocation.setOnClickListener(this);
         ivSearch.setOnClickListener(this);
 
-        final SmartTabLayout tabLayout = (SmartTabLayout) view.findViewById(R.id.tab_layout);
+        tabLayout = (SmartTabLayout) view.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         tabLayout.setCustomTabView(this);
 
@@ -106,8 +138,8 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
             @Override
             public void onPageSelected(int position) {
                 //reset tip dot
-                View tip = tabLayout.getTabAt(position).findViewById(R.id.tv_tab_tip);
-                tip.setVisibility(View.GONE);
+//                View tip = tabLayout.getTabAt(position).findViewById(R.id.tv_tab_tip);
+//                tip.setVisibility(View.GONE);
 
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
@@ -143,12 +175,15 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
                     }
                     break;
                 case Constant.REQUEST_VIDEO_TRIMMER:
+
+
                     Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
                     selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
 
                     PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
                             selectedMedia, REQUEST_PUBLISH_DYNAMIC);
                     break;
+
                 case REQUEST_PUBLISH_DYNAMIC:
 
                     //有问题，要改
@@ -193,6 +228,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
     @Override
     public void onDestroy() {
         super.onDestroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(selectCityReceiver);
     }
 
     @Override
@@ -200,6 +236,8 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_home_text_with_notification, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         TextView tip = (TextView) tabView.findViewById(R.id.tv_tab_tip);
+        tip.setWidth(DensityUtil.dp2px(getActivity(),8));
+        tip.setHeight(DensityUtil.dp2px(getActivity(),8));
         tip.setVisibility(View.GONE);
 //        if(position == 0){
 //            text.setText(R.string.tab_sport_circle);
@@ -213,6 +251,10 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         text.setText(campaignTab[position]);
         if (position == 0) {
             text.setTypeface(Typeface.DEFAULT_BOLD);
+        }else if(position ==2){
+            tip.setVisibility(App.getInstance().getCMDCirleDynamicBean() == null ||
+                App.getInstance().getCMDCirleDynamicBean().isEmpty() ? View.GONE : View.VISIBLE);
+            tip.setText("");
         }
         allTabView.add(tabView);
         return tabView;

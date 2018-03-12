@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,11 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserDynamicFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
@@ -101,15 +104,20 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         }
 
         layoutPersonIntro = (LinearLayout) view.findViewById(R.id.layout_person_intro);
-        txtCourseIntro = (TextView) view.findViewById(R.id.txt_course_intro);
-        if(getActivity() instanceof UserInfoActivity && intro != null){
-            layoutPersonIntro.setVisibility(View.VISIBLE);
-            txtCourseIntro.setText(intro);
-
-        }
+//        if(getActivity() instanceof UserInfoActivity && !TextUtils.isEmpty(intro)){
+//
+//            layoutPersonIntro.setVisibility(View.VISIBLE);
+//
+//            txtCourseIntro.setText(intro);
+//
+//        }else {
+//            layoutPersonIntro.setVisibility(View.GONE);
+//        }
 
         userInfoPresent = new UserInfoPresentImpl(getContext(), this);
         initRecyclerView(view);
+
+        DialogUtils.showDialog(getActivity(), "", true);
         userInfoPresent.pullToRefreshDynamic(useId);
     }
 
@@ -122,11 +130,11 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private void initRecyclerView(View view) {
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_dynamic);
-        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
+        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         dynamicList = new ArrayList<>();
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext());
         builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
-                .addType(MultiImageViewHolder.class,DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
+                .addType(MultiImageViewHolder.class, DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
                 .showLikeAndCommentLayout(true)
                 .setDynamicCallback(new DynamicCallback());
         circleDynamicAdapter = builder.build();
@@ -141,6 +149,15 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
                 refreshDynamic();
             }
         });
+
+
+        if (getActivity() instanceof UserInfoActivity && !TextUtils.isEmpty(intro)) {
+
+            View headView = View.inflate(getActivity(), R.layout.layout_person_intro, null);
+            txtCourseIntro = (TextView) headView.findViewById(R.id.txt_course_intro);
+            txtCourseIntro.setText(intro);
+            RecyclerViewUtils.setHeaderView(recyclerView, headView);
+        }
     }
 
     public void refreshDynamic() {
@@ -163,6 +180,8 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     @Override
     public void updateDynamic(List<DynamicBean> dynamicBeanList) {
+        DialogUtils.dismissDialog();
+
         switcherLayout.showContentLayout();
         if (refreshLayout.isRefreshing()) {
             dynamicList.clear();
@@ -180,6 +199,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     @Override
     public void showEmptyLayout() {
+        DialogUtils.dismissDialog();
         if (refreshLayout.isRefreshing()) {
             dynamicList.clear();
             refreshLayout.setRefreshing(false);
@@ -262,7 +282,6 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
                 DynamicDetailByIdActivity.startResultById(UserDynamicFragment.this, dynamic.id);
 
 
-
 //                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
 //                        .putExtra("dynamic", dynamic)
 //                        .putExtra("replyComment",item), REQUEST_REFRESH_DYNAMIC);
@@ -321,7 +340,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
                 //更新动态详情
                 DynamicBean dynamicBean = data.getParcelableExtra("dynamic");
                 dynamicList.remove(clickPosition);
-                dynamicList.add(clickPosition,dynamicBean);
+                dynamicList.add(clickPosition, dynamicBean);
                 circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
             }

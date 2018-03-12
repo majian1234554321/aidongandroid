@@ -10,6 +10,7 @@ import com.leyuan.aidong.entity.data.FollowCampaignData;
 import com.leyuan.aidong.entity.data.FollowCourseData;
 import com.leyuan.aidong.entity.data.FollowData;
 import com.leyuan.aidong.entity.data.FollowUserData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -75,7 +76,7 @@ public class FollowPresentImpl implements FollowPresent {
 
 
     public void getUserFollow(String type, int page) {
-        followModel.getUserFollow(new ProgressSubscriber<FollowUserData>(context) {
+        followModel.getUserFollow(new BaseSubscriber<FollowUserData>(context) {
             @Override
             public void onNext(FollowUserData followUserData) {
                 if (userInfoView != null) {
@@ -85,7 +86,11 @@ public class FollowPresentImpl implements FollowPresent {
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
+//                super.onError(e);
+
+                if (userInfoView != null) {
+                    userInfoView.onGetUserData(null);
+                }
             }
         }, type, page);
     }

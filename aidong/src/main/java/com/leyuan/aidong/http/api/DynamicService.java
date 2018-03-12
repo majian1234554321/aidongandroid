@@ -42,7 +42,7 @@ public interface DynamicService {
 
 
     @POST("dynamics")
-    Observable<BaseBean<DiscoverData>> postImageDynamic(@Body RequestBody requestBody);
+    Observable<BaseBean<DynamicsData>> postImageDynamic(@Body RequestBody requestBody);
 
 
     @FormUrlEncoded

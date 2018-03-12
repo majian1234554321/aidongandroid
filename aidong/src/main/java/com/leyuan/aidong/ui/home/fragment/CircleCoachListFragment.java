@@ -161,8 +161,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
 
-            if (clickedFollowPosition < data.size() - 1) {
-
+            if (clickedFollowPosition < data.size()) {
                 data.get(clickedFollowPosition).followed = true;
                 adapter.notifyItemChanged(clickedFollowPosition);
 //                wrapperAdapter.notifyDataSetChanged();
@@ -180,7 +179,6 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
 
             if (clickedFollowPosition < data.size()) {
                 Logger.i("Myattention  cancelFollowResult");
-
 
                 data.get(clickedFollowPosition).followed = false;
                 adapter.notifyItemChanged(clickedFollowPosition);

@@ -17,6 +17,10 @@ public class CompetitionAreaBean implements Parcelable {
         city = in.createStringArray();
     }
 
+    public CompetitionAreaBean(String name) {
+        this.name = name;
+    }
+
     public static final Creator<CompetitionAreaBean> CREATOR = new Creator<CompetitionAreaBean>() {
         @Override
         public CompetitionAreaBean createFromParcel(Parcel in) {

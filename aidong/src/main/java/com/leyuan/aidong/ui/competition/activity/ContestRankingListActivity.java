@@ -18,7 +18,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.campaign.CompetitionAreaBean;
 import com.leyuan.aidong.entity.campaign.ContestBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.competition.fragment.ContestRankingFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -81,6 +83,17 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
         super.onCreate(savedInstanceState);
 
         contest = getIntent().getParcelableExtra("contest");
+
+        CompetitionAreaBean[] beans = new CompetitionAreaBean[contest.division_info.length + 1];
+        for (int i = 0; i < beans.length; i++) {
+            if (i == 0) {
+                beans[i] = new CompetitionAreaBean("全国");
+            } else {
+                beans[i] = contest.division_info[i - 1];
+            }
+        }
+
+        contest.division_info = beans;
         setContentView(R.layout.activity_contest_ranking_list);
 
         ivBack = (ImageView) findViewById(R.id.iv_back);
@@ -110,7 +123,12 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
 
         initFragments();
 
+        if (App.getInstance().isLogin())
+            txtGroup.setText(App.getInstance().getUser().getGender() == 0 ? "男子组" : "女子组");
+
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -121,6 +139,7 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
 
             case R.id.txt_mass_election:
                 rankType = "preliminary";
+                tabLayout.setVisibility(View.VISIBLE);
                 txtMassElection.setBackgroundResource(R.drawable.shape_simi_circle_orange_solid);
                 txtQuarterFinal.setBackgroundColor(transprentColor);
                 txtFinal.setBackgroundColor(transprentColor);
@@ -130,6 +149,7 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
                 break;
             case R.id.txt_quarter_final:
                 rankType = "semi_finals";
+                tabLayout.setVisibility(View.VISIBLE);
                 txtMassElection.setBackgroundColor(transprentColor);
                 txtQuarterFinal.setBackgroundResource(R.drawable.shape_simi_circle_orange_solid);
                 txtFinal.setBackgroundColor(transprentColor);
@@ -138,6 +158,7 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
 
             case R.id.txt_final:
                 rankType = "finals";
+                tabLayout.setVisibility(View.GONE);
 
                 txtMassElection.setBackgroundColor(transprentColor);
                 txtQuarterFinal.setBackgroundColor(transprentColor);
@@ -227,4 +248,8 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
         return tabView;
     }
 
+
+    public void setMyRankingVisible(int visible){
+        layout_my_ranking.setVisibility(visible);
+    }
 }

@@ -118,6 +118,7 @@ public class Constant {
     public static final int UPLOAD_VIDEO_MIN_DURATION = 4 * 1000;
     public static final int CAMERA_VIDEO_MAX_DURATION = 60;
     public static final int CAMERA_VIDEO_PROGRESS_MAX_DURATION = 600;
+    public static final int REQUEST_COURSE_DETAIL = 313;
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;
@@ -194,10 +195,17 @@ public class Constant {
     public static final String KDNOCCURTIME = "kDNOccurTime";
     public static final String KDNCONTENT = "kDNContent";
     public static final String KDNCONTENTURL = "kDNContentUrl";
+    public static final String kDNreplyUser = "kDNreplyUser";
+    public static final String kDAiteUser = "kDAiteUser";
+    public static final String kuser_name = "user_name";
+    public static final String kuser_id = "user_id";
+
     public static final String KDNCOMMENTTYPE = "kDNCommentType";
     public static final String KDNMSGID = "kDNMsgID";
     public static final String KDNCONTENTTYPE = "kDNContentType";
     public static final String KDNREPLYSITENICKNAME = "kDNreplySiteNickName";
+
+
     public static final String BROADCAST_ACTION_RECEIVER_CMD_MESSAGE = "broadcast_action_receiver_cmd_message";
     public static int MAN_GENDER = 0;
 

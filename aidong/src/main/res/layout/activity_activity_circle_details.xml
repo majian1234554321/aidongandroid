@@ -27,7 +27,7 @@
             android:id="@+id/layout_title"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            app:imgRight="@drawable/share"
+            app:imgRight="@drawable/icon_share"
             app:txtTitle="@string/details" />
 
 

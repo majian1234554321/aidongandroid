@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.data.DynamicsData;
 
 /**
  * 发表动态
@@ -8,5 +9,5 @@ import com.leyuan.aidong.entity.BaseBean;
  */
 public interface PublishDynamicActivityView {
 
-    void publishDynamicResult(BaseBean baseBean);
+    void publishDynamicResult(DynamicsData baseBean);
 }

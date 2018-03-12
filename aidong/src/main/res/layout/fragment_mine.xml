@@ -71,7 +71,7 @@
                     android:id="@+id/relativeLayout_my_logo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imageView_head"
@@ -87,7 +87,7 @@
                         android:layout_alignRight="@+id/imageView_head"
                         android:layout_margin="5dp"
                         android:src="@drawable/icon_girl"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
 
                     <LinearLayout

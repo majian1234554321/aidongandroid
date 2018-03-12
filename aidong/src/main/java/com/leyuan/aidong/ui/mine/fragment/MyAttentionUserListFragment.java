@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.MyAttentionUserListAdapter;
@@ -159,6 +160,9 @@ public class MyAttentionUserListFragment extends BaseFragment implements OnRefre
             refreshLayout.setRefreshing(false);
         }
         View view = View.inflate(getContext(), R.layout.empty_course, null);
+
+        TextView txt_type = (TextView) view.findViewById(R.id.txt_type);
+        txt_type.setText("暂无关注的人");
         CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
         refreshLayout.setProgressViewOffset(true, 50, 100);
         refreshLayout.setOnRefreshListener(this);

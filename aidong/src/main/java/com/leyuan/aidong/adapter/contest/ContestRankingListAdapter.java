@@ -41,6 +41,8 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
         GlideLoader.getInstance().displayCircleImage(user.avatar, holder.imgAvatar);
         holder.txtCoachName.setText(user.name);
         holder.txtIntro.setText(user.score + "分");
+        holder.txt_rank.setText(user.rank+"");
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,14 +76,16 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgAvatar;
         private TextView txtCoachName;
-        private TextView txtIntro;
+        private TextView txtIntro,txt_rank;
         private ImageButton btAttention;
 
         public ViewHolder(View view) {
             super(view);
+
             imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
             txtCoachName = (TextView) view.findViewById(R.id.txt_coach_name);
             txtIntro = (TextView) view.findViewById(R.id.txt_intro);
+            txt_rank = (TextView) view.findViewById(R.id.txt_rank);
             btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
         }
     }

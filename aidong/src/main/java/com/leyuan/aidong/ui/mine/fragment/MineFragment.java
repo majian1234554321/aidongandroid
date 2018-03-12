@@ -330,6 +330,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 //        textView_yyjrw.setText(mineInfoBean.getAppointing_count() + "");
 //        textView_dd.setText(mineInfoBean.getPaid_orders_count() + "");
 //        textView_ddjrw.setText(mineInfoBean.getUnpay_orders_count() + "");
-        textView_popularity.setText(mineInfoBean.getView_count());
+        textView_popularity.setText(mineInfoBean.dynamics_count+"");
     }
 }

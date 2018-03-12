@@ -13,6 +13,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
+        android:background="@color/c2"
         android:visibility="visible">
 
         <ImageView
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:background="@color/c2"
+
             android:orientation="vertical">
 
             <TextView

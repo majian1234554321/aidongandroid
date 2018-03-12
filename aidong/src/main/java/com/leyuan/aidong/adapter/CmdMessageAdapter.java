@@ -50,24 +50,47 @@ public class CmdMessageAdapter extends RecyclerView.Adapter<CmdMessageAdapter.Vi
 //        StringBuilder author = new StringBuilder();
         StringBuilder content = new StringBuilder();
 
-        if (bean.getCommentType() == CircleDynamicBean.ActionType.PARSE) {
-            content.append("赞了你的");
-            content.append(dynamicType);
-            holder.txtAuthor.setText(bean.getFromName());
-        } else {
-            //评论
-            holder.txtAuthor.setText(Html.fromHtml(bean.getFromName() + " <font color='#000000'>评论了</font> 你的" + dynamicType) );
-//          if(TextUtils.isEmpty(bean.getReplySiteNickname())){
-            content.append(bean.getContent());
-//            }
+        switch (bean.getCommentType()) {
+            case CircleDynamicBean.ActionType.COMMENT:
+                holder.txtAuthor.setText(Html.fromHtml(bean.getFromName() + " <font color='#000000'>评论了</font> 你的" + dynamicType));
+                content.append(bean.getContent());
+                break;
+            case CircleDynamicBean.ActionType.PARSE:
+                content.append("赞了你的");
+                content.append(dynamicType);
+                holder.txtAuthor.setText(bean.getFromName());
+                break;
+            case CircleDynamicBean.ActionType.AITER:
+                content.append("在动态中@了你,");
+                content.append(bean.getContent());
+                holder.txtAuthor.setText(bean.getFromName());
+                break;
+            case CircleDynamicBean.ActionType.REPLY:
+                content.append("回复了你的评论,");
+                content.append(bean.getContent());
+                holder.txtAuthor.setText(bean.getFromName());
+                break;
         }
+
+//        if (bean.getCommentType() == CircleDynamicBean.ActionType.PARSE) {
+//            content.append("赞了你的");
+//            content.append(dynamicType);
+//            holder.txtAuthor.setText(bean.getFromName());
+//        } else {
+//            //评论
+//            holder.txtAuthor.setText(Html.fromHtml(bean.getFromName() + " <font color='#000000'>评论了</font> 你的" + dynamicType));
+////          if(TextUtils.isEmpty(bean.getReplySiteNickname())){
+//            content.append(bean.getContent());
+////            }
+//        }
 
         //点赞
         holder.txtContent.setText(content.toString());
         holder.layout_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DynamicDetailByIdActivity.startById(context,bean.getDynamicId());
+
+                DynamicDetailByIdActivity.startById(context, bean.getDynamicId());
             }
         });
     }
@@ -103,7 +126,7 @@ public class CmdMessageAdapter extends RecyclerView.Adapter<CmdMessageAdapter.Vi
             txtTime = (TextView) view.findViewById(R.id.txt_time);
             imgCover = (ImageView) view.findViewById(R.id.img_cover);
             imgPlay = (ImageView) view.findViewById(R.id.img_play);
-            layout_root = (LinearLayout)view.findViewById(R.id.layout_root);
+            layout_root = (LinearLayout) view.findViewById(R.id.layout_root);
         }
     }
 }

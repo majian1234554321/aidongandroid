@@ -20,9 +20,9 @@
 
     <TextView
         android:id="@+id/tv_tab_tip"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:text="9"
+        android:layout_width="7dp"
+        android:layout_height="7dp"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="11sp"
         android:gravity="center"

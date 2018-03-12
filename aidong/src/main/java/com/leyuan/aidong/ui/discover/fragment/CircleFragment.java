@@ -22,6 +22,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
@@ -315,7 +316,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
 
             DynamicBean dynamic = dynamicList.get(position);
             CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(),
-                    App.getInstance().getUser().getName(), dynamic.id, null, dynamic.getUnifromCover(), 1, null,
+                    App.getInstance().getUser().getName(), dynamic.id, null, dynamic.getUnifromCover(), CircleDynamicBean.ActionType.PARSE, null,
                     dynamic.getDynamicTypeInteger(), null);
 
         } else {

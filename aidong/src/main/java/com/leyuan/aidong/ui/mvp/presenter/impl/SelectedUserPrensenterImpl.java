@@ -13,7 +13,6 @@ import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.SearchModelImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -44,15 +43,16 @@ public class SelectedUserPrensenterImpl {
                 if (followData != null && !followData.getFollow().isEmpty()) {
                     userBeanList = followData.getFollow();
                 }
+                switcherLayout.showContentLayout();
+                followFragment.onRefreshData(userBeanList);
 
-
-                Logger.i("commonLoadData","userBeanList == " +userBeanList);
-                if (userBeanList != null && !userBeanList.isEmpty()) {
-                    switcherLayout.showContentLayout();
-                    followFragment.onRefreshData(userBeanList);
-                } else {
-                    followFragment.showEmptyView();
-                }
+//                Logger.i("commonLoadData","userBeanList == " +userBeanList);
+//                if (userBeanList != null && !userBeanList.isEmpty()) {
+//                    switcherLayout.showContentLayout();
+//                    followFragment.onRefreshData(userBeanList);
+//                } else {
+//                    followFragment.showEmptyView();
+//                }
             }
         }, type, Constant.PAGE_FIRST);
     }
@@ -97,12 +97,15 @@ public class SelectedUserPrensenterImpl {
                 if (userData != null) {
                     userBeanList = userData.getUser();
                 }
-                if (userBeanList.isEmpty()) {
-                    followFragment.showEmptyView();
-                } else {
-                    switcherLayout.showContentLayout();
-                    followFragment.onRefreshData(userBeanList);
-                }
+                switcherLayout.showContentLayout();
+                followFragment.onRefreshData(userBeanList);
+
+//                if (userBeanList.isEmpty()) {
+//                    followFragment.showEmptyView();
+//                } else {
+//                    switcherLayout.showContentLayout();
+//                    followFragment.onRefreshData(userBeanList);
+//                }
             }
         }, keyword, Constant.PAGE_FIRST);
     }

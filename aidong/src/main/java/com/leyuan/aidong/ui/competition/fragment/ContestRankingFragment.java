@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.contest.ContestRankingListAdapter;
 import com.leyuan.aidong.entity.campaign.RankingBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.competition.activity.ContestRankingListActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
@@ -23,6 +25,7 @@ import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by user on 2018/1/5.
@@ -81,6 +84,7 @@ public class ContestRankingFragment extends BaseFragment implements OnRefreshLis
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout.setBackgroundResource(R.color.c1);
         refreshLayout.setOnRefreshListener(this);
     }
 
@@ -135,14 +139,27 @@ public class ContestRankingFragment extends BaseFragment implements OnRefreshLis
 
     @Override
     public void onGetRankingData(ArrayList<RankingBean> ranking) {
+        switcherLayout.showContentLayout();
         if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
         data.clear();
         data.addAll(ranking);
+        Collections.sort(data);
+
         adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
-        switcherLayout.showContentLayout();
+
+
+        ((ContestRankingListActivity) getActivity()).setMyRankingVisible(View.GONE);
+        if (isVisible() && App.getInstance().isLogin()) {
+            for (RankingBean bean : data) {
+                if (TextUtils.equals(bean.id, App.getInstance().getUser().getId() + "")) {
+                    ((ContestRankingListActivity) getActivity()).setMyRankingVisible(View.VISIBLE);
+
+                }
+            }
+        }
     }
 
     public void scrollToTop() {

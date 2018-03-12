@@ -246,6 +246,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
 
 
             if (Constant.COACH.equals(userInfoData.getProfile().getUserTypeByUserType())) {
+
                 pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
                         new Bundler().putString("userId", userId).putString("intro","教练简介暂无") .get()));
 

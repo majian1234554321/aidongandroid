@@ -47,7 +47,7 @@
             android:layout_toLeftOf="@id/img_share"
             android:background="@color/transparent"
             android:scaleType="centerInside"
-            android:src="@drawable/attention_white" />
+            android:src="@drawable/icon_attention_competition" />
     </RelativeLayout>
 
     <ImageView
@@ -236,7 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="23dp"
-                    android:text="@string/input_invitation_code"
+                    android:text="若无邀请码,无资格参加复赛"
                     android:textColor="@color/b3"
                     android:textSize="13sp"
 

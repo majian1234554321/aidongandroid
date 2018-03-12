@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.entity.DynamicBean;
@@ -96,12 +98,19 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     private CourseCircleHeaderView headView;
     private CourseDetailBean courseDetailBean;
     private ArrayList<BaseMedia> selectedMedia;
+    private boolean refresh;
 
 
     public static void start(Context context, String id) {
         Intent intent = new Intent(context, CourseCircleDetailActivity.class);
         intent.putExtra("id", id);
         context.startActivity(intent);
+    }
+
+    public static void startForResult(Fragment fragment, String id, int request_code) {
+        Intent starter = new Intent(fragment.getContext(), CourseCircleDetailActivity.class);
+        starter.putExtra("id", id);
+        fragment.startActivityForResult(starter, request_code);
     }
 
     @Override
@@ -174,6 +183,9 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         //重点
         headView = new CourseCircleHeaderView(this);
         RecyclerViewUtils.setHeaderView(recyclerView, headView);
+
+//        int top = recyclerView.getChildAt(0).getTop();
+//        recyclerView.scrollBy(0,top);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -187,12 +199,30 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     };
 
 
+    private void finishSetResult() {
+
+//        Logger.i("follow","finishSetResult follow = " +userInfoData.getProfile().followed);
+        Intent intentResult = new Intent();
+        if (courseDetailBean != null) {
+            intentResult.putExtra(Constant.FOLLOW, courseDetailBean.isFollowed());
+        }
+        setResult(RESULT_OK, intentResult);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //        super.onBackPressed();
+        finishSetResult();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
             case R.id.iv_back:
-                finish();
+                finishSetResult();
+
                 break;
             case R.id.txt_share_image:
                 if (App.mInstance.isLogin()) {
@@ -251,15 +281,19 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
     @Override
     public void updateRecyclerView(List<DynamicBean> dynamicBeanList) {
-//        if (refreshLayout.isRefreshing()) {
-//            dynamicList.clear();
-//            refreshLayout.setRefreshing(false);
-//        }
-
-        dynamicList.addAll(dynamicBeanList);
+        if (refresh) {
+            refresh = false;
+            dynamicList.clear();
+        }
+        if (dynamicBeanList != null)
+            dynamicList.addAll(dynamicBeanList);
         circleDynamicAdapter.updateData(dynamicList);
-        wrapperAdapter.notifyDataSetChanged();
-        recyclerView.scrollToPosition(0);
+        circleDynamicAdapter.notifyItemRangeChanged(0, dynamicList.size());
+//        circleDynamicAdapter.notifyDataSetChanged();
+
+
+        int top = recyclerView.getChildAt(0).getTop();
+        recyclerView.scrollBy(0, top);
     }
 
     @Override
@@ -272,6 +306,8 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     @Override
     public void updateRelateVideo(String title, List<CourseVideoBean> videos) {
         headView.setRelativeVideoData(videos);
+        int top = recyclerView.getChildAt(0).getTop();
+        recyclerView.scrollBy(0, top);
     }
 
     @Override
@@ -297,7 +333,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
             DynamicBean dynamic = dynamicList.get(position);
             CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(),
-                    App.getInstance().getUser().getName(), dynamic.id, null, dynamic.getUnifromCover(), 1, null,
+                    App.getInstance().getUser().getName(), dynamic.id, null, dynamic.getUnifromCover(), CircleDynamicBean.ActionType.PARSE, null,
                     dynamic.getDynamicTypeInteger(), null);
 
         } else {
@@ -333,8 +369,6 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
                 DynamicDetailByIdActivity.startResultById(CourseCircleDetailActivity.this, invokeDynamicBean.id);
 
-//                startActivityForResult(new Intent(this, DynamicDetailActivity.class)
-//                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
             } else if (requestCode == REQUEST_REFRESH_DYNAMIC) {
 
                 //更新动态详情
@@ -365,6 +399,10 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                     PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
                             selectedMedia, REQUEST_PUBLISH_DYNAMIC);
                 }
+            } else if (requestCode == REQUEST_PUBLISH_DYNAMIC) {
+                refresh = true;
+                currPage = 1;
+                dynamicPresent.pullToRefreshRelativeDynamics(type, id);
             }
         }
     }

@@ -45,7 +45,7 @@ public interface DynamicModel {
                      String link_id,
                      String position_name, String latitude, String longitude, String... image);
 
-    void postDynamic(Subscriber<BaseBean> subscriber, String video, String content, String type, String link_id,
+    void postDynamic(Subscriber<DynamicsData> subscriber, String video, String content, String type, String link_id,
                      String position_name, String latitude, String longitude, ArrayList<String> image, Map<String, String> itUser);
 
     /**

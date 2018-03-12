@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.leyuan.aidong.entity.data.HomeData;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CircleListActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
@@ -35,6 +37,7 @@ import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.mvp.view.HomeRecommendView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
@@ -43,6 +46,8 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by user on 2017/12/28.
@@ -72,8 +77,12 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
+                initHomeBanner();
+            } else {
+                refreshData();
+            }
 
-            refreshData();
         }
     };
 
@@ -81,6 +90,8 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     private HomeRecommendActivityAdapter activityAdapter;
     private CoachAttentionAdapter coachAdapter;
     FollowPresentImpl followPresent;
+    private int itemClickedPosition;
+    private HomeData homeData;
 
 
     @Override
@@ -89,6 +100,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
         filter.addAction(Constant.BROADCAST_ACTION_EXIT_LOGIN);
         filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
+
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
     }
 
@@ -162,7 +174,18 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
         homePresent = new HomeRecommendPresentImpl(getActivity(), this);
         homePresent.getRecommendList();
+        initHomeBanner();
 
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+
+    }
+
+    private void initHomeBanner() {
         List<BannerBean> bannerBeanList = SystemInfoUtils.getHomeBanner(getActivity());
 
         if (bannerBeanList != null && !bannerBeanList.isEmpty()) {
@@ -172,15 +195,6 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         } else {
             banner.setVisibility(View.GONE);
         }
-
-
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshData();
-            }
-        });
-
     }
 
     @Override
@@ -213,6 +227,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onGetData(HomeData homeData) {
+        this.homeData = homeData;
         refreshLayout.setRefreshing(false);
         if (homeData == null) return;
 
@@ -261,7 +276,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onCourseAttentionClick(String id, int position, boolean followed) {
 
-        if(!App.getInstance().isLogin()){
+        if (!App.getInstance().isLogin()) {
             UiManager.activityJump(getActivity(), LoginActivity.class);
             return;
         }
@@ -275,9 +290,35 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     }
 
     @Override
+    public void onItemClick(String id, int position) {
+        itemClickedPosition = position;
+
+        CourseCircleDetailActivity.startForResult(this, id,Constant.REQUEST_COURSE_DETAIL);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(selectCityReceiver);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Logger.i("follow onActivityResult", "requestCode = " + requestCode + ", resultCode = " + resultCode);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constant.REQUEST_COURSE_DETAIL:
+
+                    homeData.getCourse().get(itemClickedPosition).setFollowed(data.getBooleanExtra(Constant.FOLLOW,false));
+                    Logger.i("follow", "onActivityResult follow = " +  homeData.getCourse().get(itemClickedPosition).isFollowed());
+                    courseAdapter.notifyItemChanged(itemClickedPosition);
+
+
+                    break;
+            }
+        }
+
     }
 
 }

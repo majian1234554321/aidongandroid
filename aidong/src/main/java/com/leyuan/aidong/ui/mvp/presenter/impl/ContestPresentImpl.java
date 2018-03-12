@@ -160,6 +160,7 @@ public class ContestPresentImpl {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+
             }
         }, id, code);
     }

@@ -53,6 +53,7 @@ public class HomeAttentionHeaderAdapter extends RecyclerView.Adapter<HomeAttenti
 
                 }
             });
+            holder.txtName.setText("添加关注");
 
             return;
         }

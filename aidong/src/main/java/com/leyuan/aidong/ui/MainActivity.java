@@ -70,9 +70,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE)) {
-                img_new_circle_message.setVisibility(View.VISIBLE);
+//                img_new_circle_message.setVisibility(View.VISIBLE);
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
-                img_new_circle_message.setVisibility(View.GONE);
+//                img_new_circle_message.setVisibility(View.GONE);
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_NEW_USER_REGISTER)) {
                 getNewUserCouponInfo();
             }
@@ -115,10 +115,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        tabDiscoverLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
         tabMineLayout = (RelativeLayout) findViewById(R.id.tabMineLayout);
         img_new_message = (ImageView) findViewById(R.id.img_new_message);
-        img_new_circle_message = (ImageView) findViewById(R.id.img_new_circle_message);
-
-        img_new_circle_message.setVisibility(App.getInstance().getCMDCirleDynamicBean() == null ||
-                App.getInstance().getCMDCirleDynamicBean().isEmpty() ? View.GONE : View.VISIBLE);
+//        img_new_circle_message = (ImageView) findViewById(R.id.img_new_circle_message);
+//
+//        img_new_circle_message.setVisibility(App.getInstance().getCMDCirleDynamicBean() == null ||
+//                App.getInstance().getCMDCirleDynamicBean().isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     private void initData() {

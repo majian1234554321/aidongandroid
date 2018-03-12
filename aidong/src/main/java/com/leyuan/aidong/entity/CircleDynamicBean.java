@@ -123,7 +123,12 @@ public class CircleDynamicBean {
     }
 
     public class ActionType {
-        public static final int PARSE = 1;
+
+        public static final int COMMENT = 0;
+        public static final int REPLY = 1;
+        public static final int PARSE = 2;
+        public static final int AITER = 3;
+
     }
 
     public class DynamicType {

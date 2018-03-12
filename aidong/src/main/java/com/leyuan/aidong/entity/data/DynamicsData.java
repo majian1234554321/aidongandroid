@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class DynamicsData {
     private List<DynamicBean> dynamic;
+    public String cover;
+    public String dynamic_id;
 
     public List<DynamicBean> getDynamic() {
         return dynamic;

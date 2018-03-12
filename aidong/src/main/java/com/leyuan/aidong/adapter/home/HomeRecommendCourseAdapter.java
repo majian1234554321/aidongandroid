@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
-import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -63,7 +62,11 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseCircleDetailActivity.start(context, courseBean.getId());
+                if (listener != null) {
+                    listener.onItemClick(courseBean.getId(), position);
+                }
+
+//                CourseCircleDetailActivity.start(context, courseBean.getId());
             }
         });
         holder.btAttention.setOnClickListener(new View.OnClickListener() {
@@ -125,5 +128,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 
     public interface OnAttentionClickListener {
         void onCourseAttentionClick(String id, int position, boolean followed);
+
+        void onItemClick(String id, int position);
     }
 }

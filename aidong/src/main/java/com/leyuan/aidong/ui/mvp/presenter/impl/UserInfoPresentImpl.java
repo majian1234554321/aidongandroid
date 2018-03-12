@@ -103,6 +103,12 @@ public class UserInfoPresentImpl implements UserInfoPresent {
                     dynamicFragmentView.showEmptyLayout();
                 }
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                dynamicFragmentView.showEmptyLayout();
+            }
         }, id, Constant.PAGE_FIRST);
     }
 
@@ -121,6 +127,8 @@ public class UserInfoPresentImpl implements UserInfoPresent {
                     dynamicFragmentView.showEndFooterView();
                 }
             }
+
+
         }, id, page);
     }
 

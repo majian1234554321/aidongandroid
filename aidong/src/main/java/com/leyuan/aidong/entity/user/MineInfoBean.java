@@ -19,6 +19,7 @@ public class MineInfoBean {
     int orders_count;//订单总数量
     int cart_items_count;//购物车数量
     String views_count;//热度
+   public   int dynamics_count;//动态数量
 
     private String acivity;
 

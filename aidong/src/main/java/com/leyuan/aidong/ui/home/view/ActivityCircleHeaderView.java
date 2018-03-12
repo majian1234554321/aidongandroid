@@ -180,6 +180,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
             campaignDetailBean.follows_count ++;
+            campaignDetailBean.followed = true;
             txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
             bt_attention.setImageResource(R.drawable.icon_followed);
             ToastGlobal.showShortConsecutive(R.string.follow_success);
@@ -192,6 +193,8 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
             campaignDetailBean.follows_count --;
+            campaignDetailBean.followed = false;
+
             txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
             bt_attention.setImageResource(R.drawable.icon_follow);
             ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);

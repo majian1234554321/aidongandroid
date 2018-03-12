@@ -11,7 +11,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicDetailAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
@@ -37,6 +40,7 @@ import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
+import com.leyuan.aidong.ui.discover.activity.SelectedUserActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
@@ -49,6 +53,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.KeyBoardUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -58,7 +63,9 @@ import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.view.inputmethod.EditorInfo.IME_ACTION_SEND;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
@@ -73,6 +80,7 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
         TextView.OnEditorActionListener, DynamicDetailAdapter.OnItemClickListener, OnRefreshListener {
     private static final int MAX_TEXT_COUNT = 240;
     public static final int RESULT_DELETE = 0x3333;
+    private static final int REQUEST_USER = 104;
     private ImageView ivBack;
     private TextView tvReportOrDelete;
     private ImageView ivUserAvatar;
@@ -97,6 +105,10 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
     private String replyName;
     private UserBean replyUser;
     private String dynamicId;
+    private String user_id;
+    private String name;
+
+    Map<String, String> itUser = new HashMap<>();
 
 
     public static void startById(Context context, String dynamicId) {
@@ -191,6 +203,8 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
         tvReportOrDelete.setOnClickListener(this);
         ivUserAvatar.setOnClickListener(this);
         etComment.setOnEditorActionListener(this);
+        etComment.addTextChangedListener(new OnTextWatcher());
+
         refreshLayout.setOnRefreshListener(this);
         commentView.addOnScrollListener(onScrollListener);
         commentAdapter.setOnItemClickListener(this);
@@ -305,18 +319,19 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
             //刷新头部评论数量
             headerAdapter.notifyDataSetChanged();
 
-
             if (replyUser != null) {
+
                 CMDMessageManager.sendCMDMessage(replyUser.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                        , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
+
                 if (!TextUtils.equals(replyUser.getId(), dynamic.publisher.getId())) {
                     CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                            , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                            , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
                 }
                 replyUser = null;
             } else {
                 CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                        , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
             }
 
         } else {
@@ -519,7 +534,7 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
             headerAdapter.notifyItemChanged(position);
 
             CMDMessageManager.sendCMDMessage(dynamicBean.publisher.getId(), App.getInstance().getUser().getAvatar(),
-                    App.getInstance().getUser().getName(), dynamicBean.id, null, dynamicBean.getUnifromCover(), 1, null,
+                    App.getInstance().getUser().getName(), dynamicBean.id, null, dynamicBean.getUnifromCover(), CircleDynamicBean.ActionType.PARSE, null,
                     dynamicBean.getDynamicTypeInteger(), null);
 
             //返回新增点赞 刷新动态列表
@@ -562,15 +577,54 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
 
         Logger.i("follow onActivityResult", "requestCode = " + requestCode + ", resultCode = " + resultCode);
         if (resultCode == RESULT_OK) {
+
             switch (requestCode) {
+
                 case Constant.REQUEST_USER_INFO:
 
                     dynamic.publisher.followed = data.getBooleanExtra(Constant.FOLLOW, dynamic.publisher.followed);
-                    Logger.i("follow","onActivityResult follow = " + dynamic.publisher.followed);
+                    Logger.i("follow", "onActivityResult follow = " + dynamic.publisher.followed);
                     headerAdapter.notifyDataSetChanged();
                     break;
+
+                case REQUEST_USER:
+                    this.user_id = data.getStringExtra("user_id");
+                    this.name = data.getStringExtra("name");
+
+                    itUser.put(name, user_id);
+                    Logger.i(" itUser.put( name =  " + name + ", user_id = " + user_id);
+                    etComment.setText(etComment.getText().toString() + name);
+                    break;
+
+
             }
         }
 
     }
+
+    private class OnTextWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            Logger.i("beforeTextChanged : " + s + "");
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (TextUtils.equals("@", s.toString().substring(start, start + count))) {
+//                ToastGlobal.showShortConsecutive("跳到我关注人");
+
+                UiManager.activityJumpForResult(ContestDynamicDetailActivity.this, new Bundle(), SelectedUserActivity.class, REQUEST_USER);
+            }
+
+//            Logger.i("onTextChanged : " + s + " start " + start + " before " + before + " count " + count + " sub " + );
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+//            Logger.i("afterTextChanged : " + s + "");
+        }
+    }
+
+
 }

@@ -104,6 +104,13 @@ public class ContestQuarterFinalEnroledRecordActivity extends BaseActivity imple
         coursePresent = new ContestPresentImpl(this);
         coursePresent.setContestSchedulesView(this);
         coursePresent.getContestEnrolRecord(contestId, currPage);
+
+        imgLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

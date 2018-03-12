@@ -24,7 +24,9 @@ import android.widget.TextView;
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.PublishDynamicAdapter;
-import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CircleDynamicBean;
+import com.leyuan.aidong.entity.data.DynamicsData;
+import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
@@ -84,8 +86,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     private String position_name;
     private String user_id;
     private String name;
-    private String latitude = App.lat+"";
-    private String longitude = App.lon +"";
+    private String latitude = App.lat + "";
+    private String longitude = App.lon + "";
+    private String content;
 
 
     public static void startForResult(Fragment fragment, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
@@ -268,28 +271,32 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     Map<String, String> itUser = new HashMap<>();
 
     private void uploadToServer(List<String> qiNiuMediaUrls) {
-        String content = etContent.getText().toString();
+        content = etContent.getText().toString();
         String[] media = new String[qiNiuMediaUrls.size()];
         for (int i = 0; i < qiNiuMediaUrls.size(); i++) {
             media[i] = qiNiuMediaUrls.get(i);
         }
-        dynamicPresent.postDynamic(isPhoto, content, type, link_id, position_name,latitude,longitude,itUser, media);
+        dynamicPresent.postDynamic(isPhoto, content, type, link_id, position_name, latitude, longitude, itUser, media);
 
 
     }
 
     @Override
-    public void publishDynamicResult(BaseBean baseBean) {
+    public void publishDynamicResult(DynamicsData dynamicData) {
         dismissProgressDialog();
-        if (baseBean.getStatus() == Constant.OK) {
-            selectedMedia.clear();
-            ToastGlobal.showLong("上传成功");
-            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS));
-            setResult(RESULT_OK, null);
-            finish();
-        } else {
-            ToastGlobal.showLong(baseBean.getMessage());
-        }
+        if (dynamicData == null) return;
+        selectedMedia.clear();
+        ToastGlobal.showLong("上传成功");
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS));
+
+        CMDMessageManager.sendCMDMessageAite(App.getInstance().getUser().getAvatar(),
+                App.getInstance().getUser().getName(), dynamicData.dynamic_id,content, dynamicData.cover, CircleDynamicBean.ActionType.AITER, null,
+                isPhoto ? 0 : 1, null, itUser);
+
+        setResult(RESULT_OK, null);
+        finish();
+
     }
 
     @Override
@@ -320,9 +327,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             } else if (requestCode == REQUEST_USER) {
                 this.user_id = data.getStringExtra("user_id");
                 this.name = data.getStringExtra("name");
-                itUser.put( name,user_id);
+                itUser.put(name, user_id);
 
-                Logger.i(" itUser.put( name =  " + name+", user_id = " + user_id);
+                Logger.i(" itUser.put( name =  " + name + ", user_id = " + user_id);
 
                 etContent.setText(etContent.getText().toString() + name);
 

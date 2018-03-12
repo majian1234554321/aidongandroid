@@ -88,7 +88,7 @@ public class DynamicModelImpl implements DynamicModel {
     }
 
     @Override
-    public void postDynamic(Subscriber<BaseBean> subscriber, String video, String content, String type, String link_id,
+    public void postDynamic(Subscriber<DynamicsData> subscriber, String video, String content, String type, String link_id,
                                  String position_name, String latitude, String longitude, ArrayList<String> image, Map<String, String> itUser) {
         JSONObject root = new JSONObject();
         JSONArray arrayImage = new JSONArray(image);
@@ -130,8 +130,7 @@ public class DynamicModelImpl implements DynamicModel {
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), root.toString());
         dynamicService.postImageDynamic(requestBody)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxHelper.<DynamicsData>transform())
                 .subscribe(subscriber);
     }
 

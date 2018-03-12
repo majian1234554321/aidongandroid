@@ -30,9 +30,9 @@ public interface DynamicPresent {
 //                     String link_id,
 //                     String position_name, String...media);
 
-    void postDynamic(boolean isPhoto, String content, String type,
-                     String link_id,
-                     String position_name, String latitude, String longitude, String... media);
+//    void postDynamic(boolean isPhoto, String content, String type,
+//                     String link_id,
+//                     String position_name, String latitude, String longitude, String... media);
 
     void postDynamic(boolean isPhoto, String content, String type, String link_id,
                      String position_name, String latitude, String longitude,

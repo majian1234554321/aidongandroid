@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.fragment.FollowerFragment;
-import com.leyuan.aidong.ui.mine.fragment.FollowingFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -53,9 +52,9 @@ public class FollowActivity extends BaseActivity implements SmartTabLayout.TabPr
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
-        FollowingFragment followFragment = new FollowingFragment();
+//        FollowingFragment followFragment = new FollowingFragment();
         FollowerFragment fansFragment = new FollowerFragment();
-        pages.add(FragmentPagerItem.of(null, followFragment.getClass()));
+//        pages.add(FragmentPagerItem.of(null, followFragment.getClass()));
         pages.add(FragmentPagerItem.of(null,fansFragment.getClass()));
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), pages);
