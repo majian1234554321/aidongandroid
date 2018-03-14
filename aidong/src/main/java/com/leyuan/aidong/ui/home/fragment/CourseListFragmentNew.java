@@ -61,6 +61,7 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
         if (getArguments() != null) {
             date = getArguments().getString("date");
             course = getArguments().getString("category");
+            store = getArguments().getString("store");
         }
         coursePresent = new CourseListPresentImpl(getContext(), this);
 

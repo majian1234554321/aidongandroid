@@ -10,27 +10,33 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.discover.UserAdapter;
+import com.leyuan.aidong.adapter.discover.UserFollowCacheAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.data.FollowData;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicParsePresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicParseUserView;
+import com.leyuan.aidong.ui.mvp.view.FollowCacheView;
+import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 动态里面点赞的人列表
  * Created by song on 2017/3/23.
  */
-public class DynamicParseUserActivity extends BaseActivity implements DynamicParseUserView, UserAdapter.FollowListener {
+public class DynamicParseUserActivity extends BaseActivity implements DynamicParseUserView, FollowView, FollowCacheView, UserFollowCacheAdapter.FollowListener {
     private SimpleTitleBar titleBar;
     private RecyclerView rvUser;
     private RelativeLayout emptyLayout;
@@ -39,9 +45,12 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
 
     private DynamicParsePresent dynamicPresent;
     private int page = 1;
-    private UserAdapter userAdapter;
+    private UserFollowCacheAdapter userAdapter;
     private int position;
     private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
+    private FollowPresentImpl present;
+    private ArrayList<String> following_ids;
+    private int itemClickedPosition;
 
     public static void start(Context context, String dynamicId) {
         Intent starter = new Intent(context, DynamicParseUserActivity.class);
@@ -60,13 +69,20 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
         rvUser = (RecyclerView) findViewById(R.id.rv_user);
         emptyLayout = (RelativeLayout) findViewById(R.id.rl_empty);
         rvUser.setLayoutManager(new LinearLayoutManager(this));
-        userAdapter = new UserAdapter(this);
+        userAdapter = new UserFollowCacheAdapter(this);
         userAdapter.setFollowListener(this);
 
-         wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(userAdapter);
+        wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(userAdapter);
 
         rvUser.setAdapter(wrapAdapter);
         rvUser.addOnScrollListener(onScrollListener);
+
+        present = new FollowPresentImpl(this);
+        present.setFollowListener(this);
+        present.setFollowCacheView(this);
+        present.getFollowCahceList();
+
+
         dynamicPresent = new DynamicParsePresent(this, this);
         dynamicPresent.getLikes(dynamicId, page);
 
@@ -78,17 +94,26 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
         });
     }
 
-    private RecyclerView.OnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private RecyclerView.OnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
             super.onLoadNextPage(view);
-            page ++;
-            dynamicPresent.getLikes(dynamicId, page);
+            if (data != null && data.size() >= pageSize) {
+                page++;
+                dynamicPresent.getLikes(dynamicId, page);
+            }
+
         }
     };
 
     @Override
     public void onGetUserData(List<UserBean> data, int page) {
+        if (following_ids != null && data != null && !data.isEmpty()) {
+
+            for (UserBean user : data) {
+                user.followed = FollowData.isFollow(user.getId(), following_ids);
+            }
+        }
 
         if (page == 1) {
             this.data = data;
@@ -100,49 +125,138 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
                 emptyLayout.setVisibility(View.VISIBLE);
             }
         } else {
-            this.data.addAll(data);
             if (data != null && !data.isEmpty()) {
-                userAdapter.addMoreData(data);
-                wrapAdapter.notifyDataSetChanged();
+                this.data.addAll(data);
+                userAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+
+    @Override
+    public void onGetFollowCacheList(ArrayList<String> following_ids) {
+        this.following_ids = following_ids;
+
+        //假如这个请求后收到,
+
+        if (data != null && !data.isEmpty()) {
+
+            for (UserBean user : data) {
+                user.followed = FollowData.isFollow(user.getId(), following_ids);
+            }
+            userAdapter.setData(data);
+        }
+
     }
 
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            SystemInfoUtils.addFollow(data.get(position));
+            data.get(position).followed = true;
             userAdapter.notifyDataSetChanged();
             Toast.makeText(this, R.string.follow_success, Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
+
+
+//        if (baseBean.getStatus() == Constant.OK) {
+//            SystemInfoUtils.addFollow(data.get(position));
+//            userAdapter.notifyDataSetChanged();
+//            Toast.makeText(this, R.string.follow_success, Toast.LENGTH_LONG).show();
+//        } else {
+//            Toast.makeText(this, R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+//        }
     }
 
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            SystemInfoUtils.removeFollow(data.get(position));
+            data.get(position).followed = false;
             userAdapter.notifyDataSetChanged();
             Toast.makeText(this, R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
+
+
+//        if (baseBean.getStatus() == Constant.OK) {
+//            SystemInfoUtils.removeFollow(data.get(position));
+//            userAdapter.notifyDataSetChanged();
+//            Toast.makeText(this, R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+//        } else {
+//            Toast.makeText(this, R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+//        }
     }
 
 
+//    @Override
+//    public void onFollowClicked(int position) {
+//        this.position = position;
+//        if (App.mInstance.isLogin()) {
+//            UserBean userBean = data.get(position);
+//            if (SystemInfoUtils.isFollow(this, userBean)) {
+//                dynamicPresent.cancelFollow(userBean.getId());
+//            } else {
+//                dynamicPresent.addFollow(userBean.getId());
+//            }
+//        } else {
+//            startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
+//        }
+//    }
+
     @Override
-    public void onFollowClicked(int position) {
-        this.position = position;
-        if (App.mInstance.isLogin()) {
-            UserBean userBean = data.get(position);
-            if (SystemInfoUtils.isFollow(this, userBean)) {
-                dynamicPresent.cancelFollow(userBean.getId());
-            } else {
-                dynamicPresent.addFollow(userBean.getId());
-            }
-        } else {
+    public void onAddFollow(String id, int position) {
+        if (!App.mInstance.isLogin()) {
             startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
+            return;
         }
+        this.position = position;
+
+        UserBean userBean = data.get(position);
+        present.addFollow(id, userBean.getTypeByType());
+
+    }
+
+    @Override
+    public void onCancelFollow(String id, int position) {
+        if (!App.mInstance.isLogin()) {
+            startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
+            return;
+        }
+
+
+        this.position = position;
+        UserBean userBean = data.get(position);
+        present.cancelFollow(id, userBean.getTypeByType());
+    }
+
+    @Override
+    public void onItemClick(UserBean userBean, int position) {
+        this.itemClickedPosition = position;
+        UserInfoActivity.startForResult(this, userBean.getId(), Constant.REQUEST_USER_INFO);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Logger.i("follow onActivityResult", "requestCode = " + requestCode + ", resultCode = " + resultCode);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constant.REQUEST_USER_INFO:
+
+                    this.data.get(itemClickedPosition).followed =
+                            data.getBooleanExtra(Constant.FOLLOW, this.data.get(itemClickedPosition).followed);
+                    Logger.i("follow", "onActivityResult follow = " + this.data.get(itemClickedPosition).followed);
+
+                    userAdapter.notifyItemChanged(itemClickedPosition);
+                    break;
+                case  Constant.REQUEST_LOGIN:
+                        present.getFollowCahceList();
+
+                    break;
+            }
+        }
+
     }
 }

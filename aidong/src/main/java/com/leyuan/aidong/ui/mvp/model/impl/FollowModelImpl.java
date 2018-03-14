@@ -83,6 +83,14 @@ public class FollowModelImpl implements FollowModel {
     }
 
 
+    @Override
+    public void getFollowCache(Subscriber<FollowData> subscriber) {
+        followService.getFollowCache()
+                .compose(RxHelper.<FollowData>transform())
+                .subscribe(subscriber);
+    }
+
+
 
 //    @Override
 //    public void addFollow(Subscriber<BaseBean> subscriber, String id) {

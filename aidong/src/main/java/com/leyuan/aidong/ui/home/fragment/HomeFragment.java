@@ -102,6 +102,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
         filter.addAction(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE);
         filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);

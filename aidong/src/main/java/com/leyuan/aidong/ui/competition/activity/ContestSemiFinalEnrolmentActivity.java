@@ -3,7 +3,10 @@ package com.leyuan.aidong.ui.competition.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +46,7 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
     private RelativeLayout layoutSelectGroup;
     private TextView txtBelongGroup;
     private String contestId;
+    EditText edit_name;
     ContestBean contestBean;
 
     private String city;
@@ -83,13 +87,18 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
         txtUserName = (TextView) findViewById(R.id.txt_user_name);
         layoutSelectCity = (RelativeLayout) findViewById(R.id.layout_select_city);
         txtCity = (TextView) findViewById(txt_city);
+        edit_name = (EditText) findViewById(R.id.edit_name);
+
         findViewById(R.id.bt_select_city).setOnClickListener(this);
         layoutContestArea = (RelativeLayout) findViewById(R.id.layout_contest_area);
         txtContestArea = (TextView) findViewById(R.id.txt_contest_area);
         layoutSelectGroup = (RelativeLayout) findViewById(R.id.layout_select_group);
         txtBelongGroup = (TextView) findViewById(R.id.txt_belong_group);
+        titleLayout.setLeftIconListener(this);
         findViewById(R.id.bt_select_group).setOnClickListener(this);
         findViewById(R.id.bt_enrol_post_video).setOnClickListener(this);
+
+        ((Button)findViewById(R.id.bt_enrol_post_video)).setText("确认报名");
 
         txtContestName.setText(getIntent().getStringExtra("name"));
         txtContestTime.setText(getIntent().getStringExtra("start"));
@@ -100,7 +109,9 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
 
         if (App.getInstance().getUser().getGender() == Constant.MAN_GENDER) {
             txtBelongGroup.setText("选择分组: 男子组");
+            gender = "男";
         } else {
+            gender = "女";
             txtBelongGroup.setText("选择分组: 女子组");
         }
 
@@ -117,6 +128,9 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_left:
+                finish();
+                break;
             case R.id.bt_select_city:
                 UiManager.activityJump(this, LocationActivity.class);
 
@@ -126,7 +140,14 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
 
                 break;
             case R.id.bt_enrol_post_video:
-                contestPresent.invitationCodeEnrol(contestId, App.getInstance().getUser().getName(), gender, invitationCode);
+                String name = edit_name.getText().toString().trim();
+                if (TextUtils.isEmpty(name)) {
+                    ToastGlobal.showShortConsecutive("请输入真实姓名");
+                    return;
+                }
+
+
+                contestPresent.invitationCodeEnrol(contestId, name, gender, invitationCode);
 
 
                 break;
@@ -141,7 +162,7 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         txtBelongGroup.setText((which == 0) ? "选择分组: 男子组" : "选择分组: 女子组");
-                        gender = (which == 0) ? "0" : "1";
+                        gender = (which == 0) ? "男" : "女";
                         return false;
                     }
                 })

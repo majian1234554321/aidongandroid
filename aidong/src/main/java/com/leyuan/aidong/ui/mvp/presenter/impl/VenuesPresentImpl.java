@@ -168,6 +168,11 @@ public class VenuesPresentImpl implements VenuesPresent {
                     if (selfDeliveryVenuesActivity != null) {
                         selfDeliveryVenuesActivity.showEmptyView();
                     }
+                    if (discoverVenuesActivityView != null) {
+                        discoverVenuesActivityView.showEmptyView();
+                    }
+
+
                 }
             }
         }, Constant.PAGE_FIRST, brand_id, landmark, area, gymTypes);

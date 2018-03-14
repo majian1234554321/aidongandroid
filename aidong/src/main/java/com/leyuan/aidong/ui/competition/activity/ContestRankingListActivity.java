@@ -64,9 +64,9 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
     private List<View> allTabView = new ArrayList<>();
     private String category;
     ContestBean contest;
-    public static String rankType = "semi_finals";
+    public static String rankType = "preliminary";
     private int transprentColor;
-    private String gender;
+    public static String gender;
 
 
     public static void start(Context context, ContestBean contest) {
@@ -93,7 +93,9 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
             }
         }
 
+
         contest.division_info = beans;
+
         setContentView(R.layout.activity_contest_ranking_list);
 
         ivBack = (ImageView) findViewById(R.id.iv_back);
@@ -108,11 +110,11 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
         txtFinal = (TextView) findViewById(R.id.txt_final);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        layout_my_ranking = (FrameLayout) findViewById(R.id.layout_my_ranking);
-        txtRank = (TextView) findViewById(R.id.txt_rank);
-        imgAvatar = (ImageView) findViewById(R.id.img_avatar);
-        txtCoachName = (TextView) findViewById(R.id.txt_coach_name);
-        txtIntro = (TextView) findViewById(R.id.txt_intro);
+//        layout_my_ranking = (FrameLayout) findViewById(R.id.layout_my_ranking);
+//        txtRank = (TextView) findViewById(R.id.txt_rank);
+//        imgAvatar = (ImageView) findViewById(R.id.img_avatar);
+//        txtCoachName = (TextView) findViewById(R.id.txt_coach_name);
+//        txtIntro = (TextView) findViewById(R.id.txt_intro);
 
         findViewById(R.id.iv_back).setOnClickListener(this);
         txtMassElection.setOnClickListener(this);
@@ -120,14 +122,13 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
         txtFinal.setOnClickListener(this);
         layoutSelectGroup.setOnClickListener(this);
         transprentColor = Color.parseColor("#00000000");
+        if (App.getInstance().isLogin()) {
+            txtGroup.setText(App.getInstance().getUser().getGender() == 0 ? "男子组" : "女子组");
+            gender = App.getInstance().getUser().getGender() == 0 ? "男" : "女";
+        }
 
         initFragments();
-
-        if (App.getInstance().isLogin())
-            txtGroup.setText(App.getInstance().getUser().getGender() == 0 ? "男子组" : "女子组");
-
     }
-
 
 
     @Override
@@ -192,7 +193,8 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         txtGroup.setText((which == 0) ? "男子组" : "女子组");
-                        gender = (which == 0) ? "0" : "1";
+                        gender = (which == 0) ? "男" : "女";
+                        refreshFragmentData();
                         return false;
                     }
                 })
@@ -249,7 +251,7 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
     }
 
 
-    public void setMyRankingVisible(int visible){
-        layout_my_ranking.setVisibility(visible);
+    public void setMyRankingVisible(int visible) {
+//        layout_my_ranking.setVisibility(visible);
     }
 }

@@ -12,6 +12,8 @@ public class RankingBean implements Comparable<RankingBean> {
     public double score;// 分数,
     public int rank;// 排名
 
+
+
     @Override
     public int compareTo(RankingBean o) {
         return this.rank - o.rank;

@@ -18,15 +18,21 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.StoreListAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.VenuesDetailBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.discover.activity.VenuesSubbranchActivity;
+import com.leyuan.aidong.ui.home.activity.GoodsListActivity;
+import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.home.fragment.CourseListFragmentNew;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.TelephoneManager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -39,6 +45,10 @@ import java.util.List;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static com.leyuan.aidong.R.id.tv_price_separator;
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
+import static com.leyuan.aidong.utils.Constant.GOODS_TICKET;
 
 /**
  * Created by user on 2018/1/9.
@@ -59,7 +69,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout llNurture;
     private LinearLayout llEquipment;
     private LinearLayout llHealthyFood;
-    private LinearLayout llTicket;
+    private LinearLayout llTicket, layout_address;
     private LinearLayout llOtherSubStore;
     private TextView txtSubStore;
     private TextView txtSubStoreNum;
@@ -69,7 +79,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     private ImageView ivParking;
     private ImageView ivWifi;
     private ImageView ivBath;
-    private ImageView ivFood;
+    private ImageView ivFood, img_address;
     private TextView txtRelateCourse;
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
@@ -84,6 +94,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     private VenuesDetailBean venues;
     private SharePopupWindow sharePopupWindow;
     private StoreListAdapter venuesAdapter;
+
 
     public static void start(Context context, String id) {
         Intent starter = new Intent(context, StoreDetailActivity.class);
@@ -129,15 +140,28 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         rvOtherSubStore = (RecyclerView) findViewById(R.id.rv_other_sub_store);
         txtStoreFacilities = (TextView) findViewById(R.id.txt_store_facilities);
         layoutStoreInnerFacility = (LinearLayout) findViewById(R.id.layout_store_inner_facility);
+        layout_address = (LinearLayout) findViewById(R.id.layout_address);
+
+        img_address = (ImageView) findViewById(R.id.img_address);
         ivParking = (ImageView) findViewById(R.id.iv_parking);
         ivWifi = (ImageView) findViewById(R.id.iv_wifi);
         ivBath = (ImageView) findViewById(R.id.iv_bath);
         ivFood = (ImageView) findViewById(R.id.iv_food);
 
         rvOtherSubStore.setLayoutManager(new LinearLayoutManager(this));
-         venuesAdapter = new StoreListAdapter(this);
+        venuesAdapter = new StoreListAdapter(this);
         rvOtherSubStore.setAdapter(venuesAdapter);
         rvOtherSubStore.setNestedScrollingEnabled(false);
+
+        img_address.setOnClickListener(this);
+        layout_address.setOnClickListener(this);
+        llNurture.setOnClickListener(this);
+        llEquipment.setOnClickListener(this);
+        llHealthyFood.setOnClickListener(this);
+        llTicket.setOnClickListener(this);
+        txtSubStoreNum.setOnClickListener(this);
+        ivBack.setOnClickListener(this);
+        ivShare.setOnClickListener(this);
 
     }
 
@@ -154,25 +178,29 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         }
 
         tvDistance.setText(venues.getDistanceFormat());
-        txtAddress.setText(venues.getAddress());
+        txtAddress.setText(venues.city + venues.getArea());
+        txtAddressDetail.setText(venues.getAddress());
 
         if (venues.getBrother() != null && !venues.getBrother().isEmpty()) {
             llOtherSubStore.setVisibility(View.VISIBLE);
             txtSubStoreNum.setText("共" + venues.getBrother().size() + "家分店");
-            venuesAdapter.setData(venues.getBrother());
+            venuesAdapter.setData(venues.getBrother().size()>2?venues.getBrother().subList(0,2):venues.getBrother());
             venuesAdapter.notifyDataSetChanged();
         } else {
             llOtherSubStore.setVisibility(View.GONE);
         }
 
-        ivParking.setImageResource(venues.getService().contains("1") ? R.drawable.icon_parking :
-                R.drawable.icon_parking_gray);
-        ivWifi.setImageResource(venues.getService().contains("2") ? R.drawable.icon_wifi :
-                R.drawable.icon_wifi_gray);
-        ivBath.setImageResource(venues.getService().contains("3") ? R.drawable.icon_bath :
-                R.drawable.icon_bath_gray);
-        ivFood.setImageResource(venues.getService().contains("4") ? R.drawable.icon_food :
-                R.drawable.icon_food_gray);
+        if (venues.getService() != null) {
+            ivParking.setImageResource(venues.getService().contains("1") ? R.drawable.icon_parking :
+                    R.drawable.icon_parking_gray);
+            ivWifi.setImageResource(venues.getService().contains("2") ? R.drawable.icon_wifi :
+                    R.drawable.icon_wifi_gray);
+            ivBath.setImageResource(venues.getService().contains("3") ? R.drawable.icon_bath :
+                    R.drawable.icon_bath_gray);
+            ivFood.setImageResource(venues.getService().contains("4") ? R.drawable.icon_food :
+                    R.drawable.icon_food_gray);
+        }
+
 
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
@@ -193,11 +221,12 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         days = DateUtils.getSevenDate();
         FragmentPagerItems pages = new FragmentPagerItems(this);
         for (int i = 0; i < days.size(); i++) {
+
             CourseListFragmentNew courseFragment = new CourseListFragmentNew();
+
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
                     new Bundler().putString("date", days.get(i)).putString("category", "").get()
             ));
-
         }
 
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
@@ -209,6 +238,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onPageSelected(int position) {
                 for (int i = 0; i < allTabView.size(); i++) {
+
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
                     text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
@@ -216,8 +246,8 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
                     //reset fragment
                     CourseListFragmentNew page = (CourseListFragmentNew) adapter.getPage(position);
                     page.scrollToTop();
-//                    filterView.animate().translationY(0).setInterpolator
-//                            (new DecelerateInterpolator(2)).start();
+//                  filterView.animate().translationY(0).setInterpolator
+//                      (new DecelerateInterpolator(2)).start();
                 }
             }
         });
@@ -232,8 +262,56 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+
+        llNurture = (LinearLayout) findViewById(R.id.ll_nurture);
+        llEquipment = (LinearLayout) findViewById(R.id.ll_equipment);
+        llHealthyFood = (LinearLayout) findViewById(R.id.ll_healthy_food);
+        llTicket = (LinearLayout) findViewById(R.id.ll_ticket);
+
+        if (venues == null) return;
         switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.iv_share:
+
+                String image = "";
+
+                if (venues.getPhoto() != null && !venues.getPhoto().isEmpty()) {
+                    image = venues.getPhoto().get(0);
+                }
+                sharePopupWindow.showAtBottom(venues.getName() + Constant.I_DONG_FITNESS, venues.getIntroduce(),
+                        image, ConstantUrl.URL_SHARE_GYM + venues.getId());
+
+                break;
+
+            case R.id.ll_nurture:
+                GoodsListActivity.start(this, GOODS_NUTRITION, venues.getName(), venues.getId());
+                break;
+            case R.id.ll_equipment:
+                GoodsListActivity.start(this, GOODS_EQUIPMENT, venues.getName(), venues.getId());
+                break;
+            case R.id.ll_healthy_food:
+
+                GoodsListActivity.start(this, GOODS_FOODS, venues.getName(), venues.getId());
+
+                break;
+            case R.id.ll_ticket:
+
+                GoodsListActivity.start(this, GOODS_TICKET, venues.getName(), venues.getId());
+
+                break;
+
             case R.id.img_bt_telephone:
+                TelephoneManager.callImmediate(this, venues.getTel());
+
+                break;
+            case R.id.img_address:
+            case R.id.layout_address:
+                MapActivity.start(this, "门店地址", venues.getName(), venues.getAddress(), venues.getCoordinate().getLat() + "", venues.getCoordinate().getLng() + "");
+                break;
+            case R.id.txt_sub_store_num:
+                VenuesSubbranchActivity.start(this, venues.getBrother());
                 break;
         }
     }

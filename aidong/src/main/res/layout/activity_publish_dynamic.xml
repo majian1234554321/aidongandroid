@@ -102,7 +102,10 @@
                 android:textSize="16sp"
                 android:visibility="gone" />
 
-            <include layout="@layout/inc_add_circle_location"/>
+            <include
+                android:id="@+id/layout_add_circle_location"
+                layout="@layout/inc_add_circle_location"
+                android:visibility="visible" />
 
         </LinearLayout>
     </ScrollView>

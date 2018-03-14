@@ -1,33 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app ="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
+
         <com.leyuan.custompullrefresh.CustomRefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_venues"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="45dp"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:scrollbars="vertical"/>
+                android:paddingTop="45dp"
+                android:scrollbars="vertical" />
         </com.leyuan.custompullrefresh.CustomRefreshLayout>
 
-        <com.leyuan.aidong.ui.discover.view.VenuesFilterView
-            android:id="@+id/filter_view"
+        <LinearLayout
+            android:id="@+id/layout_head"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_mine_store"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:background="#F7F7F7"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_store_type_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/i_dong_self_support_store"
+                    android:textColor="@color/main_red"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+            <include layout="@layout/inc_bold_line" />
+
+            <com.leyuan.aidong.ui.discover.view.VenuesFilterView
+                android:id="@+id/filter_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <!--android:layout_marginTop="185dp"-->
+
+            <include layout="@layout/inc_line" />
+
+        </LinearLayout>
+
+
     </FrameLayout>
 
 </LinearLayout>

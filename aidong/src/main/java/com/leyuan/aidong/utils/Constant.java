@@ -119,6 +119,7 @@ public class Constant {
     public static final int CAMERA_VIDEO_MAX_DURATION = 60;
     public static final int CAMERA_VIDEO_PROGRESS_MAX_DURATION = 600;
     public static final int REQUEST_COURSE_DETAIL = 313;
+    public static final int REQUEST_CITY_CODE = 314;
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

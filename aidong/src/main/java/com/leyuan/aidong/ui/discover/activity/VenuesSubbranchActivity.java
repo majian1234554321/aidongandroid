@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.discover.VenuesAdapter;
+import com.leyuan.aidong.adapter.discover.StoreListAdapter;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -51,7 +51,7 @@ public class VenuesSubbranchActivity extends BaseActivity {
         });
         rvVenues.setLayoutManager(new LinearLayoutManager(this));
 
-        VenuesAdapter adapter = new VenuesAdapter(this, venuesList);
+        StoreListAdapter adapter = new StoreListAdapter(this, venuesList);
 
         HeaderAndFooterRecyclerViewAdapter headerAndFooterRecyclerViewAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
 

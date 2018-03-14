@@ -98,11 +98,11 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
                 refreshData();
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
                 refreshData();
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
                 refreshData();
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
                 refreshData();
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_LOGIN_SUCCESS)) {
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_LOGIN_SUCCESS)) {
                 refreshData();
             }
             Logger.i(TAG, "onReceive action = " + intent.getAction());
@@ -139,7 +139,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         sharePopupWindow = new SharePopupWindow(getActivity());
 
 
-        DiscoverPresentImpl userPresent= new DiscoverPresentImpl(getActivity());
+        DiscoverPresentImpl userPresent = new DiscoverPresentImpl(getActivity());
         userPresent.getNearlyUserData(this);
     }
 
@@ -182,7 +182,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         recyclerView.addOnScrollListener(onScrollListener);
 
         //重点
-         headView = new PersonHorizontalView(getActivity());
+        headView = new PersonHorizontalView(getActivity());
         headView.setLeftTitle(getResources().getString(R.string.nealy_person));
         headView.setCheckAllClickListener(new View.OnClickListener() {
             @Override
@@ -190,7 +190,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
                 UiManager.activityJump(getActivity(), DiscoverUserActivity.class);
             }
         });
-        RecyclerViewUtils.setHeaderView(recyclerView,headView);
+        RecyclerViewUtils.setHeaderView(recyclerView, headView);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -206,9 +206,13 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
 
     public void refreshData() {
         currPage = 1;
-        refreshLayout.setRefreshing(true);
-        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        dynamicPresent.pullToRefreshData();
+        if (refreshLayout != null)
+            refreshLayout.setRefreshing(true);
+        if (recyclerView != null)
+            RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+
+        if (dynamicPresent != null)
+            dynamicPresent.pullToRefreshData();
     }
 
     @Override
@@ -233,7 +237,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         public void onBackgroundClick(int position) {
             HomePlazaFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                Logger.i("HOMEPLAZAFRAGMENT","onBackgroundClick isLogin");
+                Logger.i("HOMEPLAZAFRAGMENT", "onBackgroundClick isLogin");
 
                 DynamicDetailByIdActivity.startResultById(HomePlazaFragment.this, dynamicList.get(position).id);
 
@@ -294,7 +298,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
             HomePlazaFragment.this.clickPosition = position;
 
 
-            Logger.i("HOMEPLAZAFRAGMENT","onCommentListClick isLogin");
+            Logger.i("HOMEPLAZAFRAGMENT", "onCommentListClick isLogin");
             if (App.mInstance.isLogin()) {
 
                 DynamicDetailByIdActivity.startResultById(HomePlazaFragment.this, dynamicList.get(position).id);
@@ -315,7 +319,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         public void onCommentClick(DynamicBean dynamicBean, int position) {
             HomePlazaFragment.this.clickPosition = position;
 
-            Logger.i("HOMEPLAZAFRAGMENT","onCommentClick isLogin");
+            Logger.i("HOMEPLAZAFRAGMENT", "onCommentClick isLogin");
 
             if (App.mInstance.isLogin()) {
                 DynamicDetailByIdActivity.startResultById(HomePlazaFragment.this, dynamicList.get(position).id);

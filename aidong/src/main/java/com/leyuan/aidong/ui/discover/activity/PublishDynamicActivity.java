@@ -57,38 +57,38 @@ import java.util.Map;
  */
 public class PublishDynamicActivity extends BaseActivity implements PublishDynamicActivityView,
         View.OnClickListener, PublishDynamicAdapter.OnItemClickListener, View.OnKeyListener {
-    private static final int REQUEST_MEDIA = 1;
-    private static final int MAX_TEXT_COUNT = 180;
-    private static final int REQUEST_CIRCLE = 101;
-    private static final int REQUEST_LOCATION = 102;
-    private static final int REQUEST_USER = 103;
+    protected static final int REQUEST_MEDIA = 1;
+    protected static final int MAX_TEXT_COUNT = 180;
+    protected static final int REQUEST_CIRCLE = 101;
+    protected static final int REQUEST_LOCATION = 102;
+    protected static final int REQUEST_USER = 103;
 
-    private ImageView ivBack;
-    private EditText etContent;
-    private TextView tvContentCount;
-    private RecyclerView recyclerView;
-    private Button btSend;
+    protected ImageView ivBack;
+    protected EditText etContent;
+    protected TextView tvContentCount;
+    protected RecyclerView recyclerView;
+    protected Button btSend;
 
-    private boolean isPhoto;    //区分上传图片还是视频
-    private PublishDynamicAdapter mediaAdapter;
-    private ArrayList<BaseMedia> selectedMedia;
-    private DynamicPresent dynamicPresent;
+    protected boolean isPhoto;    //区分上传图片还是视频
+    protected PublishDynamicAdapter mediaAdapter;
+    protected ArrayList<BaseMedia> selectedMedia;
+    protected DynamicPresent dynamicPresent;
 
-    private LinearLayout layoutAddCircle;
-    private ImageView imgAddCircle;
-    private TextView txtAddCircle;
-    private LinearLayout layoutAddLocation;
-    private ImageView imgAddLocation;
-    private TextView txtLocation;
-    private ImageButton bt_circle_delete, bt_location_delete;
-    private String type;
-    private String link_id;
-    private String position_name;
-    private String user_id;
-    private String name;
-    private String latitude = App.lat + "";
-    private String longitude = App.lon + "";
-    private String content;
+    protected LinearLayout layoutAddCircle;
+    protected ImageView imgAddCircle;
+    protected TextView txtAddCircle;
+    protected LinearLayout layoutAddLocation;
+    protected ImageView imgAddLocation;
+    protected TextView txtLocation;
+    protected ImageButton bt_circle_delete, bt_location_delete;
+    protected String type;
+    protected String link_id;
+    protected String position_name;
+    protected String user_id;
+    protected String name;
+    protected String latitude = App.lat + "";
+    protected String longitude = App.lon + "";
+    protected String content;
 
 
     public static void startForResult(Fragment fragment, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
@@ -248,7 +248,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         }
     }
 
-    private void uploadToQiNiu() {
+    protected void uploadToQiNiu() {
         showProgressDialog();
         for (BaseMedia media : selectedMedia) {
             Logger.i("Publish", "uploadToQiNiu selectedMedia = " + media.getPath());
@@ -268,9 +268,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         });
     }
 
-    Map<String, String> itUser = new HashMap<>();
+    protected   Map<String, String> itUser = new HashMap<>();
 
-    private void uploadToServer(List<String> qiNiuMediaUrls) {
+    protected void uploadToServer(List<String> qiNiuMediaUrls) {
         content = etContent.getText().toString();
         String[] media = new String[qiNiuMediaUrls.size()];
         for (int i = 0; i < qiNiuMediaUrls.size(); i++) {

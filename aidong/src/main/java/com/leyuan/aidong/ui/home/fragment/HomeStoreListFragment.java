@@ -1,14 +1,21 @@
 package com.leyuan.aidong.ui.home.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
@@ -19,14 +26,13 @@ import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.view.VenuesFilterView;
-import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverVenuesActivityView;
 import com.leyuan.aidong.ui.mvp.view.VenuesSelfSupportView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
@@ -55,13 +61,36 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private ArrayList<VenuesBean> data = new ArrayList<>();
 
-    private VenuesPresent venuesPresent;
+    private VenuesPresentImpl venuesPresent;
     private String brand_id;
     private String landmark;
     private String gymTypes;
     private String bussiness_area;
     private RecyclerView headerRecyclerView;
     private HeaderStoreListAdapter headerStoreAdapter;
+
+    BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
+                resetRefreshData();
+
+            }
+
+
+        }
+    };
+    private LinearLayout layout_mine_store;
+    private LinearLayout layout_head;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
+    }
 
     @Nullable
     @Override
@@ -76,6 +105,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         venuesPresent = new VenuesPresentImpl(getActivity(), this);
         initView(view);
         setListener();
+
         venuesPresent.getGymBrand();
         venuesPresent.getBusinessCircle();
         venuesPresent.getGymTypes();
@@ -102,6 +132,19 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
 
     }
 
+    public void resetRefreshData() {
+
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+
+        venuesPresent.getGymBrand();
+        venuesPresent.getBusinessCircle();
+        venuesPresent.getGymTypes();
+        venuesPresent.getSlefSupportVenues(this);
+        venuesPresent.pullToRefreshData(brand_id, landmark, bussiness_area, gymTypes);
+
+    }
+
     private void refreshData() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
@@ -117,16 +160,20 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
 
-        View headerView = View.inflate(getActivity(), R.layout.header_home_store_list, null);
 
-        TextView txtStoreTypeName = (TextView) headerView.findViewById(R.id.txt_store_type_name);
-        headerRecyclerView = (RecyclerView) headerView.findViewById(R.id.recyclerView);
+//        View headerView = View.inflate(getActivity(), R.layout.header_home_store_list, null);
+
+        TextView txtStoreTypeName = (TextView) view.findViewById(R.id.txt_store_type_name);
+
+        layout_head = (LinearLayout) view.findViewById(R.id.layout_head);
+        layout_mine_store = (LinearLayout) view.findViewById(R.id.layout_mine_store);
+        headerRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         headerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         headerStoreAdapter = new HeaderStoreListAdapter(getActivity());
         headerRecyclerView.setAdapter(headerStoreAdapter);
 
-        RecyclerViewUtils.setHeaderView(recyclerView, headerView);
+//        RecyclerViewUtils.setHeaderView(recyclerView, headerView);
     }
 
     private void initFilterView(View view) {
@@ -135,6 +182,11 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
             @Override
             public void onBrandItemClick(String brandId) {
                 brand_id = brandId;
+//
+//                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) layout_head.getLayoutParams();
+//                layoutParams.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+//                layout_head.setLayoutParams(layoutParams);
+
                 refreshData();
             }
 
@@ -166,11 +218,16 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             if (scrolledDistance > HIDE_THRESHOLD && filterViewVisible) {           //手指向上滑动
+                layout_head.animate().translationY(-layout_head.getHeight()).setInterpolator
+                        (new AccelerateInterpolator(2)).start();
+
                 filterView.animate().translationY(-filterView.getHeight()).setInterpolator
                         (new AccelerateInterpolator(2)).start();
                 filterViewVisible = false;
                 scrolledDistance = 0;
             } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
+                layout_head.animate().translationY(0).setInterpolator
+                        (new DecelerateInterpolator(2)).start();
                 filterView.animate().translationY(0).setInterpolator
                         (new DecelerateInterpolator(2)).start();
                 scrolledDistance = 0;
@@ -190,7 +247,14 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
 
     @Override
     public void onGetSelfSupportVenues(ArrayList<VenuesBean> gym) {
-        headerStoreAdapter.setData(gym);
+
+        if (gym == null || gym.isEmpty()) {
+            headerRecyclerView.setVisibility(View.GONE);
+        } else {
+            headerRecyclerView.setVisibility(View.VISIBLE);
+            headerStoreAdapter.setData(gym);
+        }
+
     }
 
     @Override
@@ -241,4 +305,9 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         switcherLayout.showCustomLayout("empty");
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(selectCityReceiver);
+    }
 }

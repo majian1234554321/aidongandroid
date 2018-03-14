@@ -43,8 +43,8 @@ public class ContestModelImpl {
                 .subscribe(subscribe);
     }
 
-    public void postVideo(Observer<BaseBean> subscribe, String id, String video) {
-        contestService.postVideo(id, video)
+    public void postVideo(Observer<BaseBean> subscribe, String id, String video,String content) {
+        contestService.postVideo(id, video,content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscribe);
@@ -96,9 +96,9 @@ public class ContestModelImpl {
                 .subscribe(subscribe);
     }
 
-    public void getContestRanking(Observer<RankingData> subscribe, String id, String division, String type) {
+    public void getContestRanking(Observer<RankingData> subscribe, String id, String division, String type,String gender) {
 
-        contestService.getContestRanking(id, division, type)
+        contestService.getContestRanking(id, division, type,gender)
                 .compose(RxHelper.<RankingData>transform())
                 .subscribe(subscribe);
     }

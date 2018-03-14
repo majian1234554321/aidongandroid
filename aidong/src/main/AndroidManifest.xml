@@ -324,6 +324,10 @@
             android:name=".ui.competition.activity.ContestHomeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.competition.activity.PublishContestDynamicActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.competition.activity.ContestQuarterFinalEnrolActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -424,6 +428,10 @@
         <activity
             android:name=".ui.home.activity.LocationActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.SelectCityActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.discover.activity.PublishDynamicActivity"
             android:screenOrientation="portrait" />

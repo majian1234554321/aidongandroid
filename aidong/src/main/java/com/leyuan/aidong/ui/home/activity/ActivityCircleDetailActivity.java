@@ -194,7 +194,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         layout_title = (CommonTitleLayout) findViewById(R.id.layout_title);
         txt_share_image = (TextView) findViewById(R.id.txt_share_image);
         txt_appoint_immediately = (TextView) findViewById(R.id.txt_appoint_immediately);
-        txt_appoint_immediately.setText(R.string.appoint_sign_up);
+        txt_appoint_immediately.setText(R.string.enrol_immediatly);
 
         layout_title.setLeftIconListener(this);
         layout_title.setRightIconListener(this);

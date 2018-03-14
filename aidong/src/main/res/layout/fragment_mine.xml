@@ -264,6 +264,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_visible="true"
+                android:visibility="gone"
                 app:img_tag="@drawable/mine_private"
                 app:txt_name="私人定制" />
 

@@ -13,6 +13,8 @@ public interface FollowPresent {
 
     void getFollowList();
 
+    void getFollowCahceList();
+
     void getFollowers(int pageSize);
 
     /**

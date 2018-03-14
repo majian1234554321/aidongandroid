@@ -48,7 +48,7 @@ public interface ContestService {
 
     @FormUrlEncoded
     @POST("contest/{id}/preliminary")
-    Observable<BaseBean> postVideo(@Path("id") String id, @Field("video") String video);
+    Observable<BaseBean> postVideo(@Path("id") String id, @Field("video") String video,@Field("content") String content);
 
     @POST("contest/{contestId}/schedules/{scheduleId}")
     Observable<BaseBean> scheduleEnrol(@Path("contestId") String contestId, @Path("scheduleId") String scheduleId);
@@ -75,7 +75,8 @@ public interface ContestService {
     @GET("contest/{id}/ranking")
     Observable<BaseBean<RankingData>> getContestRanking(@Path("id") String id,
                                                         @Query("division") String division,
-                                                        @Query("list") String type);
+                                                        @Query("list") String type,
+                                                        @Query("gender") String gender);
 
 
     @GET("contest/{id}/schedules")

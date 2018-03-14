@@ -84,7 +84,7 @@
                             android:textSize="16sp" />
                     </LinearLayout>
 
-                    <include layout="@layout/inc_line_with_margin" />
+                    <include layout="@layout/inc_line_margin_left" />
 
                     <LinearLayout
 
@@ -96,14 +96,17 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/img_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/icon_address" />
 
                         <LinearLayout
+                            android:id="@+id/layout_address"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -121,7 +124,7 @@
                                 android:id="@+id/txt_address_detail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="6dp"
                                 android:text="22222222"
                                 android:textColor="@color/b3"
                                 android:textSize="13sp"
@@ -138,18 +141,22 @@
 
                         <ImageButton
                             android:id="@+id/img_bt_telephone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_marginLeft="35dp"
                             android:background="@color/transparent"
                             android:src="@drawable/icon_telephone_red" />
                     </LinearLayout>
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:src="@color/base_theme" />
+
                     <LinearLayout
                         android:id="@+id/layout_relate_goods"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:background="@color/white"
                         android:orientation="vertical">
 
@@ -281,8 +288,10 @@
 
                         </LinearLayout>
 
-
                     </LinearLayout>
+
+                    <include layout="@layout/inc_line_margin_left" />
+
 
                     <LinearLayout
                         android:id="@+id/ll_other_sub_store"
@@ -358,28 +367,28 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/icon_parking" />
+                            android:src="@drawable/icon_parking_gray" />
 
                         <ImageView
                             android:id="@+id/iv_wifi"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/icon_wifi" />
+                            android:src="@drawable/icon_wifi_gray" />
 
                         <ImageView
                             android:id="@+id/iv_bath"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/icon_bath" />
+                            android:src="@drawable/icon_bath_gray" />
 
                         <ImageView
                             android:id="@+id/iv_food"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/icon_food" />
+                            android:src="@drawable/icon_food_gray" />
                     </LinearLayout>
 
                     <TextView
@@ -423,10 +432,11 @@
         </android.support.design.widget.CoordinatorLayout>
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        android:background="@color/transparent">
+        android:background="@color/semitransparent">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -440,7 +450,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="5dp"
-            android:src="@drawable/share"
+
+            android:src="@drawable/icon_share"
             android:tint="@color/white"
             android:visibility="visible" />
     </RelativeLayout>

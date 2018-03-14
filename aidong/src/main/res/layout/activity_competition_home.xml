@@ -36,18 +36,18 @@
             android:layout_marginRight="15dp"
             android:background="@color/transparent"
             android:scaleType="centerInside"
-            android:src="@drawable/share_white_competition" />
+            android:src="@drawable/icon_share" />
 
         <ImageButton
             android:id="@+id/img_attention"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:layout_toLeftOf="@id/img_share"
             android:background="@color/transparent"
             android:scaleType="centerInside"
-            android:src="@drawable/icon_attention_competition" />
+            android:src="@drawable/icon_contest_parse_not" />
     </RelativeLayout>
 
     <ImageView
@@ -68,14 +68,14 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp">
+            android:visibility="visible"
+            android:layout_marginBottom="15dp">
 
             <ImageView
                 android:id="@+id/img_post_or_enrol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="25dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/post_video"
                 android:visibility="visible" />
@@ -99,6 +99,12 @@
                         android:layout_height="129dp"
                         android:scaleType="centerCrop"
                         android:src="@color/red_origin" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_end_state"
+                        />
 
                     <Button
                         android:id="@+id/bt_end_play"
@@ -125,6 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:text="@string/enrolment_is_over"
+                    android:visibility="gone"
                     android:textColor="@color/c9"
                     android:textSize="11dp" />
 

@@ -1,6 +1,6 @@
 package com.leyuan.aidong.entity.data;
 
-import com.leyuan.aidong.entity.campaign.RankingBean;
+import com.leyuan.aidong.entity.UserBean;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,6 @@ import java.util.ArrayList;
  */
 public class RankingData {
 
-    public  ArrayList<RankingBean> ranking;
+    public  ArrayList<UserBean> ranking;
 
 }

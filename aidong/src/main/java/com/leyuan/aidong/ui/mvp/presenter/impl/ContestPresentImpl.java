@@ -132,7 +132,7 @@ public class ContestPresentImpl {
         }, id, name, gender, division);
     }
 
-    public void postVideo(String id, String video) {
+    public void postVideo(String id, String video,String content) {
         contestModel.postVideo(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
@@ -145,7 +145,7 @@ public class ContestPresentImpl {
             public void onError(Throwable e) {
                 super.onError(e);
             }
-        }, id, video);
+        }, id, video,content);
     }
 
     public void checkInvitationCode(String id, String code) {
@@ -214,7 +214,7 @@ public class ContestPresentImpl {
         }, id, scheduleId);
     }
 
-    public void getContestRanking(String id, String division, String type) {
+    public void getContestRanking(String id, String division, String type,String gender) {
         contestModel.getContestRanking(new ProgressSubscriber<RankingData>(context) {
             @Override
             public void onNext(RankingData rankingData) {
@@ -227,7 +227,7 @@ public class ContestPresentImpl {
             public void onError(Throwable e) {
                 super.onError(e);
             }
-        }, id, division, type);
+        }, id, division, type,gender);
     }
 
 

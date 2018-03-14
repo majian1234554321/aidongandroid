@@ -89,6 +89,7 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
     @Override
     public void onItemClick(int position) {
         coursePresent.getCoachCourseList(mobile);
+
     }
 
 //    @Override

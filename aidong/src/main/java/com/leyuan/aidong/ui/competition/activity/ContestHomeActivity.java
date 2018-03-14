@@ -8,10 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
@@ -29,8 +31,10 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ContestEnrolView;
 import com.leyuan.aidong.ui.mvp.view.ContestHomeView;
+import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
@@ -38,20 +42,19 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
-import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
-import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.leyuan.aidong.R.id.img_post_or_enrol;
+import static com.leyuan.aidong.utils.Constant.REQUEST_PUBLISH_DYNAMIC;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
 /**
  * Created by user on 2018/2/6.
  */
 
-public class ContestHomeActivity extends BaseActivity implements View.OnClickListener, ContestHomeView, ContestEnrolView {
+public class ContestHomeActivity extends BaseActivity implements View.OnClickListener, ContestHomeView, ContestEnrolView, FollowView {
 
 
     private RelativeLayout relTitle;
@@ -64,6 +67,8 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     private TextView txtRelateDynamic;
     private TextView txtOfficialInfo;
     private TextView txtRank;
+    private ImageButton img_attention;
+
     private FrameLayout layoutInvitation;
 
     private String contestId;
@@ -74,10 +79,25 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     private String invitationCode;
     private SharePopupWindow sharePopupWindow;
     private ArrayList<BaseMedia> selectedMedia;
+    private FollowPresentImpl present;
+
+
+    public static void start(Context context, String contestId) {
+        Intent intent = new Intent(context, ContestHomeActivity.class);
+        intent.putExtra("contestId", contestId);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, CampaignBean campaignBean) {
+        Intent intent = new Intent(context, ContestHomeActivity.class);
+        intent.putExtra("campaignBean", campaignBean);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_competition_home);
 
         txtTitle = (TextView) findViewById(R.id.txt_title);
@@ -94,6 +114,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         layoutInvitation = (FrameLayout) findViewById(R.id.layout_invitation);
         layoutInvitation.setVisibility(View.GONE);
 
+        img_attention = (ImageButton) findViewById(R.id.img_attention);
 
         contestId = getIntent().getStringExtra("contestId");
         campaignBean = getIntent().getParcelableExtra("campaignBean");
@@ -123,10 +144,15 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
 
         sharePopupWindow = new SharePopupWindow(this);
 
+        present = new FollowPresentImpl(this);
+        present.setFollowListener(this);
+
     }
 
     @Override
     public void onClick(View view) {
+
+
         switch (view.getId()) {
 
             case R.id.img_back:
@@ -134,17 +160,25 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.img_share:
+                if (contest == null) return;
                 sharePopupWindow.showAtBottom("我分享了赛事: " + contest.name + "，速速围观", contest.name,
                         contest.background, ConstantUrl.URL_SHARE_DYNAMIC + contest.id);
 
                 break;
 
             case R.id.img_attention:
-                ContestEnrolmentInfoActivity.start(this, contestId, campaignBean.name, campaignBean.start, contest);
+
+                if (contest == null) return;
+                if (contest.followed) {
+                    present.cancelFollow(contestId, contest.type);
+                } else {
+                    present.addFollow(contestId, contest.type);
+                }
+
                 break;
 
             case R.id.bt_end_play:
-
+                if (contest == null) return;
                 Intent intent = new Intent(this, PlayerActivity.class)
                         .setData(Uri.parse(contest.video))
                         .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER);
@@ -152,14 +186,14 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case img_post_or_enrol:
-
+                if (contest == null) return;
                 if (!App.getInstance().isLogin()) {
                     UiManager.activityJump(this, LoginActivity.class);
                 } else if ("preliminary".equals(contest.status)) {
-                    if(contest.joined){
+                    if (contest.joined) {
                         BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
                         Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
-                    }else {
+                    } else {
                         ContestEnrolmentInfoActivity.start(this, contestId, campaignBean.name, campaignBean.start, contest);
                     }
 
@@ -180,7 +214,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.txt_relate_dynamic:
-                ContestDynamicActivity.start(this,contestId);
+                ContestDynamicActivity.start(this, contestId);
                 break;
 
             case R.id.txt_official_info:
@@ -220,23 +254,14 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         return (EditText) findViewById(R.id.edit_invitation_code);
     }
 
-    public static void start(Context context, String contestId) {
-        Intent intent = new Intent(context, ContestHomeActivity.class);
-        intent.putExtra("contestId", contestId);
-        context.startActivity(intent);
-    }
-
-    public static void start(Context context, CampaignBean campaignBean) {
-        Intent intent = new Intent(context, ContestHomeActivity.class);
-        intent.putExtra("campaignBean", campaignBean);
-        context.startActivity(intent);
-    }
 
     @Override
     public void onGetContestDetailData(ContestBean contest) {
         this.contest = contest;
 
         GlideLoader.getInstance().displayImage(contest.background, img_bg);
+        img_attention.setImageResource(contest.followed ? R.drawable.icon_contest_parsed : R.drawable.icon_contest_parse_not);
+
 
         if ("preliminary".equals(contest.status)) {
 
@@ -264,7 +289,6 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -281,8 +305,11 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 if (selectedMedia != null && selectedMedia.size() > 0) {
 
                     selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
+//
+                    PublishContestDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                            selectedMedia, REQUEST_PUBLISH_DYNAMIC, contestId);
 
-                    uploadVideo();
+//                    uploadVideo();
 
 
                 }
@@ -290,29 +317,29 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void uploadVideo() {
-
-        Logger.i("contest video ", "uploadVideo");
-        UploadToQiNiuManager.getInstance().uploadMediaVideo(selectedMedia, new IQiNiuCallback() {
-            @Override
-            public void onSuccess(List<String> urls) {
-                Logger.i("contest video ", "uploadVideo  onSuccess urls .size = " + urls.size());
-
-                if (urls != null && urls.size() > 0){
-                    DialogUtils.showDialog(ContestHomeActivity.this,"",true);
-                    contestPresent.postVideo(contestId, urls.get(0));
-                }
-
-
-            }
-
-            @Override
-            public void onFail() {
-                dismissProgressDialog();
-                ToastGlobal.showLong("上传失败");
-            }
-        });
-    }
+//    private void uploadVideo() {
+//
+//        Logger.i("contest video ", "uploadVideo");
+//        UploadToQiNiuManager.getInstance().uploadMediaVideo(selectedMedia, new IQiNiuCallback() {
+//            @Override
+//            public void onSuccess(List<String> urls) {
+//                Logger.i("contest video ", "uploadVideo  onSuccess urls .size = " + urls.size());
+//
+//                if (urls != null && urls.size() > 0){
+//                    DialogUtils.showDialog(ContestHomeActivity.this,"",true);
+//                    contestPresent.postVideo(contestId, urls.get(0));
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onFail() {
+//                dismissProgressDialog();
+//                ToastGlobal.showLong("上传失败");
+//            }
+//        });
+//    }
 
     @Override
     public void onContestEnrolResult(BaseBean baseBean) {
@@ -323,5 +350,29 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     public void onPostVideoResult(BaseBean baseBean) {
         DialogUtils.dismissDialog();
         ToastGlobal.showLong("视频上传成功");
+    }
+
+    @Override
+    public void addFollowResult(BaseBean baseBean) {
+
+        if (baseBean.getStatus() == Constant.OK) {
+            contest.followed = true;
+            img_attention.setImageResource(R.drawable.icon_contest_parsed);
+            Toast.makeText(this, R.string.follow_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void cancelFollowResult(BaseBean baseBean) {
+        if (baseBean.getStatus() == Constant.OK) {
+            contest.followed = false;
+            img_attention.setImageResource(R.drawable.icon_contest_parse_not);
+            Toast.makeText(this, R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
     }
 }

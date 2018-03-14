@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.campaign.RankingBean;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -22,7 +22,7 @@ import java.util.List;
 public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRankingListAdapter.ViewHolder> {
 
     private final Context context;
-    private List<RankingBean> users;
+    private List<UserBean> users;
     private OnAttentionClickListener listener;
 
     public ContestRankingListAdapter(Context context) {
@@ -37,17 +37,18 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final RankingBean user = users.get(position);
-        GlideLoader.getInstance().displayCircleImage(user.avatar, holder.imgAvatar);
-        holder.txtCoachName.setText(user.name);
+        final UserBean user = users.get(position);
+        GlideLoader.getInstance().displayCircleImage(user.getAvatar(), holder.imgAvatar);
+        holder.txtCoachName.setText(user.getName());
         holder.txtIntro.setText(user.score + "分");
-        holder.txt_rank.setText(user.rank+"");
-
+        holder.txt_rank.setText(user.rank + "");
+        holder.btAttention.setImageResource(user.followed
+                ? R.drawable.icon_followed : R.drawable.icon_follow);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfoActivity.start(context, user.id);
+                UserInfoActivity.start(context, user.getId());
 
             }
         });
@@ -56,7 +57,7 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onCourseAttentionClick(user.id, position, true);
+                    listener.onCourseAttentionClick(user.getId(), position, user.followed);
                 }
             }
         });
@@ -68,7 +69,7 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
         return users.size();
     }
 
-    public void setData(List<RankingBean> followings) {
+    public void setData(List<UserBean> followings) {
         this.users = followings;
         notifyDataSetChanged();
     }
@@ -76,7 +77,7 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgAvatar;
         private TextView txtCoachName;
-        private TextView txtIntro,txt_rank;
+        private TextView txtIntro, txt_rank;
         private ImageButton btAttention;
 
         public ViewHolder(View view) {

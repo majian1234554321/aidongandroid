@@ -1,11 +1,17 @@
 package com.leyuan.aidong.ui.home.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +28,7 @@ import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.home.view.CourseListFilterNew;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseFilterCallback;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -47,10 +54,42 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
     private ViewPager viewPager;
     private String allcategory;
 
+
+    BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
+                resetRefreshData();
+
+            }
+
+
+        }
+    };
+
+    private void resetRefreshData() {
+
+        for (int i = 0; i < days.size(); i++) {
+            Fragment page = adapter.getPage(i);
+            if (page != null)
+                ((CourseListFragmentNew) page).fetchData();
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
+
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return  inflater.inflate(R.layout.fragment_home_course_list, container, false);
+        return inflater.inflate(R.layout.fragment_home_course_list, container, false);
     }
 
     @Override
@@ -78,20 +117,20 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
     }
 
     private void initView(View view) {
-        tabLayout = (SmartTabLayout)  view.findViewById(R.id.tab_layout);
-        filterView = (CourseListFilterNew)  view.findViewById(R.id.view_filter_course);
-        viewPager = (ViewPager)  view.findViewById(R.id.view_pager);
+        tabLayout = (SmartTabLayout) view.findViewById(R.id.tab_layout);
+        filterView = (CourseListFilterNew) view.findViewById(R.id.view_filter_course);
+        viewPager = (ViewPager) view.findViewById(R.id.view_pager);
 
         days = DateUtils.getSevenDate();
-        if(category != null ){
-            allcategory = "all,"+category;
+        if (category != null) {
+            allcategory = "all," + category;
         }
 
         FragmentPagerItems pages = new FragmentPagerItems(getActivity());
         for (int i = 0; i < days.size(); i++) {
             CourseListFragmentNew courseFragment = new CourseListFragmentNew();
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                    new Bundler().putString("date", days.get(i)).putString("category",allcategory).get()
+                    new Bundler().putString("date", days.get(i)).putString("category", allcategory).get()
             ));
 
 //            if (!TextUtils.isEmpty(category)) {
@@ -195,6 +234,12 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
             if (page != null)
                 ((CourseListFragmentNew) page).fetchData();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(selectCityReceiver);
     }
 
 }

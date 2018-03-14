@@ -34,6 +34,10 @@ public interface FollowService {
     @GET("mine/followings")
     Observable<BaseBean<FollowData>> getFollow(@Query("list") String type, @Query("page") int page);
 
+
+    @GET("mine/followings/user_cache")
+    Observable<BaseBean<FollowData>> getFollowCache();
+
 //    /**
 //     * 添加关注
 //     * @param id 关注的用户id

@@ -51,13 +51,13 @@ public class FollowMeAdapter extends RecyclerView.Adapter<FollowMeAdapter.UserHo
         holder.distance.setText(bean.getSignature());
         holder.gender.setBackgroundResource("0".equals(bean.getGender()) ? R.drawable.icon_man
                 : R.drawable.icon_woman);
-        holder.follow.setBackgroundResource(bean.following
+        holder.follow.setBackgroundResource(bean.followed
                 ? R.drawable.icon_followed : R.drawable.icon_follow);
 
         holder.follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bean.following) {
+                if (bean.followed) {
                     if (followListener != null) {
                         followListener.onCancelFollow(bean.getId(), position);
                     }
@@ -101,11 +101,13 @@ public class FollowMeAdapter extends RecyclerView.Adapter<FollowMeAdapter.UserHo
     }
 
     public interface FollowListener {
+
         void onAddFollow(String id, int position);
 
         void onCancelFollow(String id, int position);
 
         void onItemClick(UserBean userBean, int position);
+
     }
 
     public static class SimpleFollowListener implements FollowListener {

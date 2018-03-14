@@ -91,7 +91,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/transparent"
+            android:background="@drawable/shape_simi_circle_orange_solid"
+
+
             android:gravity="center"
             android:text="@string/mass_election"
             android:textColor="@color/white"
@@ -102,7 +104,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_simi_circle_orange_solid"
+            android:background="@color/transparent"
             android:gravity="center"
             android:text="@string/quarter_final"
             android:textColor="@color/white"
@@ -130,15 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <FrameLayout
-            android:id="@+id/layout_my_ranking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:visibility="gone">
 
-            <include layout="@layout/inc_contest_ranking_mine" />
-        </FrameLayout>
     </RelativeLayout>
 
 </LinearLayout>

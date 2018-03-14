@@ -127,6 +127,20 @@
 
             />
 
+        <EditText
+            android:id="@+id/edit_name"
+            android:background="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:paddingLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/txt_user_name"
+            android:hint="请输入真实姓名"
+            android:textColor="@color/e6"
+            android:textColorHint="@color/b3"
+            android:textSize="15sp"
+            />
 
         <View
             android:layout_width="match_parent"

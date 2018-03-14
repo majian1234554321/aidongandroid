@@ -4,7 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.leyuan.aidong.entity.model.Coordinate;
 import com.leyuan.aidong.utils.Logger;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by user on 2018/2/6.
@@ -20,6 +24,17 @@ public class ContestBean implements Parcelable {
     public String video;//: "赛事介绍视频",
     public String status;//: '赛事状态' #preliminary-海选 semi_finals-复赛 finals-决赛,
     public CompetitionAreaBean[] division_info;//: ["赛区-1","赛区-2"]
+
+    public String address;
+    public String cover;
+    public String end_date;
+    public boolean followed;
+    public String landmark;
+    public String start_date;
+    public String type;
+
+    public Coordinate coordinate;
+
 
     protected ContestBean(Parcel in) {
         id = in.readString();
@@ -77,5 +92,15 @@ public class ContestBean implements Parcelable {
             }
         }
         return null;
+    }
+
+    public ArrayList<String> getAllCity() {
+        if (division_info == null) return null;
+        ArrayList<String> citys = new ArrayList<>();
+
+        for (CompetitionAreaBean areaBean : division_info) {
+            Collections.addAll(citys, areaBean.city);
+        }
+        return citys;
     }
 }

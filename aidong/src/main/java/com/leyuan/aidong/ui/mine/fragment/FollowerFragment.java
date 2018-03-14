@@ -147,7 +147,7 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
             FollowerFragment.this.position = position;
 
             UserBean userBean = data.get(position);
-            present.addFollow(id, userBean.getUserTypeByUserType());
+            present.addFollow(id, userBean.getTypeByType());
 
 //            present.addFollow(id);
         }
@@ -156,19 +156,20 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
         public void onCancelFollow(String id, int position) {
             FollowerFragment.this.position = position;
             UserBean userBean = data.get(position);
-            present.cancelFollow(id, userBean.getUserTypeByUserType());
+            present.cancelFollow(id, userBean.getTypeByType());
         }
 
         @Override
         public void onItemClick(UserBean userBean, int position) {
             FollowerFragment.this.itemClickedPosition = position;
             if (Constant.USER.equals(userBean.type)) {
-//                UserInfoActivity.start(getContext(), userBean.getId());
+
+//              UserInfoActivity.start(getContext(), userBean.getId());
 
                 UserInfoActivity.startForResult(FollowerFragment.this, userBean.getId(), Constant.REQUEST_USER_INFO);
 
             } else {
-//                CoachInfoActivity.start(getContext(), userBean.getId());
+//              CoachInfoActivity.start(getContext(), userBean.getId());
 
                 UserInfoActivity.startForResult(FollowerFragment.this, userBean.getId(), Constant.REQUEST_USER_INFO);
             }
@@ -181,7 +182,7 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
         if (baseBean.getStatus() == Constant.OK) {
 //            SystemInfoUtils.addFollow(data.get(position));
 
-            data.get(position).following = true;
+            data.get(position).followed = true;
             followAdapter.notifyDataSetChanged();
             Toast.makeText(getContext(), R.string.follow_success, Toast.LENGTH_LONG).show();
         } else {
@@ -194,7 +195,7 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
         if (baseBean.getStatus() == Constant.OK) {
 //            SystemInfoUtils.removeFollow(data.get(position));
 //            data.remove(data.get(position));
-            data.get(position).following = false;
+            data.get(position).followed = false;
             followAdapter.notifyDataSetChanged();
             Toast.makeText(getContext(), R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
         } else {
@@ -218,9 +219,9 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
             switch (requestCode) {
                 case Constant.REQUEST_USER_INFO:
 
-                    FollowerFragment.this.data.get(itemClickedPosition).following =
-                            data.getBooleanExtra(Constant.FOLLOW, FollowerFragment.this.data.get(itemClickedPosition).following);
-                    Logger.i("follow", "onActivityResult follow = " + FollowerFragment.this.data.get(itemClickedPosition).following);
+                    FollowerFragment.this.data.get(itemClickedPosition).followed =
+                            data.getBooleanExtra(Constant.FOLLOW, FollowerFragment.this.data.get(itemClickedPosition).followed);
+                    Logger.i("follow", "onActivityResult follow = " + FollowerFragment.this.data.get(itemClickedPosition).followed);
 
                     followAdapter.notifyItemChanged(itemClickedPosition);
                     break;

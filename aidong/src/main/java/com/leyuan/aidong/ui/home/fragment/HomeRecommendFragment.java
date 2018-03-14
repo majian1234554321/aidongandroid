@@ -79,6 +79,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         public void onReceive(Context context, Intent intent) {
             if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
                 initHomeBanner();
+                refreshData();
             } else {
                 refreshData();
             }

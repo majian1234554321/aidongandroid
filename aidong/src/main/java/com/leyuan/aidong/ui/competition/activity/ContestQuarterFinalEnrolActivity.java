@@ -162,6 +162,7 @@ public class ContestQuarterFinalEnrolActivity extends BaseActivity implements On
     @Override
     public void onScheduleEnrol(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
+            ToastGlobal.showLongConsecutive("报名成功，请提早15分钟进入赛场");
             coursePresent.getContestSchedules(contestId, currPage);
         } else {
             ToastGlobal.showLongConsecutive(baseBean.getMessage());
@@ -171,6 +172,7 @@ public class ContestQuarterFinalEnrolActivity extends BaseActivity implements On
     @Override
     public void onScheduleCancelResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
+            ToastGlobal.showLongConsecutive("取消报名成功");
             coursePresent.getContestSchedules(contestId, currPage);
         } else {
             ToastGlobal.showLongConsecutive(baseBean.getMessage());

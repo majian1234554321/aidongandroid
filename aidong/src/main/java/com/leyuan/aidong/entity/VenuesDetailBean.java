@@ -38,6 +38,10 @@ public class VenuesDetailBean {
 
     @SerializedName("area")
     private String area;
+
+    @SerializedName("city")
+    public String city;
+
     @SerializedName("price")
     private String price;
     @SerializedName("distance")
@@ -54,6 +58,7 @@ public class VenuesDetailBean {
 
     @SerializedName("brand_name")
     private String brand_name;
+
 
     @SerializedName("brother")
     private ArrayList<VenuesBean> brother;

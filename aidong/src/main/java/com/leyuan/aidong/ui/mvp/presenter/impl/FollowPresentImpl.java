@@ -20,10 +20,12 @@ import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.view.AppointmentUserActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseBeanNewDataView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
+import com.leyuan.aidong.ui.mvp.view.FollowCacheView;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
 import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.mvp.view.UserInfoView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -47,6 +49,7 @@ public class FollowPresentImpl implements FollowPresent {
     private CourseBeanNewDataView courseListListener;
     private CourserFragmentView courserFragmentView;
     private ArrayList<CourseBeanNew> courseBeanList;
+    private FollowCacheView followCacheView;
 
     public FollowPresentImpl(Context context) {
         this.context = context;
@@ -74,6 +77,9 @@ public class FollowPresentImpl implements FollowPresent {
         this.followView = followView;
     }
 
+    public void setFollowCacheView(FollowCacheView followCacheView) {
+        this.followCacheView = followCacheView;
+    }
 
     public void getUserFollow(String type, int page) {
         followModel.getUserFollow(new BaseSubscriber<FollowUserData>(context) {
@@ -172,29 +178,73 @@ public class FollowPresentImpl implements FollowPresent {
     @Override
     public void getFollowList() {
         //旧的获取关注的人列表
-//        followModel.getFollow(new RefreshSubscriber<FollowData>(context) {
-//            @Override
-//            public void onNext(FollowData followData) {
-//                if (followData != null) {
-//                    Constant.followData = followData;
-//                    SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
-//                }
-//                if (requestResponse != null) {
-//                    requestResponse.onRequestResponse();
-//                }
-//
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                super.onError(e);
-//                if (requestResponse != null) {
-//                    requestResponse.onRequestResponse();
-//                }
-//            }
-//        }, "followings", Constant.PAGE_FIRST);
+        followModel.getFollowCache(new RefreshSubscriber<FollowData>(context) {
+            @Override
+            public void onNext(FollowData followData) {
+                if (followData != null) {
+                    followData = followData;
+                    SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
+                }
+                if (requestResponse != null) {
+                    requestResponse.onRequestResponse();
+                }
+
+                if (followCacheView != null) {
+                    followCacheView.onGetFollowCacheList(followData.following_ids);
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (requestResponse != null) {
+                    requestResponse.onRequestResponse();
+                }
+
+                if (followCacheView != null) {
+                    followCacheView.onGetFollowCacheList(null);
+                }
+            }
+        });
     }
+
+    @Override
+    public void getFollowCahceList() {
+        //旧的获取关注的人列表
+        followModel.getFollowCache(new RefreshSubscriber<FollowData>(context) {
+            @Override
+            public void onNext(FollowData followData) {
+                if (followData != null) {
+                    followData = followData;
+                    SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
+                }
+                if (requestResponse != null) {
+                    requestResponse.onRequestResponse();
+                }
+
+                if (followCacheView != null) {
+                    followCacheView.onGetFollowCacheList(followData.following_ids);
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (requestResponse != null) {
+                    requestResponse.onRequestResponse();
+                }
+
+                if (followCacheView != null) {
+                    followCacheView.onGetFollowCacheList(null);
+                }
+            }
+        });
+    }
+
 
     @Override
     public void getFollowers(final int pageSize) {
@@ -225,7 +275,7 @@ public class FollowPresentImpl implements FollowPresent {
                 }
                 if (userBeanList != null && !userBeanList.isEmpty()) {
                     if ("followings".equals(type)) {
-                        Constant.followData = followData;
+                        followData = followData;
                         SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
                     }
                     switcherLayout.showContentLayout();
@@ -244,7 +294,7 @@ public class FollowPresentImpl implements FollowPresent {
             public void onNext(FollowData followData) {
                 if (followData != null && !followData.getFollow().isEmpty()) {
                     if ("followings".equals(type)) {
-                        Constant.followData = followData;
+                        followData = followData;
                         SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
                     }
                     followFragment.onRefreshData(followData.getFollow());
@@ -293,12 +343,19 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
+
+                Logger.i("Appointuseractivity follow"," addFollow  onNext");
+
                 if (followView != null) {
                     followView.addFollowResult(baseBean);
                 }
 
                 if (followFragment != null) {
                     followFragment.addFollowResult(baseBean);
+                }
+
+                if (appointmentUserActivityView != null) {
+                    appointmentUserActivityView.addFollowResult(baseBean);
                 }
             }
         }, id, type);
@@ -324,12 +381,19 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
+                Logger.i("Appointuseractivity follow"," cancelFollow  onNext");
+
+
                 if (followView != null) {
                     followView.cancelFollowResult(baseBean);
                 }
 
                 if (followFragment != null) {
                     followFragment.cancelFollowResult(baseBean);
+                }
+
+                if (appointmentUserActivityView != null) {
+                    appointmentUserActivityView.cancelFollowResult(baseBean);
                 }
             }
         }, id, type);

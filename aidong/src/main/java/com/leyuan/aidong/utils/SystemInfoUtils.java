@@ -401,20 +401,39 @@ public class SystemInfoUtils {
     }
 
 
+//    /**
+//     * 获取关注列表
+//     *
+//     * @param context
+//     * @return
+//     */
+//    public static List<UserBean> getFollowList(Context context) {
+//        List<UserBean> followList = new ArrayList<>();
+//        if (Constant.followData != null && Constant.followData.getFollow() != null) {
+//            followList = Constant.followData.getFollow();
+//        } else {
+//            Object bean = getSystemInfoBean(context, KEY_FOLLOW);
+//            if (bean instanceof FollowData) {
+//                followList = ((FollowData) bean).getFollow();
+//            }
+//        }
+//        return followList;
+//    }
+
     /**
      * 获取关注列表
      *
      * @param context
      * @return
      */
-    public static List<UserBean> getFollowList(Context context) {
-        List<UserBean> followList = new ArrayList<>();
+    public static List<String> getFollowList(Context context) {
+        List<String> followList = new ArrayList<>();
         if (Constant.followData != null && Constant.followData.getFollow() != null) {
-            followList = Constant.followData.getFollow();
+            followList = Constant.followData.following_ids;
         } else {
             Object bean = getSystemInfoBean(context, KEY_FOLLOW);
             if (bean instanceof FollowData) {
-                followList = ((FollowData) bean).getFollow();
+                followList = ((FollowData) bean).following_ids;
             }
         }
         return followList;
@@ -429,10 +448,11 @@ public class SystemInfoUtils {
      */
     public static boolean isFollow(Context context, String uid) {
         boolean isFollow = false;
-        List<UserBean> followList = getFollowList(context);
-        if(followList == null) return false;
-        for (UserBean userBean : followList) {
-            if (userBean.getId().equals(uid)) {
+        List<String> followList = getFollowList(context);
+        if (followList == null) return false;
+
+        for (String id : followList) {
+            if (id.equals(uid)) {
                 isFollow = true;
                 break;
             }
@@ -450,16 +470,15 @@ public class SystemInfoUtils {
     public static boolean isFollow(Context context, UserBean bean) {
 
         boolean isFollow = false;
-//        List<UserBean> followList = getFollowList(context);
-//        for (UserBean userBean : followList) {
-//            if (bean == null) {
-//                return false;
-//            }
-//            if (userBean.getId().equals(bean.getId())) {
-//                isFollow = true;
-//                break;
-//            }
-//        }
+        List<String> followList = getFollowList(context);
+        if (followList == null) return false;
+
+        for (String id : followList) {
+            if (id.equals(bean.getId())) {
+                isFollow = true;
+                break;
+            }
+        }
         return isFollow;
     }
 
@@ -470,8 +489,8 @@ public class SystemInfoUtils {
      */
     public static void addFollow(UserBean bean) {
         if (bean != null) {
-            getFollowList(App.context).add(bean);
-            if (Constant.followData == null && Constant.followData.getFollow() == null ){
+            getFollowList(App.context).add(bean.getId());
+            if (Constant.followData == null && Constant.followData.getFollow() == null) {
                 Constant.followData.getFollow().add(bean);
             }
 
@@ -544,7 +563,6 @@ public class SystemInfoUtils {
     }
 
     /**
-     *
      * @param context
      * @param goodsType
      * @return 要改 目前固定返回票务分类

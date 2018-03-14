@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * 用户
  * Created by song on 2016/8/2.
  */
-public class UserBean implements Parcelable, Serializable {
+public class UserBean implements Parcelable, Serializable,  Comparable<UserBean> {
     //发现-人
     private String id;          //编号
     private String name;        //名字
@@ -37,9 +37,12 @@ public class UserBean implements Parcelable, Serializable {
     public int strength;
     public ArrayList<String> tags;
 
-    public boolean following;//判断关注我的人 我是否关注他
-    public boolean followed;
+    public boolean following;//判断关注我的人 我是否关注他,已废弃
+    public boolean followed; //
     public int follows_count;
+
+    public int rank;//
+    public int score;//
 
     private StringBuffer tagString = new StringBuffer();
 
@@ -64,6 +67,8 @@ public class UserBean implements Parcelable, Serializable {
         following = in.readByte() != 0;
         followed = in.readByte() != 0;
         follows_count = in.readInt();
+        rank = in.readInt();
+        score = in.readInt();
     }
 
     public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
@@ -209,10 +214,21 @@ public class UserBean implements Parcelable, Serializable {
         dest.writeByte((byte) (following ? 1 : 0));
         dest.writeByte((byte) (followed ? 1 : 0));
         dest.writeInt(follows_count);
+        dest.writeInt(rank);
+        dest.writeInt(score);
     }
 
 
     public String getUserTypeByUserType() {
         return "Coach".equals(user_type) || "coach".equals(user_type) ? Constant.COACH : Constant.USER;
+    }
+
+    public String getTypeByType() {
+        return "Coach".equals(type) || "coach".equals(type) ? Constant.COACH : Constant.USER;
+    }
+
+    @Override
+    public int compareTo(UserBean o) {
+        return this.rank - o.rank;
     }
 }
