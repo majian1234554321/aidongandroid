@@ -271,7 +271,12 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         circleDynamicAdapter.notifyItemRangeChanged(0, dynamicList.size());
 
         int top = recyclerView.getChildAt(0).getTop();
-        recyclerView.scrollBy(0, top);
+        Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " +top);
+
+        recyclerView.scrollBy(0, -10000);
+
+        int top1 = recyclerView.getChildAt(0).getTop();
+        Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " +top1);
     }
 
     @Override
@@ -309,7 +314,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                                 }
                             }).show();
                 } else {
-                    ToastGlobal.showLong("请先登陆再来发帖");
+                    ToastGlobal.showLong("请先登录再来发帖");
                     startActivity(new Intent(this, LoginActivity.class));
 
                 }
@@ -383,10 +388,17 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     txt_appoint_immediately.setText(R.string.campaign_status_end);
                 }
 
-
             }
 
         }
+
+        int top = recyclerView.getChildAt(0).getTop();
+        Logger.i("recyclerView.scrollBy setCampaignDetail ,top = " +top);
+
+        recyclerView.scrollBy(0, top-20);
+
+        int top1 = recyclerView.getChildAt(0).getTop();
+        Logger.i("recyclerView.scrollBy setCampaignDetail ,top = " +top1);
     }
 
     private List<String> selectedSkuValues = new ArrayList<>();

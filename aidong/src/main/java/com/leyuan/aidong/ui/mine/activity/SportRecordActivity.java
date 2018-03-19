@@ -8,11 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.fragment.SportRecordFragment;
+import com.leyuan.aidong.utils.Logger;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -25,27 +28,35 @@ import java.util.List;
 /**
  * Created by user on 2018/1/10.
  */
-public class SportRecordActivity extends BaseActivity implements SmartTabLayout.TabProvider {
+public class SportRecordActivity extends BaseActivity implements SmartTabLayout.TabProvider, View.OnClickListener {
 
     private FragmentPagerItemAdapter adapter;
     private List<View> allTabView = new ArrayList<>();
-    private String year = "2018";
+    TextView txt_right;
+    ImageView img_left;
+
+    public static String year = "2018";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sport_record);
+        img_left = (ImageView) findViewById(R.id.img_left);
+        txt_right = (TextView) findViewById(R.id.txt_right);
 
         final SmartTabLayout tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+
+
         tabLayout.setCustomTabView(this);
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
-
+        year = "2018";
         for (int i = 0; i < 12; i++) {
             SportRecordFragment courseFragment = new SportRecordFragment();
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                    new Bundler().putInt("month", i+1).putString("year", year).get()
+                    new Bundler().putInt("month", i + 1).putString("year", year).get()
             ));
 
         }
@@ -65,6 +76,10 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
                 }
             }
         });
+
+
+        img_left.setOnClickListener(this);
+        txt_right.setOnClickListener(this);
     }
 
     @Override
@@ -79,4 +94,55 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
         allTabView.add(tabView);
         return tabView;
     }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.img_left:
+                finish();
+                break;
+            case R.id.txt_right:
+                showHeightDialog();
+
+
+                break;
+        }
+    }
+
+
+    private void showHeightDialog() {
+        new MaterialDialog.Builder(this).title("请选择年份")
+                .items(generateHeightData())
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        year = text.toString();
+                        txt_right.setText(year + "年");
+
+                        for (int i = 0; i < 12; i++) {
+                            SportRecordFragment page = (SportRecordFragment) adapter.getPage(i);
+
+                            Logger.i("SportRecordFragment"+page);
+                            if (page != null) {
+//                                page.setyear(year);
+                                page.fetchData();
+                            }
+                        }
+
+                    }
+                })
+                .positiveText(android.R.string.cancel)
+                .show();
+    }
+
+
+    private List<String> generateHeightData() {
+        List<String> height = new ArrayList<>();
+        for (int i = 2017; i < 2020; i++) {
+            height.add(String.valueOf(i));
+        }
+        return height;
+    }
+
 }

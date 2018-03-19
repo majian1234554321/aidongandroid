@@ -98,7 +98,7 @@ public class MainActivityOld extends BaseActivity implements View.OnClickListene
         tabFoundLayout = (RelativeLayout) findViewById(R.id.tabFoundLayout);
         tabStoreLayout = (RelativeLayout) findViewById(R.id.tabStoreLayout);
 
-        tabDiscoverLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
+//        tabDiscoverLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
         tabMineLayout = (RelativeLayout) findViewById(R.id.tabMineLayout);
         img_new_message = (ImageView) findViewById(R.id.img_new_message);
         img_new_circle_message = (ImageView) findViewById(R.id.img_new_circle_message);
@@ -232,10 +232,10 @@ public class MainActivityOld extends BaseActivity implements View.OnClickListene
                 setTabSelection(2);
                 showFragment(2);
                 break;
-            case R.id.tabContactorLayout:
-                setTabSelection(3);
-                showFragment(3);
-                break;
+//            case R.id.tabContactorLayout:
+//                setTabSelection(3);
+//                showFragment(3);
+//                break;
             case R.id.tabMineLayout:
                 setTabSelection(4);
                 showFragment(4);

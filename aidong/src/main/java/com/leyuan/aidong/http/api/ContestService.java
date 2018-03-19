@@ -80,7 +80,9 @@ public interface ContestService {
 
 
     @GET("contest/{id}/schedules")
-    Observable<BaseBean<ContestSchedulesData>> getContestSchedules(@Path("id") String id, @Query("page") int page);
+    Observable<BaseBean<ContestSchedulesData>> getContestSchedules(@Path("id") String id,
+                                                                   @Query("city") String city,
+                                                                   @Query("page") int page);
 
 
     @GET("contest/{id}/semi_finals")

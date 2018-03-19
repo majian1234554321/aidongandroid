@@ -121,7 +121,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
                             }
                         }).show();
             }else {
-                ToastGlobal.showLong("请先登陆再来发帖");
+                ToastGlobal.showLong("请先登录再来发帖");
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         }

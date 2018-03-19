@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.mine;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class MyAttentionUserListAdapter extends RecyclerView.Adapter<MyAttention
         final UserBean user = users.get(position);
         GlideLoader.getInstance().displayCircleImage(user.getAvatar(), holder.imgAvatar);
         holder.txtCoachName.setText(user.getName());
-        holder.txtIntro.setText(user.personal_intro);
+        holder.txtIntro.setText(TextUtils.isEmpty(user.personal_intro) ? user.signature : user.personal_intro);
         if (Constant.COACH.equals(user.type)) {
             holder.img_coach_tag.setVisibility(View.VISIBLE);
         } else {

@@ -20,6 +20,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.StoreListAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.VenuesDetailBean;
+import com.leyuan.aidong.entity.course.CourseFilterBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.activity.VenuesSubbranchActivity;
@@ -32,6 +33,7 @@ import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -94,6 +96,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     private VenuesDetailBean venues;
     private SharePopupWindow sharePopupWindow;
     private StoreListAdapter venuesAdapter;
+    private String store;
 
 
     public static void start(Context context, String id) {
@@ -111,7 +114,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         if (getIntent() != null) {
             id = getIntent().getStringExtra("id");
         }
-        initRelateCourse();
+
         VenuesPresent venuesPresent = new VenuesPresentImpl(this, this);
         venuesPresent.getVenuesDetail(id);
         sharePopupWindow = new SharePopupWindow(this);
@@ -184,7 +187,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         if (venues.getBrother() != null && !venues.getBrother().isEmpty()) {
             llOtherSubStore.setVisibility(View.VISIBLE);
             txtSubStoreNum.setText("共" + venues.getBrother().size() + "家分店");
-            venuesAdapter.setData(venues.getBrother().size()>2?venues.getBrother().subList(0,2):venues.getBrother());
+            venuesAdapter.setData(venues.getBrother().size() > 2 ? venues.getBrother().subList(0, 2) : venues.getBrother());
             venuesAdapter.notifyDataSetChanged();
         } else {
             llOtherSubStore.setVisibility(View.GONE);
@@ -211,6 +214,11 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
 
         banner.setData(venues.getPhoto(), null);
 
+        CourseFilterBean courseFilterConfig = SharePrefUtils.getCourseFilterConfig(this);
+        if (courseFilterConfig != null) {
+            store = courseFilterConfig.getStoreByVenuesBean(venues.getBrand_name(), venues.getName());
+        }
+        initRelateCourse();
     }
 
     private void initRelateCourse() {
@@ -223,9 +231,8 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         for (int i = 0; i < days.size(); i++) {
 
             CourseListFragmentNew courseFragment = new CourseListFragmentNew();
-
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                    new Bundler().putString("date", days.get(i)).putString("category", "").get()
+                    new Bundler().putString("date", days.get(i)).putString("store", store).get()
             ));
         }
 

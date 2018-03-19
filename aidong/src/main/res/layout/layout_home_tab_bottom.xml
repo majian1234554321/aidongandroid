@@ -5,83 +5,121 @@
     android:background="@color/color_home_tab_bg"
     android:baselineAligned="false">
 
-    <RelativeLayout
-        android:id="@+id/tabNearLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:gravity="center">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/tabNearLayout"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center">-->
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true">-->
 
-            <ImageView
-                android:id="@+id/tabNearImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:src="@drawable/selctor_tab_home" />
+            <!--<ImageView-->
+                <!--android:id="@+id/tabNearImageView"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:src="@drawable/selctor_tab_home" />-->
 
-            <TextView
-                android:id="@+id/tabNearTextView"
-                style="@style/tabTextStyle"
-                android:layout_below="@id/tabNearImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="@string/tabhome"
-                android:textSize="12sp" />
-        </RelativeLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/tabNearTextView"-->
+                <!--style="@style/tabTextStyle"-->
+                <!--android:layout_below="@id/tabNearImageView"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="7dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/tabhome"-->
+                <!--android:textSize="12sp" />-->
+        <!--</RelativeLayout>-->
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/tabFoundLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:gravity="center">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <ImageView
-                android:id="@+id/tabFoundImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:src="@drawable/selector_tab_live_video" />
-
-            <TextView
-                android:id="@+id/tabFoundTextView"
-                style="@style/tabTextStyle"
-                android:layout_below="@id/tabFoundImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="@string/live_video"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-    </RelativeLayout>
+        <!--<View-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent" />-->
+    <!--</RelativeLayout>-->
 
     <!--<RelativeLayout-->
-        <!--android:id="@+id/tabStoreLayout"-->
+        <!--android:id="@+id/tabFoundLayout"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:clickable="false"-->
+        <!--android:gravity="center">-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/tabFoundImageView"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:src="@drawable/selector_tab_live_video" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tabFoundTextView"-->
+                <!--style="@style/tabTextStyle"-->
+                <!--android:layout_below="@id/tabFoundImageView"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="7dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/live_video"-->
+                <!--android:textSize="12sp" />-->
+        <!--</RelativeLayout>-->
+
+        <!--<View-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent" />-->
+    <!--</RelativeLayout>-->
+
+    <!--&lt;!&ndash;<RelativeLayout&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/tabStoreLayout"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="fill_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="fill_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:clickable="false"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:gravity="center">&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<RelativeLayout&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_centerInParent="true">&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/tabStoreImageView"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_centerHorizontal="true"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginTop="5dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:src="@drawable/selector_tab_live_video" />&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/tabStoreTextView"&ndash;&gt;-->
+                <!--&lt;!&ndash;style="@style/tabTextStyle"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_below="@id/tabStoreImageView"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_centerHorizontal="true"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginTop="7dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="@string/store"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:textSize="12sp" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<View&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="fill_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="fill_parent" />&ndash;&gt;-->
+    <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/tabStoreLayout"&ndash;&gt;-->
+    <!--<RelativeLayout-->
+
         <!--android:layout_width="fill_parent"-->
         <!--android:layout_height="fill_parent"-->
         <!--android:layout_weight="1"-->
@@ -100,7 +138,7 @@
                 <!--android:layout_centerHorizontal="true"-->
                 <!--android:layout_marginTop="5dp"-->
                 <!--android:gravity="center"-->
-                <!--android:src="@drawable/selector_tab_live_video" />-->
+                <!--android:src="@drawable/selector_tab_store" />-->
 
             <!--<TextView-->
                 <!--android:id="@+id/tabStoreTextView"-->
@@ -117,142 +155,104 @@
             <!--android:layout_width="fill_parent"-->
             <!--android:layout_height="fill_parent" />-->
     <!--</RelativeLayout>-->
-    <!--android:id="@+id/tabStoreLayout"-->
-    <RelativeLayout
 
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:gravity="center">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/tabContactorLayout"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:clickable="false"-->
+        <!--android:gravity="center">-->
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true">-->
 
-            <ImageView
-                android:id="@+id/tabStoreImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:src="@drawable/selector_tab_store" />
+            <!--<ImageView-->
+                <!--android:id="@+id/tabContactorImageView"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:src="@drawable/selector_tab_found" />-->
 
-            <TextView
-                android:id="@+id/tabStoreTextView"
-                style="@style/tabTextStyle"
-                android:layout_below="@id/tabStoreImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="@string/store"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/tabContactorLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:gravity="center">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <ImageView
-                android:id="@+id/tabContactorImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:src="@drawable/selector_tab_found" />
-
-            <TextView
-                android:id="@+id/tabContactorTextView"
-                style="@style/tabTextStyle"
-                android:layout_below="@id/tabContactorImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="@string/found"
-                android:textSize="11dp" />
-            <ImageView
-                android:id="@+id/img_new_circle_message"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="2dp"
-                android:src="@drawable/shape_circle_red"
-                android:visibility="gone" />
-        </RelativeLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/tabContactorTextView"-->
+                <!--style="@style/tabTextStyle"-->
+                <!--android:layout_below="@id/tabContactorImageView"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="7dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/found"-->
+                <!--android:textSize="11dp" />-->
+            <!--<ImageView-->
+                <!--android:id="@+id/img_new_circle_message"-->
+                <!--android:layout_width="8dp"-->
+                <!--android:layout_height="8dp"-->
+                <!--android:layout_marginLeft="17dp"-->
+                <!--android:layout_marginTop="2dp"-->
+                <!--android:src="@drawable/shape_circle_red"-->
+                <!--android:visibility="gone" />-->
+        <!--</RelativeLayout>-->
 
 
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
-    </RelativeLayout>
+        <!--<View-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_alignParentTop="true" />-->
+    <!--</RelativeLayout>-->
 
-    <RelativeLayout
-        android:id="@+id/tabMineLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:gravity="center">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/tabMineLayout"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:clickable="false"-->
+        <!--android:gravity="center">-->
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true">-->
 
-            <ImageView
-                android:id="@+id/tabMineImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:src="@drawable/selector_tab_mine" />
+            <!--<ImageView-->
+                <!--android:id="@+id/tabMineImageView"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:src="@drawable/selector_tab_mine" />-->
 
 
-            <TextView
-                android:id="@+id/tabMineTextView"
-                style="@style/tabTextStyle"
-                android:layout_below="@id/tabMineImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="@string/tabMine"
-                android:textSize="12sp" />
+            <!--<TextView-->
+                <!--android:id="@+id/tabMineTextView"-->
+                <!--style="@style/tabTextStyle"-->
+                <!--android:layout_below="@id/tabMineImageView"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="7dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/tabMine"-->
+                <!--android:textSize="12sp" />-->
 
-            <ImageView
-                android:id="@+id/img_new_message"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="2dp"
-                android:src="@drawable/shape_circle_red"
-                android:visibility="gone" />
-        </RelativeLayout>
+            <!--<ImageView-->
+                <!--android:id="@+id/img_new_message"-->
+                <!--android:layout_width="8dp"-->
+                <!--android:layout_height="8dp"-->
+                <!--android:layout_marginLeft="17dp"-->
+                <!--android:layout_marginTop="2dp"-->
+                <!--android:src="@drawable/shape_circle_red"-->
+                <!--android:visibility="gone" />-->
+        <!--</RelativeLayout>-->
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-    </RelativeLayout>
+        <!--<View-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent" />-->
+    <!--</RelativeLayout>-->
 
 </LinearLayout>

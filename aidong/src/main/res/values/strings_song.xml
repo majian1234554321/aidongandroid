@@ -120,7 +120,7 @@
     <string name="coupon_time">%1$s - %2$s</string>
     <string name="appoint_no">预约号：%1$s </string>
     <string name="order_no">订单号：%1$s </string>
-    <string name="reply_other_user">回复%1$s：</string>
+    <string name="reply_other_user">回复%1$s: </string>
 
     <string name="exchange_coupon_success">兑换成功</string>
     <string name="exchange_coupon_fail">兑换码无效</string>

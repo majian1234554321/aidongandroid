@@ -44,7 +44,6 @@ import com.leyuan.aidong.ui.discover.activity.SelectedUserActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
-import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
@@ -95,7 +94,7 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
     private int currPage = 1;
     private DynamicBean dynamic;
     private List<CommentBean> comments = new ArrayList<>();
-    private DynamicPresent dynamicPresent;
+    private DynamicPresentImpl dynamicPresent;
     private CircleDynamicAdapter headerAdapter;
     private List<DynamicBean> dynamicList = new ArrayList<>();
 
@@ -280,7 +279,7 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
                 if (content.length() > MAX_TEXT_COUNT - 2) {
                     content = content.substring(0, MAX_TEXT_COUNT - 2) + "......";
                 }
-                dynamicPresent.addComment(dynamic.id, content);
+                dynamicPresent.addComment(dynamic.id, content,itUser);
                 KeyBoardUtil.closeKeyboard(etComment, this);
 
                 return true;

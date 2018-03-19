@@ -85,7 +85,6 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
     private TextView txtEmptyHint;
     private ImageView btEmptyConfirm;
 
-
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<DynamicBean> dynamicList;
@@ -103,16 +102,10 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         public void onReceive(Context context, Intent intent) {
             if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
                 refreshData();
-            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE)) {
-                refreshData();
-            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
-                refreshData();
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
                 refreshData();
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_LOGIN_SUCCESS)) {
                 refreshData();
-                followPresent.getUserFollow("following_relation", 1);
-
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
                 refreshData();
             }
@@ -172,7 +165,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
 
     @Override
     public void fetchData() {
-        dynamicPresent.commonLoadDataFollow(switcherLayout);
+        dynamicPresent.pullToRefreshDataFollow();
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -187,7 +180,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dynamicPresent.commonLoadDataFollow(switcherLayout);
+                dynamicPresent.pullToRefreshDataFollow();
             }
         });
     }
@@ -249,13 +242,14 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         if (dynamicBeanList == null || dynamicBeanList.isEmpty()) {
             layoutAttentionEmpty.setVisibility(View.VISIBLE);
             if (App.getInstance().isLogin()) {
+
                 txtEmptyHint.setText("还没有关注任何内容");
                 btEmptyConfirm.setImageResource(R.drawable.icon_go_to_attention);
 
 
             } else {
 
-                txtEmptyHint.setText("立即登陆查看您关注的内容");
+                txtEmptyHint.setText("立即登录查看您关注的内容");
                 btEmptyConfirm.setImageResource(R.drawable.icon_login_immediatly_red);
             }
 
@@ -270,9 +264,17 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
 
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (App.getInstance().isLogin() && "还没有关注任何内容".equals(txtEmptyHint.getText().toString().trim())) {
+//            refreshData();
+//        }
+//    }
+
     @Override
     public void onGetUserData(List<UserBean> followings) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
 

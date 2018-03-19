@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.contest;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
-import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.List;
@@ -42,13 +43,21 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
         holder.txtCoachName.setText(user.getName());
         holder.txtIntro.setText(user.score + "分");
         holder.txt_rank.setText(user.rank + "");
+        if(App.getInstance().isLogin() && TextUtils.equals(App.getInstance().getUser().getId()+"",user.getId())){
+            holder.btAttention.setVisibility(View.GONE);
+        }else {
+            holder.btAttention.setVisibility(View.VISIBLE);
+        }
+
         holder.btAttention.setImageResource(user.followed
-                ? R.drawable.icon_followed : R.drawable.icon_follow);
+                ? R.drawable.icon_contest_followed : R.drawable.icon_contest_follow);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfoActivity.start(context, user.getId());
+                if (listener != null) {
+                    listener.onItemClick(user,position);
+                }
 
             }
         });
@@ -56,8 +65,14 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
         holder.btAttention.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
-                    listener.onCourseAttentionClick(user.getId(), position, user.followed);
+                if (user.followed) {
+                    if (listener != null) {
+                        listener.onCancelFollow(user.getId(), position);
+                    }
+                } else {
+                    if (listener != null) {
+                        listener.onAddFollow(user.getId(), position);
+                    }
                 }
             }
         });
@@ -97,6 +112,11 @@ public class ContestRankingListAdapter extends RecyclerView.Adapter<ContestRanki
     }
 
     public interface OnAttentionClickListener {
-        void onCourseAttentionClick(String id, int position, boolean followed);
+
+        void onAddFollow(String id, int position);
+
+        void onCancelFollow(String id, int position);
+
+        void onItemClick(UserBean userBean, int position);
     }
 }

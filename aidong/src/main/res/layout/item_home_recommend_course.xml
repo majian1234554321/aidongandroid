@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="100dp"
-        android:layout_marginRight="70dp"
+        android:layout_marginRight="80dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -28,6 +28,7 @@
                 android:singleLine="true"
                 android:text="11111111111111111111111"
                 android:maxLength="22"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

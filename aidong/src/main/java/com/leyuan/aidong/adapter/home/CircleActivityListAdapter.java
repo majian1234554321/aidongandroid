@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,10 +39,16 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CampaignBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.imgCover);
-        holder.txtType.setText("【" +bean.getTypeCZ()+"】");
+        holder.txtType.setText("【" + bean.getTypeCZ() + "】");
         holder.txtName.setText(bean.getName());
-        holder.txtTime.setText(bean.getLandmark()+" "+ bean.getStart());
-        holder.txt_sub_title.setText(bean.getSlogan()+" | " + bean.getFollows_count()+"人已关注");
+        if (TextUtils.isEmpty(bean.getLandmark())) {
+            holder.txtTime.setText(bean.getStart());
+        } else {
+            holder.txtTime.setText(bean.getLandmark() + " " + bean.getStart());
+        }
+
+
+        holder.txt_sub_title.setText(bean.getSlogan() + " | " + bean.getFollows_count() + "人已关注");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

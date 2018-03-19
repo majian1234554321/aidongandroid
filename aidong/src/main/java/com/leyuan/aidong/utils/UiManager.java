@@ -24,7 +24,7 @@ public class UiManager {
             intent.setClass(from, to);
             from.startActivity(intent);
         } else {
-            Toast.makeText(from, "请先登陆", Toast.LENGTH_LONG).show();
+            Toast.makeText(from, "请先登录", Toast.LENGTH_LONG).show();
             from.startActivity(new Intent(from, LoginActivity.class));
         }
 

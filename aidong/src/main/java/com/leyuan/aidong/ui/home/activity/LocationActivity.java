@@ -85,6 +85,7 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
         if (!TextUtils.equals(App.getInstance().getSelectedCity(), str)) {
             App.getInstance().setSelectedCity(str);
             systemPresent.getSystemInfoSelected(Constant.OS);
+
         }
     }
 

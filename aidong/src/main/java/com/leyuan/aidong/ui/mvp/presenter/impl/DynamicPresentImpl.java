@@ -16,7 +16,6 @@ import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
-import com.leyuan.aidong.ui.mvp.model.DynamicModel;
 import com.leyuan.aidong.ui.mvp.model.FollowModel;
 import com.leyuan.aidong.ui.mvp.model.impl.DynamicModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
@@ -40,7 +39,7 @@ import java.util.Map;
 public class DynamicPresentImpl implements DynamicPresent {
     private DynamicParseUserView dynamicParseUserView;
     private Context context;
-    private DynamicModel dynamicModel;
+    private DynamicModelImpl dynamicModel;
     private FollowModel followModel;
 
     private SportCircleFragmentView sportCircleFragmentView;
@@ -349,6 +348,18 @@ public class DynamicPresentImpl implements DynamicPresent {
                 dynamicDetailActivityView.addCommentsResult(baseBean);
             }
         }, id, content);
+    }
+
+    @Override
+    public void addComment(String id, String content, Map<String, String> itUser) {
+
+        dynamicModel.addComment(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+
+                dynamicDetailActivityView.addCommentsResult(baseBean);
+            }
+        }, id, content,itUser);
     }
 
     @Override

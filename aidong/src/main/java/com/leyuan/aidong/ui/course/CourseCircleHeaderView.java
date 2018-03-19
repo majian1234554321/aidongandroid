@@ -33,6 +33,7 @@ import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
 
@@ -92,6 +93,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     private CourseDetailBean course;
 
     FollowPresentImpl followPresent;
+    private String relativeVideoTitle;
 
     public CourseCircleHeaderView(Context context) {
         this(context, null, 0);
@@ -161,7 +163,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         switch (v.getId()) {
             case R.id.img_live_begin_or_end:
                 Intent intent = new Intent(getContext(), PlayerActivity.class)
-                        .setData(Uri.parse(course.getId()))
+                        .setData(Uri.parse(course.getVideo()))
                         .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
                 context.startActivity(intent);
 
@@ -170,11 +172,18 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
                 break;
             case R.id.txt_bt_attention_num:
+                if (App.getInstance().isLogin()) {
 
-                AppointmentUserActivity.start(context, course.getFollowers(), "关注的人");
+                    AppointmentUserActivity.start(context, course.getFollowers(), "已关注人列表");
+
+                } else {
+                    UiManager.activityJump(context, LoginActivity.class);
+                }
+
+
                 break;
             case R.id.bt_attention:
-                if(!App.getInstance().isLogin()){
+                if (!App.getInstance().isLogin()) {
                     UiManager.activityJump(context, LoginActivity.class);
                     return;
                 }
@@ -215,7 +224,8 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         rvRelateVideo.setAdapter(relativeViedeoAdapter);
         txtCheckAllVideo.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                RelativeVideoListActivity.start(context, course.getId());
+
+                RelativeVideoListActivity.start(context, course.getId(), relativeVideoTitle);
 
 //                UiManager.activityJump(context, RelativeVideoListActivity.class);
             }
@@ -286,14 +296,15 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
     }
 
-    public void setRelativeVideoData(List<CourseVideoBean> videos) {
+    public void setRelativeVideoData(String title, List<CourseVideoBean> videos) {
 //        if (videos != null && !videos.isEmpty()) {
 //            llRelateCourseVideo.setVisibility(VISIBLE);
 //            relativeViedeoAdapter.setData(videos);
 //        } else {
 //            llRelateCourseVideo.setVisibility(GONE);
-//        }
-
+//        }D
+        this.relativeVideoTitle = title;
+        txtRelateCourseVideo.setText(title);
         relativeViedeoAdapter.setData(videos);
     }
 
@@ -321,6 +332,16 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
         } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
+        }
+    }
+
+    public void setDynamicEmpty(boolean empty) {
+
+        Logger.i("CourseCircleHeaderView", "empty = " + empty);
+        if (empty) {
+            txtRelateDynamic.setVisibility(INVISIBLE);
+        } else {
+            txtRelateDynamic.setVisibility(VISIBLE);
         }
     }
 }

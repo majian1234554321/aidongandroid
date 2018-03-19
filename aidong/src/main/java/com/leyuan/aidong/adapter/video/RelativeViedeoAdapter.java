@@ -42,7 +42,7 @@ public class RelativeViedeoAdapter extends RecyclerView.Adapter<RelativeViedeoAd
         final CourseVideoBean bean = videos.get(position);
 
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.img_cover);
-        holder.txtSubTitle.setText(bean.getIntroduce());
+        holder.txtSubTitle.setText("#"+bean.getTypeName()+"#");
         holder.txtTitle.setText(bean.getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

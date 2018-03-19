@@ -38,9 +38,9 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final UserBean user = users.get(position);
-        GlideLoader.getInstance().displayCircleImage(user.image, holder.imgAvatar);
+        GlideLoader.getInstance().displayCircleImage(user.cover, holder.imgAvatar);
         holder.txtCoachName.setText(user.getName());
-        holder.txtIntro.setText(user.simple_intro);
+        holder.txtIntro.setText(user.simple_intro == null ? user.slogan : user.simple_intro);
         holder.img_coach_tag.setVisibility(View.GONE);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

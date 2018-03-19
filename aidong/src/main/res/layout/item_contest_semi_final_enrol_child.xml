@@ -47,14 +47,18 @@
 
     </LinearLayout>
 
-    <ImageButton
+    <Button
         android:id="@+id/bt_enrol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:background="@color/transparent"
-        android:src="@drawable/icon_contest_enrol" />
+        android:background="@drawable/shape_semi_circle_nine_solid"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:text="@string/enroled"
+        />
 
 </RelativeLayout>

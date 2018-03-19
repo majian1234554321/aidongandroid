@@ -187,7 +187,7 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
 
     private void showGenderDialog() {
         new MaterialDialog.Builder(this)
-                .title(R.string.confirm_gender)
+                .title(R.string.man_woman_group_select)
                 .items(R.array.gender)
                 .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override

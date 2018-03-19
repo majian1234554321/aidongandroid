@@ -102,7 +102,6 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
 
         txtContestName.setText(getIntent().getStringExtra("name"));
         txtContestTime.setText(getIntent().getStringExtra("start"));
-        txtUserName.setText("姓名: " + App.getInstance().getUser().getName());
 
         layoutSelectCity.setVisibility(View.GONE);
         layoutContestArea.setVisibility(View.GONE);
@@ -146,9 +145,7 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
                     return;
                 }
 
-
                 contestPresent.invitationCodeEnrol(contestId, name, gender, invitationCode);
-
 
                 break;
         }
@@ -156,7 +153,7 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
 
     private void showGenderDialog() {
         new MaterialDialog.Builder(this)
-                .title(R.string.confirm_gender)
+                .title(R.string.man_woman_group_select)
                 .items(R.array.gender)
                 .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
@@ -175,7 +172,8 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
     public void onContestEnrolResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
 
-            ContestQuarterFinalEnrolActivity.start(this, contestId);
+            ContestQuarterFinalEnrolActivity.start(this, contestId,contestBean);
+            finish();
 
         } else {
 

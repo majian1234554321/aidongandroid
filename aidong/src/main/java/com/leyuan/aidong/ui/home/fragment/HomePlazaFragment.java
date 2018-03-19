@@ -146,7 +146,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
     @Override
     public void fetchData() {
         // dynamicPresent.pullToRefreshData();
-        dynamicPresent.commonLoadData(switcherLayout);
+        dynamicPresent.pullToRefreshData();
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -161,7 +161,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dynamicPresent.commonLoadData(switcherLayout);
+                dynamicPresent.pullToRefreshData();
             }
         });
     }

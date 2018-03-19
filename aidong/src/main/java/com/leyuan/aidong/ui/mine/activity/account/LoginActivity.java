@@ -238,10 +238,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onChatLogin(boolean result) {
         DialogUtils.dismissDialog();
         if (result) {
-            ToastUtil.showConsecutiveShort("登陆成功");
+            ToastUtil.showConsecutiveShort("登录成功");
             finish();
         } else {
-            ToastUtil.showConsecutiveShort("登陆成功 聊天服务不可用");
+            ToastUtil.showConsecutiveShort("登录成功 聊天服务不可用");
             finish();
         }
     }
@@ -262,7 +262,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             DialogUtils.showDialog(this, "", false);
             chatLoginManager.login(userName);
         } else {
-            ToastUtil.showConsecutiveShort("登陆成功 聊天服务注册失败");
+            ToastUtil.showConsecutiveShort("登录成功 聊天服务注册失败");
             finish();
         }
     }

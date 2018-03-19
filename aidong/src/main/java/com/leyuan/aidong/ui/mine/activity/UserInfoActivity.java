@@ -85,7 +85,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private SwitcherLayout switcherLayout;
     private RelativeLayout contentLayout;
     private RelativeLayout emptyPhotoLayout;
-    private TextView tvAddImage,tv_attention_num;
+    private TextView tvAddImage, tv_attention_num, txt_edit;
     private RecyclerView rvPhoto;
     private ImageView ivAvatar;
     private ImageView ivGender;
@@ -95,7 +95,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private ImageView ivFollowOrEdit;
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
-//    private LinearLayout contactLayout;
+    //    private LinearLayout contactLayout;
 //    private TextView tvCall;
     private TextView tvMessage;
 
@@ -164,7 +164,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         viewPager = (ViewPager) findViewById(R.id.vp_user);
 //        contactLayout = (LinearLayout) findViewById(R.id.ll_contact);
 //        tvCall = (TextView) findViewById(R.id.tv_call);
-        tv_attention_num =  (TextView) findViewById(R.id.tv_attention_num);
+        tv_attention_num = (TextView) findViewById(R.id.tv_attention_num);
+        txt_edit = (TextView) findViewById(R.id.txt_edit);
 
         wallAdapter = new UserInfoPhotoAdapter(this, isSelf);
         rvPhoto.setAdapter(wallAdapter);
@@ -173,6 +174,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
     private void setListener() {
+        txt_edit.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         ivPublish.setOnClickListener(this);
         tvAddImage.setOnClickListener(this);
@@ -194,7 +196,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private void setView() {
         GlideLoader.getInstance().displayRoundAvatarImage(userInfoData.getProfile().getAvatar(), ivAvatar);
         tvName.setText(userInfoData.getProfile().getName());
-        tv_attention_num.setText(userInfoData.getProfile().follows_count+"人关注");
+        tv_attention_num.setText(userInfoData.getProfile().follows_count + "人关注");
 
         tvSignature.setText(TextUtils.isEmpty(userInfoData.getProfile().getSignature())
                 ? "这个人很懒，什么都没有留下" : userInfoData.getProfile().getSignature());
@@ -203,8 +205,13 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         ivCoach.setVisibility("Coach".equalsIgnoreCase(userInfoData.getProfile().getUserType())
                 ? View.VISIBLE : View.GONE);
         if (isSelf) {
+
             tvTitle.setText("我的资料");
-            ivFollowOrEdit.setBackgroundResource(R.drawable.icon_edit_red);
+//            ivFollowOrEdit.setBackgroundResource(R.drawable.icon_edit_red);
+            ivFollowOrEdit.setVisibility(View.GONE);
+            txt_edit.setVisibility(View.VISIBLE);
+
+
             if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
                 emptyPhotoLayout.setVisibility(View.GONE);
@@ -219,6 +226,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             tvTitle.setText("TA的资料");
             ivFollowOrEdit.setBackgroundResource(userInfoData.getProfile().followed
                     ? R.drawable.icon_followed : R.drawable.icon_follow);
+            ivFollowOrEdit.setVisibility(View.VISIBLE);
+            txt_edit.setVisibility(View.GONE);
+
             if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
             }
@@ -248,12 +258,12 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             if (Constant.COACH.equals(userInfoData.getProfile().getUserTypeByUserType())) {
 
                 pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
-                        new Bundler().putString("userId", userId).putString("intro","教练简介暂无") .get()));
+                        new Bundler().putString("userId", userId).putString("intro", "教练简介暂无").get()));
 
                 CoachCourseFragment courseFragment = new CoachCourseFragment();
                 pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
                         new Bundler().putString("mobile", userInfoData.getProfile().mobile).get()));
-            }else {
+            } else {
                 pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
                         new Bundler().putString("userId", userId).get()));
             }
@@ -311,6 +321,15 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
                 }
                 break;
+            case R.id.txt_edit:
+                if (App.mInstance.isLogin()) {
+                    if (isSelf) {
+                        showEditDialog();
+                    }
+                } else {
+                    startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
+                }
+
 //            case R.id.tv_call:
 //                if (TextUtils.isEmpty(userInfoData.getProfile().getPhone())) {
 //                    ToastGlobal.showLong("该教练没有录入电话号码");

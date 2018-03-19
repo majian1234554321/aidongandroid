@@ -95,9 +95,9 @@ public class ContestBean implements Parcelable {
     }
 
     public ArrayList<String> getAllCity() {
-        if (division_info == null) return null;
-        ArrayList<String> citys = new ArrayList<>();
 
+        ArrayList<String> citys = new ArrayList<>();
+        if (division_info == null) return citys;
         for (CompetitionAreaBean areaBean : division_info) {
             Collections.addAll(citys, areaBean.city);
         }

@@ -41,7 +41,7 @@ public class MyAttentionCourseAdapter extends RecyclerView.Adapter<MyAttentionCo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final UserBean courseBean = course.get(position);
-        GlideLoader.getInstance().displayCircleImage(courseBean.image, holder.imgCoach);
+        GlideLoader.getInstance().displayCircleImage(courseBean.cover, holder.imgCoach);
         holder.txtCourseName.setText(courseBean.getName());
         holder.txtAttentionNum.setVisibility(View.GONE);
         holder.txtCourseDesc.setText(courseBean.getTagString());

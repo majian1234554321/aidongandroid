@@ -89,7 +89,7 @@ public class DynamicModelImpl implements DynamicModel {
 
     @Override
     public void postDynamic(Subscriber<DynamicsData> subscriber, String video, String content, String type, String link_id,
-                                 String position_name, String latitude, String longitude, ArrayList<String> image, Map<String, String> itUser) {
+                            String position_name, String latitude, String longitude, ArrayList<String> image, Map<String, String> itUser) {
         JSONObject root = new JSONObject();
         JSONArray arrayImage = new JSONArray(image);
         JSONArray arrayUser = new JSONArray();
@@ -117,7 +117,7 @@ public class DynamicModelImpl implements DynamicModel {
                     userObj.put("user_id", code.getValue());
                     arrayUser.put(userObj);
 
-                    Logger.i(" itUser. arrayUser.put(userObj);  name =  " + code.getKey()+", user_id = " + code.getValue());
+                    Logger.i(" itUser. arrayUser.put(userObj);  name =  " + code.getKey() + ", user_id = " + code.getValue());
                 }
                 root.put("extras", arrayUser);
                 Logger.i("root.put(\"extras\", arrayUser);");
@@ -131,6 +131,38 @@ public class DynamicModelImpl implements DynamicModel {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), root.toString());
         dynamicService.postImageDynamic(requestBody)
                 .compose(RxHelper.<DynamicsData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void addComment(Subscriber<BaseBean> subscriber, String id, String content, Map<String, String> itUser) {
+
+        JSONObject root = new JSONObject();
+        JSONArray arrayUser = new JSONArray();
+
+        try {
+            root.put("content", content);
+
+            if (itUser != null) {
+                for (Map.Entry<String, String> code : itUser.entrySet()) {
+                    JSONObject userObj = new JSONObject();
+                    userObj.put("name", code.getKey());
+                    userObj.put("user_id", code.getValue());
+                    arrayUser.put(userObj);
+
+                    Logger.i(" itUser. arrayUser.put(userObj);  name =  " + code.getKey() + ", user_id = " + code.getValue());
+                }
+                root.put("extras", arrayUser);
+                Logger.i("root.put(\"extras\", arrayUser);");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), root.toString());
+
+        dynamicService.addComment(id, requestBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 

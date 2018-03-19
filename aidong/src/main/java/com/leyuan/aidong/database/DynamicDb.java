@@ -59,7 +59,7 @@ public class DynamicDb {
                 bean.setCommentType(cursor.getInt(cursor.getColumnIndex(Constant.KDNCOMMENTTYPE)));
                 bean.setKDNMSGID(cursor.getString(cursor.getColumnIndex(Constant.KDNMSGID)));
                 bean.setDynamicType(cursor.getInt(cursor.getColumnIndex(Constant.KDNCONTENTTYPE)));
-                bean.setReplySiteNickname(cursor.getString(cursor.getColumnIndex(Constant.KDNREPLYSITENICKNAME)));
+//                bean.setReplySiteNickname(cursor.getString(cursor.getColumnIndex(Constant.KDNREPLYSITENICKNAME)));
                 beanList.add(bean);
             }
 

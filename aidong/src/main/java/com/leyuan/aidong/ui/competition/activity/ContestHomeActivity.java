@@ -125,7 +125,6 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         contestPresent = new ContestPresentImpl(this);
         contestPresent.setContestHomeView(this);
         contestPresent.setContestEnrolView(this);
-        contestPresent.getContestDetail(contestId);
 
 
         findViewById(R.id.img_back).setOnClickListener(this);
@@ -147,6 +146,12 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         present = new FollowPresentImpl(this);
         present.setFollowListener(this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        contestPresent.getContestDetail(contestId);
     }
 
     @Override
@@ -181,7 +186,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 if (contest == null) return;
                 Intent intent = new Intent(this, PlayerActivity.class)
                         .setData(Uri.parse(contest.video))
-                        .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER);
+                        .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
                 startActivity(intent);
 
                 break;
@@ -200,7 +205,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 } else if ("semi_finals".equals(contest.status)) {
                     if (contest.joined) {
                         //已参加，有复赛资格
-                        ContestQuarterFinalEnrolActivity.start(this, contestId);
+                        ContestQuarterFinalEnrolActivity.start(this, contestId,contest);
 
                     } else {
                         layoutInvitation.setVisibility(View.VISIBLE);
@@ -214,7 +219,9 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.txt_relate_dynamic:
+
                 ContestDynamicActivity.start(this, contestId);
+
                 break;
 
             case R.id.txt_official_info:
@@ -223,15 +230,23 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.txt_rank:
+
+                if (!App.getInstance().isLogin()) {
+                    UiManager.activityJump(this, LoginActivity.class);
+                    return;
+                }
+
                 if (contest != null) {
                     ContestRankingListActivity.start(this, contest);
                 }
-
 
                 break;
 
             case R.id.bt_rule:
                 //h5
+
+                ContestRuleActivity.start(this,contestId);
+
                 break;
 
             case R.id.bt_close_invitation:
@@ -262,7 +277,6 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         GlideLoader.getInstance().displayImage(contest.background, img_bg);
         img_attention.setImageResource(contest.followed ? R.drawable.icon_contest_parsed : R.drawable.icon_contest_parse_not);
 
-
         if ("preliminary".equals(contest.status)) {
 
             imgPostOrEnrol.setImageResource(R.drawable.post_video);
@@ -272,20 +286,25 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         } else if ("finals".equals(contest.status)) {
             imgPostOrEnrol.setVisibility(View.GONE);
             layoutEnd.setVisibility(View.VISIBLE);
+            GlideLoader.getInstance().displayImage(contest.cover,imgEndCover);
         } else {
             imgPostOrEnrol.setImageResource(R.drawable.post_video);
         }
-
 
     }
 
     @Override
     public void onCheckInvitationCodeResult(boolean registed) {
-        if (registed) {
-            ContestQuarterFinalEnrolActivity.start(this, contestId);
-        } else {
-            ContestSemiFinalEnrolmentActivity.start(this, contestId, campaignBean.name, campaignBean.start, contest, invitationCode);
-        }
+
+        layoutInvitation.setVisibility(View.GONE);
+
+        ContestSemiFinalEnrolmentActivity.start(this, contestId, campaignBean.name, campaignBean.start, contest, invitationCode);
+
+//        if (registed) {
+//            ContestQuarterFinalEnrolActivity.start(this, contestId);
+//        } else {
+//
+//        }
     }
 
 

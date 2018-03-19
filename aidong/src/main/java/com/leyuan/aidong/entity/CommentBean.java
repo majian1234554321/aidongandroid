@@ -23,6 +23,9 @@ public class CommentBean implements Parcelable {
     @SerializedName("publisher")
     private UserBean publisher;
 
+    @SerializedName("extras")
+    public UserBean[] extras;
+
 
     public UserBean getPublisher() {
         return publisher;
@@ -86,6 +89,7 @@ public class CommentBean implements Parcelable {
         dest.writeString(this.published_at);
         dest.writeString(this.created_at);
         dest.writeParcelable(this.publisher, flags);
+        dest.writeTypedArray(this.extras,flags);
     }
 
     public CommentBean() {
@@ -97,6 +101,7 @@ public class CommentBean implements Parcelable {
         this.published_at = in.readString();
         this.created_at = in.readString();
         this.publisher = in.readParcelable(UserBean.class.getClassLoader());
+        this.extras = in.createTypedArray(UserBean.CREATOR);
     }
 
     public static final Creator<CommentBean> CREATOR = new Creator<CommentBean>() {

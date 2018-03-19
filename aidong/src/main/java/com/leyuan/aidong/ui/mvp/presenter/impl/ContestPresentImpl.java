@@ -63,7 +63,7 @@ public class ContestPresentImpl {
         this.contestDynamicView = contestDynamicView;
     }
 
-    public void getContestSchedules(String id, int page) {
+    public void getContestSchedules(String id,  String city,int page) {
 
         contestModel.getContestSchedules(new ProgressSubscriber<ContestSchedulesData>(context) {
             @Override
@@ -77,7 +77,7 @@ public class ContestPresentImpl {
             public void onError(Throwable e) {
                 super.onError(e);
             }
-        }, id, page);
+        }, id,city, page);
 
     }
 

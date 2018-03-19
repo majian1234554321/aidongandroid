@@ -11,7 +11,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -40,7 +42,6 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
-import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
@@ -49,6 +50,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.KeyBoardUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -58,9 +60,12 @@ import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.view.inputmethod.EditorInfo.IME_ACTION_SEND;
+import static com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity.REQUEST_USER;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
@@ -87,7 +92,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     private int currPage = 1;
     private DynamicBean dynamic;
     private List<CommentBean> comments = new ArrayList<>();
-    private DynamicPresent dynamicPresent;
+    private DynamicPresentImpl dynamicPresent;
     private CircleDynamicAdapter headerAdapter;
     private List<DynamicBean> dynamicList = new ArrayList<>();
 
@@ -97,6 +102,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     private String replyName;
     private UserBean replyUser;
     private String dynamicId;
+    private String user_id;
+    private String name;
 
 
     public static void startById(Context context, String dynamicId) {
@@ -191,6 +198,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         tvReportOrDelete.setOnClickListener(this);
         ivUserAvatar.setOnClickListener(this);
         etComment.setOnEditorActionListener(this);
+
+        etComment.addTextChangedListener(new OnTextWatcher());
         refreshLayout.setOnRefreshListener(this);
         commentView.addOnScrollListener(onScrollListener);
         commentAdapter.setOnItemClickListener(this);
@@ -240,6 +249,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             default:
                 break;
         }
+
     }
 
     @Override
@@ -247,8 +257,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         replyName = comments.get(position).getPublisher().getName();
         replyUser = comments.get(position).getPublisher();
 
-        String other = comments.get(position).getPublisher().getName();
-        other = String.format(getString(R.string.reply_other_user), other);
+        String other ="回复" +comments.get(position).getPublisher().getName()+": ";
+//        other = String.format(getString(R.string.reply_other_user), other);
         etComment.setText(other);
         etComment.setSelection(other.length());
         etComment.requestFocus();
@@ -266,7 +276,10 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
                 if (content.length() > MAX_TEXT_COUNT - 2) {
                     content = content.substring(0, MAX_TEXT_COUNT - 2) + "......";
                 }
-                dynamicPresent.addComment(dynamic.id, content);
+                if (replyUser != null) {
+                    itUser.put(replyUser.getName(), replyUser.getId());
+                }
+                dynamicPresent.addComment(dynamic.id, content, itUser);
                 KeyBoardUtil.closeKeyboard(etComment, this);
 
                 return true;
@@ -289,6 +302,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             temp.setPublisher(publisher);
 
             comments.add(0, temp);
+            commentAdapter.addExtra(itUser);
+            itUser.clear();
             commentAdapter.setData(comments);
             commentAdapter.notifyItemChanged(0);
 
@@ -307,8 +322,14 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
 
             if (replyUser != null) {
+                replyUserMap.put(replyUser.getName(),replyUser.getId());
+
+
                 CMDMessageManager.sendCMDMessage(replyUser.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
+                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.REPLY, null, dynamic.getDynamicTypeInteger(), replyName);
+
+
+
                 if (!TextUtils.equals(replyUser.getId(), dynamic.publisher.getId())) {
                     CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
                             , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
@@ -414,6 +435,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     @Override
     public void deleteDynamicResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
+
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_DELETE_DYNAMIC_SUCCESS));
             ToastGlobal.showLong("删除成功");
             setResult(RESULT_DELETE, null);
@@ -433,6 +455,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             setListener();
             dynamicPresent.pullToRefreshComments(dynamic.id);
             sharePopupWindow = new SharePopupWindow(this);
+            commentAdapter.setExtras(dynamicBean.extras);
+
         }
     }
 
@@ -556,6 +580,9 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         }
     }
 
+    protected Map<String, String> itUser = new HashMap<>();
+    protected Map<String, String> replyUserMap = new HashMap<>();
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -566,11 +593,45 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
                 case Constant.REQUEST_USER_INFO:
 
                     dynamic.publisher.followed = data.getBooleanExtra(Constant.FOLLOW, dynamic.publisher.followed);
-                    Logger.i("follow","onActivityResult follow = " + dynamic.publisher.followed);
+                    Logger.i("follow", "onActivityResult follow = " + dynamic.publisher.followed);
                     headerAdapter.notifyDataSetChanged();
                     break;
+                case REQUEST_USER:
+
+                    this.user_id = data.getStringExtra("user_id");
+                    this.name = data.getStringExtra("name");
+                    itUser.put(name, user_id);
+
+                    Logger.i(" itUser.put( name =  " + name + ", user_id = " + user_id);
+                    String newContent = etComment.getText().toString() + name;
+                    etComment.setText(newContent);
+                    etComment.setSelection(newContent.length());
+                    etComment.requestFocus();
+                    break;
+
             }
         }
 
+    }
+
+    private class OnTextWatcher implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            if (TextUtils.equals("@", s.toString().substring(start, start + count))) {
+
+                UiManager.activityJumpForResult(DynamicDetailByIdActivity.this, new Bundle(), SelectedUserActivity.class, REQUEST_USER);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
     }
 }

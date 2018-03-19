@@ -104,8 +104,8 @@ public class ContestModelImpl {
     }
 
 
-    public void getContestSchedules(Observer<ContestSchedulesData> subscribe, String id, int page) {
-        contestService.getContestSchedules(id, page)
+    public void getContestSchedules(Observer<ContestSchedulesData> subscribe, String id,  String city,int page) {
+        contestService.getContestSchedules(id, city,page)
                 .compose(RxHelper.<ContestSchedulesData>transform())
                 .subscribe(subscribe);
     }

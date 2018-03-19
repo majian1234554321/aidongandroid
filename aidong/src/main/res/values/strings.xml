@@ -252,9 +252,9 @@
     <string name="all_circle">全部商圈</string>
     <string name="new_cusmor_exclusive">新用户专享</string>
     <string name="check_immediately">立即查看</string>
-    <string name="login_success">登陆成功</string>
-    <string name="login_chat_success">登陆聊天服务器成功</string>
-    <string name="login_chat_faile">登陆聊天服务器失败</string>
+    <string name="login_success">登录成功</string>
+    <string name="login_chat_success">登录聊天服务器成功</string>
+    <string name="login_chat_faile">登录聊天服务器失败</string>
     <string name="register_success">注册成功</string>
     <string name="share_coupons">分享优惠券</string>
     <string name="share_coupons_to_friends">将优惠券分享给自己的小伙伴</string>
@@ -405,4 +405,8 @@
     <string name="search_more_person">搜索更多的人</string>
     <string name="person_intro">个人介绍</string>
     <string name="person_dynamic">个人动态</string>
+    <string name="man_woman_group_select">男子组女子组选择</string>
+    <string name="contest_shedule_explain">赛事讲解</string>
+    <string name="time_of_contest_colon">比赛时间:</string>
+    <string name="address_of_final_colon">总决赛地点:</string>
 </resources>

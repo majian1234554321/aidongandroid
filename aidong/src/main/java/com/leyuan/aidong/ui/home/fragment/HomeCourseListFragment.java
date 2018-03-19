@@ -67,9 +67,11 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
 
         }
     };
+    private CourseConfigPresentImpl coursePresentNew;
 
     private void resetRefreshData() {
 
+        coursePresentNew.getLocalCourseFilterConfig(this);
         for (int i = 0; i < days.size(); i++) {
             Fragment page = adapter.getPage(i);
             if (page != null)
@@ -110,7 +112,7 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
 
     private void initData() {
 
-        CourseConfigPresentImpl coursePresentNew = new CourseConfigPresentImpl(getActivity());
+         coursePresentNew = new CourseConfigPresentImpl(getActivity());
         coursePresentNew.getLocalCourseFilterConfig(this);
 
 //        present.getScrollDate(days.get(0), category);

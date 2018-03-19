@@ -189,6 +189,8 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
                     SelectCouponActivity.startForResult(this, course.getPrice() + "",
                             couponId, selectedUserCouponId, usableCoupons, REQUEST_SELECT_COUPON);
+                }else {
+                    ToastGlobal.showLongConsecutive("无可用优惠券");
                 }
                 break;
 

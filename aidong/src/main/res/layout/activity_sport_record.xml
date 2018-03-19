@@ -38,7 +38,7 @@
             android:drawablePadding="5dp"
             android:drawableRight="@drawable/icon_arrow_down_coupon"
             android:gravity="center"
-            android:text="2017年"
+            android:text="2018年"
             android:textColor="#fff"
             android:textSize="14sp" />
 

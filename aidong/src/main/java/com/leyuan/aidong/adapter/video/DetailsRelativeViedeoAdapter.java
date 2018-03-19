@@ -45,7 +45,7 @@ public class DetailsRelativeViedeoAdapter extends RecyclerView.Adapter<DetailsRe
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CourseVideoBean bean = videos.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.img_cover);
-        holder.txtSubTitle.setText(bean.getIntroduce());
+        holder.txtSubTitle.setText("#"+bean.getTypeName()+"#");
         holder.txtTitle.setText(bean.getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -60,11 +60,20 @@ public class DetailsRelativeViedeoAdapter extends RecyclerView.Adapter<DetailsRe
     public int getItemCount() {
         if (videos == null)
             return 0;
-        return videos.size() >= 2 ? 2 : videos.size();
+//        return videos.size() >= 2 ? 2 : videos.size();
+        return videos.size();
     }
 
+
     public void setData(List<CourseVideoBean> videos) {
-        this.videos = videos;
+
+        if(videos.size()<=2){
+            this.videos = videos;
+        }else {
+            this.videos = videos.subList(0,2);
+        }
+
+
         notifyDataSetChanged();
     }
 

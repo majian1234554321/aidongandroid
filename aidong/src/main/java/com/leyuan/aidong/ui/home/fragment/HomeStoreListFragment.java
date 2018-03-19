@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,16 +46,16 @@ import java.util.List;
  * Created by user on 2018/1/4.
  */
 public class HomeStoreListFragment extends BaseFragment implements DiscoverVenuesActivityView, VenuesSelfSupportView {
-    private static final int HIDE_THRESHOLD = 80;
 
+    private static final int HIDE_THRESHOLD = 500;
     private int scrolledDistance;
     private boolean filterViewVisible = true;
-
 
     private RecyclerView recyclerView;
     private CustomRefreshLayout refreshLayout;
     private SwitcherLayout switcherLayout;
     private VenuesFilterView filterView;
+    ImageView view_zhanwei;
 
     private int currPage = 1;
     private StoreListAdapter venuesAdapter;
@@ -114,6 +115,8 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
     }
 
     private void initView(View view) {
+        view_zhanwei = (ImageView) view.findViewById(R.id.view_zhanwei);
+
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         initFilterView(view);
@@ -218,18 +221,25 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             if (scrolledDistance > HIDE_THRESHOLD && filterViewVisible) {           //手指向上滑动
-                layout_head.animate().translationY(-layout_head.getHeight()).setInterpolator
+                layout_mine_store.animate().translationY(-layout_mine_store.getHeight()).setInterpolator
                         (new AccelerateInterpolator(2)).start();
+//
+//                filterView.animate().translationY(-filterView.getHeight()).setInterpolator
+//                        (new AccelerateInterpolator(2)).start();
+//                view_zhanwei.setVisibility(View.GONE);
+                layout_mine_store.setVisibility(View.GONE);
 
-                filterView.animate().translationY(-filterView.getHeight()).setInterpolator
-                        (new AccelerateInterpolator(2)).start();
+
                 filterViewVisible = false;
                 scrolledDistance = 0;
             } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
-                layout_head.animate().translationY(0).setInterpolator
+                layout_mine_store.animate().translationY(0).setInterpolator
                         (new DecelerateInterpolator(2)).start();
-                filterView.animate().translationY(0).setInterpolator
-                        (new DecelerateInterpolator(2)).start();
+//                filterView.animate().translationY(0).setInterpolator
+//                        (new DecelerateInterpolator(2)).start();
+//                view_zhanwei.setVisibility(View.VISIBLE);
+                layout_mine_store.setVisibility(View.VISIBLE);
+
                 scrolledDistance = 0;
                 filterViewVisible = true;
             }

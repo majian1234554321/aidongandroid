@@ -242,7 +242,22 @@
                             android:layout_centerVertical="true"
                             android:background="@drawable/icon_follow"
                             android:orientation="vertical"
-                            android:visibility="visible"></ImageView>
+                            android:visibility="gone"/>
+                        
+                        <TextView
+                            android:id="@+id/txt_edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="编辑资料"
+                            android:padding="7dp"
+                            android:textColor="@color/c9"
+                            android:textSize="16sp"
+                            android:background="@drawable/shape_stroke_corner_gray"
+                            />
+
                     </RelativeLayout>
 
                     <include layout="@layout/inc_line" />

@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.contest;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,26 +13,27 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.campaign.ContestScheduleBean;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.mvp.view.ContestSemiFinalEnrolClickListener;
-import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.ToastGlobal.showShortConsecutive;
 
 /**
  * 运动之窗适配器
  * Created by song on 2016/10/17.
  */
-public class ContestSemiFinalEnrolChildAdapter extends RecyclerView.Adapter<ContestSemiFinalEnrolChildAdapter.ViewHolder> {
+public class ContestSemiFinalEnroledAdapter extends RecyclerView.Adapter<ContestSemiFinalEnroledAdapter.ViewHolder> {
     private Context context;
     private List<ContestScheduleBean> data = new ArrayList<>();
     private ContestSemiFinalEnrolClickListener listener;
 
 
-    public ContestSemiFinalEnrolChildAdapter(Context context) {
+    public ContestSemiFinalEnroledAdapter(Context context) {
         this.context = context;
     }
 
-    public ContestSemiFinalEnrolChildAdapter(Context context, ArrayList<ContestScheduleBean> item) {
+    public ContestSemiFinalEnroledAdapter(Context context, ArrayList<ContestScheduleBean> item) {
         this.context = context;
         data = item;
     }
@@ -67,38 +69,34 @@ public class ContestSemiFinalEnrolChildAdapter extends RecyclerView.Adapter<Cont
             @Override
             public void onClick(View v) {
                 if (schedule.coordinate == null) {
-                    ToastGlobal.showShortConsecutive("无效的地址");
+                    showShortConsecutive("无效的地址");
                     return;
                 }
                 MapActivity.start(context, "比赛地址", schedule.store_name, schedule.address, schedule.coordinate.getLat(), schedule.coordinate.getLng());
             }
         });
 
-        if (schedule.appointed) {
-            //已预约
+        if (!TextUtils.isEmpty(schedule.score) && !TextUtils.equals("null", schedule.score.toLowerCase())) {
+            //有分数
+            holder.btEnrol.setBackgroundResource(R.drawable.shape_semi_circle_tranparent_solid_stroke_gray);
+            holder.btEnrol.setText(schedule.score);
+        } else if (schedule.expired) {
+            //已结束
             holder.btEnrol.setBackgroundResource(R.drawable.shape_semi_circle_nine_solid);
-            holder.btEnrol.setText("已报名");
-
-        } else if (schedule.place <= 0) {
-            //已满员
-            holder.btEnrol.setBackgroundResource(R.drawable.shape_semi_circle_nine_solid);
-            holder.btEnrol.setText("已满员");
-
+            holder.btEnrol.setText("已结束");
         } else {
+            //已预约
             holder.btEnrol.setBackgroundResource(R.drawable.shape_simi_circle_orange_solid);
-            holder.btEnrol.setText("报名");
-        }
+            holder.btEnrol.setText("取消");
 
+        }
         holder.btEnrol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    if (schedule.place <= 0 && !schedule.appointed) {
-                        ToastGlobal.showShortConsecutive("已满员，请选择其他时段");
-                    } else {
+                    if (!schedule.expired && (TextUtils.isEmpty(schedule.score) || TextUtils.equals("null", schedule.score.toLowerCase()))) {
                         listener.onSemiFinalEnrolClick(schedule.id, schedule.appointed);
                     }
-
                 }
             }
         });

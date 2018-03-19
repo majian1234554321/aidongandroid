@@ -47,7 +47,6 @@
                         android:layout_height="50dp"
                         android:layout_marginLeft="@dimen/left_margin"
                         android:gravity="center_vertical"
-                        android:text="11111111111"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -63,7 +62,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/left_margin"
-                            android:text="99"
                             android:textColor="@color/c9"
                             android:textSize="16sp" />
 
@@ -73,13 +71,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
-                            android:text="/" />
+                            android:text="" />
 
                         <TextView
                             android:id="@+id/tv_distance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2.8km"
                             android:textColor="@color/c9"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -114,7 +111,6 @@
                                 android:id="@+id/txt_address"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="11111111111"
                                 android:textColor="@color/c3"
                                 android:textSize="15sp"
 
@@ -125,7 +121,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                android:text="22222222"
                                 android:textColor="@color/b3"
                                 android:textSize="13sp"
 
@@ -158,6 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
+                        android:layout_marginBottom="15dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -290,7 +286,8 @@
 
                     </LinearLayout>
 
-                    <include layout="@layout/inc_line_margin_left" />
+                    <include
+                        layout="@layout/inc_line_margin_left" />
 
 
                     <LinearLayout
@@ -390,6 +387,11 @@
                             android:layout_weight="1"
                             android:src="@drawable/icon_food_gray" />
                     </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:src="@color/base_theme" />
 
                     <TextView
                         android:id="@+id/txt_relate_course"

@@ -136,7 +136,9 @@
             android:drawablePadding="5dp"
             android:gravity="center"
             android:singleLine="true"
-            android:text="虹桥南丰城健身"
+            android:text="虹桥南丰城健身阿斯蒂芬卡多少阿斯达安德森阿斯蒂"
+            android:ellipsize="end"
+            android:maxWidth="200dp"
             android:textColor="@color/b3"
             android:textSize="13sp" />
 

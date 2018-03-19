@@ -73,6 +73,9 @@ public interface DynamicService {
     @POST("dynamics/{id}/comments")
     Observable<BaseBean> addComment(@Path("id") String id, @Field("content") String content);
 
+    @POST("dynamics/{id}/comments")
+    Observable<BaseBean> addComment(@Path("id") String id, @Body RequestBody requestBody);
+
     @GET("dynamics/{id}/comments")
     Observable<BaseBean<CommentData>> getComments(@Path("id") String id, @Query("page") int page);
 

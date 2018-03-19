@@ -65,8 +65,8 @@ public class MyAttentionListActivity extends BaseActivity implements SmartTabLay
             @Override
             public void onPageSelected(int position) {
                 //reset tip dot
-                View tip = tabLayout.getTabAt(position).findViewById(R.id.tv_tab_tip);
-                tip.setVisibility(View.GONE);
+//                View tip = tabLayout.getTabAt(position).findViewById(R.id.tv_tab_tip);
+//                tip.setVisibility(View.GONE);
 
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
@@ -87,10 +87,10 @@ public class MyAttentionListActivity extends BaseActivity implements SmartTabLay
 
     @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_text_with_notification, container, false);
+        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_text_attention, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
-        TextView tip = (TextView) tabView.findViewById(R.id.tv_tab_tip);
-        tip.setVisibility(View.GONE);
+//        TextView tip = (TextView) tabView.findViewById(R.id.tv_tab_tip);
+//        tip.setVisibility(View.GONE);
 
         String[] campaignTab = getResources().getStringArray(R.array.attentinList);
         text.setText(campaignTab[position]);

@@ -39,7 +39,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         } else if (e instanceof ZeroException) {
             ToastGlobal.showShortConsecutive(e.getMessage());
         } else if (e instanceof NotLoginException) {
-            ToastGlobal.showShortConsecutive("您还未登陆");
+            ToastGlobal.showShortConsecutive("您还未登录");
         } else {
             ToastGlobal.showShortConsecutive("请求失败");
         }

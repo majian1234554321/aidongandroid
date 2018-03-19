@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.leyuan.aidong.R;
@@ -41,12 +42,14 @@ public class RelativeVideoListActivity extends BaseActivity implements RelatedVi
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     String relativeId;
     private CoursePresentImpl coursePresent;
+    private String title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relative_video);
         relativeId = getIntent().getStringExtra("relativeId");
+        title = getIntent().getStringExtra("title");
 
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +58,10 @@ public class RelativeVideoListActivity extends BaseActivity implements RelatedVi
                 finish();
             }
         });
+        if (!TextUtils.isEmpty(title)) {
+            titleBar.setTitle(title);
+        }
+
         initSwipeRefreshLayout();
         initRecyclerView();
 
@@ -78,7 +85,7 @@ public class RelativeVideoListActivity extends BaseActivity implements RelatedVi
 
     private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.rv_news);
-        adapter = new RelativeViedeoAdapter(this,relativeId);
+        adapter = new RelativeViedeoAdapter(this, relativeId);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         recyclerView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(context, 2);
@@ -97,6 +104,13 @@ public class RelativeVideoListActivity extends BaseActivity implements RelatedVi
     public static void start(Context context, String id) {
         Intent intent = new Intent(context, RelativeVideoListActivity.class);
         intent.putExtra("relativeId", id);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, String id, String title) {
+        Intent intent = new Intent(context, RelativeVideoListActivity.class);
+        intent.putExtra("relativeId", id);
+        intent.putExtra("title", title);
         context.startActivity(intent);
     }
 

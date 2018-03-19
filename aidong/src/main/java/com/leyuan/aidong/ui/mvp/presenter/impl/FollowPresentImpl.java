@@ -293,11 +293,13 @@ public class FollowPresentImpl implements FollowPresent {
             @Override
             public void onNext(FollowData followData) {
                 if (followData != null && !followData.getFollow().isEmpty()) {
-                    if ("followings".equals(type)) {
-                        followData = followData;
-                        SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
-                    }
+//                    if ("followings".equals(type)) {
+//                        followData = followData;
+//                        SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
+//                    }
                     followFragment.onRefreshData(followData.getFollow());
+                }else {
+                    followFragment.showEmptyView();
                 }
             }
         }, type, Constant.PAGE_FIRST);

@@ -330,8 +330,10 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 itUser.put(name, user_id);
 
                 Logger.i(" itUser.put( name =  " + name + ", user_id = " + user_id);
-
-                etContent.setText(etContent.getText().toString() + name);
+                String newContent = etContent.getText().toString() + name;
+                etContent.setText(newContent);
+                etContent.setSelection(newContent.length());
+                etContent.requestFocus();
 
             } else {
 

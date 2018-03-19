@@ -200,6 +200,7 @@
                 android:layout_centerVertical="true"
 
                 android:text="@string/relate_dynamic"
+                android:visibility="invisible"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />

@@ -43,6 +43,8 @@ public class UserBean implements Parcelable, Serializable,  Comparable<UserBean>
 
     public int rank;//
     public int score;//
+    public String slogan;
+    public String cover;
 
     private StringBuffer tagString = new StringBuffer();
 

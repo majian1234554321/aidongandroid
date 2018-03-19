@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.home.view;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +27,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.widget.richtext.RichWebView;
 
 /**
  * Created by user on 2018/1/11.
@@ -37,7 +37,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     private TextView txtAttentionNum;
     private ImageView imgCover;
     private ImageButton bt_attention;
-    private TextView txtIntro;
+    private RichWebView txtIntro;
     private TextView txtPrice;
     private TextView txtTime;
     private TextView txtCityAddress;
@@ -76,7 +76,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
 
         view.findViewById(R.id.bt_attention).setOnClickListener(this);
         imgCover = (ImageView) view.findViewById(R.id.img_cover);
-        txtIntro = (TextView) view.findViewById(R.id.txt_intro);
+        txtIntro = (RichWebView) view.findViewById(R.id.txt_intro);
         view.findViewById(R.id.txt_check_detail).setOnClickListener(this);
         txtPrice = (TextView) view.findViewById(R.id.txt_price);
         txtTime = (TextView) view.findViewById(R.id.txt_time);
@@ -111,7 +111,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         }
 
 
-        txtIntro.setText(Html.fromHtml(campaignDetailBean.getIntroduce()));
+        txtIntro.setRichText(campaignDetailBean.getIntroduce());
         txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
         txtTime.setText(campaignDetailBean.getStartTime() + "-" + campaignDetailBean.getEndTime());
         txtCityAddress.setText(campaignDetailBean.getLandmark());
@@ -145,7 +145,15 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_check_all:
-                AppointmentUserActivity.start(context, campaignDetailBean.getApplicant(), "已报名的人");
+                if (App.getInstance().isLogin()) {
+
+                    AppointmentUserActivity.start(context, campaignDetailBean.getApplicant(), "已报名的人");
+
+                } else {
+                    UiManager.activityJump(context, LoginActivity.class);
+                }
+
+
                 break;
 
             case R.id.bt_attention:

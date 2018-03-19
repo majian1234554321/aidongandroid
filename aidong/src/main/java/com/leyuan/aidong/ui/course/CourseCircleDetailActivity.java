@@ -84,7 +84,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private List<DynamicBean> dynamicList;
+    private List<DynamicBean>  dynamicList = new ArrayList<>();
     private DynamicBean invokeDynamicBean;
 
     private int currPage = 1;
@@ -167,7 +167,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
     private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.rv_dynamic_list);
-        dynamicList = new ArrayList<>();
+
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(this);
         builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
                 .addType(MultiImageViewHolder.class, DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
@@ -239,7 +239,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                                 }
                             }).show();
                 } else {
-                    ToastGlobal.showLong("请先登陆再来发帖");
+                    ToastGlobal.showLong("请先登录再来发帖");
                     startActivity(new Intent(this, LoginActivity.class));
                 }
                 break;
@@ -290,10 +290,11 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         circleDynamicAdapter.updateData(dynamicList);
         circleDynamicAdapter.notifyItemRangeChanged(0, dynamicList.size());
 //        circleDynamicAdapter.notifyDataSetChanged();
-
-
+        headView.setDynamicEmpty(dynamicList.isEmpty());
         int top = recyclerView.getChildAt(0).getTop();
-        recyclerView.scrollBy(0, top);
+        Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " +top);
+        recyclerView.scrollBy(0, -10000);
+
     }
 
     @Override
@@ -305,9 +306,11 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
     @Override
     public void updateRelateVideo(String title, List<CourseVideoBean> videos) {
-        headView.setRelativeVideoData(videos);
+        headView.setRelativeVideoData(title,videos);
         int top = recyclerView.getChildAt(0).getTop();
-        recyclerView.scrollBy(0, top);
+
+        Logger.i("recyclerView.scrollBy updateRelateVideo ,top = " +top);
+        recyclerView.scrollBy(0, -10000);
     }
 
     @Override

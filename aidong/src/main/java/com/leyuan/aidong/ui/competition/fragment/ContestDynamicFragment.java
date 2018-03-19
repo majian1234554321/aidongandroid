@@ -311,7 +311,7 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         public void onCommentClick(DynamicBean dynamicBean, int position) {
             ContestDynamicFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                DynamicDetailByIdActivity.startResultById(ContestDynamicFragment.this, dynamicBean.id);
+                ContestDynamicDetailActivity.startResultById(ContestDynamicFragment.this, dynamicBean.id);
 
 //                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
 //                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);

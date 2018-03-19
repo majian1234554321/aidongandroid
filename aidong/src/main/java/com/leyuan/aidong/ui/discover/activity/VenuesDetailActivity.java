@@ -119,7 +119,7 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
                     AppointVenuesActivity.start(VenuesDetailActivity.this, id, venuesBean.getName(),
                             venuesBean.getAddress(), venuesBean.getTel());
                 } else {
-                    Toast.makeText(VenuesDetailActivity.this, "请先登陆", Toast.LENGTH_LONG).show();
+                    Toast.makeText(VenuesDetailActivity.this, "请先登录", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(VenuesDetailActivity.this, LoginActivity.class));
                 }
             }

@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.contest.ContestSemiFinalEnrolChildAdapter;
+import com.leyuan.aidong.adapter.contest.ContestSemiFinalEnroledAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.campaign.ContestScheduleBean;
 import com.leyuan.aidong.entity.data.ContestSchedulesDateData;
@@ -46,7 +46,7 @@ public class ContestQuarterFinalEnroledRecordActivity extends BaseActivity imple
     private RecyclerView recyclerView;
     private SwitcherLayout switcherLayout;
     private int currPage = 1;
-    private ContestSemiFinalEnrolChildAdapter adapter;
+    private ContestSemiFinalEnroledAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
     private ContestPresentImpl coursePresent;
@@ -82,7 +82,7 @@ public class ContestQuarterFinalEnroledRecordActivity extends BaseActivity imple
         recyclerView = (RecyclerView) findViewById(R.id.rv_order);
 
         refreshLayout.setOnRefreshListener(this);
-        adapter = new ContestSemiFinalEnrolChildAdapter(this);
+        adapter = new ContestSemiFinalEnroledAdapter(this);
         adapter.setListener(this);
 
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);

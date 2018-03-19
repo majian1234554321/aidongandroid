@@ -102,7 +102,7 @@ public class PublishContestDynamicActivity extends PublishDynamicActivity implem
 
                 if (urls != null && urls.size() > 0){
                     DialogUtils.showDialog(PublishContestDynamicActivity.this,"",true);
-                    contestPresent.postVideo(contestId, urls.get(0),tvContentCount.getText().toString().trim());
+                    contestPresent.postVideo(contestId, urls.get(0),etContent.getText().toString().trim());
                 }
 
 
@@ -120,7 +120,7 @@ public class PublishContestDynamicActivity extends PublishDynamicActivity implem
     protected void uploadToServer(List<String> urls) {
 //        super.uploadToServer(qiNiuMediaUrls);
         if (urls != null && urls.size() > 0) {
-            contestPresent.postVideo(contestId, urls.get(0),tvContentCount.getText().toString().trim());
+            contestPresent.postVideo(contestId, urls.get(0),etContent.getText().toString().trim());
         }
 
     }

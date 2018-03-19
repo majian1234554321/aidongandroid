@@ -1,15 +1,11 @@
 package com.leyuan.aidong.ui.discover.viewholder;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -32,15 +28,13 @@ import com.leyuan.aidong.ui.discover.activity.CMDMessageActivity;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
-import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -124,7 +118,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     @Override
     public void onBindData(final DynamicBean dynamic, final int position) {
         if (position == 0 && context instanceof MainActivity && App.getInstance().isLogin() && App.getInstance().getCMDCirleDynamicBean()
-                != null && !App.getInstance().getCMDCirleDynamicBean().isEmpty()) {
+                != null && !App.getInstance().getCMDCirleDynamicBean().isEmpty() ) {
 
             layoutCmdMessage.setVisibility(View.VISIBLE);
             layoutCmdMessage.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +155,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         }
 
         if (dynamic.extras != null && dynamic.extras.length > 0) {
-            SpannableStringBuilder highlightText = highlight(dynamic.content, dynamic.extras, "#EA2D2D");
+            SpannableStringBuilder highlightText = StringUtils.highlight(context,dynamic.content, dynamic.extras, "#EA2D2D",1);
 
             tv_content.setText(highlightText);
             tv_content.setMovementMethod(LinkMovementMethod.getInstance());
@@ -223,7 +217,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 layout_difficulty_star.setVisibility(View.VISIBLE);
                 txtDesc.setText(dynamic.related.getTagString());
                 for (int i = 0; i < 5; i++) {
-                    if (i < dynamic.related.hard_degree) {
+                    if (i < dynamic.related.strength) {
                         starList.get(i).setVisibility(View.VISIBLE);
                     } else {
                         starList.get(i).setVisibility(View.GONE);
@@ -329,37 +323,37 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     }
 
 
-    private SpannableStringBuilder highlight(String text, UserBean[] users,
-                                             String color) {
-        SpannableStringBuilder spannableString = new SpannableStringBuilder(text);
-
-
-        for (final UserBean user : users) {
-            Pattern pattern = Pattern.compile(user.getName().replaceAll("\\*",""));
-            Matcher matcher = pattern.matcher(text);
-
-//            String quote = Pattern.quote(user.getName());
-//            return Pattern.matches(quote, text);
-
-            while (matcher.find()) {
-                ClickableSpan clickableSpan = new ClickableSpan() {
-                    @Override
-                    public void onClick(View view) {
-
-                        UserInfoActivity.start(context, user.user_id);
-                    }
-                };
-
-                spannableString.setSpan(clickableSpan, matcher.start() - 1, matcher.end(),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor(color));
-                spannableString.setSpan(span, matcher.start() - 1, matcher.end(),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
-        }
-        return spannableString;
-    }
+//    private SpannableStringBuilder highlight(String text, UserBean[] users,
+//                                             String color) {
+//        SpannableStringBuilder spannableString = new SpannableStringBuilder(text);
+//
+//
+//        for (final UserBean user : users) {
+//            Pattern pattern = Pattern.compile(user.getName().replaceAll("\\*",""));
+//            Matcher matcher = pattern.matcher(text);
+//
+////            String quote = Pattern.quote(user.getName());
+////            return Pattern.matches(quote, text);
+//
+//            while (matcher.find()) {
+//                ClickableSpan clickableSpan = new ClickableSpan() {
+//                    @Override
+//                    public void onClick(View view) {
+//
+//                        UserInfoActivity.start(context, user.user_id);
+//                    }
+//                };
+//
+//                spannableString.setSpan(clickableSpan, matcher.start() - 1, matcher.end(),
+//                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//
+//                ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor(color));
+//                spannableString.setSpan(span, matcher.start() - 1, matcher.end(),
+//                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            }
+//
+//        }
+//        return spannableString;
+//    }
 
 }

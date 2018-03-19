@@ -188,7 +188,7 @@ public class EmConfigManager implements EmChatView {
                         bean.setCommentType(message.getIntAttribute(Constant.KDNCOMMENTTYPE));
 //                        bean.setKDNMSGID(message.getStringAttribute(Constant.KDNMSGID));
                         bean.setDynamicType(message.getIntAttribute(Constant.KDNCONTENTTYPE));
-                        bean.setReplySiteNickname(message.getStringAttribute(Constant.KDNREPLYSITENICKNAME));
+//                        bean.setReplySiteNickname(message.getStringAttribute(Constant.KDNREPLYSITENICKNAME));
 
                         App.getInstance().saveDynamicCmdMessage(bean);
 

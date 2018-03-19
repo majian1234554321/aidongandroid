@@ -9,11 +9,14 @@ import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.discover.activity.DynamicParseUserActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ScreenUtil;
+import com.leyuan.aidong.utils.UiManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +90,16 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DynamicParseUserActivity.start(context, dynamicId);
+
+                    if (App.getInstance().isLogin()) {
+
+                        DynamicParseUserActivity.start(context, dynamicId);
+
+                    } else {
+                        UiManager.activityJump(context, LoginActivity.class);
+                    }
+
+
                 }
             });
         }

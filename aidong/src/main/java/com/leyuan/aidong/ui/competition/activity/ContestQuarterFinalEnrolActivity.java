@@ -10,11 +10,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.contest.ContestSemiFinalEnrolAdapter;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.campaign.ContestBean;
 import com.leyuan.aidong.entity.campaign.ContestScheduleBean;
 import com.leyuan.aidong.entity.data.ContestSchedulesDateData;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
@@ -30,6 +33,8 @@ import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
+
+import static com.leyuan.aidong.R.id.txt_right;
 
 /**
  * Created by user on 2018/2/22.
@@ -55,38 +60,52 @@ public class ContestQuarterFinalEnrolActivity extends BaseActivity implements On
 
     FollowPresentImpl followPresent;
     private int clickedFollowPosition;
-    String contestId;
 
-    public static void start(Context context, String contestId) {
+    ContestBean contestBean;
+    String contestId;
+    private String city;
+    private ArrayList<String> allCity;
+
+    public static void start(Context context, String contestId, ContestBean contest) {
 
         Intent intent = new Intent(context, ContestQuarterFinalEnrolActivity.class);
         intent.putExtra("contestId", contestId);
-
+        intent.putExtra("contest", contest);
         context.startActivity(intent);
-
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contestId = getIntent().getStringExtra("contestId");
+        contestBean = getIntent().getParcelableExtra("contest");
         setContentView(R.layout.activity_contest_quarter_final_enrol);
 
         relTitle = (RelativeLayout) findViewById(R.id.rel_title);
         imgLeft = (ImageView) findViewById(R.id.img_left);
         txtTitle = (TextView) findViewById(R.id.txt_title);
         tvLocation = (TextView) findViewById(R.id.tv_location);
-        txtRight = (TextView) findViewById(R.id.txt_right);
+        txtRight = (TextView) findViewById(txt_right);
         refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.rv_order);
 
         txtRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContestQuarterFinalEnroledRecordActivity.start(ContestQuarterFinalEnrolActivity.this,contestId);
+                ContestQuarterFinalEnroledRecordActivity.start(ContestQuarterFinalEnrolActivity.this, contestId);
             }
         });
+
+        city = App.getInstance().getSelectedCity();
+        allCity = contestBean.getAllCity();
+        tvLocation.setText(city);
+        tvLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showHeightDialog();
+            }
+        });
+
 
         refreshLayout.setOnRefreshListener(this);
         adapter = new ContestSemiFinalEnrolAdapter(this);
@@ -110,7 +129,7 @@ public class ContestQuarterFinalEnrolActivity extends BaseActivity implements On
 
         coursePresent = new ContestPresentImpl(this);
         coursePresent.setContestSchedulesView(this);
-        coursePresent.getContestSchedules(contestId, currPage);
+        coursePresent.getContestSchedules(contestId, city, currPage);
 
         imgLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,11 +139,27 @@ public class ContestQuarterFinalEnrolActivity extends BaseActivity implements On
         });
     }
 
+    private void showHeightDialog() {
+        new MaterialDialog.Builder(this).title("请选择城市")
+                .items(allCity)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        city = text.toString();
+                        onRefresh();
+                        tvLocation.setText(city);
+
+                    }
+                })
+                .positiveText(android.R.string.cancel)
+                .show();
+    }
+
     @Override
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        coursePresent.getContestSchedules(contestId, currPage);
+        coursePresent.getContestSchedules(contestId, city, currPage);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -132,7 +167,7 @@ public class ContestQuarterFinalEnrolActivity extends BaseActivity implements On
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                coursePresent.getContestSchedules(contestId, currPage);
+                coursePresent.getContestSchedules(contestId, city, currPage);
             }
 
         }
@@ -163,7 +198,8 @@ public class ContestQuarterFinalEnrolActivity extends BaseActivity implements On
     public void onScheduleEnrol(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
             ToastGlobal.showLongConsecutive("报名成功，请提早15分钟进入赛场");
-            coursePresent.getContestSchedules(contestId, currPage);
+            onRefresh();
+
         } else {
             ToastGlobal.showLongConsecutive(baseBean.getMessage());
         }
@@ -173,7 +209,7 @@ public class ContestQuarterFinalEnrolActivity extends BaseActivity implements On
     public void onScheduleCancelResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
             ToastGlobal.showLongConsecutive("取消报名成功");
-            coursePresent.getContestSchedules(contestId, currPage);
+            onRefresh();
         } else {
             ToastGlobal.showLongConsecutive(baseBean.getMessage());
         }

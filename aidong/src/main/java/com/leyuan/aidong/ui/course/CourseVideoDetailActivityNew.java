@@ -71,6 +71,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
 
     CoursePresentImpl coursePresent;
     private ArrayList<BaseMedia> selectedMedia;
+    private String relateVideoTitle;
 
     public static void start(Context context, String id) {
         Intent intent = new Intent(context, CourseVideoDetailActivityNew.class);
@@ -115,7 +116,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         if (courseVideoBean != null) {
             GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), imgBg);
             txt_course_name.setText(courseVideoBean.getName());
-            txt_course_sub_name.setText("#" + courseVideoBean.getName() + "#");
+            txt_course_sub_name.setText("#" + courseVideoBean.getTypeName() + "#");
             txtCourseIntro.setText(courseVideoBean.getIntroduce());
         }
 
@@ -136,7 +137,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         txtCheckAllVideo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                RelativeVideoListActivity.start(CourseVideoDetailActivityNew.this, courseId);
+                RelativeVideoListActivity.start(CourseVideoDetailActivityNew.this, courseId,relateVideoTitle);
 
             }
         });
@@ -230,6 +231,8 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
 
     @Override
     public void updateRelateVideo(String title, List<CourseVideoBean> videoBeanList) {
+        txtRelateCourseVideo.setText(title);
+        this.relateVideoTitle = title;
         relativeViedeoAdapter.setData(videoBeanList);
     }
 

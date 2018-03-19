@@ -272,7 +272,7 @@ public class MineFragmentOld extends BaseFragment implements View.OnClickListene
                 if (App.mInstance.isLogin()) {
                     FollowActivity.start(getContext(), 1);
                 } else {
-                    Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "请先登录", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getContext(), LoginActivity.class));
                 }
                 break;

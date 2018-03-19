@@ -41,7 +41,7 @@
             android:paddingBottom="4dp"
             android:paddingLeft="5dp"
             android:paddingTop="4dp"
-            android:text=""
+            android:text="上海"
             android:textColor="@color/white"
             android:textSize="12sp" />
 

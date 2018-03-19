@@ -48,6 +48,8 @@ public interface DynamicModel {
     void postDynamic(Subscriber<DynamicsData> subscriber, String video, String content, String type, String link_id,
                      String position_name, String latitude, String longitude, ArrayList<String> image, Map<String, String> itUser);
 
+    void addComment(Subscriber<BaseBean> subscriber, String id, String content, Map<String, String> itUser);
+
     /**
      * 发表评论
      * @param subscriber Subscriber

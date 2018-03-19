@@ -13,6 +13,7 @@ import com.leyuan.aidong.adapter.mine.MySportRecordListAdapter;
 import com.leyuan.aidong.entity.data.SportRecordMonthData;
 import com.leyuan.aidong.entity.user.SportRecordBean;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.mine.activity.SportRecordActivity;
 import com.leyuan.aidong.ui.mine.view.SportRecordHeaderView;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SportPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportRecordView;
@@ -25,6 +26,8 @@ import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
+
+import static com.leyuan.aidong.ui.mine.activity.SportRecordActivity.year;
 
 /**
  * Created by user on 2018/1/10.
@@ -42,7 +45,6 @@ public class SportRecordFragment extends BaseFragment implements OnRefreshListen
 
     private SportPresentImpl sportPresent;
     private String month;
-    private String year;
     private SportRecordHeaderView headerView;
 
     @Nullable
@@ -60,11 +62,10 @@ public class SportRecordFragment extends BaseFragment implements OnRefreshListen
         initSwitcherLayout();
 
         month = getArguments().getInt("month", 1) + "";
-        year = getArguments().getString("year");
 
         sportPresent = new SportPresentImpl(getContext());
         sportPresent.setSportRecordView(this);
-        sportPresent.getSportRecord(year, month);
+        sportPresent.getSportRecord(SportRecordActivity.year, month);
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -103,7 +104,7 @@ public class SportRecordFragment extends BaseFragment implements OnRefreshListen
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        sportPresent.getSportRecord(year, month);
+        sportPresent.getSportRecord(SportRecordActivity.year, month);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -133,6 +134,10 @@ public class SportRecordFragment extends BaseFragment implements OnRefreshListen
         adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
         switcherLayout.showContentLayout();
+    }
+
+    public void fetchData() {
+        onRefresh();
     }
 
 //
