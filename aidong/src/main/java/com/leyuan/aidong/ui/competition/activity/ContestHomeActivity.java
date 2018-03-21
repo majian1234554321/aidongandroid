@@ -288,7 +288,11 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
             layoutEnd.setVisibility(View.VISIBLE);
             GlideLoader.getInstance().displayImage(contest.cover,imgEndCover);
         } else {
-            imgPostOrEnrol.setImageResource(R.drawable.post_video);
+
+            imgPostOrEnrol.setVisibility(View.GONE);
+            layoutEnd.setVisibility(View.VISIBLE);
+            GlideLoader.getInstance().displayImage(contest.cover,imgEndCover);
+
         }
 
     }

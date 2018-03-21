@@ -28,8 +28,8 @@ import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
 import com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.AppointmentMineCampaignActivityNew;
-import com.leyuan.aidong.ui.mine.activity.AppointmentMineCourseActivityNew;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mine.activity.FollowActivity;
@@ -226,7 +226,7 @@ public class MineFragmentOld extends BaseFragment implements View.OnClickListene
             case R.id.layout_appoint_course:
 
                 if(App.getInstance().isLogin()){
-                    AppointmentMineCourseActivityNew.start(getActivity(),0);
+                    AppointmentMineActivityNew.start(getActivity(),0);
                 }else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }

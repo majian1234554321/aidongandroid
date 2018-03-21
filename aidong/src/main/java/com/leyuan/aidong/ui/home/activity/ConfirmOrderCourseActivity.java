@@ -23,7 +23,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointmentMineCourseActivityNew;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderCoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderCourseView;
@@ -263,7 +263,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
 
             Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
 
-            AppointmentMineCourseActivityNew.start(ConfirmOrderCourseActivity.this,0);
+            AppointmentMineActivityNew.start(ConfirmOrderCourseActivity.this,0);
             finish();
 
         }

@@ -35,7 +35,7 @@ public interface CourseServiceNew {
                                                       @Query("mobile") String mobile);
 
     @GET("app/api/coach/{mobile}/timetables")
-    Observable<BaseBean<CourseDataNew>> getCoachCourseList(@Path("mobile") String mobile);
+    Observable<BaseBean<CourseDataNew>> getCoachCourseList(@Path("mobile") String mobile,@Query("date") String data);
 
 
 

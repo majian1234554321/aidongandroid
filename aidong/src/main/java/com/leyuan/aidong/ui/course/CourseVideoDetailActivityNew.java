@@ -114,21 +114,22 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         txt_appoint_immediately = (TextView) findViewById(R.id.txt_appoint_immediately);
 
         if (courseVideoBean != null) {
+
             GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), imgBg);
             txt_course_name.setText(courseVideoBean.getName());
             txt_course_sub_name.setText("#" + courseVideoBean.getTypeName() + "#");
             txtCourseIntro.setText(courseVideoBean.getIntroduce());
+
         }
 
         findViewById(bt_share).setOnClickListener(this);
         txt_appoint_immediately.setOnClickListener(this);
         imgLiveBeginOrEnd.setOnClickListener(this);
         txt_share_image.setOnClickListener(this);
+
         findViewById(R.id.iv_back).setOnClickListener(this);
 
-
         sharePopupWindow = new SharePopupWindow(this);
-
 
         GridLayoutManager manager = new GridLayoutManager(this, 2);
         rvRelateVideo.setLayoutManager(manager);
@@ -137,7 +138,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         txtCheckAllVideo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                RelativeVideoListActivity.start(CourseVideoDetailActivityNew.this, courseId,relateVideoTitle);
+                RelativeVideoListActivity.start(CourseVideoDetailActivityNew.this, courseId, relateVideoTitle,courseVideoBean.getId());
 
             }
         });
@@ -154,8 +155,9 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
                 finish();
                 break;
             case R.id.img_live_begin_or_end:
+                if (courseVideoBean == null) return;
                 Intent intent = new Intent(this, PlayerActivity.class)
-                        .setData(Uri.parse(""))
+                        .setData(Uri.parse(courseVideoBean.getFile()))
                         .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
                 startActivity(intent);
 

@@ -43,6 +43,7 @@ public class RelativeVideoListActivity extends BaseActivity implements RelatedVi
     String relativeId;
     private CoursePresentImpl coursePresent;
     private String title;
+    private String videoId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class RelativeVideoListActivity extends BaseActivity implements RelatedVi
         setContentView(R.layout.activity_relative_video);
         relativeId = getIntent().getStringExtra("relativeId");
         title = getIntent().getStringExtra("title");
+        videoId = getIntent().getStringExtra("videoId");
 
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +69,7 @@ public class RelativeVideoListActivity extends BaseActivity implements RelatedVi
 
         coursePresent = new CoursePresentImpl(this, this);
 
-        coursePresent.pullToRefreshVideo(relativeId, null);
+        coursePresent.pullToRefreshVideo(relativeId, videoId);
 
     }
 
@@ -111,6 +113,14 @@ public class RelativeVideoListActivity extends BaseActivity implements RelatedVi
         Intent intent = new Intent(context, RelativeVideoListActivity.class);
         intent.putExtra("relativeId", id);
         intent.putExtra("title", title);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, String id, String title, String videoId) {
+        Intent intent = new Intent(context, RelativeVideoListActivity.class);
+        intent.putExtra("relativeId", id);
+        intent.putExtra("title", title);
+        intent.putExtra("videoId", videoId);
         context.startActivity(intent);
     }
 

@@ -134,10 +134,12 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
 
         setContentView(R.layout.activity_user_info);
         userInfoPresent = new UserInfoPresentImpl(this, this);
+
         if (getIntent() != null) {
             userId = getIntent().getStringExtra("userId");
             isSelf = isSelf(userId);
         }
+
         initView();
         setListener();
         userInfoPresent.getUserInfo(switcherLayout, userId);
@@ -281,22 +283,27 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.iv_back:
 
                 finishSetResult();
 
                 break;
             case R.id.dv_avatar:
+
                 List<String> urls = new ArrayList<>();
                 urls.add(userInfoData.getProfile().getAvatar());
                 List<Rect> viewLocalRect = new ArrayList<>();
                 viewLocalRect.add(ImageRectUtils.getDrawableBoundsInView(ivAvatar));
                 PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, viewLocalRect, 0);
                 PhotoBrowseActivity.start(this, info);
+
                 break;
+
             case R.id.iv_publish:
                 publishDynamic();
                 break;
+
             case R.id.tv_add_image:
                 toUpdatePhotoWallActivity();
                 break;

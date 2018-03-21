@@ -30,7 +30,7 @@ import java.util.List;
 public class CoachCourseFragment extends BaseFragment implements CourseDateAdapter.ItemClickListener, CourseListView {
     private static final String TAG = "VenuesCourseFragment";
     private SwitcherLayout switcherLayout;
-//    private VenuesCourseAdapter courseAdapter;
+    //    private VenuesCourseAdapter courseAdapter;
 //    private String id;
     private List<String> days;
 //    private VenuesPresent venuesPresent;
@@ -67,7 +67,8 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
         }
         initView(view);
 
-        coursePresent.getCoachCourseList(mobile);
+        date = days.get(0);
+        coursePresent.getCoachCourseList(mobile, date);
     }
 
     private void initView(View view) {
@@ -88,7 +89,9 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
 
     @Override
     public void onItemClick(int position) {
-        coursePresent.getCoachCourseList(mobile);
+
+        date = days.get(position);
+        coursePresent.getCoachCourseList(mobile, date);
 
     }
 

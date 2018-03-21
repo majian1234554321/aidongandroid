@@ -17,7 +17,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointmentMineCampaignActivityNew;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneUnBindingActivity;
@@ -195,7 +195,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                     ToastGlobal.showLong("请先绑定手机");
                 } else {
                     campaignPresent.buyCampaign(bean.getCampaignId(), couponId, integral,
-                            payType, userRealName, contactMobile, payListener, "1");
+                            payType, userRealName, contactMobile, payListener, "1",null);
                 }
                 break;
             default:
@@ -213,7 +213,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         @Override
         public void onFail(String code, Object object) {
             super.onFail(code, object);
-            AppointmentMineCampaignActivityNew.start(AppointCampaignActivity.this,0);
+            AppointmentMineActivityNew.start(AppointCampaignActivity.this,3);
 //            AppointmentMineActivityNew.start(AppointCampaignActivity.this,3);
 
 //            startActivity(new Intent(AppointCampaignActivity.this, AppointmentActivity.class));

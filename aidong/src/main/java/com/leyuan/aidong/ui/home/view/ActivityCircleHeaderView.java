@@ -111,7 +111,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         }
 
 
-        txtIntro.setRichText(campaignDetailBean.getIntroduce());
+        txtIntro.setRichText(campaignDetailBean.simple_intro);
         txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
         txtTime.setText(campaignDetailBean.getStartTime() + "-" + campaignDetailBean.getEndTime());
         txtCityAddress.setText(campaignDetailBean.getLandmark());

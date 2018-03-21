@@ -33,7 +33,7 @@
                     <cn.bingoogolapple.bgabanner.BGABanner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="350dp"
+                        android:layout_height="210dp"
                         android:background="@drawable/place_holder_logo"
                         app:banner_pointAutoPlayAble="false"
                         app:banner_pointContainerBackground="@android:color/transparent"

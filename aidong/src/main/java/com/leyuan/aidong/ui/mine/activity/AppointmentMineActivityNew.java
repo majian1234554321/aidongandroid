@@ -53,7 +53,7 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
         AppointmentFragmentCourseNew course = AppointmentFragmentCourseNew.newInstance(tranPosition);
 
         AppointmentFragmentEventNew event =  AppointmentFragmentEventNew.newInstance(tranPosition-3);
-        AppointmentFragmentGoods goods = AppointmentFragmentGoods.newInstance(tranPosition);
+        AppointmentFragmentGoods goods = AppointmentFragmentGoods.newInstance(tranPosition-6);
 
 
         mFragments.add(course);

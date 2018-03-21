@@ -20,6 +20,7 @@ public class AppointmentDetailBean {
     private AppointInfo appointment;    //预约信息
     private PayOrderBean pay;            //支付信息
     private PayInfo payInfo;
+    private String remark;
 
 
     public class AppointInfo{
@@ -324,5 +325,13 @@ public class AppointmentDetailBean {
 
     public void setIs_vip(boolean is_vip) {
         this.is_vip = is_vip;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

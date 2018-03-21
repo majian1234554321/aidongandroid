@@ -39,8 +39,8 @@ public class CampaignModelImpl implements CampaignModel{
 
     @Override
     public void buyCampaign(Subscriber<PayOrderData> subscriber, String id, String couponId,
-                            float integral, String payType, String contactName, String contactMobile, String amount) {
-        campaignService.buyCampaign(id,couponId,integral,payType,contactName,contactMobile,amount)
+                            float integral, String payType, String contactName, String contactMobile, String amount,String remark) {
+        campaignService.buyCampaign(id,couponId,integral,payType,contactName,contactMobile,amount,remark)
                 .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }

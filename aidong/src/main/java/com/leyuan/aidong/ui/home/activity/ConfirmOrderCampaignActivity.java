@@ -21,7 +21,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointmentMineCourseActivityNew;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
@@ -210,7 +210,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 } else {
                     DialogUtils.showDialog(this, "", false);
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
-                            payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount);
+                            payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount, edit_remark.getText().toString().trim());
                 }
                 break;
             case R.id.txt_course_location:
@@ -250,11 +250,14 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
+
             DialogUtils.dismissDialog();
+
             LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
 
-            AppointCourseSuccessActivity.start(ConfirmOrderCampaignActivity.this, course.getStartTime(), true, null);
-            Toast.makeText(ConfirmOrderCampaignActivity.this, "支付成功", Toast.LENGTH_LONG).show();
+            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, null, false, campaignPresent.getShareInfo());
+
+            ToastGlobal.showLongConsecutive("支付成功");
             finish();
 
         }
@@ -269,7 +272,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
             Toast.makeText(ConfirmOrderCampaignActivity.this, "支付失败", Toast.LENGTH_LONG).show();
 
-            AppointmentMineCourseActivityNew.start(ConfirmOrderCampaignActivity.this, 0);
+            AppointmentMineActivityNew.start(ConfirmOrderCampaignActivity.this, 3);
             finish();
 
         }
@@ -278,8 +281,9 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         public void onFree() {
             DialogUtils.dismissDialog();
             LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
-            AppointCourseSuccessActivity.start(ConfirmOrderCampaignActivity.this, course.getStartTime(), true, null);
-            Toast.makeText(ConfirmOrderCampaignActivity.this, "预约成功", Toast.LENGTH_LONG).show();
+            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, null, false, campaignPresent.getShareInfo());
+
+            ToastGlobal.showLongConsecutive("预约成功");
             finish();
 
         }

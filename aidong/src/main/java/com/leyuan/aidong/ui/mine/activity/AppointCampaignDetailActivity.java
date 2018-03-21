@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,7 +26,6 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
-import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
@@ -78,7 +78,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     //预约状态信息
     private TextView tvState;
     private TextView tvOrderNo;
-    private LinearLayout timerLayout;
+    private LinearLayout timerLayout, layout_mark;
     private CountdownView timer;
     private RelativeLayout campaignLayout;
     private ImageView ivCover;
@@ -104,7 +104,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private ExtendTextView tvAiDou;
     private ExtendTextView tvStartTime;
     private ExtendTextView tvPayTime;
-    private ExtendTextView tvPayType,tv_appoint_phone;
+    private ExtendTextView tvPayType, tv_appoint_phone;
 
     //支付方式信息
     private LinearLayout payLayout;
@@ -116,14 +116,14 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private LinearLayout bottomLayout;
     private TextView tvPrice;
     private TextView tvPayTip;
-    private TextView tvPay;
+    private TextView tvPay, txt_remark;
     private TextView tvCancelPay;
     private TextView tvCancelJoin;
     private TextView tvConfirmJoin;
     private TextView tvDelete;
 
     //Present层对象
-    private AppointmentPresent present;
+    private AppointmentPresentImpl present;
     private String orderId;
     @PayType
     private String payType;
@@ -178,6 +178,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvState = (TextView) findViewById(R.id.tv_state);
         tvOrderNo = (TextView) findViewById(R.id.tv_order_num);
         timerLayout = (LinearLayout) findViewById(R.id.ll_timer);
+        layout_mark = (LinearLayout) findViewById(R.id.layout_mark);
+
         timer = (CountdownView) findViewById(R.id.timer);
         campaignLayout = (RelativeLayout) findViewById(R.id.rl_detail);
         ivCover = (ImageView) findViewById(R.id.dv_goods_cover);
@@ -187,6 +189,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         txtRoomName = (TextView) findViewById(R.id.txt_room_name);
         txtCourseLocation = (TextView) findViewById(R.id.txt_course_location);
 
+        txt_remark = (TextView) findViewById(R.id.txt_remark);
         tvInfo = (TextView) findViewById(R.id.tv_info);
         codeLayout = (RelativeLayout) findViewById(R.id.rl_qr_code);
         tvCodeNum = (TextView) findViewById(R.id.tv_qr_num);
@@ -285,6 +288,13 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay().getTotal())));
         tv_appoint_phone.setRightContent(bean.getAppoint().getMobile());
+
+        if (TextUtils.isEmpty(bean.getRemark())) {
+            layout_mark.setVisibility(View.GONE);
+        } else {
+            layout_mark.setVisibility(View.VISIBLE);
+            txt_remark.setText(bean.getRemark());
+        }
 
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
         tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType()) ? "支付宝" : "微信");
@@ -427,7 +437,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
                 tvCodeNum.setText(bean.getAppoint().getVerify_no());
 //                if (bean.getAppoint().isVerified()) {
-                    tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 //                }
                 tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getAppoint().getVerify_no(),
@@ -498,7 +508,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
             case R.id.txt_course_room:
             case R.id.txt_course_location:
-                MapActivity.start(this, bean.getName(),bean.getAppoint().getOrganizer(), bean.getAppoint().getAddress(),
+                MapActivity.start(this, bean.getName(), bean.getAppoint().getOrganizer(), bean.getAppoint().getAddress(),
                         bean.getAppoint().getLat(), bean.getAppoint().getLng());
 
 
@@ -520,7 +530,6 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
             AppointSuccessActivity.start(AppointCampaignDetailActivity.this, null, false, present.getShareInfo());
             LocalBroadcastManager.getInstance(AppointCampaignDetailActivity.this)
                     .sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
-
 
 
         }

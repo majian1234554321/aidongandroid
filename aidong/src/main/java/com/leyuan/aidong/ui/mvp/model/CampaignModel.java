@@ -38,7 +38,7 @@ public interface CampaignModel {
      * @param amount
      */
     void buyCampaign(Subscriber<PayOrderData> subscriber, String id, String couponId, float integral,
-                     String payType, String contactName, String contactMobile, String amount);
+                     String payType, String contactName, String contactMobile, String amount,String remark);
 
 
     /**

@@ -49,8 +49,8 @@ public class CourseModelNewImpl {
 
 
 
-    public void getCoachCourseList(Subscriber<CourseDataNew> subscriber, String mobile) {
-        courseService.getCoachCourseList(mobile)
+    public void getCoachCourseList(Subscriber<CourseDataNew> subscriber, String mobile, String date) {
+        courseService.getCoachCourseList(mobile,date)
                 .compose(RxHelper.<CourseDataNew>transform())
                 .subscribe(subscriber);
     }

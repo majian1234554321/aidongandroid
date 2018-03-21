@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="位置"
+            android:text="地点"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -55,7 +55,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:padding="5dp"
-        android:src="@drawable/icon_course_telephone" />
+        android:src="@drawable/icon_telephone_red" />
 
     <ImageView
         android:layout_width="match_parent"

@@ -33,10 +33,10 @@
 
                 <!--活动预约信息布局-->
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -85,6 +85,39 @@
                         app:line_color="@color/transparent" />
                 </LinearLayout>
 
+                <!-- 备注信息-->
+
+                <LinearLayout
+                    android:id="@+id/layout_mark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/left_margin"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_vertical"
+                        android:text="备注信息"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txt_remark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="@dimen/left_margin"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_vertical"
+                        android:text="麻烦吗的说法"
+                        android:textColor="@color/c3"
+                        android:textSize="15sp" />
+
+                    <include layout="@layout/inc_line_margin_left" />
+                </LinearLayout>
+
                 <!--订单信息-->
                 <TextView
                     android:layout_width="wrap_content"
@@ -130,24 +163,24 @@
                     android:id="@+id/campaign_privilege"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:left_text="活动优惠:"
                     android:visibility="gone"
+                    app:left_text="活动优惠:"
                     app:line_color="@color/transparent" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_aibi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:left_text="爱币:"
                     android:visibility="gone"
+                    app:left_text="爱币:"
                     app:line_color="@color/transparent" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_aidou"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:left_text="爱豆:"
                     android:visibility="gone"
+                    app:left_text="爱豆:"
                     app:line_color="@color/transparent" />
 
                 <com.leyuan.aidong.widget.ExtendTextView

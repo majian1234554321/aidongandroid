@@ -54,7 +54,7 @@ public interface CampaignPresent {
      * @param amount
      */
     void buyCampaign(String id, String couponId, float integral, String payType, String contactName,
-                     String contactMobile, PayInterface.PayListener listener, String amount);
+                     String contactMobile, PayInterface.PayListener listener, String amount,String remark);
 
 
     /**

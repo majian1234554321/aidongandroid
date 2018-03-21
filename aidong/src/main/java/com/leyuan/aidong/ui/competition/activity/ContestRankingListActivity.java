@@ -81,7 +81,7 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        rankType = "preliminary";
         contest = getIntent().getParcelableExtra("contest");
 
         CompetitionAreaBean[] beans = new CompetitionAreaBean[contest.division_info.length + 1];

@@ -42,7 +42,7 @@ public class CourseListPresentImpl {
     }
 
 
-    public void getCoachCourseList(String mobile) {
+    public void getCoachCourseList(String mobile, String date) {
         courseModel.getCoachCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -59,7 +59,7 @@ public class CourseListPresentImpl {
                 super.onError(e);
                 listener.onGetRefreshCourseList(null);
             }
-        }, mobile);
+        }, mobile,date);
     }
 
     public void pullRefreshCourseList(String store, String course, String time, String date) {

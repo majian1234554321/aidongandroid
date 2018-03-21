@@ -34,7 +34,8 @@ public interface CampaignService {
                                                    @Field("pay_type") String payType,
                                                    @Field("contact_name") String contactName,
                                                    @Field("contact_mobile") String contactMobile,
-                                                   @Field("amount") String amount);
+                                                   @Field("amount") String amount,
+                                                   @Field("remark") String remark);
 
     @GET("market/campaigns/{id}/appointment")
     Observable<BaseBean<AppointmentDetailData>> getCampaignAppointDetail(@Path("id") String id);

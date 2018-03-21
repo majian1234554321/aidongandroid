@@ -115,6 +115,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
     };
     private HomeAttentionHeaderlView headView;
     private FollowPresentImpl followPresent;
+    private boolean isRefresh;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -225,6 +226,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
 
     public void refreshData() {
         currPage = 1;
+        isRefresh = true;
         refreshLayout.setRefreshing(true);
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
         dynamicPresent.pullToRefreshDataFollow();
@@ -234,7 +236,9 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
 
     @Override
     public void updateRecyclerView(List<DynamicBean> dynamicBeanList) {
-        if (refreshLayout.isRefreshing()) {
+        if (refreshLayout.isRefreshing() || isRefresh ) {
+            Logger.i("HomeAttentionFragment"," if (refreshLayout.isRefreshing()) {");
+            isRefresh = false;
             dynamicList.clear();
             refreshLayout.setRefreshing(false);
         }
@@ -246,7 +250,6 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
                 txtEmptyHint.setText("还没有关注任何内容");
                 btEmptyConfirm.setImageResource(R.drawable.icon_go_to_attention);
 
-
             } else {
 
                 txtEmptyHint.setText("立即登录查看您关注的内容");
@@ -254,7 +257,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
             }
 
         } else {
-
+            Logger.i("HomeAttentionFragment"," circleDynamicAdapter.updateData(dynamicList);");
             layoutAttentionEmpty.setVisibility(View.GONE);
             dynamicList.addAll(dynamicBeanList);
             circleDynamicAdapter.updateData(dynamicList);

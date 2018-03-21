@@ -43,6 +43,7 @@ public class AppointmentMineCourseActivityNew extends BaseActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_appointment_mine_course_new);
 
         Logger.i(TAG, "onViewCreated");
