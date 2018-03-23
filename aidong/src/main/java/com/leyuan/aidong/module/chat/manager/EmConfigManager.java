@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.google.gson.Gson;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
@@ -22,6 +23,7 @@ import com.hyphenate.util.EMLog;
 import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.user.AiterUser;
 import com.leyuan.aidong.module.chat.CallReceiver;
 import com.leyuan.aidong.module.chat.MyContactListener;
 import com.leyuan.aidong.module.chat.MyGroupChangeListener;
@@ -33,6 +35,10 @@ import com.leyuan.aidong.ui.mvp.view.EmChatView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -58,6 +64,7 @@ public class EmConfigManager implements EmChatView {
     private EMMessageListener messageListener;
 
     private ChatPresentImpl present;
+    private Gson gson = new Gson();
 
     private EmConfigManager() {
     }
@@ -179,6 +186,10 @@ public class EmConfigManager implements EmChatView {
                     CircleDynamicBean bean = new CircleDynamicBean();
 
                     try {
+                        if (gson == null) {
+                            gson = new Gson();
+                        }
+
                         bean.setFromAvatar(message.getStringAttribute(Constant.KDNPRAISEAVATAR));
                         bean.setFromName(message.getStringAttribute(Constant.KDNUSERNAME));
                         bean.setDynamicId(message.getStringAttribute(Constant.KDNID));
@@ -188,12 +199,43 @@ public class EmConfigManager implements EmChatView {
                         bean.setCommentType(message.getIntAttribute(Constant.KDNCOMMENTTYPE));
 //                        bean.setKDNMSGID(message.getStringAttribute(Constant.KDNMSGID));
                         bean.setDynamicType(message.getIntAttribute(Constant.KDNCONTENTTYPE));
-//                        bean.setReplySiteNickname(message.getStringAttribute(Constant.KDNREPLYSITENICKNAME));
+
+                        //设置@的人
+                        ArrayList<AiterUser>  kDAiteUser = new ArrayList<>();
+                        JSONArray AiterjsonArray = message.getJSONArrayAttribute(Constant.kDAiteUser);
+
+                        Logger.i("chat CircleDynamicBean AiterjsonArray = " +AiterjsonArray.toString());
+                        for (int i = 0; i < AiterjsonArray.length(); i++) {
+                            AiterUser user = new AiterUser();
+                            JSONObject jsonObject = AiterjsonArray.getJSONObject(i);
+                            user.user_name = jsonObject.getString(Constant.kuser_name);
+                            user.user_id = jsonObject.getString(Constant.kuser_id);
+                            kDAiteUser.add(user);
+                        }
+
+                        bean.kDAiteUser = kDAiteUser;
+
+                        //设置回复的人
+
+                        ArrayList<AiterUser>  kDNreplyUserD = new ArrayList<>();
+                        JSONArray replyjsonArray = message.getJSONArrayAttribute(Constant.kDNreplyUser);
+
+                        Logger.i("chat CircleDynamicBean replyjsonArray = " +replyjsonArray.toString());
+                        for (int i = 0; i < replyjsonArray.length(); i++) {
+                            AiterUser user = new AiterUser();
+                            JSONObject jsonObject = replyjsonArray.getJSONObject(i);
+                            user.user_name = jsonObject.getString(Constant.kuser_name);
+                            user.user_id = jsonObject.getString(Constant.kuser_id);
+                            kDNreplyUserD.add(user);
+                        }
+                        bean.kDNreplyUserD = kDNreplyUserD;
 
                         App.getInstance().saveDynamicCmdMessage(bean);
 
                         EMLog.d(TAG, "CircleDynamicBean = " + bean.toString());
                     } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
 

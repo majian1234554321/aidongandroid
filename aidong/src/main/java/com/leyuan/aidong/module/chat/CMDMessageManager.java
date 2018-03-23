@@ -80,7 +80,7 @@ public class CMDMessageManager {
             for (Map.Entry<String, String> code : itUser.entrySet()) {
 
                 Logger.i("chat itUser. arrayUser.put(userObj);  name =  " + code.getKey() + ", user_id = " + code.getValue());
-                sendCMDMessageAite(code.getValue(), myAvatar, mName, dynamicId, DateUtils.getCurrentTime(),
+                sendCMDMessageAiteReply(code.getValue(), myAvatar, mName, dynamicId, DateUtils.getCurrentTime(),
                         content, dynamicCover, commentType, msgId, dynamicType, replySiteNickname, itUser, null);
             }
             Logger.i("chat root.put(\"extras\", arrayUser);");
@@ -88,16 +88,32 @@ public class CMDMessageManager {
 
     }
 
-    public static void sendCMDMessageReply(String myAvatar, String mName, String dynamicId,
-                                           String content,String dynamicCover, int commentType,
-                                           String msgId, int dynamicType, String replySiteNickname,
-                                           Map<String, String> itUser, Map<String, String> replyUser) {
+    public static void sendCMDMessageAite(String myAvatar, String mName, String dynamicId,
+                                          String content, String dynamicCover, int commentType,
+                                          String msgId, int dynamicType, String replySiteNickname,
+                                          Map<String, String> itUser,Map<String, String> replyUser) {
         if (itUser != null) {
             for (Map.Entry<String, String> code : itUser.entrySet()) {
 
-                Logger.i(" itUser. arrayUser.put(userObj);  name =  " + code.getKey() + ", user_id = " + code.getValue());
-                sendCMDMessageAite(code.getValue(), myAvatar, mName, dynamicId, DateUtils.getCurrentTime(),
+                Logger.i("chat itUser. arrayUser.put(userObj);  name =  " + code.getKey() + ", user_id = " + code.getValue());
+                sendCMDMessageAiteReply(code.getValue(), myAvatar, mName, dynamicId, DateUtils.getCurrentTime(),
                         content, dynamicCover, commentType, msgId, dynamicType, replySiteNickname, itUser, replyUser);
+            }
+            Logger.i("chat root.put(\"extras\", arrayUser);");
+        }
+
+    }
+
+    public static void sendCMDMessageReply(String myAvatar, String mName, String dynamicId,
+                                           String content, String dynamicCover, int commentType,
+                                           String msgId, int dynamicType,
+                                           Map<String, String> itUser, Map<String, String> replyUser) {
+        if (replyUser != null) {
+            for (Map.Entry<String, String> code : replyUser.entrySet()) {
+
+                Logger.i(" itUser. arrayUser.put(userObj);  name =  " + code.getKey() + ", user_id = " + code.getValue());
+                sendCMDMessageAiteReply(code.getValue(), myAvatar, mName, dynamicId, DateUtils.getCurrentTime(),
+                        content, dynamicCover, commentType, msgId, dynamicType, null, itUser, replyUser);
 
             }
             Logger.i("root.put(\"extras\", arrayUser);");
@@ -106,10 +122,10 @@ public class CMDMessageManager {
     }
 
 
-    private static void sendCMDMessageAite(String toUserName, String myAvatar, String mName,
-                                           String dynamicId, String time, String content, String imageUrl,
-                                           int commentType, String msgId, int dynamicType, String replySiteNickname,
-                                           Map<String, String> itUser, Map<String, String> replyUser) {
+    public static void sendCMDMessageAiteReply(String toUserName, String myAvatar, String mName,
+                                               String dynamicId, String time, String content, String imageUrl,
+                                               int commentType, String msgId, int dynamicType, String replySiteNickname,
+                                               Map<String, String> itUser, Map<String, String> replyUser) {
         final EMMessage cmdMsg = EMMessage.createSendMessage(EMMessage.Type.CMD);
         cmdMsg.setChatType(EMMessage.ChatType.Chat);
         String action = Constant.CIRCLE; //action可以自定义
@@ -127,7 +143,7 @@ public class CMDMessageManager {
         cmdMsg.setAttribute(Constant.KDNCOMMENTTYPE, commentType);//0 评论，1 点赞
         cmdMsg.setAttribute(Constant.KDNMSGID, msgId);
         cmdMsg.setAttribute(Constant.KDNCONTENTTYPE, dynamicType);//0 图片 ，1 视频
-        cmdMsg.setAttribute(Constant.KDNREPLYSITENICKNAME, replySiteNickname);
+        cmdMsg.setAttribute(Constant.KDNREPLYSITENICKNAME, replySiteNickname); //回复人昵称
 
 
         //@的人

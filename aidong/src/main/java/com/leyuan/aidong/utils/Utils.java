@@ -335,7 +335,7 @@ public class Utils {
 			String timeDate = timeFormat.format(date);
 			//当前日期的前一天
 			String beforeDate = getSpecifiedDayBefore();
-			if(spanTime < 60000  * 60 * 4) { // 小于4h
+			if(spanTime < 60000  * 60 ) { // 小于1h
 				return "刚刚";
 			} else if(spanTime < 60000  * 60 * 24) { // xx分钟前
 				return spanTime / (60000*60) + "小时前";

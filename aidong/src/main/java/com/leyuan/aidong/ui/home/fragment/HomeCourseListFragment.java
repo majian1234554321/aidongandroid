@@ -61,9 +61,7 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
 
             if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
                 resetRefreshData();
-
             }
-
 
         }
     };
@@ -75,7 +73,7 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
         for (int i = 0; i < days.size(); i++) {
             Fragment page = adapter.getPage(i);
             if (page != null)
-                ((CourseListFragmentNew) page).fetchData();
+                ((HomeCourseListChildFragment) page).fetchData();
         }
     }
 
@@ -130,7 +128,7 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
 
         FragmentPagerItems pages = new FragmentPagerItems(getActivity());
         for (int i = 0; i < days.size(); i++) {
-            CourseListFragmentNew courseFragment = new CourseListFragmentNew();
+            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
                     new Bundler().putString("date", days.get(i)).putString("category", allcategory).get()
             ));
@@ -158,7 +156,7 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
                     text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
 
                     //reset fragment
-                    CourseListFragmentNew page = (CourseListFragmentNew) adapter.getPage(position);
+                    HomeCourseListChildFragment page = (HomeCourseListChildFragment) adapter.getPage(position);
                     page.scrollToTop();
 //                    filterView.animate().translationY(0).setInterpolator
 //                            (new DecelerateInterpolator(2)).start();
@@ -212,8 +210,8 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
 
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
-                ((CourseListFragmentNew) page).resetCurrentStore(currentBrand, currentArea, currentStore);
-                ((CourseListFragmentNew) page).fetchData();
+                ((HomeCourseListChildFragment) page).resetCurrentStore(currentBrand, currentArea, currentStore);
+                ((HomeCourseListChildFragment) page).fetchData();
             }
 
         }
@@ -223,8 +221,8 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
                 if (page == null) return;
-                ((CourseListFragmentNew) page).resetCourseCategory(currentCoursePriceType, currentCourseCategory);
-                ((CourseListFragmentNew) page).fetchData();
+                ((HomeCourseListChildFragment) page).resetCourseCategory(currentCoursePriceType, currentCourseCategory);
+                ((HomeCourseListChildFragment) page).fetchData();
             }
         }
     };
@@ -234,7 +232,7 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
         for (int i = 0; i < days.size(); i++) {
             Fragment page = adapter.getPage(i);
             if (page != null)
-                ((CourseListFragmentNew) page).fetchData();
+                ((HomeCourseListChildFragment) page).fetchData();
         }
     }
 

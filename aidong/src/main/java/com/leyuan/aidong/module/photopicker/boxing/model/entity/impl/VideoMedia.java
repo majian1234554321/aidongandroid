@@ -55,6 +55,10 @@ public class VideoMedia extends BaseMedia {
         this.mMimeType = builder.mMimeType;
     }
 
+    public String getmDuration() {
+        return mDuration;
+    }
+
     public String getDuration() {
         try {
             long duration = Long.parseLong(mDuration);

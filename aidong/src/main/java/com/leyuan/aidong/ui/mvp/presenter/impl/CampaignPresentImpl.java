@@ -232,6 +232,14 @@ public class CampaignPresentImpl implements CampaignPresent {
                 createShareBeanByOrder(payOrderData);
                 PayUtils.pay(context, payOrderData.getOrder(), listener);
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if(appointCampaignActivityView != null){
+                    appointCampaignActivityView.OnBuyError();
+                }
 
             }
         }, id, couponId, integral, payType, contactName, contactMobile, amount,remark);

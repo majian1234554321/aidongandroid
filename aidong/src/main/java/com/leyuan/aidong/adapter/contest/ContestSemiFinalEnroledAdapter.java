@@ -79,7 +79,7 @@ public class ContestSemiFinalEnroledAdapter extends RecyclerView.Adapter<Contest
         if (!TextUtils.isEmpty(schedule.score) && !TextUtils.equals("null", schedule.score.toLowerCase())) {
             //有分数
             holder.btEnrol.setBackgroundResource(R.drawable.shape_semi_circle_tranparent_solid_stroke_gray);
-            holder.btEnrol.setText(schedule.score);
+            holder.btEnrol.setText(schedule.score+"分");
         } else if (schedule.expired) {
             //已结束
             holder.btEnrol.setBackgroundResource(R.drawable.shape_semi_circle_nine_solid);

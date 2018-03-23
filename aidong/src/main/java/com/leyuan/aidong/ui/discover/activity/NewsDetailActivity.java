@@ -73,16 +73,20 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
         TextView txt_title = (TextView) findViewById(R.id.txt_title);
         TextView tvDate = (TextView) findViewById(R.id.tv_date);
 
-        webView = (RichWebView)findViewById(R.id.web_view);
+        webView = (RichWebView) findViewById(R.id.web_view);
 //        TextView tvNews = (TextView) findViewById(R.id.tv_news);
         tvTitle.setText(title);
         tvDate.setText(date);
+
+        if (bean != null && bean.isNotShare) {
+            ivShare.setVisibility(View.GONE);
+        }
         if (!TextUtils.isEmpty(body)) {
 
-            Logger.i("RichText"," body = " + body);
+            Logger.i("RichText", " body = " + body);
             webView.setRichText(body);
             txt_title.setText(bean.getTitleAll());
-            if(TextUtils.isEmpty(date)){
+            if (TextUtils.isEmpty(date)) {
                 tvDate.setVisibility(View.GONE);
             }
 //            RichText.from(body).placeHolder(R.drawable.place_holder_logo)

@@ -32,7 +32,7 @@ public class TrimVideoUtil {
     private static final String TAG = TrimVideoUtil.class.getSimpleName();
     public static final int VIDEO_MAX_DURATION = 60;// 15秒
     public static final int MIN_TIME_FRAME = 5;
-    private static final int thumb_Width = (DeviceUtil.getDeviceWidth() - UnitConverter.dpToPx(20)) / VIDEO_MAX_DURATION;
+    private static  int thumb_Width = (DeviceUtil.getDeviceWidth() - UnitConverter.dpToPx(20)) / VIDEO_MAX_DURATION;
     private static final int thumb_Height = UnitConverter.dpToPx(60);
     private static final long one_frame_time = 1000000;
 
@@ -83,7 +83,9 @@ public class TrimVideoUtil {
         }
     }
 
-    public static void backgroundShootVideoThumb(final Context context, final Uri videoUri, final SingleCallback<ArrayList<Bitmap>, Integer> callback) {
+    public static void backgroundShootVideoThumb(final Context context, int duration,final Uri videoUri, final SingleCallback<ArrayList<Bitmap>, Integer> callback) {
+
+        thumb_Width = (DeviceUtil.getDeviceWidth() - UnitConverter.dpToPx(20)) / duration;
         final ArrayList<Bitmap> thumbnailList = new ArrayList<>();
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0L, "") {
                                        @Override

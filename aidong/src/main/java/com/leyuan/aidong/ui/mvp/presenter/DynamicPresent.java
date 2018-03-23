@@ -40,7 +40,7 @@ public interface DynamicPresent {
 
     void addComment(String id, String content);
 
-    void addComment(String id, String content, Map<String, String> itUser);
+    void addComment(String id, String content, Map<String, String> itUser,Map<String, String> replyUserMap);
 
     void pullToRefreshComments(String id);
     void requestMoreComments(RecyclerView recyclerView,String id,int page,int pageSize);

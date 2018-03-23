@@ -50,6 +50,12 @@ public class SelectItUserListAdapter extends RecyclerView.Adapter<SelectItUserLi
             holder.img_coach_tag.setVisibility(View.GONE);
         }
 
+        holder.iv_gender.setVisibility(View.VISIBLE);
+        if ("0".equals(user.getGender())) {   //男
+            holder.iv_gender.setBackgroundResource(R.drawable.icon_man);
+        } else {
+            holder.iv_gender.setBackgroundResource(R.drawable.icon_woman);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,13 +80,14 @@ public class SelectItUserListAdapter extends RecyclerView.Adapter<SelectItUserLi
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgAvatar, img_coach_tag;
+        private ImageView imgAvatar, img_coach_tag, iv_gender;
         private TextView txtCoachName;
         private TextView txtIntro;
         private ImageButton btAttention;
 
         public ViewHolder(View view) {
             super(view);
+            iv_gender = (ImageView) view.findViewById(R.id.iv_gender);
             imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
             img_coach_tag = (ImageView) view.findViewById(R.id.img_coach_tag);
             txtCoachName = (TextView) view.findViewById(R.id.txt_coach_name);

@@ -28,6 +28,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
     private IDynamicCallback callback;
     private boolean showLikeAndCommentLayout;
     private boolean showFollowButton;
+    private boolean showCMDMessageLayout;
 
     private CircleDynamicAdapter(Context context,List<DynamicBean> data){
         super(context,data);
@@ -38,6 +39,8 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         this.callback = builder.callback;
         this.viewHolderKeyArray = builder.viewHolderKeyArray;
         this.showFollowButton = builder.showFollowButton;
+        this.showCMDMessageLayout = builder.showCMDMessageLayout;
+
         this.showLikeAndCommentLayout = builder.showLikeAndCommentLayout;
     }
 
@@ -54,6 +57,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
             if (circleBaseViewHolder != null) {
                 circleBaseViewHolder.setCallback(callback);
                 circleBaseViewHolder.setShowFollowButton(showFollowButton);
+                circleBaseViewHolder.setShowCMDMessageLayout(showCMDMessageLayout);
                 circleBaseViewHolder.showLikeAndCommentLayout(showLikeAndCommentLayout);
             }
             return circleBaseViewHolder;
@@ -69,6 +73,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         private IDynamicCallback callback;
         private boolean showLikeAndCommentLayout;
         private boolean showFollowButton;
+        private boolean showCMDMessageLayout = true;
 
         public Builder(Context context) {
             this.context = context;
@@ -102,6 +107,11 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
 
         public Builder<T> showFollowButton(boolean show) {
             this.showFollowButton = show;
+            return this;
+        }
+
+        public Builder<T> showCMDMessageLayout(boolean show) {
+            this.showCMDMessageLayout = show;
             return this;
         }
 

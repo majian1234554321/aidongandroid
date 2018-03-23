@@ -58,7 +58,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.Venu
         GlideLoader.getInstance().displayRoundImage(bean.getBrandLogo(), holder.cover);
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
-        holder.distance.setText("<"+bean.getDistanceFormat());
+        holder.distance.setText(bean.getDistanceFormat());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override 

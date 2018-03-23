@@ -51,7 +51,6 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selected_location_activity);
 
-
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
         refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);

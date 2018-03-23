@@ -28,6 +28,7 @@ public class DateUtils {
     public static final String WeiBo_ITEM_DATE_FORMAT = "EEE MMM d HH:mm:ss Z yyyy";
 
     private static SimpleDateFormat SecondFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
     public static long compareLongTime(String time) {
         long sysSecond = System.currentTimeMillis();
 
@@ -297,7 +298,7 @@ public class DateUtils {
     }
 
     public static List<String> getLimitDays(int start, int limit) {
-        Logger.i("getLimitDays","start days = " + start+", limit days = " +limit);
+        Logger.i("getLimitDays", "start days = " + start + ", limit days = " + limit);
         List<String> dates = new ArrayList<>();
         Date date = new Date();//取时间
         final Calendar calendar = new GregorianCalendar();
@@ -323,12 +324,12 @@ public class DateUtils {
             int limitHour = Integer.parseInt(limit_period.substring(0, 2));
             int limitMinute = Integer.parseInt(limit_period.substring(3, 5));
 
-            Logger.i("getLimitDays","currentHour = " +currentHour+", currentMin = "+currentMin+
-                    "limitHour = " +limitHour+", limitMinute = " +limitMinute);
+            Logger.i("getLimitDays", "currentHour = " + currentHour + ", currentMin = " + currentMin +
+                    "limitHour = " + limitHour + ", limitMinute = " + limitMinute);
             if (currentHour < limitHour) {
-                return getLimitDays(1, limitDays );
+                return getLimitDays(1, limitDays);
             } else if (currentHour == limitHour && currentMin < limitMinute) {
-                return getLimitDays(1, limitDays );
+                return getLimitDays(1, limitDays);
             } else {
                 return getLimitDays(2, limitDays);
             }
@@ -423,6 +424,7 @@ public class DateUtils {
     }
 
     public static boolean bigThanOneHour(String date) {
+        if (TextUtils.isEmpty(date)) return false;
         Date d = parseDate(date, yyyyMMddHHmm);
         if (d != null) {
             return d.getTime() - System.currentTimeMillis() > 3600 * 1000l;

@@ -48,7 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="222222222"
+            android:layout_marginRight="15dp"
+            android:singleLine="true"
             android:textColor="@color/c3"
             android:textSize="15sp" />
 

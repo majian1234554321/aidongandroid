@@ -16,13 +16,17 @@ import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.LocationActivityView;
 import com.leyuan.aidong.ui.mvp.view.MineInfoView;
+import com.leyuan.aidong.ui.mvp.view.RequestCountInterface;
 import com.leyuan.aidong.ui.mvp.view.SystemView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
@@ -32,14 +36,15 @@ import java.util.List;
  * 城市切换界面
  * Created by song on 2016/8/23.
  */
-public class LocationActivity extends BaseActivity implements LocationActivityView, CityAdapter.OnCitySelectListener, SystemView, MineInfoView {
+public class LocationActivity extends BaseActivity implements LocationActivityView, CityAdapter.OnCitySelectListener, SystemView, MineInfoView, RequestCountInterface {
     private SimpleTitleBar titleBar;
     private TextView tvLocation;
     private RecyclerView recyclerView;
     private CityAdapter cityAdapter;
     private ImageView img_selected;
-    private SystemPresentImpl systemPresent;
-    private MineInfoPresenterImpl presenter;
+//    private SystemPresentImpl systemPresent;
+//    private MineInfoPresenterImpl presenter;
+    int requestNum ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +53,9 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
         HomePresent homePresent = new HomePresentImpl(this, this);
         initView();
         homePresent.getOpenCity();
-        systemPresent = new SystemPresentImpl(this);
-        systemPresent.setSystemView(this);
-        presenter = new MineInfoPresenterImpl(this, this);
+//        systemPresent = new SystemPresentImpl(this);
+//        systemPresent.setSystemView(this);
+//        presenter = new MineInfoPresenterImpl(this, this);
     }
 
     private void initView() {
@@ -84,23 +89,47 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
     public void onCitySelect(String str) {
         if (!TextUtils.equals(App.getInstance().getSelectedCity(), str)) {
             App.getInstance().setSelectedCity(str);
+
+            RequestResponseCount requestResponse = new RequestResponseCount(this);
+
+            if (App.getInstance().isLogin()) {
+                MineInfoPresenterImpl mineInfoPresenter = new MineInfoPresenterImpl(this);
+                mineInfoPresenter.setOnRequestResponse(requestResponse);
+                mineInfoPresenter.getMineInfo();
+                requestNum++;
+            }
+
+            SystemPresentImpl systemPresent = new SystemPresentImpl(this);
+            systemPresent.setOnRequestResponse(requestResponse);
             systemPresent.getSystemInfoSelected(Constant.OS);
+            requestNum++;
+
+
+
+
+
+            CourseConfigPresentImpl coursePresentNew = new CourseConfigPresentImpl(this);
+            coursePresentNew.setOnRequestResponse(requestResponse);
+            coursePresentNew.getCourseFilterConfig();
+            requestNum++;
+
+
 
         }
     }
 
     @Override
     public void onGetSystemConfiguration(boolean b) {
-        if (App.getInstance().isLogin()) {
-            presenter.getMineInfo();
-        } else {
-            sendBroadcastAndFinish();
-        }
+//        if (App.getInstance().isLogin()) {
+//            presenter.getMineInfo();
+//        } else {
+//            sendBroadcastAndFinish();
+//        }
     }
 
     @Override
     public void onGetMineInfo(MineInfoBean mineInfoBean) {
-        sendBroadcastAndFinish();
+//        sendBroadcastAndFinish();
     }
 
 
@@ -108,5 +137,15 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_SELECTED_CITY));
         ToastGlobal.showLong("已切换到" + App.getInstance().getSelectedCity());
         finish();
+
+    }
+
+    @Override
+    public void onRequestCount(int requestCount) {
+
+        Logger.i("LocationActivity","requestCount = " +requestCount);
+        if(requestCount >= requestNum){
+            sendBroadcastAndFinish();
+        }
     }
 }

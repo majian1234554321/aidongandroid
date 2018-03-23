@@ -23,7 +23,6 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
-import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointCampaignActivityView;
 import com.leyuan.aidong.utils.Constant;
@@ -81,7 +80,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
     private String userName;
 
     private CampaignDetailBean course;
-    private CampaignPresent campaignPresent;
+    private CampaignPresentImpl campaignPresent;
     private List<CouponBean> usableCoupons = new ArrayList<>();
     private String selectedUserCouponId;
     private double totalPrice;
@@ -99,7 +98,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_confirm_order_course);
+        setContentView(R.layout.activity_confirm_order_campaign);
 
         if (getIntent() != null) {
             course = getIntent().getParcelableExtra("bean");
@@ -208,7 +207,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 if (TextUtils.isEmpty(userCoach.getMobile())) {
                     ToastGlobal.showLong("请先绑定手机");
                 } else {
-                    DialogUtils.showDialog(this, "", false);
+                    DialogUtils.showDialog(this, "", true);
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
                             payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount, edit_remark.getText().toString().trim());
                 }
@@ -231,6 +230,11 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         } else {
             txtCoupon.setText("请选择");
         }
+    }
+
+    @Override
+    public void OnBuyError() {
+        DialogUtils.dismissDialog();
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.ContestData;
 import com.leyuan.aidong.entity.data.ContestEnrolRecordData;
 import com.leyuan.aidong.entity.data.ContestInfoData;
+import com.leyuan.aidong.entity.data.ContestRuleData;
 import com.leyuan.aidong.entity.data.ContestSchedulesData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.RankingData;
@@ -88,5 +89,8 @@ public interface ContestService {
     @GET("contest/{id}/semi_finals")
     Observable<BaseBean<ContestEnrolRecordData>> getContestEnrolRecord(@Path("id") String id, @Query("page") int page);
 
+
+    @GET("contest/{id}/rule")
+    Observable<BaseBean<ContestRuleData>> getContestRule(@Path("id") String id);
 
 }

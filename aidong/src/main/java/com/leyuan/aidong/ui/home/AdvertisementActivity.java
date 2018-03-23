@@ -17,7 +17,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
-import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -136,7 +136,7 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
 
                 break;
             case "23":
-                intentBanner = new Intent(this, CampaignDetailActivity.class);
+                intentBanner = new Intent(this, ActivityCircleDetailActivity.class);
                 intentBanner.putExtra("id", startingBanner.getLink());
                 break;
             case "25":

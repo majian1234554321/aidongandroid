@@ -1,6 +1,7 @@
 package com.leyuan.aidong.adapter.discover;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
@@ -27,10 +28,13 @@ import static com.leyuan.aidong.R.id.tv_content;
 
 
 public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdapter.CommentHolder> {
+    public static final int CONTEST = 1;
+    public static final int NORMAL = 2;
     private Context context;
     private List<CommentBean> data = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private UserBean[] extras;
+    private int type = NORMAL;
 
     public DynamicDetailAdapter(Context context) {
         this.context = context;
@@ -53,10 +57,14 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
         final CommentBean bean = data.get(position);
         GlideLoader.getInstance().displayRoundAvatarImage(bean.getPublisher().getAvatar(), holder.avatar);
         holder.name.setText(bean.getPublisher().getName());
-
+        if (type == NORMAL) {
+            holder.content.setTextColor(Color.BLACK);
+        } else {
+            holder.content.setTextColor(Color.WHITE);
+        }
 
         if (extras != null && extras.length > 0) {
-            SpannableStringBuilder highlightText = StringUtils.highlight(context, bean.getContent(), extras, "#EA2D2D", 0);
+            SpannableStringBuilder highlightText = StringUtils.highlight(context, bean.getContent(), extras, "#EA2D2D", 1);
 
             holder.content.setText(highlightText);
             holder.content.setMovementMethod(LinkMovementMethod.getInstance());
@@ -95,8 +103,12 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
     }
 
     public void addExtra(Map<String, String> itUser) {
-
-        List<UserBean> lists = new ArrayList<>(Arrays.asList(extras));
+        List<UserBean> lists;
+        if (extras == null) {
+            lists = new ArrayList<>();
+        } else {
+            lists = new ArrayList<>(Arrays.asList(extras));
+        }
 //                Arrays.asList(extras);
         for (Map.Entry<String, String> code : itUser.entrySet()) {
             UserBean userBean = new UserBean();
@@ -104,8 +116,12 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
             userBean.setName(code.getKey());
             lists.add(userBean);
         }
-        this.extras =  lists.toArray(new UserBean[lists.size()]);
+        this.extras = lists.toArray(new UserBean[lists.size()]);
 
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     class CommentHolder extends RecyclerView.ViewHolder {

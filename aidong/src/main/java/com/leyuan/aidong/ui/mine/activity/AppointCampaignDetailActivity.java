@@ -266,7 +266,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         //与订单状态无关: 订单信息
         GlideLoader.getInstance().displayImage(bean.getCover(), ivCover);
         tvCampaignName.setText(bean.getName());
-        txtCourseTime.setText(bean.getAppoint().getClassTime());
+        txtCourseTime.setText(bean.getAppoint().getSpec_value());
 
         tvUserName.setRightContent(bean.getAppoint().getName());
         tvPhone.setRightContent(bean.getAppoint().getMobile());

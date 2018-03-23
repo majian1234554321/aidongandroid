@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
+import com.iknow.android.utils.TrimVideoUtil;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
@@ -36,6 +37,7 @@ import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -56,6 +58,7 @@ import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.CommonTitleLayout;
@@ -270,13 +273,16 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         circleDynamicAdapter.updateData(dynamicList);
         circleDynamicAdapter.notifyItemRangeChanged(0, dynamicList.size());
 
-        int top = recyclerView.getChildAt(0).getTop();
-        Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " +top);
+        if (recyclerView != null) {
+            int top = recyclerView.getChildAt(0).getTop();
+            Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " + top);
 
-        recyclerView.scrollBy(0, -10000);
+            recyclerView.scrollBy(0, -10000);
 
-        int top1 = recyclerView.getChildAt(0).getTop();
-        Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " +top1);
+            int top1 = recyclerView.getChildAt(0).getTop();
+            Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " + top1);
+        }
+
     }
 
     @Override
@@ -392,13 +398,17 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
         }
 
-        int top = recyclerView.getChildAt(0).getTop();
-        Logger.i("recyclerView.scrollBy setCampaignDetail ,top = " +top);
 
-        recyclerView.scrollBy(0, top-20);
+        if (recyclerView != null) {
+            int top = recyclerView.getChildAt(0).getTop();
+            Logger.i("recyclerView.scrollBy setCampaignDetail ,top = " + top);
 
-        int top1 = recyclerView.getChildAt(0).getTop();
-        Logger.i("recyclerView.scrollBy setCampaignDetail ,top = " +top1);
+            recyclerView.scrollBy(0, top - 20);
+
+            int top1 = recyclerView.getChildAt(0).getTop();
+            Logger.i("recyclerView.scrollBy setCampaignDetail ,top = " + top1);
+        }
+
     }
 
     private List<String> selectedSkuValues = new ArrayList<>();
@@ -495,7 +505,20 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
             } else if (requestCode == REQUEST_SELECT_VIDEO) {
                 selectedMedia = Boxing.getResult(data);
                 if (selectedMedia != null && selectedMedia.size() > 0) {
-                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                    int duration = TrimVideoUtil.VIDEO_MAX_DURATION;
+
+                    if (selectedMedia.get(0) instanceof VideoMedia) {
+                        VideoMedia media = (VideoMedia) selectedMedia.get(0);
+                        duration = (int) (FormatUtil.parseLong(media.getmDuration()) / 1000 + 1);
+                        Logger.i("TrimmerActivity", "onActivityResult media.getDuration() = " + media.getDuration());
+                    }
+                    Logger.i("TrimmerActivity", "onActivityResult  durantion = " + duration);
+
+                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), duration, Constant.REQUEST_VIDEO_TRIMMER);
+
+
+
+//                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
                 }
 
             } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {

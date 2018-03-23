@@ -26,6 +26,8 @@ public class NewsBean implements Serializable{
 
     private String titleAll;
 
+    public boolean isNotShare;
+
     public NewsBean(String title, String body, String cover, String datetime, String titleAll, String id) {
         this.title = title;
         this.body = body;

@@ -157,6 +157,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         sharePopupWindow = new SharePopupWindow(getActivity());
 
         followPresent = new FollowPresentImpl(getActivity());
@@ -193,6 +194,7 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
         builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
                 .addType(MultiImageViewHolder.class, DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
                 .showFollowButton(false)
+                .showCMDMessageLayout(false)
                 .showLikeAndCommentLayout(true)
                 .setDynamicCallback(new DynamicCallback());
         circleDynamicAdapter = builder.build();

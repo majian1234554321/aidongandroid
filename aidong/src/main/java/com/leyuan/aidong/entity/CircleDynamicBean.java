@@ -1,5 +1,9 @@
 package com.leyuan.aidong.entity;
 
+import com.leyuan.aidong.entity.user.AiterUser;
+
+import java.util.ArrayList;
+
 /**
  * Created by user on 2017/7/24.
  */
@@ -16,6 +20,24 @@ public class CircleDynamicBean {
     String KDNMSGID;
     int dynamicType;
     String replySiteNickname;
+    public ArrayList<AiterUser> kDAiteUser;
+    public ArrayList<AiterUser> kDNreplyUserD;
+
+
+    public ArrayList<AiterUser> allUser = new ArrayList<>();
+
+    public ArrayList<AiterUser> getAllUser() {
+        if (allUser.isEmpty()) {
+            if (kDAiteUser != null) {
+                allUser.addAll(kDAiteUser);
+            }
+            if (kDNreplyUserD != null) {
+                allUser.addAll(kDNreplyUserD);
+            }
+        }
+
+        return allUser;
+    }
 
     public int getCmdMsgType() {
         return cmdMsgType;

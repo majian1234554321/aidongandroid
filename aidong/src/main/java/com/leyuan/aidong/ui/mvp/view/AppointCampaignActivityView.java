@@ -12,4 +12,6 @@ public interface AppointCampaignActivityView {
 
     void setCampaignCouponResult(List<CouponBean> couponBeanList);
 
+
+    void OnBuyError();
 }

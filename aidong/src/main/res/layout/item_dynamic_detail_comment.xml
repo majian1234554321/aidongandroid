@@ -2,58 +2,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     android:paddingLeft="@dimen/left_margin"
-    android:paddingRight="@dimen/right_margin"
-    android:background="?selectableItemBackground">
+    android:paddingRight="@dimen/right_margin">
 
     <ImageView
         android:id="@+id/dv_avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp" />
-    
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp" />
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="name"
         android:layout_marginLeft="10dp"
-        android:layout_toLeftOf="@+id/tv_time"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:singleLine="true"
+        android:layout_toRightOf="@+id/dv_avatar"
         android:ellipsize="end"
-        android:layout_toRightOf="@+id/dv_avatar"
-        android:textColor="@color/gray_normal"/>
-
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/dv_avatar"
-        android:layout_alignLeft="@+id/tv_name"
-        android:layout_below="@+id/tv_name"
-        android:text="comment"
-        android:layout_marginBottom="10dp"/>
+        android:singleLine="true"
+        android:text="name"
+        android:textColor="@color/gray_normal"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:layout_alignLeft="@+id/tv_name"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="5dp"
         android:text="5分钟前"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/dv_avatar"
-        android:textColor="@color/gray_normal"/>
+        android:textColor="@color/gray_normal"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_time"
+        android:layout_below="@+id/tv_time"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/dv_avatar"
+        android:text="comment"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/line_color"/>
+        android:background="@color/line_color" />
 </RelativeLayout>

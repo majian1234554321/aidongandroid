@@ -4,6 +4,8 @@ import android.graphics.Color;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * 预约详情
  * Created by song on 2016/9/1.
@@ -23,7 +25,7 @@ public class AppointmentDetailBean {
     private String remark;
 
 
-    public class AppointInfo{
+    public class AppointInfo {
         private String name;            //预约人
         private String mobile;          //手机
         private String gym;             //上课场馆
@@ -37,9 +39,10 @@ public class AppointmentDetailBean {
         String lat;
         String lng;
         String organizer_mobile;
+        private ArrayList<String> spec_value;
 
         public String getVerify_no() {
-            return verify_no+"";
+            return verify_no + "";
         }
 
         public void setVerify_no(String verify_no) {
@@ -94,6 +97,18 @@ public class AppointmentDetailBean {
             this.class_time = class_time;
         }
 
+        public String getSpec_value() {
+            StringBuilder builder = new StringBuilder();
+            if (spec_value != null) {
+                for (String s : spec_value) {
+                    builder.append(s).append(" ");
+                }
+            } else {
+                builder.append(class_time);
+            }
+            return builder.toString();
+        }
+
         public String getClassroom() {
             return classroom;
         }
@@ -119,14 +134,14 @@ public class AppointmentDetailBean {
         }
 
         public int getverifyColor() {
-            if("undo".equals(getVerify_status()))
+            if ("undo".equals(getVerify_status()))
                 return Color.parseColor("#000000");
             return Color.parseColor("#ebebeb");
         }
 
         public int getverifyColorQr() {
-            if("undo".equals(getVerify_status()))
-                return  0xFF000000;
+            if ("undo".equals(getVerify_status()))
+                return 0xFF000000;
             return 0xFFebebeb;
         }
 

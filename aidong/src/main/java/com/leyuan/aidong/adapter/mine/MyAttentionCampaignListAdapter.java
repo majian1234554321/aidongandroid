@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.mine;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.List;
@@ -46,7 +49,12 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCircleDetailActivity.start(context, user.getId());
+                if (TextUtils.equals(user.type, Constant.CONTEST)) {
+                    ContestHomeActivity.start(context, user.getId());
+                } else {
+                    ActivityCircleDetailActivity.start(context, user.getId());
+                }
+
 
             }
         });

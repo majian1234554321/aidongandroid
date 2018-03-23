@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.ContestData;
 import com.leyuan.aidong.entity.data.ContestEnrolRecordData;
 import com.leyuan.aidong.entity.data.ContestInfoData;
+import com.leyuan.aidong.entity.data.ContestRuleData;
 import com.leyuan.aidong.entity.data.ContestSchedulesData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.RankingData;
@@ -43,8 +44,8 @@ public class ContestModelImpl {
                 .subscribe(subscribe);
     }
 
-    public void postVideo(Observer<BaseBean> subscribe, String id, String video,String content) {
-        contestService.postVideo(id, video,content)
+    public void postVideo(Observer<BaseBean> subscribe, String id, String video, String content) {
+        contestService.postVideo(id, video, content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscribe);
@@ -96,16 +97,16 @@ public class ContestModelImpl {
                 .subscribe(subscribe);
     }
 
-    public void getContestRanking(Observer<RankingData> subscribe, String id, String division, String type,String gender) {
+    public void getContestRanking(Observer<RankingData> subscribe, String id, String division, String type, String gender) {
 
-        contestService.getContestRanking(id, division, type,gender)
+        contestService.getContestRanking(id, division, type, gender)
                 .compose(RxHelper.<RankingData>transform())
                 .subscribe(subscribe);
     }
 
 
-    public void getContestSchedules(Observer<ContestSchedulesData> subscribe, String id,  String city,int page) {
-        contestService.getContestSchedules(id, city,page)
+    public void getContestSchedules(Observer<ContestSchedulesData> subscribe, String id, String city, int page) {
+        contestService.getContestSchedules(id, city, page)
                 .compose(RxHelper.<ContestSchedulesData>transform())
                 .subscribe(subscribe);
     }
@@ -114,6 +115,12 @@ public class ContestModelImpl {
     public void getContestEnrolRecord(Observer<ContestEnrolRecordData> subscribe, String id, int page) {
         contestService.getContestEnrolRecord(id, page)
                 .compose(RxHelper.<ContestEnrolRecordData>transform())
+                .subscribe(subscribe);
+    }
+
+    public void getContestRule(Observer<ContestRuleData> subscribe, String id) {
+        contestService.getContestRule(id)
+                .compose(RxHelper.<ContestRuleData>transform())
                 .subscribe(subscribe);
     }
 

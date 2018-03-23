@@ -2,7 +2,8 @@ package com.leyuan.aidong.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
+import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CircleDynamicBean;
+import com.leyuan.aidong.entity.user.AiterUser;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.StringUtils;
 
 import java.util.ArrayList;
 
@@ -44,31 +47,50 @@ public class CmdMessageAdapter extends RecyclerView.Adapter<CmdMessageAdapter.Vi
         GlideLoader.getInstance().displayImage(bean.getImageUrl(), holder.imgCover);
         holder.txtTime.setText(bean.getTime());
 
-        String dynamicType = bean.getDynamicType() == CircleDynamicBean.DynamicType.IMAGE ? "图片" : "视频";
+//        String dynamicType = bean.getDynamicType() == CircleDynamicBean.DynamicType.IMAGE ? "图片" : "视频";
         holder.imgPlay.setVisibility(bean.getDynamicType() == CircleDynamicBean.DynamicType.IMAGE ? View.GONE : View.VISIBLE);
+        holder.txtAuthor.setText(bean.getFromName());
 
-//        StringBuilder author = new StringBuilder();
-        StringBuilder content = new StringBuilder();
+//        StringBuilder content = new StringBuilder();
 
         switch (bean.getCommentType()) {
+
             case CircleDynamicBean.ActionType.COMMENT:
-                holder.txtAuthor.setText(Html.fromHtml(bean.getFromName() + " <font color='#000000'>评论了</font> 你的" + dynamicType));
-                content.append(bean.getContent());
+
+                if(!bean.getAllUser().isEmpty()){
+                    SpannableStringBuilder highlightText = StringUtils.highlight(context, bean.getContent(),
+                            bean.getAllUser().toArray(new AiterUser[bean.getAllUser().size()]), "#EA2D2D", 1);
+
+                    holder.txtContent.setText(highlightText);
+                    holder.txtContent.setMovementMethod(LinkMovementMethod.getInstance());
+
+                }else {
+                    holder.txtContent.setText(bean.getContent());
+                }
+
                 break;
+
             case CircleDynamicBean.ActionType.PARSE:
-                content.append("赞了你的");
-                content.append(dynamicType);
-                holder.txtAuthor.setText(bean.getFromName());
+                holder.txtContent.setText("赞了你的动态");
                 break;
+
             case CircleDynamicBean.ActionType.AITER:
-                content.append("在动态中@了你,");
-                content.append(bean.getContent());
-                holder.txtAuthor.setText(bean.getFromName());
+                holder.txtContent.setText("提到了你");
                 break;
+
             case CircleDynamicBean.ActionType.REPLY:
-                content.append("回复了你的评论,");
-                content.append(bean.getContent());
-                holder.txtAuthor.setText(bean.getFromName());
+                if(!bean.getAllUser().isEmpty()){
+                    SpannableStringBuilder highlightText = StringUtils.highlight(context, bean.getContent(),
+                            bean.getAllUser().toArray(new AiterUser[bean.getAllUser().size()]), "#EA2D2D", 1);
+
+                    holder.txtContent.setText(highlightText);
+                    holder.txtContent.setMovementMethod(LinkMovementMethod.getInstance());
+
+                }else {
+                    holder.txtContent.setText(bean.getContent());
+                }
+
+//                holder.txtContent.setText(bean.getContent());
                 break;
         }
 
@@ -85,7 +107,7 @@ public class CmdMessageAdapter extends RecyclerView.Adapter<CmdMessageAdapter.Vi
 //        }
 
         //点赞
-        holder.txtContent.setText(content.toString());
+
         holder.layout_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

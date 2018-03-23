@@ -13,7 +13,6 @@ import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 import com.leyuan.aidong.config.UrlConfig;
-import com.leyuan.aidong.database.DynamicDb;
 import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.model.UserCoach;
@@ -179,24 +178,30 @@ public class App extends MultiDexApplication {
 
     private ArrayList<CircleDynamicBean> cmdCircleDynamicBeans;
 
+
     public ArrayList<CircleDynamicBean> getCMDCirleDynamicBean() {
         if (cmdCircleDynamicBeans == null) {
-            cmdCircleDynamicBeans = new DynamicDb(this).queryAll();
+//            cmdCircleDynamicBeans = new DynamicDb(this).queryAll();
+            cmdCircleDynamicBeans =  SharePrefUtils.getCmdMessage(this);
         }
         return cmdCircleDynamicBeans;
     }
 
     public void saveDynamicCmdMessage(CircleDynamicBean bean) {
-        new DynamicDb(this).insertInto(bean);
+        SharePrefUtils.addCmdMessage(this,bean);
+
+//        new DynamicDb(this).insertInto(bean);
     }
 
     public void refreshDynamicCmdMessage() {
-        cmdCircleDynamicBeans = new DynamicDb(this).queryAll();
+//        cmdCircleDynamicBeans = new DynamicDb(this).queryAll();
+        cmdCircleDynamicBeans =  SharePrefUtils.getCmdMessage(this);
     }
 
     public void clearCMDMessage() {
         cmdCircleDynamicBeans = null;
-        new DynamicDb(this).clear();
+        SharePrefUtils.saveCmdMessage(this,new ArrayList<CircleDynamicBean>());
+//        new DynamicDb(this).clear();
     }
 
     public class MyLocationListener implements BDLocationListener {

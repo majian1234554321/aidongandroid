@@ -45,13 +45,14 @@ public class SelectUserListAdapter extends RecyclerView.Adapter<SelectUserListAd
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgAvatar;
+        private ImageView imgAvatar,iv_gender;
         private TextView txtCoachName, txt_attention_num;
         private TextView txtIntro;
         private ImageButton btAttention;
 
         public ViewHolder(View view) {
             super(view);
+            iv_gender = (ImageView) view.findViewById(R.id.iv_gender);
             imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
             txtCoachName = (TextView) view.findViewById(R.id.txt_coach_name);
             txtIntro = (TextView) view.findViewById(R.id.txt_intro);

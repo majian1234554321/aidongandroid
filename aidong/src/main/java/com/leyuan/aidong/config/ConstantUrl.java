@@ -13,6 +13,7 @@ public class ConstantUrl {
     public final static String URL_SHARE_GYM = BASE_URL_HTML + "share_gym?gid=";
     public final static String URL_SHARE_PRODUCT = BASE_URL_HTML + "share_product?pid=";
     public final static String URL_SHARE_CAMPAIGN = BASE_URL_HTML + "share_campaign?cid=";
+    public final static String URL_SHARE_COURSE_CIRCLE = BASE_URL_HTML+"share_course?cid="; //http://opentest.aidong.me/share/课程编号/course
 //    public final static String URL_SHARE_COURSE = BASE_URL_HTML + "share_timetable?tid=";
     public final static String URL_SHARE_COURSE = BASE_URL_MEMBER_CARD+"share/"; //http://opentest.aidong.me/share/课程编号/course
 

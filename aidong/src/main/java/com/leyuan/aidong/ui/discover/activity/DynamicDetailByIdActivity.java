@@ -46,6 +46,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.KeyBoardUtil;
 import com.leyuan.aidong.utils.Logger;
@@ -254,11 +255,13 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
     @Override
     public void onItemClick(int position) {
+
         replyName = comments.get(position).getPublisher().getName();
         replyUser = comments.get(position).getPublisher();
 
-        String other ="回复" +comments.get(position).getPublisher().getName()+": ";
-//        other = String.format(getString(R.string.reply_other_user), other);
+        String other = "回复 " + comments.get(position).getPublisher().getName() + ": ";
+//      other = String.format(getString(R.string.reply_other_user), other);
+
         etComment.setText(other);
         etComment.setSelection(other.length());
         etComment.requestFocus();
@@ -277,9 +280,9 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
                     content = content.substring(0, MAX_TEXT_COUNT - 2) + "......";
                 }
                 if (replyUser != null) {
-                    itUser.put(replyUser.getName(), replyUser.getId());
+                    replyUserMap.put(replyUser.getName(), replyUser.getId());
                 }
-                dynamicPresent.addComment(dynamic.id, content, itUser);
+                dynamicPresent.addComment(dynamic.id, content, itUser, replyUserMap);
                 KeyBoardUtil.closeKeyboard(etComment, this);
 
                 return true;
@@ -303,7 +306,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
             comments.add(0, temp);
             commentAdapter.addExtra(itUser);
-            itUser.clear();
+            commentAdapter.addExtra(replyUserMap);
             commentAdapter.setData(comments);
             commentAdapter.notifyItemChanged(0);
 
@@ -320,25 +323,41 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             //刷新头部评论数量
             headerAdapter.notifyDataSetChanged();
 
+            CMDMessageManager.sendCMDMessageAiteReply(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(),
+                    App.getInstance().getUser().getName(), dynamic.id,  DateUtils.getCurrentTime(),content, dynamic.getUnifromCover(),
+                    CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName,
+                    itUser, replyUserMap);
 
-            if (replyUser != null) {
-                replyUserMap.put(replyUser.getName(),replyUser.getId());
-
-
-                CMDMessageManager.sendCMDMessage(replyUser.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.REPLY, null, dynamic.getDynamicTypeInteger(), replyName);
-
-
-
-                if (!TextUtils.equals(replyUser.getId(), dynamic.publisher.getId())) {
-                    CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                            , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
-                }
-                replyUser = null;
-            } else {
-                CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
+            if (!itUser.isEmpty()) {
+                CMDMessageManager.sendCMDMessageAite(App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.AITER, null, dynamic.getDynamicTypeInteger(), null, itUser, replyUserMap);
             }
+
+            if (!replyUserMap.isEmpty()) {
+                CMDMessageManager.sendCMDMessageReply(App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.REPLY, null, dynamic.getDynamicTypeInteger(), itUser, replyUserMap);
+            }
+
+            itUser.clear();
+            replyUserMap.clear();
+            replyUser = null;
+
+
+//            if (replyUser != null) {
+//
+//                CMDMessageManager.sendCMDMessage(replyUser.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+//                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.REPLY, null, dynamic.getDynamicTypeInteger(), replyName);
+//
+//
+//                if (!TextUtils.equals(replyUser.getId(), dynamic.publisher.getId())) {
+//                    CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+//                            , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
+//                }
+//                replyUser = null;
+//            } else {
+//                CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+//                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName);
+//            }
 
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
@@ -595,11 +614,14 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
                     dynamic.publisher.followed = data.getBooleanExtra(Constant.FOLLOW, dynamic.publisher.followed);
                     Logger.i("follow", "onActivityResult follow = " + dynamic.publisher.followed);
                     headerAdapter.notifyDataSetChanged();
+
                     break;
+
                 case REQUEST_USER:
 
                     this.user_id = data.getStringExtra("user_id");
                     this.name = data.getStringExtra("name");
+
                     itUser.put(name, user_id);
 
                     Logger.i(" itUser.put( name =  " + name + ", user_id = " + user_id);

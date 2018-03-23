@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.leyuan.aidong.entity.PushExtroInfo;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointDetailCourseNewActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderDetailMultiplePackagesActivity;
@@ -127,7 +127,7 @@ public class JPushReceiver extends BroadcastReceiver {
 
                 break;
             case Constant.PUSH_CAMPAIGN:
-                intent = new Intent(context, CampaignDetailActivity.class);
+                intent = new Intent(context, ActivityCircleDetailActivity.class);
                 intent.putExtra("id", info.getLink_id());
 
                 break;

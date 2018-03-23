@@ -1,12 +1,21 @@
  爱动说明文档
 
+    * 如需知道当前操作界面(Activity/Fragment)类名,查看Log并筛选className
+    *
+
     项目采用MVP模式
     网络请求库使用 retrofit + okHttp
     图片加载库使用 glide
     图片选择库 https://github.com/Bilibili/boxing
     下拉刷新 google官方下拉刷新控件
     上拉加载更多 使用详见https://github.com/cundong/HeaderAndFooterRecyclerView
-    如需知道当前操作界面(Activity/Fragment)类名,查看Log并筛选currUIName
+
+     模块1:
+            首页:HomeFragment
+
+
+
+
 
     模块1:
           首页和商城采用的同一个适配器HomeAdapter
@@ -31,7 +40,9 @@
           活动/课程已参加的人 AppointmentUserActivity
  
 
-    模块2: 视界
+    模块2: 视界(现已废弃)
+           视界首页 VideoHomeFragment
+
 
     模块3:
           首页和商城采用的同一个适配器HomeAdapter
@@ -80,6 +91,7 @@
 
     模块5:    我的：
               MineFragment 我的主界面
+
 
               售后：
               ApplyServiceActivity 申请售后

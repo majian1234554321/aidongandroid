@@ -20,10 +20,12 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.iknow.android.TrimmerActivity;
+import com.iknow.android.utils.TrimVideoUtil;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
@@ -33,6 +35,7 @@ import com.leyuan.aidong.ui.home.activity.LocationActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -71,16 +74,16 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
 
                 tabLayout.getTabAt(2).findViewById(R.id.tv_tab_tip).setVisibility(View.GONE);
 
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
 
                 tabLayout.getTabAt(2).findViewById(R.id.tv_tab_tip).setVisibility(View.GONE);
 
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_LOGIN_SUCCESS)) {
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_LOGIN_SUCCESS)) {
 
                 tabLayout.getTabAt(2).findViewById(R.id.tv_tab_tip).setVisibility(App.getInstance().getCMDCirleDynamicBean() == null ||
                         App.getInstance().getCMDCirleDynamicBean().isEmpty() ? View.GONE : View.VISIBLE);
 
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY))  {
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
 
                 tvLocation.setText(App.getInstance().getSelectedCity());
 
@@ -172,7 +175,18 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
                 case REQUEST_SELECT_VIDEO:
                     selectedMedia = Boxing.getResult(data);
                     if (selectedMedia != null && selectedMedia.size() > 0) {
-                        TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                        int duration = TrimVideoUtil.VIDEO_MAX_DURATION;
+
+                        if (selectedMedia.get(0) instanceof VideoMedia) {
+                            VideoMedia media = (VideoMedia) selectedMedia.get(0);
+                            duration = (int) (FormatUtil.parseLong(media.getmDuration()) / 1000 + 1);
+                            Logger.i("TrimmerActivity", "onActivityResult media.getDuration() = " + media.getDuration());
+                        }
+                        Logger.i("TrimmerActivity", "onActivityResult  durantion = " + duration);
+
+                        TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), duration, Constant.REQUEST_VIDEO_TRIMMER);
+
+//                        TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
                     }
                     break;
                 case Constant.REQUEST_VIDEO_TRIMMER:
@@ -237,8 +251,8 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_home_text_with_notification, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         TextView tip = (TextView) tabView.findViewById(R.id.tv_tab_tip);
-        tip.setWidth(DensityUtil.dp2px(getActivity(),8));
-        tip.setHeight(DensityUtil.dp2px(getActivity(),8));
+        tip.setWidth(DensityUtil.dp2px(getActivity(), 8));
+        tip.setHeight(DensityUtil.dp2px(getActivity(), 8));
         tip.setVisibility(View.GONE);
 //        if(position == 0){
 //            text.setText(R.string.tab_sport_circle);
@@ -252,9 +266,9 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         text.setText(campaignTab[position]);
         if (position == 0) {
             text.setTypeface(Typeface.DEFAULT_BOLD);
-        }else if(position ==2){
+        } else if (position == 2) {
             tip.setVisibility(App.getInstance().getCMDCirleDynamicBean() == null ||
-                App.getInstance().getCMDCirleDynamicBean().isEmpty() ? View.GONE : View.VISIBLE);
+                    App.getInstance().getCMDCirleDynamicBean().isEmpty() ? View.GONE : View.VISIBLE);
             tip.setText("");
         }
         allTabView.add(tabView);

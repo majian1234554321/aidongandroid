@@ -29,6 +29,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -351,7 +352,11 @@ public class DynamicPresentImpl implements DynamicPresent {
     }
 
     @Override
-    public void addComment(String id, String content, Map<String, String> itUser) {
+    public void addComment(String id, String content, Map<String, String> itUser, Map<String, String> replyUserMap) {
+
+        Map<String, String> allUser = new HashMap<>();
+        allUser.putAll(itUser);
+        allUser.putAll(replyUserMap);
 
         dynamicModel.addComment(new ProgressSubscriber<BaseBean>(context) {
             @Override
@@ -359,7 +364,7 @@ public class DynamicPresentImpl implements DynamicPresent {
 
                 dynamicDetailActivityView.addCommentsResult(baseBean);
             }
-        }, id, content,itUser);
+        }, id, content, allUser);
     }
 
     @Override

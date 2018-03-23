@@ -176,6 +176,6 @@ public class VenuesBean implements Parcelable {
 
     @SuppressLint("DefaultLocale")
     public String getDistanceFormat() {
-        return FormatUtil.formatDistance(distance);
+        return FormatUtil.formatDistanceStore(distance);
     }
 }

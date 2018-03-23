@@ -174,6 +174,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
 
                 NewsBean newsBean = new NewsBean(campaignDetailBean.getName(), campaignDetailBean.getIntroduce()
                         , null, null, "图文详情", campaignDetailBean.getCampaignId());
+                newsBean.isNotShare = true;
                 NewsDetailActivity.start(context, newsBean);
                 break;
             case R.id.txt_location_detail:

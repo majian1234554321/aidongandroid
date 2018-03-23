@@ -61,7 +61,7 @@ public class HomeAttentionHeaderAdapter extends RecyclerView.Adapter<HomeAttenti
 
         final UserBean bean = userList.get(position);
         if (Constant.COURSE.equals(bean.type) || Constant.CAMPAIGN.equals(bean.type)) {
-            GlideLoader.getInstance().displayCircleImage(bean.image, holder.imgAvatar);
+            GlideLoader.getInstance().displayCircleImage(bean.cover, holder.imgAvatar);
         } else {
             GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.imgAvatar);
         }

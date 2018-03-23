@@ -54,6 +54,7 @@ public class CourseBeanNew implements Parcelable {
 
 //    @SerializedName("strength")
     String hard_degree;
+    public int company_id;// 1 自营门店，其他：合作品牌门店
 
     private StringBuffer tagString = new StringBuffer();
 

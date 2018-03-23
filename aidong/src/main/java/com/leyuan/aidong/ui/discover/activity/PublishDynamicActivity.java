@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.exoplayer.util.Util;
+import com.iknow.android.TrimmerActivity;
+import com.iknow.android.utils.TrimVideoUtil;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.PublishDynamicAdapter;
 import com.leyuan.aidong.entity.CircleDynamicBean;
@@ -30,6 +32,7 @@ import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -39,6 +42,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -50,6 +54,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
 /**
  * 发表动态
@@ -72,6 +78,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     protected boolean isPhoto;    //区分上传图片还是视频
     protected PublishDynamicAdapter mediaAdapter;
     protected ArrayList<BaseMedia> selectedMedia;
+    private ArrayList<BaseMedia> selectedMediaNewSelf;
     protected DynamicPresent dynamicPresent;
 
     protected LinearLayout layoutAddCircle;
@@ -219,8 +226,14 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     public void onAddMediaClick() {
         BoxingConfig config = new BoxingConfig(isPhoto ? BoxingConfig.Mode.MULTI_IMG
                 : BoxingConfig.Mode.VIDEO).needCamera();
-        Boxing.of(config).withIntent(this, BoxingActivity.class, selectedMedia)
-                .start(this, REQUEST_MEDIA);
+        if (isPhoto) {
+            Boxing.of(config).withIntent(this, BoxingActivity.class, selectedMedia)
+                    .start(this, REQUEST_MEDIA);
+        } else {
+            Boxing.of(config).withIntent(this, BoxingActivity.class, selectedMedia)
+                    .start(this, REQUEST_SELECT_VIDEO);
+        }
+
     }
 
     @Override
@@ -268,7 +281,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         });
     }
 
-    protected   Map<String, String> itUser = new HashMap<>();
+    protected Map<String, String> itUser = new HashMap<>();
 
     protected void uploadToServer(List<String> qiNiuMediaUrls) {
         content = etContent.getText().toString();
@@ -291,7 +304,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS));
 
         CMDMessageManager.sendCMDMessageAite(App.getInstance().getUser().getAvatar(),
-                App.getInstance().getUser().getName(), dynamicData.dynamic_id,content, dynamicData.cover, CircleDynamicBean.ActionType.AITER, null,
+                App.getInstance().getUser().getName(), dynamicData.dynamic_id, content, dynamicData.cover, CircleDynamicBean.ActionType.AITER, null,
                 isPhoto ? 0 : 1, null, itUser);
 
         setResult(RESULT_OK, null);
@@ -335,8 +348,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 etContent.setSelection(newContent.length());
                 etContent.requestFocus();
 
-            } else {
-
+            } else if (requestCode == REQUEST_MEDIA) {
                 if (recyclerView == null || mediaAdapter == null) {
                     return;
                 }
@@ -349,6 +361,49 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
                 mediaAdapter.setData(selectedMedia, isPhoto);
                 btSend.setEnabled(!selectedMedia.isEmpty());
+            } else if (requestCode == REQUEST_SELECT_VIDEO) {
+
+                if (recyclerView == null || mediaAdapter == null) {
+                    return;
+                }
+
+                selectedMediaNewSelf = Boxing.getResult(data);
+                if (selectedMediaNewSelf != null && selectedMediaNewSelf.size() > 0) {
+
+                    int duration = TrimVideoUtil.VIDEO_MAX_DURATION;
+
+                    if (selectedMediaNewSelf.get(0) instanceof VideoMedia) {
+                        VideoMedia media = (VideoMedia) selectedMediaNewSelf.get(0);
+                        duration = (int) (FormatUtil.parseLong(media.getmDuration()) / 1000 + 1);
+                        Logger.i("TrimmerActivity", "onActivityResult media.getDuration() = " + media.getDuration());
+                    }
+                    Logger.i("TrimmerActivity", "onActivityResult  durantion = " + duration);
+
+                    TrimmerActivity.startForResult(this, selectedMediaNewSelf.get(0).getPath(), duration, Constant.REQUEST_VIDEO_TRIMMER);
+
+//                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                }
+
+
+            } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
+                DialogUtils.showDialog(this, "", true);
+                Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER ");
+                if (selectedMediaNewSelf != null && selectedMediaNewSelf.size() > 0) {
+
+                    selectedMediaNewSelf.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));
+
+                    selectedMedia.clear();
+                    selectedMedia.addAll(selectedMediaNewSelf);
+                    for (BaseMedia media : selectedMedia) {
+                        Logger.i("Publish", "onActivityResult selectedMedia = " + media.getPath());
+                    }
+
+                    mediaAdapter.setData(selectedMedia, isPhoto);
+                    btSend.setEnabled(!selectedMedia.isEmpty());
+
+                }
+
+
             }
 
 

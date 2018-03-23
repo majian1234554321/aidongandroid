@@ -239,7 +239,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tabMineLayout:
                 setTabSelection(3);
                 showFragment(3);
-                img_new_message.setVisibility(View.GONE);
+//                img_new_message.setVisibility(View.GONE);
                 break;
 //            case R.id.tabMineLayout:
 //                setTabSelection(4);

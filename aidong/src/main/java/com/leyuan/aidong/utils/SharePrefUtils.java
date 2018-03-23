@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.course.CourseFilterBean;
 import com.leyuan.aidong.entity.data.CouponData;
@@ -13,6 +15,7 @@ import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.ui.App;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SharePrefUtils {
@@ -48,6 +51,48 @@ public class SharePrefUtils {
         }
         return user;
     }
+
+    public static ArrayList<CircleDynamicBean> getCmdMessage(Context ctx) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        ArrayList<CircleDynamicBean> beans = null;
+        String json = mSharedPreferences.getString("cmdMessage", null);
+        try {
+            Gson gson = new Gson();
+            beans = gson.fromJson(json, new TypeToken<List<CircleDynamicBean>>() {
+            }.getType());
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+
+        }
+
+        Logger.i(TAG, " mSharedPreferences.edit().putString(\"getCmdMessage\", json).commit();");
+        return beans;
+    }
+
+    public static void addCmdMessage(Context ctx, CircleDynamicBean message) {
+        ArrayList<CircleDynamicBean> beans = getCmdMessage(ctx);
+        if (beans == null) beans = new ArrayList<>();
+        beans.add(message);
+        saveCmdMessage(ctx, beans);
+
+        Logger.i(TAG, " mSharedPreferences.edit().putString(\"addCmdMessage\", json).commit();");
+    }
+
+    public static void saveCmdMessage(Context ctx, ArrayList<CircleDynamicBean> beans) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        Gson gson = new Gson();
+        String json = gson.toJson(beans);
+        mSharedPreferences.edit().putString("cmdMessage", json).apply();
+
+        Logger.i(TAG, " mSharedPreferences.edit().putString(\"saveCmdMessage\", json).commit();");
+    }
+
 
     public static void saveSportsHistory(Context ctx, MineInfoBean mineInfo) {
         if (mSharedPreferences == null) {
@@ -221,7 +266,7 @@ public class SharePrefUtils {
             mSharedPreferences = context.getSharedPreferences(SHARE_PREFS_NAME,
                     Context.MODE_PRIVATE);
         }
-        Logger.i("Course",courseFilterData.toString());
+        Logger.i("Course", courseFilterData.toString());
         Gson gson = new Gson();
         String json = gson.toJson(courseFilterData);
         mSharedPreferences.edit().putString("courseFilterData", json).commit();

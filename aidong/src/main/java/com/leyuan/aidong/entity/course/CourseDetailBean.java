@@ -29,6 +29,7 @@ public class CourseDetailBean {
     boolean followed;//: “是否关注”,
     ArrayList<UserBean> followers;//
     int follows_count;
+    String video_cover;
 
     private StringBuffer tagString = new StringBuffer();
 
@@ -112,6 +113,14 @@ public class CourseDetailBean {
 
     public String getCrowd() {
         return crowd;
+    }
+
+    public String getVideo_cover() {
+        return video_cover;
+    }
+
+    public void setVideo_cover(String video_cover) {
+        this.video_cover = video_cover;
     }
 
     public ArrayList<UserBean> getFollowers() {

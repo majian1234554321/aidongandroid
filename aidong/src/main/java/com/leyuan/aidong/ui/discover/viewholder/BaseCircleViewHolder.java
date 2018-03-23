@@ -70,7 +70,9 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     protected IDynamicCallback callback;
     private boolean showCommentLayout = true;
     private boolean showFollowButton = false;
+    private boolean showCMDMessageLayout = true;
     private ArrayList<ImageView> starList = new ArrayList<>();
+
 
     public BaseCircleViewHolder(Context context, ViewGroup parent, int layoutResId) {
         super(context, parent, layoutResId);
@@ -118,13 +120,15 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     @Override
     public void onBindData(final DynamicBean dynamic, final int position) {
         if (position == 0 && context instanceof MainActivity && App.getInstance().isLogin() && App.getInstance().getCMDCirleDynamicBean()
-                != null && !App.getInstance().getCMDCirleDynamicBean().isEmpty() ) {
+                != null && !App.getInstance().getCMDCirleDynamicBean().isEmpty() && showCMDMessageLayout ) {
 
             layoutCmdMessage.setVisibility(View.VISIBLE);
             layoutCmdMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     CMDMessageActivity.start(context);
+
                 }
             });
 
@@ -304,6 +308,10 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
     public void setShowFollowButton(boolean show) {
         this.showFollowButton = show;
+    }
+
+    public void setShowCMDMessageLayout(boolean show) {
+        this.showCMDMessageLayout = show;
     }
 
     private boolean isLike(DynamicBean dynamic) {

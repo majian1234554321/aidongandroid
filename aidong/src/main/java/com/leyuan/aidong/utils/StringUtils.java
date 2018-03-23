@@ -9,6 +9,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.user.AiterUser;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 
 import java.util.regex.Matcher;
@@ -93,12 +94,45 @@ public class StringUtils {
 
 
     public static SpannableStringBuilder highlight(final Context context, String text, UserBean[] users,
-                                                   String color,int start) {
+                                                   String color, int start) {
         SpannableStringBuilder spannableString = new SpannableStringBuilder(text);
 
         for (final UserBean user : users) {
 
             Pattern pattern = Pattern.compile(user.getName().replaceAll("\\*", ""));
+            Matcher matcher = pattern.matcher(text);
+
+//          String quote = Pattern.quote(user.getName());
+//          return Pattern.matches(quote, text);
+
+            while (matcher.find()) {
+                ClickableSpan clickableSpan = new ClickableSpan() {
+                    @Override
+                    public void onClick(View view) {
+
+                        UserInfoActivity.start(context, user.user_id);
+                    }
+                };
+
+                spannableString.setSpan(clickableSpan, matcher.start() - start, matcher.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor(color));
+                spannableString.setSpan(span, matcher.start() - start, matcher.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+        }
+        return spannableString;
+    }
+
+    public static SpannableStringBuilder highlight(final Context context, String text, AiterUser[] users,
+                                                   String color, int start) {
+        SpannableStringBuilder spannableString = new SpannableStringBuilder(text);
+
+        for (final AiterUser user : users) {
+
+            Pattern pattern = Pattern.compile(user.user_name.replaceAll("\\*", ""));
             Matcher matcher = pattern.matcher(text);
 
 //          String quote = Pattern.quote(user.getName());

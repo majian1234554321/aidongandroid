@@ -51,7 +51,7 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
     public void onBindViewHolder(CourseViewHolder holder, int position) {
 
         final CourseBeanNew courseBean = data.get(position);
-        GlideLoader.getInstance().displayImage(courseBean.getCoach().getAvatar(), holder.imgCoach);
+        GlideLoader.getInstance().displayCircleImage(courseBean.getCoach().getAvatar(), holder.imgCoach);
         holder.txtCoachName.setText(courseBean.getCoach().getName());
         holder.txtCourseName.setText(courseBean.getName());
         holder.txtCourseTime.setText(courseBean.getClass_time());

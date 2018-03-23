@@ -55,7 +55,6 @@ public class CMDMessageActivity extends BaseActivity {
         filter.addAction(Constant.BROADCAST_ACTION_DELETE_DYNAMIC_SUCCESS);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 
-
         setContentView(R.layout.activity_cmd_message);
         beanList = App.getInstance().getCMDCirleDynamicBean();
 

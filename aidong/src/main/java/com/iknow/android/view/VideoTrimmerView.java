@@ -130,13 +130,13 @@ public class VideoTrimmerView extends FrameLayout {
 
     }
 
-    public void setVideoURI(final Uri videoURI) {
+    public void setVideoURI(int duration,final Uri videoURI) {
         mSrc = videoURI;
 
         mVideoView.setVideoURI(mSrc);
         mVideoView.requestFocus();
 
-        TrimVideoUtil.backgroundShootVideoThumb(mContext, mSrc, new SingleCallback<ArrayList<Bitmap>, Integer>() {
+        TrimVideoUtil.backgroundShootVideoThumb(mContext,duration, mSrc, new SingleCallback<ArrayList<Bitmap>, Integer>() {
             @Override
             public void onSingleCallback(final ArrayList<Bitmap> bitmap, final Integer interval) {
                 UiThreadExecutor.runTask("", new Runnable() {

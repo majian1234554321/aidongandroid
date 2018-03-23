@@ -215,9 +215,9 @@
         <activity
             android:name=".ui.mine.activity.OrderActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.AppointmentActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".ui.mine.activity.AppointmentActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.mine.activity.CouponActivity"
             android:screenOrientation="portrait" />
@@ -268,20 +268,20 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.ConfirmOrderCampaignActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.home.activity.AppointCourseSuccessActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.AppointmentMineCampaignActivityNew"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".ui.mine.activity.AppointmentMineCampaignActivityNew"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.mine.activity.UserInfoActivity"
             android:screenOrientation="portrait" />
         <!--<activity-->
-            <!--android:name=".ui.mine.activity.CoachInfoActivity"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!--android:name=".ui.mine.activity.CoachInfoActivity"-->
+        <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.mine.activity.UpdateAddressActivity"
             android:screenOrientation="portrait" />
@@ -323,6 +323,10 @@
         <activity
             android:name=".ui.competition.activity.ContestHomeActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.competition.activity.ContestRuleActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.competition.activity.PublishContestDynamicActivity"
             android:screenOrientation="portrait" />
@@ -372,9 +376,9 @@
             android:name=".ui.home.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SearchTheme" />
-        <activity
-            android:name=".ui.home.activity.CampaignDetailActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".ui.home.activity.CampaignDetailActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.home.activity.GoodsListActivity"
             android:screenOrientation="portrait" />
@@ -386,10 +390,10 @@
             android:name=".ui.home.activity.FoodAndBeverageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
-        <activity
-            android:name=".ui.home.activity.AppointCampaignActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+        <!--<activity-->
+            <!--android:name=".ui.home.activity.AppointCampaignActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="stateHidden" />-->
         <activity
             android:name=".ui.mine.activity.AppointCampaignDetailActivity"
             android:screenOrientation="portrait" />
@@ -448,8 +452,8 @@
             android:name=".ui.mine.activity.MyAttentionListActivity"
             android:screenOrientation="portrait" />
         <!--<activity-->
-            <!--android:name=".ui.discover.activity.DynamicDetailActivity"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!--android:name=".ui.discover.activity.DynamicDetailActivity"-->
+        <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.discover.activity.DynamicDetailByIdActivity"
             android:screenOrientation="portrait" />
@@ -582,9 +586,9 @@
         <activity
             android:name=".ui.home.activity.MapActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.AppointmentMineCourseActivityNew"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".ui.mine.activity.AppointmentMineCourseActivityNew"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.mine.activity.BarcodeActivity"
             android:screenOrientation="portrait"

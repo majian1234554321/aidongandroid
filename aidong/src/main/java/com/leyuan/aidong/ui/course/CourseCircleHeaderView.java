@@ -110,6 +110,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     }
 
     private void initView(Context context) {
+
         View view = LayoutInflater.from(context).inflate(R.layout.header_course_circle_detail, this, true);
         this.context = context;
         relTop = (RelativeLayout) view.findViewById(R.id.rel_top);
@@ -170,12 +171,12 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
                 break;
             case R.id.rootView:
 
+
                 break;
             case R.id.txt_bt_attention_num:
+
                 if (App.getInstance().isLogin()) {
-
                     AppointmentUserActivity.start(context, course.getFollowers(), "已关注人列表");
-
                 } else {
                     UiManager.activityJump(context, LoginActivity.class);
                 }
@@ -247,19 +248,22 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 //
 //            }
 //        });
-//
 //        LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
 //        rvRelativeCoach.setLayoutManager(manager);
 //        adapterRelativeCoach = new PersonHorizontalAdapter(context);
 //        rvRelativeCoach.setAdapter(adapterRelativeCoach);
+//
 //    }
 
 
     public void setData(CourseDetailBean course) {
+
         this.course = course;
+
         relativeViedeoAdapter.setCourseID(course.getId());
-        if (course.getImage() != null && !course.getImage().isEmpty()) {
-            GlideLoader.getInstance().displayImage(course.getImage().get(0), imgBg);
+
+        if (course.getVideo_cover() != null) {
+            GlideLoader.getInstance().displayImage(course.getVideo_cover(), imgBg);
         }
 
         txtCourseName.setText(course.getName());

@@ -218,6 +218,10 @@ public class SystemPresentImpl implements SystemPresent {
                 if (systemView != null) {
                     systemView.onGetSystemConfiguration(false);
                 }
+
+                if (requestResponse != null) {
+                    requestResponse.onRequestResponse();
+                }
             }
 
             @Override
@@ -320,6 +324,10 @@ public class SystemPresentImpl implements SystemPresent {
 
                 if (systemView != null) {
                     systemView.onGetSystemConfiguration(true);
+                }
+
+                if (requestResponse != null) {
+                    requestResponse.onRequestResponse();
                 }
 
             }

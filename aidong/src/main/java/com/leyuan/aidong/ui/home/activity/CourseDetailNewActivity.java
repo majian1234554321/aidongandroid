@@ -331,7 +331,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 RichText.from(course.getCoach().getIntroduce()).placeHolder(R.drawable.place_holder_logo)
                         .error(R.drawable.place_holder_logo).into(txtCoachDesc);
             }
-            GlideLoader.getInstance().displayImage(course.getCoach().getAvatar(), imgCoachAvatar);
+            GlideLoader.getInstance().displayCircleImage(course.getCoach().getAvatar(), imgCoachAvatar);
         }
 
         tvPrice.setVisibility(View.VISIBLE);

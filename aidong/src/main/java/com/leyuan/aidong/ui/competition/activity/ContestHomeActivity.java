@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
+import com.iknow.android.utils.TrimVideoUtil;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
@@ -25,6 +26,7 @@ import com.leyuan.aidong.entity.campaign.ContestBean;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -38,6 +40,7 @@ import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -135,6 +138,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.bt_close_invitation).setOnClickListener(this);
 
 
+        imgEndCover.setOnClickListener(this);
         imgPostOrEnrol.setOnClickListener(this);
         findViewById(R.id.bt_rule).setOnClickListener(this);
         txtRelateDynamic.setOnClickListener(this);
@@ -182,6 +186,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
 
                 break;
 
+            case R.id.img_end_cover:
             case R.id.bt_end_play:
                 if (contest == null) return;
                 Intent intent = new Intent(this, PlayerActivity.class)
@@ -319,7 +324,18 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
             if (requestCode == REQUEST_SELECT_VIDEO) {
                 selectedMedia = Boxing.getResult(data);
                 if (selectedMedia != null && selectedMedia.size() > 0) {
-                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
+                    int duration = TrimVideoUtil.VIDEO_MAX_DURATION;
+
+                    if (selectedMedia.get(0) instanceof VideoMedia) {
+                        VideoMedia media = (VideoMedia) selectedMedia.get(0);
+                        duration = (int) (FormatUtil.parseLong(media.getmDuration()) / 1000 + 1);
+                        Logger.i("TrimmerActivity", "onActivityResult media.getDuration() = " + media.getDuration());
+                    }
+                    Logger.i("TrimmerActivity", "onActivityResult  durantion = " + duration);
+
+                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), duration, Constant.REQUEST_VIDEO_TRIMMER);
+
+//                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
                 }
 
             } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {

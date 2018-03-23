@@ -293,19 +293,19 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.ll_nurture:
-                GoodsListActivity.start(this, GOODS_NUTRITION, venues.getName(), venues.getId());
+                GoodsListActivity.start(this, GOODS_NUTRITION, "营养品", venues.getId());
                 break;
             case R.id.ll_equipment:
-                GoodsListActivity.start(this, GOODS_EQUIPMENT, venues.getName(), venues.getId());
+                GoodsListActivity.start(this, GOODS_EQUIPMENT, "装备", venues.getId());
                 break;
             case R.id.ll_healthy_food:
 
-                GoodsListActivity.start(this, GOODS_FOODS, venues.getName(), venues.getId());
+                GoodsListActivity.start(this, GOODS_FOODS, "健康餐饮", venues.getId());
 
                 break;
             case R.id.ll_ticket:
 
-                GoodsListActivity.start(this, GOODS_TICKET, venues.getName(), venues.getId());
+                GoodsListActivity.start(this, GOODS_TICKET, "票务赛事", venues.getId());
 
                 break;
 

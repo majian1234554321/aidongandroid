@@ -13,11 +13,11 @@ import com.iknow.android.view.VideoTrimmerView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ContestEnrolView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.io.File;
 
@@ -29,26 +29,42 @@ public class TrimmerActivity extends BaseActivity implements OnTrimVideoListener
 
     private File tempFile;
     VideoTrimmerView trimmerView;
-    private ContestPresentImpl contestPresent;
+    private int duration;
+//    private ContestPresentImpl contestPresent;
 
+//    public static void startForResult(Activity from, String videoPath, int request_code) {
+//        if (!TextUtils.isEmpty(videoPath)) {
+//            Bundle bundle = new Bundle();
+//            bundle.putString("path", videoPath);
+//            Intent intent = new Intent(from, TrimmerActivity.class);
+//            intent.putExtras(bundle);
+//            from.startActivityForResult(intent, request_code);
+//        }
+//    }
 
-    public static void startForResult(Activity from, String videoPath, int request_code) {
+    public static void startForResult(Activity from, String videoPath, int duration, int request_code) {
         if (!TextUtils.isEmpty(videoPath)) {
             Bundle bundle = new Bundle();
             bundle.putString("path", videoPath);
+            bundle.putInt("duration", duration);
             Intent intent = new Intent(from, TrimmerActivity.class);
             intent.putExtras(bundle);
             from.startActivityForResult(intent, request_code);
+        } else {
+            ToastGlobal.showLongConsecutive("获取视频失败，请检查该视频是否存在");
         }
     }
 
-    public static void startForResult(Fragment from, String videoPath, int request_code) {
+    public static void startForResult(Fragment from, String videoPath, int duration, int request_code) {
         if (!TextUtils.isEmpty(videoPath)) {
             Bundle bundle = new Bundle();
             bundle.putString("path", videoPath);
+            bundle.putInt("duration", duration);
             Intent intent = new Intent(from.getActivity(), TrimmerActivity.class);
             intent.putExtras(bundle);
             from.startActivityForResult(intent, request_code);
+        } else {
+            ToastGlobal.showLongConsecutive("获取视频失败，请检查该视频是否存在");
         }
     }
 
@@ -59,16 +75,22 @@ public class TrimmerActivity extends BaseActivity implements OnTrimVideoListener
         setContentView(R.layout.activity_trimmer);
         Bundle bd = getIntent().getExtras();
         String path = "";
-        if (bd != null)
+        if (bd != null) {
             path = bd.getString("path");
+            duration = bd.getInt("duration", TrimVideoUtil.VIDEO_MAX_DURATION);
+            Logger.i("TrimmerActivity", "bd.getInt(\"duration\" durantion = " + duration);
+        }
+        if (duration <= 3 || duration > 60) {
+            duration = 60;
+        }
 
         trimmerView = (VideoTrimmerView) findViewById(R.id.trimmer_view);
-        trimmerView.setMaxDuration(TrimVideoUtil.VIDEO_MAX_DURATION);
+        trimmerView.setMaxDuration(duration);
         trimmerView.setOnTrimVideoListener(this);
-        trimmerView.setVideoURI(Uri.parse(path));
+        trimmerView.setVideoURI(duration, Uri.parse(path));
 
-        contestPresent = new ContestPresentImpl(this);
-        contestPresent.setContestEnrolView(this);
+//        contestPresent = new ContestPresentImpl(this);
+//        contestPresent.setContestEnrolView(this);
 
 
     }
@@ -94,7 +116,7 @@ public class TrimmerActivity extends BaseActivity implements OnTrimVideoListener
     @Override
     public void onStartTrim() {
 
-        DialogUtils.showDialog(this,"",true);
+        DialogUtils.showDialog(this, "", true);
     }
 
     @Override

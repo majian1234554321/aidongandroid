@@ -6,6 +6,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.ContestData;
 import com.leyuan.aidong.entity.data.ContestEnrolRecordData;
 import com.leyuan.aidong.entity.data.ContestInfoData;
+import com.leyuan.aidong.entity.data.ContestRuleData;
 import com.leyuan.aidong.entity.data.ContestSchedulesData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.RankingData;
@@ -16,6 +17,7 @@ import com.leyuan.aidong.ui.mvp.view.ContestEnrolView;
 import com.leyuan.aidong.ui.mvp.view.ContestHomeView;
 import com.leyuan.aidong.ui.mvp.view.ContestInfoView;
 import com.leyuan.aidong.ui.mvp.view.ContestRankingView;
+import com.leyuan.aidong.ui.mvp.view.ContestRuleView;
 import com.leyuan.aidong.ui.mvp.view.ContestSchedulesView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 
@@ -33,6 +35,7 @@ public class ContestPresentImpl {
     private ContestRankingView contestRankingView;
     private ContestInfoView contestInfoView;
     private SportCircleFragmentView contestDynamicView;
+    private ContestRuleView contestRuleView;
 
     public ContestPresentImpl(Context context) {
         this.context = context;
@@ -63,7 +66,11 @@ public class ContestPresentImpl {
         this.contestDynamicView = contestDynamicView;
     }
 
-    public void getContestSchedules(String id,  String city,int page) {
+    public void setContestRuleView(ContestRuleView contestRuleView) {
+        this.contestRuleView = contestRuleView;
+    }
+
+    public void getContestSchedules(String id, String city, int page) {
 
         contestModel.getContestSchedules(new ProgressSubscriber<ContestSchedulesData>(context) {
             @Override
@@ -77,7 +84,7 @@ public class ContestPresentImpl {
             public void onError(Throwable e) {
                 super.onError(e);
             }
-        }, id,city, page);
+        }, id, city, page);
 
     }
 
@@ -86,17 +93,39 @@ public class ContestPresentImpl {
         contestModel.getContestEnrolRecord(new ProgressSubscriber<ContestEnrolRecordData>(context) {
             @Override
             public void onNext(ContestEnrolRecordData contestSchedulesData) {
+
                 if (contestSchedulesView != null) {
                     contestSchedulesView.onGetContestSchedulesRecordData(contestSchedulesData.record);
                 }
+
             }
+
 
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
             }
         }, id, page);
+    }
 
+    public void getContestRule(String id) {
+
+        contestModel.getContestRule(new ProgressSubscriber<ContestRuleData>(context) {
+            @Override
+            public void onNext(ContestRuleData contestRuleData) {
+
+                if (contestRuleView != null) {
+                    contestRuleView.onGetContestRuleData(contestRuleData.rule);
+                }
+
+            }
+
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+        }, id);
     }
 
 
@@ -132,7 +161,7 @@ public class ContestPresentImpl {
         }, id, name, gender, division);
     }
 
-    public void postVideo(String id, String video,String content) {
+    public void postVideo(String id, String video, String content) {
         contestModel.postVideo(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
@@ -145,7 +174,7 @@ public class ContestPresentImpl {
             public void onError(Throwable e) {
                 super.onError(e);
             }
-        }, id, video,content);
+        }, id, video, content);
     }
 
     public void checkInvitationCode(String id, String code) {
@@ -214,7 +243,7 @@ public class ContestPresentImpl {
         }, id, scheduleId);
     }
 
-    public void getContestRanking(String id, String division, String type,String gender) {
+    public void getContestRanking(String id, String division, String type, String gender) {
         contestModel.getContestRanking(new ProgressSubscriber<RankingData>(context) {
             @Override
             public void onNext(RankingData rankingData) {
@@ -227,9 +256,8 @@ public class ContestPresentImpl {
             public void onError(Throwable e) {
                 super.onError(e);
             }
-        }, id, division, type,gender);
+        }, id, division, type, gender);
     }
-
 
 
     public void getContestInfo(String id) {
