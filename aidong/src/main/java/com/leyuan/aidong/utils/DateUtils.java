@@ -116,6 +116,17 @@ public class DateUtils {
         return c.get(Calendar.YEAR);
     }
 
+    public static int getYear() {
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.YEAR);
+    }
+
+    public static int getMonth() {
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.MONTH) + 1;
+
+    }
+
     /**
      * 得到月
      *
@@ -425,12 +436,13 @@ public class DateUtils {
 
     public static boolean bigThanOneHour(String date) {
         if (TextUtils.isEmpty(date)) return false;
-        Date d = parseDate(date, yyyyMMddHHmm);
-        if (d != null) {
-            return d.getTime() - System.currentTimeMillis() > 3600 * 1000l;
-        } else {
-            return false;
-        }
+//        Date d = parseDate(date, yyyyMMddHHmm);
+//        if (d != null) {
+//            return d.getTime() - System.currentTimeMillis() > 3600 * 1000l;
+//        } else {
+//            return false;
+//        }
+        return false;
     }
 
     public static boolean started(String date) {

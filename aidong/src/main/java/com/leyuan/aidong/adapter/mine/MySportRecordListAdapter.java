@@ -35,13 +35,18 @@ public class MySportRecordListAdapter extends RecyclerView.Adapter<MySportRecord
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        SportRecordBean recordBean = course.get(position);
-        GlideLoader.getInstance().displayImage(recordBean.coach_avatar,holder.dvGoodsCover);
+        final SportRecordBean recordBean = course.get(position);
+        GlideLoader.getInstance().displayImage(recordBean.coach_avatar, holder.dvGoodsCover);
         holder.tvName.setText(recordBean.course_name);
         holder.tvAddress.setText(recordBean.coach_name);
-        holder.tvTime.setText(recordBean.class_date+" " + recordBean.class_time);
+        holder.tvTime.setText(recordBean.class_date + " " + recordBean.class_time);
 
-
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CourseDetailNewActivity.start(context, recordBean.id);
+//            }
+//        });
 
     }
 

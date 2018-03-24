@@ -32,6 +32,7 @@ public class ContestBean implements Parcelable {
     public String landmark;
     public String start_date;
     public String type;
+    public String share_url;
 
     public Coordinate coordinate;
 

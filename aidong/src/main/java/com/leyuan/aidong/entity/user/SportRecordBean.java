@@ -11,4 +11,5 @@ public class SportRecordBean {
     public String course_name;//课程",
     public String class_date;//上课日期",
     public String class_time;//"上课时间"
+    public String id;
 }

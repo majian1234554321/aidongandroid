@@ -470,9 +470,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 }
                 break;
             case R.id.tv_confirm:
-                if (DateUtils.bigThanOneHour(bean.getAppoint().getClassTime())) {
-                    ToastGlobal.showLong("未到活动时间，请稍后确认");
-                } else {
+//                if (DateUtils.bigThanOneHour(bean.getAppoint().getClassTime())) {
+//                    ToastGlobal.showLong("未到活动时间，请稍后确认");
+//                } else {
                     new DialogDoubleButton(this)
                             .setLeftButton(getString(R.string.no_attend))
                             .setRightButton(getString(R.string.have_attend))
@@ -491,7 +491,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                                 }
                             }).show();
 
-                }
+//                }
                 break;
             case R.id.tv_delete:
                 present.deleteAppoint(bean.getId());

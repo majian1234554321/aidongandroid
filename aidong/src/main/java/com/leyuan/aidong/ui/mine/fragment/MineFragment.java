@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
+import com.leyuan.aidong.entity.data.SportRecordMonthData;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
@@ -41,8 +42,11 @@ import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.SportPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.MineInfoView;
+import com.leyuan.aidong.ui.mvp.view.SportRecordView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Md5Utils;
 import com.leyuan.aidong.utils.ToastUtil;
@@ -50,7 +54,7 @@ import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
 
 
-public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView {
+public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView, SportRecordView {
 
     private View rootView;
     private LinearLayout layout_no_login, linearLayout_guanzhu, linearLayout_beiguanzhu, layout_hot;
@@ -80,6 +84,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             refreshLoginState();
         }
     };
+    private SportPresentImpl sportPresent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,6 +109,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         presenter = new MineInfoPresenterImpl(getActivity(), this);
+
+        sportPresent = new SportPresentImpl(getContext());
+        sportPresent.setSportRecordView(this);
+
     }
 
     private void initView() {
@@ -196,6 +205,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             user = App.getInstance().getUser();
             textView_name.setText(user.getName());
             presenter.getMineInfo();
+            sportPresent.getSportRecordNoProgress(DateUtils.getYear()+"", DateUtils.getMonth()+"");
+
             GlideLoader.getInstance().displayCircleImage(user.getAvatar(), imageView_head);
         } else {
             relativeLayout_my_logo.setVisibility(View.GONE);
@@ -203,11 +214,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             txt_new_shop.setVisibility(View.GONE);
             textView_guanzhushu.setText("0");
             textView_beiguanzhushu.setText("0");
-//            textView_yysl.setText("0");
-//            textView_yyjrw.setText("0");
-//            textView_dd.setText("0");
-//            textView_ddjrw.setText("0");
             textView_popularity.setText("0");
+
+            txtClockNum.setText("0");
+            txtGoCourseNum.setText("0");
+            txtClassTotalTime.setText("0");
         }
     }
 
@@ -331,5 +342,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 //        textView_dd.setText(mineInfoBean.getPaid_orders_count() + "");
 //        textView_ddjrw.setText(mineInfoBean.getUnpay_orders_count() + "");
         textView_popularity.setText(mineInfoBean.dynamics_count+"");
+    }
+
+    @Override
+    public void onGetSportRecordData(SportRecordMonthData athletic) {
+        if(athletic == null) return;
+        txtClockNum.setText(athletic.days);
+        txtGoCourseNum.setText(athletic.frequency);
+        txtClassTotalTime.setText(athletic.during);
     }
 }

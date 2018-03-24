@@ -312,7 +312,9 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
             commentAdapter.addExtra(itUser);
             commentAdapter.addExtra(replyUserMap);
             commentAdapter.setData(comments);
-            commentAdapter.notifyItemChanged(0);
+            //            commentAdapter.notifyItemChanged(0);
+            commentAdapter.notifyDataSetChanged();
+            commentView.scrollToPosition(0);
 
             etComment.clearFocus();
             etComment.setText(Constant.EMPTY_STR);

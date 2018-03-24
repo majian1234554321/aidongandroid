@@ -102,6 +102,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     private CourseDetailBean courseDetailBean;
     private ArrayList<BaseMedia> selectedMedia;
     private boolean refresh;
+    private LinearLayoutManager linearLayoutManager;
 
 
     public static void start(Context context, String id) {
@@ -180,7 +181,8 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 .setDynamicCallback(new DynamicCallback());
         circleDynamicAdapter = builder.build();
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(circleDynamicAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+         linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
 
@@ -296,7 +298,9 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         if(recyclerView != null){
             int top = recyclerView.getChildAt(0).getTop();
             Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " + top);
-            recyclerView.scrollBy(0, -10000);
+//            recyclerView.scrollBy(0, -10000);
+
+            ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(0,0);
         }
 
 
@@ -306,6 +310,14 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     public void setCourseDetail(CourseDetailBean courseDetailBean) {
         this.courseDetailBean = courseDetailBean;
         headView.setData(courseDetailBean);
+
+        if(recyclerView != null){
+            int top = recyclerView.getChildAt(0).getTop();
+            Logger.i("recyclerView.scrollBy updateRelateVideo ,top = " + top);
+//            recyclerView.scrollBy(0, -10000);
+
+            ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(0,0);
+        }
     }
 
 
@@ -314,10 +326,12 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         headView.setRelativeVideoData(title, videos);
 
 
-        if(recyclerView != null){
+        if(recyclerView != null && recyclerView.getChildAt(0) != null){
             int top = recyclerView.getChildAt(0).getTop();
             Logger.i("recyclerView.scrollBy updateRelateVideo ,top = " + top);
-            recyclerView.scrollBy(0, -10000);
+//            recyclerView.scrollBy(0, -10000);
+
+            ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(0,0);
         }
 
     }
