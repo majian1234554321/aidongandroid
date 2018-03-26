@@ -15,10 +15,10 @@ import android.view.Gravity;
 
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
-import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
+import com.leyuan.aidong.ui.store.StoreDetailActivity;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
@@ -157,7 +157,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 startActivity(intent);
                 break;
             case "20":
-                VenuesDetailActivity.start(this, bannerBean.getLink());
+                StoreDetailActivity.start(this, bannerBean.getLink());
                 break;
             case "21":
                 GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_NUTRITION);

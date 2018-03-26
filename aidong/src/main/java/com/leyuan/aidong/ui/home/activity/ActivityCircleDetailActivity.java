@@ -301,7 +301,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                         image = campaignDetailBean.getImage().get(0);
                     }
 
-                    sharePopupWindow.showAtBottom(campaignDetailBean.getName() + Constant.I_DONG_FITNESS, campaignDetailBean.getIntroduce(),
+                    sharePopupWindow.showAtBottom(campaignDetailBean.getName() + Constant.I_DONG_FITNESS, campaignDetailBean.simple_intro,
                             image, ConstantUrl.URL_SHARE_CAMPAIGN + campaignDetailBean.getCampaignId());
                 }
 
@@ -401,7 +401,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         }
 
 
-        if (recyclerView != null) {
+        if (recyclerView != null &&  recyclerView.getChildAt(0) != null) {
             int top = recyclerView.getChildAt(0).getTop();
             Logger.i("recyclerView.scrollBy setCampaignDetail ,top = " + top);
 

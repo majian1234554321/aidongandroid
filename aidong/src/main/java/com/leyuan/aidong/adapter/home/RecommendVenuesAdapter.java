@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VenuesBean;
-import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
+import com.leyuan.aidong.ui.store.StoreDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VenuesDetailActivity.start(context, "1");
+                StoreDetailActivity.start(context, "1");
             }
         });
     }

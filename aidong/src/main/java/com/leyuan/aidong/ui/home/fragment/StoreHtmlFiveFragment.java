@@ -23,12 +23,12 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.WebViewActivity;
-import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsBrandRecommendActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsListActivity;
+import com.leyuan.aidong.ui.store.StoreDetailActivity;
 import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DeviceManager;
@@ -190,7 +190,7 @@ public class StoreHtmlFiveFragment extends BaseFragment {
                     startActivity(intent);
                     break;
                 case "venues":
-                    VenuesDetailActivity.start(getActivity(), link[0]);
+                    StoreDetailActivity.start(getActivity(), link[0]);
                     break;
                 case "course_list":
                     CourseListActivityNew.start(getActivity(),link[0]);

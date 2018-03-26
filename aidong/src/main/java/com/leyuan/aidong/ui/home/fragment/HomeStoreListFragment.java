@@ -42,6 +42,8 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.VISIBLE;
+
 /**
  * Created by user on 2018/1/4.
  */
@@ -146,12 +148,24 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         venuesPresent.getSlefSupportVenues(this);
         venuesPresent.pullToRefreshData(brand_id, landmark, bussiness_area, gymTypes);
 
+        layout_mine_store.animate().translationY(0).setInterpolator
+                (new DecelerateInterpolator(2)).start();
+
+        layout_mine_store.setVisibility(View.VISIBLE);
+
     }
 
     private void refreshData() {
+
+
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
         venuesPresent.pullToRefreshData(brand_id, landmark, bussiness_area, gymTypes);
+        
+        layout_mine_store.animate().translationY(0).setInterpolator
+                  (new DecelerateInterpolator(2)).start();
+        layout_mine_store.setVisibility(View.VISIBLE);
+
     }
 
     private void initRecyclerView(View view) {
@@ -211,6 +225,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
+
             currPage++;
             if (data != null && data.size() >= pageSize) {
                 venuesPresent.requestMoreData(recyclerView, pageSize, currPage, brand_id, landmark, bussiness_area, gymTypes);
@@ -233,12 +248,12 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
                 filterViewVisible = false;
                 scrolledDistance = 0;
             } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
-                layout_mine_store.animate().translationY(0).setInterpolator
-                        (new DecelerateInterpolator(2)).start();
+//                layout_mine_store.animate().translationY(0).setInterpolator
+//                        (new DecelerateInterpolator(2)).start();
 //                filterView.animate().translationY(0).setInterpolator
 //                        (new DecelerateInterpolator(2)).start();
 //                view_zhanwei.setVisibility(View.VISIBLE);
-                layout_mine_store.setVisibility(View.VISIBLE);
+
 
                 scrolledDistance = 0;
                 filterViewVisible = true;
@@ -259,9 +274,11 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
     public void onGetSelfSupportVenues(ArrayList<VenuesBean> gym) {
 
         if (gym == null || gym.isEmpty()) {
-            headerRecyclerView.setVisibility(View.GONE);
+            layout_mine_store.setVisibility(View.GONE);
+           // headerRecyclerView.setVisibility(View.GONE);
         } else {
-            headerRecyclerView.setVisibility(View.VISIBLE);
+            layout_mine_store.setVisibility(VISIBLE);
+          //  headerRecyclerView.setVisibility(VISIBLE);
             headerStoreAdapter.setData(gym);
         }
 

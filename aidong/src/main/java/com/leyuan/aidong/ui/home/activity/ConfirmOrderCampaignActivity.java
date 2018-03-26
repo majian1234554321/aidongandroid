@@ -124,6 +124,8 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         txtRoomName = (TextView) findViewById(R.id.txt_room_name);
         txtCourseLocation = (TextView) findViewById(R.id.txt_course_location);
         img_telephone = (ImageView) findViewById(R.id.img_telephone);
+        img_telephone.setVisibility(View.GONE);
+
         edit_remark = (EditText) findViewById(R.id.edit_remark);
 
         layoutCourseLocation = (RelativeLayout) findViewById(R.id.layout_course_location);

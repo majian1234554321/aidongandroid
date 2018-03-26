@@ -19,6 +19,7 @@ import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.GoodsSpecBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.ConfirmOrderCampaignActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
@@ -337,7 +338,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                         tipUnSelectSku();
                     }
                 } else {
-                    ((GoodsDetailActivity) context).startActivityForResult(
+                    ((ActivityCircleDetailActivity) context).startActivityForResult(
                             new Intent(context, LoginActivity.class), Constant.REQUEST_CONFIRM);
                 }
                 break;

@@ -20,8 +20,8 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseCategoryActivity;
+import com.leyuan.aidong.ui.store.StoreDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -120,7 +120,7 @@ public class HomeHeaderView extends RelativeLayout{
             marqueeFactory.setOnItemClickListener(new MarqueeFactory.OnItemClickListener<RelativeLayout, VenuesBean>() {
                 @Override
                 public void onItemClickListener(MarqueeFactory.ViewHolder<RelativeLayout, VenuesBean> holder) {
-                    VenuesDetailActivity.start(context,holder.data.getId());
+                    StoreDetailActivity.start(context,holder.data.getId());
                 }
             });
             if(venuesBeanList.size() > 1 ) {
