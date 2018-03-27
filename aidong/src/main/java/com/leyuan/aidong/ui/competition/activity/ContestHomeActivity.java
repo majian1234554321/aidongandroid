@@ -178,6 +178,11 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
 
             case R.id.img_attention:
 
+                if(!App.getInstance().isLogin()){
+                    UiManager.activityJump(this, LoginActivity.class);
+                    return;
+                }
+
                 if (contest == null) return;
                 if (contest.followed) {
                     present.cancelFollow(contestId, contest.type);
@@ -293,6 +298,9 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
             imgPostOrEnrol.setVisibility(View.GONE);
             layoutEnd.setVisibility(View.VISIBLE);
             GlideLoader.getInstance().displayImage(contest.cover,imgEndCover);
+        } else if ("pending".equals(contest.status))
+        {
+            imgPostOrEnrol.setImageResource(R.drawable.post_video);
         } else {
 
             imgPostOrEnrol.setVisibility(View.GONE);

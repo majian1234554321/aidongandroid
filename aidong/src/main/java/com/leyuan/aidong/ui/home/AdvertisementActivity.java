@@ -20,6 +20,7 @@ import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
+import com.leyuan.aidong.ui.store.StoreDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.UiManager;
 
@@ -120,7 +121,9 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
                 intentBanner = new Intent(Intent.ACTION_VIEW, uri);
                 break;
             case "20":
-                intentBanner = new Intent(this, VenuesDetailActivity.class);
+//                intentBanner = new Intent(this, VenuesDetailActivity.class);
+//                intentBanner.putExtra("id", startingBanner.getLink());
+                intentBanner = new Intent(this, StoreDetailActivity.class);
                 intentBanner.putExtra("id", startingBanner.getLink());
 
                 break;

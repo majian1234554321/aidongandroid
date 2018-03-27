@@ -8,7 +8,7 @@
 
     <com.leyuan.aidong.widget.SimpleTitleBar
         android:id="@+id/title_bar"
-        app:stb_title="私人定制"
+        app:stb_title="爱动时刻"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"/>
 
