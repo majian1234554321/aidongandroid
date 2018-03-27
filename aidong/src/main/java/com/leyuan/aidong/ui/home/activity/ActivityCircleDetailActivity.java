@@ -122,6 +122,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 case Constant.BROADCAST_ACTION_LOGIN_SUCCESS:
 
                     campaignPresent.getCampaignDetail(id);
+                    break;
 
                 case Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS:
                     finish();
