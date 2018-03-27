@@ -19,7 +19,6 @@ import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.GoodsSpecBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.ConfirmOrderCampaignActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
@@ -338,8 +337,8 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                         tipUnSelectSku();
                     }
                 } else {
-                    ((ActivityCircleDetailActivity) context).startActivityForResult(
-                            new Intent(context, LoginActivity.class), Constant.REQUEST_CONFIRM);
+                    this.dismiss();
+                     context.startActivity(new Intent(context,LoginActivity.class));
                 }
                 break;
 //            case R.id.tv_add_cart:
