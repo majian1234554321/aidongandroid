@@ -228,6 +228,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
 
     @Override
     public void onGetUserData(List<UserBean> followings) {
+
         headView.setUserData(followings);
     }
 

@@ -230,13 +230,15 @@ public class EmConfigManager implements EmChatView {
                         }
                         bean.kDNreplyUserD = kDNreplyUserD;
 
-                        App.getInstance().saveDynamicCmdMessage(bean);
-
-                        EMLog.d(TAG, "CircleDynamicBean = " + bean.toString());
                     } catch (HyphenateException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
                         e.printStackTrace();
+                    }finally {
+
+                        App.getInstance().saveDynamicCmdMessage(bean);
+
+                        EMLog.d(TAG, "CircleDynamicBean = " + bean.toString());
                     }
 
 
