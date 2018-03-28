@@ -185,8 +185,8 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
                 }
                 break;
             case R.id.bt_share:
-                sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
-                        "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
+                sharePopupWindow.showAtBottom(courseVideoBean.getName()+" | 爱动健身", courseVideoBean.getIntroduce(),
+                        courseVideoBean.getCover(), ConstantUrl.URL_SHARE_VIDEO + courseVideoBean.getId());
                 break;
             case R.id.txt_appoint_immediately:
 

@@ -78,6 +78,8 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
 
     public void showAtBottom(String title, String content, String imageUrl, String webUrl) {
 
+        if (title == null)title = "爱动健身";
+        title += title.contains("爱动健身")?"":" | 爱动健身";
         this.showAtLocation(((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0), Gravity.BOTTOM, 0, 0);
         this.title = title;
         String html = HtmlToStringUtils.delHTMLTag(content);
