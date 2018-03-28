@@ -16,6 +16,7 @@ public class CourseVideoBean  implements Serializable{
     private String during;
     private String introduce;
     private String type_name;
+    private String category;
 
     public String getId() {
         return id;
@@ -80,4 +81,8 @@ public class CourseVideoBean  implements Serializable{
     public void setCat_id(String cat_id) {
         this.cat_id = cat_id;
     }
+
+    public void setCategory(String category){this.category = category;}
+
+    public String getCategory(){return this.category;}
 }
