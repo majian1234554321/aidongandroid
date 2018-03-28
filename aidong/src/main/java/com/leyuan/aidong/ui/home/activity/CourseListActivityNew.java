@@ -25,6 +25,7 @@ import com.leyuan.aidong.entity.course.CourseFilterBean;
 import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.fragment.CourseListFragmentNew;
+import com.leyuan.aidong.ui.home.fragment.HomeCourseListChildFragment;
 import com.leyuan.aidong.ui.home.view.CourseListFilterNew;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseFilterCallback;
@@ -137,7 +138,8 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
         for (int i = 0; i < days.size(); i++) {
-            CourseListFragmentNew courseFragment = new CourseListFragmentNew();
+//            CourseListFragmentNew courseFragment = new CourseListFragmentNew();
+            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
                     new Bundler().putString("date", days.get(i)).putString("category",allcategory).get()
             ));
