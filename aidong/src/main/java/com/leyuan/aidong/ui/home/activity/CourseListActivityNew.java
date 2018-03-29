@@ -138,8 +138,8 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
         for (int i = 0; i < days.size(); i++) {
-//            CourseListFragmentNew courseFragment = new CourseListFragmentNew();
-            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
+            CourseListFragmentNew courseFragment = new CourseListFragmentNew();
+//            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
                     new Bundler().putString("date", days.get(i)).putString("category",allcategory).get()
             ));

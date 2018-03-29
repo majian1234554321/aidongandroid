@@ -233,15 +233,26 @@ public class AppointmentFragmentCampaignList extends BaseLazyFragment implements
         @Override
         public void onCancelJoin(int position) {
             AppointmentBean bean = data.get(position);
-            if (DateUtils.started(bean.getStart())) {
-                if ("course".equals(bean.getAppointmentType())) {
+            if ("course".equals(bean.getAppointmentType()))
+            {
+                if (DateUtils.started(bean.getStart()))
+                {
                     ToastGlobal.showLong("课程已开始，无法取消");
-                } else {
-                    ToastGlobal.showLong("活动已开始，无法取消");
+                    return;
                 }
-            } else {
-                present.cancelAppoint(bean.getId());
             }
+
+            present.cancelAppoint(bean.getId());
+
+//            if (DateUtils.started(bean.getStart())) {
+//                if ("course".equals(bean.getAppointmentType())) {
+//                    ToastGlobal.showLong("课程已开始，无法取消");
+//                } else {
+//                    ToastGlobal.showLong("活动已开始，无法取消");
+//                }
+//            } else {
+//                present.cancelAppoint(bean.getId());
+//            }
         }
 
         @Override
