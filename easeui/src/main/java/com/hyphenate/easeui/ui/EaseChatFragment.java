@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -120,6 +122,7 @@ EaseChatFragment extends EaseBaseFragment implements EMMessageListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.ease_fragment_chat, container, false);
     }
 
@@ -885,9 +888,39 @@ EaseChatFragment extends EaseBaseFragment implements EMMessageListener {
                 + System.currentTimeMillis() + ".jpg");
         //noinspection ResultOfMethodCallIgnored
         cameraFile.getParentFile().mkdirs();
-        startActivityForResult(
-                new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),
-                REQUEST_CODE_CAMERA);
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            final  int REQUEST_TAKE_PHOTO_PERMISSION = 123123;
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_TAKE_PHOTO_PERMISSION);
+            return;
+        }
+
+
+//        startActivityForResult(
+//                new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),
+//                REQUEST_CODE_CAMERA);
+
+
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+
+                if (cameraFile != null) {
+                 /*获取当前系统的android版本号*/
+                    int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                    if (currentapiVersion<24){
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
+                        startActivityForResult(intent, REQUEST_CODE_CAMERA);
+                    }else {
+                        ContentValues contentValues = new ContentValues(1);
+                        contentValues.put(MediaStore.Images.Media.DATA, cameraFile.getAbsolutePath());
+                        Uri uri = getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                        startActivityForResult(intent, REQUEST_CODE_CAMERA);
+                    }
+                }
+            }
     }
 
     /**
