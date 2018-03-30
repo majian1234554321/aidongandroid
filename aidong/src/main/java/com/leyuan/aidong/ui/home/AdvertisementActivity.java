@@ -16,6 +16,7 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.WebViewActivity;
+import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
@@ -151,6 +152,10 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
                 intentBanner = new Intent(this, GoodsDetailActivity.class);
                 intentBanner.putExtra("goodsId", startingBanner.getLink());
                 intentBanner.putExtra("goodsType", GOODS_TICKET);
+                break;
+            case "28":
+                intentBanner = new Intent(this,ContestHomeActivity.class);
+                intentBanner.putExtra("contestId", startingBanner.getLink());
                 break;
 
             default:

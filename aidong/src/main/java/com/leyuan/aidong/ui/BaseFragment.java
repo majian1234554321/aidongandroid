@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
@@ -80,6 +81,9 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
                 break;
             case "26":
                 GoodsDetailActivity.start(getContext(), bannerBean.getLink(), GOODS_TICKET);
+                break;
+            case "28":
+                ContestHomeActivity.start(getContext(),bannerBean.getLink());
                 break;
             default:
                 break;
