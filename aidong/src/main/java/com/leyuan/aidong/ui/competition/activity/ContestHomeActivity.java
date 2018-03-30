@@ -120,6 +120,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
 
         contestId = getIntent().getStringExtra("contestId");
         campaignBean = getIntent().getParcelableExtra("campaignBean");
+
         if (campaignBean != null) {
             contestId = campaignBean.id;
             txtTitle.setText(campaignBean.name);
@@ -284,7 +285,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onGetContestDetailData(ContestBean contest) {
         this.contest = contest;
-
+        txtTitle.setText(contest.name);
         GlideLoader.getInstance().displayImage(contest.background, img_bg);
         img_attention.setImageResource(contest.followed ? R.drawable.icon_contest_parsed : R.drawable.icon_contest_parse_not);
 
