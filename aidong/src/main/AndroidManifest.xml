@@ -387,6 +387,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
         <activity
+            android:name=".ui.home.activity.EquipmentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen" />
+
+        <activity
             android:name=".ui.home.activity.FoodAndBeverageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
