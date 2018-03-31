@@ -32,7 +32,7 @@ public class GuideActivity extends BaseActivity {
         banner.setOverScrollMode(View.OVER_SCROLL_NEVER);
         final List<View> views = new ArrayList<>();
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide1));
-        views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide2));
+//        views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide2));
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide3));
         if (UrlConfig.isMi) {
             views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide4_xiaomi));
