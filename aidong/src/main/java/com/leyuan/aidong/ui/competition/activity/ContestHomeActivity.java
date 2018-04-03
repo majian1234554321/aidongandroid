@@ -212,7 +212,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                         BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
                         Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
                     } else {
-                        ContestEnrolmentInfoActivity.start(this, contestId, campaignBean.name, campaignBean.start, contest);
+                        ContestEnrolmentInfoActivity.start(this, contestId, contest.name, contest.start_date+"~"+contest.end_date, contest);
                     }
 
                 } else if ("semi_finals".equals(contest.status)) {
