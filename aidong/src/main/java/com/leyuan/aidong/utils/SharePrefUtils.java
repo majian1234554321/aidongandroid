@@ -52,9 +52,9 @@ public class SharePrefUtils {
         return user;
     }
 
-    public static ArrayList<CircleDynamicBean> getCmdMessage(Context ctx) {
+    public static ArrayList<CircleDynamicBean> getCmdMessage(Context ctx,String userId) {
         if (mSharedPreferences == null) {
-            mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+            mSharedPreferences = ctx.getSharedPreferences(userId,
                     Context.MODE_PRIVATE);
         }
         ArrayList<CircleDynamicBean> beans = null;
@@ -72,18 +72,18 @@ public class SharePrefUtils {
         return beans;
     }
 
-    public static void addCmdMessage(Context ctx, CircleDynamicBean message) {
-        ArrayList<CircleDynamicBean> beans = getCmdMessage(ctx);
+    public static void addCmdMessage(Context ctx, CircleDynamicBean message,String userId) {
+        ArrayList<CircleDynamicBean> beans = getCmdMessage(ctx,userId);
         if (beans == null) beans = new ArrayList<>();
         beans.add(message);
-        saveCmdMessage(ctx, beans);
+        saveCmdMessage(ctx, beans,userId);
 
         Logger.i(TAG, " mSharedPreferences.edit().putString(\"addCmdMessage\", json).commit();");
     }
 
-    public static void saveCmdMessage(Context ctx, ArrayList<CircleDynamicBean> beans) {
+    public static void saveCmdMessage(Context ctx, ArrayList<CircleDynamicBean> beans,String userId) {
         if (mSharedPreferences == null) {
-            mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+            mSharedPreferences = ctx.getSharedPreferences(userId,
                     Context.MODE_PRIVATE);
         }
         Gson gson = new Gson();

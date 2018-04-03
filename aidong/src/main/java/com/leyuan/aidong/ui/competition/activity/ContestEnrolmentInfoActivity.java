@@ -53,7 +53,7 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
     private RelativeLayout layoutSelectCity;
     private TextView txtCity;
     private RelativeLayout layoutContestArea;
-    private TextView txtContestArea;
+    private TextView txtContestArea,tv_tips;
     private RelativeLayout layoutSelectGroup;
     private TextView txtBelongGroup;
     EditText edit_name;
@@ -90,7 +90,7 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
         contestId = getIntent().getStringExtra("contestId");
         contestBean = getIntent().getParcelableExtra("contest");
 
-
+        tv_tips = (TextView) findViewById(R.id.tv_tips);
         titleLayout = (CommonTitleLayout) findViewById(R.id.title_layout);
         txtContestName = (TextView) findViewById(R.id.txt_contest_name);
         txtContestTime = (TextView) findViewById(R.id.txt_contest_time);
@@ -99,6 +99,7 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
         layoutSelectCity = (RelativeLayout) findViewById(R.id.layout_select_city);
         txtCity = (TextView) findViewById(txt_city);
         edit_name = (EditText) findViewById(R.id.edit_name);
+        tv_tips.setVisibility(View.GONE);
 
         findViewById(R.id.bt_select_city).setOnClickListener(this);
         layoutContestArea = (RelativeLayout) findViewById(R.id.layout_contest_area);

@@ -23,6 +23,7 @@ import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.DynamicParseUserView;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
+import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentExtendView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -44,6 +45,7 @@ public class DynamicPresentImpl implements DynamicPresent {
     private FollowModel followModel;
 
     private SportCircleFragmentView sportCircleFragmentView;
+    private SportCircleFragmentExtendView sportCircleFragmentExtendView;
     private PublishDynamicActivityView publishDynamicActivityView;
     private DynamicDetailActivityView dynamicDetailActivityView;
     private List<DynamicBean> dynamicBeanList = new ArrayList<>();
@@ -56,6 +58,17 @@ public class DynamicPresentImpl implements DynamicPresent {
             dynamicModel = new DynamicModelImpl();
         }
     }
+
+
+    public DynamicPresentImpl(Context context, SportCircleFragmentView view, SportCircleFragmentExtendView sportCircleFragmentExtendView) {
+        this.context = context;
+        this.sportCircleFragmentView = view;
+        this.sportCircleFragmentExtendView = sportCircleFragmentExtendView;
+        if (dynamicModel == null) {
+            dynamicModel = new DynamicModelImpl();
+        }
+    }
+
 
     public DynamicPresentImpl(Context context, PublishDynamicActivityView view) {
         this.context = context;
@@ -201,7 +214,12 @@ public class DynamicPresentImpl implements DynamicPresent {
                 }
                 if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
                     sportCircleFragmentView.updateRecyclerView(dynamicBeanList);
+                } else {
+                    if (sportCircleFragmentExtendView != null)
+                        sportCircleFragmentExtendView.noRelevantData();
                 }
+
+
             }
         }, type, link_id, Constant.PAGE_FIRST);
     }

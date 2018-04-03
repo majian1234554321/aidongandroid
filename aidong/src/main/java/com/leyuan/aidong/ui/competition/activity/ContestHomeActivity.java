@@ -54,6 +54,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
 /**
  * Created by user on 2018/2/6.
+ * 精选活动-赛事
  */
 
 public class ContestHomeActivity extends BaseActivity implements View.OnClickListener, ContestHomeView, ContestEnrolView, FollowView {
@@ -172,7 +173,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
             case R.id.img_share:
 
                 if (contest == null) return;
-                sharePopupWindow.showAtBottom("我分享了赛事: " + contest.name + "，速速围观", contest.name,
+                sharePopupWindow.showAtBottom( contest.name,"我分享了赛事: " + contest.name + "，速速围观",
                         contest.background, contest.share_url);
 
                 break;

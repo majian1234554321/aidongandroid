@@ -122,6 +122,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
             adapterAttentionPerson.setData(campaignDetailBean.getApplicant());
         } else {
             layoutAttention.setVisibility(GONE);
+
         }
 
 
@@ -210,5 +211,9 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
+    }
+
+    public void hideView(){
+        txt_relate_dynamic.setVisibility(GONE);
     }
 }

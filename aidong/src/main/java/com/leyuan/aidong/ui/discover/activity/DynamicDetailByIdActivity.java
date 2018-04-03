@@ -72,7 +72,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
 
 /**
- * 动态详情
+ * 爱动广场动态详情
  * Created by song on 2016/12/28.
  */
 public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDetailActivityView, View.OnClickListener,

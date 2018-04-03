@@ -110,7 +110,12 @@ public class StringUtils {
                     @Override
                     public void onClick(View view) {
 
-                        UserInfoActivity.start(context, user.user_id);
+                        if (user.user_id==null){
+                            UserInfoActivity.start(context, user.getId());
+                        }else {
+                            UserInfoActivity.start(context, user.user_id);
+                        }
+
                     }
                 };
 

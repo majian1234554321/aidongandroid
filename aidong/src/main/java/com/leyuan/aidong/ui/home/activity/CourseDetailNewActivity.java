@@ -246,8 +246,13 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             case R.id.layout_course_location:
                 CourseStore store = course.getStore();
                 if (store != null) {
-                    MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
-                            store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
+                    if (store.getCoordinate()!=null&&store.getCoordinate().length>=2){
+                        MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
+                                store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
+                    }else {
+                        MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
+                               "31.00","108.00");
+                    }
                 }
 
                 break;

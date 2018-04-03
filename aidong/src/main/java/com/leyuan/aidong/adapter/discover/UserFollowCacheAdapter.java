@@ -63,7 +63,12 @@ public class UserFollowCacheAdapter extends RecyclerView.Adapter<UserFollowCache
         final UserBean bean = data.get(position);
         GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.nickname.setText(bean.getName());
-        holder.distance.setText(bean.getDistanceFormat());
+        if (!TextUtils.isEmpty(bean.getSignature())){
+            holder.distance.setText(bean.getSignature());
+        }else {
+            holder.distance.setText("这个人很懒，什么都没有留下");
+        }
+
 
         if (!App.mInstance.isLogin()) {
             holder.follow.setBackgroundResource(R.drawable.icon_follow);
@@ -76,8 +81,9 @@ public class UserFollowCacheAdapter extends RecyclerView.Adapter<UserFollowCache
                         ? R.drawable.icon_followed : R.drawable.icon_follow);
             }
         }
-
+        holder.gender.setVisibility(View.VISIBLE);
         if ("0".equals(bean.getGender())) {   //男
+
             holder.gender.setBackgroundResource(R.drawable.icon_man);
         } else {
             holder.gender.setBackgroundResource(R.drawable.icon_woman);

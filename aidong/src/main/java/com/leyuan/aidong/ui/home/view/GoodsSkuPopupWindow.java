@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsSkuAdapter;
@@ -306,6 +307,10 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 tvCount.setText(String.valueOf(count));
                 break;
             case R.id.iv_add:
+                if (!selectProduct){
+                    Toast.makeText(context, "先选择口味或者类别", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 count++;
                 if (count > stock) {
                     count = stock;
@@ -328,8 +333,13 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             case R.id.tv_confirm:
                 if (App.mInstance.isLogin()) {
                     if (isAllSkuConfirm()) {
-                        dismiss();
-                        confirm();
+                        if (tvCount.getText().toString()!=null&&!tvCount.getText().toString().equals("0")){
+                            dismiss();
+                            confirm();
+                        }else {
+                            Toast.makeText(context, "商品数量必须大于0", Toast.LENGTH_SHORT).show();
+                        }
+
                     } else {
                         tipUnSelectSku();
                     }
@@ -443,6 +453,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         }
     }
 
+    public boolean selectProduct = false;
+
     @Override
     public void onSelectSkuChanged(List<String> allSelectedNodes) {
         this.selectedSkuValues = allSelectedNodes;
@@ -450,6 +462,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         if (allSelectedNodes.size() == detailBean.spec.name.size()) {
             GoodsSkuBean line = getLine(allSelectedNodes);
             if (line != null) {
+                selectProduct = true;
                 price = FormatUtil.parseDouble(line.price);
                 tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),
                         FormatUtil.parseDouble(line.price)));
@@ -479,6 +492,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             tvSelect.setText(context.getString(selected));
             tvSkuTip.setText(skuTip.toString());
         } else {
+            selectProduct = false;
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
             selectedSkuCover = unConfirmedSkuCover;
             tvGoodsPrice.setText(maxPrice == minPrice ? String.valueOf(maxPrice) :

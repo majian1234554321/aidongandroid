@@ -95,7 +95,7 @@ public class App extends MultiDexApplication {
         EmConfigManager.getInstance().initializeEaseUi(this);
         Realm.init(context);
 //        if (UrlConfig.debug) {
-            Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(this);
 //        }
 
         RichText.initCacheDir(this);
@@ -182,25 +182,29 @@ public class App extends MultiDexApplication {
     public ArrayList<CircleDynamicBean> getCMDCirleDynamicBean() {
         if (cmdCircleDynamicBeans == null) {
 //            cmdCircleDynamicBeans = new DynamicDb(this).queryAll();
-            cmdCircleDynamicBeans =  SharePrefUtils.getCmdMessage(this);
+            if (isLogin())
+            cmdCircleDynamicBeans = SharePrefUtils.getCmdMessage(this,getUser().getId()+"");
         }
         return cmdCircleDynamicBeans;
     }
 
     public void saveDynamicCmdMessage(CircleDynamicBean bean) {
-        SharePrefUtils.addCmdMessage(this,bean);
+        if (isLogin())
+        SharePrefUtils.addCmdMessage(this, bean,getUser().getId()+"");
 
 //        new DynamicDb(this).insertInto(bean);
     }
 
     public void refreshDynamicCmdMessage() {
 //        cmdCircleDynamicBeans = new DynamicDb(this).queryAll();
-        cmdCircleDynamicBeans =  SharePrefUtils.getCmdMessage(this);
+        if (isLogin())
+        cmdCircleDynamicBeans = SharePrefUtils.getCmdMessage(this,getUser().getId()+"");
     }
 
     public void clearCMDMessage() {
         cmdCircleDynamicBeans = null;
-        SharePrefUtils.saveCmdMessage(this,new ArrayList<CircleDynamicBean>());
+        if (isLogin())
+        SharePrefUtils.saveCmdMessage(this, new ArrayList<CircleDynamicBean>(),getUser().getId()+"");
 //        new DynamicDb(this).clear();
     }
 

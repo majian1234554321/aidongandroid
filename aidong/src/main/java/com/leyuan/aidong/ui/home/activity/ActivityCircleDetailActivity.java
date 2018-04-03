@@ -54,6 +54,7 @@ import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
+import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentExtendView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
@@ -84,9 +85,10 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
 
 /**
  * Created by user on 2018/1/9.
+ * //精选活动 - 活动
  */
 
-public class ActivityCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener, CampaignDetailActivityView, ActivitySkuPopupWindow.SelectSkuListener {
+public class ActivityCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener, CampaignDetailActivityView, ActivitySkuPopupWindow.SelectSkuListener ,SportCircleFragmentExtendView {
     //    private SwitcherLayout switcherLayout;
 //    private CustomRefreshLayout refreshLayout;
     TextView txt_share_image, txt_appoint_immediately;
@@ -156,7 +158,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         id = getIntent().getStringExtra("id");
 
         setContentView(R.layout.activity_activity_circle_details);
-        dynamicPresent = new DynamicPresentImpl(this, this);
+        dynamicPresent = new DynamicPresentImpl(this, this,this);
         initView();
         initSwipeRefreshLayout();
         initRecyclerView();
@@ -565,6 +567,14 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         Intent intent = new Intent(context, ActivityCircleDetailActivity.class);
         intent.putExtra("id", id);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void noRelevantData() {
+        if (headView!=null) {
+            headView.hideView();
+        }
+
     }
 
 

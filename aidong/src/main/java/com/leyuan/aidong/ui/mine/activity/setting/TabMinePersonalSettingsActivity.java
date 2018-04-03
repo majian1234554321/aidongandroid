@@ -319,7 +319,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
             coursePresentNew.getCourseFilterConfig();
 
             EmChatLoginManager.loginOut();
-            App.getInstance().clearCMDMessage();
+            //App.getInstance().clearCMDMessage();
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE));
 
             Intent intent = new Intent(TabMinePersonalSettingsActivity.this, MainActivity.class);
