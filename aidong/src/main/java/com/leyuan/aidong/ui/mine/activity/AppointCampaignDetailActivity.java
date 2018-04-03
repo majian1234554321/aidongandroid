@@ -131,7 +131,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
     private String campaignId;
     private boolean fromDetail = false;
-    private String status;
+    private String status,imageUrl;
     private TextView txtCourseTime;
 
     private TextView txtRoomName;
@@ -142,6 +142,15 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         starter.putExtra("orderId", orderId);
         context.startActivity(starter);
     }
+
+
+    public static void start(Context context, String orderId,String imageUrl) {
+        Intent starter = new Intent(context, AppointCampaignDetailActivity.class);
+        starter.putExtra("orderId", orderId);
+        starter.putExtra("imageUrl", imageUrl);
+        context.startActivity(starter);
+    }
+
 
     public static void start(Context context, String campaignId, boolean fromDetail) {
         Intent starter = new Intent(context, AppointCampaignDetailActivity.class);
@@ -158,6 +167,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         present = new AppointmentPresentImpl(this, this);
         if (getIntent() != null) {
             fromDetail = getIntent().getBooleanExtra("fromDetail", false);
+            imageUrl = getIntent().getStringExtra("imageUrl");
             if (fromDetail) {
                 campaignId = getIntent().getStringExtra("campaignId");
             } else {
@@ -264,7 +274,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         }
 
         //与订单状态无关: 订单信息
-        GlideLoader.getInstance().displayImage(bean.getCover(), ivCover);
+        if(!TextUtils.isEmpty(bean.getCover())){
+            GlideLoader.getInstance().displayImage(bean.getCover(), ivCover);
+        }else {
+            GlideLoader.getInstance().displayImage(imageUrl, ivCover);
+        }
+
         tvCampaignName.setText(bean.getName());
         txtCourseTime.setText(bean.getAppoint().getSpec_value());
 

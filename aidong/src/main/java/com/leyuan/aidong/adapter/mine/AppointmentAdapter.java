@@ -157,7 +157,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                appointmentListener.onPayOrder(bean.getAppointmentType(), bean.getId());
+                appointmentListener.onPayOrder(bean.getAppointmentType(), bean.getId(),bean.getCover());
             }
         });
 
@@ -192,7 +192,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 if (appointmentListener != null) {
-                    appointmentListener.onPayOrder(bean.getAppointmentType(), bean.getId());
+                    appointmentListener.onPayOrder(bean.getAppointmentType(), bean.getId(),bean.getCover());
                 }
             }
         });
@@ -260,7 +260,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     public interface AppointmentListener {
-        void onPayOrder(String type, String id);
+        void onPayOrder(String type, String id,String  imageUrl);
 
         void onDeleteOrder(String id);
 

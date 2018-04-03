@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -226,7 +227,8 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         txtCheckAllVideo.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
 
-                RelativeVideoListActivity.start(context, course.getId(), relativeVideoTitle);
+                if (!TextUtils.isEmpty(course.getId()))
+                    RelativeVideoListActivity.start(context, course.getId(), relativeVideoTitle);
 
 //                UiManager.activityJump(context, RelativeVideoListActivity.class);
             }

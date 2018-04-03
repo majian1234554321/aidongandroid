@@ -190,8 +190,8 @@ public class AppointmentFragmentCampaignList extends BaseLazyFragment implements
     private class AppointCallback implements AppointmentAdapter.AppointmentListener {
 
         @Override
-        public void onPayOrder(String type, String id) {
-            AppointCampaignDetailActivity.start(getContext(), id);
+        public void onPayOrder(String type, String id,String imageUrl) {
+            AppointCampaignDetailActivity.start(getContext(), id,imageUrl);
         }
 
         @Override
