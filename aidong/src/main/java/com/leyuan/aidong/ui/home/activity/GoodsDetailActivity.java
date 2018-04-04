@@ -210,6 +210,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void showErrorView() {
         switcherLayout.showExceptionLayout();
+
         ivShare.setVisibility(View.GONE);
     }
 
@@ -217,6 +218,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public void setGoodsDetailCoupon(List<CouponBean> coupons) {
         if(bean==null){
             bean = new GoodsDetailBean();
+
         }
         bean.coupon = coupons;
 

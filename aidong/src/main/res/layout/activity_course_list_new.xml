@@ -53,15 +53,24 @@
             android:layout_height="match_parent"
             android:visibility="visible">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <com.leyuan.aidong.ui.home.view.CourseListFilterNew
+                    android:id="@+id/view_filter_course"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-            <com.leyuan.aidong.ui.home.view.CourseListFilterNew
-                android:id="@+id/view_filter_course"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+
+
         </FrameLayout>
     </LinearLayout>
 

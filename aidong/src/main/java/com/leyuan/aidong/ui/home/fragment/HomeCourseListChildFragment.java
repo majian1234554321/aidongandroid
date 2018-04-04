@@ -87,7 +87,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
 
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_course);
-        recyclerView.setPadding(0,15,0,0);
+
         data = new ArrayList<>();
         courseAdapter = new HomeCourseListChildAdapter(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(courseAdapter);

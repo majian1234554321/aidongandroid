@@ -14,6 +14,7 @@ public class KeyBoardUtil {
 
     /**
      * 打卡软键盘
+     *
      * @param mEditText 输入框
      * @param mContext  上下文
      */
@@ -27,17 +28,20 @@ public class KeyBoardUtil {
 
     /**
      * 关闭软键盘
+     *
      * @param mEditText 输入框
      * @param mContext  上下文
      */
     public static void closeKeyboard(EditText mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+        if (imm != null && mEditText != null && mEditText.getWindowToken() != null)
+            imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
     }
 
     /**
      * 解决输入法中的内存泄漏问题
+     *
      * @param destContext 上下文
      */
     public static void fixInputMethodManagerLeak(Context destContext) {

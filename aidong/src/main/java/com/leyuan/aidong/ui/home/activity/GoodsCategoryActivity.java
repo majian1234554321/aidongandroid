@@ -16,6 +16,7 @@ import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsRecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -116,7 +117,7 @@ public class GoodsCategoryActivity extends BaseActivity implements GoodsActivity
     private void initRecommendRecyclerView() {
         recommendView = (RecyclerView)findViewById(R.id.rv_recommend);
         nurtureList = new ArrayList<>();
-        nurtureAdapter = new NurtureAdapter(this);
+        nurtureAdapter = new NurtureAdapter(this, Constant.GOODS_NUTRITION);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
         recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);

@@ -131,7 +131,7 @@ public class FoodAndBeverageActivity extends BaseActivity implements NurtureActi
     private void initRecommendRecyclerView() {
         recommendView = (RecyclerView)findViewById(R.id.rv_recommend);
         nurtureList = new ArrayList<>();
-        nurtureAdapter = new NurtureAdapter(this);
+        nurtureAdapter = new NurtureAdapter(this,Constant.GOODS_FOODS);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
         recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);

@@ -35,6 +35,7 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.RECOMMEND_NUTRITION;
 
 
@@ -88,7 +89,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private void initTopLayout(){
         SimpleTitleBar titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         RecyclerView categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this, Constant.GOODS_NUTRITION);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this, GOODS_NUTRITION);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
@@ -128,7 +129,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private void initRecommendRecyclerView() {
         recommendView = (RecyclerView)findViewById(R.id.rv_recommend);
         nurtureList = new ArrayList<>();
-        nurtureAdapter = new NurtureAdapter(this);
+        nurtureAdapter = new NurtureAdapter(this,GOODS_NUTRITION);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
         recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);

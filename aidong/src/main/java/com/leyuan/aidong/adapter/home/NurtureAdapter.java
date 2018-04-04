@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -26,9 +25,11 @@ import java.util.List;
 public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureViewHolder>{
     private Context context;
     private List<GoodsBean> data = new ArrayList<>();
+    public String type;
 
-    public NurtureAdapter(Context context) {
+    public NurtureAdapter(Context context,String type) {
         this.context = context;
+        this.type = type ;
     }
 
     public void setData(List<GoodsBean> data) {
@@ -56,7 +57,7 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,bean.getId(), Constant.GOODS_NUTRITION);
+                GoodsDetailActivity.start(context,bean.getId(), type);
             }
         });
     }

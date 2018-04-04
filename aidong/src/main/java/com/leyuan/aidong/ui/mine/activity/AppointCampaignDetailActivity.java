@@ -289,7 +289,10 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvCampaignTime.setRightContent(bean.getAppoint().getClassTime());
         txtCourseLocation.setText(bean.getAppoint().getAddress());
         txtRoomName.setText(bean.getSubName());
-        tvInfo.setText(bean.getAppoint().getOrganizer());
+
+
+
+        tvInfo.setText("共"+(int)(Double.parseDouble(bean.getPay().getTotal()) / Double.parseDouble(bean.getPay().getPayAmount())) +"张票");
 
         tvCampaignAddress.setRightContent(bean.getAppoint().getAddress());
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),

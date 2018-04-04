@@ -97,6 +97,19 @@
             android:layout_toRightOf="@+id/dv_goods_cover"
             android:layout_marginLeft="10dp"/>
 
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="爱动"
+            android:layout_below="@+id/tv_name"
+            android:textSize="12sp"
+            android:textColor="@color/c9"
+            android:layout_marginTop="3dp"
+
+            android:layout_alignLeft="@+id/tv_name"/>
+
         <TextView
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
@@ -105,17 +118,7 @@
             android:textSize="12sp"
             android:textColor="@color/c9"
             android:layout_marginTop="3dp"
-            android:layout_below="@+id/tv_name"
-            android:layout_alignLeft="@+id/tv_name"/>
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="爱动"
-            android:textSize="12sp"
-            android:textColor="@color/c9"
-            android:layout_marginTop="3dp"
-            android:layout_below="@+id/tv_address"
+            android:layout_below="@+id/tv_time"
             android:layout_alignLeft="@+id/tv_name"/>
 
 
