@@ -18,6 +18,8 @@ public class AppointmentBean {
     private String little_time;             //订单剩余支付时间
     private String created_at;
     private String no;
+    public String amount;
+    public String [] spec_value;
     private int pay_type;
 
     public String getNo() {

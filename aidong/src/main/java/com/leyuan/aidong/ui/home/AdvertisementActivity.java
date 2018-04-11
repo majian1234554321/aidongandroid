@@ -4,9 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,13 +16,20 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
-import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.ui.store.StoreDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.UiManager;
+
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
@@ -33,12 +39,13 @@ import static com.leyuan.aidong.utils.Constant.GOODS_TICKET;
  * Created by user on 2017/5/5.
  */
 public class AdvertisementActivity extends BaseActivity implements View.OnClickListener {
-    private static final int COUNT = 1;
+
     private int COUNT_TIME = 5;
-    private static final long DIVIDER = 1000;
+
     private ImageView imgBg;
     private Button btn_count;
     private BannerBean startingBanner;
+    private Subscription tag;
 
     public static void start(Context context, BannerBean startingBannerImage) {
         Intent intent = new Intent(context, AdvertisementActivity.class);
@@ -60,38 +67,52 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
         btn_count = (Button) findViewById(R.id.btn_count);
         btn_count.setOnClickListener(this);
         imgBg.setOnClickListener(this);
-        handler.sendEmptyMessageDelayed(COUNT, DIVIDER);
-    }
+       // handler.sendEmptyMessageDelayed(COUNT, DIVIDER);
 
-    private Handler handler = new Handler() {
 
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case COUNT:
-                    COUNT_TIME--;
-                    if (COUNT_TIME == 0) {
-                        UiManager.activityJump(AdvertisementActivity.this, MainActivity.class);
-                        finish();
-                    } else {
-                        handler.removeCallbacksAndMessages(null);
-                        handler.sendEmptyMessageDelayed(COUNT, DIVIDER);
-                        btn_count.setText("跳过" + COUNT_TIME + "s");
+        tag = Observable.interval(1, 1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Long>() {
+                    @Override
+                    public void onCompleted() {
+
                     }
 
+                    @Override
+                    public void onError(Throwable e) {
 
-                    break;
-            }
+                    }
 
-        }
-    };
+                    @Override
+                    public void onNext(Long aLong) {
+                        COUNT_TIME--;
+                        if (aLong == 5) {
+                            Log.i("TAG", aLong + "");
+                            UiManager.activityJump(AdvertisementActivity.this, MainActivity.class);
+                            finish();
+                            unsubscribe();
+                        } else {
+                            btn_count.setText("跳过" + COUNT_TIME + "s");
+                        }
+
+                    }
+                });
+
+    }
+
+
 
     @Override
     public void onClick(View view) {
+
+        if (tag!=null){
+            tag.unsubscribe();
+        }
+
         switch (view.getId()) {
             case R.id.btn_count:
-                handler.removeCallbacksAndMessages(null);
+
                 UiManager.activityJump(AdvertisementActivity.this, MainActivity.class);
                 finish();
                 break;
@@ -99,7 +120,7 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
                 if (TextUtils.isEmpty(startingBanner.getLink())) {
                     return;
                 }
-                handler.removeCallbacksAndMessages(null);
+
                 Intent intentMain = new Intent(this, MainActivity.class);
                 Intent intentBanner = getBannerIntent(startingBanner);
                 startActivities(new Intent[]{intentMain, intentBanner});
@@ -168,7 +189,9 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
+        if (tag!=null){
+            tag.unsubscribe();
+        }
     }
 
 }

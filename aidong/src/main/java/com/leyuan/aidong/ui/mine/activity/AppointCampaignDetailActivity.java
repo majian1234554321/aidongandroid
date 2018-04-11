@@ -292,7 +292,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
 
 
-        tvInfo.setText("共"+(int)(Double.parseDouble(bean.getPay().getTotal()) / Double.parseDouble(bean.getPay().getPayAmount())) +"张票");
+        tvInfo.setText("共"+bean.getAppoint().amount +"张票");
 
         tvCampaignAddress.setRightContent(bean.getAppoint().getAddress());
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),

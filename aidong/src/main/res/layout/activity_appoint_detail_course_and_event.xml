@@ -239,7 +239,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="20dp"
                     android:gravity="center"
-                    android:text="@string/course_order_hint"
+                    android:text="@string/course_order_hint2"
                     android:textColor="@color/c9"
 
                     android:textSize="12sp" />

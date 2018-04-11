@@ -139,7 +139,7 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
 
     private List<String> generateHeightData() {
         List<String> height = new ArrayList<>();
-        for (int i = 2017; i < 2020; i++) {
+        for (int i = 2017; i < 2019; i++) {
             height.add(String.valueOf(i));
         }
         return height;

@@ -189,11 +189,17 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         wallAdapter.setListener(this);
         ivAvatar.setOnClickListener(this);
     }
-
+    String intro = "" ;
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
         this.userInfoData = userInfoData;
         userId = userInfoData.getProfile().getId();
+
+      if (!TextUtils.isEmpty( userInfoData.getProfile().intro)){
+          intro =  userInfoData.getProfile().intro;
+      }else {
+          intro = "NODATA";
+      }
         setView();
         setFragments();
     }
@@ -263,7 +269,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             if (Constant.COACH.equals(userInfoData.getProfile().getUserTypeByUserType())) {
 
                 pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
-                        new Bundler().putString("userId", userId).putString("intro", "教练简介暂无").get()));
+                        new Bundler().putString("userId", userId).putString("intro", intro).get()));
 
                 CoachCourseFragment courseFragment = new CoachCourseFragment();
                 pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),

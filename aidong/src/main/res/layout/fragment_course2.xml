@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="20dp"
+            android:drawableTop="@drawable/empty_course"
+            android:gravity="center_horizontal"
+            android:text="暂无课程"
+            android:textColor="@color/c9"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <com.leyuan.custompullrefresh.CustomRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/line_color"
+        android:layout_alignParentTop="true"
+        android:paddingTop="45dp"
+        android:layout_toRightOf="@+id/rl_empty"
+        android:layout_toEndOf="@+id/rl_empty">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_course"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+             />
+
+    </com.leyuan.custompullrefresh.CustomRefreshLayout>
+
+</RelativeLayout>

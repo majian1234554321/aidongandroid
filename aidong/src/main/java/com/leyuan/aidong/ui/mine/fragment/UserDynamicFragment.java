@@ -155,7 +155,15 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
             View headView = View.inflate(getActivity(), R.layout.layout_person_intro, null);
             txtCourseIntro = (TextView) headView.findViewById(R.id.txt_course_intro);
-            txtCourseIntro.setText(intro);
+            TextView  tv_name = (TextView) headView.findViewById(R.id.tv_name);
+
+            if ("NODATA".equals(intro)){
+                txtCourseIntro.setVisibility(View.GONE);
+                tv_name.setVisibility(View.GONE);
+            }else {
+                txtCourseIntro.setText(intro);
+            }
+
             RecyclerViewUtils.setHeaderView(recyclerView, headView);
         }
     }
@@ -181,6 +189,9 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     @Override
     public void updateDynamic(List<DynamicBean> dynamicBeanList) {
         DialogUtils.dismissDialog();
+
+
+
 
         switcherLayout.showContentLayout();
         if (refreshLayout.isRefreshing()) {

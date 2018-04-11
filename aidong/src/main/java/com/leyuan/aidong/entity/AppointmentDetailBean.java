@@ -33,6 +33,7 @@ public class AppointmentDetailBean {
         private String classroom;       //上课时间
         private String address;         //上课地址
         private String organizer;
+        public String amount;
         private String status;
         private String verify_no; //"核销码"
         private String verify_status;//"核销状态 undo-未核销 done-已核销",

@@ -297,7 +297,8 @@
     <string name="queue_confirm">确认排队</string>
     <string name="queue_immediately">立即排队</string>
     <string name="confirm_order">确认订单</string>
-    <string name="course_order_hint">温馨提示:付费课程可在开课前48小时取消退款!</string>
+    <string name="course_order_hint">温馨提示:爱动自营门店付费课程可在开课前6小时取消退款,其他门店付费课程可在开课前48小时取消退款!</string>
+    <string name="course_order_hint2">温馨提示:爱动自营门店付费课程可在开课前6小时取消退款,其他门店付费课程可在开课前48小时取消退款!</string>
     <string name="pay_immediately">立即支付</string>
     <string name="course_appoint">课程预约</string>
     <string name="event_appoint">活动预约</string>
@@ -342,7 +343,7 @@
     <string name="my_course">我的课程</string>
     <string name="my_campaign">我的活动</string>
     <string name="immediately_appoint_course">立即约课</string>
-    <string name="check_all">查看全部</string>
+    <string name="check_all">查看更多</string>
     <string name="my_attention">我的关注</string>
     <string name="current_month_clock_in_days">本月打卡(天)</string>
     <string name="sport_record">运动记录</string>
