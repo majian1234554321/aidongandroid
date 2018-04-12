@@ -1,7 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
 android {
+
+
     signingConfigs {
         release {
             keyAlias 'aidong'
@@ -14,6 +18,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "com.example.aidong"
+
         minSdkVersion 16
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode        //old 25 5.0.1
@@ -58,14 +63,14 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile rootProject.ext.design
     compile rootProject.ext.appcompatv7
     compile rootProject.ext.recyclerviewv7
     compile rootProject.ext.cardview7
-    compile 'com.android.support:multidex:1.0.1'
+    // compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'com.android.support:multidex:1.0.3'
     compile 'org.apmem.tools:layouts:1.10@aar'
-    compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
+     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -75,10 +80,11 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
-//    compile 'com.google.zxing:core:3.2.1'
+    //    compile 'com.google.zxing:core:3.2.1'
     testCompile 'junit:junit:4.12'
-//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+
+    //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     compile 'com.google.android.exoplayer:exoplayer:r1.5.7'
     compile 'cn.bingoogolapple:bga-banner:2.1.7@aar'
     compile 'com.nineoldandroids:library:2.4.0'
@@ -92,25 +98,23 @@ dependencies {
     compile 'com.afollestad.material-dialogs:core:0.9.3.0'
     compile 'com.qiniu:qiniu-android-sdk:7.3.11'
     compile 'com.zzhoujay.richtext:richtext:2.5.2'
-//    compile 'com.github.limedroid:XRichText:v1.0.0'
+    //    compile 'com.github.limedroid:XRichText:v1.0.0'
     compile 'com.github.iwgang:countdownview:2.1.3'
     compile 'com.yalantis:ucrop:2.2.0'
     compile 'com.gongwen:marqueelibrary:1.0.4'
     compile 'com.umeng.analytics:analytics:6.1.4'
     compile 'com.contrarywind:Android-PickerView:3.2.5'
     compile 'com.kyleduo.switchbutton:library:2.0.0'
-
     compile 'com.github.iknow4:android-utils-sdk:1.1.1'
     compile 'com.googlecode.mp4parser:isoparser:1.1.20'
     compile 'org.aspectj:aspectjrt:1.8.9'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.writingminds:FFmpegAndroid:0.3.2'
-
+    compile project(':custompullrefresh')
+    compile project(':easeui')
     compile project(':ijkplayer-exo')
     compile project(':ijkplayer-java')
     compile project(':photoview')
-    compile project(':easeui')
-    compile project(':custompullrefresh')
 }
 //buildscript {
 //    repositories {
