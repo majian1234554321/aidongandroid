@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -37,6 +36,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.widget.richtext.RichWebView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     private RelativeLayout relTop;
     private ImageView imgBg;
     private ImageView imgLiveBeginOrEnd;
-    private TextView txtCourseIntro;
+    private RichWebView txtCourseIntro;
     private TextView txtSuggestFrequency;
     private RelativeLayout layoutAttention;
     private RecyclerView rvAttention;
@@ -135,7 +135,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         imageView6 = (ImageView) view.findViewById(R.id.imageView6);
         imgCoach = (ImageView) view.findViewById(img_coach);
 
-        txtCourseIntro = (TextView) view.findViewById(txt_course_intro);
+        txtCourseIntro = (RichWebView) view.findViewById(txt_course_intro);
         txtSuggestFrequency = (TextView) view.findViewById(R.id.txt_suggest_frequency);
         txt_use_equipment = (TextView) view.findViewById(R.id.txt_use_equipment);
         txt_target_population = (TextView) view.findViewById(R.id.txt_target_population);
@@ -287,7 +287,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         } else {
             bt_attention.setImageResource(R.drawable.icon_attention);
         }
-        txtCourseIntro.setText(Html.fromHtml(course.getIntroduce()));
+        txtCourseIntro.setRichText(course.getIntroduce());
         txtSuggestFrequency.setText("建议周频次: " + course.getFrequency() + "次/周");
         txt_use_equipment.setText("使用机械: " + course.getInstrument());
         txt_target_population.setText("针对人群: " + course.getCrowd());

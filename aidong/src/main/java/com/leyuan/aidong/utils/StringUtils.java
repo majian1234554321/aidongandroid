@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
@@ -80,6 +81,12 @@ public class StringUtils {
                 public void onClick(View view) {
                     ToastGlobal.showShortConsecutive("点点点");
                 }
+
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    ds.setUnderlineText(false);
+//
+                }
             };
 
             spannableString.setSpan(clickableSpan, matcher.start() - start, matcher.end() + end,
@@ -117,6 +124,13 @@ public class StringUtils {
                         }
 
                     }
+
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        ds.setUnderlineText(false);
+//
+                    }
                 };
 
                 spannableString.setSpan(clickableSpan, matcher.start() - start, matcher.end(),
@@ -149,6 +163,12 @@ public class StringUtils {
                     public void onClick(View view) {
 
                         UserInfoActivity.start(context, user.user_id);
+                    }
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        ds.setUnderlineText(false);
+//
                     }
                 };
 

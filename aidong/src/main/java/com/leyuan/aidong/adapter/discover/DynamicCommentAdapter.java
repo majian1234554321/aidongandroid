@@ -133,7 +133,7 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
 
         @Override
         public void updateDrawState(TextPaint ds) {
-            super.updateDrawState(ds);
+
             ds.setUnderlineText(false);// 去除下划线
             ds.bgColor = Color.parseColor("#00000000");
         }

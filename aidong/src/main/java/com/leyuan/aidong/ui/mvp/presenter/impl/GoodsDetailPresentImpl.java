@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.CouponData;
@@ -74,6 +75,12 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
             @Override
             public void onNext(CouponData couponData) {
                 goodsDetailView.setGoodsDetailCoupon(couponData.getCoupons());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                Log.i(e.toString(),e.toString());
             }
         }, goodsId);
     }

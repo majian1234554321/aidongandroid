@@ -43,7 +43,7 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
-    <TextView
+    <com.leyuan.aidong.widget.richtext.RichWebView
         android:id="@+id/txt_course_intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

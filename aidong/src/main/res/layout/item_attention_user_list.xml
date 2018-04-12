@@ -70,7 +70,7 @@
                     android:src="@drawable/icon_coach" />
             </LinearLayout>
 
-            <TextView
+            <com.leyuan.aidong.widget.richtext.RichWebView
                 android:id="@+id/txt_intro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -15,15 +15,18 @@ import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.xiaofeng.flowlayoutmanager.Alignment;
 import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
  * 商品详情页规格适配器
  * Created by song on 2016/11/9.
  */
-public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHolder>{
+public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHolder> {
     private Context context;
     private List<LocalGoodsSkuBean> localSkuList;
     private List<GoodsSkuBean> skuList;
@@ -45,7 +48,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
 
     @Override
     public SkuHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_sku_list,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_sku_list, parent, false);
         return new SkuHolder(view);
     }
 
@@ -70,7 +73,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         skuValueAdapter.setData(bean.getSkuValues());
 
         //初始化sku值按钮状态
-        if(!selectedSkuValues.isEmpty()){
+        if (!selectedSkuValues.isEmpty()) {
             setUnSelectedStatus();
             setSelectedNodeStatus();
         }
@@ -90,7 +93,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
                 localSkuList.get(position).setSelected(false);
                 List<GoodsSkuValueBean> skuValues = localSkuList.get(position).getSkuValues();
                 for (int i = 0; i < skuValues.size(); i++) {
-                    if(i == itemPosition){
+                    if (i == itemPosition) {
                         skuValues.get(i).setSelected(false);
                     }
                 }
@@ -102,7 +105,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
                 setSelectedNodeStatus();
                 notifyDataSetChanged();
 
-                if(selectSkuListener != null){
+                if (selectSkuListener != null) {
                     selectSkuListener.onSelectSkuChanged(getAllSelectedNodes());
                 }
             }
@@ -110,13 +113,13 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     }
 
     //设置未选择属性中的节点状态
-    private void setUnSelectedStatus(){
+    private void setUnSelectedStatus() {
         List<LocalGoodsSkuBean> localUnselectedSkuList = new ArrayList<>();
-        if(selectSkuListener != null){
-             localUnselectedSkuList = selectSkuListener.onGetUnSelectSku();
+        if (selectSkuListener != null) {
+            localUnselectedSkuList = selectSkuListener.onGetUnSelectSku();
         }
 
-        if(localUnselectedSkuList.isEmpty()){
+        if (localUnselectedSkuList.isEmpty()) {
             return;
         }
 
@@ -124,12 +127,12 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         List<String> lineNodes = getLineNodes(selectedSkuValues);
         for (LocalGoodsSkuBean localGoodsSkuBean : localUnselectedSkuList) {
             for (GoodsSkuValueBean valueBean : localGoodsSkuBean.getSkuValues()) {
-                if(lineNodes.isEmpty()){
+                if (lineNodes.isEmpty()) {
                     valueBean.setAvailable(true);
-                }else{
-                    if(lineNodes.contains(valueBean.getValue())){
+                } else {
+                    if (lineNodes.contains(valueBean.getValue())) {
                         valueBean.setAvailable(true);
-                    }else {
+                    } else {
                         valueBean.setAvailable(false);
                     }
                 }
@@ -138,12 +141,12 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     }
 
     //设置已选属性行中的相邻节点状态
-    private void setSelectedNodeStatus(){
+    private void setSelectedNodeStatus() {
         List<LocalGoodsSkuBean> localSelectedSkuList = new ArrayList<>();
-        if(selectSkuListener != null){
+        if (selectSkuListener != null) {
             localSelectedSkuList = selectSkuListener.onGetSelectSku();
         }
-        if(localSelectedSkuList.isEmpty()){
+        if (localSelectedSkuList.isEmpty()) {
             return;
         }
 
@@ -151,12 +154,12 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
             List<String> otherLineSelectedNodes = getExceptCurrLineSelectedNodes(localGoodsSkuBean);
             List<String> lineNodes = getLineNodes(otherLineSelectedNodes);
             for (GoodsSkuValueBean valueBean : localGoodsSkuBean.getSkuValues()) {
-                if(lineNodes.isEmpty()){
+                if (lineNodes.isEmpty()) {
                     valueBean.setAvailable(true);
-                }else{
-                    if(lineNodes.contains(valueBean.getValue())){
+                } else {
+                    if (lineNodes.contains(valueBean.getValue())) {
                         valueBean.setAvailable(true);
-                    }else {
+                    } else {
                         valueBean.setAvailable(false);
                     }
                 }
@@ -165,14 +168,28 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     }
 
     //获取包含该规格的所有线路库存都为0的规格值 如[大，黄] [小，黄] 库存均为0返回黄
-    private List<String> getAllLineNoStockSkuValue(){
+    private List<String> getAllLineNoStockSkuValue() {
         List<GoodsSkuBean> noStockSkuList = new ArrayList<>();
         List<GoodsSkuBean> hasStockSkuList = new ArrayList<>();
         for (GoodsSkuBean goodsSkuBean : skuList) {
-            if(goodsSkuBean.getStock() == 0){   // 注意后台约定小于0是无限库存
+            if (goodsSkuBean.getStock() == 0) {   // 注意后台约定小于0是无限库存
                 noStockSkuList.add(goodsSkuBean);
-            }else {
-                hasStockSkuList.add(goodsSkuBean);
+            } else {
+                if (goodsSkuBean.value != null && goodsSkuBean.value.size() > 0) {
+
+                    if (goodsSkuBean.value.get(0).contains("~")) {
+                        if (time2(goodsSkuBean.value.get(0).split("~")[1])) {
+                            noStockSkuList.add(goodsSkuBean);
+                        }
+                    } else {
+                        if (time2(goodsSkuBean.value.get(0))) {
+                            noStockSkuList.add(goodsSkuBean);
+                        }
+                    }
+
+
+                } else
+                    hasStockSkuList.add(goodsSkuBean);
             }
         }
 
@@ -199,20 +216,24 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         //将库存为0的线路中的所有规格值与库存不为0的线路比较
         List<String> allLineNoStockValue = new ArrayList<>();
         for (String noStockValue : noStockValues) {
-            if(!hasStockValues.contains(noStockValue)){
+            if (!hasStockValues.contains(noStockValue)) {
                 allLineNoStockValue.add(noStockValue);
             }
         }
+
+
+        //判断日期
+
 
         return allLineNoStockValue;
     }
 
     //获取当前选中的Sku值如['黄'] ['红'，'大']
-    private List<String> getAllSelectedNodes(){
+    private List<String> getAllSelectedNodes() {
         List<String> selectedNodes = new ArrayList<>();
         for (LocalGoodsSkuBean localGoodsSkuBean : localSkuList) {
             for (GoodsSkuValueBean valueBean : localGoodsSkuBean.getSkuValues()) {
-                if(valueBean.isSelected()){
+                if (valueBean.isSelected()) {
                     selectedNodes.add(valueBean.getValue());
                 }
             }
@@ -221,10 +242,10 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     }
 
     //获取当前行选中的Sku值
-    private String getCurrentLineSelectedNode(LocalGoodsSkuBean localGoodsSkuBean){
+    private String getCurrentLineSelectedNode(LocalGoodsSkuBean localGoodsSkuBean) {
         String currLineSelectedNode = "";
         for (GoodsSkuValueBean valueBean : localGoodsSkuBean.getSkuValues()) {
-            if(valueBean.isSelected()){
+            if (valueBean.isSelected()) {
                 currLineSelectedNode = valueBean.getValue();
                 break;
             }
@@ -234,7 +255,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
 
 
     //获取包含选中的属性节点路线上的所有节点
-    public List<String> getLineNodes(List<String> selectedSkuValues){
+    public List<String> getLineNodes(List<String> selectedSkuValues) {
         List<GoodsSkuBean> lines = getLinesExceptNoStock(selectedSkuValues);
         List<String> allLineNodes = new ArrayList<>();
         for (GoodsSkuBean line : lines) {
@@ -246,10 +267,10 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     }
 
     //获取包含指定属性节点的所有路线(排除库存为0的)
-    private List<GoodsSkuBean> getLinesExceptNoStock(List<String> selectedValues){
+    private List<GoodsSkuBean> getLinesExceptNoStock(List<String> selectedValues) {
         ArrayList<GoodsSkuBean> usefulGoodsSkuBean = new ArrayList<>();
         for (GoodsSkuBean goodsSkuBean : skuList) {
-            if(goodsSkuBean.value.containsAll(selectedValues) && goodsSkuBean.getStock() != 0){
+            if (goodsSkuBean.value.containsAll(selectedValues) && goodsSkuBean.getStock() != 0) {
                 usefulGoodsSkuBean.add(goodsSkuBean);
             }
         }
@@ -257,31 +278,31 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     }
 
     //获取除去当前行选中的Sku值，剩余Sku值的集合 如当前选中['红'，'大'] 当前行选中的是红 返回[大]
-    private List<String> getExceptCurrLineSelectedNodes(LocalGoodsSkuBean localGoodsSkuBean){
+    private List<String> getExceptCurrLineSelectedNodes(LocalGoodsSkuBean localGoodsSkuBean) {
         String currLineSelectedNode = getCurrentLineSelectedNode(localGoodsSkuBean);
         List<String> allSelectedNodes = getAllSelectedNodes();
         List<String> otherLineSelectedNodes = new ArrayList<>();
         for (String allSelectedNode : allSelectedNodes) {
-            if(!allSelectedNode.equals(currLineSelectedNode)){
+            if (!allSelectedNode.equals(currLineSelectedNode)) {
                 otherLineSelectedNodes.add(allSelectedNode);
             }
         }
         return otherLineSelectedNodes;
     }
 
-    class SkuHolder extends RecyclerView.ViewHolder{
+    class SkuHolder extends RecyclerView.ViewHolder {
         TextView skuName;
         RecyclerView skuValues;
 
         public SkuHolder(View itemView) {
             super(itemView);
-            skuName = (TextView)itemView.findViewById(R.id.tv_sku_name);
+            skuName = (TextView) itemView.findViewById(R.id.tv_sku_name);
             skuValues = (RecyclerView) itemView.findViewById(R.id.rv_sku_value);
             skuValues.addItemDecoration(new RecyclerView.ItemDecoration() {
                 @Override
                 public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                     super.getItemOffsets(outRect, view, parent, state);
-                    outRect.set(0,0,40,20);
+                    outRect.set(0, 0, 40, 20);
                 }
             });
         }
@@ -293,7 +314,30 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
 
     public interface SelectSkuListener {
         List<LocalGoodsSkuBean> onGetSelectSku();
+
         List<LocalGoodsSkuBean> onGetUnSelectSku();
-        void onSelectSkuChanged(List<String> allSelectedNodes );
+
+        void onSelectSkuChanged(List<String> allSelectedNodes);
+    }
+
+
+    public boolean time2(String validDate) {
+        if (validDate != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String Nowdate = sdf.format(new Date());//获取当前时间
+
+
+            try {
+                if (sdf.parse(Nowdate).getTime() > sdf.parse(validDate).getTime()) {
+
+                    return true;
+
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
     }
 }

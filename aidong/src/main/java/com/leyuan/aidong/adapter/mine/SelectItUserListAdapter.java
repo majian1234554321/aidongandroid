@@ -15,6 +15,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.widget.richtext.RichWebView;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class SelectItUserListAdapter extends RecyclerView.Adapter<SelectItUserLi
         final UserBean user = users.get(position);
         GlideLoader.getInstance().displayCircleImage(user.getAvatar(), holder.imgAvatar);
         holder.txtCoachName.setText(user.getName());
-        holder.txtIntro.setText(user.signature == null ? user.personal_intro : user.signature);
+        holder.txtIntro.setRichText(user.signature == null ? user.personal_intro : user.signature);
         holder.btAttention.setVisibility(View.GONE);
         if (Constant.COACH.equals(user.type)) {
             holder.img_coach_tag.setVisibility(View.VISIBLE);
@@ -82,7 +83,7 @@ public class SelectItUserListAdapter extends RecyclerView.Adapter<SelectItUserLi
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgAvatar, img_coach_tag, iv_gender;
         private TextView txtCoachName;
-        private TextView txtIntro;
+        private RichWebView txtIntro;
         private ImageButton btAttention;
 
         public ViewHolder(View view) {
@@ -91,7 +92,7 @@ public class SelectItUserListAdapter extends RecyclerView.Adapter<SelectItUserLi
             imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
             img_coach_tag = (ImageView) view.findViewById(R.id.img_coach_tag);
             txtCoachName = (TextView) view.findViewById(R.id.txt_coach_name);
-            txtIntro = (TextView) view.findViewById(R.id.txt_intro);
+            txtIntro = (RichWebView) view.findViewById(R.id.txt_intro);
             btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
         }
     }

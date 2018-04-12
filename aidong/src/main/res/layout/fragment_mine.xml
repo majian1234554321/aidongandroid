@@ -114,10 +114,9 @@
 
                             <LinearLayout
                                 android:id="@+id/linearLayout_guanzhu"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="fill_parent"
-                                android:layout_weight="1"
-                                android:gravity="left">
+                                >
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -141,17 +140,20 @@
                             </LinearLayout>
 
                             <TextView
-                                android:layout_width="1px"
-                                android:layout_height="21dp"
+                                android:layout_width="1dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_height="@dimen/pref_15dp"
                                 android:layout_gravity="center_vertical"
                                 android:background="@color/list_line_color" />
 
                             <LinearLayout
                                 android:id="@+id/linearLayout_beiguanzhu"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="fill_parent"
-                                android:layout_weight="1"
-                                android:gravity="left">
+
+                                android:gravity="left"
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -173,16 +175,18 @@
                             </LinearLayout>
 
                             <TextView
-                                android:layout_width="1px"
-                                android:layout_height="21dp"
+                                android:layout_width="1dp"
+                                android:layout_height="@dimen/pref_15dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
                                 android:layout_gravity="center_vertical"
                                 android:background="@color/list_line_color" />
 
                             <LinearLayout
                                 android:id="@+id/layout_hot"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="fill_parent"
-                                android:layout_weight="1"
+
                                 android:gravity="left">
 
                                 <TextView
@@ -199,8 +203,8 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="5dp"
                                     android:gravity="center"
-                                    android:text="0"
                                     android:singleLine="true"
+                                    android:text="0"
                                     android:textColor="@color/c3"
                                     android:textSize="@dimen/length22" />
                             </LinearLayout>
@@ -272,6 +276,7 @@
                 android:id="@+id/item_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:divider_visible="true"
                 app:img_tag="@drawable/mine_shopping_address"
                 android:layout_marginTop="@dimen/pref_10dp"
                 app:txt_name="收货地址" />

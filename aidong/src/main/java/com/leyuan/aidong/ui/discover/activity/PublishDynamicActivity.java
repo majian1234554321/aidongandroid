@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
@@ -320,7 +321,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 this.type = data.getStringExtra("type");
                 this.link_id = data.getStringExtra("link_id");
                 imgAddCircle.setImageResource(R.drawable.circle_selected);
-                txtAddCircle.setTextColor(R.color.main_red);
+                txtAddCircle.setTextColor(ActivityCompat.getColor(this,R.color.main_red));
                 txtAddCircle.setText(data.getStringExtra("name"));
                 bt_circle_delete.setVisibility(View.VISIBLE);
 

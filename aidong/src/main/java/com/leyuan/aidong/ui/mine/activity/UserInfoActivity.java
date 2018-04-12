@@ -119,6 +119,14 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         context.startActivity(starter);
     }
 
+
+    public static void start(Context context, String userId,String intro) {
+        Intent starter = new Intent(context, UserInfoActivity.class);
+        starter.putExtra("userId", userId);
+        starter.putExtra("intro", intro);
+        context.startActivity(starter);
+    }
+
     public static void startForResult(Activity context, String userId, int request_code) {
         Intent starter = new Intent(context, UserInfoActivity.class);
         starter.putExtra("userId", userId);

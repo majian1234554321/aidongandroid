@@ -16,6 +16,7 @@ import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
 import com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.widget.richtext.RichWebView;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
         final UserBean user = users.get(position);
         GlideLoader.getInstance().displayCircleImage(user.cover, holder.imgAvatar);
         holder.txtCoachName.setText(user.getName());
-        holder.txtIntro.setText(user.simple_intro == null ? user.slogan : user.simple_intro);
+        holder.txtIntro.setRichText(user.simple_intro == null ? user.slogan : user.simple_intro);
         holder.img_coach_tag.setVisibility(View.GONE);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +83,7 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgAvatar, img_coach_tag;
         private TextView txtCoachName;
-        private TextView txtIntro;
+        private RichWebView txtIntro;
         private ImageButton btAttention;
 
         public ViewHolder(View view) {
@@ -90,7 +91,7 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
             imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
             img_coach_tag = (ImageView) view.findViewById(R.id.img_coach_tag);
             txtCoachName = (TextView) view.findViewById(R.id.txt_coach_name);
-            txtIntro = (TextView) view.findViewById(R.id.txt_intro);
+            txtIntro = (RichWebView) view.findViewById(R.id.txt_intro);
             btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
         }
     }
