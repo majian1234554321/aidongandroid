@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CourseDateAdapter;
@@ -14,6 +15,7 @@ import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.CourseListPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseListView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.widget.CustomLayoutManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -22,12 +24,14 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewA
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.baidu.mapapi.BMapManager.getContext;
+
 
 /**
  * 场馆详情-课程
  * Created by song on 2016/8/27.
  */
-public class CoachCourseFragment extends BaseFragment implements CourseDateAdapter.ItemClickListener, CourseListView {
+public class CoachCourseFragment extends BaseFragment implements CourseDateAdapter.ItemClickListener, CourseListView,EmptyView {
     private static final String TAG = "VenuesCourseFragment";
     private SwitcherLayout switcherLayout;
     //    private VenuesCourseAdapter courseAdapter;
@@ -58,7 +62,7 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
 
         days = DateUtils.getSevenDate();
 
-        coursePresent = new CourseListPresentImpl(getContext(), this);
+        coursePresent = new CourseListPresentImpl(getContext(), this,this);
 
 //        venuesPresent = new VenuesPresentImpl(getContext(), this);
         Bundle bundle = getArguments();
@@ -119,4 +123,11 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
         courseAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showEmptyView() {
+        View view = View.inflate(getContext(), R.layout.empty_order, null);
+        ( (TextView)view.findViewById(R.id.tv)).setText("暂无课表");
+        switcherLayout.addCustomView(view, "empty");
+        switcherLayout.showCustomLayout("empty");
+    }
 }

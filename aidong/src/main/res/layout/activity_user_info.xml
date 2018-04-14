@@ -48,34 +48,34 @@
     </RelativeLayout>
 
     <!--<LinearLayout-->
-        <!--android:id="@+id/ll_contact"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:visibility="gone">-->
+    <!--android:id="@+id/ll_contact"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:visibility="gone">-->
 
-        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/tv_message"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:text="私信"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:textSize="15sp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:textColor="@color/white"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:background="@color/c3"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:gravity="center" />&ndash;&gt;-->
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/tv_message"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="私信"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textSize="15sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textColor="@color/white"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@color/c3"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:gravity="center" />&ndash;&gt;-->
 
-        <!--<TextView-->
-            <!--android:id="@+id/tv_call"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@color/main_red"-->
-            <!--android:gravity="center"-->
-            <!--android:text="打电话"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="15sp" />-->
+    <!--<TextView-->
+    <!--android:id="@+id/tv_call"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@color/main_red"-->
+    <!--android:gravity="center"-->
+    <!--android:text="打电话"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="15sp" />-->
     <!--</LinearLayout>-->
 
     <RelativeLayout
@@ -167,12 +167,13 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_toRightOf="@id/dv_avatar"
-                            android:layout_marginLeft="20dp"
                             android:layout_centerVertical="true"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@id/dv_avatar"
+                            android:orientation="vertical"
 
                             >
+
                             <RelativeLayout
                                 android:id="@+id/ll_name"
                                 android:layout_width="wrap_content"
@@ -242,8 +243,8 @@
                             android:layout_centerVertical="true"
                             android:background="@drawable/icon_follow"
                             android:orientation="vertical"
-                            android:visibility="gone"/>
-                        
+                            android:visibility="gone" />
+
                         <TextView
                             android:id="@+id/txt_edit"
                             android:layout_width="wrap_content"
@@ -251,12 +252,11 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:text="编辑资料"
-                            android:padding="7dp"
-                            android:textColor="@color/c3"
-                            android:textSize="16sp"
                             android:background="@drawable/shape_stroke_corner_gray"
-                            />
+                            android:padding="7dp"
+                            android:text="编辑资料"
+                            android:textColor="@color/c3"
+                            android:textSize="16sp" />
 
                     </RelativeLayout>
 
@@ -267,14 +267,14 @@
                     android:id="@+id/tab_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/height_top_bar"
-                    android:layout_gravity="center_horizontal"
+
                     android:background="@color/white"
-                    android:gravity="center_horizontal"
+
                     app:stl_defaultTabTextColor="@color/gray_normal"
                     app:stl_defaultTabTextSize="17sp"
                     app:stl_dividerColor="@color/transparent"
                     app:stl_indicatorColor="@color/main_red"
-                    app:stl_indicatorInterpolation="smart"
+                    app:stl_indicatorInterpolation="linear"
                     app:stl_indicatorThickness="3dp"
                     app:stl_indicatorWidth="auto"
                     app:stl_underlineColor="@color/transparent"

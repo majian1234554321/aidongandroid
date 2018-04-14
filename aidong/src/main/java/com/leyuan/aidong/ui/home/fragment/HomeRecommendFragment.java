@@ -40,6 +40,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
@@ -93,6 +94,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     FollowPresentImpl followPresent;
     private int itemClickedPosition;
     private HomeData homeData;
+    private SwitcherLayout switcherLayout;
 
 
     @Override
@@ -111,12 +113,25 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         return inflater.inflate(R.layout.fragment_home_recommend, container, false);
     }
 
+    private void initSwitcherLayout() {
+        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
 
+
+
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
+       // initSwitcherLayout();
         scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
         llContent = (LinearLayout) view.findViewById(R.id.ll_content);
         banner = (BGABanner) view.findViewById(R.id.banner);
@@ -174,7 +189,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
 
         homePresent = new HomeRecommendPresentImpl(getActivity(), this);
-        homePresent.getRecommendList();
+        homePresent.getRecommendList2();
         initHomeBanner();
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -207,7 +222,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
     private void refreshData() {
         refreshLayout.setRefreshing(true);
-        homePresent.getRecommendList();
+        homePresent.getRecommendList2();
     }
 
     @Override
@@ -261,7 +276,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     public void addFollowResult(BaseBean baseBean) {
 
         if (baseBean.getStatus() == 1) {
-            homePresent.getRecommendList();
+            homePresent.getRecommendList2();
         }
 
     }
@@ -270,7 +285,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     public void cancelFollowResult(BaseBean baseBean) {
 
         if (baseBean.getStatus() == 1) {
-            homePresent.getRecommendList();
+            homePresent.getRecommendList2();
         }
     }
 

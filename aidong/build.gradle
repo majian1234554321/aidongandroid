@@ -75,10 +75,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile rootProject.ext.design
-    compile rootProject.ext.appcompatv7
-    compile rootProject.ext.recyclerviewv7
-    compile rootProject.ext.cardview7
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'org.apmem.tools:layouts:1.10@aar'
@@ -122,12 +118,15 @@ dependencies {
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.writingminds:FFmpegAndroid:0.3.2'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
-
     implementation project(':custompullrefresh')
     implementation project(':easeui')
     implementation project(':ijkplayer-exo')
     implementation project(':ijkplayer-java')
     implementation project(':photoview')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
 }
 //buildscript {
 //    repositories {

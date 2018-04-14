@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
@@ -41,6 +42,7 @@ import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
@@ -69,7 +71,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * 爱动圈
  * Created by song on 2016/12/26.
  */
-public class ContestDynamicFragment extends BasePageFragment implements SportCircleFragmentView {
+public class ContestDynamicFragment extends BasePageFragment implements SportCircleFragmentView,EmptyView {
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -151,7 +153,7 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
 
 
         dynamicPresent = new DynamicPresentImpl(getActivity(),this);
-        contestDynamicPresent = new ContestPresentImpl(getActivity());
+        contestDynamicPresent = new ContestPresentImpl(getActivity(),this);
         contestDynamicPresent.setContestDynamicView(this);
         contestDynamicPresent.getContestDynamics(contestId,currPage);
     }
@@ -229,6 +231,19 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         dynamicList.addAll(dynamicBeanList);
         circleDynamicAdapter.updateData(dynamicList);
         wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEmptyView() {
+
+
+        View view = View.inflate(getContext(), R.layout.empty_order, null);
+        ( (TextView)view.findViewById(R.id.tv)).setText("暂无动态");
+        switcherLayout.addCustomView(view, "empty");
+        switcherLayout.showCustomLayout("empty");
+
+
+
     }
 
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {

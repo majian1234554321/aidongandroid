@@ -20,6 +20,7 @@ import com.leyuan.aidong.ui.mvp.view.ContestInfoView;
 import com.leyuan.aidong.ui.mvp.view.ContestRankingView;
 import com.leyuan.aidong.ui.mvp.view.ContestRuleView;
 import com.leyuan.aidong.ui.mvp.view.ContestSchedulesView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.utils.ToastGlobal;
 
@@ -43,6 +44,18 @@ public class ContestPresentImpl {
         this.context = context;
         contestModel = new ContestModelImpl();
     }
+
+
+    public EmptyView emptyView;
+    public ContestPresentImpl(Context context,EmptyView emptyView) {
+        this.context = context;
+        this.emptyView =emptyView;
+        contestModel = new ContestModelImpl();
+    }
+
+
+
+
 
     public void setContestSchedulesView(ContestSchedulesView contestSchedulesView) {
         this.contestSchedulesView = contestSchedulesView;
@@ -269,8 +282,11 @@ public class ContestPresentImpl {
         contestModel.getContestInfo(new ProgressSubscriber<ContestInfoData>(context) {
             @Override
             public void onNext(ContestInfoData contestInfoData) {
-                if (contestInfoView != null) {
+                if (contestInfoView != null&&contestInfoData.news.size()>0) {
                     contestInfoView.onGetContestInfoData(contestInfoData.news);
+                }else {
+                    if (emptyView!=null)
+                        emptyView.showEmptyView();
                 }
             }
 
@@ -286,8 +302,12 @@ public class ContestPresentImpl {
         contestModel.getContestDynamics(new ProgressSubscriber<DynamicsData>(context) {
             @Override
             public void onNext(DynamicsData dynamicsData) {
-                if (contestDynamicView != null) {
+                if (contestDynamicView != null&&dynamicsData.getDynamic()!=null&&dynamicsData.getDynamic().size()>0) {
                     contestDynamicView.updateRecyclerView(dynamicsData.getDynamic());
+                }else {
+                    if (emptyView!=null){
+                        emptyView.showEmptyView();
+                    }
                 }
             }
 

@@ -293,6 +293,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
             viewPager.setAdapter(adapter);
             tabLayout.setCustomTabView(this);
+
+
+
             tabLayout.setViewPager(viewPager);
         }
     }

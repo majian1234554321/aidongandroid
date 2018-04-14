@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -396,6 +397,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 }
 
                 if (!hasSku) {
+                    txt_appoint_immediately.setBackgroundColor(Color.parseColor("#33333333"));
                     txt_appoint_immediately.setText(R.string.campaign_status_end);
                 }
 

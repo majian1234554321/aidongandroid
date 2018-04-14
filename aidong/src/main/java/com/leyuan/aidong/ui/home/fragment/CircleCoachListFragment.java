@@ -69,7 +69,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
         initSwitcherLayout();
         present = new FollowPresentImpl(getActivity());
         present.setUserViewListener(this);
-        present.getRecommendCoachList(currPage);
+        present.getRecommendCoachList(switcherLayout,currPage);
         present.setFollowListener(this);
 //        if()
 //        present.getUserFollow("");
@@ -85,7 +85,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.getRecommendCoachList(currPage);
+                present.getRecommendCoachList(switcherLayout,currPage);
             }
         });
     }

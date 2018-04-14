@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/img_cover"
+        android:scaleType="fitXY"
         android:layout_width="match_parent"
         android:layout_height="210dp"
         android:src="@color/black" />
@@ -59,5 +60,9 @@
         android:layout_marginLeft="15dp"
         android:textColor="@color/b3"
         android:textSize="14sp" />
+    <View
+        android:background="#33333333"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_18dp" />
 
 </LinearLayout>

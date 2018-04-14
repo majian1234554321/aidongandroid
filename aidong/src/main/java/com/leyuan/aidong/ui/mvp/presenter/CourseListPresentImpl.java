@@ -6,6 +6,7 @@ import com.leyuan.aidong.entity.course.CourseDataNew;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.CourseModelNewImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseListView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.utils.RequestResponseCount;
 
 /**
@@ -20,6 +21,14 @@ public class CourseListPresentImpl {
 
     public CourseListPresentImpl(Context context, CourseListView listener) {
         this.context = context;
+        courseModel = new CourseModelNewImpl(context);
+        this.listener = listener;
+    }
+
+    EmptyView emptyView;
+    public CourseListPresentImpl(Context context, CourseListView listener, EmptyView emptyView) {
+        this.context = context;
+        this.emptyView =emptyView;
         courseModel = new CourseModelNewImpl(context);
         this.listener = listener;
     }
@@ -46,10 +55,13 @@ public class CourseListPresentImpl {
         courseModel.getCoachCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
-                if (courseDataNew != null) {
+                if (courseDataNew != null&&courseDataNew.getTimetable().size()>0) {
                     listener.onGetRefreshCourseList(courseDataNew.getTimetable());
                 } else {
                     listener.onGetRefreshCourseList(null);
+                    if (emptyView!=null){
+                        emptyView.showEmptyView();
+                    }
                 }
 
             }

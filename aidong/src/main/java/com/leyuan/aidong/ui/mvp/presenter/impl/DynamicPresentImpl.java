@@ -22,6 +22,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.DynamicParseUserView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentExtendView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
@@ -58,6 +59,10 @@ public class DynamicPresentImpl implements DynamicPresent {
             dynamicModel = new DynamicModelImpl();
         }
     }
+
+
+
+
 
 
     public DynamicPresentImpl(Context context, SportCircleFragmentView view, SportCircleFragmentExtendView sportCircleFragmentExtendView) {

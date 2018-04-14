@@ -47,7 +47,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
     @Override
     public void onStart() {
         if(showDialog){
-            showProgressDialog();
+           // showProgressDialog();
         }
     }
 
@@ -56,7 +56,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
      */
     @Override
     public void onCompleted() {
-        dismissProgressDialog();
+       // dismissProgressDialog();
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
     @Override
     public void onError(Throwable e) {
         super.onError(e);
-        dismissProgressDialog();
+       // dismissProgressDialog();
     }
 
     /**

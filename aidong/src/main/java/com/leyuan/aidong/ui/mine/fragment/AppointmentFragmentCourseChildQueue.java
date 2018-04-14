@@ -22,6 +22,7 @@ import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentCoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentCourseListView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 /**
  * Created by user on 2017/11/16.
  */
-public class AppointmentFragmentCourseChildQueue extends BaseFragment implements AppointmentCourseListView {
+public class AppointmentFragmentCourseChildQueue extends BaseFragment implements AppointmentCourseListView,EmptyView{
     protected static final String TAG = "AppointmentFragmentEventChild";
     private CustomRefreshLayout refreshLayout;
     private RecyclerView rvAppointment;
@@ -104,7 +105,7 @@ public class AppointmentFragmentCourseChildQueue extends BaseFragment implements
 
         initView(view);
 
-        present = new AppointmentCoursePresentImpl(getContext(), this);
+        present = new AppointmentCoursePresentImpl(getContext(), this,this);
         present.getFirstPageCourseAppointList(type);
         setListener();
     }
@@ -236,6 +237,15 @@ public class AppointmentFragmentCourseChildQueue extends BaseFragment implements
             LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED));
             Toast.makeText(getContext(), "删除成功", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void showEmptyView() {
+
+        emptyLayout.setVisibility(View.VISIBLE);
+
+        rvAppointment.setVisibility(View.GONE);
+
     }
 
     private class AppointCallback implements AppointmentCourseListQueueAdapter.AppointmentListener {

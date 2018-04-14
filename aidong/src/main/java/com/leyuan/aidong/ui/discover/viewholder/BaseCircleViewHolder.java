@@ -269,12 +269,16 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 }
             }
         });
-        txt_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callback.onShareClick(dynamic);
-            }
-        });
+
+        if (txt_share!=null){
+            txt_share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.onShareClick(dynamic);
+                }
+            });
+        }
+
 
         layoutCourseOrActivity.setOnClickListener(new View.OnClickListener() {
             @Override

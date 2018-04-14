@@ -285,6 +285,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
                 dynamicPresent.addComment(dynamic.id, content, itUser, replyUserMap);
                 KeyBoardUtil.closeKeyboard(etComment, this);
 
+
                 return true;
             }
         } else {
@@ -303,6 +304,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             temp.setContent(content);
             temp.setPublishedAt("刚刚");
             temp.setPublisher(publisher);
+            etComment.setHint("评论");
 
             comments.add(0, temp);
             commentAdapter.addExtra(itUser);

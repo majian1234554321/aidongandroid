@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
@@ -22,6 +23,7 @@ import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentCoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentCourseListView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -36,7 +38,7 @@ import java.util.ArrayList;
 /**
  * Created by user on 2017/11/16.
  */
-public class AppointmentFragmentCourseChild extends BaseFragment implements AppointmentCourseListView {
+public class AppointmentFragmentCourseChild extends BaseFragment implements AppointmentCourseListView,EmptyView {
     protected static final String TAG = "AppointmentFragmentEventChild";
     private CustomRefreshLayout refreshLayout;
     private RecyclerView rvAppointment;
@@ -75,6 +77,19 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
         }
     };
 
+
+    @Override
+    public void showEmptyView() {
+
+
+        emptyLayout.setVisibility(View.VISIBLE);
+
+
+        refreshLayout.setVisibility(View.GONE);
+
+
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +118,7 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
         }
         initView(view);
 
-        present = new AppointmentCoursePresentImpl(getContext(), this);
+        present = new AppointmentCoursePresentImpl(getContext(), this,this);
         present.getFirstPageCourseAppointList(type);
         setListener();
     }

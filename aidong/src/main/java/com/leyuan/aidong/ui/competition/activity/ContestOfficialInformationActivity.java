@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.contest.ContestOfficialInforAdapter;
@@ -13,6 +14,7 @@ import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ContestInfoView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.ui.mvp.view.SportNewsActivityView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -30,7 +32,7 @@ import java.util.List;
  * 运动之窗资讯列表
  * Created by song on 2016/10/17.
  */
-public class ContestOfficialInformationActivity extends BaseActivity implements SportNewsActivityView, ContestInfoView {
+public class ContestOfficialInformationActivity extends BaseActivity implements SportNewsActivityView, ContestInfoView,EmptyView {
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
@@ -66,7 +68,7 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
         });
         initSwipeRefreshLayout();
         initRecyclerView();
-        contestPresent = new ContestPresentImpl(this);
+        contestPresent = new ContestPresentImpl(this,this);
         contestPresent.setContestInfoView(this);
         contestPresent.getContestInfo(contestId);
 
@@ -133,4 +135,11 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
     }
 
 
+    @Override
+    public void showEmptyView() {
+        View view = View.inflate(this, R.layout.empty_order, null);
+        ( (TextView)view.findViewById(R.id.tv)).setText("暂无资讯");
+        switcherLayout.addCustomView(view, "empty");
+        switcherLayout.showCustomLayout("empty");
+    }
 }

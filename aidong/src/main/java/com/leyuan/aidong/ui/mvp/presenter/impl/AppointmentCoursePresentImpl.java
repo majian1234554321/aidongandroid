@@ -13,6 +13,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.CourseModelNewImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentCourseDetailView;
 import com.leyuan.aidong.ui.mvp.view.AppointmentCourseListView;
 import com.leyuan.aidong.ui.mvp.view.CourseQueueView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.utils.constant.PayType;
 
 /**
@@ -34,11 +35,20 @@ public class AppointmentCoursePresentImpl {
         this.courseQueueCallback = callback;
     }
 
-    public AppointmentCoursePresentImpl(Context context, AppointmentCourseListView callback) {
+    public AppointmentCoursePresentImpl(Context context, AppointmentCourseListView callback, EmptyView emptyView) {
         this.context = context;
         this.callback = callback;
+        this.emptyView = emptyView;
         courseModel = new CourseModelNewImpl(context);
     }
+
+    public EmptyView emptyView;
+
+    /*public AppointmentCoursePresentImpl(Context context, EmptyView emptyView) {
+        this.context = context;
+        this.emptyView = emptyView;
+        courseModel = new CourseModelNewImpl(context);
+    }*/
 
 
     public AppointmentCoursePresentImpl(Context context, AppointmentCourseDetailView callback) {
@@ -86,7 +96,12 @@ public class AppointmentCoursePresentImpl {
         courseModel.getCourseAppointList(new BaseSubscriber<CourseAppointListResult>(context) {
             @Override
             public void onNext(CourseAppointListResult courseAppointListResult) {
-                callback.onFirstPageCourseAppointList(courseAppointListResult.getAppointment());
+                if (courseAppointListResult != null && courseAppointListResult.getAppointment().size() > 0)
+                    callback.onFirstPageCourseAppointList(courseAppointListResult.getAppointment());
+                else {
+                    if (emptyView != null)
+                        emptyView.showEmptyView();
+                }
             }
 
             @Override
@@ -273,7 +288,7 @@ public class AppointmentCoursePresentImpl {
     }
 
 
-    public void confirmAppointCourse(String courseId, String coupon_id, @PayType final String payType, final PayInterface.PayListener listener,String seat) {
+    public void confirmAppointCourse(String courseId, String coupon_id, @PayType final String payType, final PayInterface.PayListener listener, String seat) {
         courseModel.confirmAppointCourse(
                 new BaseSubscriber<CourseAppointResult>(context) {
 

@@ -160,7 +160,7 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
         new MaterialDialog.Builder(this)
                 .title(R.string.man_woman_group_select)
                 .items(R.array.gender)
-                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallbackSingleChoice(1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         txtBelongGroup.setText((which == 0) ? "选择分组: 男子组" : "选择分组: 女子组");
