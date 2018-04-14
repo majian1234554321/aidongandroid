@@ -54,7 +54,7 @@ public class CourseDateAdapter extends RecyclerView.Adapter<CourseDateAdapter.Da
     public void onBindViewHolder(DateHolder holder, final int position) {
         final String date = data.get(position);
         holder.date.setText(date);
-        holder.date.setTextColor(position == selectedPosition ? Color.parseColor("#FF5000") :
+        holder.date.setTextColor(position == selectedPosition ? Color.parseColor("#D51121") :
                 Color.parseColor("#000000"));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

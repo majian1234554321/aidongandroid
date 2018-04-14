@@ -2,78 +2,79 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingRight="@dimen/right_margin"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/left_margin"
-    android:orientation="vertical">
+    android:paddingRight="@dimen/right_margin">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 
-    <!--头部用户信息布局-->
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="60dp">
+        <!--头部用户信息布局-->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/dv_avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:id="@+id/iv_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/dv_avatar"
+                android:layout_alignRight="@+id/dv_avatar"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv_coach_flag"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="13dp"
+                android:layout_toRightOf="@+id/tv_name"
+                android:background="@drawable/icon_coach" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_name"
+                android:layout_below="@+id/tv_name"
+                android:layout_marginTop="5dp"
+                android:text="12分钟前"
+                android:textColor="@color/c9"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/dv_avatar"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="12dp"
+                android:layout_toRightOf="@+id/dv_avatar"
+                android:singleLine="true"
+                android:text="这是谁这是谁这是谁这是谁这是"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
 
         <ImageView
-            android:id="@+id/dv_avatar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true" />
-
-        <ImageView
-            android:id="@+id/iv_gender"
+            android:id="@+id/iv_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/dv_avatar"
-            android:layout_alignRight="@+id/dv_avatar"
-            android:visibility="visible"/>
-
-        <ImageView
-            android:id="@+id/iv_coach_flag"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="13dp"
-            android:layout_toRightOf="@+id/tv_name"
-            android:src="@drawable/icon_coach" />
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_name"
-            android:layout_below="@+id/tv_name"
-            android:layout_marginTop="5dp"
-            android:text="12分钟前"
-            android:textColor="@color/c9"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/dv_avatar"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_toRightOf="@+id/dv_avatar"
-            android:singleLine="true"
-            android:text="这是谁这是谁这是谁这是谁这是"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-    </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/iv_follow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/icon_follow"
-        android:layout_marginLeft="15dp"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/icon_follow" />
     </LinearLayout>
 
     <!--文字内容-->
@@ -81,8 +82,8 @@
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="111"
         android:textColor="@color/c3"
-        android:textSize="14sp"
-        android:layout_marginBottom="10dp"/>
+        android:textSize="14sp" />
 </LinearLayout>

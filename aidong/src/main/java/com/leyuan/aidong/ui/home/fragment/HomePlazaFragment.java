@@ -232,6 +232,8 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         headView.setUserData(followings);
     }
 
+
+
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override

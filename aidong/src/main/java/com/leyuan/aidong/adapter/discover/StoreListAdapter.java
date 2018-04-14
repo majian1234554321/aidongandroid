@@ -57,8 +57,18 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.Venu
         final VenuesBean bean = data.get(position);
         GlideLoader.getInstance().displayRoundImage(bean.getBrandLogo(), holder.cover);
         holder.name.setText(bean.getName());
+
+        if (bean.getDistanceFormat()!=null) {
+            if (!bean.getDistanceFormat().contains("<100m")) {
+                holder.distance.setText(bean.getDistanceFormat().substring(1,bean.getDistanceFormat().length()));
+            }else {
+                holder.distance.setText(bean.getDistanceFormat());
+            }
+        }
+
         holder.address.setText(bean.getAddress());
-        holder.distance.setText(bean.getDistanceFormat());
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override 

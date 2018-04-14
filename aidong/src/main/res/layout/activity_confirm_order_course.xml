@@ -90,8 +90,8 @@
             <RelativeLayout
                 android:id="@+id/layout_remark"
                 android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="80dp">
+                android:layout_height="80dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -109,9 +109,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="15dp"
-                    android:hint="请输入需要备注的内容"
-                    android:gravity="center_vertical"
                     android:background="@color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="请输入需要备注的内容"
                     android:paddingLeft="15dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
@@ -326,16 +326,33 @@
             </LinearLayout>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="12dp"
-                android:gravity="center"
-                android:text="@string/course_order_hint"
-                android:textColor="@color/c9"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="温馨提示:" />
+
+
+                <TextView
+                    android:layout_below="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="left"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:text="@string/course_order_hint"
+                    android:textColor="@color/c9"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 

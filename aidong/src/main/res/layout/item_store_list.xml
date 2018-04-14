@@ -40,7 +40,7 @@
             android:drawableLeft="@drawable/location_selected"
             android:drawablePadding="5dp"
             android:text="dslfjasdlkfjsadlkfjdjkslafjkkjl"
-            android:textColor="@color/c3"
+            android:textColor="@color/b3"
             android:textSize="14sp" />
 
         <TextView

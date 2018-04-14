@@ -108,6 +108,8 @@
                         android:id="@+id/txt_coach_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:maxLines="4"
+                        android:ellipsize="end"
                         android:layout_marginTop="10dp"
                         android:textColor="@color/txt_black"
                         android:textSize="13sp" />

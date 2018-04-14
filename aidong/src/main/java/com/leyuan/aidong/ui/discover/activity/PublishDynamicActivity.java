@@ -333,7 +333,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 this.longitude = data.getStringExtra("longitude");
 
                 imgAddLocation.setImageResource(R.drawable.location_selected);
-                txtLocation.setTextColor(R.color.main_red);
+                txtLocation.setTextColor(ActivityCompat.getColor(this,R.color.main_red));
                 txtLocation.setText(position_name);
                 bt_location_delete.setVisibility(View.VISIBLE);
 

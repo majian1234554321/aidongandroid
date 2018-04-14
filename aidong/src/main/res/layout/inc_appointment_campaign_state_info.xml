@@ -106,14 +106,6 @@
 
                 />
 
-            <TextView
-                android:id="@+id/tv_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                android:text="Jan chen"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/txt_course_time"
@@ -124,6 +116,17 @@
                 android:text="10-20 15:30-16:3"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="Jan chen"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
 
 
         </LinearLayout>

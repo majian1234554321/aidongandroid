@@ -63,6 +63,7 @@ public class PermissionManager {
                 ActivityCompat.requestPermissions(context, new String[]{permission}, REQUEST_PERMISSION_CODE);
             } else {
                 showPermissionDailog(permission, hint);
+               // checkPermissionList();
             }
         } else {
 //            LogUtil.i("permission"," checkPermission  map.remove(permission);");

@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * Created by user on 2018/2/2.
  */
-public interface UserInfoView {
-
-    void onGetUserData(List<UserBean> followings);
+public interface CircleView {
 
 
 
+
+    void loadMoreData(List<UserBean> followings);
 }

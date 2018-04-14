@@ -14,6 +14,8 @@
         android:background="@color/white">
 
         <LinearLayout
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -217,7 +217,14 @@
                 </RelativeLayout>
 
             </FrameLayout>
-
+            <ImageView
+                android:id="@+id/img_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/pref_16dp"
+                android:background="@color/mine_divider"
+                android:layout_alignParentBottom="true"
+                />
 
             <include layout="@layout/inc_month_clock_info" />
 

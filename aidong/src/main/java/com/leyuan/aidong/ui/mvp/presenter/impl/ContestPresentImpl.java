@@ -11,6 +11,7 @@ import com.leyuan.aidong.entity.data.ContestSchedulesData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.RankingData;
 import com.leyuan.aidong.entity.data.RegisterData;
+import com.leyuan.aidong.http.api.exception.ZeroException;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.ContestModelImpl;
 import com.leyuan.aidong.ui.mvp.view.ContestEnrolView;
@@ -20,6 +21,7 @@ import com.leyuan.aidong.ui.mvp.view.ContestRankingView;
 import com.leyuan.aidong.ui.mvp.view.ContestRuleView;
 import com.leyuan.aidong.ui.mvp.view.ContestSchedulesView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 /**
  * Created by user on 2018/2/23.
@@ -189,7 +191,10 @@ public class ContestPresentImpl {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-
+                if (e instanceof ZeroException) {
+                    ToastGlobal.showShortConsecutive(e.getMessage());
+                } else
+                    ToastGlobal.showShortConsecutive("报名失败");
             }
         }, id, code);
     }

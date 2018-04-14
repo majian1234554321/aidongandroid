@@ -83,7 +83,7 @@
     <string name="status_course_end">课程已结束</string>
 
     <string name="campaign_status_apply">马上报名</string>
-    <string name="campaign_status_end">活动已结束</string>
+    <string name="campaign_status_end">已结束</string>
     <string name="campaign_status_applied">已报名 查看详情</string>
     <string name="campaign_status_not_start">即将开始报名</string>
     <string name="campaign_status_not_pay">待支付(已报名)</string>
@@ -94,7 +94,7 @@
     <string name="user_condition">满%1$s元可用</string>
 
     <string name="tab_discover">发现</string>
-    <string name="tab_sport_circle">爱动圈</string>
+    <string name="tab_sport_circle">动态</string>
 
     <string name="true_pay">实付款：</string>
     <string name="need_pay">需付款：</string>

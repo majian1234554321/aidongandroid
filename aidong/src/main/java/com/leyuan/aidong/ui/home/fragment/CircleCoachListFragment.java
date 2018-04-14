@@ -18,6 +18,7 @@ import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.CircleView;
 import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.ui.mvp.view.UserInfoView;
 import com.leyuan.aidong.utils.Constant;
@@ -39,7 +40,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * Created by user on 2018/1/5.
  */
-public class CircleCoachListFragment extends BaseFragment implements UserInfoView, CircleCoachListAdapter.OnAttentionClickListener, FollowView {
+public class CircleCoachListFragment extends BaseFragment implements UserInfoView, CircleCoachListAdapter.OnAttentionClickListener, FollowView,CircleView {
 
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -51,6 +52,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
     private int clickedFollowPosition;
     ArrayList<UserBean> data = new ArrayList<>();
     private int itemClickedPosition;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +78,8 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
+
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -111,12 +115,20 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
     }
 
 
+
+
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
             currPage++;
-            present.getRecommendCoachList(currPage);
+            FollowPresentImpl   present2 = new FollowPresentImpl(getActivity(),CircleCoachListFragment.this);
+            present2.requestMoreDataFollow(recyclerView,currPage,25);
         }
+
+
+
+
+
     };
 
 
@@ -132,6 +144,22 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
         adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
 
+
+
+
+
+    }
+
+    @Override
+    public void loadMoreData(List<UserBean> followings) {
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+            data.clear();
+        }
+
+        data.addAll(followings);
+        adapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override

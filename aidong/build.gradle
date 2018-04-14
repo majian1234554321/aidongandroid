@@ -40,6 +40,13 @@ android {
 //        }
 //    }
 
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+        }
+    }
+
+
     dexOptions {
         javaMaxHeapSize "4g" //specify the heap size for the dex process
         preDexLibraries = false //delete the already predexed libraries

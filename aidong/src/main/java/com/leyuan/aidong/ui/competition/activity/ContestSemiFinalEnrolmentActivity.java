@@ -44,7 +44,7 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
     private RelativeLayout layoutContestArea;
     private TextView txtContestArea;
     private RelativeLayout layoutSelectGroup;
-    private TextView txtBelongGroup;
+    private TextView txtBelongGroup,tv_tips;
     private String contestId;
     EditText edit_name;
     ContestBean contestBean;
@@ -79,6 +79,11 @@ public class ContestSemiFinalEnrolmentActivity extends BaseActivity implements V
         contestId = getIntent().getStringExtra("contestId");
         invitationCode = getIntent().getStringExtra("invitationCode");
         contestBean = getIntent().getParcelableExtra("contest");
+
+
+
+        tv_tips = (TextView) findViewById(R.id.tv_tips);
+        tv_tips.setVisibility(View.GONE);
 
         titleLayout = (CommonTitleLayout) findViewById(R.id.title_layout);
         txtContestName = (TextView) findViewById(R.id.txt_contest_name);

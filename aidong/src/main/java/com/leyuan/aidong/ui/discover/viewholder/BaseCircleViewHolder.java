@@ -62,7 +62,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private TextView txtTime, tv_content;
     private TextView txtLocation;
     private TextView txtParse;
-    private TextView txtComment;
+    private TextView txtComment,txt_share;
     private RecyclerView likesRecyclerView;
     private LinearLayout likeLayout, layout_parse;
 
@@ -109,6 +109,8 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         txtParse = (TextView) itemView.findViewById(R.id.txt_parse);
         img_parse = (ImageView) itemView.findViewById(R.id.img_parse);
         txtComment = (TextView) itemView.findViewById(R.id.txt_comment);
+        txt_share = (TextView) itemView.findViewById(R.id.txt_share);
+
 
         likeLayout = (LinearLayout) itemView.findViewById(R.id.like_layout);
         layout_parse = (LinearLayout) itemView.findViewById(R.id.layout_parse);
@@ -265,6 +267,12 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 if (callback != null) {
                     callback.onCommentClick(dynamic, position);
                 }
+            }
+        });
+        txt_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.onShareClick(dynamic);
             }
         });
 

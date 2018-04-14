@@ -110,6 +110,7 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
         headView.setOnsearchListner(this);
         headView.setSearchHint(getResources().getString(R.string.search_more_circle));
         headView.setTxtSearchTitle(getResources().getString(R.string.hot_recommend));
+        headView.setTxtSearchTitleVisible(View.GONE);
         RecyclerViewUtils.setHeaderView(recyclerView, headView);
 
     }

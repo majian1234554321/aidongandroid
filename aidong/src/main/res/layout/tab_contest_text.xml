@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
-        android:text="爱动圈"
+        android:text="动态"
         android:textColor="@drawable/selector_tab_orange_contest"
         android:textSize="17sp" />
 

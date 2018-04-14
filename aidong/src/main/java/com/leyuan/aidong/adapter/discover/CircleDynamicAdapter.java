@@ -151,6 +151,8 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         void onShareClick(DynamicBean dynamic);
         void onFollowClick(String id);
 
+
+
         void onLikeClick(DynamicBean dynamic);
 
         void onCommentListClick(DynamicBean dynamic, int position, CommentBean item);

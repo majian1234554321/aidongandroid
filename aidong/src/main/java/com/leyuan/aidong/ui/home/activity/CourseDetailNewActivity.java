@@ -333,6 +333,9 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         if (course.getCoach() != null) {
             txtCoachName.setText(course.getCoach().getName());
             if (!TextUtils.isEmpty(course.getCoach().getIntroduce())) {
+
+               // txtCoachDesc.setText(course.getCoach().getIntroduce());
+
                 RichText.from(course.getCoach().getIntroduce()).placeHolder(R.drawable.place_holder_logo)
                         .error(R.drawable.place_holder_logo).into(txtCoachDesc);
             }

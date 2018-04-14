@@ -18,6 +18,7 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.view.AppointmentUserActivityView;
+import com.leyuan.aidong.ui.mvp.view.CircleView;
 import com.leyuan.aidong.ui.mvp.view.CourseBeanNewDataView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.ui.mvp.view.FollowCacheView;
@@ -51,6 +52,8 @@ public class FollowPresentImpl implements FollowPresent {
     private ArrayList<CourseBeanNew> courseBeanList;
     private FollowCacheView followCacheView;
 
+    private CircleView circleView;
+
     public FollowPresentImpl(Context context) {
         this.context = context;
         followModel = new FollowModelImpl();
@@ -65,6 +68,13 @@ public class FollowPresentImpl implements FollowPresent {
     public FollowPresentImpl(Context context, FollowFragmentView followFragment) {
         this.context = context;
         this.followFragment = followFragment;
+        followModel = new FollowModelImpl();
+    }
+
+
+    public FollowPresentImpl(Context context, CircleView circleView) {
+        this.context = context;
+        this.circleView = circleView;
         followModel = new FollowModelImpl();
     }
 
@@ -173,6 +183,26 @@ public class FollowPresentImpl implements FollowPresent {
             }
         }, page);
     }
+
+
+
+
+    public void requestMoreDataFollow(RecyclerView recyclerView,int page,int size) {
+        followModel.getRecommendCoachList(new RequestMoreSubscriber<FollowUserData>(context, recyclerView,size) {
+            @Override
+            public void onNext(FollowUserData followUserData) {
+                if (followUserData!=null){
+                    circleView.loadMoreData(followUserData.getCoach());
+                }
+            }
+        }, page);
+    }
+
+
+
+
+
+
 
 
     @Override
