@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/icon_parse" />
+                android:background="@drawable/icon_parse" />
 
             <TextView
                 android:id="@+id/txt_parse"
