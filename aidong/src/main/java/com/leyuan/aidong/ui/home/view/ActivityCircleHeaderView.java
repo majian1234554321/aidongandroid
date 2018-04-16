@@ -112,7 +112,9 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
 
 
         txtIntro.setRichText(campaignDetailBean.simple_intro);
-        txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
+       // txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
+
+        txtPrice.setText("￥" + campaignDetailBean.getPrice() );
         txtTime.setText(campaignDetailBean.getStartTime() + "-" + campaignDetailBean.getEndTime());
         txtCityAddress.setText(campaignDetailBean.getLandmark());
         txtLocationDetail.setText(campaignDetailBean.getAddress());
@@ -215,5 +217,10 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
 
     public void hideView(){
         txt_relate_dynamic.setVisibility(GONE);
+    }
+
+    public void setData2() {
+         txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
+
     }
 }

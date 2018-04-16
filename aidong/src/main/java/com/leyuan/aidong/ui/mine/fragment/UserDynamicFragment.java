@@ -48,6 +48,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewA
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.aidong.widget.richtext.RichWebView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private LinearLayout layoutPersonIntro;
-    private TextView txtCourseIntro;
+    private RichWebView txtCourseIntro;
 
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -154,14 +155,14 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         if (getActivity() instanceof UserInfoActivity && !TextUtils.isEmpty(intro)) {
 
             View headView = View.inflate(getActivity(), R.layout.layout_person_intro, null);
-            txtCourseIntro = (TextView) headView.findViewById(R.id.txt_course_intro);
+            txtCourseIntro = (RichWebView) headView.findViewById(R.id.txt_course_intro);
             TextView  tv_name = (TextView) headView.findViewById(R.id.tv_name);
 
             if ("NODATA".equals(intro)){
                 txtCourseIntro.setVisibility(View.GONE);
                 tv_name.setVisibility(View.GONE);
             }else {
-                txtCourseIntro.setText(intro);
+                txtCourseIntro.setRichText(intro);
             }
 
             RecyclerViewUtils.setHeaderView(recyclerView, headView);

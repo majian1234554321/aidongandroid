@@ -18,7 +18,7 @@
             app:stl_defaultTabTextColor="@color/gray_normal"
             app:stl_defaultTabTextHorizontalPadding="40dp"
             app:stl_defaultTabTextSize="17sp"
-            app:stl_indicatorColor="@color/main_red"
+            app:stl_indicatorColor="@color/white"
             app:stl_indicatorInterpolation="smart"
             app:stl_indicatorThickness="3dp"
             app:stl_indicatorWidth="auto" />

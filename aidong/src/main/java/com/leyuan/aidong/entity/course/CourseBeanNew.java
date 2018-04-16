@@ -2,6 +2,7 @@ package com.leyuan.aidong.entity.course;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.leyuan.aidong.entity.CoachBean;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by user on 2017/11/20.
  */
-public class CourseBeanNew implements Parcelable {
+public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
     public static final int NORMAL = 0;
     public static final int APPOINTED = 1;
     public static final int APPOINTED_NO_PAY = 2;
@@ -369,5 +370,10 @@ public class CourseBeanNew implements Parcelable {
 
     public int getMyQueue_number() {
         return queue_number+1;
+    }
+
+    @Override
+    public int compareTo(@NonNull CourseBeanNew o) {
+          return this.company_id-o.company_id;
     }
 }

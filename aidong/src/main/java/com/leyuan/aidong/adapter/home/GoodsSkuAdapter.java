@@ -177,7 +177,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
             } else {
                 if (goodsSkuBean.value != null && goodsSkuBean.value.size() > 0) {
 
-                    if (goodsSkuBean.value.get(0).contains("~")) {
+                   /* if (goodsSkuBean.value.get(0).contains("~")) {
                         if (time2(goodsSkuBean.value.get(0).split("~")[1])) {
                             noStockSkuList.add(goodsSkuBean);
                         }
@@ -185,7 +185,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
                         if (time2(goodsSkuBean.value.get(0))) {
                             noStockSkuList.add(goodsSkuBean);
                         }
-                    }
+                    }*/
 
 
                 } else

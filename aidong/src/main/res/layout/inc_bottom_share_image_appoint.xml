@@ -1,29 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:layout_alignParentBottom="true"
     android:background="@color/white">
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_1dp"
+        android:background="#33333333" />
+
     <TextView
         android:id="@+id/txt_share_image"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/shine_image"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_below="@+id/view"
+        android:drawableLeft="@drawable/shine_image"
+        android:drawablePadding="12dp"
         android:gravity="center"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:text="@string/shine_image" />
-
 
     <TextView
         android:id="@+id/txt_appoint_immediately"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_below="@+id/view"
+        android:layout_toRightOf="@+id/txt_share_image"
         android:background="@color/main_red"
         android:gravity="center"
         android:text="@string/appoint_course_immediately"
         android:textColor="@color/white"
         android:textStyle="bold" />
-</LinearLayout>
+</RelativeLayout>

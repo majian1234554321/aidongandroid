@@ -61,11 +61,13 @@ public class RichWebView extends WebView {
         });
     }
 
+
+
+
     public void setRichText(String content) {
         if (content == null) return;
         String htmlHeader;
         String htmlFooter;
-
 
         loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);
 

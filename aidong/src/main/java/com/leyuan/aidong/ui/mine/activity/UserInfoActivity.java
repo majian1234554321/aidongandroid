@@ -203,8 +203,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         this.userInfoData = userInfoData;
         userId = userInfoData.getProfile().getId();
 
-      if (!TextUtils.isEmpty( userInfoData.getProfile().intro)){
-          intro =  userInfoData.getProfile().intro;
+      if (!TextUtils.isEmpty( userInfoData.getProfile().personal_intro)){
+          intro =  userInfoData.getProfile().personal_intro;
       }else {
           intro = "NODATA";
       }

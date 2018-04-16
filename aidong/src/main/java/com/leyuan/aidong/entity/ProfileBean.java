@@ -35,6 +35,7 @@ public class ProfileBean implements Parcelable {
     public int follows_count;
     public String mobile;
     public String intro;
+    public String personal_intro;
 
     public String getPhone() {
         return phone;

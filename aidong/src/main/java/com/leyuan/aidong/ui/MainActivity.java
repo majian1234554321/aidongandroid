@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.data.CouponData;
+import com.leyuan.aidong.entity.data.SportRecordMonthData;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.receivers.ChatMessageReceiver;
 import com.leyuan.aidong.receivers.NewPushMessageReceiver;
@@ -29,9 +30,12 @@ import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.SportPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
+import com.leyuan.aidong.ui.mvp.view.SportRecordView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.LocatinCityManager;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
@@ -46,7 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener,SportRecordView {
 
     private RelativeLayout tabNearLayout;
     private RelativeLayout tabFoundLayout;
@@ -79,6 +83,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             Logger.i("mainActivityReceiver", "onReceive action = " + intent.getAction());
         }
     };
+    private MineFragment mineFragment;
 
     public static void start(Context context, int index) {
         Intent starter = new Intent(context, MainActivity.class);
@@ -137,7 +142,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        mFragments.add(new VideoHomeFragment());
         mFragments.add(new HomeCourseFragment());
         mFragments.add(new StoreFragment());
-        mFragments.add(new MineFragment());
+
+        mineFragment = new MineFragment();
+
+        mFragments.add(mineFragment);
 
 //        mFragments.add( )
 
@@ -239,7 +247,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tabMineLayout:
                 setTabSelection(3);
                 showFragment(3);
-//                img_new_message.setVisibility(View.GONE);
+
+
+
+                SportPresentImpl sportPresent = new SportPresentImpl(App.context);
+                sportPresent.setSportRecordView(this);
+                sportPresent.getSportRecordNoProgress(DateUtils.getYear() + "", DateUtils.getMonth() + "");
+
                 break;
 //            case R.id.tabMineLayout:
 //                setTabSelection(4);
@@ -346,5 +360,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         unregisterReceiver(newPushMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(chatMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mainActivityReceiver);
+    }
+
+    @Override
+    public void onGetSportRecordData(SportRecordMonthData athletic) {
+        if (mineFragment!=null){
+            mineFragment.setData(athletic);
+        }
     }
 }

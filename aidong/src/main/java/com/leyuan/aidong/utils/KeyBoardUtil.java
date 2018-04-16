@@ -37,6 +37,7 @@ public class KeyBoardUtil {
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && mEditText != null && mEditText.getWindowToken() != null)
             imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+        mEditText.setHint("评论");
     }
 
     /**

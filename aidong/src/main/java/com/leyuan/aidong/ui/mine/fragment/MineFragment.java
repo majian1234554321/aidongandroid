@@ -26,6 +26,7 @@ import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.receivers.ChatMessageReceiver;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
 import com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity;
@@ -52,6 +53,8 @@ import com.leyuan.aidong.utils.Md5Utils;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
+
+import java.util.Random;
 
 
 public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView, SportRecordView {
@@ -85,6 +88,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         }
     };
     private SportPresentImpl sportPresent;
+   // private SwipeRefreshLayout swipe;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,6 +120,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void initView() {
+       // swipeRefreshView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
+
+
         layout_no_login = (LinearLayout) rootView.findViewById(R.id.layout_no_login);
         linearLayout_guanzhu = (LinearLayout) rootView.findViewById(R.id.linearLayout_guanzhu);
         linearLayout_beiguanzhu = (LinearLayout) rootView.findViewById(R.id.linearLayout_beiguanzhu);
@@ -182,6 +189,18 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         item_my_orders.setOnClickListener(this);
         layout_no_login.setOnClickListener(this);
 
+
+//        swipeRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//
+//                refreshLoginState();
+//            }
+//        });
+
+
+
+
     }
 
     private void initData() {
@@ -189,6 +208,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
                 chatMessageReceiver, new IntentFilter(Constant.BROADCAST_ACTION_NEW_MESSAGE));
     }
+
 
     @Override
     public void onResume() {
@@ -205,7 +225,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             user = App.getInstance().getUser();
             textView_name.setText(user.getName());
             presenter.getMineInfo();
-            sportPresent.getSportRecordNoProgress(DateUtils.getYear()+"", DateUtils.getMonth()+"");
+            sportPresent.getSportRecordNoProgress(DateUtils.getYear() + "", DateUtils.getMonth() + "");
 
             GlideLoader.getInstance().displayCircleImage(user.getAvatar(), imageView_head);
         } else {
@@ -341,12 +361,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 //        textView_yyjrw.setText(mineInfoBean.getAppointing_count() + "");
 //        textView_dd.setText(mineInfoBean.getPaid_orders_count() + "");
 //        textView_ddjrw.setText(mineInfoBean.getUnpay_orders_count() + "");
-        textView_popularity.setText(mineInfoBean.dynamics_count+"");
+        textView_popularity.setText(mineInfoBean.dynamics_count + "");
     }
 
     @Override
     public void onGetSportRecordData(SportRecordMonthData athletic) {
-        if(athletic == null) return;
+        if (athletic == null) return;
+        txtClockNum.setText(athletic.days);
+        txtGoCourseNum.setText(athletic.frequency);
+        txtClassTotalTime.setText(athletic.during);
+    }
+
+    public void setData(SportRecordMonthData athletic) {
+        if (athletic == null) return;
         txtClockNum.setText(athletic.days);
         txtGoCourseNum.setText(athletic.frequency);
         txtClassTotalTime.setText(athletic.during);

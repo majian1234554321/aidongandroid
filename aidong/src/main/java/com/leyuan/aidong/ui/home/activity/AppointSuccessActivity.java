@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.home.activity;
 
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,16 +46,17 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
     private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    private String time;
+    private String time,amount;
     private boolean isCourse;
     private RecommendPresent present;
     ShareData.ShareCouponInfo shareBean;
 
-    public static void start(Context context, String time, boolean isCourse, ShareData.ShareCouponInfo shareInfo) {
+    public static void start(Context context, String time, boolean isCourse, ShareData.ShareCouponInfo shareInfo,String amount ) {
         Intent intent = new Intent(context, AppointSuccessActivity.class);
         intent.putExtra("time", time);
         intent.putExtra("isCourse", isCourse);
         intent.putExtra("shareInfo", shareInfo);
+        intent.putExtra("amount", amount);
         context.startActivity(intent);
     }
 
@@ -65,6 +67,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         present = new RecommendPresentImpl(this, this);
         if (getIntent() != null) {
             time = getIntent().getStringExtra("time");
+            amount = getIntent().getStringExtra("amount");
             isCourse = getIntent().getBooleanExtra("isCourse", false);
             shareBean = (ShareData.ShareCouponInfo) getIntent().getSerializableExtra("shareInfo");
         }
@@ -84,7 +87,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
         tvType.setText(isCourse ? R.string.course_time : R.string.campaign_time);
         tvTime = (TextView) headerView.findViewById(R.id.tv_time);
-        tvTime.setText(time);
+        tvTime.setText(time+"共"+amount+"张票");
         returnHome = (TextView) headerView.findViewById(R.id.tv_home);
         checkAppointment = (TextView) headerView.findViewById(R.id.tv_appointment);
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);

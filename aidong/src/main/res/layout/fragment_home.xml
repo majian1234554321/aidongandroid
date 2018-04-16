@@ -10,22 +10,37 @@
         layout="@layout/inc_home_title"/>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_top_bar"
+        android:layout_height="47dp"
         android:background="@color/white">
-
+        <View
+            android:layout_marginTop="@dimen/pref_46dp"
+            android:layout_width="match_parent"
+            android:background="#33333333"
+            android:layout_height="1dp"/>
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/tab_layout"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/height_top_bar"
+            android:layout_height="46dp"
             android:layout_gravity="center"
-            android:background="@color/transparent"
+            android:background="@color/white"
             app:stl_indicatorColor="@color/black"
             app:stl_indicatorThickness="3dp"
             app:stl_underlineColor="@color/transparent"
             app:stl_dividerColor="@color/transparent"
-            app:stl_indicatorInterpolation="smart"
+
             app:stl_indicatorWidth="auto"
+
+
+            app:stl_defaultTabTextColor="@color/gray_normal"
+            app:stl_defaultTabTextSize="17sp"
+
+            app:stl_indicatorInterpolation="linear"
+
+            app:stl_underlineThickness="1dp" />
+
             app:stl_defaultTabTextHorizontalPadding="40dp" />
+
+
 
     </FrameLayout>
 

@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.widget.richtext.RichWebView;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
     private final Context context;
     private List<UserBean> users;
     private OnAttentionClickListener listener;
+    private String value;
 
     public CircleCoachListAdapter(Context context) {
         this.context = context;
@@ -41,7 +44,23 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
         holder.txtCoachName.setText(user.getName());
         holder.txt_attention_num.setVisibility(View.VISIBLE);
         holder.txt_attention_num.setText(user.followers_count + "人关注");
-        holder.txtIntro.setText(user.personal_intro);
+        if (!TextUtils.isEmpty(user.personal_intro)) {
+
+            if (user.personal_intro.contains("<p>")) {
+                value = user.personal_intro.replace("<p>", "");
+            }
+
+            if (value.contains("</p>")) {
+                value = value.replace("</p>", "");
+            }
+
+
+            holder.txtIntro.setText(value);
+        } else {
+            holder.txtIntro.setText(user.personal_intro);
+        }
+
+
         holder.btAttention.setImageResource(user.followed ? R.drawable.icon_followed : R.drawable.icon_follow);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

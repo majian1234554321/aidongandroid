@@ -399,6 +399,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 if (!hasSku) {
                     txt_appoint_immediately.setBackgroundColor(Color.parseColor("#33333333"));
                     txt_appoint_immediately.setText(R.string.campaign_status_end);
+                    headView.setData2();
                 }
 
             }

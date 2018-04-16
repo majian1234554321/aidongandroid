@@ -262,7 +262,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
             LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
 
-            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, txtCoachName.getText().toString().trim(), false, campaignPresent.getShareInfo());
+            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, txtCoachName.getText().toString().trim(), false, campaignPresent.getShareInfo(),course.amount);
 
             ToastGlobal.showLongConsecutive("支付成功");
             finish();
@@ -288,7 +288,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         public void onFree() {
             DialogUtils.dismissDialog();
             LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
-            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, txtCoachName.getText().toString().trim(), false, campaignPresent.getShareInfo());
+            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, txtCoachName.getText().toString().trim(), false, campaignPresent.getShareInfo(),course.amount);
 
             ToastGlobal.showLongConsecutive("预约成功");
             finish();

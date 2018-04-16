@@ -273,7 +273,7 @@
                     app:stl_defaultTabTextColor="@color/gray_normal"
                     app:stl_defaultTabTextSize="17sp"
                     app:stl_dividerColor="@color/transparent"
-                    app:stl_indicatorColor="@color/main_red"
+                    app:stl_indicatorColor="@color/black"
                     app:stl_indicatorInterpolation="linear"
                     app:stl_indicatorThickness="3dp"
                     app:stl_indicatorWidth="auto"

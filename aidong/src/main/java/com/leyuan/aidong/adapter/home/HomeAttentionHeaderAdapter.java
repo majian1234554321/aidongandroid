@@ -43,7 +43,7 @@ public class HomeAttentionHeaderAdapter extends RecyclerView.Adapter<HomeAttenti
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         if (position >= userList.size()) {
-            GlideLoader.getInstance().displayCircleImage(R.drawable.icon_add_photo, holder.imgAvatar);
+            GlideLoader.getInstance().displayCircleImage(R.drawable.icon_add_photo2, holder.imgAvatar);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

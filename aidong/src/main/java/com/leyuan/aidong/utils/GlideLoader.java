@@ -44,7 +44,7 @@ public class GlideLoader {
         Glide.with(getContext(imageView))
                 .load(imgUrl)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
-                .placeholder(R.drawable.place_holder_user)
+                .placeholder(R.drawable.icon_avatar_default)
                 .into(imageView);
     }
 
@@ -62,7 +62,7 @@ public class GlideLoader {
         Glide.with(getContext(imageView))
                 .load(imgUrl)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
-                .placeholder(R.drawable.place_holder_user)
+                .placeholder(R.drawable.icon_avatar_default)
                 .into(imageView);
 
 //        Glide.with(getContext(imageView))
@@ -86,7 +86,7 @@ public class GlideLoader {
         Glide.with(getContext(imageView))
                 .load(resId)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
-                .placeholder(R.drawable.place_holder_user)
+                .placeholder(R.drawable.icon_avatar_default)
                 .into(imageView);
     }
 

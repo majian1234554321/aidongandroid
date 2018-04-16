@@ -71,13 +71,13 @@
                     android:src="@drawable/icon_coach" />
             </LinearLayout>
 
-            <com.leyuan.aidong.widget.richtext.RichWebView
+            <TextView
                 android:id="@+id/txt_intro"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:textColor="@color/c3"
                 android:textSize="12sp"
 

@@ -22,6 +22,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.baidu.mapapi.BMapManager.getContext;
@@ -31,7 +32,7 @@ import static com.baidu.mapapi.BMapManager.getContext;
  * 场馆详情-课程
  * Created by song on 2016/8/27.
  */
-public class CoachCourseFragment extends BaseFragment implements CourseDateAdapter.ItemClickListener, CourseListView,EmptyView {
+public class CoachCourseFragment extends BaseFragment implements CourseDateAdapter.ItemClickListener, CourseListView, EmptyView {
     private static final String TAG = "VenuesCourseFragment";
     private SwitcherLayout switcherLayout;
     //    private VenuesCourseAdapter courseAdapter;
@@ -49,6 +50,7 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
 
     private CourseListPresentImpl coursePresent;
     private String mobile;
+    private View view;
 
 
     @Override
@@ -62,7 +64,7 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
 
         days = DateUtils.getSevenDate();
 
-        coursePresent = new CourseListPresentImpl(getContext(), this,this);
+        coursePresent = new CourseListPresentImpl(getContext(), this, this);
 
 //        venuesPresent = new VenuesPresentImpl(getContext(), this);
         Bundle bundle = getArguments();
@@ -109,24 +111,32 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
     @Override
     public void onGetRefreshCourseList(ArrayList<CourseBeanNew> courseList) {
         data.clear();
-        if (courseList != null)
+
+        if (courseList != null && courseList.size() > 0) {
+            switcherLayout.showContentLayout();
             data.addAll(courseList);
-        courseAdapter.setData(data);
-        courseAdapter.notifyDataSetChanged();
+            Collections.sort(data);
+            courseAdapter.setData(data);
+            courseAdapter.notifyDataSetChanged();
+        }
+
+
     }
 
     @Override
     public void onGetMoreCourseList(ArrayList<CourseBeanNew> courseList) {
-        if (courseList != null)
+        if (courseList != null && courseList.size() > 0) {
             data.addAll(courseList);
-        courseAdapter.setData(data);
-        courseAdapter.notifyDataSetChanged();
+            switcherLayout.showContentLayout();
+            courseAdapter.setData(data);
+            courseAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void showEmptyView() {
-        View view = View.inflate(getContext(), R.layout.empty_order, null);
-        ( (TextView)view.findViewById(R.id.tv)).setText("暂无课表");
+        view = View.inflate(getContext(), R.layout.empty_order, null);
+        ((TextView) view.findViewById(R.id.tv)).setText("暂无课表");
         switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
     }

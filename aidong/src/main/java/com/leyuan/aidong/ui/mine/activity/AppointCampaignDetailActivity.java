@@ -545,7 +545,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         @Override
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
-            AppointSuccessActivity.start(AppointCampaignDetailActivity.this, null, false, present.getShareInfo());
+            AppointSuccessActivity.start(AppointCampaignDetailActivity.this, null, false, present.getShareInfo(),bean.getAppoint().amount);
             LocalBroadcastManager.getInstance(AppointCampaignDetailActivity.this)
                     .sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
 
@@ -556,7 +556,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         public void onFree() {
             LocalBroadcastManager.getInstance(AppointCampaignDetailActivity.this)
                     .sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
-            AppointSuccessActivity.start(AppointCampaignDetailActivity.this, bean.getAppoint().getClassTime(), false, present.getShareInfo());
+            AppointSuccessActivity.start(AppointCampaignDetailActivity.this, bean.getAppoint().getClassTime(), false, present.getShareInfo(),bean.getAppoint().amount);
         }
     };
 

@@ -153,10 +153,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/icon_recommend"
+            android:drawableLeft="@drawable/iv_share"
             android:drawablePadding="5dp"
             android:singleLine="true"
-            android:text="3324"
+
             android:textColor="@color/b3"
             android:textSize="13sp" />
 

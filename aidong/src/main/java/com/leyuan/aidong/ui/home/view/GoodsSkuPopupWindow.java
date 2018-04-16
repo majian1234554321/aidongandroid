@@ -201,6 +201,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     private void initView(View view) {
+        selectProduct = true;
         dvGoodsCover = (ImageView) view.findViewById(R.id.dv_goods_cover);
         ivCancel = (ImageView) view.findViewById(R.id.iv_cancel);
         TextView tvGoodName = (TextView) view.findViewById(R.id.tv_good_name);

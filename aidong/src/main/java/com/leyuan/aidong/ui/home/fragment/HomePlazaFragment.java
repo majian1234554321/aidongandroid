@@ -424,7 +424,10 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
     @Override
     public void onDestroy() {
         super.onDestroy();
-        sharePopupWindow.release();
+        if (sharePopupWindow!=null){
+            sharePopupWindow.release();
+        }
+
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(circleFragmentReceiver);
     }
 }
