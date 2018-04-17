@@ -20,6 +20,7 @@ import com.leyuan.aidong.adapter.discover.DynamicLikeAdapter;
 import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
@@ -62,7 +63,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private TextView txtTime, tv_content;
     private TextView txtLocation;
     private TextView txtParse;
-    private TextView txtComment,txt_share;
+    private TextView txtComment, txt_share;
     private RecyclerView likesRecyclerView;
     private LinearLayout likeLayout, layout_parse;
 
@@ -122,7 +123,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     @Override
     public void onBindData(final DynamicBean dynamic, final int position) {
         if (position == 0 && context instanceof MainActivity && App.getInstance().isLogin() && App.getInstance().getCMDCirleDynamicBean()
-                != null && !App.getInstance().getCMDCirleDynamicBean().isEmpty() && showCMDMessageLayout ) {
+                != null && !App.getInstance().getCMDCirleDynamicBean().isEmpty() && showCMDMessageLayout) {
 
             layoutCmdMessage.setVisibility(View.VISIBLE);
             layoutCmdMessage.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +162,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         }
 
         if (dynamic.extras != null && dynamic.extras.length > 0) {
-            SpannableStringBuilder highlightText = StringUtils.highlight(context,dynamic.content, dynamic.extras, "#EA2D2D",1);
+            SpannableStringBuilder highlightText = StringUtils.highlight(context, dynamic.content, dynamic.extras, "#EA2D2D", 1);
 
             tv_content.setText(highlightText);
             tv_content.setMovementMethod(LinkMovementMethod.getInstance());
@@ -171,7 +172,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         }
 
 
-        if (dynamic.like != null && dynamic.like.counter > 0 && ( context instanceof DynamicDetailByIdActivity)) {
+        if (dynamic.like != null && dynamic.like.counter > 0 && (context instanceof DynamicDetailByIdActivity)) {
             likeLayout.setVisibility(View.VISIBLE);
             likesRecyclerView.setLayoutManager(new LinearLayoutManager
                     (context, LinearLayoutManager.HORIZONTAL, false));
@@ -197,7 +198,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onAvatarClick(dynamic.publisher.getId(),dynamic.publisher.getUserTypeByUserType());
+                    callback.onAvatarClick(dynamic.publisher.getId(), dynamic.publisher.getUserTypeByUserType());
                 }
             }
         });
@@ -233,7 +234,8 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             } else {
                 txtTime.setVisibility(View.VISIBLE);
                 layout_difficulty_star.setVisibility(View.GONE);
-                txtDesc.setText("#"+dynamic.related.slogan+"#");
+                if (!TextUtils.isEmpty(dynamic.related.slogan))
+                    txtDesc.setText("#" + dynamic.related.slogan + "#");
                 txtTime.setText(dynamic.related.start);
             }
 
@@ -241,20 +243,34 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             layoutCourseOrActivity.setVisibility(View.GONE);
         }
         //位置，赞，评论
-        if (dynamic.postion != null && ! TextUtils.isEmpty(dynamic.postion.position_name)) {
+        if (dynamic.postion != null && !TextUtils.isEmpty(dynamic.postion.position_name)) {
             txtLocation.setVisibility(View.VISIBLE);
             txtLocation.setText(dynamic.postion.position_name);
-        }else {
+        } else {
             txtLocation.setVisibility(View.GONE);
         }
+        UserCoach  userCoach = App.getInstance().getUser();
+      String user_id =    dynamic.publisher.id;
 
-        img_parse.setBackgroundResource(isLike(dynamic)
-                ? R.drawable.icon_parsed : R.drawable.icon_parse);
+        if (isLike(dynamic)) {
+            if (dynamic.publisher.id.equals(App.getInstance().getUser().getId() + "")) {
+                img_parse.setBackgroundResource(R.drawable.icon_001);
+            }else {
+                img_parse.setBackgroundResource(R.drawable.icon_parsed);
+            }
+        } else {
+            img_parse.setBackgroundResource(R.drawable.icon_parse);
+        }
+
+//        img_parse.setBackgroundResource(isLike(dynamic)
+//                ? R.drawable.icon_parsed : R.drawable.icon_parse);
         txtParse.setText(String.valueOf(dynamic.like.counter));
         txtComment.setText(String.valueOf(dynamic.comment.count));
         layout_parse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if (callback != null) {
                     callback.onLikeClick(position, dynamic.id, isLike(dynamic));
                 }
@@ -270,7 +286,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         });
 
-        if (txt_share!=null){
+        if (txt_share != null) {
             txt_share.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -45,15 +45,16 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
         holder.txt_attention_num.setVisibility(View.VISIBLE);
         holder.txt_attention_num.setText(user.followers_count + "人关注");
         if (!TextUtils.isEmpty(user.personal_intro)) {
-
+            value = user.personal_intro;
             if (user.personal_intro.contains("<p>")) {
                 value = user.personal_intro.replace("<p>", "");
             }
 
-            if (value.contains("</p>")) {
-                value = value.replace("</p>", "");
+            if (!TextUtils.isEmpty(value)){
+                if (value.contains("</p>")) {
+                    value = value.replace("</p>", "");
+                }
             }
-
 
             holder.txtIntro.setText(value);
         } else {

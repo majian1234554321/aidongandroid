@@ -1,8 +1,11 @@
 package com.leyuan.aidong.entity.course;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.leyuan.aidong.entity.CoachBean;
 
@@ -60,6 +63,7 @@ public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
     private StringBuffer tagString = new StringBuffer();
 
     public StringBuffer getTagString() {
+
         if (tagString == null) {
             tagString = new StringBuffer();
         }
@@ -73,6 +77,23 @@ public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
 
             }
         }
+
+//        Paint  paint  =    new Paint();
+//        paint.setTypeface(Typeface.DEFAULT);
+//        paint.setTextSize(12);
+//        Canvas canvas = new Canvas();
+//        canvas.drawText("tagString",0,100,paint);
+
+        Paint paint  =    new Paint();
+        paint.setTextSize(50);
+        Canvas canvas = new Canvas();
+        String str = "Hello";
+        canvas.drawText( str , 0 , 0 , paint);
+
+//1. 粗略计算文字宽度
+        Log.d("tagString", "measureText=" + paint.measureText(str));
+
+
         return tagString;
     }
 

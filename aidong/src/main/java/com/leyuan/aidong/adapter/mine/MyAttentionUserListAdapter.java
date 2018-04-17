@@ -49,7 +49,7 @@ public class MyAttentionUserListAdapter extends RecyclerView.Adapter<MyAttention
 
 
 
-        if (!TextUtils.isEmpty(user.personal_intro)) {
+        if (!TextUtils.isEmpty(user.signature)) {
 
             String value = "";
             if (user.personal_intro.contains("<p>")) {
@@ -61,9 +61,9 @@ public class MyAttentionUserListAdapter extends RecyclerView.Adapter<MyAttention
             }
 
 
-            holder.txtIntro.setText(value);
+            holder.txtIntro.setText(user.signature);
         } else {
-            holder.txtIntro.setText(user.personal_intro);
+            holder.txtIntro.setText(user.signature);
         }
 
 

@@ -71,8 +71,19 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.address.setText("共" + bean.amount + "张票");
-        if (bean.spec_value != null && bean.spec_value.length > 2)
-            holder.tvtime.setText(bean.spec_value[0] +" "+ bean.spec_value[1]);
+        if (bean.spec_value != null ){
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bean.spec_value.length; i++) {
+                sb.append(bean.spec_value[i]);
+                sb.append(" ");
+            }
+            holder.tvtime.setText(sb.toString());
+        }
+
+
+
+
+
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay_amount())));
         //与订单状态有关

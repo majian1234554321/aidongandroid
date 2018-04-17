@@ -1,6 +1,5 @@
 package com.leyuan.aidong.ui.home.activity;
 
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +21,8 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointSuccessActivityView;
 import com.leyuan.aidong.ui.mvp.view.CouponShareView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
+import com.leyuan.aidong.ui.mvp.view.HideHeadItemView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -34,7 +35,7 @@ import java.util.List;
  * 预约成功界面
  * Created by song on 2016/9/12.
  */
-public class AppointSuccessActivity extends BaseActivity implements View.OnClickListener, AppointSuccessActivityView, CouponShareView {
+public class AppointSuccessActivity extends BaseActivity implements View.OnClickListener, AppointSuccessActivityView, CouponShareView,HideHeadItemView {
     private TextView tvRecommend;
     private TextView tvType;
     private TextView tvTime;
@@ -77,7 +78,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         present.pullToRefreshRecommendData(Constant.RECOMMEND_ORDER);
 
         if (shareBean != null) {
-            new CouponPresentImpl(this, this).getShareCoupon(shareBean.getNo());
+            new CouponPresentImpl(this, this,this).getShareCoupon(shareBean.getNo());
         }
     }
 
@@ -147,5 +148,12 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         shareBean.setImage(share_coupons.getImage());
         shareBean.setCoupons(share_coupons.getCoupons());
         CouponShareActivity.start(this, shareBean);
+    }
+
+    @Override
+    public void hideHeadItemView() {
+        if(tvRecommend!=null){
+            tvRecommend.setVisibility(View.GONE);
+        }
     }
 }

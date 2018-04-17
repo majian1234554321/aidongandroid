@@ -328,9 +328,11 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
             } else if (requestCode == REQUEST_LOCATION) {
 
-                this.position_name = data.getStringExtra("position_name");
+                this.position_name = data.getStringExtra("position_address");
                 this.latitude = data.getStringExtra("latitude");
                 this.longitude = data.getStringExtra("longitude");
+                //this.position_address = data.getStringExtra("position_address");
+
 
                 imgAddLocation.setImageResource(R.drawable.location_selected);
                 txtLocation.setTextColor(ActivityCompat.getColor(this,R.color.main_red));

@@ -297,7 +297,7 @@ public class DateUtils {
             calendar.add(calendar.DATE, i == 0 ? 0 : +1);//把日期往前减少一天，若想把日期向后推一天则将负数改为正数
             date = calendar.getTime();
             String weekOfDate = getWeekOfDate(date);
-            SimpleDateFormat formatter = new SimpleDateFormat("MM月dd");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
             String dateString = formatter.format(date);
             if (i == 0) {
                 dates.add(dateString + "(今天)");
@@ -469,5 +469,47 @@ public class DateUtils {
     public static String getCurrentTime() {
         return calendarToStr(Calendar.getInstance(), yyyyMMddHHmmss);
     }
+
+
+    public static String getWeekByDateStr(String strDate) {
+        int year = Integer.parseInt(strDate.substring(0, 4));
+        int month = Integer.parseInt(strDate.substring(5, 7));
+        int day = Integer.parseInt(strDate.substring(8, 10));
+
+        Calendar c = Calendar.getInstance();
+
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month - 1);
+        c.set(Calendar.DAY_OF_MONTH, day);
+
+        String week = "";
+        int weekIndex = c.get(Calendar.DAY_OF_WEEK);
+
+        switch (weekIndex) {
+            case 1:
+                week = "(周一)";
+                break;
+            case 2:
+                week = "(周二)";
+                break;
+            case 3:
+                week = "(周三)";
+                break;
+            case 4:
+                week = "(周四)";
+                break;
+            case 5:
+                week = "(周五)";
+                break;
+            case 6:
+                week = "(周六)";
+                break;
+            case 7:
+                week = "(周日)";
+                break;
+        }
+        return week;
+    }
+
 
 }

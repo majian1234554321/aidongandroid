@@ -96,7 +96,7 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
             });
 
         }else {
-            holder.image.setBackgroundResource(R.drawable.icon_add_photo);
+            holder.image.setBackgroundResource(R.drawable.icon_add3);
             holder.delete.setVisibility(View.GONE);
             holder.ivPlay.setVisibility(View.GONE);
             holder.itemView.setOnClickListener(new View.OnClickListener() {

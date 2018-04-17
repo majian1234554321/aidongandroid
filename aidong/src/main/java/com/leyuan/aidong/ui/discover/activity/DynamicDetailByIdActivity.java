@@ -42,6 +42,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.ui.mine.view.EEditText;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
@@ -82,7 +83,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     private ImageView ivBack;
     private TextView tvReportOrDelete;
     private ImageView ivUserAvatar;
-    private EditText etComment;
+    private EEditText etComment;
     private String content;
 
     private View header;
@@ -164,7 +165,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvReportOrDelete = (TextView) findViewById(R.id.tv_report_or_delete);
         ivUserAvatar = (ImageView) findViewById(R.id.dv_user_avatar);
-        etComment = (EditText) findViewById(R.id.et_comment);
+        etComment = (EEditText) findViewById(R.id.et_comment);
         refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         commentView = (RecyclerView) findViewById(R.id.rv_comment);
         commentAdapter = new DynamicDetailAdapter(this);
@@ -227,6 +228,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             super.onScrollStateChanged(recyclerView, newState);
 
             if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+
                 KeyBoardUtil.closeKeyboard(etComment, DynamicDetailByIdActivity.this);
                 etComment.clearFocus();
             }
@@ -283,8 +285,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
                     replyUserMap.put(replyUser.getName(), replyUser.getId());
                 }
                 dynamicPresent.addComment(dynamic.id, content, itUser, replyUserMap);
-                KeyBoardUtil.closeKeyboard(etComment, this);
-                etComment.setHint("评论");
+                KeyBoardUtil.closeKeyboard(etComment, DynamicDetailByIdActivity.this);
+                etComment.clearFocus();
 
                 return true;
             }
@@ -305,7 +307,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             temp.setPublishedAt("刚刚");
             temp.setPublisher(publisher);
 
-            etComment.setHint("评论");
+
 
             comments.add(0, temp);
             commentAdapter.addExtra(itUser);

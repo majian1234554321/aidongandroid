@@ -22,6 +22,7 @@ import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
 import com.leyuan.aidong.ui.mvp.view.CouponNewUserValidView;
 import com.leyuan.aidong.ui.mvp.view.CouponShareView;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
+import com.leyuan.aidong.ui.mvp.view.HideHeadItemView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -65,6 +66,16 @@ public class CouponPresentImpl implements CouponPresent {
         }
     }
 
+    HideHeadItemView hideHeadItemView;
+    public CouponPresentImpl(Context context, CouponShareView view, HideHeadItemView hideHeadItemView) {
+        this.context = context;
+        this.couponShareView = view;
+        this.hideHeadItemView = hideHeadItemView;
+        if (couponModel == null) {
+            couponModel = new CouponModelImpl();
+        }
+    }
+
     public CouponPresentImpl(Context context, CouponExchangeActivityView view) {
         this.context = context;
         this.exchangeCouponView = view;
@@ -88,6 +99,10 @@ public class CouponPresentImpl implements CouponPresent {
             public void onNext(ShareData shareData) {
                 if (couponShareView != null && shareData.getShare_coupons() != null) {
                     couponShareView.onGetShareData(shareData.getShare_coupons());
+                }else {
+                    if (hideHeadItemView!=null){
+                        hideHeadItemView.hideHeadItemView();
+                    }
                 }
             }
         }, order_no);

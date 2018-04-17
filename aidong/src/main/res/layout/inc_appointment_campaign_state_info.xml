@@ -112,10 +112,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:singleLine="true"
+                android:lineSpacingExtra="5dp"
                 android:text="10-20 15:30-16:3"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_info"

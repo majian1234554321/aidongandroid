@@ -22,6 +22,7 @@ import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CouponShareView;
+import com.leyuan.aidong.ui.mvp.view.HideHeadItemView;
 import com.leyuan.aidong.ui.mvp.view.PaySuccessActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
@@ -36,12 +37,12 @@ import java.util.List;
  * 支付成功
  * Created by song on 2016/9/23.
  */
-public class PaySuccessActivity extends BaseActivity implements View.OnClickListener, PaySuccessActivityView, CouponShareView {
+public class PaySuccessActivity extends BaseActivity implements View.OnClickListener, PaySuccessActivityView, CouponShareView,HideHeadItemView {
     private static final int COUPON_SHARE = 1;
     private static final java.lang.String TAG = "PaySuccessActivity";
     private SimpleTitleBar titleBar;
     private TextView tvHome;
-    private TextView tvOrder;
+    private TextView tvOrder,tvRecommend;
     private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private ShareData.ShareCouponInfo shareBean;
@@ -81,7 +82,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
         setListener();
 
         if (shareBean != null) {
-            new CouponPresentImpl(this, this).getShareCoupon(shareBean.getNo());
+            new CouponPresentImpl(this, this,this).getShareCoupon(shareBean.getNo());
         }
 
         present.pullToRefreshRecommendData(Constant.RECOMMEND_ORDER);
@@ -105,6 +106,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
     private void initView() {
         View headerView = View.inflate(this, R.layout.header_pay_success, null);
         tvHome = (TextView) headerView.findViewById(R.id.tv_home);
+        tvRecommend = (TextView) headerView.findViewById(R.id.tvRecommend);
         tvOrder = (TextView) headerView.findViewById(R.id.tv_order);
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_recommend);
@@ -171,4 +173,10 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
     }
 
 
+    @Override
+    public void hideHeadItemView() {
+        if(tvRecommend!=null){
+            tvRecommend.setVisibility(View.GONE);
+        }
+    }
 }

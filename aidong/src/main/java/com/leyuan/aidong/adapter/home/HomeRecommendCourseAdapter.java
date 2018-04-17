@@ -1,7 +1,9 @@
 package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,15 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
         holder.txtCourseName.setText(courseBean.getName());
         holder.txtAttentionNum.setText(courseBean.getFollows_count() + "人关注");
         holder.txtCourseDesc.setText(courseBean.getTagString());
+//            Paint mPaint = new Paint();
+//            mPaint.setFontFeatureSettings();
+
+
+            int spec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+            holder.txtCourseDesc.measure(spec,spec);
+
+
+            Log.i("holder",":"+holder.txtCourseDesc.getMeasuredWidth());
 
         for (int i = 0; i < 5; i++) {
             if (i < courseBean.getStrength()) {

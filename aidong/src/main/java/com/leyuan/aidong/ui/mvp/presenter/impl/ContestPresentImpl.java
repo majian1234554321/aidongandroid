@@ -69,6 +69,14 @@ public class ContestPresentImpl {
         this.contestEnrolView = contestEnrolView;
     }
 
+
+
+    public void setContestRankingView(ContestRankingView contestRankingView,EmptyView emptyView) {
+        this.contestRankingView = contestRankingView;
+        this.emptyView = emptyView;
+    }
+
+
     public void setContestRankingView(ContestRankingView contestRankingView) {
         this.contestRankingView = contestRankingView;
     }
@@ -265,8 +273,12 @@ public class ContestPresentImpl {
         contestModel.getContestRanking(new ProgressSubscriber<RankingData>(context) {
             @Override
             public void onNext(RankingData rankingData) {
-                if (contestRankingView != null) {
+                if (rankingData != null&&rankingData.ranking.size()>0) {
                     contestRankingView.onGetRankingData(rankingData.ranking);
+                }else {
+                    if (emptyView!=null){
+                        emptyView.showEmptyView();
+                    }
                 }
             }
 

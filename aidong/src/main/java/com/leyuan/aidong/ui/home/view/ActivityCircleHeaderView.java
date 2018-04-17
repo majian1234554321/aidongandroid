@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.home.view;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,9 +113,9 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
 
 
         txtIntro.setRichText(campaignDetailBean.simple_intro);
-       // txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
+        // txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
 
-        txtPrice.setText("￥" + campaignDetailBean.getPrice() );
+        txtPrice.setText("￥" + campaignDetailBean.getPrice());
         txtTime.setText(campaignDetailBean.getStartTime() + "-" + campaignDetailBean.getEndTime());
         txtCityAddress.setText(campaignDetailBean.getLandmark());
         txtLocationDetail.setText(campaignDetailBean.getAddress());
@@ -191,7 +192,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
-            campaignDetailBean.follows_count ++;
+            campaignDetailBean.follows_count++;
             campaignDetailBean.followed = true;
             txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
             bt_attention.setImageResource(R.drawable.icon_followed);
@@ -204,7 +205,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
-            campaignDetailBean.follows_count --;
+            campaignDetailBean.follows_count--;
             campaignDetailBean.followed = false;
 
             txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
@@ -215,12 +216,19 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         }
     }
 
-    public void hideView(){
+    public void hideView() {
         txt_relate_dynamic.setVisibility(GONE);
     }
 
     public void setData2() {
-         txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
 
+        if (!TextUtils.isEmpty(campaignDetailBean.getPrice()) && !TextUtils.isEmpty(campaignDetailBean.getMarket_price())) {
+            if (campaignDetailBean.getPrice().equals(campaignDetailBean.getMarket_price())) {
+                txtPrice.setText("￥" + campaignDetailBean.getPrice());
+            } else {
+                txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
+            }
+
+        }
     }
 }

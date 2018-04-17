@@ -133,7 +133,10 @@
                 android:textColor="@color/main_red"
                 android:textSize="14sp" />
 
-
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_sku"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
@@ -203,10 +206,7 @@
                 android:layout_height="30dp"
                 android:background="@color/white" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_sku"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+
         </LinearLayout>
     </com.leyuan.aidong.widget.MaxHeightNestScrollView>
 

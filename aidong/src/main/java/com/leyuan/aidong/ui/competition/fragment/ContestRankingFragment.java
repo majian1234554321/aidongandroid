@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.competition.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ContestRankingView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.ui.mvp.view.FollowView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -39,12 +41,13 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static com.baidu.mapapi.BMapManager.getContext;
 import static com.leyuan.aidong.R.id.img_rank_none;
 
 /**
  * Created by user on 2018/1/5.
  */
-public class ContestRankingFragment extends BaseFragment implements OnRefreshListener, ContestRankingListAdapter.OnAttentionClickListener, ContestRankingView, FollowView {
+public class ContestRankingFragment extends BaseFragment implements OnRefreshListener, ContestRankingListAdapter.OnAttentionClickListener, ContestRankingView, FollowView,EmptyView {
 
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -91,6 +94,8 @@ public class ContestRankingFragment extends BaseFragment implements OnRefreshLis
             contestId = bundle.getString("contestId");
         }
 
+
+
         txtRank = (TextView) view.findViewById(R.id.txt_rank);
         imgRankNone = (ImageView) view.findViewById(img_rank_none);
         imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
@@ -114,7 +119,7 @@ public class ContestRankingFragment extends BaseFragment implements OnRefreshLis
         present.setFollowListener(this);
 
         contestPresent = new ContestPresentImpl(getActivity());
-        contestPresent.setContestRankingView(this);
+        contestPresent.setContestRankingView(this,this);
         contestPresent.getContestRanking(contestId, division, ContestRankingListActivity.rankType, ContestRankingListActivity.gender);
 
     }
@@ -277,6 +282,22 @@ public class ContestRankingFragment extends BaseFragment implements OnRefreshLis
     public void onItemClick(UserBean userBean, int position) {
         this.itemClickedPosition = position;
         UserInfoActivity.startForResult(this, userBean.getId(), Constant.REQUEST_USER_INFO);
+    }
+
+    @Override
+    public void showEmptyView() {
+       View  view = View.inflate(getContext(), R.layout.empty_order2, null);
+        TextView tv =  ((TextView) view.findViewById(R.id.tv));
+        Drawable rightDrawable = getContext().getResources().getDrawable(R.drawable.icon_rank);
+
+
+        rightDrawable.setBounds(0, rightDrawable.getMinimumWidth(), 0, 0);
+        tv.setCompoundDrawables(null, rightDrawable, null, null);
+
+        tv .setText("暂无排行");
+        switcherLayout.addCustomView(view, "empty");
+
+        switcherLayout.showCustomLayout("empty");
     }
 
 

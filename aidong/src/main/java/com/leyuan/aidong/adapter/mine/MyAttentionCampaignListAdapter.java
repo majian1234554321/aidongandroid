@@ -45,9 +45,12 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
         GlideLoader.getInstance().displayCircleImage(user.cover, holder.imgAvatar);
         if (user.type != null) {
             if ("campaign".equals(user.type)) {
-                holder.txtCoachName.setText("[活动] " + user.getName());
+
+                holder.tv.setText("[活动] ");
+                holder.txtCoachName.setText( user.getName());
             } else {
-                holder.txtCoachName.setText("[赛事] " + user.getName());
+                holder.tv.setText("[赛事] ");
+                holder.txtCoachName.setText(user.getName());
             }
         }
 
@@ -110,7 +113,7 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgAvatar, img_coach_tag;
         private TextView txtCoachName;
-        private TextView txtIntro;
+        private TextView txtIntro,tv;
         private ImageButton btAttention;
 
         public ViewHolder(View view) {
@@ -119,6 +122,7 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
             img_coach_tag = (ImageView) view.findViewById(R.id.img_coach_tag);
             txtCoachName = (TextView) view.findViewById(R.id.txt_coach_name);
             txtIntro = (TextView) view.findViewById(R.id.txt_intro);
+            tv = (TextView) view.findViewById(R.id.tv);
             btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
         }
     }

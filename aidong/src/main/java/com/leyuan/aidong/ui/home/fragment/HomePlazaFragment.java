@@ -137,8 +137,6 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharePopupWindow = new SharePopupWindow(getActivity());
-
-
         DiscoverPresentImpl userPresent = new DiscoverPresentImpl(getActivity());
         userPresent.getNearlyUserData(this);
     }

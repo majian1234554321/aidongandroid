@@ -43,8 +43,8 @@
 
     <ImageView
         android:id="@+id/iv_follow"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
         android:background="@drawable/icon_follow"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"

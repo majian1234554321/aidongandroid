@@ -42,6 +42,7 @@ public class SelectLocationAdapter extends RecyclerView.Adapter<SelectLocationAd
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.putExtra("position_name", info.getName());
+                intent.putExtra("position_address", info.getAddress());
                 intent.putExtra("latitude", info.lat);
                 intent.putExtra("longitude", info.lng);
 

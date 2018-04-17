@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="horizontal">
 
@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="80dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="70dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -26,9 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="11111111111111111111111"
-                android:maxLength="22"
-                android:textStyle="bold"
+                android:text="111111111111"
+                android:maxLength="25"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -39,8 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:singleLine="true"
-                android:text="1 attention"
                 android:visibility="gone"
+                android:text="1 attention"
                 android:textColor="@color/text_color_common"
                 android:textSize="13sp" />
         </LinearLayout>
@@ -51,7 +50,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
-            android:maxLines="1"
             android:text="索性 | 剪子 | 马健先 索性 | 剪子 | 马健先"
             android:layout_marginRight="10dp"
             android:textColor="@color/text_color_common"
@@ -123,7 +121,7 @@
         android:src="@drawable/icon_attention"
         android:layout_marginRight="15dp"
 
-       />
+        />
 
     <ImageView
         android:layout_width="match_parent"
@@ -139,6 +137,7 @@
         android:layout_height="80dp"
         android:src="@color/actionsheet_blue"
         android:layout_centerVertical="true"
+        android:visibility="gone"
         android:layout_alignLeft="@+id/imageView6"
         android:layout_alignStart="@+id/imageView6" />
 

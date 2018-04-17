@@ -1,11 +1,13 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
@@ -20,6 +22,7 @@ import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.widget.CustomLayoutManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.aidong.widget.refreshlayout.FullyLinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,19 +35,17 @@ import static com.baidu.mapapi.BMapManager.getContext;
  * 场馆详情-课程
  * Created by song on 2016/8/27.
  */
-public class CoachCourseFragment extends BaseFragment implements CourseDateAdapter.ItemClickListener, CourseListView, EmptyView {
+public class CoachCourseFragment extends BaseFragment implements  CourseListView, EmptyView {
     private static final String TAG = "VenuesCourseFragment";
     private SwitcherLayout switcherLayout;
-    //    private VenuesCourseAdapter courseAdapter;
-//    private String id;
-    private List<String> days;
-//    private VenuesPresent venuesPresent;
 
-    private RecyclerView dateView;
-    private CourseDateAdapter dateAdapter;
+    private List<String> days;
+
+
+
 
     private CourseListAdapterNew courseAdapter;
-    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
+
     private ArrayList<CourseBeanNew> data = new ArrayList<>();
     private String date, store, course, time;
 
@@ -79,34 +80,55 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
 
     private void initView(View view) {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_venues_course);
+
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+
+        tabLayout.addTab(tabLayout.newTab().setText(DateUtils.getCourseSevenDate().get(0)));
+        tabLayout.addTab(tabLayout.newTab().setText(DateUtils.getCourseSevenDate().get(1)));
+        tabLayout.addTab(tabLayout.newTab().setText(DateUtils.getCourseSevenDate().get(2)));
+        tabLayout.addTab(tabLayout.newTab().setText(DateUtils.getCourseSevenDate().get(3)));
+        tabLayout.addTab(tabLayout.newTab().setText(DateUtils.getCourseSevenDate().get(4)));
+        tabLayout.addTab(tabLayout.newTab().setText(DateUtils.getCourseSevenDate().get(5)));
+        tabLayout.addTab(tabLayout.newTab().setText(DateUtils.getCourseSevenDate().get(6)));
+
+
+
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                date = days.get(tab.getPosition());
+                coursePresent.getCoachCourseList(mobile, date);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+
+        FullyLinearLayoutManager full = new FullyLinearLayoutManager(getContext());
         switcherLayout = new SwitcherLayout(getContext(), recyclerView);
         courseAdapter = new CourseListAdapterNew(getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(full);
         recyclerView.setAdapter(courseAdapter);
 
-        dateView = (RecyclerView) view.findViewById(R.id.rv_date);
-        dateAdapter = new CourseDateAdapter();
-        dateView.setLayoutManager(new CustomLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        dateView.setAdapter(dateAdapter);
-        dateAdapter.setData(days);
-        dateAdapter.setItemClickListener(this);
-    }
-
-
-    @Override
-    public void onItemClick(int position) {
-
-        date = days.get(position);
-        coursePresent.getCoachCourseList(mobile, date);
 
     }
 
-//    @Override
-//    public void showEmptyView() {
-//        View view = View.inflate(getContext(),R.layout.empty_venues_course,null);
-//        switcherLayout.addCustomView(view,"empty");
-//        switcherLayout.showCustomLayout("empty");
-//    }
+
+
+
+
 
     @Override
     public void onGetRefreshCourseList(ArrayList<CourseBeanNew> courseList) {
@@ -138,6 +160,7 @@ public class CoachCourseFragment extends BaseFragment implements CourseDateAdapt
         view = View.inflate(getContext(), R.layout.empty_order, null);
         ((TextView) view.findViewById(R.id.tv)).setText("暂无课表");
         switcherLayout.addCustomView(view, "empty");
+
         switcherLayout.showCustomLayout("empty");
     }
 }

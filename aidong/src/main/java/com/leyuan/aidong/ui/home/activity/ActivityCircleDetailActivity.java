@@ -89,7 +89,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * //精选活动 - 活动
  */
 
-public class ActivityCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener, CampaignDetailActivityView, ActivitySkuPopupWindow.SelectSkuListener ,SportCircleFragmentExtendView {
+public class ActivityCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener, CampaignDetailActivityView, ActivitySkuPopupWindow.SelectSkuListener, SportCircleFragmentExtendView {
     //    private SwitcherLayout switcherLayout;
 //    private CustomRefreshLayout refreshLayout;
     TextView txt_share_image, txt_appoint_immediately;
@@ -159,7 +159,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         id = getIntent().getStringExtra("id");
 
         setContentView(R.layout.activity_activity_circle_details);
-        dynamicPresent = new DynamicPresentImpl(this, this,this);
+        dynamicPresent = new DynamicPresentImpl(this, this, this);
         initView();
         initSwipeRefreshLayout();
         initRecyclerView();
@@ -281,7 +281,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
             int top = recyclerView.getChildAt(0).getTop();
             Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " + top);
 
-            ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(0,0);
+            ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(0, 0);
 
 //            recyclerView.scrollBy(0, -10000);
 //
@@ -304,7 +304,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()) {
                         image = campaignDetailBean.getImage().get(0);
                     }
-
+//活动分享
                     sharePopupWindow.showAtBottom(campaignDetailBean.getName() + Constant.I_DONG_FITNESS, campaignDetailBean.simple_intro,
                             image, ConstantUrl.URL_SHARE_CAMPAIGN + campaignDetailBean.getCampaignId());
                 }
@@ -332,11 +332,15 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                 }
                 break;
             case txt_share:
-                if (campaignDetailBean != null) {
-
+                String image = "";
+                if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()) {
+                    image = campaignDetailBean.getImage().get(0);
                 }
-                sharePopupWindow.showAtBottom("我分享了" + "的动态，速速围观", "dsklajdsads",
-                        "kasdkads", ConstantUrl.URL_SHARE_DYNAMIC + 123213);
+
+
+                sharePopupWindow.showAtBottom(campaignDetailBean.getName() + Constant.I_DONG_FITNESS, campaignDetailBean.simple_intro,
+                        image, ConstantUrl.URL_SHARE_CAMPAIGN + campaignDetailBean.getCampaignId());
+
                 break;
             case R.id.txt_appoint_immediately:
 
@@ -407,11 +411,11 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         }
 
 
-        if (recyclerView != null &&  recyclerView.getChildAt(0) != null) {
+        if (recyclerView != null && recyclerView.getChildAt(0) != null) {
             int top = recyclerView.getChildAt(0).getTop();
             Logger.i("recyclerView.scrollBy setCampaignDetail ,top = " + top);
 
-            ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(0,0);
+            ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(0, 0);
 
 
 //            recyclerView.scrollBy(0, top - 20);
@@ -528,7 +532,6 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), duration, Constant.REQUEST_VIDEO_TRIMMER);
 
 
-
 //                    TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), Constant.REQUEST_VIDEO_TRIMMER);
                 }
 
@@ -574,7 +577,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
     @Override
     public void noRelevantData() {
-        if (headView!=null) {
+        if (headView != null) {
             headView.hideView();
         }
 

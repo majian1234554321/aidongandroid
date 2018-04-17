@@ -19,6 +19,7 @@ import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
 import com.iknow.android.utils.TrimVideoUtil;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.entity.campaign.ContestBean;
@@ -80,6 +81,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
     ContestPresentImpl contestPresent;
     private ContestBean contest;
     private String invitationCode;
+
     private SharePopupWindow sharePopupWindow;
     private ArrayList<BaseMedia> selectedMedia;
     private FollowPresentImpl present;
@@ -173,7 +175,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
             case R.id.img_share:
 
                 if (contest == null) return;
-                sharePopupWindow.showAtBottom( contest.name,"我分享了赛事: " + contest.name + "，速速围观",
+                sharePopupWindow.showAtBottom( contest.name+ Constant.I_DONG_FITNESS, contest.introduce ,
                         contest.background, contest.share_url);
 
                 break;

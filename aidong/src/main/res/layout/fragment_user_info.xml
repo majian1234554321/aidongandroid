@@ -11,11 +11,14 @@
         android:orientation="vertical">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
-            <include layout="@layout/inc_bold_line" />
+         <View  android:layout_width="match_parent"
+             android:layout_height="1dp"
+             android:background="@color/line_color"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/id"

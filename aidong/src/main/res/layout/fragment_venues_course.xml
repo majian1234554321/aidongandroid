@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_content"
-    android:orientation="vertical"
+android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="10dp"
-    android:background="@color/line_color">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_date"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:elevation="2dp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_venues_course"
+    <View
         android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        app:tabSelectedTextColor="@color/red"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"/>
+        app:tabBackground="@color/line_color"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="scrollable" />
 
+
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:fillViewport="true"
+        android:orientation="vertical">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_venues_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+
+
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
+

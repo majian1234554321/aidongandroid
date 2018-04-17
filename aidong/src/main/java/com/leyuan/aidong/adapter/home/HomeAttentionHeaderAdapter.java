@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.competition.activity.ContestHomeActivity;
@@ -43,8 +44,9 @@ public class HomeAttentionHeaderAdapter extends RecyclerView.Adapter<HomeAttenti
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         if (position >= userList.size()) {
-            GlideLoader.getInstance().displayCircleImage(R.drawable.icon_add_photo2, holder.imgAvatar);
+            //GlideLoader.getInstance().displayCircleImage(R.drawable.icon_add_photo2, holder.imgAvatar);
 
+            Glide.with(context).load(R.drawable.icon_add_photo).into(holder.imgAvatar);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

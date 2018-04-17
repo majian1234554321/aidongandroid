@@ -104,7 +104,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             intro = bundle.getString("intro");
         }
 
-        layoutPersonIntro = (LinearLayout) view.findViewById(R.id.layout_person_intro);
+   //     layoutPersonIntro = (LinearLayout) view.findViewById(R.id.layout_person_intro);
 //        if(getActivity() instanceof UserInfoActivity && !TextUtils.isEmpty(intro)){
 //
 //            layoutPersonIntro.setVisibility(View.VISIBLE);

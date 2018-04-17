@@ -261,6 +261,8 @@
                     </RelativeLayout>
 
                     <include layout="@layout/inc_line" />
+
+                    <include layout="@layout/inc_bold_line" />
                 </LinearLayout>
 
                 <com.ogaclejapan.smarttablayout.SmartTabLayout

@@ -12,6 +12,8 @@ import java.lang.reflect.Field;
  */
 public class KeyBoardUtil {
 
+    private static InputMethodManager imm;
+
     /**
      * 打卡软键盘
      *
@@ -19,11 +21,13 @@ public class KeyBoardUtil {
      * @param mContext  上下文
      */
     public static void openKeyboard(EditText mEditText, Context mContext) {
-        InputMethodManager imm = (InputMethodManager) mContext
+        imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
                 InputMethodManager.HIDE_IMPLICIT_ONLY);
+
+
     }
 
     /**
@@ -33,11 +37,12 @@ public class KeyBoardUtil {
      * @param mContext  上下文
      */
     public static void closeKeyboard(EditText mEditText, Context mContext) {
-        InputMethodManager imm = (InputMethodManager) mContext
+         imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && mEditText != null && mEditText.getWindowToken() != null)
             imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
-        mEditText.setHint("评论");
+        mEditText.clearFocus();
+
     }
 
     /**

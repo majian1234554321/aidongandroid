@@ -123,7 +123,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/pref_35dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp">
@@ -131,8 +131,8 @@
         <TextView
             android:id="@+id/txt_location"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
+
             android:drawableLeft="@drawable/icon_address"
             android:drawablePadding="5dp"
             android:gravity="center"
@@ -150,9 +150,9 @@
         <TextView
             android:id="@+id/txt_share"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
+          android:gravity="center"
             android:drawableLeft="@drawable/iv_share"
             android:drawablePadding="5dp"
             android:singleLine="true"
@@ -165,9 +165,10 @@
             android:id="@+id/txt_comment"
             android:layout_toLeftOf="@+id/txt_share"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="12dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+
+            android:layout_marginRight="18dp"
             android:drawableLeft="@drawable/icon_recommend"
             android:drawablePadding="5dp"
             android:singleLine="true"
@@ -180,9 +181,10 @@
             android:id="@+id/layout_parse"
            android:layout_toLeftOf="@+id/txt_comment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-           android:layout_marginRight="12dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
+           android:layout_marginRight="18dp"
+
+            android:layout_centerVertical="true"
             android:gravity="bottom"
             android:orientation="horizontal">
 
@@ -197,9 +199,10 @@
             <TextView
                 android:id="@+id/txt_parse"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
                 android:singleLine="true"
+                android:gravity="center"
                 android:text="3324"
                 android:textColor="@color/b3"
                 android:textSize="13sp" />

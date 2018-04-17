@@ -137,6 +137,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         pages.add(FragmentPagerItem.of(null, HomePlazaFragment.class));
         adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
         tabLayout.setViewPager(viewPager);
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override

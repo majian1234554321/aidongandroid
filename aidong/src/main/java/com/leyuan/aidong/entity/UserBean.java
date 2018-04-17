@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class UserBean implements Parcelable, Serializable,  Comparable<UserBean> {
     //发现-人
-    private String id;          //编号
+    public String id;          //编号
     private String name;        //名字
     private String avatar;      //头像
     private String gender;      //性别
