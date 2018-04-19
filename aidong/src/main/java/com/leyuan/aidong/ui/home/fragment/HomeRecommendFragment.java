@@ -249,6 +249,9 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
         if (homeData.getCourse() != null && !homeData.getCourse().isEmpty()) {
             courseAdapter.setData(homeData.getCourse());
+
+
+
             llSelectionCourse.setVisibility(View.VISIBLE);
 
         } else {

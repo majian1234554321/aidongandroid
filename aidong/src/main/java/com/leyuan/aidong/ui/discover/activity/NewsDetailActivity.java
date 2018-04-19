@@ -13,6 +13,7 @@ import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.richtext.RichWebView;
 
@@ -106,7 +107,17 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.iv_share:
-                sharePopupWindow.showAtBottom("爱动资讯", bean.getTitle(), bean.getCover(), ConstantUrl.URL_SHARE_NEWS + bean.getId());
+//                String image = "";
+//                if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()) {
+//                    image = campaignDetailBean.getImage().get(0);
+//                }
+//活动分享
+                sharePopupWindow.showAtBottom(bean.getTitle() + Constant.I_DONG_FITNESS, bean.getBody(),
+                        bean.getCover(), ConstantUrl.URL_SHARE_NEWS + bean.getId());
+
+
+
+              //  sharePopupWindow.showAtBottom("爱动资讯", bean.getTitle(), bean.getCover(), ConstantUrl.URL_SHARE_NEWS + bean.getId());
                 break;
             default:
                 break;

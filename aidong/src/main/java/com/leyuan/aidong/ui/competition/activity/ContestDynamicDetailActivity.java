@@ -188,7 +188,7 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
         header = View.inflate(this, R.layout.header_dynamic_detail_new, null);
         dynamicList.add(dynamic);
         RecyclerView headerRecyclerView = (RecyclerView) header.findViewById(R.id.rv_header);
-        CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(this);
+        CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(this,"ABOUTDONGTAI");
         builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.contest_dynamic_video)
                 .addType(MultiImageViewHolder.class, DYNAMIC_MULTI_IMAGE, R.layout.contest_dynamic_multi_photos)
                 .showFollowButton(!isSelf)

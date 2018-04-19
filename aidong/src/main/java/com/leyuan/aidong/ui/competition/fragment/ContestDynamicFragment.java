@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -188,7 +189,7 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_dynamic_list);
         dynamicList = new ArrayList<>();
-        CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext());
+        CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext(),"ABOUTDONGTAI");
         builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.contest_dynamic_video)
                 .addType(MultiImageViewHolder.class, DYNAMIC_MULTI_IMAGE, R.layout.contest_dynamic_multi_photos)
                 .showFollowButton(false)
@@ -237,10 +238,25 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
     public void showEmptyView() {
 
 
-        View view = View.inflate(getContext(), R.layout.empty_order, null);
-        ( (TextView)view.findViewById(R.id.tv)).setText("暂无动态");
+        View view = View.inflate(getContext(), R.layout.empty_order2, null);
+
+
+
+
+        TextView tv = ((TextView) view.findViewById(R.id.tv));
+        Drawable drawable = getResources().getDrawable(
+                R.drawable.icon_nodata);
+        // / 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                drawable.getMinimumHeight());
+        tv.setCompoundDrawables(null, drawable, null, null);
+
+        tv.setText("暂无动态");
         switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
+
+
+
 
 
 

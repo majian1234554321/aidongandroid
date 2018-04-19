@@ -397,7 +397,13 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         campaignDetailBean.skucode = line.code;
         campaignDetailBean.amount = tvCount.getText().toString().trim();
         campaignDetailBean.skuPrice = line.price;
-        campaignDetailBean.skuTime  = line.value.get(0)+" "+line.value.get(1);
+        StringBuilder sb = new StringBuilder();
+        if (line.value!=null){
+            for (int i = 0; i < line.value.size(); i++) {
+                sb.append(line.value.get(i)+" ");
+            }
+        }
+        campaignDetailBean.skuTime  = sb.toString();
 
         ConfirmOrderCampaignActivity.start(context,campaignDetailBean);
 

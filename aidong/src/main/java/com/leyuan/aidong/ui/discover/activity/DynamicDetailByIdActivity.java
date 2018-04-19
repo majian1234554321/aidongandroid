@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -45,6 +46,7 @@ import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.view.EEditText;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
@@ -53,6 +55,7 @@ import com.leyuan.aidong.utils.KeyBoardUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -77,7 +80,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
  * Created by song on 2016/12/28.
  */
 public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDetailActivityView, View.OnClickListener,
-        TextView.OnEditorActionListener, DynamicDetailAdapter.OnItemClickListener, OnRefreshListener {
+        TextView.OnEditorActionListener, DynamicDetailAdapter.OnItemClickListener, OnRefreshListener, EmptyView {
     private static final int MAX_TEXT_COUNT = 240;
     public static final int RESULT_DELETE = 0x3333;
     private ImageView ivBack;
@@ -106,6 +109,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     private String dynamicId;
     private String user_id;
     private String name;
+    private SwitcherLayout switcherLayout;
 
 
     public static void startById(Context context, String dynamicId) {
@@ -130,7 +134,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_detail);
-        dynamicPresent = new DynamicPresentImpl(this, this);
+        dynamicPresent = new DynamicPresentImpl(this, this, this);
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         if (getIntent() != null) {
             dynamic = getIntent().getParcelableExtra("dynamic");
             dynamicId = getIntent().getStringExtra(Constant.DYNAMIC_ID);
@@ -145,11 +150,16 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             sharePopupWindow = new SharePopupWindow(this);
         }
 
+
+
         if (dynamicId != null) {
             dynamicPresent.getDynamicDetail(dynamicId);
         }
         findViewById(R.id.iv_back).setOnClickListener(this);
     }
+
+
+
 
     @Override
     protected void onResume() {
@@ -166,7 +176,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         tvReportOrDelete = (TextView) findViewById(R.id.tv_report_or_delete);
         ivUserAvatar = (ImageView) findViewById(R.id.dv_user_avatar);
         etComment = (EEditText) findViewById(R.id.et_comment);
-        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
+
         commentView = (RecyclerView) findViewById(R.id.rv_comment);
         commentAdapter = new DynamicDetailAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(commentAdapter);
@@ -308,7 +318,6 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             temp.setPublisher(publisher);
 
 
-
             comments.add(0, temp);
             commentAdapter.addExtra(itUser);
             commentAdapter.addExtra(replyUserMap);
@@ -332,7 +341,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             headerAdapter.notifyDataSetChanged();
 
             CMDMessageManager.sendCMDMessageAiteReply(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(),
-                    App.getInstance().getUser().getName(), dynamic.id,  DateUtils.getCurrentTime(),content, dynamic.getUnifromCover(),
+                    App.getInstance().getUser().getName(), dynamic.id, DateUtils.getCurrentTime(), content, dynamic.getUnifromCover(),
                     CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName,
                     itUser, replyUserMap);
 
@@ -485,6 +494,26 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             commentAdapter.setExtras(dynamicBean.extras);
 
         }
+    }
+
+    @Override
+    public void showEmptyView() {
+        switcherLayout = new SwitcherLayout(this, refreshLayout);
+        View view = View.inflate(this, R.layout.empty_order, null);
+
+        TextView tv = ((TextView) view.findViewById(R.id.tv));
+        Drawable drawable = getResources().getDrawable(
+                R.drawable.icon_nocontent);
+        // / 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                drawable.getMinimumHeight());
+        tv.setCompoundDrawables(null, drawable, null, null);
+
+        tv.setText("动态已删除");
+        switcherLayout.addCustomView(view, "empty");
+        switcherLayout.showCustomLayout("empty");
+
+
     }
 
     public class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {

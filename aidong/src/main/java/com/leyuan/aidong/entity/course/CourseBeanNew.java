@@ -24,6 +24,8 @@ public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
     public static final int FULL = 6;
     public static final int END = 7;
 
+
+    public boolean modifyTag = false;
     String id;// 课程编号
     String name;// 课程名
     String class_time;//  上课时间 - 下课时间
@@ -36,6 +38,8 @@ public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
     boolean member;
 
     String reserve_time;// 预约时间
+
+    public ArrayList<String>   copyTag;
 
     double price;//价格
     double member_price;// 会员价格

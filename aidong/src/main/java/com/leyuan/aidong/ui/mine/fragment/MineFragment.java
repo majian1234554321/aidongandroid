@@ -142,6 +142,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         txtClassTotalTime = (TextView) rootView.findViewById(R.id.txt_class_total_time);
         txtExpendCal = (TextView) rootView.findViewById(R.id.txt_expend_cal);
 
+
+
 //        relativeLayout_yuyue = (LinearLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
 //        relativeLayout_dingdang = (LinearLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
 //        layout_appoint_course= (LinearLayout) rootView.findViewById(R.id.layout_appoint_course);
@@ -225,7 +227,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             user = App.getInstance().getUser();
             textView_name.setText(user.getName());
             presenter.getMineInfo();
-            sportPresent.getSportRecordNoProgress(DateUtils.getYear() + "", DateUtils.getMonth() + "");
+            sportPresent.getSportRecordNoProgress( "",  "");
 
             GlideLoader.getInstance().displayCircleImage(user.getAvatar(), imageView_head);
         } else {

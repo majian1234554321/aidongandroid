@@ -72,7 +72,7 @@
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="10fen"
+                android:text="     - -"
                 android:textColor="@color/b3"
                 android:textSize="12sp" />
 

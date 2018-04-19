@@ -26,6 +26,9 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
     private final Context context;
     private ArrayList<CourseBeanNew> course;
     private OnAttentionClickListener listener;
+    private int width;
+    private StringBuilder sb;
+    private ArrayList<String> tag;
 
     public HomeRecommendCourseAdapter(Context context) {
         this.context = context;
@@ -39,57 +42,96 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        if (course!=null){
-        final CourseBeanNew courseBean = course.get(position);
-        GlideLoader.getInstance().displayImage(courseBean.getCover(), holder.imgCoach);
-        holder.txtCourseName.setText(courseBean.getName());
-        holder.txtAttentionNum.setText(courseBean.getFollows_count() + "人关注");
-        holder.txtCourseDesc.setText(courseBean.getTagString());
-//            Paint mPaint = new Paint();
-//            mPaint.setFontFeatureSettings();
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        if (course != null) {
+            final CourseBeanNew courseBean = course.get(position);
+            GlideLoader.getInstance().displayImage(courseBean.getCover(), holder.imgCoach);
+            holder.txtCourseName.setText(courseBean.getName());
+            holder.txtAttentionNum.setText(courseBean.getFollows_count() + "人关注");
+            holder.txtCourseDesc.setText(courseBean.getTagString());
+
+//            sb = new StringBuilder();
+//
+//            if (courseBean.copyTag== null) {
+//                if (courseBean.getTag() != null) {
+//                    tag = courseBean.getTag();
+//                    if (tag.size() < 2) {
+//                        holder.txtCourseDesc.setText(courseBean.getTagString());
+//                    } else {
+//                        holder.txtCourseDesc.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//
+//                            private Paint paint;
+//
+//                            @Override
+//                            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                                width = v.getWidth();
+//
+//                                for (int i = 0; i < tag.size(); i++) {
+//                                    holder.txtCourseDesc.setText(sb.append(tag.get(i)).append("|"));
+//                                    paint = holder.txtCourseDesc.getPaint();
+//                                    paint.measureText(sb.toString());
+//                                    if (paint.measureText(holder.txtCourseDesc.getText().toString()) > width) {
+//                                        String value = sb.toString().replace(tag.get(i), "");
+//                                        if (value.endsWith("||")) {
+//                                            Log.i("TAG1", "VALUE" + value.replace("||", ""));
+//                                            holder.txtCourseDesc.setText(value.replace("||", ""));
+//
+//                                        } else {
+//                                            holder.txtCourseDesc.setText(value);
+//                                        }
+//                                        courseBean.copyTag.add(value.replace("||", ""));
+//                                        break;
+//                                    }
+//                                }
+//
+//                            }
+//                        });
+//
+//
+//                    }
+//
+//
+//                }
+//            } else {
+//                holder.txtCourseDesc.setText(courseBean.copyTag.get(position));
+//            }
 
 
-            int spec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-            holder.txtCourseDesc.measure(spec,spec);
-
-
-            Log.i("holder",":"+holder.txtCourseDesc.getMeasuredWidth());
-
-        for (int i = 0; i < 5; i++) {
-            if (i < courseBean.getStrength()) {
-                holder.starList.get(i).setVisibility(View.VISIBLE);
-            } else {
-                holder.starList.get(i).setVisibility(View.GONE);
-            }
-        }
-
-        if (courseBean.isFollowed()) {
-            holder.btAttention.setImageResource(R.drawable.icon_attented);
-        } else {
-            holder.btAttention.setImageResource(R.drawable.icon_attention);
-        }
-
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(courseBean.getId(), position);
+            for (int i = 0; i < 5; i++) {
+                if (i < courseBean.getStrength()) {
+                    holder.starList.get(i).setVisibility(View.VISIBLE);
+                } else {
+                    holder.starList.get(i).setVisibility(View.GONE);
                 }
+            }
+
+            if (courseBean.isFollowed()) {
+                holder.btAttention.setImageResource(R.drawable.icon_attented);
+            } else {
+                holder.btAttention.setImageResource(R.drawable.icon_attention);
+            }
+
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(courseBean.getId(), position);
+                    }
 
 //                CourseCircleDetailActivity.start(context, courseBean.getId());
-            }
-        });
-        holder.btAttention.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onCourseAttentionClick(courseBean.getId(),position,courseBean.isFollowed());
                 }
-            }
-        });
-    }}
+            });
+            holder.btAttention.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onCourseAttentionClick(courseBean.getId(), position, courseBean.isFollowed());
+                    }
+                }
+            });
+        }
+    }
 
     @Override
     public int getItemCount() {
@@ -129,6 +171,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
             txtCourseDesc = (TextView) view.findViewById(R.id.txt_course_desc);
             txtCourseDifficulty = (TextView) view.findViewById(R.id.txt_course_difficulty);
             btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
+
 
             starList.add((ImageView) view.findViewById(R.id.img_star_first));
             starList.add((ImageView) view.findViewById(R.id.img_star_second));

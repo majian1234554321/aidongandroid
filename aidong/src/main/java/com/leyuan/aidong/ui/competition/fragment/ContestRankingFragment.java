@@ -288,11 +288,16 @@ public class ContestRankingFragment extends BaseFragment implements OnRefreshLis
     public void showEmptyView() {
        View  view = View.inflate(getContext(), R.layout.empty_order2, null);
         TextView tv =  ((TextView) view.findViewById(R.id.tv));
-        Drawable rightDrawable = getContext().getResources().getDrawable(R.drawable.icon_rank);
+    Drawable drawable = getResources().getDrawable(
+                R.drawable.icon_rank);
+        // / 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                drawable.getMinimumHeight());
+        tv.setCompoundDrawables(null, drawable, null, null);
 
-
-        rightDrawable.setBounds(0, rightDrawable.getMinimumWidth(), 0, 0);
-        tv.setCompoundDrawables(null, rightDrawable, null, null);
+        UserCoach mine = App.getInstance().getUser();
+        GlideLoader.getInstance().displayCircleImage(mine.getAvatar(), imgAvatar);
+        txtCoachName.setText(mine.getName());
 
         tv .setText("暂无排行");
         switcherLayout.addCustomView(view, "empty");

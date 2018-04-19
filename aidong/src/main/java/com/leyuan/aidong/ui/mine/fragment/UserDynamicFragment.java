@@ -68,7 +68,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private LinearLayout layoutPersonIntro;
-    private RichWebView txtCourseIntro;
+    private TextView txtCourseIntro;
 
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -155,14 +155,14 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         if (getActivity() instanceof UserInfoActivity && !TextUtils.isEmpty(intro)) {
 
             View headView = View.inflate(getActivity(), R.layout.layout_person_intro, null);
-            txtCourseIntro = (RichWebView) headView.findViewById(R.id.txt_course_intro);
+            txtCourseIntro = (TextView) headView.findViewById(R.id.txt_course_intro);
             TextView  tv_name = (TextView) headView.findViewById(R.id.tv_name);
 
             if ("NODATA".equals(intro)){
                 txtCourseIntro.setVisibility(View.GONE);
                 tv_name.setVisibility(View.GONE);
             }else {
-                txtCourseIntro.setRichText(intro);
+                txtCourseIntro.setText(intro);
             }
 
             RecyclerViewUtils.setHeaderView(recyclerView, headView);

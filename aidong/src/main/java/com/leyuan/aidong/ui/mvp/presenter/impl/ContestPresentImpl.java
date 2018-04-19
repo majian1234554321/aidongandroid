@@ -137,8 +137,12 @@ public class ContestPresentImpl {
             @Override
             public void onNext(ContestRuleData contestRuleData) {
 
-                if (contestRuleView != null) {
+                if (contestRuleView != null&&contestRuleData.rule!=null) {
                     contestRuleView.onGetContestRuleData(contestRuleData.rule);
+                }else {
+                    if (emptyView!=null){
+                        emptyView.showEmptyView();
+                    }
                 }
 
             }

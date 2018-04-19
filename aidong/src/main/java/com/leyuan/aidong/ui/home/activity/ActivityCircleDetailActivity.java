@@ -151,6 +151,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         }
     };
     private boolean refresh;
+    private String value;
 
 
     @Override
@@ -304,8 +305,15 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()) {
                         image = campaignDetailBean.getImage().get(0);
                     }
+
+                    if(campaignDetailBean.simple_intro!=null&&campaignDetailBean.simple_intro.length()>30){
+                        value = campaignDetailBean.simple_intro.substring(0,30);
+                        value =  value+"...";
+                    }else {
+                        value = campaignDetailBean.simple_intro;
+                    }
 //活动分享
-                    sharePopupWindow.showAtBottom(campaignDetailBean.getName() + Constant.I_DONG_FITNESS, campaignDetailBean.simple_intro,
+                    sharePopupWindow.showAtBottom(campaignDetailBean.getName() + Constant.I_DONG_FITNESS, value,
                             image, ConstantUrl.URL_SHARE_CAMPAIGN + campaignDetailBean.getCampaignId());
                 }
 

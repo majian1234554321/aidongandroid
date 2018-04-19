@@ -273,7 +273,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         txt_bt_attention_num.setText(course.getFollows_count() + "人已关注");
 
         if (course.getTagString()!=null) {
-            txtCourseDesc.setText( course.getTagString().replace("|","#"));
+            txtCourseDesc.setText( course.getTagString().replace("|","|"));
         }
 
         for (int i = 0; i < 5; i++) {

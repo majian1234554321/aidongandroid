@@ -14,13 +14,17 @@ import com.leyuan.aidong.entity.campaign.ContestRuleBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ContestPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ContestRuleView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.richtext.RichWebView;
 
 /**
  * Created by user on 2018/3/19.
  */
-public class ContestRuleActivity extends BaseActivity implements ContestRuleView {
+public class ContestRuleActivity extends BaseActivity implements ContestRuleView,EmptyView {
+
+    private View view;
+    private TextView tv;
 
     public static void start(Context context, String contestId) {
 
@@ -47,9 +51,12 @@ public class ContestRuleActivity extends BaseActivity implements ContestRuleView
 
         contestId = getIntent().getStringExtra("contestId");
 
+        view = (View) findViewById(R.id.view);
+
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         txtContestTime = (TextView) findViewById(R.id.txt_contest_time);
+        tv = (TextView) findViewById(R.id.tv);
         txtAddress = (TextView) findViewById(R.id.txt_address);
         richWebView = (RichWebView) findViewById(R.id.rich_web_view);
 //        Color.parseColor("#111111")
@@ -60,7 +67,7 @@ public class ContestRuleActivity extends BaseActivity implements ContestRuleView
         videoAdapter = new ContestRuleVideoAdapter(this);
         recyclerView.setAdapter(videoAdapter);
 
-        contestPresent = new ContestPresentImpl(this);
+        contestPresent = new ContestPresentImpl(this,this);
         contestPresent.setContestRuleView(this);
         contestPresent.getContestRule(contestId);
 
@@ -74,9 +81,22 @@ public class ContestRuleActivity extends BaseActivity implements ContestRuleView
 
     @Override
     public void onGetContestRuleData(ContestRuleBean rule) {
-        videoAdapter.setData(rule.videos);
+
+        if (rule.videos!=null&&rule.videos.size()>0){
+            videoAdapter.setData(rule.videos);
+        }else {
+            tv.setVisibility(View.GONE);
+            view.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+        }
         txtContestTime.setText(rule.date);
         txtAddress.setText(rule.address);
         richWebView.setRichText(rule.introduce);
+    }
+
+
+    @Override
+    public void showEmptyView() {
+
     }
 }

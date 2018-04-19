@@ -175,14 +175,26 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
             case R.id.img_share:
 
                 if (contest == null) return;
-                sharePopupWindow.showAtBottom( contest.name+ Constant.I_DONG_FITNESS, contest.introduce ,
+
+
+                String value = "";
+
+
+                if (contest.introduce != null && contest.introduce.length() > 30) {
+                    value = contest.introduce.substring(0, 30);
+                    value = value + "...";
+                } else {
+                    value = contest.introduce;
+                }
+
+                sharePopupWindow.showAtBottom(contest.name + Constant.I_DONG_FITNESS, value,
                         contest.background, contest.share_url);
 
                 break;
 
             case R.id.img_attention:
 
-                if(!App.getInstance().isLogin()){
+                if (!App.getInstance().isLogin()) {
                     UiManager.activityJump(this, LoginActivity.class);
                     return;
                 }
@@ -214,13 +226,13 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                         BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
                         Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
                     } else {
-                        ContestEnrolmentInfoActivity.start(this, contestId, contest.name, contest.start_date+"~"+contest.end_date, contest);
+                        ContestEnrolmentInfoActivity.start(this, contestId, contest.name, contest.start_date + "~" + contest.end_date, contest);
                     }
 
                 } else if ("semi_finals".equals(contest.status)) {
                     if (contest.joined) {
                         //已参加，有复赛资格
-                        ContestQuarterFinalEnrolActivity.start(this, contestId,contest);
+                        ContestQuarterFinalEnrolActivity.start(this, contestId, contest);
 
                     } else {
                         layoutInvitation.setVisibility(View.VISIBLE);
@@ -260,7 +272,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
             case R.id.bt_rule:
                 //h5
 
-                ContestRuleActivity.start(this,contestId);
+                ContestRuleActivity.start(this, contestId);
 
                 break;
 
@@ -301,15 +313,14 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         } else if ("finals".equals(contest.status)) {
             imgPostOrEnrol.setVisibility(View.GONE);
             layoutEnd.setVisibility(View.VISIBLE);
-            GlideLoader.getInstance().displayImage(contest.cover,imgEndCover);
-        } else if ("pending".equals(contest.status))
-        {
+            GlideLoader.getInstance().displayImage(contest.cover, imgEndCover);
+        } else if ("pending".equals(contest.status)) {
             imgPostOrEnrol.setImageResource(R.drawable.post_video);
         } else {
 
             imgPostOrEnrol.setVisibility(View.GONE);
             layoutEnd.setVisibility(View.VISIBLE);
-            GlideLoader.getInstance().displayImage(contest.cover,imgEndCover);
+            GlideLoader.getInstance().displayImage(contest.cover, imgEndCover);
 
         }
 

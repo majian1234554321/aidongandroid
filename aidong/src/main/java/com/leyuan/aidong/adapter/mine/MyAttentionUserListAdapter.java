@@ -52,13 +52,13 @@ public class MyAttentionUserListAdapter extends RecyclerView.Adapter<MyAttention
         if (!TextUtils.isEmpty(user.signature)) {
 
             String value = "";
-            if (user.personal_intro.contains("<p>")) {
-                value = user.personal_intro.replace("<p>", "");
-            }
-
-            if (value.contains("</p>")) {
-                value = value.replace("</p>", "");
-            }
+//            if (user.personal_intro.contains("<p>")) {
+//                value = user.personal_intro.replace("<p>", "");
+//            }
+//
+//            if (value.contains("</p>")) {
+//                value = value.replace("</p>", "");
+//            }
 
 
             holder.txtIntro.setText(user.signature);

@@ -21,6 +21,7 @@ public class DialogUtils {
 //        if (dialog != null && dialog.isShowing()) {
 //            dialog.dismiss();
 //        }
+        if (context == null) return;
         dialog = wattingDialog(context, message, cancelable);
         dialog.show();
     }

@@ -252,7 +252,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
 
                 SportPresentImpl sportPresent = new SportPresentImpl(App.context);
                 sportPresent.setSportRecordView(this);
-                sportPresent.getSportRecordNoProgress(DateUtils.getYear() + "", DateUtils.getMonth() + "");
+                sportPresent.getSportRecordNoProgress( "",  "");
 
                 break;
 //            case R.id.tabMineLayout:

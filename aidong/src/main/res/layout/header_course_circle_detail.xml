@@ -52,7 +52,7 @@
         android:layout_marginTop="15dp"
         android:text="钢管舞属于动作与机器相结合多少点卡了咯松井大辅卡拉，啊迪斯科解放和点卡收费就"
         android:textColor="@color/c3"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
     <TextView
         android:id="@+id/txt_suggest_frequency"
         android:layout_width="wrap_content"

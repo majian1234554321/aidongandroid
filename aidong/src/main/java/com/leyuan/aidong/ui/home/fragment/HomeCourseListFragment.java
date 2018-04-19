@@ -157,7 +157,10 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
 
                     //reset fragment
                     HomeCourseListChildFragment page = (HomeCourseListChildFragment) adapter.getPage(position);
-                    page.scrollToTop();
+                    if (page!=null){
+                        page.scrollToTop();
+                    }
+
 //                    filterView.animate().translationY(0).setInterpolator
 //                            (new DecelerateInterpolator(2)).start();
                 }

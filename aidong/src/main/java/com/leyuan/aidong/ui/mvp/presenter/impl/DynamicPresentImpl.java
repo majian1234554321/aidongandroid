@@ -91,6 +91,16 @@ public class DynamicPresentImpl implements DynamicPresent {
         }
     }
 
+    EmptyView emptyView;
+    public DynamicPresentImpl(Context context, DynamicDetailActivityView view,EmptyView emptyView) {
+        this.context = context;
+        this.dynamicDetailActivityView = view;
+        this.emptyView = emptyView;
+        if (dynamicModel == null) {
+            dynamicModel = new DynamicModelImpl();
+        }
+    }
+
     public DynamicPresentImpl(Context context, DynamicParseUserView view) {
         this.context = context;
         this.dynamicParseUserView = view;
@@ -273,10 +283,12 @@ public class DynamicPresentImpl implements DynamicPresent {
         dynamicModel.getDynamicDetail(new BaseSubscriber<DynamicsSingleData>(context) {
             @Override
             public void onNext(DynamicsSingleData dynamicBean) {
-                if (dynamicBean != null) {
+                if (dynamicBean != null&&dynamicBean.getDynamic()!=null) {
                     dynamicDetailActivityView.onGetDynamicDetail(dynamicBean.getDynamic());
                 } else {
-                    dynamicDetailActivityView.onGetDynamicDetail(null);
+                    if(emptyView!=null){
+                        emptyView.showEmptyView();
+                    }
                 }
 
             }
@@ -284,7 +296,9 @@ public class DynamicPresentImpl implements DynamicPresent {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                dynamicDetailActivityView.onGetDynamicDetail(null);
+                if(emptyView!=null){
+                    emptyView.showEmptyView();
+                }
             }
         }, id);
 

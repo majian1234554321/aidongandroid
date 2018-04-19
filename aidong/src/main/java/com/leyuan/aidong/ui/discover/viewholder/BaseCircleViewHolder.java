@@ -249,21 +249,43 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         } else {
             txtLocation.setVisibility(View.GONE);
         }
-        UserCoach  userCoach = App.getInstance().getUser();
-      String user_id =    dynamic.publisher.id;
+        UserCoach userCoach = App.getInstance().getUser();
+        String user_id = dynamic.publisher.id;
 
-        if (isLike(dynamic)) {
-            if (dynamic.publisher.id.equals(App.getInstance().getUser().getId() + "")) {
-                img_parse.setBackgroundResource(R.drawable.icon_001);
-            }else {
-                img_parse.setBackgroundResource(R.drawable.icon_parsed);
+//        if (isLike(dynamic)) {
+//            if (dynamic.publisher.id.equals(App.getInstance().getUser().getId() + "")) {
+//                img_parse.setBackgroundResource(R.drawable.icon_001);
+//            }else {
+//                img_parse.setBackgroundResource(R.drawable.icon_parsed);
+//            }
+//        } else {
+//            img_parse.setBackgroundResource(R.drawable.icon_parse);
+//        }
+
+        if (typeData != null) {
+
+            switch (typeData) {
+                case "ABOUTDONGTAI":
+                    img_parse.setBackgroundResource(isLike(dynamic)
+                            ? R.drawable.icon_001 : R.drawable.icon_parse);
+                    break;
+
+                default:
+
+                    img_parse.setBackgroundResource(isLike(dynamic)
+                            ? R.drawable.icon_parsed : R.drawable.icon_parse);
+                    break;
             }
+
+
         } else {
-            img_parse.setBackgroundResource(R.drawable.icon_parse);
+            img_parse.setBackgroundResource(isLike(dynamic)
+                    ? R.drawable.icon_parsed : R.drawable.icon_parse);
+
         }
 
-//        img_parse.setBackgroundResource(isLike(dynamic)
-//                ? R.drawable.icon_parsed : R.drawable.icon_parse);
+
+//
         txtParse.setText(String.valueOf(dynamic.like.counter));
         txtComment.setText(String.valueOf(dynamic.comment.count));
         layout_parse.setOnClickListener(new View.OnClickListener() {
@@ -329,6 +351,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         this.callback = callback;
     }
 
+
     public void showLikeAndCommentLayout(boolean show) {
         this.showCommentLayout = show;
     }
@@ -356,6 +379,12 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         }
         return false;
+    }
+
+    public String typeData;
+
+    public void setTypeData(String typeData) {
+        this.typeData = typeData;
     }
 
 

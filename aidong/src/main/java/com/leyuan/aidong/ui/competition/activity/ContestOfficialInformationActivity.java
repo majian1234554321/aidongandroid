@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.competition.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +33,7 @@ import java.util.List;
  * 运动之窗资讯列表
  * Created by song on 2016/10/17.
  */
-public class ContestOfficialInformationActivity extends BaseActivity implements SportNewsActivityView, ContestInfoView,EmptyView {
+public class ContestOfficialInformationActivity extends BaseActivity implements SportNewsActivityView, ContestInfoView, EmptyView {
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
@@ -68,7 +69,7 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
         });
         initSwipeRefreshLayout();
         initRecyclerView();
-        contestPresent = new ContestPresentImpl(this,this);
+        contestPresent = new ContestPresentImpl(this, this);
         contestPresent.setContestInfoView(this);
         contestPresent.getContestInfo(contestId);
 
@@ -137,8 +138,17 @@ public class ContestOfficialInformationActivity extends BaseActivity implements 
 
     @Override
     public void showEmptyView() {
-        View view = View.inflate(this, R.layout.empty_order, null);
-        ( (TextView)view.findViewById(R.id.tv)).setText("暂无资讯");
+        View view = View.inflate(this, R.layout.empty_order2, null);
+
+        TextView tv = ((TextView) view.findViewById(R.id.tv));
+        Drawable drawable = getResources().getDrawable(
+                R.drawable.icon_nodata);
+        // / 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                drawable.getMinimumHeight());
+        tv.setCompoundDrawables(null, drawable, null, null);
+
+        tv.setText("暂无资讯");
         switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
     }

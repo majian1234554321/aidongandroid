@@ -29,9 +29,15 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
     private boolean showLikeAndCommentLayout;
     private boolean showFollowButton;
     private boolean showCMDMessageLayout;
+   public String typeData;
 
     private CircleDynamicAdapter(Context context,List<DynamicBean> data){
         super(context,data);
+    }
+
+    private CircleDynamicAdapter(Context context,List<DynamicBean> data,String typeData){
+        super(context,data);
+        this.typeData = typeData;
     }
 
     private CircleDynamicAdapter(Builder builder) {
@@ -40,6 +46,9 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         this.viewHolderKeyArray = builder.viewHolderKeyArray;
         this.showFollowButton = builder.showFollowButton;
         this.showCMDMessageLayout = builder.showCMDMessageLayout;
+        this.showCMDMessageLayout = builder.showCMDMessageLayout;
+        this.typeData = builder.typeData;
+
 
         this.showLikeAndCommentLayout = builder.showLikeAndCommentLayout;
     }
@@ -55,6 +64,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         if (viewHolderInfo != null) {
             BaseCircleViewHolder circleBaseViewHolder = createCircleViewHolder(context, parent, viewHolderInfo);
             if (circleBaseViewHolder != null) {
+                circleBaseViewHolder.setTypeData(typeData);
                 circleBaseViewHolder.setCallback(callback);
                 circleBaseViewHolder.setShowFollowButton(showFollowButton);
                 circleBaseViewHolder.setShowCMDMessageLayout(showCMDMessageLayout);
@@ -77,6 +87,15 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
 
         public Builder(Context context) {
             this.context = context;
+            data = new ArrayList<>();
+            viewHolderKeyArray = new SparseArray<>();
+        }
+
+        public String typeData;
+
+        public Builder(Context context,String typeData) {
+            this.context = context;
+            this.typeData = typeData;
             data = new ArrayList<>();
             viewHolderKeyArray = new SparseArray<>();
         }
@@ -109,6 +128,8 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
             this.showFollowButton = show;
             return this;
         }
+
+
 
         public Builder<T> showCMDMessageLayout(boolean show) {
             this.showCMDMessageLayout = show;
