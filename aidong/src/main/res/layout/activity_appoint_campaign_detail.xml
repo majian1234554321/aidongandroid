@@ -125,10 +125,11 @@
                     android:layout_marginLeft="@dimen/left_margin"
                     android:gravity="center_vertical"
                     android:text="订单信息"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <include layout="@layout/inc_line_black" />
+
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_appoint_phone"
@@ -223,7 +224,12 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
-                    <include layout="@layout/inc_line_black" />
+                   <View
+                       android:layout_width="match_parent"
+                       android:layout_marginLeft="15dp"
+                       android:background="@color/line_color"
+                       android:layout_marginRight="15dp"
+                       android:layout_height="@dimen/pref_1dp"/>
 
                     <com.leyuan.aidong.widget.CustomNestRadioGroup
                         android:id="@+id/radio_group"
@@ -294,6 +300,12 @@
         </ScrollView>
     </LinearLayout>
     <!--底部操作按钮信息-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:background="@color/line_color"
+        android:layout_marginRight="15dp"
+        android:layout_height="@dimen/pref_1dp"/>
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"

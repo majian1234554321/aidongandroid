@@ -86,9 +86,18 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         View headerView = View.inflate(this, R.layout.header_appointment_success, null);
         tvType = (TextView) headerView.findViewById(R.id.tv_type);
         tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
-        tvType.setText(isCourse ? R.string.course_time : R.string.campaign_time);
+        //tvType.setText(isCourse ? R.string.course_time : R.string.campaign_time);
         tvTime = (TextView) headerView.findViewById(R.id.tv_time);
-        tvTime.setText(time+"共"+amount+"张票");
+
+        if (time!=null){
+            if (time.split(" ").length>2){
+                tvTime.setText(time.split(" ")[0]+" "+time.split(" ")[1] +" 共"+amount+"张票");
+            }else {
+                tvTime.setText(time+"共"+amount+"张票");
+            }
+        }
+
+
         returnHome = (TextView) headerView.findViewById(R.id.tv_home);
         checkAppointment = (TextView) headerView.findViewById(R.id.tv_appointment);
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);

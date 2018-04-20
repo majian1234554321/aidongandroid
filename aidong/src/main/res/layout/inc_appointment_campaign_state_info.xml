@@ -74,7 +74,7 @@
     <RelativeLayout
         android:id="@+id/rl_detail"
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/dv_goods_cover"
@@ -82,6 +82,7 @@
             android:layout_height="@dimen/pref_100dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
+            android:layout_marginBottom="8dp"
             android:src="@color/black"
 
             />

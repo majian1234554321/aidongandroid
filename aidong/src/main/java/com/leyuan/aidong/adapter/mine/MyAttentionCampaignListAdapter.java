@@ -69,9 +69,9 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
             }
 
 
-            holder.txtIntro.setText(value);
+            holder.txtIntro.setText(user.slogan);
         } else {
-            holder.txtIntro.setText(user.personal_intro);
+            holder.txtIntro.setText(user.slogan);
         }
 
 

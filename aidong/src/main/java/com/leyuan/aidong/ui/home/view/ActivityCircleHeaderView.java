@@ -30,6 +30,9 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.richtext.RichWebView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Created by user on 2018/1/11.
  */
@@ -51,6 +54,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
     private CampaignDetailBean campaignDetailBean;
 
     FollowPresentImpl followPresent;
+    private double max, min;
 
 
     public ActivityCircleHeaderView(Context context) {
@@ -115,8 +119,37 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         txtIntro.setRichText(campaignDetailBean.simple_intro);
         // txtPrice.setText("￥" + campaignDetailBean.getPrice() + "-" + campaignDetailBean.getMarket_price());
 
-        txtPrice.setText("￥" + campaignDetailBean.getPrice());
-        txtTime.setText(campaignDetailBean.getStartTime() + "-" + campaignDetailBean.getEndTime());
+
+        ArrayList<Double> arrayList = new ArrayList<>();
+
+
+        if (campaignDetailBean.spec.item != null) {
+
+
+            for (int i = 0; i < campaignDetailBean.spec.item.size(); i++) {
+                if (campaignDetailBean.spec.item.get(i).price != null) {
+                    arrayList.add(Double.parseDouble(campaignDetailBean.spec.item.get(i).price));
+                }
+            }
+
+            if (arrayList != null && arrayList.size() > 0) {
+                max = Collections.max(arrayList);
+                min = Collections.min(arrayList);
+
+
+                if (max == min) {
+                    txtPrice.setText(String.format(context.getString(R.string.rmb_price_double), max));
+                } else {
+                    txtPrice.setText(String.format(context.getString(R.string.rmb_price_scope), min, max));
+
+                }
+            }
+
+
+        }
+
+
+       // txtTime.setText(campaignDetailBean.getStartTime() + "-" + campaignDetailBean.getEndTime());
         txtCityAddress.setText(campaignDetailBean.getLandmark());
         txtLocationDetail.setText(campaignDetailBean.getAddress());
         if (campaignDetailBean.getApplicant() != null && !campaignDetailBean.getApplicant().isEmpty()) {

@@ -161,6 +161,7 @@
             android:background="@color/half_transparent"
             android:visibility="gone" />
 
+        <!--全部门店-->
         <RelativeLayout
             android:id="@+id/layout_store_content_root"
             android:layout_width="match_parent"
@@ -307,6 +308,7 @@
         </RelativeLayout>
 
 
+        <!--全部课程-->
         <LinearLayout
             android:id="@+id/layout_course_content"
             android:layout_width="match_parent"

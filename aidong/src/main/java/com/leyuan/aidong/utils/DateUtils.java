@@ -393,6 +393,8 @@ public class DateUtils {
         ;
         if (countdown < 0)
             countdown = 0;
+       // if(totalMilliseconds>)
+
         return countdown;
     }
 

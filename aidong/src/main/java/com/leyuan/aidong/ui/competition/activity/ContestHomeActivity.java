@@ -180,12 +180,28 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 String value = "";
 
 
-                if (contest.introduce != null && contest.introduce.length() > 30) {
-                    value = contest.introduce.substring(0, 30);
-                    value = value + "...";
-                } else {
+
+
+
+
+
+
+
+
+
+                if(contest.introduce!=null) {
                     value = contest.introduce;
+                    if (value.contains("<p>")){
+                        value = value.replace("<p>","");
+                    }
+                    if (value.length()>=30){
+                        value = value.substring(0,30);
+
+                    }
+
                 }
+
+
 
                 sharePopupWindow.showAtBottom(contest.name + Constant.I_DONG_FITNESS, value,
                         contest.background, contest.share_url);

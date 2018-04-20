@@ -71,7 +71,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.address.setText("共" + bean.amount + "张票");
-        if (bean.spec_value != null ){
+        if (bean.spec_value != null) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bean.spec_value.length; i++) {
                 sb.append(bean.spec_value[i]);
@@ -79,9 +79,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             }
             holder.tvtime.setText(sb.toString());
         }
-
-
-
 
 
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
@@ -99,7 +96,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
-                holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), appointCountdownMill));
+
+
+                holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), appointCountdownMill) > appointCountdownMill ? appointCountdownMill : DateUtils.getCountdown(bean.getCreated_at(), appointCountdownMill)
+                );
                 break;
 
             case UN_JOIN:           //待参加

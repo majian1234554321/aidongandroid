@@ -448,8 +448,10 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                 } else {
                     txt_limit_number.setText("");
                 }
-                txt_spec_remark.setText(line.remark);
-
+                if (line.remark!=null) {
+                    txt_spec_remark.setText(line.remark);
+                    txt_spec_remark.setVisibility(View.VISIBLE);
+                }
 
                 tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count), stock));
                 tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);

@@ -42,9 +42,9 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
     CirclePrensenter circlePrensenter;
 
 
-
     boolean isSearch;
     private String keyword;
+    private SearchHeaderView headView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +106,11 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
 
-        SearchHeaderView headView = new SearchHeaderView(this);
+        headView = new SearchHeaderView(this);
         headView.setOnsearchListner(this);
         headView.setSearchHint(getResources().getString(R.string.search_more_circle));
         headView.setTxtSearchTitle(getResources().getString(R.string.hot_recommend));
-        headView.setTxtSearchTitleVisible(View.GONE);
+
         RecyclerViewUtils.setHeaderView(recyclerView, headView);
 
     }
@@ -127,6 +127,8 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
         isSearch = true;
         currPage = 1;
         this.keyword = keyword;
+        if (headView != null)
+            headView.setTxtSearchTitleVisible(View.GONE);
         DialogUtils.showDialog(this, "", true);
         circlePrensenter.searchCircle(keyword);
     }

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -332,6 +334,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelPay.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.VISIBLE);
                 tvDelete.setVisibility(View.GONE);
+                tvStartTime.setLeftTextContent("实付款");
+
+
+                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.red_price));
+                tvStartTime.setRightContent(String.format(getString(R.string.rmb_price_double),
+                        FormatUtil.parseDouble(bean.getPay().getPayAmount())));
                 tvConfirmJoin.setVisibility(View.GONE);
                 tvCancelJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.GONE);
@@ -349,7 +357,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvPay.setVisibility(View.GONE);
                 tvCancelPay.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.GONE);
-                codeLayout.setVisibility(View.VISIBLE);
+                codeLayout.setVisibility(View.GONE);//1
 
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
@@ -373,7 +381,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelPay.setVisibility(View.GONE);
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
-                codeLayout.setVisibility(View.VISIBLE);
+                codeLayout.setVisibility(View.GONE);//1
 //                tvCodeNum.setText(bean.getId());
 //                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 //                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
@@ -415,7 +423,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelPay.setVisibility(View.GONE);
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
-                codeLayout.setVisibility(View.VISIBLE);
+                codeLayout.setVisibility(View.GONE);//1
 //                tvCodeNum.setText(bean.getId());
 //                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 //                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
@@ -443,7 +451,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelPay.setVisibility(View.GONE);
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
-                codeLayout.setVisibility(View.VISIBLE);
+                codeLayout.setVisibility(View.GONE);//1
 //                tvCodeNum.setText(bean.getId());
 //                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 //                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));

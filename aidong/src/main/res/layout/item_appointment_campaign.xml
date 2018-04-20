@@ -102,6 +102,7 @@
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:text="爱动"
             android:layout_below="@+id/tv_name"
             android:textSize="12sp"

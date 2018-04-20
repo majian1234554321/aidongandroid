@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -26,6 +27,7 @@ import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.leyuan.aidong.R.id.layout_store_content_all;
 import static com.leyuan.aidong.R.id.tv_store_all;
@@ -88,7 +90,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private ArrayList<CourseArea> currentAreaList;
     private CourseName courseType;
     private String currentCoursePriceType;
-    private ArrayList<String> currentCourseCategoryList;
+
     private String currentCourseCategory;
 
     private ArrayList<CourseArea> currentMineAreaList;
@@ -97,6 +99,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private CourseStore currentMineStore;
     private CourseAreaFilterAdapter adapterMineArea;
     private CourseStoreFilterAdapter adapterMineStore;
+    private List<List<CourseName.CategoryModelItem>> rightlist;
 
     public CourseListFilterNew(Context context) {
         this(context, null);
@@ -175,15 +178,15 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
                 break;
             case R.id.tv_store_all:
-                tvStoreAll.setTextColor(getResources().getColor( R.color.main_red));
-                tvStoreMine.setTextColor(getResources().getColor(R.color.c3) );
+                tvStoreAll.setTextColor(getResources().getColor(R.color.main_red));
+                tvStoreMine.setTextColor(getResources().getColor(R.color.c3));
                 layoutStoreContentAll.setVisibility(VISIBLE);
                 layoutStoreContentMine.setVisibility(GONE);
                 break;
             case R.id.tv_store_mine:
 
                 tvStoreAll.setTextColor(getResources().getColor(R.color.c3));
-                tvStoreMine.setTextColor(getResources().getColor( R.color.main_red));
+                tvStoreMine.setTextColor(getResources().getColor(R.color.main_red));
                 layoutStoreContentAll.setVisibility(GONE);
                 layoutStoreContentMine.setVisibility(VISIBLE);
 
@@ -229,26 +232,40 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         Logger.i("Course", courseFilterConfig.toString());
 
 
+//        if ("全部课程".equals(category)) {
+//            tvCourseName.setTextColor(category);
+//        }else {
+//            tvCourseName.setTextColor(ContextCompat.getColor(context,R.color.red_price));
+//        }
+        if (TextUtils.isEmpty(category))
+            category = "全部课程";
+        tvCourseName.setText(category);
+
         if (courseType != null) {
             int startPosition = courseType.getCategoryByCategoryName(category);
 
-            resetCurrentCategorySate(0, startPosition);
-            adapterTypePrice = new CourseTypePriceFilterAdapter(context, courseType.getCourseTypePriceName(), courseTypeItemClickListener);
-            adapterCategoty = new CourseCategoryFilterAdapter(context, currentCourseCategoryList, courseCategoryListener);
+
+            ArrayList<String> leftlist = new ArrayList<>();
+            rightlist = new ArrayList<>();
+            if (courseType.category != null && courseType.category.size() > 0) {
+                for (int i = 0; i < courseType.category.size(); i++) {
+                    leftlist.add(courseType.category.get(i).name);
+                    rightlist.add(courseType.category.get(i).item);
+                }
+            }
+
+
+            adapterTypePrice = new CourseTypePriceFilterAdapter(context, leftlist, courseTypeItemClickListener);
+
+
+            adapterCategoty = new CourseCategoryFilterAdapter(context, rightlist.get(0), courseCategoryListener);
             listCourseLeft.setAdapter(adapterTypePrice);
             listCourseRight.setAdapter(adapterCategoty);
+            resetCurrentCategorySate(0, startPosition);
 
-            refreshtCategoryAdapater(-1, startPosition);
-            tvCourseName.setText(currentCourseCategory);
-//            if (listener != null) {
-//                new Handler().postDelayed(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        listener.onCourseCategoryItemClick(currentCoursePriceType, currentCourseCategory);
-//                    }
-//                },500);
-//            }
+
+            refreshtCategoryAdapater(0, startPosition);
+
 
         }
 
@@ -307,12 +324,12 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private CourseCategoryFilterAdapter.OnLeftItemClickListener courseCategoryListener = new CourseCategoryFilterAdapter.OnLeftItemClickListener() {
         @Override
         public void onClick(int position) {
-            resetCurrentCategorySate(-1, position);
-            refreshtCategoryAdapater(-1, position);
+            resetCurrentCategorySate(leftPostion, position);
+            refreshtCategoryAdapater(leftPostion, position);
             if (listener != null) {
                 listener.onCourseCategoryItemClick(currentCoursePriceType, currentCourseCategory);
             }
-            tvCourseName.setText(currentCourseCategory);
+            //   tvCourseName.setText(currentCourseCategory);
             hidePopup();
         }
     };
@@ -322,31 +339,24 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             adapterTypePrice.refreshData(pricePostion);
         }
         if (categoryPostion > -1) {
-            adapterCategoty.refreshData(currentCourseCategoryList, categoryPostion);
+            adapterCategoty.refreshData(rightlist.get(pricePostion), categoryPostion);
         }
 
     }
 
+
+    public int leftPostion = 0;
+
     private void resetCurrentCategorySate(int pricePostion, int categoryPostion) {
         if (courseType != null && pricePostion > -1) {
 
-            currentCoursePriceType = courseType.getCourseTypePrice().get(pricePostion);
-            switch (pricePostion) {
-                case 0:
-                    currentCourseCategoryList = courseType.getAll();
-                    break;
-                case 1:
-                    currentCourseCategoryList = courseType.getTuition();
-                    break;
-                case 2:
-                    currentCourseCategoryList = courseType.getFree();
-                    break;
-            }
+            // currentCoursePriceType = courseType.getCourseTypePrice().get(pricePostion);
+            adapterCategoty.refreshData(rightlist.get(leftPostion), categoryPostion);
+
+            leftPostion = pricePostion;
+            tvCourseName.setText(rightlist.get(leftPostion).get(categoryPostion).name);
         }
 
-        if (currentCourseCategoryList != null && categoryPostion > -1 && categoryPostion < currentCourseCategoryList.size()) {
-            currentCourseCategory = currentCourseCategoryList.get(categoryPostion);
-        }
 
     }
 
@@ -416,13 +426,13 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                 listener.onAllStoreItemClick(mineCourseBrand, currentMineArea, currentMineStore);
             }
 
-            if(TextUtils.equals(currentMineStore.getName(),"全部门店" ) ){
-                if(TextUtils.equals(currentMineArea.getName(),"全部区域")){
-                    tvStore.setText("我的"+currentMineStore.getName());
-                }else {
-                    tvStore.setText("我的"+currentMineArea.getName()+currentMineStore.getName());
+            if (TextUtils.equals(currentMineStore.getName(), "全部门店")) {
+                if (TextUtils.equals(currentMineArea.getName(), "全部区域")) {
+                    tvStore.setText("我的" + currentMineStore.getName());
+                } else {
+                    tvStore.setText("我的" + currentMineArea.getName() + currentMineStore.getName());
                 }
-            }else {
+            } else {
                 tvStore.setText(currentMineStore.getName());
             }
 
@@ -464,16 +474,15 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                 listener.onAllStoreItemClick(currentBrand, currentArea, currentStore);
             }
 
-            if(TextUtils.equals(currentStore.getName(),"全部门店" ) ){
-                if(TextUtils.equals(currentArea.getName(),"全部区域")){
-                    tvStore.setText(currentBrand.getName()+currentStore.getName());
-                }else {
-                    tvStore.setText(currentArea.getName()+currentStore.getName());
+            if (TextUtils.equals(currentStore.getName(), "全部门店")) {
+                if (TextUtils.equals(currentArea.getName(), "全部区域")) {
+                    tvStore.setText(currentBrand.getName() + currentStore.getName());
+                } else {
+                    tvStore.setText(currentArea.getName() + currentStore.getName());
                 }
-            }else {
+            } else {
                 tvStore.setText(currentStore.getName());
             }
-
 
 
             hidePopup();
@@ -506,6 +515,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     public void setListener(OnCourseListFilterListener listener) {
         this.listener = listener;
     }
+
 
     public interface OnCourseListFilterListener {
         void onAllStoreItemClick(CourseBrand currentBrand, CourseArea currentArea, CourseStore currentStore);

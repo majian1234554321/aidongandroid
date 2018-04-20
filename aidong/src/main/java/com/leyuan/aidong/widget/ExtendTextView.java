@@ -94,6 +94,9 @@ public class ExtendTextView extends RelativeLayout {
     public void setRightContent(String content) {
         rightTextView.setText(content);
     }
+    public void setRightTextColor(int color){
+        rightTextView.setTextColor(color);
+    }
 
     /**
      * 设置左边文本内容

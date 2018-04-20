@@ -306,11 +306,16 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                         image = campaignDetailBean.getImage().get(0);
                     }
 
-                    if(campaignDetailBean.simple_intro!=null&&campaignDetailBean.simple_intro.length()>30){
-                        value = campaignDetailBean.simple_intro.substring(0,30);
-                        value =  value+"...";
-                    }else {
+                    if(campaignDetailBean.simple_intro!=null) {
                         value = campaignDetailBean.simple_intro;
+                        if (campaignDetailBean.simple_intro.contains("<p>")){
+                            value = value.replace("<p>","");
+                        }
+                        if (value.length()>30){
+                            value = value.substring(0,30);
+
+                        }
+
                     }
 //活动分享
                     sharePopupWindow.showAtBottom(campaignDetailBean.getName() + Constant.I_DONG_FITNESS, value,

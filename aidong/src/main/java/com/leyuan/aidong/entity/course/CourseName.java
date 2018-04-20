@@ -1,6 +1,7 @@
 package com.leyuan.aidong.entity.course;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by user on 2017/11/20.
@@ -11,6 +12,22 @@ public class CourseName {
     ArrayList<String> all;
     ArrayList<String> type = new ArrayList<>();
     ArrayList<String> typeName = new ArrayList<>();
+
+
+    public List<CategoryModel> category;
+
+
+    public static class CategoryModel {
+        public String name;
+        public List<CategoryModelItem> item;
+    }
+
+
+    public static class CategoryModelItem {
+        public String id;
+        public String name;
+    }
+
 
     public ArrayList<String> getFree() {
         return free;

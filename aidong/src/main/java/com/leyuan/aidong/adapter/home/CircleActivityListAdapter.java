@@ -48,7 +48,7 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
         }
 
 
-        holder.txt_sub_title.setText(bean.getSlogan() + " | " + bean.getFollows_count() + "人已关注");
+        holder.txt_sub_title.setText(((TextUtils.isEmpty(bean.getSlogan()))?"":bean.getSlogan()+ " | "  )+ bean.getFollows_count() + "人已关注");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

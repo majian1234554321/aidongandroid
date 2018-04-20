@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.course.CourseBrand;
+import com.leyuan.aidong.entity.course.CourseName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +21,25 @@ import java.util.List;
 public class CourseCategoryFilterAdapter extends BaseAdapter {
     private OnLeftItemClickListener listener;
     private Context context;
-    private List<String> circleBrandList;
+    private List<CourseName.CategoryModelItem> categoryModelItems;
     private CourseBrand selectedBean;        //持久保存
     private int checkItemPosition = -1;             //临时保存
     private boolean isTempShow = false;
     private int selectedIndex;
 
 
-    public CourseCategoryFilterAdapter(Context context, ArrayList<String> circleBeanList,
-                                       OnLeftItemClickListener listener) {
-        this.context = context;
-        this.circleBrandList = circleBeanList;
-        this.listener = listener;
+//    public CourseCategoryFilterAdapter(Context context, ArrayList<String> circleBeanList,
+//                                       OnLeftItemClickListener listener) {
+//        this.context = context;
+//        this.circleBrandList = circleBeanList;
+//        this.listener = listener;
+//
+//    }
 
+    public CourseCategoryFilterAdapter(Context context, List<CourseName.CategoryModelItem> categoryModelItems, OnLeftItemClickListener listener) {
+        this.context = context;
+        this.categoryModelItems = categoryModelItems;
+        this.listener = listener;
     }
 
 
@@ -52,14 +59,15 @@ public class CourseCategoryFilterAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (circleBrandList == null)
+        if (categoryModelItems == null)
             return 0;
-        return circleBrandList.size();
+        return categoryModelItems.size();
     }
 
+
     @Override
-    public String getItem(int position) {
-        return circleBrandList.get(position);
+    public CourseName.CategoryModelItem getItem(int position) {
+        return categoryModelItems.get(position);
     }
 
     @Override
@@ -83,11 +91,12 @@ public class CourseCategoryFilterAdapter extends BaseAdapter {
 
 
     private void fillValue(final int position, ViewHolder holder) {
-        holder.text.setText(getItem(position));
+        holder.text.setText(getItem(position).name);
         holder.root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClick(position);
+                if (listener != null)
+                    listener.onClick(position);
             }
         });
 
@@ -99,8 +108,8 @@ public class CourseCategoryFilterAdapter extends BaseAdapter {
 
     }
 
-    public void refreshData(ArrayList<String> currentStoreList, int categoryPostion) {
-        this.circleBrandList = currentStoreList;
+    public void refreshData(List<CourseName.CategoryModelItem> categoryModelItems, int categoryPostion) {
+        this.categoryModelItems = categoryModelItems;
         this.selectedIndex = categoryPostion;
         notifyDataSetChanged();
     }

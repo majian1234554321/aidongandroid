@@ -89,9 +89,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:background="?selectableItemBackground"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="?selectableItemBackground"
                 android:scaleType="center"
                 android:src="@drawable/icon_cancel" />
 
@@ -122,21 +122,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_spec_remark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text=""
-                android:layout_marginLeft="15dp"
-                android:visibility="gone"
-                android:textColor="@color/main_red"
-                android:textSize="14sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_sku"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_spec_remark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:textColor="@color/main_red"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
@@ -188,14 +190,15 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:background="@drawable/icon_add" />
+
                 <TextView
                     android:id="@+id/txt_limit_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/black"
-                    android:layout_marginLeft="10dp"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -235,12 +238,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/main_red"
+                android:foreground="?selectableItemBackground"
                 android:gravity="center"
                 android:text="确认"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="gone"
-                android:foreground="?selectableItemBackground"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_add_cart"
@@ -248,22 +251,22 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/c3"
+                android:foreground="?selectableItemBackground"
                 android:gravity="center"
                 android:text="加入购物车"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="gone"
-                android:foreground="?selectableItemBackground"/>
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_buy"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
                 android:background="@color/main_red"
-                android:foreground="?selectableItemBackground">
+                android:foreground="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -278,9 +281,9 @@
                     android:id="@+id/tv_all_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
                     android:gravity="center"
                     android:text="仅剩9件"
-                    android:layout_marginTop="1dp"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:visibility="gone" />
@@ -293,12 +296,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/c9"
+                android:foreground="?selectableItemBackground"
                 android:gravity="center"
                 android:text="售罄"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="gone"
-                android:foreground="?selectableItemBackground"/>
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

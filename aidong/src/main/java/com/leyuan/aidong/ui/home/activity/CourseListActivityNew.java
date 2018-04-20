@@ -132,32 +132,9 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         days = DateUtils.getSevenDate();
-        if(category != null ){
-            allcategory = "all,"+category;
-        }
 
-        FragmentPagerItems pages = new FragmentPagerItems(this);
-        for (int i = 0; i < days.size(); i++) {
-            CourseListFragmentNew courseFragment = new CourseListFragmentNew();
-//            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
-            pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                    new Bundler().putString("date", days.get(i)).putString("category",allcategory).get()
-            ));
-
-//            if (!TextUtils.isEmpty(category)) {
-//                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-//                        new Bundler().putString("date", days.get(i))
-//                                .putString("category", category).get()));
-//            } else {
-//                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-//                        new Bundler().putString("date", days.get(i)).get()));
-//            }
-        }
-        adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
-        viewPager.setOffscreenPageLimit(6);
-        viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);
-        tabLayout.setViewPager(viewPager);
+
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -239,7 +216,50 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
     @Override
     public void onGetCourseFilterConfig(CourseFilterBean courseFilterConfig) {
-        filterView.setData(courseFilterConfig, category);
+        if (courseFilterConfig.getCourse().getAll().contains(category)){
+            filterView.setData(courseFilterConfig, category);
+
+            if(category != null ){
+                allcategory = "all,"+category;
+            }
+
+            FragmentPagerItems pages = new FragmentPagerItems(this);
+            for (int i = 0; i < days.size(); i++) {
+                CourseListFragmentNew courseFragment = new CourseListFragmentNew();
+//            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
+                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
+                        new Bundler().putString("date", days.get(i)).putString("category",allcategory).get()
+                ));
+
+
+            }
+            adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+            viewPager.setOffscreenPageLimit(6);
+            viewPager.setAdapter(adapter);
+        }else {
+            filterView.setData(courseFilterConfig, "全部课程");
+
+
+            if(category != null ){
+                allcategory = "all,"+"全部课程";
+            }
+
+            FragmentPagerItems pages = new FragmentPagerItems(this);
+            for (int i = 0; i < days.size(); i++) {
+                CourseListFragmentNew courseFragment = new CourseListFragmentNew();
+//            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
+                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
+                        new Bundler().putString("date", days.get(i)).putString("category",allcategory).get()
+                ));
+
+
+            }
+            adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+            viewPager.setOffscreenPageLimit(6);
+            viewPager.setAdapter(adapter);
+        }
+        tabLayout.setViewPager(viewPager);
+
     }
 
     public void animatedShow() {
