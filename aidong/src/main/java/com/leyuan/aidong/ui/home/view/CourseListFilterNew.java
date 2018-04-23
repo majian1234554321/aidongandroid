@@ -1,6 +1,8 @@
 package com.leyuan.aidong.ui.home.view;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -9,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,11 +29,15 @@ import com.leyuan.aidong.entity.course.CourseFilterBean;
 import com.leyuan.aidong.entity.course.CourseName;
 import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.widget.RangeSeekBar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.leyuan.aidong.R.id.layout_store_content_all;
+import static com.leyuan.aidong.R.id.left;
+import static com.leyuan.aidong.R.id.switch1;
 import static com.leyuan.aidong.R.id.tv_store_all;
 
 /**
@@ -49,17 +57,17 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private TextView tvTimeFrame;
     private ImageView ivTimeArrow;
     private LinearLayout llFilter;
-    private TextView tvFilter;
+    private TextView tvFilter, tv_reset003, tv_true003;
     private ImageView ivFilterArrow;
     private RelativeLayout layoutStoreContentRoot;
     private LinearLayout layoutStoreBelong;
-    private TextView tvStoreAll;
+    private TextView tvStoreAll, tv_time;
     private TextView tvStoreMine;
     private LinearLayout layoutStoreContentAll;
     private ListView listStoreLeftAll;
     private ListView listStoreMiddleAll;
     private ListView listStoreRightAll;
-    private LinearLayout layoutStoreContentMine;
+    private LinearLayout layoutStoreContentMine, ll003;
 
     private ListView listStoreLeftMine;
     private ListView listStoreRightMine;
@@ -100,6 +108,13 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private CourseAreaFilterAdapter adapterMineArea;
     private CourseStoreFilterAdapter adapterMineStore;
     private List<List<CourseName.CategoryModelItem>> rightlist;
+    private ArrayList<String> leftlist;
+    private TextView rb1;
+    private TextView rb2;
+    private TextView rb3;
+    private TextView rb4;
+    private RangeSeekBar seekbar3;
+    public String startTime = "0", endTime = "24";
 
     public CourseListFilterNew(Context context) {
         this(context, null);
@@ -142,10 +157,115 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         listStoreLeftMine = (ListView) view.findViewById(R.id.list_store_left_mine);
         listStoreRightMine = (ListView) view.findViewById(R.id.list_store_right_mine);
         layoutCourseContent = (LinearLayout) view.findViewById(R.id.layout_course_content);
+
+        ll003 = (LinearLayout) view.findViewById(R.id.ll003);
+        LinearLayout lls = (LinearLayout) view.findViewById(R.id.lls);
+
+        lls.setOnClickListener(this);
         listCourseLeft = (ListView) view.findViewById(R.id.list_course_left);
         listCourseRight = (ListView) view.findViewById(R.id.list_course_right);
 
         view_mask_bg = view.findViewById(R.id.view_mask_bg);
+        LinearLayout rg = view.findViewById(R.id.rg);
+        rb1 = view.findViewById(R.id.rb1);
+        rb2 = view.findViewById(R.id.rb2);
+        rb3 = view.findViewById(R.id.rb3);
+        rb4 = view.findViewById(R.id.rb4);
+
+        tv_time = (TextView) view.findViewById(R.id.tv_time);
+        tv_reset003 = (TextView) view.findViewById(R.id.tv_reset003);
+        tv_true003 = (TextView) view.findViewById(R.id.tv_true003);
+        tv_true003.setOnClickListener(this);
+        tv_reset003.setOnClickListener(this);
+
+        seekbar3 = (RangeSeekBar) view.findViewById(R.id.seekbar3);
+
+
+        seekbar3.setValue(0, 24);
+
+        seekbar3.setLeftProgressDescription(startTime + ":00");
+        seekbar3.setRightProgressDescription(endTime + ":00");
+        tv_time.setText("当前时间段选择为:" + startTime + ":00-" + endTime + ":00");
+
+        seekbar3.setOnRangeChangedListener(new RangeSeekBar.OnRangeChangedListener() {
+            @Override
+            public void onRangeChanged(RangeSeekBar view, float min, float max, boolean isFromUser) {
+                if (isFromUser) {
+                    //  tv2.setText(min + "-" + max);
+
+
+                    rb1.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                    rb2.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                    rb3.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                    rb4.setTextColor(ContextCompat.getColor(context, R.color.gray));
+
+                    seekbar3.setLeftProgressDescription((int) min + ":00");
+
+                    seekbar3.setRightProgressDescription((int) max + ":00");
+
+                    startTime = (int) min + "";
+                    endTime = (int) max + "";
+                    tv_time.setText("当前时间段选择为:" + startTime + ":00-" + endTime + ":00");
+
+                    if ((int) min == 0 && (int) max == 24) {
+
+                        rb1.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+                        rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                    } else if ((int) min >= 0 && (int) max <= 12) {
+
+                        rb2.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+                        rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                    } else if ((int) min >= 12 && (int) max <= 18) {
+
+                        rb3.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+                        rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                    } else if ((int) min >= 18 && (int) max <= 24) {
+
+                        rb4.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+                    } else {
+
+
+                        rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
+                //do what you want!!
+            }
+
+            @Override
+            public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
+                //do what you want!!
+            }
+        });
+
+
+        rb1.setOnClickListener(new MyOnClickListener());
+        rb2.setOnClickListener(new MyOnClickListener());
+        rb3.setOnClickListener(new MyOnClickListener());
+        rb4.setOnClickListener(new MyOnClickListener());
+
+
     }
 
     private void setListener() {
@@ -157,6 +277,69 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         tvStoreMine.setOnClickListener(this);
     }
 
+
+    public class MyOnClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            rb1.setTextColor(ContextCompat.getColor(context, R.color.gray));
+            rb2.setTextColor(ContextCompat.getColor(context, R.color.gray));
+            rb3.setTextColor(ContextCompat.getColor(context, R.color.gray));
+            rb4.setTextColor(ContextCompat.getColor(context, R.color.gray));
+            rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+            rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+            rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+            rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+
+            switch (v.getId()) {
+                case R.id.rb1:
+                    rb1.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+
+                    seekbar3.setValue(0, 24);
+                    seekbar3.setLeftProgressDescription(0 + ":00");
+                    seekbar3.setRightProgressDescription(24 + ":00");
+                    rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+
+                    startTime = "0";
+                    endTime = "24";
+                    tv_time.setText("当前时间段选择为:" + startTime + ":00-" + endTime + ":00");
+
+                    break;
+                case R.id.rb2:
+
+                    rb2.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                    seekbar3.setValue(0, 12);
+                    seekbar3.setLeftProgressDescription(0 + ":00");
+                    seekbar3.setRightProgressDescription(12 + ":00");
+                    rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+                    startTime = "0";
+                    endTime = "12";
+                    tv_time.setText("当前时间段选择为:" + startTime + ":00-" + endTime + ":00");
+                    break;
+                case R.id.rb3:
+
+                    rb3.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                    seekbar3.setValue(12, 18);
+                    seekbar3.setLeftProgressDescription(12 + ":00");
+                    seekbar3.setRightProgressDescription(18 + ":00");
+                    rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+                    startTime = "12";
+                    endTime = "18";
+                    tv_time.setText("当前时间段选择为:" + startTime + ":00-" + endTime + ":00");
+                    break;
+                case R.id.rb4:
+                    rb4.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                    seekbar3.setValue(18, 24);
+                    seekbar3.setLeftProgressDescription(18 + ":00");
+                    seekbar3.setRightProgressDescription(24 + ":00");
+                    rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+                    startTime = "18";
+                    endTime = "24";
+                    tv_time.setText("当前时间段选择为:" + startTime + ":00-" + endTime + ":00");
+                    break;
+            }
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -208,8 +391,20 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
                 break;
             case R.id.ll_time_frame:
-                if (isPopupShowing()) {
+                if (timeIsShowing) {
                     hidePopup();
+                } else if (isPopupShowing()) {
+
+                    hidePopup();
+                    ll003.setVisibility(VISIBLE);
+                    view_mask_bg.setVisibility(VISIBLE);
+                    timeIsShowing = true;
+                } else {
+
+                    hidePopup();
+                    view_mask_bg.setVisibility(VISIBLE);
+                    ll003.setVisibility(VISIBLE);
+                    timeIsShowing = true;
                 }
 
                 break;
@@ -219,6 +414,41 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                     hidePopup();
                 }
                 break;
+
+            case R.id.tv_true003:
+
+                if (listener != null) {
+                    listener.onTimeItemClick(startTime + ":00," + endTime + ":00");
+                }
+                hidePopup();
+
+                break;
+
+
+            case R.id.tv_reset003:
+
+
+                rb1.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                rb2.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                rb3.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                rb4.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+
+                rb1.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+
+                seekbar3.setValue(0, 24);
+                seekbar3.setLeftProgressDescription(0 + ":00");
+                seekbar3.setRightProgressDescription(24 + ":00");
+                startTime = "0";
+                endTime = "24";
+                tv_time.setText("当前时间段选择为:" + startTime + ":00-" + endTime + ":00");
+                rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+
+                break;
+
             default:
                 break;
         }
@@ -237,15 +467,13 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 //        }else {
 //            tvCourseName.setTextColor(ContextCompat.getColor(context,R.color.red_price));
 //        }
-        if (TextUtils.isEmpty(category))
-            category = "全部课程";
-        tvCourseName.setText(category);
+
 
         if (courseType != null) {
-            int startPosition = courseType.getCategoryByCategoryName(category);
+            //int startPosition = courseType.getCategoryByCategoryName(category);
 
-
-            ArrayList<String> leftlist = new ArrayList<>();
+            int startPosition = 0;
+            leftlist = new ArrayList<>();
             rightlist = new ArrayList<>();
             if (courseType.category != null && courseType.category.size() > 0) {
                 for (int i = 0; i < courseType.category.size(); i++) {
@@ -257,16 +485,36 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
             adapterTypePrice = new CourseTypePriceFilterAdapter(context, leftlist, courseTypeItemClickListener);
 
+            if (rightlist.size() > 0) {
+                adapterCategoty = new CourseCategoryFilterAdapter(context, rightlist.get(0), courseCategoryListener);
+                listCourseRight.setAdapter(adapterCategoty);
+            }
 
-            adapterCategoty = new CourseCategoryFilterAdapter(context, rightlist.get(0), courseCategoryListener);
             listCourseLeft.setAdapter(adapterTypePrice);
-            listCourseRight.setAdapter(adapterCategoty);
-            resetCurrentCategorySate(0, startPosition);
+
+            if (leftlist.contains(category)){
+
+              int index =    leftlist.indexOf(category);
+                resetCurrentCategorySate(index, startPosition);
+
+            }else {
+                resetCurrentCategorySate(0, startPosition);
+            }
+
+
 
 
             refreshtCategoryAdapater(0, startPosition);
 
 
+
+                if (TextUtils.isEmpty(category) && leftlist != null && leftlist.size() > 0 && leftlist.contains(category))
+                    tvCourseName.setText(category);
+                else
+                    tvCourseName.setText("全部课程");
+
+        }else {
+            tvCourseName.setText("全部课程");
         }
 
 
@@ -327,7 +575,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             resetCurrentCategorySate(leftPostion, position);
             refreshtCategoryAdapater(leftPostion, position);
             if (listener != null) {
-                listener.onCourseCategoryItemClick(currentCoursePriceType, currentCourseCategory);
+                listener.onCourseCategoryItemClick(leftlist.get(leftPostion), rightlist.get(leftPostion).get(position).id);
             }
             //   tvCourseName.setText(currentCourseCategory);
             hidePopup();
@@ -339,7 +587,8 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             adapterTypePrice.refreshData(pricePostion);
         }
         if (categoryPostion > -1) {
-            adapterCategoty.refreshData(rightlist.get(pricePostion), categoryPostion);
+            if (adapterCategoty != null)
+                adapterCategoty.refreshData(rightlist.get(pricePostion), categoryPostion);
         }
 
     }
@@ -351,10 +600,12 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         if (courseType != null && pricePostion > -1) {
 
             // currentCoursePriceType = courseType.getCourseTypePrice().get(pricePostion);
-            adapterCategoty.refreshData(rightlist.get(leftPostion), categoryPostion);
+            if (adapterCategoty != null)
+                adapterCategoty.refreshData(rightlist.get(leftPostion), categoryPostion);
 
             leftPostion = pricePostion;
-            tvCourseName.setText(rightlist.get(leftPostion).get(categoryPostion).name);
+            if (rightlist != null && rightlist.size() > 0)
+                tvCourseName.setText(rightlist.get(leftPostion).get(categoryPostion).name);
         }
 
 
@@ -491,6 +742,8 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     };
 
     public boolean isPopupShowing() {
+
+
         return storeContentRootIsShowing || courseIsShowing || timeIsShowing;
 //        storeContentAllIsShowing || storeContentMineIsShowing ||
     }
@@ -502,7 +755,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 //        layoutCourseContent.setVisibility(GONE);
         layoutCourseContent.setVisibility(GONE);
         view_mask_bg.setVisibility(GONE);
-
+        ll003.setVisibility(GONE);
         storeContentRootIsShowing = false;
 //        storeContentAllIsShowing = false;
 //        storeContentMineIsShowing = false;
@@ -521,5 +774,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         void onAllStoreItemClick(CourseBrand currentBrand, CourseArea currentArea, CourseStore currentStore);
 
         void onCourseCategoryItemClick(String currentCoursePriceType, String currentCourseCategory);
+
+        void onTimeItemClick(String timeValue);
     }
 }

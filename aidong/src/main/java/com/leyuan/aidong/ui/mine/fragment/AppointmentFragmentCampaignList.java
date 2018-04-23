@@ -190,8 +190,8 @@ public class AppointmentFragmentCampaignList extends BaseLazyFragment implements
     private class AppointCallback implements AppointmentAdapter.AppointmentListener {
 
         @Override
-        public void onPayOrder(String type, String id,String imageUrl) {
-            AppointCampaignDetailActivity.start(getContext(), id,imageUrl);
+        public void onPayOrder(String type, String id, String imageUrl) {
+            AppointCampaignDetailActivity.start(getContext(), id, imageUrl);
         }
 
         @Override
@@ -209,8 +209,8 @@ public class AppointmentFragmentCampaignList extends BaseLazyFragment implements
                     ToastGlobal.showLong("未到活动时间，请稍后确认");
                 }
             } else {
-                new DialogDoubleButton(getActivity()).setLeftButton(getString(R.string.no_attend))
-                        .setRightButton(getString(R.string.have_attend))
+                new DialogDoubleButton(getActivity()).setLeftButton("取消")
+                        .setRightButton("确定")
                         .setContentDesc(getString(R.string.are_you_sure_have_to_attend))
                         .setBtnCancelListener(new ButtonCancelListener() {
                             @Override
@@ -233,10 +233,8 @@ public class AppointmentFragmentCampaignList extends BaseLazyFragment implements
         @Override
         public void onCancelJoin(int position) {
             AppointmentBean bean = data.get(position);
-            if ("course".equals(bean.getAppointmentType()))
-            {
-                if (DateUtils.started(bean.getStart()))
-                {
+            if ("course".equals(bean.getAppointmentType())) {
+                if (DateUtils.started(bean.getStart())) {
                     ToastGlobal.showLong("课程已开始，无法取消");
                     return;
                 }

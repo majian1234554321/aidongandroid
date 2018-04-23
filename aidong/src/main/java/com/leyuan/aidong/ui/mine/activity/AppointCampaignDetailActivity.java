@@ -357,7 +357,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvPay.setVisibility(View.GONE);
                 tvCancelPay.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.GONE);
-                codeLayout.setVisibility(View.GONE);//1
+                codeLayout.setVisibility(View.VISIBLE);//1
 
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
@@ -381,7 +381,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelPay.setVisibility(View.GONE);
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
-                codeLayout.setVisibility(View.GONE);//1
+                codeLayout.setVisibility(View.VISIBLE);//1
 //                tvCodeNum.setText(bean.getId());
 //                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 //                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
@@ -500,8 +500,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 //                    ToastGlobal.showLong("未到活动时间，请稍后确认");
 //                } else {
                     new DialogDoubleButton(this)
-                            .setLeftButton(getString(R.string.no_attend))
-                            .setRightButton(getString(R.string.have_attend))
+                            .setLeftButton("取消")
+                            .setRightButton("确定")
                             .setContentDesc(getString(R.string.are_you_sure_have_to_attend))
                             .setBtnCancelListener(new ButtonCancelListener() {
                                 @Override

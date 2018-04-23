@@ -359,7 +359,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
                 if (hasSku) {
                     if (isSellOut) {
-                        showSkuPopupWindow(ActivitySkuPopupWindow.GoodsStatus.SellOut);
+                        //showSkuPopupWindow(ActivitySkuPopupWindow.GoodsStatus.SellOut);
                     } else {
                         showSkuPopupWindow(ActivitySkuPopupWindow.GoodsStatus.ConfirmToBuy);
                     }
@@ -417,6 +417,13 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     txt_appoint_immediately.setBackgroundColor(Color.parseColor("#33333333"));
                     txt_appoint_immediately.setText(R.string.campaign_status_end);
                     headView.setData2();
+                }
+
+
+                if (isSellOut){
+                    txt_appoint_immediately.setBackgroundColor(Color.parseColor("#33333333"));
+                    txt_appoint_immediately.setText("售罄");
+
                 }
 
             }

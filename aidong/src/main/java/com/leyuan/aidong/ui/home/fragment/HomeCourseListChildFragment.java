@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.HomeCourseListChildAdapter;
@@ -17,6 +18,7 @@ import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.mvp.presenter.CourseListPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseListView;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
  * 课程表门店
  * Created by song on 2016/11/1.
  */
-public class HomeCourseListChildFragment extends BasePageFragment implements OnRefreshListener, CourseListView {
+public class HomeCourseListChildFragment extends BasePageFragment implements OnRefreshListener, CourseListView, EmptyView {
     private static final int HIDE_THRESHOLD = 80;
     private int scrolledDistance = 0;
     private boolean filterViewVisible = true;
@@ -63,7 +65,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
             course = getArguments().getString("category");
             store = getArguments().getString("store");
         }
-        coursePresent = new CourseListPresentImpl(getContext(), this);
+        coursePresent = new CourseListPresentImpl(getContext(), this,this);
 
         initRefreshLayout(view);
         initRecyclerView(view);
@@ -162,10 +164,10 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
             refreshLayout.setRefreshing(false);
         }
         data.clear();
-        if (courseList != null && !courseList.isEmpty()){
+        if (courseList != null && !courseList.isEmpty()) {
             data.addAll(courseList);
             rl_empty.setVisibility(View.GONE);
-        }else {
+        } else {
             rl_empty.setVisibility(View.VISIBLE);
         }
 
@@ -195,5 +197,18 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
     public void onDestroy() {
         super.onDestroy();
         DialogUtils.releaseDialog();
+    }
+
+    public void resetCourseTime(String timeValue) {
+        this.time = timeValue;
+    }
+
+    @Override
+    public void showEmptyView() {
+        View view = View.inflate(getContext(), R.layout.empty_order, null);
+        ((TextView) view.findViewById(R.id.tv)).setText("暂无课表");
+        switcherLayout.addCustomView(view, "empty");
+
+        switcherLayout.showCustomLayout("empty");
     }
 }

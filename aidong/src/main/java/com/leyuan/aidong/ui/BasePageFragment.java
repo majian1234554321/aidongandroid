@@ -47,4 +47,6 @@ public abstract class BasePageFragment extends BaseFragment {
         }
         return false;
     }
+
+
 }

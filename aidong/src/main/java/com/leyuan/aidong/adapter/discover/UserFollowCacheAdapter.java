@@ -1,6 +1,7 @@
 package com.leyuan.aidong.adapter.discover;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -67,6 +68,17 @@ public class UserFollowCacheAdapter extends RecyclerView.Adapter<UserFollowCache
             holder.distance.setText(bean.getSignature());
         }else {
             holder.distance.setText("这个人很懒，什么都没有留下");
+        }
+
+        if ("coach".equals(bean.type)){
+            Drawable drawable = context.getResources().getDrawable(
+                    R.drawable.icon_coach);
+            // / 这一步必须要做,否则不会显示.
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                    drawable.getMinimumHeight());
+            holder.nickname.setCompoundDrawables(null, null, drawable, null);
+        }else {
+            holder.nickname.setCompoundDrawables(null, null, null, null);
         }
 
 

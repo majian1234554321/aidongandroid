@@ -29,6 +29,7 @@ import com.leyuan.aidong.ui.home.fragment.HomeCourseListChildFragment;
 import com.leyuan.aidong.ui.home.view.CourseListFilterNew;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseFilterCallback;
+import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.Logger;
@@ -293,6 +294,15 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
                 ((CourseListFragmentNew) page).fetchData();
             }
         }
+
+        @Override
+        public void onTimeItemClick(String timeValue) {
+            for (int i = 0; i < days.size(); i++) {
+                Fragment page = adapter.getPage(i);
+                ((CourseListFragmentNew) page).resetCourseTime(timeValue);
+                ((CourseListFragmentNew) page).fetchData();
+            }
+        }
     };
 
 
@@ -309,6 +319,8 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
+
+
 
     //    private class SimpleDrawerDrawerListener extends DrawerLayout.SimpleDrawerListener {
 //        @Override

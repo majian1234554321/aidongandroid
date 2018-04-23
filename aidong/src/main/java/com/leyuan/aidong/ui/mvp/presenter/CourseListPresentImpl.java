@@ -74,14 +74,16 @@ public class CourseListPresentImpl {
         }, mobile,date);
     }
 
-    public void pullRefreshCourseList(String store, String course, String time, String date) {
+    public void pullRefreshCourseList(String store, final String course, String time, String date) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
-                if (courseDataNew != null) {
+                if (courseDataNew != null&&courseDataNew.getTimetable().size()>0) {
                     listener.onGetRefreshCourseList(courseDataNew.getTimetable());
                 } else {
-                    listener.onGetRefreshCourseList(null);
+                    if (emptyView!=null){
+                        emptyView.showEmptyView();
+                    }
                 }
 
             }

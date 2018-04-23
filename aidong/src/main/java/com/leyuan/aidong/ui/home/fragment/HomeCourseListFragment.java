@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.course.CourseArea;
@@ -228,6 +229,17 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
                 ((HomeCourseListChildFragment) page).fetchData();
             }
         }
+
+        @Override
+        public void onTimeItemClick(String timeValue) {
+            for (int i = 0; i < days.size(); i++) {
+                Fragment page = adapter.getPage(i);
+                ((HomeCourseListChildFragment) page).resetCourseTime(timeValue);
+                ((HomeCourseListChildFragment) page).fetchData();
+            }
+        }
+
+
     };
 
 
