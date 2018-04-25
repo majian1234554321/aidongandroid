@@ -67,7 +67,7 @@
                 android:layout_below="@+id/iv_image"
                 android:layout_centerHorizontal="true"
                 android:singleLine="true"
-                android:maxEms="8"
+                android:maxEms="6"
                 android:ellipsize="end"
                 android:text="@string/course"
                 android:textColor="@color/c3"

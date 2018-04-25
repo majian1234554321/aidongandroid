@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.exoplayer.util.Util;
@@ -80,7 +81,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * Created by user on 2018/1/9.
  */
 
-public class CourseCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, CourseDetailActivityView, View.OnClickListener, CourseVideoView {
+public class CourseCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, CourseDetailActivityView, View.OnClickListener, CourseVideoView,CourseCircleHeaderView.OnLoadListener {
     //    private SwitcherLayout switcherLayout;
 //    private CustomRefreshLayout refreshLayout;
     TextView txt_share_image, txt_appoint_immediately;
@@ -91,13 +92,13 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     private DynamicBean invokeDynamicBean;
 
     private int currPage = 1;
-    private DynamicPresentImpl dynamicPresent;
+    public DynamicPresentImpl dynamicPresent;
 
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
     private ImageButton bt_share;
     CoursePresentImpl coursePresent;
-    String id = "1", type = Constant.COURSE;
+   public String id = "1",  type = Constant.COURSE;
     private CourseCircleHeaderView headView;
     private CourseDetailBean courseDetailBean;
     private ArrayList<BaseMedia> selectedMedia;
@@ -259,7 +260,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 break;
             case R.id.txt_appoint_immediately:
 
-                CourseListActivityNew.start(this, courseDetailBean.getCategory());
+                CourseListActivityNew.start(this, courseDetailBean.getCategory(),courseDetailBean.getName());
                 break;
         }
     }
@@ -309,7 +310,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     @Override
     public void setCourseDetail(CourseDetailBean courseDetailBean) {
         this.courseDetailBean = courseDetailBean;
-        headView.setData(courseDetailBean);
+        headView.setData(courseDetailBean,this);
 
         if(recyclerView != null){
             int top = recyclerView.getChildAt(0).getTop();
@@ -454,6 +455,11 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     public void onDestroy() {
         super.onDestroy();
         sharePopupWindow.release();
+    }
+
+    @Override
+    public void load() {
+        coursePresent.getCourseDetail(id);
     }
 
 

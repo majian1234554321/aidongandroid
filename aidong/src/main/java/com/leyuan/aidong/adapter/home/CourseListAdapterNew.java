@@ -51,11 +51,26 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
 
+
+
+
+
+        final CourseBeanNew courseBean = data.get(position);
+        if (position == 0) {
+            holder.layout_type.setVisibility(View.VISIBLE);
+            holder.txt_type.setText(courseBean.company_id == 1 ? "爱动自营门店" : "合作品牌门店");
+        } else if (courseBean.company_id != data.get(position - 1).company_id && data.get(position - 1).company_id == 1) {
+            holder.layout_type.setVisibility(View.VISIBLE);
+            holder.txt_type.setText(courseBean.company_id == 1 ? "爱动自营门店" : "合作品牌门店");
+        } else {
+            holder.layout_type.setVisibility(View.GONE);
+        }
+
         if (data == null){
             holder.relativeLayout.setVisibility(View.VISIBLE);
         }else {
             holder.relativeLayout.setVisibility(View.VISIBLE);
-            final CourseBeanNew courseBean = data.get(position);
+
             GlideLoader.getInstance().displayCircleImage(courseBean.getCoach().getAvatar(), holder.imgCoach);
             holder.txtCoachName.setText(courseBean.getCoach().getName());
             holder.txtCourseName.setText(courseBean.getName());
@@ -155,7 +170,7 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
 
         private ImageView imgCoach;
         private TextView txtCoachName;
-        private TextView txtCourseName;
+        private TextView txtCourseName,txt_type;
         private TextView txtCourseTime;
         private TextView txtCourseDesc;
         private TextView txtCourseDifficulty;
@@ -164,7 +179,7 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
         // ,img_star_first,img_star_second,img_star_three,img_star_four,img_star_five;
         private TextView txtCourseOriginPrice;
         private TextView txtCourseMemberPrice;
-        private LinearLayout rootView;
+        private LinearLayout rootView,layout_type;
         private RelativeLayout relativeLayout;
 
         public CourseViewHolder(View view) {
@@ -193,6 +208,10 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
 //            img_star_five = (ImageView) view.findViewById(R.id.img_star_five);
 
             rootView = (LinearLayout) view.findViewById(R.id.rootView);
+
+
+            txt_type = (TextView) view.findViewById(R.id.txt_type);
+            layout_type = (LinearLayout) view.findViewById(R.id.layout_type);
         }
     }
 }

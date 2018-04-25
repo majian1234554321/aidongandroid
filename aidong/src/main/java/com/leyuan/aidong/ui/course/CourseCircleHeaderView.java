@@ -258,8 +258,9 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 //    }
 
 
-    public void setData(CourseDetailBean course) {
+    public void setData(CourseDetailBean course,OnLoadListener listener) {
 
+        this.onLoadListener = listener;
         this.course = course;
 
         relativeViedeoAdapter.setCourseID(course.getId());
@@ -270,7 +271,16 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         txtCourseName.setText(course.getName());
         txtAttentionNum.setText(course.getFollows_count() + "人关注");
-        txt_bt_attention_num.setText(course.getFollows_count() + "人已关注");
+        if (course.getFollowers()!=null) {
+            value =  course.getFollowers().size();
+            txt_bt_attention_num.setText((course.getFollowers().size()>0? course.getFollowers().size():0 )+ "人已关注");
+        }else {
+            txt_bt_attention_num.setText( "0人已关注");
+            value =  0;
+        }
+
+
+
 
         if (course.getTagString()!=null) {
             txtCourseDesc.setText( course.getTagString().replace("|","|"));
@@ -316,6 +326,8 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         relativeViedeoAdapter.setData(videos);
     }
 
+    public int value;
+
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
@@ -323,7 +335,13 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             course.setFollowed(true);
 
             course.setFollows_count(course.getFollows_count() + 1);
-            txt_bt_attention_num.setText(course.getFollows_count() + "人关注");
+            value = value+1;
+            txt_bt_attention_num.setText(value + "人已关注");
+
+
+            if (onLoadListener!=null) {
+                onLoadListener.load();
+            }
             ToastGlobal.showShortConsecutive(R.string.follow_success);
         } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
@@ -335,9 +353,16 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         if (baseBean.getStatus() == 1) {
             course.setFollowed(false);
             course.setFollows_count(course.getFollows_count() - 1);
-            txt_bt_attention_num.setText(course.getFollows_count() + "人关注");
+            value  = value-1;
+            txt_bt_attention_num.setText(value + "人已关注");
             bt_attention.setImageResource(R.drawable.icon_follow);
             ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
+
+            if (onLoadListener!=null) {
+                onLoadListener.load();
+            }
+
+
         } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
@@ -352,4 +377,13 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             txtRelateDynamic.setVisibility(VISIBLE);
         }
     }
+
+
+
+
+    public interface OnLoadListener{
+        void load();
+    }
+
+    public OnLoadListener onLoadListener;
 }

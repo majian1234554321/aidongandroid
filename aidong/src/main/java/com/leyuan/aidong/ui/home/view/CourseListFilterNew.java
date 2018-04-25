@@ -454,7 +454,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         }
     }
 
-    public void setData(CourseFilterBean courseFilterConfig, String category) {
+    public void setData(CourseFilterBean courseFilterConfig, String category, String rightText) {
         if (courseFilterConfig == null) return;
         this.courseBrands = courseFilterConfig.getCompany();
         this.mineCourseBrand = courseFilterConfig.getMine();
@@ -492,29 +492,54 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
             listCourseLeft.setAdapter(adapterTypePrice);
 
-            if (leftlist.contains(category)){
+            if (leftlist.contains(category)) {
 
-              int index =    leftlist.indexOf(category);
+                int index = leftlist.indexOf(category);
                 resetCurrentCategorySate(index, startPosition);
 
-            }else {
+            } else {
                 resetCurrentCategorySate(0, startPosition);
             }
-
-
 
 
             refreshtCategoryAdapater(0, startPosition);
 
 
+            if (!TextUtils.isEmpty(category) && leftlist != null && leftlist.size() > 0 && leftlist.contains(category) && !TextUtils.isEmpty(rightText)) {
 
-                if (TextUtils.isEmpty(category) && leftlist != null && leftlist.size() > 0 && leftlist.contains(category))
-                    tvCourseName.setText(category);
-                else
-                    tvCourseName.setText("全部课程");
+                if ("全部课程".equals(rightText)) {
+                    tvCourseName.setText(category + " 全部课程");
 
-        }else {
-            tvCourseName.setText("全部课程");
+                } else {
+
+
+                    refreshtCategoryAdapater(leftlist.indexOf(category), startPosition);
+
+
+                    int leftPostion = leftlist.indexOf(category);
+
+
+                    for (int i = 0; i < rightlist.get(leftPostion).size(); i++) {
+                        if (rightlist.get(leftPostion).get(i).name.equals(rightText)) {
+                            refreshtCategoryAdapater(leftlist.indexOf(category), i);
+                            break;
+                        } else {
+
+                            refreshtCategoryAdapater(leftlist.indexOf(category), 0);
+
+                        }
+                    }
+
+
+                    tvCourseName.setText(rightText);
+                }
+
+
+            } else
+                tvCourseName.setText("全部分类 全部课程");
+
+        } else {
+            tvCourseName.setText("全部分类 全部课程");
         }
 
 
@@ -563,7 +588,8 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private CourseTypePriceFilterAdapter.OnLeftItemClickListener courseTypeItemClickListener = new CourseTypePriceFilterAdapter.OnLeftItemClickListener() {
         @Override
         public void onClick(int position) {
-            resetCurrentCategorySate(position, 0);
+            // resetCurrentCategorySate(position, 0);
+            leftPostion = position;
             refreshtCategoryAdapater(position, 0);
         }
     };
@@ -604,8 +630,17 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                 adapterCategoty.refreshData(rightlist.get(leftPostion), categoryPostion);
 
             leftPostion = pricePostion;
-            if (rightlist != null && rightlist.size() > 0)
-                tvCourseName.setText( leftlist.get(leftPostion)+" "+rightlist.get(leftPostion).get(categoryPostion).name);
+            if (rightlist != null && rightlist.size() > 0) {
+
+                if ("全部课程".equals(rightlist.get(leftPostion).get(categoryPostion).name)) {
+                    tvCourseName.setText(leftlist.get(leftPostion) + " " + rightlist.get(leftPostion).get(categoryPostion).name);
+                } else {
+                    tvCourseName.setText(rightlist.get(leftPostion).get(categoryPostion).name);
+                }
+
+
+            }
+
         }
 
 

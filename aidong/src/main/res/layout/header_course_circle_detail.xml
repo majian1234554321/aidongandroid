@@ -4,6 +4,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -117,7 +118,7 @@
             android:layout_centerVertical="true"
             android:drawablePadding="10dp"
             android:drawableRight="@drawable/icon_right_arrow"
-            android:text="200人已关注"
+            tools:text="200人已关注"
             android:textColor="@color/black"
             android:textSize="15sp" />
 

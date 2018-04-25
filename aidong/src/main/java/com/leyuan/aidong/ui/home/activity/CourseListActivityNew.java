@@ -22,6 +22,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.course.CourseArea;
 import com.leyuan.aidong.entity.course.CourseBrand;
 import com.leyuan.aidong.entity.course.CourseFilterBean;
+import com.leyuan.aidong.entity.course.CourseName;
 import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.fragment.CourseListFragmentNew;
@@ -91,7 +92,7 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
             }
         }
     };
-    private String allcategory;
+    private String allcategory, rightText;
 
 
     public static void start(Context context, String category) {
@@ -101,6 +102,17 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         context.startActivity(starter);
     }
 
+
+    public static void start(Context context, String category, String rightText) {
+        Intent starter = new Intent(context, CourseListActivityNew.class);
+        starter.putExtra("category", category);
+
+        starter.putExtra("rightText", rightText);
+        Logger.i(TAG, "start CourseListActivityNew by " + category);
+        context.startActivity(starter);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -109,6 +121,7 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         setContentView(R.layout.activity_course_list_new);
         if (getIntent() != null) {
             category = getIntent().getStringExtra("category");
+            rightText = getIntent().getStringExtra("rightText");
         }
 
         initView();
@@ -217,19 +230,55 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
     @Override
     public void onGetCourseFilterConfig(CourseFilterBean courseFilterConfig) {
-        if (courseFilterConfig.getCourse().getAll().contains(category)){
-            filterView.setData(courseFilterConfig, category);
+        if (courseFilterConfig.getCourse().getAll().contains(category)) {
+            filterView.setData(courseFilterConfig, category, rightText);
 
-            if(category != null ){
-                allcategory = "all,"+category;
+
+            ArrayList<String> leftlist = new ArrayList<>();
+            ArrayList<List<CourseName.CategoryModelItem>> rightlist = new ArrayList<>();
+
+
+            if (category == null) {
+                allcategory = "全部分类," + 0;
+            } else if (courseFilterConfig.getCourse() != null) {
+
+                CourseName courseType = courseFilterConfig.getCourse();
+                if (courseType.category != null && courseType.category.size() > 0) {
+                    for (int i = 0; i < courseType.category.size(); i++) {
+                        leftlist.add(courseType.category.get(i).name);
+                        rightlist.add(courseType.category.get(i).item);
+                    }
+
+                }
+
+                if (leftlist.contains(category)) {
+
+                  int leftPostion  =   leftlist.indexOf(category);
+
+
+                    for (int i = 0; i < rightlist.get(leftPostion).size(); i++) {
+                        if (rightlist.get(leftPostion).get(i).name.equals(rightText)) {
+                            allcategory = category + "," + rightlist.get(leftPostion).get(i).id;
+                            break;
+                        }else {
+
+                                allcategory = category + "," + "0";
+
+                        }
+                    }
+
+
+
+                }
             }
+
 
             FragmentPagerItems pages = new FragmentPagerItems(this);
             for (int i = 0; i < days.size(); i++) {
                 CourseListFragmentNew courseFragment = new CourseListFragmentNew();
 //            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
                 pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                        new Bundler().putString("date", days.get(i)).putString("category",allcategory).get()
+                        new Bundler().putString("date", days.get(i)).putString("category", allcategory).get()
                 ));
 
 
@@ -237,12 +286,12 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
             adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
             viewPager.setOffscreenPageLimit(6);
             viewPager.setAdapter(adapter);
-        }else {
-            filterView.setData(courseFilterConfig, "全部课程");
+        } else {
+            filterView.setData(courseFilterConfig, category, rightText);
 
 
-            if(category != null ){
-                allcategory = "all,"+"全部课程";
+            if (category != null) {
+                allcategory = "全部分类," + 0;
             }
 
             FragmentPagerItems pages = new FragmentPagerItems(this);
@@ -250,7 +299,7 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
                 CourseListFragmentNew courseFragment = new CourseListFragmentNew();
 //            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
                 pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                        new Bundler().putString("date", days.get(i)).putString("category",allcategory).get()
+                        new Bundler().putString("date", days.get(i)).putString("category", allcategory).get()
                 ));
 
 
@@ -319,7 +368,6 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
-
 
 
     //    private class SimpleDrawerDrawerListener extends DrawerLayout.SimpleDrawerListener {

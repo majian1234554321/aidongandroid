@@ -28,6 +28,7 @@ import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * 课程表门店
@@ -170,6 +171,12 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         } else {
             rl_empty.setVisibility(View.VISIBLE);
         }
+
+
+       // Collections.sort(data);
+
+
+
 
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();

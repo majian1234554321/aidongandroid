@@ -283,7 +283,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         new MaterialDialog.Builder(this)
                 .title(R.string.confirm_gender)
                 .items(R.array.gender)
-                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallbackSingleChoice("男".equals(tvGender.getText())?0:1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         tvGender.setRightContent(text.toString());
