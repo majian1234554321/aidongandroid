@@ -185,7 +185,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         RecyclerViewUtils.setHeaderView(commentView, header);
         etComment.setHorizontallyScrolling(false);
         etComment.setMaxLines(5);
-        GlideLoader.getInstance().displayRoundImage(App.mInstance.getUser().getAvatar(), ivUserAvatar);
+        GlideLoader.getInstance().displayCircleImage(App.mInstance.getUser().getAvatar(), ivUserAvatar);
         tvReportOrDelete.setText(isSelf ? R.string.delete_dynamic : R.string.report_dynamic);
     }
 

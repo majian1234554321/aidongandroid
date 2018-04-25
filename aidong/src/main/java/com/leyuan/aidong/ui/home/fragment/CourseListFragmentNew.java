@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.home.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.aidong.widget.refreshlayout.FullyLinearLayoutManager;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
@@ -33,15 +35,15 @@ import java.util.ArrayList;
  * 课程列表
  * Created by song on 2016/11/1.
  */
-public class CourseListFragmentNew extends BasePageFragment implements OnRefreshListener, CourseListView,EmptyView {
+public class CourseListFragmentNew extends BasePageFragment implements  CourseListView,EmptyView {
     private static final int HIDE_THRESHOLD = 80;
     private int scrolledDistance = 0;
     private boolean filterViewVisible = true;
 
     private SwitcherLayout switcherLayout;
-    private CustomRefreshLayout refreshLayout;
+
     private RecyclerView recyclerView;
-    RelativeLayout rl_empty;
+
 
     private int currPage = 1;
     private CourseListAdapterNew courseAdapter;
@@ -60,6 +62,8 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_course);
+        switcherLayout = new SwitcherLayout(getContext(), recyclerView);
         if (getArguments() != null) {
             date = getArguments().getString("date");
             course = getArguments().getString("category");
@@ -67,42 +71,47 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
         }
         coursePresent = new CourseListPresentImpl(getContext(), this,this);
 
-        initRefreshLayout(view);
+
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        coursePresent.pullRefreshCourseList(store, course, time, date);
+
         initRecyclerView(view);
         return view;
     }
 
     @Override
     public void fetchData() {
-//        DialogUtils.showDialog(getActivity(),"",false);
+
         coursePresent.pullRefreshCourseList(store, course, time, date);
     }
 
-    private void initRefreshLayout(View view) {
-        rl_empty = (RelativeLayout) view.findViewById(R.id.rl_empty);
 
-        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
-        refreshLayout.setProgressViewOffset(true, 50, 100);
-        refreshLayout.setOnRefreshListener(this);
-    }
 
     private void initRecyclerView(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_course);
+
         data = new ArrayList<>();
         courseAdapter = new CourseListAdapterNew(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(courseAdapter);
-        recyclerView.setAdapter(wrapperAdapter);
+
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+
+
+
+
+
+
+
+        recyclerView.setAdapter(wrapperAdapter);
+
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
-    @Override
-    public void onRefresh() {
-        currPage = 1;
-        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        coursePresent.pullRefreshCourseList(store, course, time, date);
-    }
+
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
@@ -133,23 +142,7 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
 //        }
     };
 
-//    @Override
-//    public void showEndFooterView() {
-//        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
-//    }
-//
-//    @Override
-//    public void showEmptyView() {
-//        if(refreshLayout.isRefreshing()){
-//            refreshLayout.setRefreshing(false);
-//        }
-//        View view = View.inflate(getContext(),R.layout.empty_course,null);
-//        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
-//        refreshLayout.setProgressViewOffset(true,50,100);
-//        refreshLayout.setOnRefreshListener(this);
-//        switcherLayout.addCustomView(view,"empty");
-//        switcherLayout.showCustomLayout("empty");
-//    }
+
 
     public void scrollToTop() {
         filterViewVisible = true;
@@ -159,15 +152,13 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
     @Override
     public void onGetRefreshCourseList(ArrayList<CourseBeanNew> courseList) {
         DialogUtils.dismissDialog();
-        if (refreshLayout.isRefreshing()) {
-            refreshLayout.setRefreshing(false);
-        }
+
         data.clear();
         if (courseList != null && !courseList.isEmpty()){
             data.addAll(courseList);
-            rl_empty.setVisibility(View.GONE);
+
         }else {
-            rl_empty.setVisibility(View.VISIBLE);
+
         }
 
         courseAdapter.setData(data);

@@ -9,10 +9,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.iknow.android.models.VideoInfo;
 import com.iknow.android.utils.TrimVideoUtil;
 import com.leyuan.aidong.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
+//import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,8 @@ public class VideoGridViewAdapter extends RecyclerView.Adapter<VideoGridViewAdap
 
         VideoInfo video = videoListData.get(position);
         holder.durationTv.setText(DateUtil.convertSecondsToTime(video.getDuration() / 1000));
-        ImageLoader.getInstance().displayImage(TrimVideoUtil.getVideoFilePath(video.getVideoPath()),holder.videoCover);
+       // ImageLoader.getInstance().displayImage(TrimVideoUtil.getVideoFilePath(video.getVideoPath()),holder.videoCover);
+
 //        Bitmap bitmap = createVideoThumbnail(ImageDownloader.Scheme.FILE.crop(TrimVideoUtil.getVideoFilePath(video.getVideoPath())), MediaStore.Images.Thumbnails.MICRO_KIND);
 //        holder.videoCover.setImageBitmap(bitmap);
     }

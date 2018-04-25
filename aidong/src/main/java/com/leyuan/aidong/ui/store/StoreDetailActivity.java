@@ -4,11 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -27,6 +32,7 @@ import com.leyuan.aidong.ui.discover.activity.VenuesSubbranchActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsListActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.home.fragment.CourseListFragmentNew;
+import com.leyuan.aidong.ui.home.fragment.Fragment1;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
@@ -140,7 +146,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         llOtherSubStore = (LinearLayout) findViewById(R.id.ll_other_sub_store);
         txtSubStore = (TextView) findViewById(R.id.txt_sub_store);
         txtSubStoreNum = (TextView) findViewById(R.id.txt_sub_store_num);
-        rvOtherSubStore = (RecyclerView) findViewById(R.id.rv_other_sub_store);
+       rvOtherSubStore = (RecyclerView) findViewById(R.id.rv_other_sub_store);
         txtStoreFacilities = (TextView) findViewById(R.id.txt_store_facilities);
         layoutStoreInnerFacility = (LinearLayout) findViewById(R.id.layout_store_inner_facility);
         layout_address = (LinearLayout) findViewById(R.id.layout_address);
@@ -151,10 +157,22 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         ivBath = (ImageView) findViewById(R.id.iv_bath);
         ivFood = (ImageView) findViewById(R.id.iv_food);
 
-        rvOtherSubStore.setLayoutManager(new LinearLayoutManager(this));
-        venuesAdapter = new StoreListAdapter(this);
-        rvOtherSubStore.setAdapter(venuesAdapter);
+
+
+
+
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
+
+        rvOtherSubStore.setLayoutManager(layoutManager);
+        rvOtherSubStore.setHasFixedSize(true);
         rvOtherSubStore.setNestedScrollingEnabled(false);
+        rvOtherSubStore.setLayoutManager(new LinearLayoutManager(this));
+       venuesAdapter = new StoreListAdapter(this);
+        rvOtherSubStore.setAdapter(venuesAdapter);
+
 
         img_address.setOnClickListener(this);
         layout_address.setOnClickListener(this);
@@ -237,6 +255,17 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         }
 
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+
+
+        ArrayList<Fragment> fragments = new ArrayList<>();
+
+        fragments.add(new Fragment1());
+
+
+      //  MyAdapter adapter = new MyAdapter(getSupportFragmentManager(),fragments);
+
+
+
         viewPager.setOffscreenPageLimit(6);
         viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);
@@ -249,12 +278,8 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
                     text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-
-                    //reset fragment
                     CourseListFragmentNew page = (CourseListFragmentNew) adapter.getPage(position);
                     page.scrollToTop();
-//                  filterView.animate().translationY(0).setInterpolator
-//                      (new DecelerateInterpolator(2)).start();
                 }
             }
         });
@@ -265,6 +290,35 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
 
             }
         });
+    }
+
+
+
+
+    public class  MyAdapter  extends FragmentPagerAdapter{
+
+        public List<Fragment> list;
+
+        public MyAdapter(FragmentManager fm,List<Fragment> list) {
+            super(fm);
+            this.list =list;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return list.get(position).toString();
+        }
     }
 
     @Override
@@ -322,6 +376,9 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
         }
     }
+
+
+
 
     @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {

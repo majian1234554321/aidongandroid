@@ -62,7 +62,7 @@ public class JPushReceiver extends BroadcastReceiver {
 
             PushExtroInfo info = new Gson().fromJson(value, PushExtroInfo.class);
             if (info == null) return;
-            if (App.getInstance().isForeground) return;
+            //if (App.getInstance().isForeground) return;
 
             if (App.getInstance().getActivityStack().isEmpty()) {
                 startAppActivityByType(context, info);

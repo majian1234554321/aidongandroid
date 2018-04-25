@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.store.StoreDetailActivity;
+import com.leyuan.aidong.ui.store.StoreDetailActivity2;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.Venu
             @Override 
             public void onClick(View v) {
 
-                StoreDetailActivity.start(context, bean.getId());
+                StoreDetailActivity2.start(context, bean.getId(),bean.getName());
 //                VenuesDetailActivity.start(context, bean.getId());
             }
         });

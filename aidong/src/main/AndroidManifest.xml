@@ -127,6 +127,9 @@
             android:name=".ui.store.StoreDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.store.StoreDetailActivity2"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.course.CourseCircleDetailActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -272,6 +272,7 @@
 
                     android:background="@color/white"
 
+                    app:tabMode="scrollable"
                     app:stl_defaultTabTextColor="@color/gray_normal"
                     app:stl_defaultTabTextSize="17sp"
                     app:stl_dividerColor="@color/transparent"

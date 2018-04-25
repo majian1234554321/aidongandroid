@@ -146,7 +146,7 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
                     //reset fragment
                     CourseListFragmentNew page = (CourseListFragmentNew) adapter.getPage(position);
-                    page.scrollToTop();
+                    //page.scrollToTop();
 //                    filterView.animate().translationY(0).setInterpolator
 //                            (new DecelerateInterpolator(2)).start();
                 }

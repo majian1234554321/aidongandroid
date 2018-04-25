@@ -88,6 +88,7 @@ dependencies {
     implementation 'io.reactivex:rxandroid:1.2.0'
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     //    compile 'com.google.zxing:core:3.2.1'
     testApi 'junit:junit:4.12'
     //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
@@ -115,7 +116,7 @@ dependencies {
     implementation 'com.github.iknow4:android-utils-sdk:1.1.1'
     implementation 'com.googlecode.mp4parser:isoparser:1.1.20'
     implementation 'org.aspectj:aspectjrt:1.8.9'
-    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+   // implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.writingminds:FFmpegAndroid:0.3.2'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     implementation project(':custompullrefresh')

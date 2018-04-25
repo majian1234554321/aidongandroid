@@ -605,7 +605,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
             leftPostion = pricePostion;
             if (rightlist != null && rightlist.size() > 0)
-                tvCourseName.setText(rightlist.get(leftPostion).get(categoryPostion).name);
+                tvCourseName.setText( leftlist.get(leftPostion)+" "+rightlist.get(leftPostion).get(categoryPostion).name);
         }
 
 

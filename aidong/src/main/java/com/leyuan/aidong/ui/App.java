@@ -28,11 +28,11 @@ import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+//import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+//import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
+//import com.nostra13.universalimageloader.core.ImageLoader;
+//import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+//import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
@@ -102,7 +102,7 @@ public class App extends MultiDexApplication {
         RichText.initCacheDir(this);
 
         BaseUtils.init(this);
-        initImageLoader(this);
+       // initImageLoader(this);
         initFFmpegBinary(this);
 
 //        Logger.i("md5", Md5Utils.createMd("ae2c037cd273f69bfb5c96902d95b151"));
@@ -389,7 +389,7 @@ public class App extends MultiDexApplication {
     }
 
 
-    public static void initImageLoader(Context context) {
+   /* public static void initImageLoader(Context context) {
         int memoryCacheSize = (int) (Runtime.getRuntime().maxMemory() / 10);
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 .memoryCache(new LRULimitedMemoryCache(memoryCacheSize))
@@ -398,7 +398,7 @@ public class App extends MultiDexApplication {
                 .build();
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config);
-    }
+    }*/
 
     private void initFFmpegBinary(Context context) {
 
