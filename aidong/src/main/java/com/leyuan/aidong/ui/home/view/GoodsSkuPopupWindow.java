@@ -201,7 +201,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     private void initView(View view) {
-        selectProduct = true;
+        selectProduct = false;
         dvGoodsCover = (ImageView) view.findViewById(R.id.dv_goods_cover);
         ivCancel = (ImageView) view.findViewById(R.id.iv_cancel);
         TextView tvGoodName = (TextView) view.findViewById(R.id.tv_good_name);
@@ -308,28 +308,30 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 tvCount.setText(String.valueOf(count));
                 break;
             case R.id.iv_add:
-                if (!selectProduct){
-                    Toast.makeText(context, "先选择口味或者类别", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                count++;
-                if (count > stock) {
-                    count = stock;
-                    ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
-                    ToastGlobal.showLongConsecutive("超过最大库存");
-                }
-
-                if (count > limit) {
-                    count = limit;
-                    ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
-                    ToastGlobal.showLongConsecutive("超过限购数量");
-                }
+                if (!isAllSkuConfirm()) {
+                   tipUnSelectSku();
+                }else {
 
 
-                if (count > 1) {
-                    ivMinus.setBackgroundResource(R.drawable.icon_minus);
+                    count++;
+                    if (count > stock) {
+                        count = stock;
+                        ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
+                        ToastGlobal.showLongConsecutive("超过最大库存");
+                    }
+
+                    if (count > limit) {
+                        count = limit;
+                        ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
+                        ToastGlobal.showLongConsecutive("超过限购数量");
+                    }
+
+
+                    if (count > 1) {
+                        ivMinus.setBackgroundResource(R.drawable.icon_minus);
+                    }
+                    tvCount.setText(String.valueOf(count));
                 }
-                tvCount.setText(String.valueOf(count));
                 break;
             case R.id.tv_confirm:
                 if (App.mInstance.isLogin()) {

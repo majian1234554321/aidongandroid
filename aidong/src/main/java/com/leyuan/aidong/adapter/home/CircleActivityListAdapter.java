@@ -41,12 +41,13 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.imgCover);
         holder.txtType.setText("【" + bean.getTypeCZ() + "】");
         holder.txtName.setText(bean.getName());
-        if (TextUtils.isEmpty(bean.getLandmark())) {
-            holder.txtTime.setText(bean.getStart());
-        } else {
-            holder.txtTime.setText(bean.getLandmark() + " " + bean.getStart());
-        }
+//        if (TextUtils.isEmpty(bean.getLandmark())) {
+//            holder.txtTime.setText(bean.getStart());
+//        } else {
+//
+//        }
 
+        holder.txtTime.setText(bean.start_time + "-" + bean.end_time);
 
         holder.txt_sub_title.setText(((TextUtils.isEmpty(bean.getSlogan()))?"":bean.getSlogan()+ " | "  )+ bean.getFollows_count() + "人已关注");
 

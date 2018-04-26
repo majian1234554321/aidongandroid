@@ -46,6 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginTop="20dp">
 
                     <RelativeLayout
@@ -55,8 +56,8 @@
                         <TextView
                             android:id="@+id/txt_selection_course"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
+                            android:layout_height="match_parent"
+android:layout_centerVertical="true"
                             android:text="@string/selection_course"
                             android:textColor="@color/black"
                             android:textSize="15sp"
@@ -66,7 +67,7 @@
                             android:id="@+id/txt_selection_course_hint"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+android:visibility="gone"
                             android:layout_below="@id/txt_selection_course"
                             android:paddingTop="4dp"
                             android:text="练就你想要的身材"
@@ -78,14 +79,13 @@
                     <TextView
                         android:id="@+id/txt_check_all_course"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:drawablePadding="5dp"
 
                         android:drawableRight="@drawable/icon_right_arrow"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
+
                         android:text="@string/check_all"
                         android:textColor="@color/b3"
                         android:textSize="13sp" />
@@ -112,8 +112,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
+
                     android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="20dp">
 
@@ -138,6 +139,7 @@
                             android:layout_below="@id/txt_selection_activity"
                             android:layout_marginTop="8dp"
                             android:paddingTop="4dp"
+                            android:visibility="gone"
                             android:text="你想要的都在这里"
                             android:textColor="@color/b3"
                             android:textSize="13sp" />
@@ -152,8 +154,7 @@
                         android:layout_centerVertical="true"
                         android:drawablePadding="5dp"
                         android:drawableRight="@drawable/icon_right_arrow"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
+
                         android:text="@string/check_all"
                         android:textColor="@color/b3"
                         android:textSize="13sp" />
@@ -178,6 +179,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="20dp">
 
@@ -201,6 +203,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txt_star_coach"
                             android:layout_marginTop="8dp"
+                            android:visibility="gone"
                             android:paddingTop="4dp"
                             android:text="跟着教练去健身"
                             android:textColor="@color/b3"
@@ -217,8 +220,7 @@
                         android:layout_centerVertical="true"
                         android:drawablePadding="5dp"
                         android:drawableRight="@drawable/icon_right_arrow"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
+
                         android:text="@string/check_all"
                         android:textColor="@color/b3"
                         android:textSize="13sp" />

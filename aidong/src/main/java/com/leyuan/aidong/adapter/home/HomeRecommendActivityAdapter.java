@@ -40,7 +40,7 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
         if (campaignBean != null) {
             GlideLoader.getInstance().displayImage(campaignBean.getCover(), holder.imgCover);
             holder.txtType.setText("【" + campaignBean.getTypeCZ() + "】");
-            holder.txtTime.setText(campaignBean.getStart());
+            holder.txtTime.setText(campaignBean.start_time+"-"+campaignBean.end_time);
             holder.txtName.setText(campaignBean.getName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

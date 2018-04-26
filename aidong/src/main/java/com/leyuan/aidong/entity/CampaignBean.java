@@ -17,6 +17,8 @@ public class CampaignBean implements Parcelable{
     public String start;
     public String landmark;
     public String follows_count;
+    public String end_time;
+    public String start_time;
     public String type;
     public ArrayList<String> image;
     public String slogan;

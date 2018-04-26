@@ -95,7 +95,6 @@ public class UserFollowCacheAdapter extends RecyclerView.Adapter<UserFollowCache
         }
         holder.gender.setVisibility(View.VISIBLE);
         if ("0".equals(bean.getGender())) {   //男
-
             holder.gender.setBackgroundResource(R.drawable.icon_man);
         } else {
             holder.gender.setBackgroundResource(R.drawable.icon_woman);

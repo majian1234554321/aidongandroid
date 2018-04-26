@@ -149,7 +149,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         }
 
 
-       // txtTime.setText(campaignDetailBean.getStartTime() + "-" + campaignDetailBean.getEndTime());
+        txtTime.setText(campaignDetailBean.getStartTime() + "-" + campaignDetailBean.getEndTime());
         txtCityAddress.setText(campaignDetailBean.getLandmark());
         txtLocationDetail.setText(campaignDetailBean.getAddress());
         if (campaignDetailBean.getApplicant() != null && !campaignDetailBean.getApplicant().isEmpty()) {

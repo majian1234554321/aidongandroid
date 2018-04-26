@@ -459,7 +459,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
     @Override
     public void load() {
-        coursePresent.getCourseDetail(id);
+       // coursePresent.getCourseDetail(id);
     }
 
 

@@ -336,7 +336,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
             course.setFollows_count(course.getFollows_count() + 1);
             value = value+1;
-            txt_bt_attention_num.setText(value + "人已关注");
+          //  txt_bt_attention_num.setText(value + "人已关注");
 
 
             if (onLoadListener!=null) {
@@ -354,7 +354,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             course.setFollowed(false);
             course.setFollows_count(course.getFollows_count() - 1);
             value  = value-1;
-            txt_bt_attention_num.setText(value + "人已关注");
+           // txt_bt_attention_num.setText(value + "人已关注");
             bt_attention.setImageResource(R.drawable.icon_follow);
             ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
 

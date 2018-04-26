@@ -45,6 +45,7 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
 //    private SystemPresentImpl systemPresent;
 //    private MineInfoPresenterImpl presenter;
     int requestNum ;
+    private ImageView iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,14 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         tvLocation = (TextView) findViewById(R.id.tv_location);
         recyclerView = (RecyclerView) findViewById(R.id.rv_city);
+        iv_back = (ImageView) findViewById(R.id.iv_back);
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         img_selected = (ImageView) findViewById(R.id.img_selected);
         tvLocation.setText(App.getInstance().getLocationCity() == null ? "上海" : App.getInstance().getLocationCity());
         img_selected.setVisibility(TextUtils.equals(App.getInstance().getLocationCity(), App.getInstance().getSelectedCity()) ?
@@ -115,6 +124,8 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
 
 
 
+        }else {
+            finish();
         }
     }
 
