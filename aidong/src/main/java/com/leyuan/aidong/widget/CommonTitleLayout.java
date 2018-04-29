@@ -83,4 +83,7 @@ public class CommonTitleLayout extends RelativeLayout {
     public void setTxtTitle(String title) {
         txtTitle.setText(title);
     }
+
+
+
 }

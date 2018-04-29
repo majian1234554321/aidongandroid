@@ -271,7 +271,11 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         ivAdd.setBackgroundResource(FormatUtil.parseInt(count) == stock ? R.drawable.icon_add_gray
                 : R.drawable.icon_add);
         if (limit > 0) {
-            txt_limit_number.setText("(限购" + limit + "张)");
+
+            if (limit == 9999) {
+
+            } else
+                txt_limit_number.setText("(限购" + limit + "张)");
         }
     }
 
@@ -309,8 +313,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 break;
             case R.id.iv_add:
                 if (!isAllSkuConfirm()) {
-                   tipUnSelectSku();
-                }else {
+                    tipUnSelectSku();
+                } else {
 
 
                     count++;
@@ -336,10 +340,10 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             case R.id.tv_confirm:
                 if (App.mInstance.isLogin()) {
                     if (isAllSkuConfirm()) {
-                        if (tvCount.getText().toString()!=null&&!tvCount.getText().toString().equals("0")){
+                        if (tvCount.getText().toString() != null && !tvCount.getText().toString().equals("0")) {
                             dismiss();
                             confirm();
-                        }else {
+                        } else {
                             Toast.makeText(context, "商品数量必须大于0", Toast.LENGTH_SHORT).show();
                         }
 

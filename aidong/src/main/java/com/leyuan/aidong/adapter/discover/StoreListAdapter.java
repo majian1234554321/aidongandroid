@@ -60,11 +60,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.Venu
         holder.name.setText(bean.getName());
 
         if (bean.getDistanceFormat()!=null) {
-            if (!bean.getDistanceFormat().contains("<100m")) {
-                holder.distance.setText(bean.getDistanceFormat().substring(1,bean.getDistanceFormat().length()));
-            }else {
-                holder.distance.setText(bean.getDistanceFormat());
-            }
+            holder.distance.setText(bean.getDistanceFormat());
         }
 
         holder.address.setText(bean.getAddress());

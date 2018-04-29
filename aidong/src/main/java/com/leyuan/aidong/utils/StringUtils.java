@@ -112,7 +112,7 @@ public class StringUtils {
 //          String quote = Pattern.quote(user.getName());
 //          return Pattern.matches(quote, text);
 
-            while (matcher.find()) {
+            while (matcher.find()&&matcher.start()>0) {
                 ClickableSpan clickableSpan = new ClickableSpan() {
                     @Override
                     public void onClick(View view) {

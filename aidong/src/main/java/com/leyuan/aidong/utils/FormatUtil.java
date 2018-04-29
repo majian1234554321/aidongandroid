@@ -74,9 +74,9 @@ public class FormatUtil {
         if (distance < 100) {
             return "<100m";
         } else if (distance < 1000) {
-            return (int) distance + "m";
+            return "<"+(int) distance + "m";
         } else if (distance < HUNDRED_KILOMETER) {
-            return String.format("%.2f", (distance / 1000)) + "km";
+            return "<"+String.format("%.2f", (distance / 1000)) + "km";
         } else {
             return ">100km";
         }

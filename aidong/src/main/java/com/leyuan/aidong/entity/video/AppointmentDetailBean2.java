@@ -1,8 +1,9 @@
-package com.leyuan.aidong.entity;
+package com.leyuan.aidong.entity.video;
 
 import android.graphics.Color;
 
 import com.google.gson.annotations.SerializedName;
+import com.leyuan.aidong.entity.PayOrderBean;
 
 import java.util.ArrayList;
 
@@ -10,15 +11,13 @@ import java.util.ArrayList;
  * 预约详情
  * Created by song on 2016/9/1.
  */
-public class AppointmentDetailBean {
+public class AppointmentDetailBean2 {
     private String id;              //订单号
     private boolean is_vip;
     private String link_id;             //关联课程或者活动编号
     private String appointment_type;    //订单类型 course-课程 campaign-活动
     private String name;             //产品名称
     private String sub_name;             //副标题
-    @SerializedName("address")
-    private String cover2;
 
     private String cover;             //产品封面
     private AppointInfo appointment;    //预约信息

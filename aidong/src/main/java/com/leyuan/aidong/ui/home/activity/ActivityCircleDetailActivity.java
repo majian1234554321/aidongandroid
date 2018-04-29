@@ -306,13 +306,13 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                         image = campaignDetailBean.getImage().get(0);
                     }
 
-                    if(campaignDetailBean.simple_intro!=null) {
+                    if (campaignDetailBean.simple_intro != null) {
                         value = campaignDetailBean.simple_intro;
-                        if (campaignDetailBean.simple_intro.contains("<p>")){
-                            value = value.replace("<p>","");
+                        if (campaignDetailBean.simple_intro.contains("<p>")) {
+                            value = value.replace("<p>", "");
                         }
-                        if (value.length()>30){
-                            value = value.substring(0,30);
+                        if (value.length() > 30) {
+                            value = value.substring(0, 30);
 
                         }
 
@@ -417,10 +417,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     txt_appoint_immediately.setBackgroundColor(Color.parseColor("#33333333"));
                     txt_appoint_immediately.setText(R.string.campaign_status_end);
                     headView.setData2();
-                }
-
-
-                if (isSellOut){
+                } else if (isSellOut) {
                     txt_appoint_immediately.setBackgroundColor(Color.parseColor("#33333333"));
                     txt_appoint_immediately.setText("售罄");
 
@@ -709,6 +706,17 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
             sharePopupWindow.showAtBottom("我分享了" + dynamic.publisher.getName() + "的动态，速速围观", dynamic.content,
                     cover, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
+
+
+
+//            String image = "";
+//
+//            if (venues.getPhoto() != null && !venues.getPhoto().isEmpty()) {
+//                image = venues.getPhoto().get(0);
+//            }
+//            sharePopupWindow.showAtBottom(dynamic.publisher.getName() + Constant.I_DONG_FITNESS, venues.getIntroduce(),
+//                    image, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
+
         }
     }
 

@@ -329,9 +329,12 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
             switch (requestCode) {
                 case Constant.REQUEST_COURSE_DETAIL:
 
-                    homeData.getCourse().get(itemClickedPosition).setFollowed(data.getBooleanExtra(Constant.FOLLOW,false));
-                    Logger.i("follow", "onActivityResult follow = " +  homeData.getCourse().get(itemClickedPosition).isFollowed());
-                    courseAdapter.notifyItemChanged(itemClickedPosition);
+                    if (homeData.getCourse()!=null){
+                        homeData.getCourse().get(itemClickedPosition).setFollowed(data.getBooleanExtra(Constant.FOLLOW,false));
+                        Logger.i("follow", "onActivityResult follow = " +  homeData.getCourse().get(itemClickedPosition).isFollowed());
+                        courseAdapter.notifyItemChanged(itemClickedPosition);
+                    }
+
 
 
                     break;
