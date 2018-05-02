@@ -4,6 +4,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -14,7 +15,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:text="2017挨冻赛事"
+        tools:text="2017挨冻赛事"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -32,7 +33,7 @@
             android:drawableLeft="@drawable/icon_attention_person_num"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="160人已关注"
+            tools:text="160人已关注"
             android:textColor="@color/b3"
             android:textSize="13sp" />
 
@@ -112,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:text="1000 - 20000"
+        tools:text="1000 - 20000"
         android:textColor="@color/main_red"
         android:textSize="15sp" />
 
@@ -134,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:text="2017-11-11-2017-12-11"
+        tools:text="2017-11-11-2017-12-11"
         android:textColor="@color/c3"
         android:textSize="15sp" />
 
@@ -155,7 +156,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:text="上海市长兴岛分县区"
+        tools:text="上海市长兴岛分县区"
         android:textColor="@color/c3"
         android:textSize="15sp" />
 
@@ -167,7 +168,7 @@
         android:layout_marginTop="15dp"
         android:drawableLeft="@drawable/icon_address"
         android:drawablePadding="5dp"
-        android:text="上海市长兴岛分县区8号附8号"
+        tools:text="上海市长兴岛分县区8号附8号"
         android:textColor="@color/b3"
         android:textSize="13sp" />
 
@@ -200,7 +201,7 @@
             android:layout_centerVertical="true"
             android:drawablePadding="10dp"
             android:drawableRight="@drawable/icon_right_arrow"
-            android:text="20人已报名"
+            tools:text="20人已报名"
             android:textColor="@color/black"
             android:textSize="15sp" />
 

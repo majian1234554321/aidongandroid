@@ -397,7 +397,10 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
             //空白布局
 
         } else {
-            headView.setData(campaignBean);
+            if(campaignBean!=null){
+                headView.setData(campaignBean);
+            }
+
             if (campaignBean.spec != null) {
                 //如果有规格可选
                 for (GoodsSkuBean goodsSkuBean : campaignBean.spec.item) {

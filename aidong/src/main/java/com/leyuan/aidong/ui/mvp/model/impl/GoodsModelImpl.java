@@ -57,9 +57,9 @@ public class GoodsModelImpl  {
 
     public void buyNurtureImmediately(Subscriber<PayOrderData> subscriber,String type, String skuCode, int amount,
                                       String coupon, String integral, String coin, String payType,
-                                      String pickUpWay, String pickUpId, String pickUpDate, String pick_up_period, String is_food) {
+                                      String pickUpWay, String pickUpId, String pickUpDate, String pick_up_period, String is_food,String recommendId) {
         nurtureService.buyGoodsImmediately(type,skuCode,amount,coupon,integral,coin,payType,pickUpWay,
-                pickUpId,pickUpDate,pick_up_period,is_food)
+                pickUpId,pickUpDate,pick_up_period,is_food,recommendId)
                 .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }

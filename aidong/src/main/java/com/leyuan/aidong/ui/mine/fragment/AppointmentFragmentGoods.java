@@ -72,13 +72,20 @@ public class AppointmentFragmentGoods extends BaseFragment implements SmartTabLa
         tabLayout.setCustomTabView(this);
         tabLayout.setViewPager(viewPager);
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
+            private View tabAt;
+            private TextView text;
+
             @Override
             public void onPageSelected(int position) {
                 currentItem = position;
                 for (int i = 0; i < allTabView.size(); i++) {
-                    View tabAt = tabLayout.getTabAt(i);
-                    TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+                    tabAt = tabLayout.getTabAt(i);
+                    if (tabAt !=null){
+                        text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
+                        text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+                    }
+
                 }
 
             }

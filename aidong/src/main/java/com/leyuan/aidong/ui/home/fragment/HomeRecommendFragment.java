@@ -154,7 +154,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage(((BannerBean) model).getImage(), (ImageView) view);
+                GlideLoader.getInstance().displayImage2(((BannerBean) model).getImage(), (ImageView) view);
             }
         });
 

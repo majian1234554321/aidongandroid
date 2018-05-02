@@ -33,7 +33,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -119,7 +118,6 @@
         <activity
             android:name=".ui.home.activity.CourseVideoDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.course.CourseVideoDetailActivityNew"
             android:screenOrientation="portrait" />
@@ -218,9 +216,9 @@
         <activity
             android:name=".ui.mine.activity.OrderActivity"
             android:screenOrientation="portrait" />
-        <!--<activity-->
-            <!--android:name=".ui.mine.activity.AppointmentActivity"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".ui.mine.activity.AppointmentActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".ui.mine.activity.CouponActivity"
             android:screenOrientation="portrait" />
@@ -276,15 +274,15 @@
         <activity
             android:name=".ui.home.activity.AppointCourseSuccessActivity"
             android:screenOrientation="portrait" />
-        <!--<activity-->
-            <!--android:name=".ui.mine.activity.AppointmentMineCampaignActivityNew"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".ui.mine.activity.AppointmentMineCampaignActivityNew" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".ui.mine.activity.UserInfoActivity"
             android:screenOrientation="portrait" />
-        <!--<activity-->
-        <!--android:name=".ui.mine.activity.CoachInfoActivity"-->
-        <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".ui.mine.activity.CoachInfoActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".ui.mine.activity.UpdateAddressActivity"
             android:screenOrientation="portrait" />
@@ -318,29 +316,24 @@
         <activity
             android:name=".ui.home.activity.PastCampaignActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.ActivityCircleDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.competition.activity.ContestHomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.competition.activity.ContestRuleActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.competition.activity.PublishContestDynamicActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.competition.activity.ContestQuarterFinalEnrolActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.competition.activity.ContestQuarterFinalEnroledRecordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.competition.activity.ContestSemiFinalEnrolmentActivity"
             android:screenOrientation="portrait" />
@@ -362,7 +355,6 @@
         <activity
             android:name="com.iknow.android.TrimmerActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.CircleListActivity"
             android:screenOrientation="portrait" />
@@ -379,9 +371,9 @@
             android:name=".ui.home.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SearchTheme" />
-        <!--<activity-->
-            <!--android:name=".ui.home.activity.CampaignDetailActivity"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".ui.home.activity.CampaignDetailActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".ui.home.activity.GoodsListActivity"
             android:screenOrientation="portrait" />
@@ -393,23 +385,20 @@
             android:name=".ui.home.activity.EquipmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
-
         <activity
             android:name=".ui.home.activity.FoodAndBeverageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
-        <!--<activity-->
-            <!--android:name=".ui.home.activity.AppointCampaignActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateHidden" />-->
+        <!-- <activity -->
+        <!-- android:name=".ui.home.activity.AppointCampaignActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:windowSoftInputMode="stateHidden" /> -->
         <activity
             android:name=".ui.mine.activity.AppointCampaignDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-
             android:name=".ui.mine.activity.SportRecordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.BrandActivity"
             android:screenOrientation="portrait"
@@ -443,11 +432,10 @@
         <activity
             android:name=".ui.home.activity.SelectCityActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.discover.activity.PublishDynamicActivity"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".ui.discover.activity.SelectedLocationActivity"
             android:screenOrientation="portrait" />
@@ -460,9 +448,9 @@
         <activity
             android:name=".ui.mine.activity.MyAttentionListActivity"
             android:screenOrientation="portrait" />
-        <!--<activity-->
-        <!--android:name=".ui.discover.activity.DynamicDetailActivity"-->
-        <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".ui.discover.activity.DynamicDetailActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".ui.discover.activity.DynamicDetailByIdActivity"
             android:screenOrientation="portrait" />
@@ -595,9 +583,9 @@
         <activity
             android:name=".ui.home.activity.MapActivity"
             android:screenOrientation="portrait" />
-        <!--<activity-->
-            <!--android:name=".ui.mine.activity.AppointmentMineCourseActivityNew"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".ui.mine.activity.AppointmentMineCourseActivityNew" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".ui.mine.activity.BarcodeActivity"
             android:screenOrientation="portrait"
@@ -611,7 +599,6 @@
         <activity
             android:name=".ui.home.activity.CourseChooseSeat"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.CourseQueueConfirmActivity"
             android:screenOrientation="portrait" />
@@ -753,7 +740,7 @@
         <!-- 设置环信应用的AppKey debug:	leyuan-aidong#aidongouternettest  preRelease: leyuan-aidong#aidongprerelease   release : leyuan-aidong#aidong -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="leyuan-aidong#aidong"/>
+            android:value="leyuan-aidong#aidong" />
         <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
@@ -927,7 +914,7 @@
                 android:resource="@xml/file_provider" />
         </provider>
 
-
+        <activity android:name=".ui.DisplayActivity"></activity>
     </application>
 
 </manifest>

@@ -148,6 +148,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private String selectedUserCouponId;
     private String currentGoodsID;
     private boolean is_virtual;
+    private String recommendCode;
 
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderGoodsActivity.class);
@@ -197,6 +198,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             pickUpId = shop.getPickUp().getInfo().getId();
         }
         settlementType = goods.getType();
+        recommendCode = goods.getRecommendCode();
 
         //把shopBeanList转为GoodsList 重要代码
         List<GoodsBean> goodsList = new ArrayList<>();
@@ -453,7 +455,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         }
         Logger.i(TAG, "pickUpDate = " + pickUpDate + "pick_up_period =" + pick_up_period);
         present.buyGoodsImmediately(settlementType, skuCode, amount, couponId, integral, coin, payType,
-                String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener);
+                String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener,recommendCode);
 
     }
 

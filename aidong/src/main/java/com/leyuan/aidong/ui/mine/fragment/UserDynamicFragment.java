@@ -159,8 +159,8 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             TextView  tv_name = (TextView) headView.findViewById(R.id.tv_name);
 
             if ("NODATA".equals(intro)){
-                txtCourseIntro.setVisibility(View.GONE);
-                tv_name.setVisibility(View.GONE);
+                txtCourseIntro.setText("这个人很懒，什么都没有留下!");
+//                tv_name.setVisibility(View.GONE);
             }else {
                 txtCourseIntro.setText(intro);
             }

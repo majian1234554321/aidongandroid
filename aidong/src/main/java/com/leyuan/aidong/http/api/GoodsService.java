@@ -53,7 +53,8 @@ public interface GoodsService {
                                                            @Field("pick_up_id") String pickUpId,
                                                            @Field("pick_up_date") String pickUpDate,
                                                            @Field("pick_up_period") String pick_up_period,
-                                                           @Field("is_food") String is_food);
+                                                           @Field("is_food") String is_food,
+                                                           @Field("recommendId") String recommendId);
 
     @GET("market/products/virtuals")
     Observable<BaseBean<GoodsData>> getVirtualGoodsList(@Query("product_ids") String product_ids);

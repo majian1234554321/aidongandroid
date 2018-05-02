@@ -183,8 +183,8 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         switch (view.getId()) {
             case R.id.txt_check_all:
                 if (App.getInstance().isLogin()) {
-
-                    AppointmentUserActivity.start(context, campaignDetailBean.getApplicant(), "已报名的人");
+                    if (context != null && campaignDetailBean != null && campaignDetailBean.getApplicant() != null)
+                        AppointmentUserActivity.start(context, campaignDetailBean.getApplicant(), "已报名的人");
 
                 } else {
                     UiManager.activityJump(context, LoginActivity.class);
@@ -200,24 +200,34 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
                     return;
                 }
 
-                if (campaignDetailBean.followed) {
-                    followPresent.cancelFollow(campaignDetailBean.getCampaignId(), Constant.CAMPAIGN);
-                } else {
-                    followPresent.addFollow(campaignDetailBean.getCampaignId(), Constant.CAMPAIGN);
+                if (campaignDetailBean != null && campaignDetailBean.getCampaignId() != null) {
+                    if (campaignDetailBean.followed) {
+                        followPresent.cancelFollow(campaignDetailBean.getCampaignId(), Constant.CAMPAIGN);
+                    } else {
+                        followPresent.addFollow(campaignDetailBean.getCampaignId(), Constant.CAMPAIGN);
+                    }
                 }
+
 
                 break;
             case R.id.txt_check_detail:
 
-                NewsBean newsBean = new NewsBean(campaignDetailBean.getName(), campaignDetailBean.getIntroduce()
-                        , null, null, "图文详情", campaignDetailBean.getCampaignId());
-                newsBean.isNotShare = true;
-                NewsDetailActivity.start(context, newsBean);
+                if (campaignDetailBean != null) {
+                    NewsBean newsBean = new NewsBean(campaignDetailBean.getName(), campaignDetailBean.getIntroduce()
+                            , null, null, "图文详情", campaignDetailBean.getCampaignId());
+                    newsBean.isNotShare = true;
+                    NewsDetailActivity.start(context, newsBean);
+                }
+
+
                 break;
             case R.id.txt_location_detail:
-                MapActivity.start(context, campaignDetailBean.getName(), campaignDetailBean.getLandmark(),
-                        campaignDetailBean.getAddress(), campaignDetailBean.getCoordinate().getLat(),
-                        campaignDetailBean.getCoordinate().getLng());
+
+                if (campaignDetailBean != null && campaignDetailBean.getName() != null) {
+                    MapActivity.start(context, campaignDetailBean.getName(), campaignDetailBean.getLandmark(),
+                            campaignDetailBean.getAddress(), campaignDetailBean.getCoordinate().getLat(),
+                            campaignDetailBean.getCoordinate().getLng());
+                }
                 break;
         }
     }

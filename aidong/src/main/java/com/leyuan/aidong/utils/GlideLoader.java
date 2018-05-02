@@ -40,6 +40,15 @@ public class GlideLoader {
                 .into(imageView);
     }
 
+    public void displayImage2(String imgUrl, ImageView imageView) {
+        Glide.with(getContext(imageView))
+                .load(imgUrl)
+                .thumbnail(0.2f)
+                .centerCrop()
+                .placeholder(R.drawable.img_default)
+                .into(imageView);
+    }
+
     public void displayCircleImage(String imgUrl, ImageView imageView) {
         Glide.with(getContext(imageView))
                 .load(imgUrl)
@@ -109,9 +118,10 @@ public class GlideLoader {
     }
 
     private Context getContext(@Nullable ImageView imageView) {
-        if (imageView == null) {
+        if (imageView!=null&&imageView.getContext()!=null){
+            return  imageView.getContext();
+        }else {
             return context;
         }
-        return imageView.getContext();
     }
 }

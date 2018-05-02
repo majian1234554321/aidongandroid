@@ -149,7 +149,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     @Override
     public void buyGoodsImmediately(String type,String skuCode, int amount, String coupon, String integral,
                                     String coin, String payType, String pickUpWay, String pickUpId,
-                                    String pickUpDate, String pick_up_period, String is_food, final PayInterface.PayListener listener) {
+                                    String pickUpDate, String pick_up_period, String is_food, final PayInterface.PayListener listener,String recommendId) {
        if(goodsMode == null){
            goodsMode = new GoodsModelImpl(context);
        }
@@ -162,7 +162,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
 
 
             }
-        },type, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate, pick_up_period, is_food);
+        },type, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate, pick_up_period, is_food,recommendId);
     }
 
     private void createShareBeanByOrder(PayOrderData payOrderData) {
