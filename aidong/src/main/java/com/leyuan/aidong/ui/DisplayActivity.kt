@@ -23,7 +23,7 @@ class DisplayActivity : BaseActivity() {
 
         when (type) {
             "DetailsActivityH5Fragment" -> {
-
+//123
                 val url = intent.getStringExtra("url")
                 fragmentTransaction.replace(R.id.fragment, DetailsActivityH5Fragment.newInstance(url)
                 )
