@@ -117,9 +117,9 @@ public class AppointmentUserActivity extends BaseActivity implements UserFollowC
 
             data.get(position).followed = true;
             userAdapter.notifyDataSetChanged();
-            Toast.makeText(this, R.string.follow_success, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.follow_success), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this,  baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -141,9 +141,9 @@ public class AppointmentUserActivity extends BaseActivity implements UserFollowC
 //            data.remove(data.get(position));
             data.get(position).followed = false;
             userAdapter.notifyDataSetChanged();
-            Toast.makeText(this, R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.follow_success), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
