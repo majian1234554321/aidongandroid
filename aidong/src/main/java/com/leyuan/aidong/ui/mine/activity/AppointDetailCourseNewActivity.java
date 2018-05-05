@@ -96,7 +96,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
     private CustomNestRadioGroup radioGroup;
     private RadioButton cbAlipay;
     private RadioButton cbWeixin;
-    private String payType;
+    private String payType = PAY_ALI;
     private CourseAppointBean appointBean;
     private PayOptionBean payOptionBean;
     private LinearLayout layout_pay;
