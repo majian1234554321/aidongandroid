@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.SpecialTopicAdapter;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
+
 import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoListViewLister;
 import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
@@ -172,6 +173,8 @@ public class SpecialTopicFragment extends Fragment implements OnRefreshListener,
                     }
                 }
                 current_sroll_state = newState;
+
+
             }
 
             @Override

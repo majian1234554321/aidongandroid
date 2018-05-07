@@ -258,13 +258,17 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
             super.onFail(code, object);
 
             DialogUtils.dismissDialog();
+            try {
+                LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL));
 
-            LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL));
+                Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                AppointmentMineActivityNew.start(ConfirmOrderCourseActivity.this, 0);
+                finish();
+            }
 
-            Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
-
-            AppointmentMineActivityNew.start(ConfirmOrderCourseActivity.this,0);
-            finish();
 
         }
 

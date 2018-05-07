@@ -36,7 +36,7 @@
 
             />
 
-        <include android:id="@id/view" layout="@layout/inc_line_margin_left" />
+        <include android:id="@+id/view" layout="@layout/inc_line_margin_left" />
 
         <TextView
             android:layout_width="wrap_content"

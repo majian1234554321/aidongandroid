@@ -51,5 +51,9 @@ public class GuideActivity extends BaseActivity {
                 startActivity(new Intent(GuideActivity.this, MainActivity.class));
             }
         });
+
+
     }
+
+
 }
