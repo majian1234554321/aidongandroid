@@ -121,10 +121,10 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         findViewById(R.id.layout_remark).setVisibility(View.GONE);
         confirmOrderCoursePresent = new ConfirmOrderCoursePresentImpl(this, this);
 
-        DialogUtils.showDialog(this,"",false);
+        DialogUtils.showDialog(this, "", false);
         confirmOrderCoursePresent.getCourseAvaliableCoupons(course.getId());
 
-        if ( course.isMember()) {
+        if (course.isMember()) {
             realPrice = course.getMember_price();
             txtPriceTotal.setText("￥" + course.getMember_price());
             txtPriceReal.setText("￥" + realPrice);
@@ -138,15 +138,14 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         UserCoach userCoach = App.getInstance().getUser();
 
 
-
         txtCourseName.setText(course.getName());
         txtCoachName.setText(course.getCoach().getName());
-        if(course.getImage() != null && course.getImage().size() > 0){
-            GlideLoader.getInstance().displayImage( course.getImage().get(0), imgCourse);
+        if (course.getImage() != null && course.getImage().size() > 0) {
+            GlideLoader.getInstance().displayImage(course.getImage().get(0), imgCourse);
         }
 
         txtCourseTime.setText(course.getClass_time());
-        txtRoomName.setText(course.getStore().getName()+"-"+course.getStore().getClassroom() + (TextUtils.isEmpty(course.getSeatChoosed())?"":course.getSeatChoosed()));
+        txtRoomName.setText(course.getStore().getName() + "-" + course.getStore().getClassroom() + (TextUtils.isEmpty(course.getSeatChoosed()) ? "" : course.getSeatChoosed()));
         txtCourseLocation.setText(course.getStore().getAddress());
 
         if (userCoach != null)
@@ -168,7 +167,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
                 finish();
                 break;
             case R.id.layout_course_coach:
-                CourseDetailNewActivity.start(this,course.getId());
+                CourseDetailNewActivity.start(this, course.getId());
 
 //                if (course.getCoach() != null)
 //                    UserInfoActivity.start(this, course.getCoach().getContact());
@@ -190,7 +189,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
                     SelectCouponActivity.startForResult(this, course.getPrice() + "", couponId,
                             selectedUserCouponId, usableCoupons, REQUEST_SELECT_COUPON);
-                }else {
+                } else {
                     ToastGlobal.showShortConsecutive("无可用优惠券");
                 }
                 break;
@@ -212,9 +211,9 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
     public void onGetCourseAvaliableCoupons(List<CouponBean> coupon) {
         DialogUtils.dismissDialog();
         this.usableCoupons = coupon;
-        if(coupon == null || coupon.isEmpty()){
+        if (coupon == null || coupon.isEmpty()) {
             txtCoupon.setText("无可用优惠券");
-        }else {
+        } else {
             txtCoupon.setText("请选择");
         }
     }
@@ -222,7 +221,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
     @Override
     public void onCourseAppointResult(CourseAppointResult appointment) {
         DialogUtils.dismissDialog();
-        if(appointment != null){
+        if (appointment != null) {
             this.courseShareBean = appointment.getShare();
         }
     }
@@ -259,12 +258,19 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
 
             DialogUtils.dismissDialog();
 
-            LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL));
+            try {
+                LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL));
 
-            Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
+                Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                AppointmentMineActivityNew.start(ConfirmOrderCourseActivity.this, 0);
+                finish();
+            }
 
-            AppointmentMineActivityNew.start(ConfirmOrderCourseActivity.this,0);
-            finish();
+
+
 
         }
 

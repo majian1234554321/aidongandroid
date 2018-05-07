@@ -1,6 +1,7 @@
 package com.leyuan.aidong.module.pay;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -16,6 +17,7 @@ public abstract class SimplePayListener implements PayInterface.PayListener{
 
     @Override
     public void onFail(String code, Object object) {
+        try {
         String tip = "支付失败";
         switch (code){
             case "4000":
@@ -33,7 +35,13 @@ public abstract class SimplePayListener implements PayInterface.PayListener{
             default:
                 break;
         }
-        Toast.makeText(context,tip,Toast.LENGTH_LONG).show();
+
+
+            Toast.makeText(context,tip,Toast.LENGTH_LONG).show();
+        }catch (Exception e){
+            Log.i("SimplePayListener",e.toString());
+        }
+
 
     }
 }
