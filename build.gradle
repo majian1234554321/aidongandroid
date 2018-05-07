@@ -11,7 +11,7 @@ buildscript {
             url 'https://maven.google.com/'
             name 'Google'
         }
-       // google()
+        // google()
         google()
     }
 
@@ -42,13 +42,13 @@ ext {
 
     targetSdkVersion = 27
 
-    versionCode = 45
-    versionName = "6.2.1"
+    versionCode = 630
+    versionName = "6.3.0"
 
     design = 'com.android.support:design:27.1.1'
     appcompatv7 = 'com.android.support:appcompat-v7:27.1.1'
     recyclerviewv7 = 'com.android.support:recyclerview-v7:27.1.1'
-    cardview7='com.android.support:cardview-v7:27.1.1'
+    cardview7 = 'com.android.support:cardview-v7:27.1.1'
     support4 = 'com.android.support:support-v4:27.1.1'
     coreUtils = "com.android.support:support-core-utils:27.1.1"
 }
