@@ -261,7 +261,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
             try {
                 LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL));
 
-                Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
+               // Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }finally {

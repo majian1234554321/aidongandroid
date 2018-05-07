@@ -96,7 +96,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
     private CustomNestRadioGroup radioGroup;
     private RadioButton cbAlipay;
     private RadioButton cbWeixin;
-    private String payType;
+    private String payType = PAY_ALI;
     private CourseAppointBean appointBean;
     private PayOptionBean payOptionBean;
     private LinearLayout layout_pay;
@@ -390,8 +390,8 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
 
             LocalBroadcastManager.getInstance(AppointDetailCourseNewActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
-            Toast.makeText(AppointDetailCourseNewActivity.this, "支付失败", Toast.LENGTH_LONG).show();
-//            startActivity(new Intent(AppointDetailCourseAndEventActivity.this, AppointmentMineActivityNew.class));
+          //  Toast.makeText(AppointDetailCourseNewActivity.this, "支付失败", Toast.LENGTH_LONG).show();
+            //startActivity(new Intent(AppointDetailCourseAndEventActivity.this, AppointmentMineActivityNew.class));
             finish();
         }
 
