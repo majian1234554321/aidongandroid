@@ -1,6 +1,7 @@
 package com.leyuan.aidong.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -54,14 +55,15 @@ public class GoodsCategoryAdapter extends RecyclerView.Adapter<GoodsCategoryAdap
         return data.size();
     }
 
+    @NonNull
     @Override
-    public GoodsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GoodsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_category, parent, false);
         return new GoodsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(GoodsViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull GoodsViewHolder holder, final int position) {
         CategoryBean bean = data.get(position);
         if (TextUtils.isEmpty(bean.getImage())) { //要改
             if (GOODS_EQUIPMENT.equals(type)) {

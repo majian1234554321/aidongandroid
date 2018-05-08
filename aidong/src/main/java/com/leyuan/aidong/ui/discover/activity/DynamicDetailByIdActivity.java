@@ -549,9 +549,9 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         }
 
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition) {
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition,View view) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start(DynamicDetailByIdActivity.this, info);
+            PhotoBrowseActivity.start(DynamicDetailByIdActivity.this, info,view);
         }
 
         @Override

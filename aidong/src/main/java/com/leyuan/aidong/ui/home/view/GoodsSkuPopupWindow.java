@@ -273,7 +273,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         if (limit > 0) {
 
             if (limit == 9999) {
-
+                txt_limit_number.setText("");
             } else
                 txt_limit_number.setText("(限购" + limit + "张)");
         }

@@ -68,6 +68,7 @@ import com.leyuan.aidong.ui.video.player.ExtractorRendererBuilder;
 import com.leyuan.aidong.ui.video.player.HlsRendererBuilder;
 import com.leyuan.aidong.ui.video.player.LoveSportPlayer;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.widget.DragVideoView;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -78,7 +79,7 @@ import java.util.Locale;
 
 public class PlayerActivity extends Activity implements SurfaceHolder.Callback, OnClickListener,
         LoveSportPlayer.Listener, LoveSportPlayer.CaptionListener, LoveSportPlayer.Id3MetadataListener,
-        AudioCapabilitiesReceiver.Listener {
+        AudioCapabilitiesReceiver.Listener, DragVideoView.Callback {
 
     // For use within demo app code.
     public static final String CONTENT_ID_EXTRA = "content_id";
@@ -130,6 +131,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
     private AudioCapabilitiesReceiver audioCapabilitiesReceiver;
     private String videoId;
     private String category;
+    private DragVideoView mDragVideoView;
 
     // Activity lifecycle
 
@@ -160,6 +162,10 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
                 return mediaController.dispatchKeyEvent(event);
             }
         });
+
+
+        mDragVideoView = findViewById(R.id.dragVideoView);
+        mDragVideoView.setCallback(this);
 
         shutterView = findViewById(R.id.shutter);
         debugRootView = findViewById(R.id.controls_root);
@@ -708,6 +714,16 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         String lastPathSegment = !TextUtils.isEmpty(fileExtension) ? "." + fileExtension
                 : uri.getLastPathSegment();
         return Util.inferContentType(lastPathSegment);
+    }
+
+    @Override
+    public void onVideoDisappear() {
+        if (null != player) {
+            player.prepare();
+        }
+        mDragVideoView.setVisibility(View.GONE);
+        finish();
+        overridePendingTransition(0, 0);
     }
 
     private static final class KeyCompatibleMediaController extends MediaController {

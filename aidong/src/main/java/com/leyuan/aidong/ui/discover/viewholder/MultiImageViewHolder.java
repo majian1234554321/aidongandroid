@@ -55,7 +55,7 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
     @Override
     public void onItemClick(ImageView view, int position) {
         if (callback != null) {
-            callback.onImageClick(adapter.data, photoLayout.getContentViewsDrawableRects(), position);
+            callback.onImageClick(adapter.data, photoLayout.getContentViewsDrawableRects(), position,view);
         }
     }
 

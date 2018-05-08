@@ -89,7 +89,7 @@ public class UserInfoPhotoAdapter extends RecyclerView.Adapter<UserInfoPhotoAdap
                             urls.add(imageBean.getUrl());
                         }
                         List<Rect> drawableRectList = ImageRectUtils.getDrawableRects(imageViewList);
-                        listener.onPreviewPhotoWallImage(urls,drawableRectList,position);
+                        listener.onPreviewPhotoWallImage(urls,drawableRectList,position,holder.image);
                     }
                 }
             });
@@ -118,6 +118,6 @@ public class UserInfoPhotoAdapter extends RecyclerView.Adapter<UserInfoPhotoAdap
 
     public interface OnItemClickListener {
 
-        void onPreviewPhotoWallImage(List<String> urls, List<Rect> rectList, int currPosition);
+        void onPreviewPhotoWallImage(List<String> urls, List<Rect> rectList, int currPosition,View view);
     }
 }

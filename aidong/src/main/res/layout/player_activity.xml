@@ -13,13 +13,23 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
+
+<com.leyuan.aidong.widget.ScaleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:focusable="true"
+    android:keepScreenOn="true"
+    android:layout_height="match_parent"
+
+
+    >
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:keepScreenOn="true">
+   >
 
     <com.google.android.exoplayer.AspectRatioFrameLayout
         android:id="@+id/video_frame"
@@ -132,3 +142,5 @@
         android:paddingLeft="@dimen/padding_back"/>
 
 </FrameLayout>
+
+</com.leyuan.aidong.widget.ScaleRelativeLayout>

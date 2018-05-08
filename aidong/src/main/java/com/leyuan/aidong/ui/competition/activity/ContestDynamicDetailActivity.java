@@ -515,9 +515,9 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
         }
 
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition) {
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition,View view) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start(ContestDynamicDetailActivity.this, info);
+            PhotoBrowseActivity.start(ContestDynamicDetailActivity.this, info,view);
         }
 
         @Override

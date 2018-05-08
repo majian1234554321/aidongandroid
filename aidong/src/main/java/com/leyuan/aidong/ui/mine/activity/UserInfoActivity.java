@@ -316,7 +316,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 List<Rect> viewLocalRect = new ArrayList<>();
                 viewLocalRect.add(ImageRectUtils.getDrawableBoundsInView(ivAvatar));
                 PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, viewLocalRect, 0);
-                PhotoBrowseActivity.start(this, info);
+                PhotoBrowseActivity.start(this, info,ivAvatar);
 
                 break;
 
@@ -514,9 +514,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
     @Override
-    public void onPreviewPhotoWallImage(List<String> urls, List<Rect> rectList, int currPosition) {
+    public void onPreviewPhotoWallImage(List<String> urls, List<Rect> rectList, int currPosition,View view) {
         PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, rectList, currPosition);
-        PhotoBrowseActivity.start(this, info);
+        PhotoBrowseActivity.start(this, info,view);
     }
 
     @Override

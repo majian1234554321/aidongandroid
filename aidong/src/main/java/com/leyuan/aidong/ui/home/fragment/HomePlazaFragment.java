@@ -34,6 +34,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.discover.activity.DiscoverUserActivity;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
+
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
@@ -46,6 +47,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.mvp.view.UserInfoView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.ui.video.activity.PreviewVideoActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -258,16 +260,16 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
 
         @Override
         public void onVideoClick(String url) {
-            Intent intent = new Intent(getContext(), PlayerActivity.class)
+            Intent intent = new Intent(getContext(), PreviewVideoActivity.class)
                     .setData(Uri.parse(url))
-                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+                    .putExtra("vodieUrl", Util.TYPE_HLS);
             startActivity(intent);
         }
 
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition) {
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition,View view ) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start((Activity) getContext(), info);
+            PhotoBrowseActivity.start((Activity) getContext(), info,view);
         }
 
         @Override

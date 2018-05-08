@@ -292,9 +292,9 @@ public class ContestDynamicFragment extends BasePageFragment implements SportCir
         }
 
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition) {
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition,View view) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start((Activity) getContext(), info);
+            PhotoBrowseActivity.start((Activity) getContext(), info,view);
         }
 
         @Override

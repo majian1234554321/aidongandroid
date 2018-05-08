@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_container"
     android:layout_width="match_parent"
+    android:background="@color/transparent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false">
 
-    <View
-        android:id="@+id/view_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black" />
 
-    <com.leyuan.aidong.widget.HackyViewPager
-        android:id="@+id/photo_viewpager"
+
+    <com.leyuan.aidong.widget.ScaleViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -20,7 +17,22 @@
         android:id="@+id/dot_indicator"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_marginBottom="15dp" />
 
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_height="30dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+
+        android:gravity="center"
+        android:text="保存" />
+
+</RelativeLayout>

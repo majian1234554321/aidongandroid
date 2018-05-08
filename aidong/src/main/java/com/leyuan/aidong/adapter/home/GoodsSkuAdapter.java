@@ -175,20 +175,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
             if (goodsSkuBean.getStock() == 0) {   // 注意后台约定小于0是无限库存
                 noStockSkuList.add(goodsSkuBean);
             } else {
-                if (goodsSkuBean.value != null && goodsSkuBean.value.size() > 0) {
 
-                   /* if (goodsSkuBean.value.get(0).contains("~")) {
-                        if (time2(goodsSkuBean.value.get(0).split("~")[1])) {
-                            noStockSkuList.add(goodsSkuBean);
-                        }
-                    } else {
-                        if (time2(goodsSkuBean.value.get(0))) {
-                            noStockSkuList.add(goodsSkuBean);
-                        }
-                    }*/
-
-
-                } else
                     hasStockSkuList.add(goodsSkuBean);
             }
         }
@@ -222,7 +209,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         }
 
 
-        //判断日期
+
 
 
         return allLineNoStockValue;
