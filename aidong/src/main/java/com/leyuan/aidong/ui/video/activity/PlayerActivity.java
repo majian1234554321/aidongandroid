@@ -164,8 +164,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         });
 
 
-        mDragVideoView = findViewById(R.id.dragVideoView);
-        mDragVideoView.setCallback(this);
+//        mDragVideoView = findViewById(R.id.dragVideoView);
+//        mDragVideoView.setCallback(this);
 
         shutterView = findViewById(R.id.shutter);
         debugRootView = findViewById(R.id.controls_root);

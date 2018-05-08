@@ -260,9 +260,9 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
 
         @Override
         public void onVideoClick(String url) {
-            Intent intent = new Intent(getContext(), PreviewVideoActivity.class)
+            Intent intent = new Intent(getContext(), PlayerActivity.class)
                     .setData(Uri.parse(url))
-                    .putExtra("vodieUrl", Util.TYPE_HLS);
+                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
             startActivity(intent);
         }
 
