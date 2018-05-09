@@ -135,6 +135,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
             nickname = (TextView) itemView.findViewById(R.id.tv_nickname);
             distance = (TextView) itemView.findViewById(R.id.tv_distance);
             follow = (ImageView) itemView.findViewById(R.id.iv_follow);
+            gender.setVisibility(View.VISIBLE);
         }
     }
 

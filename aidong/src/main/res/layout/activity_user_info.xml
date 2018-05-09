@@ -191,20 +191,23 @@
                                     android:includeFontPadding="false"
                                     android:singleLine="true"
                                     android:text="name"
+                                    android:textStyle="bold"
                                     android:textColor="@color/black"
                                     android:textSize="15sp" />
 
 
                                 <ImageView
                                     android:id="@+id/iv_coach_flag"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:baselineAlignBottom="true"
+                                    android:layout_alignBottom="@+id/tv_name"
                                     android:layout_toRightOf="@id/tv_name"
                                     android:background="@drawable/icon_coach"
                                     android:scaleType="centerCrop"
-                                    android:visibility="gone" />
+                                  />
 
                             </RelativeLayout>
 

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -56,12 +55,17 @@
         android:id="@+id/txt_sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:text="2017-12-27-1028-12-22 | 22 person attended"
         android:textColor="@color/b3"
         android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/list_line_color"
+        android:layout_height="6dp"/>
 
 
 </LinearLayout>

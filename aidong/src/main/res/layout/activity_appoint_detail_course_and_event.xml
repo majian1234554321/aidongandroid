@@ -90,6 +90,7 @@
                     android:layout_marginLeft="@dimen/left_margin"
                     android:layout_marginRight="@dimen/right_margin"
                     android:layout_marginTop="15dp"
+
                     android:background="@drawable/line_black" />
 
                 <include
@@ -98,6 +99,7 @@
 
 
                 <RelativeLayout
+
                     android:id="@+id/rl_qr_code"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
@@ -151,16 +153,20 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:visibility="gone"
+                    android:layout_marginLeft="15dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
-                        android:layout_marginLeft="@dimen/left_margin"
+
                         android:gravity="center_vertical"
                         android:text="@string/pay_type"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                         />
 
 
                     <com.leyuan.aidong.widget.CustomNestRadioGroup
@@ -173,7 +179,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:layout_marginLeft="@dimen/left_margin"
+
                             android:layout_marginRight="@dimen/right_margin"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
@@ -206,7 +212,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:layout_marginLeft="@dimen/left_margin"
+
                             android:layout_marginRight="@dimen/right_margin"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
@@ -245,20 +251,21 @@
                         android:id="@+id/tv1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/pref_15dp"
+                        android:visibility="gone"
+
                         android:text="温馨提示:" />
 
 
                     <TextView
                         android:layout_below="@+id/tv1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="12dp"
-                        android:gravity="left"
+                        android:gravity="center"
                         android:paddingLeft="12dp"
                         android:paddingRight="12dp"
-                        android:text="@string/course_order_hint"
+                        android:text="@string/course_order_hint2"
                         android:textColor="@color/c9"
                         android:textSize="12sp" />
 

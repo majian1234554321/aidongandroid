@@ -7,6 +7,7 @@
 
     <ScrollView
         android:id="@+id/scroll_view"
+        android:layout_marginTop="@dimen/height_top_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,7 +31,6 @@
                     app:banner_pointAutoPlayAble="false"
                     app:banner_pointContainerBackground="@android:color/transparent"
                     app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-                    app:banner_pointTopBottomMargin="5dp"
                     app:banner_transitionEffect="alpha" />
 
                 <ImageView
@@ -97,9 +97,10 @@
 
                         <ImageView
                             android:id="@+id/img_coach_identify"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_width="14dp"
+                            android:baselineAlignBottom="true"
+                            android:layout_height="14dp"
+                            android:layout_marginLeft="5dp"
                             android:src="@drawable/icon_coach" />
 
                     </LinearLayout>
@@ -302,6 +303,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
         android:layout_height="@dimen/height_top_bar">
 
         <ImageView
@@ -322,8 +324,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:padding="10dp"
-            android:src="@drawable/icon_share"
+            android:layout_centerVertical="true"
+           android:layout_marginRight="15dp"
+            android:background="@drawable/icon_share"
             android:visibility="visible" />
     </RelativeLayout>
     <!--android:background="@color/course_oringe"-->

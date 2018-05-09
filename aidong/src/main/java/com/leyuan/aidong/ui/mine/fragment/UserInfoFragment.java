@@ -62,6 +62,7 @@ public class UserInfoFragment extends BaseFragment{
         weight = (ExtendTextView) view.findViewById(R.id.weight);
         bmi = (ExtendTextView) view.findViewById(R.id.bmi);
         frequency = (ExtendTextView) view.findViewById(R.id.frequency);
+        hot.setRightTextViewdrawable();
     }
 
     private void setView(){

@@ -58,7 +58,7 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
 
             holder.txtIntro.setText(value);
         } else {
-            holder.txtIntro.setText(user.personal_intro);
+            holder.txtIntro.setText("这个人很懒,什么都没留下");
         }
 
 
