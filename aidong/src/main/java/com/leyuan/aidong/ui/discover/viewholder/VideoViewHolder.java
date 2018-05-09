@@ -45,7 +45,7 @@ public class VideoViewHolder extends BaseCircleViewHolder{
             @Override
             public void onClick(View v) {
                 if(callback != null){
-                    callback.onVideoClick(data.videos.url);
+                    callback.onVideoClick(data.videos.url,ivVideo);
                 }
             }
         });

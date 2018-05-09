@@ -916,6 +916,11 @@
         </provider>
 
         <activity android:name=".ui.DisplayActivity"></activity>
+
+        <activity
+            android:name=".ui.video.dragvideo.DragVideoActivity"
+            android:theme="@style/Transparent"
+            />
     </application>
 
 </manifest>

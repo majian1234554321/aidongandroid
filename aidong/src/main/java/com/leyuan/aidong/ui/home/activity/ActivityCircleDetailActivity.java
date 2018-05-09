@@ -627,7 +627,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         }
 
         @Override
-        public void onVideoClick(String url) {
+        public void onVideoClick(String url,View view) {
             Intent intent = new Intent(ActivityCircleDetailActivity.this, PlayerActivity.class)
                     .setData(Uri.parse(url))
                     .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);

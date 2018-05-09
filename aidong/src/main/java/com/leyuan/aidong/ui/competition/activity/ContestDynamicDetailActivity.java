@@ -507,7 +507,7 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
         }
 
         @Override
-        public void onVideoClick(String url) {
+        public void onVideoClick(String url,View view ) {
             Intent intent = new Intent(ContestDynamicDetailActivity.this, PlayerActivity.class)
                     .setData(Uri.parse(url))
                     .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);

@@ -487,7 +487,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         }
 
         @Override
-        public void onVideoClick(String url) {
+        public void onVideoClick(String url,View view ) {
             Intent intent = new Intent(CourseCircleDetailActivity.this, PlayerActivity.class)
                     .setData(Uri.parse(url))
                     .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);

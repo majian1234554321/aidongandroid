@@ -284,7 +284,9 @@ public class PhotoBrowseActivity extends AppCompatActivity {
             return;
         }
         canDrag = false;
-        Glide.with(this).load(path).into(mCurImage);
+        //Glide.with(this).load(path).into(mCurImage);
+
+        Glide.with(this).load(path).placeholder(R.drawable.img_default).error(R.drawable.img_default).into(mCurImage);
     }
 
     // 初始化每个view的image
