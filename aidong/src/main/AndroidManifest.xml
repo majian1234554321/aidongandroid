@@ -639,7 +639,7 @@
             android:name=".ui.discover.activity.PhotoBrowseActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
 
-            android:screenOrientation="portrait"
+
             android:theme="@style/FullScreenStyle2" />
         <activity
             android:name=".module.photopicker.boxing_impl.record.VideoCaptureActivity"

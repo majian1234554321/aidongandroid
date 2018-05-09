@@ -60,7 +60,7 @@ public class MapActivity extends BaseActivity{
         tvTitle = (TextView) findViewById(R.id.tv_title);
         mapView = (MapView) findViewById(R.id.mapView);
 
-        tvTitle.setText(title);
+        tvTitle.setText(shopName);
 
         map = mapView.getMap();
         map.setMapType(BaiduMap.MAP_TYPE_NORMAL);

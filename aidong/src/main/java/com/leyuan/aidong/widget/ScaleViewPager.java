@@ -140,7 +140,7 @@ public class ScaleViewPager extends BaseAnimCloseViewPager {
         ViewHelper.setTranslationY(currentShowView, deltaY);
         setupScale(scale);
         setupBackground(alphaPercent+0.3f);
-        Log.i("TAG",alphaPercent+"$$$$$$");
+
 
     }
 
