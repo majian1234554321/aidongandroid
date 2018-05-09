@@ -33,10 +33,7 @@
                     app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
                     app:banner_transitionEffect="alpha" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@color/semitransparent" />
+
 
             </FrameLayout>
 
