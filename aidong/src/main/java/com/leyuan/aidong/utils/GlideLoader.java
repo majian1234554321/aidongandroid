@@ -36,7 +36,7 @@ public class GlideLoader {
                 .load(imgUrl)
                 .thumbnail(0.2f)
                 .centerCrop()
-                .placeholder(R.drawable.img_default)
+                .placeholder(new ColorDrawable(0xffc6c6c6))
                 .into(imageView);
     }
 
