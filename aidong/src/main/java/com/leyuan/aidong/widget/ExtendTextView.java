@@ -2,6 +2,7 @@ package com.leyuan.aidong.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,6 +97,17 @@ public class ExtendTextView extends RelativeLayout {
     }
     public void setRightTextColor(int color){
         rightTextView.setTextColor(color);
+    }
+
+
+
+    public void setRightTextViewdrawable(){
+        Drawable drawable = getResources().getDrawable(
+                R.drawable.icon_fire);
+        // / 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                drawable.getMinimumHeight());
+        rightTextView.setCompoundDrawables(drawable, null, null, null);
     }
 
     /**

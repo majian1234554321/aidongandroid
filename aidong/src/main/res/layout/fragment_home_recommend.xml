@@ -165,6 +165,12 @@ android:visibility="gone"
                     android:id="@+id/rv_activity"
                     android:layout_width="match_parent"
                     android:layout_height="220dp" />
+
+                <View
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/list_line_color"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -230,7 +236,7 @@ android:visibility="gone"
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_star_coach"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
 

@@ -212,7 +212,10 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage((String) model, (ImageView) view);
+              ImageView imageView =   (ImageView) view;
+              imageView.setScaleType(ImageView.ScaleType.CENTER);
+
+                GlideLoader.getInstance().displayImage2((String) model, imageView);
             }
         });
     }
@@ -317,6 +320,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         if (courseData == null || courseData.getTimetable() == null) return;
         this.course = courseData.getTimetable();
         this.coupon_pack = courseData.getCoupon_pack();
+        tvTitle.setText(courseData.getTimetable().getName());
 
         if(TextUtils.isEmpty(coupon_pack.getItemProduct())){
             layoutCoursePack.setVisibility(View.GONE);

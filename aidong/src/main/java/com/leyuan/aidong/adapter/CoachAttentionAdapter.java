@@ -30,7 +30,7 @@ public class CoachAttentionAdapter extends RecyclerView.Adapter<CoachAttentionAd
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_coach_attention, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_coach_attention2, parent, false);
 
         return new ViewHolder(view);
     }

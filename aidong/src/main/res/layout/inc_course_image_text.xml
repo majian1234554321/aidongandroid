@@ -25,7 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/pref_0.5dp"
         android:layout_marginLeft="15dp"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/img_course"
         android:src="@color/common_divider_color" />
 
     <LinearLayout
