@@ -25,6 +25,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AddAddressActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.OrderActivity;
 import com.leyuan.aidong.ui.mine.activity.PaySuccessActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
@@ -209,10 +210,10 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         }
 
         if (shopBeanList != null && !shopBeanList.isEmpty() && shopBeanList.get(0).getItem() != null
-                && ! shopBeanList.get(0).getItem().isEmpty()
-                && shopBeanList.get(0).getItem().get(0).is_virtual() ){
+                && !shopBeanList.get(0).getItem().isEmpty()
+                && shopBeanList.get(0).getItem().get(0).is_virtual()) {
             is_virtual = true;
-        }else {
+        } else {
             is_virtual = false;
         }
     }
@@ -250,7 +251,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         tvFinalPrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
 
-        shopAdapter = new ConfirmOrderShopAdapter(this,is_virtual);
+        shopAdapter = new ConfirmOrderShopAdapter(this, is_virtual);
         rvGoods.setLayoutManager(new LinearLayoutManager(this));
         rvGoods.setNestedScrollingEnabled(false);
         rvGoods.setAdapter(shopAdapter);
@@ -287,8 +288,6 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 }
             }
         }
-
-
 
 
         if (needExpress) {
@@ -335,7 +334,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             txt_self_delivery_identify.setText(R.string.send_the_meal_time);
         }
 
-        if (is_virtual){
+        if (is_virtual) {
             //是虚拟商品
             findViewById(R.id.layout_coupon).setVisibility(View.GONE);
             findViewById(R.id.inc_goods_line).setVisibility(View.GONE);
@@ -345,7 +344,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             addressLayout.setVisibility(View.GONE);
             selfDeliveryLayout.setVisibility(View.GONE);
             llReceivingTime.setVisibility(View.GONE);
-        }else {
+        } else {
             findViewById(R.id.layout_coupon).setVisibility(View.VISIBLE);
             findViewById(R.id.inc_goods_line).setVisibility(View.VISIBLE);
             findViewById(R.id.view_coupon_line).setVisibility(View.VISIBLE);
@@ -455,7 +454,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         }
         Logger.i(TAG, "pickUpDate = " + pickUpDate + "pick_up_period =" + pick_up_period);
         present.buyGoodsImmediately(settlementType, skuCode, amount, couponId, integral, coin, payType,
-                String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener,recommendCode);
+                String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener, recommendCode);
 
     }
 
@@ -464,7 +463,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
-            PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo(),is_virtual);
+            PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo(), is_virtual);
             finish();
         }
 
@@ -472,14 +471,19 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         public void onFail(String code, Object object) {
             super.onFail(code, object);
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL));
-            startActivity(new Intent(ConfirmOrderGoodsActivity.this, OrderActivity.class));
+
+            Intent intent = new Intent(ConfirmOrderGoodsActivity.this, AppointmentMineActivityNew.class);
+            intent.putExtra("tranPosition", 6);
+
+
+            startActivity(intent);
             finish();
         }
 
         @Override
         public void onFree() {
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
-            PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo(),is_virtual);
+            PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo(), is_virtual);
             ToastGlobal.showLong("支付成功");
             finish();
         }

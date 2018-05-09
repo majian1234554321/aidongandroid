@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -57,7 +58,7 @@ import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -65,6 +66,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.leyuan.aidong.R.id.tv_message;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
@@ -78,7 +80,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
  * Created by song on 2016/12/27.
  */
 public class UserInfoActivity extends BaseActivity implements UserInfoActivityView, View.OnClickListener,
-        SmartTabLayout.TabProvider, UserInfoPhotoAdapter.OnItemClickListener {
+        UserInfoPhotoAdapter.OnItemClickListener {
     public static final int REQUEST_UPDATE_PHOTO = 1024;
     public static final int REQUEST_UPDATE_INFO = 2048;
 
@@ -96,7 +98,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private TextView tvName;
     private TextView tvSignature;
     private ImageView ivFollowOrEdit;
-    private SmartTabLayout tabLayout;
+    private TabLayout tabLayout;
     private ViewPager viewPager;
     //    private LinearLayout contactLayout;
 //    private TextView tvCall;
@@ -120,7 +122,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
 
-    public static void start(Context context, String userId,String intro) {
+    public static void start(Context context, String userId, String intro) {
         Intent starter = new Intent(context, UserInfoActivity.class);
         starter.putExtra("userId", userId);
         starter.putExtra("intro", intro);
@@ -173,7 +175,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         tvMessage = (TextView) findViewById(tv_message);
         tvSignature = (TextView) findViewById(R.id.tv_signature);
         ivFollowOrEdit = (ImageView) findViewById(R.id.iv_follow_or_edit);
-        tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
+        tabLayout = findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_user);
 //        contactLayout = (LinearLayout) findViewById(R.id.ll_contact);
 //        tvCall = (TextView) findViewById(R.id.tv_call);
@@ -197,17 +199,19 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         wallAdapter.setListener(this);
         ivAvatar.setOnClickListener(this);
     }
-    String intro = "" ;
+
+    String intro = "";
+
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
         this.userInfoData = userInfoData;
         userId = userInfoData.getProfile().getId();
 
-      if (!TextUtils.isEmpty( userInfoData.getProfile().personal_intro)){
-          intro =  userInfoData.getProfile().personal_intro;
-      }else {
-          intro = "NODATA";
-      }
+        if (!TextUtils.isEmpty(userInfoData.getProfile().personal_intro)) {
+            intro = userInfoData.getProfile().personal_intro;
+        } else {
+            intro = "NODATA";
+        }
         setView();
         setFragments();
     }
@@ -292,11 +296,27 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     new Bundler().putParcelable("profile", userInfoData.getProfile()).get()));
             adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
             viewPager.setAdapter(adapter);
-            tabLayout.setCustomTabView(this);
+            // tabLayout.setCustomTabView(this);
 
 
+            tabLayout.setupWithViewPager(viewPager);
 
-            tabLayout.setViewPager(viewPager);
+
+            String[] campaignTab;
+
+            if (userInfoData != null && userInfoData.getProfile() != null && Constant.COACH.equals(userInfoData.getProfile().getUserTypeByUserType())) {
+                campaignTab = getResources().getStringArray(R.array.coachInfoTab);
+            } else {
+                campaignTab = getResources().getStringArray(R.array.infoTab);
+            }
+
+            for (int i = 0; i < tabLayout.getTabCount(); i++) {
+                if (tabLayout != null && tabLayout.getTabAt(i) != null)
+                    tabLayout.getTabAt(i).setText(campaignTab[i]);
+
+            }
+
+
         }
     }
 
@@ -546,17 +566,5 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 otherId.equals(String.valueOf(App.mInstance.getUser().getId()));
     }
 
-    @Override
-    public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_user_info, container, false);
-        TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
-        String[] campaignTab = getResources().getStringArray(R.array.infoTab);
-
-        if (userInfoData != null && userInfoData.getProfile() != null && Constant.COACH.equals(userInfoData.getProfile().getUserTypeByUserType())) {
-            campaignTab = getResources().getStringArray(R.array.coachInfoTab);
-        }
-        text.setText(campaignTab[position]);
-        return tabView;
-    }
 
 }

@@ -3,6 +3,7 @@ package com.leyuan.aidong.adapter.discover;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,7 @@ public class SelectCircleAdapter extends RecyclerView.Adapter<SelectCircleAdapte
         holder.txtTitle.setText(bean.getName());
         if (bean.isCourse()) {
             holder.layoutStar.setVisibility(View.VISIBLE);
-            holder.txtIntro.setTextColor(R.color.b3);
+            holder.txtIntro.setTextColor(ContextCompat.getColor(context,R.color.b3));
             holder.txtIntro.setText(bean.getTagString());
             for (int i = 0; i < 5; i++) {
                 if (i < bean.strength) {
@@ -54,7 +55,7 @@ public class SelectCircleAdapter extends RecyclerView.Adapter<SelectCircleAdapte
             }
         } else {
             holder.layoutStar.setVisibility(View.GONE);
-            holder.txtIntro.setTextColor(R.color.c3);
+            holder.txtIntro.setTextColor(ContextCompat.getColor(context,R.color.c3));
             holder.txtIntro.setText(bean.getSlogan());
         }
 
