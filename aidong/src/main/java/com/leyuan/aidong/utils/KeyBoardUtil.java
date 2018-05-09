@@ -39,8 +39,14 @@ public class KeyBoardUtil {
     public static void closeKeyboard(EditText mEditText, Context mContext) {
          imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null && mEditText != null && mEditText.getWindowToken() != null)
-            imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+//        if (imm != null && mEditText != null && mEditText.getWindowToken() != null)
+//            imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+
+
+        assert imm != null;
+        if (imm.isActive()) {//如果开启
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,InputMethodManager.HIDE_NOT_ALWAYS);//关闭软键盘，开启方法相同，这个方法是切换开启与关闭状态的
+        }
 
 
     }

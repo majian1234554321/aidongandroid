@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -177,6 +178,36 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         ivUserAvatar = (ImageView) findViewById(R.id.dv_user_avatar);
         etComment = (EEditText) findViewById(R.id.et_comment);
 
+        etComment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                etComment.setHint("评论");
+                if(!TextUtils.isEmpty(s.toString().trim())){
+                    Log.i("DynamicDetailById",s.toString()+"a");
+                    etComment.setHint("评论");
+                }else {
+                    etComment.setHint("评论");
+                    Log.i("DynamicDetailById","没有数据了");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.i("DynamicDetailById","1221");
+
+                etComment.setHint("评论");
+
+            }
+        });
+
+
+        //etComment.a
         commentView = (RecyclerView) findViewById(R.id.rv_comment);
         commentAdapter = new DynamicDetailAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(commentAdapter);
@@ -240,7 +271,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
 
                 KeyBoardUtil.closeKeyboard(etComment, DynamicDetailByIdActivity.this);
-                etComment.clearFocus();
+
             }
         }
     };
