@@ -52,6 +52,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/c9"
+            android:gravity="center"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:textSize="13sp"
             tools:text="2015-09-09 14:30"/>
     </LinearLayout>

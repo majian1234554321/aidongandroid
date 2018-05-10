@@ -451,7 +451,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
         @Override
         public void onSuccess(String code, Object object) {
             LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
-            ToastGlobal.showLong("支付成功");
+            //ToastGlobal.showLong("支付成功");
             PaySuccessActivity.start(ConfirmOrderCartActivity.this, present.getShareInfo());
             finish();
         }

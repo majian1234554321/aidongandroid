@@ -380,7 +380,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
             LocalBroadcastManager.getInstance(AppointDetailCourseNewActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
             AppointCourseSuccessActivity.start(AppointDetailCourseNewActivity.this, appointBean.getTimetable().getClass_time(), true, courseShareBean);
-            Toast.makeText(AppointDetailCourseNewActivity.this, "支付成功", Toast.LENGTH_LONG).show();
+           // Toast.makeText(AppointDetailCourseNewActivity.this, "支付成功", Toast.LENGTH_LONG).show();
             finish();
         }
 
