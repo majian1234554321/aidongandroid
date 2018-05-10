@@ -209,14 +209,14 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
                 if (TextUtils.isEmpty(userCoach.getMobile())) {
                     ToastGlobal.showLong("请先绑定手机");
-                } else {
+                }  else {
                     DialogUtils.showDialog(this, "", true);
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
                             payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount, edit_remark.getText().toString().trim());
                 }
                 break;
             case R.id.txt_course_location:
-                MapActivity.start(this, course.getName(), course.getOrganizer(), course.getAddress(),
+                MapActivity.start(this, course.getName(), course.getLandmark(), course.getAddress(),
                         course.getCoordinate().getLat(), course.getCoordinate().getLng());
 
                 break;

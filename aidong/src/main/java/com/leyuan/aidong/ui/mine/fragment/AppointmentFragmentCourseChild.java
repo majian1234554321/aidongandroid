@@ -231,7 +231,9 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
             LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL));
             Toast.makeText(getContext(), "取消成功", Toast.LENGTH_LONG).show();
         }else {
-            ToastGlobal.showShortConsecutive(baseBean.getMessage());
+            if (baseBean != null) {
+                ToastGlobal.showShortConsecutive(baseBean.getMessage());
+            }
         }
 
     }
