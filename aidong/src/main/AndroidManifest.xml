@@ -162,11 +162,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.CouponNewcomerActivity"
-            android:screenOrientation="portrait"
+
             android:theme="@style/ThemeSemitransparent" />
         <activity
             android:name=".ui.mine.activity.CouponShareActivity"
-            android:screenOrientation="portrait"
+
             android:theme="@style/ThemeSemitransparent" />
         <activity
             android:name=".ui.mine.activity.setting.AboutMxActivity"
@@ -380,15 +380,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.NurtureActivity"
-            android:screenOrientation="portrait"
+
             android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.home.activity.EquipmentActivity"
-            android:screenOrientation="portrait"
+
             android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.home.activity.FoodAndBeverageActivity"
-            android:screenOrientation="portrait"
+
             android:theme="@style/AppTheme.FullScreen" />
         <!-- <activity -->
         <!-- android:name=".ui.home.activity.AppointCampaignActivity" -->
@@ -402,7 +402,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.BrandActivity"
-            android:screenOrientation="portrait"
+
             android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.home.activity.DeliveryInfoActivity"
@@ -569,7 +569,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.WeiboResponseActivity"
-            android:screenOrientation="portrait"
+
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
@@ -579,7 +579,7 @@
         </activity>
         <activity
             android:name=".ui.ShareActivityQQ"
-            android:screenOrientation="portrait"
+
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.home.activity.MapActivity"
