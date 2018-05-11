@@ -92,7 +92,9 @@ public class AppointCourseSuccessActivity extends BaseActivity implements View.O
         tvType = (TextView) headerView.findViewById(R.id.tv_type);
         tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
         tvType.setText(isCourse ? R.string.course_time : R.string.campaign_time);
+        tvType.setVisibility(View.VISIBLE);
         tvTime = (TextView) headerView.findViewById(R.id.tv_time);
+
         tvTime.setText(time);
         returnHome = (TextView) headerView.findViewById(R.id.tv_home);
         checkAppointment = (TextView) headerView.findViewById(R.id.tv_appointment);

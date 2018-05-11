@@ -461,7 +461,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            ToastGlobal.showLong("支付成功");
+            //ToastGlobal.showLong("支付成功");
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
             PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo(), is_virtual);
             finish();

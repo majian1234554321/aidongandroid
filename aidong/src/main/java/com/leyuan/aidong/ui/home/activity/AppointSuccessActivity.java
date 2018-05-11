@@ -35,7 +35,7 @@ import java.util.List;
  * 预约成功界面
  * Created by song on 2016/9/12.
  */
-public class AppointSuccessActivity extends BaseActivity implements View.OnClickListener, AppointSuccessActivityView, CouponShareView,HideHeadItemView {
+public class AppointSuccessActivity extends BaseActivity implements View.OnClickListener, AppointSuccessActivityView, CouponShareView, HideHeadItemView {
     private TextView tvRecommend;
     private TextView tvType;
     private TextView tvTime;
@@ -47,12 +47,12 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
     private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    private String time,amount;
+    private String time, amount;
     private boolean isCourse;
     private RecommendPresent present;
     ShareData.ShareCouponInfo shareBean;
 
-    public static void start(Context context, String time, boolean isCourse, ShareData.ShareCouponInfo shareInfo,String amount ) {
+    public static void start(Context context, String time, boolean isCourse, ShareData.ShareCouponInfo shareInfo, String amount) {
         Intent intent = new Intent(context, AppointSuccessActivity.class);
         intent.putExtra("time", time);
         intent.putExtra("isCourse", isCourse);
@@ -78,7 +78,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         present.pullToRefreshRecommendData(Constant.RECOMMEND_ORDER);
 
         if (shareBean != null) {
-            new CouponPresentImpl(this, this,this).getShareCoupon(shareBean.getNo());
+            new CouponPresentImpl(this, this, this).getShareCoupon(shareBean.getNo());
         }
     }
 
@@ -89,12 +89,10 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         //tvType.setText(isCourse ? R.string.course_time : R.string.campaign_time);
         tvTime = (TextView) headerView.findViewById(R.id.tv_time);
 
-        if (time!=null){
-            if (time.split(" ").length>2){
-                tvTime.setText(time.split(" ")[0]+" "+time.split(" ")[1] +" 共"+amount+"张票");
-            }else {
-                tvTime.setText(time+"共"+amount+"张票");
-            }
+        if (time != null) {
+
+            tvTime.setText(time + "共" + amount + "张票");
+
         }
 
 
@@ -128,7 +126,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.tv_appointment:
-                AppointmentMineActivityNew.start(this,3);
+                AppointmentMineActivityNew.start(this, 3);
                 finish();
 
 //                startActivity(new Intent(this, AppointmentActivity.class));
@@ -161,7 +159,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void hideHeadItemView() {
-        if(tvRecommend!=null){
+        if (tvRecommend != null) {
             tvRecommend.setVisibility(View.GONE);
         }
     }

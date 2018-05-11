@@ -553,7 +553,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            ToastGlobal.showLong("支付成功");
+           // ToastGlobal.showLong("支付成功");
             AppointSuccessActivity.start(AppointCampaignDetailActivity.this, bean.getAppoint().getSpec_value(), false, present.getShareInfo(),bean.getAppoint().amount);
             LocalBroadcastManager.getInstance(AppointCampaignDetailActivity.this)
                     .sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));

@@ -21,15 +21,10 @@
         android:id="@+id/iv"
         android:layout_marginRight="15dp"
         android:src="@drawable/icon_right_arrow" />
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pref_0.5dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_below="@id/img_course"
-        android:src="@color/common_divider_color" />
+
 
     <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="21dp"
@@ -58,7 +53,7 @@
             android:id="@+id/txt_coach_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="8dp"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -72,5 +67,16 @@
 
 
     </LinearLayout>
+
+    <ImageView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/ll"
+        android:src="@color/common_divider_color" />
+
+
 
 </RelativeLayout>

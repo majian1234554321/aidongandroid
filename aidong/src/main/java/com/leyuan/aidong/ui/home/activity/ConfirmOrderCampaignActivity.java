@@ -264,7 +264,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
             AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, txtCoachName.getText().toString().trim(), false, campaignPresent.getShareInfo(),course.amount);
 
-            ToastGlobal.showLongConsecutive("支付成功");
+           // ToastGlobal.showLongConsecutive("支付成功");
             finish();
 
         }
@@ -277,7 +277,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
             LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_FAILED));
 
-            Toast.makeText(ConfirmOrderCampaignActivity.this, "支付失败", Toast.LENGTH_LONG).show();
+            //Toast.makeText(ConfirmOrderCampaignActivity.this, "支付失败", Toast.LENGTH_LONG).show();
 
             AppointmentMineActivityNew.start(ConfirmOrderCampaignActivity.this, 3);
             finish();

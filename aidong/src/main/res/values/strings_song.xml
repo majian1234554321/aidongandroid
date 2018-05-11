@@ -14,8 +14,8 @@
     <string name="home_competition">赛事</string>
     <string name="course_info">课程信息</string>
     <string name="campaign_info">活动信息</string>
-    <string name="course_time">课程时间</string>
-    <string name="campaign_time">活动时间</string>
+    <string name="course_time">课程时间:</string>
+    <string name="campaign_time">活动时间:</string>
     <string name="course_address">课程地址</string>
     <string name="campaign_address">活动地址</string>
     <string name="course_price">课程总额:</string>
