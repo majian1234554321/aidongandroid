@@ -293,7 +293,12 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.bt_close_invitation:
+                getEditInvitationCode().setText("");
+                getEditInvitationCode().setHint("请输入邀请码");
                 layoutInvitation.setVisibility(View.GONE);
+
+
+
                 break;
 
             case R.id.bt_enrol_semi_final:

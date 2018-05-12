@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.discover;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
@@ -136,6 +137,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
             name = (TextView) itemView.findViewById(R.id.tv_name);
             content = (TextView) itemView.findViewById(tv_content);
             time = (TextView) itemView.findViewById(R.id.tv_time);
+
+            View  view = (View) itemView.findViewById(R.id.view);
+            view.setBackgroundColor(ContextCompat.getColor(context,R.color.color_image_press));
+
         }
     }
 

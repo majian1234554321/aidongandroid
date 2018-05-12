@@ -109,7 +109,7 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
         public ImageView onCreateView(ImageView convertView, ViewGroup parent, int position) {
             if (convertView == null) {
                 convertView = new ForceClickImageView(context);
-                convertView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                convertView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 Logger.w("onCreateView","position :" + position );
             }
             return convertView;

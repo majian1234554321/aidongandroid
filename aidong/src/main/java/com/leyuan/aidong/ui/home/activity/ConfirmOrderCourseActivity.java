@@ -2,7 +2,9 @@ package com.leyuan.aidong.ui.home.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -215,9 +217,13 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         DialogUtils.dismissDialog();
         this.usableCoupons = coupon;
         if (coupon == null || coupon.isEmpty()) {
-            txtCoupon.setText("无可用优惠券");
+            txtCoupon.setText("无可用");
+            txtCoupon.setTextColor(ContextCompat.getColor(this,R.color.c9));
+            layoutCourseCoupon.setVisibility(View.GONE);
         } else {
             txtCoupon.setText("请选择");
+            txtCoupon.setTextColor(Color.BLACK);
+            layoutCourseCoupon.setVisibility(View.VISIBLE);
         }
     }
 

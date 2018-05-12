@@ -141,6 +141,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         txtGoCourseNum = (TextView) rootView.findViewById(R.id.txt_go_course_num);
         txtClassTotalTime = (TextView) rootView.findViewById(R.id.txt_class_total_time);
         txtExpendCal = (TextView) rootView.findViewById(R.id.txt_expend_cal);
+        ImageView  iv = (ImageView) rootView.findViewById(R.id.iv);
+
+        iv.setOnClickListener(this);
 
 
 
@@ -247,6 +250,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.iv:
+                UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
+                break;
             case R.id.layout_no_login:
                 UiManager.activityJump(getActivity(), LoginActivity.class);
                 break;

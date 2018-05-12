@@ -192,7 +192,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
     @Override
     public void showEmptyView() {
         View view = View.inflate(getContext(), R.layout.empty_order, null);
-        ((TextView) view.findViewById(R.id.tv)).setText("暂无课表");
+        ((TextView) view.findViewById(R.id.tv)).setText("暂无课程");
         switcherLayout.addCustomView(view, "empty");
 
         switcherLayout.showCustomLayout("empty");

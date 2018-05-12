@@ -48,7 +48,7 @@ public class PersonAttentionAdapter extends RecyclerView.Adapter<PersonAttention
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfoActivity.start(context, userBean.getId());
+               // UserInfoActivity.start(context, userBean.getId());
             }
         });
 
