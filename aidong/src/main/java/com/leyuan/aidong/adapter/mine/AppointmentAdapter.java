@@ -16,6 +16,10 @@ import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,9 +180,26 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.tvCancelJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (appointmentListener != null) {
-                    appointmentListener.onCancelJoin(position);
-                }
+
+
+                new DialogDoubleButton(context).setContentDesc("确定取消当前预约")
+                        .setBtnCancelListener(new ButtonCancelListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setBtnOkListener(new ButtonOkListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                                if (appointmentListener != null) {
+                                    appointmentListener.onCancelJoin(position);
+                                }
+                            }
+                        }).show();
+
+
             }
         });
 

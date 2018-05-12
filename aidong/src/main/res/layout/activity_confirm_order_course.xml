@@ -335,6 +335,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/pref_15dp"
+                    android:visibility="gone"
                     android:text="温馨提示:" />
 
 
@@ -344,10 +345,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="12dp"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
-                    android:text="@string/course_order_hint"
+                    android:text="@string/course_order_hint2"
                     android:textColor="@color/c9"
                     android:textSize="12sp" />
 

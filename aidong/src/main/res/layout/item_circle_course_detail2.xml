@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textStyle="bold"
-                android:text="111111111111"
+                tools:text="111111111111"
                 android:maxLength="25"
                 android:textColor="@color/black"
                 android:textSize="16sp" />

@@ -329,6 +329,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="11dp"
                 android:text="实付款:"
+                android:textStyle="bold"
                 android:textColor="@color/c3"
                 android:textSize="16sp" />
 
@@ -338,6 +339,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="¥300.00"
+                android:textStyle="bold"
                 android:textColor="@color/c3"
                 android:textSize="17sp" />
         </LinearLayout>

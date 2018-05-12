@@ -370,7 +370,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 }
                 tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                        DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
                 break;
             case JOINED:            //已参加
                 tvState.setText(context.getString(R.string.appointment_joined));
@@ -440,7 +440,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 }
                 tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                        DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
                 break;
             case REFUNDED:             //已退款
                 tvState.setText(context.getString(R.string.order_refunded));
@@ -457,7 +457,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 //                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 //                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
 //                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
-//                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+//                        DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
 
@@ -468,7 +468,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 //                }
                 tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getAppoint().getVerify_no(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                        DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
                 break;
             default:
                 break;

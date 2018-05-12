@@ -69,6 +69,8 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         if(!TextUtils.isEmpty(bean.getRecommendCode())){
             holder.code.setText(String.format(context.getString(R.string.recommend_code),
                     bean.getRecommendCode()));
+        }else {
+            holder.code.setVisibility(View.GONE);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

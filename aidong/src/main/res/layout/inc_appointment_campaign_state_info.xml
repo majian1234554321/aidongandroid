@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -163,14 +164,14 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="88777"
+            tools:text="88777"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:transitionName="@string/transition_code_num" />
 
         <ImageView
             android:id="@+id/dv_qr"
-            android:layout_width="294dp"
+            android:layout_width="312dp"
             android:layout_height="73dp"
             android:layout_below="@+id/tv_qr_num"
             android:layout_centerHorizontal="true"

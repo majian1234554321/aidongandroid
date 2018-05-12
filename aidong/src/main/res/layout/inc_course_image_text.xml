@@ -7,9 +7,10 @@
     <ImageView
         android:id="@+id/img_course"
         android:layout_width="@dimen/pref_100dp"
+
         android:layout_height="@dimen/pref_100dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
+        android:layout_margin="15dp"
 
         />
 
@@ -27,7 +28,7 @@
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="21dp"
+
         android:orientation="vertical"
         android:layout_marginRight="8dp"
         android:layout_centerVertical="true"
@@ -74,7 +75,7 @@
         android:layout_height="@dimen/pref_0.5dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:layout_below="@id/ll"
+       android:layout_alignParentBottom="true"
         android:src="@color/common_divider_color" />
 
 

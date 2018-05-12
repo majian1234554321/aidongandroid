@@ -96,7 +96,7 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<PhotoWallAdapter.Imag
             }
             holder.delete.setVisibility(View.VISIBLE);
         } else {
-            holder.image.setBackgroundResource(R.drawable.icon_add_photo);
+            holder.image.setBackgroundResource(R.drawable.outline_add_box_white_36);
             holder.delete.setVisibility(View.GONE);
             holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override

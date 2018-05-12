@@ -479,7 +479,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private void showRecommendCodeDialog() {
         View view = View.inflate(this, R.layout.dialog_input_code, null);
         final EditText etCode = (EditText) view.findViewById(R.id.et_code);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
         builder.setMessage(getString(R.string.input_recommend_code))
                 .setCancelable(true)
                 .setView(view)

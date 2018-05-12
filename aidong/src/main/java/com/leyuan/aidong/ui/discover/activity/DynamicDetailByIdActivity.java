@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.discover.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
@@ -49,6 +51,9 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.ui.video.dragvideo.ImageLoaderAdapter;
+import com.leyuan.aidong.ui.video.dragvideo.MVideo;
+import com.leyuan.aidong.ui.video.dragvideo.media.IjkVideoView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -573,10 +578,24 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
         @Override
         public void onVideoClick(String url,View view ) {
-            Intent intent = new Intent(DynamicDetailByIdActivity.this, PlayerActivity.class)
-                    .setData(Uri.parse(url))
-                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
-            startActivity(intent);
+//            Intent intent = new Intent(DynamicDetailByIdActivity.this, PlayerActivity.class)
+//                    .setData(Uri.parse(url))
+//                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+//            startActivity(intent);
+
+            MVideo.getInstance()
+                    .setProgressColor(Color.GRAY)
+                    .setPreviewImage(R.drawable.img_default)
+                    .setRotateDirection(IjkVideoView.RotateDirection.DEFAULT )
+                    .bind(new ImageLoaderAdapter() {
+                        @Override
+                        public void bind(ImageView imageView, String imagePath) {
+                            Glide.with(DynamicDetailByIdActivity.this).load(imagePath).into(imageView);
+                        }
+                    })
+                    .start(DynamicDetailByIdActivity.this, view, url);
+
+
         }
 
         @Override

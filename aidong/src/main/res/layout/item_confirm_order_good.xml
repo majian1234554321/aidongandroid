@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="@dimen/left_margin"
-    android:paddingRight="@dimen/right_margin"
-    android:layout_height="70dp">
+    android:paddingRight="@dimen/right_margin">
 
     <ImageView
         android:id="@+id/dv_cover"
@@ -16,65 +17,80 @@
         android:id="@+id/tv_goods_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="健身"
-        android:singleLine="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/dv_cover"
         android:layout_toLeftOf="@+id/tv_goods_price"
-        android:textSize="16sp"
-        android:textColor="@color/c3"/>
+        android:layout_toRightOf="@+id/dv_cover"
+        android:singleLine="true"
+        android:text="健身"
+        android:textColor="@color/c3"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_goods_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="150"
-        android:layout_alignParentRight="true"
         android:layout_alignBottom="@+id/tv_goods_name"
-        android:textSize="16sp"
-        android:textColor="@color/c3"/>
-
-    <TextView
-        android:id="@+id/tv_sku"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="sku11"
-        android:singleLine="true"
-        android:textSize="13sp"
-        android:textColor="@color/c9"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/tv_goods_name"
-        android:layout_marginRight="12dp"
-        android:layout_alignLeft="@+id/tv_goods_name"/>
-
-
-
-    <TextView
-        android:id="@+id/tv_recommend_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:singleLine="true"
-        android:textSize="13sp"
-        android:textColor="@color/c9"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="30dp"
-        android:layout_alignBottom="@+id/tv_sku"
-        android:layout_toRightOf="@+id/tv_sku"/>
-
-    <TextView
-        android:id="@+id/tv_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
         android:layout_alignParentRight="true"
-        android:text="X 1"
-        android:textColor="@color/black"
-        android:layout_alignTop="@+id/tv_recommend_code"/>
+        android:text="150"
+        android:textColor="@color/c3"
+        android:textSize="16sp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_goods_name"
+        android:layout_below="@+id/tv_goods_name">
+
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/pref_12dp"
+            tools:text="X 1"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_sku"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/tv_count"
+            android:singleLine="true"
+            tools:text="sku11"
+            android:textColor="@color/c9"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/tv_recommend_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_sku"
+            android:layout_marginRight="30dp"
+
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:textColor="@color/c9"
+            android:textSize="12sp"
+            tools:text="1212"
+
+            />
+
+
+    </RelativeLayout>
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_color"/>
+        android:background="@color/line_color" />
 </RelativeLayout>

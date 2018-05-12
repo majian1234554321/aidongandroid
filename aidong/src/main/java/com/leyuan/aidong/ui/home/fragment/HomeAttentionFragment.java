@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
@@ -49,6 +51,9 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.mvp.view.UserInfoView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.ui.video.dragvideo.ImageLoaderAdapter;
+import com.leyuan.aidong.ui.video.dragvideo.MVideo;
+import com.leyuan.aidong.ui.video.dragvideo.media.IjkVideoView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -310,10 +315,23 @@ public class HomeAttentionFragment extends BasePageFragment implements SportCirc
 
         @Override
         public void onVideoClick(String url,View view) {
-            Intent intent = new Intent(getContext(), PlayerActivity.class)
-                    .setData(Uri.parse(url))
-                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
-            startActivity(intent);
+//            Intent intent = new Intent(getContext(), PlayerActivity.class)
+//                    .setData(Uri.parse(url))
+//                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+//            startActivity(intent);
+
+            MVideo.getInstance()
+                    .setProgressColor(Color.GRAY)
+                    .setPreviewImage(R.drawable.img_default)
+                    .setRotateDirection(IjkVideoView.RotateDirection.DEFAULT )
+                    .bind(new ImageLoaderAdapter() {
+                        @Override
+                        public void bind(ImageView imageView, String imagePath) {
+                            Glide.with(getContext()).load(imagePath).into(imageView);
+                        }
+                    })
+                    .start(getActivity(), view, url);
+
         }
 
         @Override
