@@ -55,7 +55,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
  * Created by user on 2017/12/25.
  */
 public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProvider, View.OnClickListener {
-    private ImageView ivLogo;
+
     private TextView tvLocation;
     private ImageView ivSearch;
 
@@ -119,7 +119,7 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ivLogo = (ImageView) view.findViewById(R.id.iv_logo);
+
         tvLocation = (TextView) view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
 

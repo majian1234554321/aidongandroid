@@ -4,11 +4,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_gravity="center"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:padding="5dp"
-    android:background="@color/white">
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+
+    android:background="@color/colorPrimary">
     <TextView
         android:id="@+id/tv_tab_text"
         android:layout_width="wrap_content"
@@ -16,7 +15,7 @@
         android:maxLines="1"
         android:text="爱动圈"
         android:textColor="@drawable/selector_tab_black_b"
-        android:textSize="17sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_tab_tip"

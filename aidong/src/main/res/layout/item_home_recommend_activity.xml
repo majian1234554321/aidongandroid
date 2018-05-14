@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v7.widget.CardView
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:cardCornerRadius="5dp"
+    android:layout_marginLeft="15dp"
+
+    app:cardElevation="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<LinearLayout
     android:layout_width="240dp"
     android:layout_height="match_parent"
-    android:layout_marginLeft="15dp"
+
     android:orientation="vertical">
 
     <ImageView
@@ -16,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
@@ -41,7 +53,9 @@
 
     <TextView
         android:id="@+id/txt_time"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="2017-12-27-1028-12-22"
@@ -50,3 +64,5 @@
 
 
 </LinearLayout>
+
+</android.support.v7.widget.CardView>

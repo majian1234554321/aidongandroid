@@ -1,38 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="@color/black">
-    <ImageView
-        android:id="@+id/iv_logo"
+
+
+    <com.ogaclejapan.smarttablayout.SmartTabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/app_logo"
-        android:layout_centerInParent="true"/>
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        app:stl_defaultTabTextColor="@color/gray_normal"
+        app:stl_defaultTabTextSize="14sp"
+        app:stl_dividerColor="@color/transparent"
+        app:stl_indicatorColor="@color/white"
+        app:stl_indicatorInterpolation="linear"
+android:layout_centerVertical="true"
+
+        app:stl_indicatorThickness="3dp"
+        app:stl_indicatorWidth="auto"
+
+        app:stl_underlineColor="@color/transparent"
+
+        app:stl_underlineThickness="-1dp" />
+
     <TextView
         android:id="@+id/tv_location"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:clickable="true"
-        android:text="上海"
-        android:textSize="14sp"
-        android:textColor="@color/white"
+        android:drawablePadding="5dp"
         android:drawableRight="@drawable/home_arrow"
         android:gravity="center"
-        android:drawablePadding="5dp"
-        android:layout_centerVertical="true"
-        android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:paddingLeft="@dimen/left_margin"/>
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingTop="4dp"
+        android:text="上海"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/iv_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_camera"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:padding="12dp"
-        android:visibility="visible"/>
+        android:src="@drawable/icon_camera"
+        android:visibility="visible" />
 
 </RelativeLayout>
