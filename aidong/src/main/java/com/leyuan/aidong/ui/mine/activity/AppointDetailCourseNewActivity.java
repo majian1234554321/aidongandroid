@@ -228,7 +228,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         tvQrNum.setText(appointBean.getId());
         tvQrNum.setTextColor(Color.BLACK);
         dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, Color.BLACK, appointBean.getId(),
-                DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
         tv_cancel_appoint.setText("取消预约");
 
         switch (appointBean.getCourseFinalStatus()) {
@@ -283,7 +283,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 tvQrNum.setTextColor(getResources().getColor(R.color.txt_appoint_num_gray));
                 dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, appointBean.getId(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                        DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
 
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.absent));
@@ -294,7 +294,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 tvQrNum.setTextColor(getResources().getColor(R.color.txt_appoint_num_gray));
                 dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, appointBean.getId(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                        DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
 
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.signed));

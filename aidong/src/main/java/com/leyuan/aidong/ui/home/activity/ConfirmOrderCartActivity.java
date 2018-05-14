@@ -27,7 +27,8 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AddAddressActivity;
-import com.leyuan.aidong.ui.mine.activity.OrderActivity;
+
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.PaySuccessActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
@@ -462,7 +463,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
         public void onFail(String code, Object object) {
             super.onFail(code, object);
             LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL));
-            startActivity(new Intent(ConfirmOrderCartActivity.this, OrderActivity.class));
+            AppointmentMineActivityNew.start(ConfirmOrderCartActivity.this, 6);
             finish();
         }
 

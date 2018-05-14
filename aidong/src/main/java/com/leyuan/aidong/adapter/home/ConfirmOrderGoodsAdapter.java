@@ -63,15 +63,18 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
                 result.append(specName.get(i)).append(":").append(specValue.get(i)).append(" ");
             }
         }
+        if(!TextUtils.isEmpty(bean.getRecommendCode())){
+            result.append(" ").append(String.format(context.getString(R.string.recommend_code),
+                    bean.getRecommendCode()));
+        }else {
+            result.append("");
+        }
+
+
         holder.sku.setText(result);
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPrice())));
-        if(!TextUtils.isEmpty(bean.getRecommendCode())){
-            holder.code.setText(String.format(context.getString(R.string.recommend_code),
-                    bean.getRecommendCode()));
-        }else {
-            holder.code.setVisibility(View.GONE);
-        }
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

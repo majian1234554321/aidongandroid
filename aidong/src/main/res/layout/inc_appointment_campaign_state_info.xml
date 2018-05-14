@@ -164,6 +164,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
+
             tools:text="88777"
             android:textColor="@color/black"
             android:textSize="30sp"
@@ -171,12 +172,13 @@
 
         <ImageView
             android:id="@+id/dv_qr"
-            android:layout_width="312dp"
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
             android:layout_height="73dp"
+            android:scaleType="fitXY"
             android:layout_below="@+id/tv_qr_num"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
             android:background="@color/line_color"
             android:transitionName="@string/transition_code" />
 

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.OptionsPickerView;
@@ -28,7 +29,7 @@ import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AddAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
-import com.leyuan.aidong.ui.mine.activity.OrderActivity;
+
 import com.leyuan.aidong.ui.mine.activity.PaySuccessActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
@@ -49,6 +50,7 @@ import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -152,6 +154,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private String currentGoodsID;
     private boolean is_virtual;
     private String recommendCode;
+    private String rightContent;
 
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderGoodsActivity.class);
@@ -455,6 +458,13 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             }
         }
         Logger.i(TAG, "pickUpDate = " + pickUpDate + "pick_up_period =" + pick_up_period);
+
+
+
+
+
+
+
         present.buyGoodsImmediately(settlementType, skuCode, amount, couponId, integral, coin, payType,
                 String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener, recommendCode);
 
@@ -520,17 +530,21 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             //tvCoupon.setCompoundDrawables(null, null, null, null);
             tvCoupon.setTextColor(ContextCompat.getColor(this,R.color.c9));
         }else {
-            tvCoupon.setText("请选择");
-            tvCoupon.setTextColor(Color.BLACK);
+            if (TextUtils.isEmpty(couponId)){
+                tvCoupon.setText("请选择");
+                tvCoupon.setTextColor(Color.BLACK);
+                tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
+            }
+
         }
         //把优惠券使用置为初始状态
 
-        selectedUserCouponId = null;
-        Logger.i("coupon", "setSpecifyGoodsCouponResult = " + selectedUserCouponId);
-        couponId = null;
-        couponPrice = null;
+//        selectedUserCouponId = null;
+//        Logger.i("coupon", "setSpecifyGoodsCouponResult = " + selectedUserCouponId);
+//        couponId = null;
+//        couponPrice = null;
 
-        tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
+
         double dPrice = needExpress ? expressPrice : 0d;
         double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
         tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
@@ -554,10 +568,14 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 Logger.i("coupon", "onActivityResult selectedUserCouponId = " + selectedUserCouponId);
                 couponId = couponBean.getId();
                 couponPrice = couponBean.getActual();
-                tvCoupon.setText(FormatUtil.parseDouble(couponPrice) >= 0
+                tvCoupon.setText(FormatUtil.parseDouble(couponPrice) > 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
-                tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice)));
+
+
+                rightContent = String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice));
+
+                tvCouponPrice.setRightContent(rightContent);
                 double dPrice = needExpress ? expressPrice : 0;
                 double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
                 tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
@@ -582,6 +600,12 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             setAddressInfo(address);
             addressLayout.setVisibility(View.VISIBLE);
             emptyAddressLayout.setVisibility(View.GONE);
+        }
+
+        if (is_virtual) {
+            emptyAddressLayout.setVisibility(View.GONE);
+        }else {
+            emptyAddressLayout.setVisibility(View.VISIBLE);
         }
     }
 

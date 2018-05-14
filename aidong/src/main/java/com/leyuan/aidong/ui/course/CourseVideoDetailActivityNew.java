@@ -190,7 +190,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
                 break;
             case R.id.txt_appoint_immediately:
 
-                CourseListActivityNew.start(this, this.courseVideoBean.getCategory(),this.courseVideoBean.getTypeName());
+                CourseListActivityNew.start(this, "全部分类",this.courseVideoBean.getTypeName());
                 break;
         }
     }

@@ -222,7 +222,7 @@
     <string name="input_new_password_limit">输入新密码(6-14字符)</string>
     <string name="input_password_limit_again">确认密码(6-14字符)</string>
     <string name="telephone">手机号</string>
-    <string name="please_select">选择</string>
+    <string name="please_select">请选择</string>
     <string name="aidong">爱动</string>
     <string name="live_video">视界</string>
     <string name="reset_password">重置密码</string>

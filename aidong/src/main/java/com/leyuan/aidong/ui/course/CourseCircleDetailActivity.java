@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -260,7 +261,9 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 break;
             case R.id.txt_appoint_immediately:
 
-                CourseListActivityNew.start(this, courseDetailBean.getCategory(),courseDetailBean.getName());
+              //  CourseListActivityNew.start(this, courseDetailBean.getCategory(),courseDetailBean.getName());
+                if (!TextUtils.isEmpty(courseDetailBean.getName()))
+                CourseListActivityNew.start(this, "全部分类",courseDetailBean.getName());
                 break;
         }
     }

@@ -18,6 +18,7 @@ import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.ui.home.activity.ConfirmOrderCartActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
@@ -139,7 +140,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.tv_order:
-                startActivity(new Intent(this, OrderActivity.class));
+                AppointmentMineActivityNew.start(this, 6);
                 break;
             case R.id.iv_back:
                 finish();

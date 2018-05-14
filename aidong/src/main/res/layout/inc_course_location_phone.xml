@@ -61,7 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:singleLine="true"
             android:drawableLeft="@drawable/icon_course_location"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"

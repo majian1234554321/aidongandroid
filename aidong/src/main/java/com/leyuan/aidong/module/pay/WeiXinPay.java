@@ -15,7 +15,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  * 微信支付
  */
 public class WeiXinPay implements PayInterface {
-    private Context context;
+
     private IWXAPI msgApi;
     public static PayListener payListener;
     public static String appId;
@@ -25,22 +25,12 @@ public class WeiXinPay implements PayInterface {
         msgApi = WXAPIFactory.createWXAPI(context, null);
         //msgApi.registerApp(appId);
         this.payListener = payListener;
-        this.context = context;
+
     }
 
     @Override
     public void payOrder(PayOptionBean payOptionBean) {
-        if (!ThirdClientValid.isWeixinAvilible(context)) {
-            if (context instanceof Activity) {
-                ((Activity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastGlobal.showLongConsecutive(R.string.no_install_wx);
-                    }
-                });
-            }
-            return;
-        }
+
 
         if (payOptionBean != null) {
             PayReq payReq = new PayReq();

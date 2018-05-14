@@ -54,6 +54,7 @@ import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import cn.iwgang.countdownview.CountdownView;
 
+import static com.leyuan.aidong.R.id.iv;
 import static com.leyuan.aidong.R.id.txt_course_time;
 import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
@@ -369,6 +370,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                     tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 }
                 tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
+                Logger.i(DensityUtil.dp2px(this, 312)+"");
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
                 break;
@@ -398,7 +400,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 }
                 tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                        DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
                 break;
             case CLOSE:             //已关闭
                 tvState.setText(context.getString(R.string.order_close));

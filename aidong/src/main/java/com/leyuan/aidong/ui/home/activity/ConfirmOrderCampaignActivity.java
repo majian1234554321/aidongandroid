@@ -128,7 +128,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         txtCourseLocation = (TextView) findViewById(R.id.txt_course_location);
         img_telephone = (ImageView) findViewById(R.id.img_telephone);
 
-      View  view =  findViewById(R.id.view);
+        View view = findViewById(R.id.view);
         view.setVisibility(View.INVISIBLE);
         img_telephone.setVisibility(View.INVISIBLE);
 
@@ -214,7 +214,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
                 if (TextUtils.isEmpty(userCoach.getMobile())) {
                     ToastGlobal.showLong("请先绑定手机");
-                }  else {
+                } else {
                     DialogUtils.showDialog(this, "", true);
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
                             payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount, edit_remark.getText().toString().trim());
@@ -236,8 +236,8 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         if (coupon == null || coupon.isEmpty()) {
             txtCoupon.setText("无可用");
             //tvCoupon.setCompoundDrawables(null, null, null, null);
-            txtCoupon.setTextColor(ContextCompat.getColor(this,R.color.c9));
-        }else {
+            txtCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
+        } else {
             txtCoupon.setText("请选择");
             txtCoupon.setTextColor(Color.BLACK);
         }
@@ -270,9 +270,9 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
             LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
 
-            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, txtCoachName.getText().toString().trim(), false, campaignPresent.getShareInfo(),course.amount);
+            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, txtCoachName.getText().toString().trim(), false, campaignPresent.getShareInfo(), course.amount);
 
-           // ToastGlobal.showLongConsecutive("支付成功");
+            // ToastGlobal.showLongConsecutive("支付成功");
             finish();
 
         }
@@ -296,7 +296,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         public void onFree() {
             DialogUtils.dismissDialog();
             LocalBroadcastManager.getInstance(ConfirmOrderCampaignActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
-            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, txtCoachName.getText().toString().trim(), false, campaignPresent.getShareInfo(),course.amount);
+            AppointSuccessActivity.start(ConfirmOrderCampaignActivity.this, txtCoachName.getText().toString().trim(), false, campaignPresent.getShareInfo(), course.amount);
 
             ToastGlobal.showLongConsecutive("预约成功");
             finish();

@@ -210,13 +210,7 @@
                     app:left_text="支付方式:"
                     app:line_color="@color/transparent" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:background="@color/line_color"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_height="@dimen/pref_1dp"/>
+
                 <!--支付信息-->
                 <LinearLayout
                     android:id="@+id/ll_pay"
@@ -224,6 +218,13 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:background="@color/line_color"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_height="@dimen/pref_1dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"

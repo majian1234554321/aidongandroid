@@ -81,9 +81,10 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
      */
     @Override
     public void onCancelProgress() {
-        if (!this.isUnsubscribed()) {
-            this.unsubscribe();
-        }
+//        if (!this.isUnsubscribed()) {
+//            this.unsubscribe();
+//        }
+        dismissProgressDialog();
     }
 
 }

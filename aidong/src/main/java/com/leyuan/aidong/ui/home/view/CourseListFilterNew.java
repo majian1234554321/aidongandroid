@@ -522,6 +522,8 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                     for (int i = 0; i < rightlist.get(leftPostion).size(); i++) {
                         if (rightlist.get(leftPostion).get(i).name.equals(rightText)) {
                             refreshtCategoryAdapater(leftlist.indexOf(category), i);
+                            listCourseRight.setSelection(i);
+
                             tvCourseName.setText(rightText);
                             break;
                         } else {

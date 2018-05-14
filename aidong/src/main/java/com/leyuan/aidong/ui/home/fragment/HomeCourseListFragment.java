@@ -195,7 +195,7 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
 
     @Override
     public void onGetCourseFilterConfig(CourseFilterBean courseFilterConfig) {
-        filterView.setData(courseFilterConfig, category,null);
+        filterView.setData(courseFilterConfig, category,category);
     }
 
     public void animatedShow() {

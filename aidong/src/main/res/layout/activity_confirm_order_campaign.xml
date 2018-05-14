@@ -45,7 +45,7 @@
                     android:layout_marginTop="15dp"
                     android:text="优惠信息"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/pref_15dp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     />
 
@@ -99,7 +99,7 @@
                     android:layout_marginTop="15dp"
                     android:text="备注信息"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -133,7 +133,7 @@
                 android:layout_marginTop="15dp"
                 android:text="订单信息"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
 
                 />
@@ -255,7 +255,7 @@
                     android:text="@string/pay_type"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
 
                 <com.leyuan.aidong.widget.CustomNestRadioGroup
