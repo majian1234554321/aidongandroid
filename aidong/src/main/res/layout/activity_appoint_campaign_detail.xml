@@ -100,6 +100,7 @@
                         android:layout_marginTop="15dp"
                         android:gravity="center_vertical"
                         android:text="备注信息"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -199,6 +200,8 @@
                     app:left_text="支付时间:"
                     app:line_color="@color/transparent" />
 
+
+
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_pay_type"
                     android:layout_width="match_parent"
@@ -207,6 +210,13 @@
                     app:left_text="支付方式:"
                     app:line_color="@color/transparent" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:background="@color/line_color"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_height="@dimen/pref_1dp"/>
                 <!--支付信息-->
                 <LinearLayout
                     android:id="@+id/ll_pay"
@@ -217,19 +227,15 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="52dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/left_margin"
                         android:gravity="center_vertical"
                         android:text="支付方式"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
-                   <View
-                       android:layout_width="match_parent"
-                       android:layout_marginLeft="15dp"
-                       android:background="@color/line_color"
-                       android:layout_marginRight="15dp"
-                       android:layout_height="@dimen/pref_1dp"/>
+
 
                     <com.leyuan.aidong.widget.CustomNestRadioGroup
                         android:id="@+id/radio_group"
@@ -239,7 +245,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="45dp"
                             android:layout_marginLeft="@dimen/left_margin"
                             android:layout_marginRight="@dimen/right_margin"
                             android:gravity="center_vertical"
@@ -263,16 +269,11 @@
                                 android:checked="true" />
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:layout_marginLeft="@dimen/left_margin"
-                            android:layout_marginRight="@dimen/right_margin"
-                            android:background="@color/line_color" />
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="45dp"
                             android:layout_marginLeft="@dimen/left_margin"
                             android:layout_marginRight="@dimen/right_margin"
                             android:gravity="center_vertical"

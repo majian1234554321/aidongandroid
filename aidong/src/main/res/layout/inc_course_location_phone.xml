@@ -4,14 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
-
     >
 
+
+
+    <ImageButton
+        android:id="@+id/img_telephone"
+        android:background="@color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:padding="5dp"
+        android:src="@drawable/icon_telephone_red" />
+
+
+    <View
+       android:id="@+id/view"
+        android:layout_width="1px"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/pref_12dp"
+        android:layout_toLeftOf="@+id/img_telephone"
+        android:background="@color/actionsheet_gray"
+        android:layout_height="20dp"/>
+
+
     <LinearLayout
+        android:id="@+id/ll"
+        android:layout_toLeftOf="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="100dp"
         android:orientation="vertical">
 
         <TextView
@@ -19,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="地点"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
 
             />
@@ -37,30 +61,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:singleLine="true"
             android:drawableLeft="@drawable/icon_course_location"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:textColor="@color/c9"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/img_telephone"
-        android:background="@color/transparent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:padding="5dp"
-        android:src="@drawable/icon_telephone_red" />
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/pref_0.5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="15dp"
+       android:layout_below="@+id/ll"
+        android:layout_marginTop="8dp"
         android:src="@color/common_divider_color" />
 </RelativeLayout>

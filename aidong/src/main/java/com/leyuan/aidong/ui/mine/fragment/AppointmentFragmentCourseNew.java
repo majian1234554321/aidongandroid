@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mine.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -14,20 +15,23 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.utils.Logger;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
 
 /**
  * Created by user on 2017/11/14.
  */
-public class AppointmentFragmentCourseNew extends BaseFragment implements View.OnClickListener {
+public class AppointmentFragmentCourseNew extends BaseFragment {
     protected static final String TAG = "AppointmentFragmentEventNew";
     private ViewPager viewPager;
-    private int currentItem;
 
-    private TextView btAll;
-    private TextView btJoinNo;
-    private TextView btJoined;
+
+    private TabLayout tab_layout;
+
 
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
@@ -65,37 +69,53 @@ public class AppointmentFragmentCourseNew extends BaseFragment implements View.O
             if(tranPosition <0 || tranPosition > 2) tranPosition = 0;
         }
 
-        btAll = (TextView) view.findViewById(R.id.bt_all);
-        btJoinNo = (TextView) view.findViewById(R.id.bt_join_no);
-        btJoined = (TextView) view.findViewById(R.id.bt_joined);
-        viewPager = (ViewPager) view.findViewById(R.id.vp_content);
+        tab_layout =  view.findViewById(R.id.tab_layout);
+        viewPager =  view.findViewById(R.id.vp_content);
 
-        btAll.setOnClickListener(this);
-        btJoinNo.setOnClickListener(this);
-        btJoined.setOnClickListener(this);
+
+
+
+
+        FragmentPagerItems pages = new FragmentPagerItems(getActivity());
+
 
         AppointmentFragmentCourseChild all = AppointmentFragmentCourseChild.newInstance(CourseAppointBean.APPOINTED);
 
         AppointmentFragmentCourseChildQueue joined = AppointmentFragmentCourseChildQueue.newInstance(CourseAppointBean.QUEUED);
 
         AppointmentFragmentCourseChild unJoined = AppointmentFragmentCourseChild.newInstance(CourseAppointBean.HISTORY);
-        mFragments.add(all);
-        mFragments.add(joined);
-        mFragments.add(unJoined);
 
-        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-            @Override
-            public Fragment getItem(int i) {
-                return mFragments.get(i);
-            }
 
-            @Override
-            public int getCount() {
-                return mFragments.size();
-            }
-        });
 
-        viewPager.addOnPageChangeListener(new MyPageChangeListener());
+        pages.add(FragmentPagerItem.of("预约课程", all.getClass(),
+                new Bundler().putString("type", OrderFragment.ALL).get()));
+        pages.add(FragmentPagerItem.of("排队课程", joined.getClass(),
+                new Bundler().putString("type", OrderFragment.UN_PAID).get()));
+        pages.add(FragmentPagerItem.of("历史课程", unJoined.getClass(),
+                new Bundler().putString("type", OrderFragment.PAID).get()));
+
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
+
+        viewPager.setAdapter(adapter);
+
+
+
+
+        tab_layout.setupWithViewPager(viewPager);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         viewPager.setCurrentItem(tranPosition);
     }
 
@@ -112,81 +132,11 @@ public class AppointmentFragmentCourseNew extends BaseFragment implements View.O
         Logger.i(TAG, "setUserVisibleHint = " + isVisibleToUser);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.bt_all:
-                currentItem = 0;
-                viewPager.setCurrentItem(currentItem);
 
-                break;
-            case R.id.bt_join_no:
-                currentItem = 1;
-                viewPager.setCurrentItem(currentItem);
 
-                break;
-            case R.id.bt_joined:
-                currentItem = 2;
-                viewPager.setCurrentItem(currentItem);
 
-                break;
-        }
-    }
 
-    private void changeTitleTag(int i) {
-        Logger.i("AppointmentFragmentEventNew", "changeTitleTag = " + i);
-        switch (i) {
-            case 0:
-                btAll.setTextColor(getResources().getColor(R.color.main_red));
-                btJoinNo.setTextColor(getResources().getColor(R.color.c6));
-                btJoined.setTextColor(getResources().getColor(R.color.c6));
-                break;
-            case 1:
-                btAll.setTextColor(getResources().getColor(R.color.c6));
-                btJoinNo.setTextColor(getResources().getColor(R.color.main_red));
-                btJoined.setTextColor(getResources().getColor(R.color.c6));
-                break;
-            case 2:
-                btAll.setTextColor(getResources().getColor(R.color.c6));
-                btJoinNo.setTextColor(getResources().getColor(R.color.c6));
-                btJoined.setTextColor(getResources().getColor(R.color.main_red));
-                break;
-        }
-    }
 
-    class MyPageChangeListener implements ViewPager.OnPageChangeListener {
 
-        @Override
-        public void onPageScrolled(int i, float v, int i1) {
 
-        }
-
-        @Override
-        public void onPageSelected(int i) {
-            changeTitleTag(i);
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int i) {
-
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Logger.i(TAG, "onResume = ");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Logger.i(TAG, "onPause");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Logger.i(TAG, "onDestroy");
-    }
 }

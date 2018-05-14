@@ -19,126 +19,99 @@
         app:banner_pointTopBottomMargin="5dp"
         app:banner_transitionEffect="depth" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+           android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:background="@color/white"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/ll_nurture"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_nurture_round" />
+
+
 
                 <TextView
+                    android:gravity="center"
+                    android:id="@+id/ll_nurture"
+                    android:drawableTop="@drawable/icon_nurture_round"
                     android:layout_width="wrap_content"
+                    android:drawablePadding="6dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+
                     android:text="营养品"
                     android:textColor="#333333"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
-            </LinearLayout>
+
 
             <View
                 android:visibility="gone"
                 android:layout_width="1dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:background="@color/line_color" />
 
-            <LinearLayout
-                android:id="@+id/ll_equipment"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_equipment_round" />
+
+
 
                 <TextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/ll_equipment"
+                    android:drawableTop="@drawable/icon_equipment_round"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:drawablePadding="6dp"
+
                     android:text="装备"
                     android:textColor="#333333"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:textSize="12sp" />
+
             <View
                 android:visibility="gone"
                 android:layout_width="1dp"
                 android:layout_height="45dp"
                 android:background="@color/line_color" />
 
-            <LinearLayout
-                android:id="@+id/ll_healthy_food"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_healthy_food" />
+
+
 
                 <TextView
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:id="@+id/ll_healthy_food"
+                    android:drawableTop="@drawable/icon_healthy_food"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+
                     android:text="健康饮食"
+                    android:drawablePadding="6dp"
                     android:textColor="#333333"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:textSize="12sp" />
 
-            <LinearLayout
-                android:id="@+id/ll_ticket"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_ticket" />
+
+
+
 
                 <TextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/ll_ticket"
+                    android:drawableTop="@drawable/icon_ticket"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:drawablePadding="6dp"
                     android:text="票务赛事"
                     android:textColor="#333333"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:textSize="12sp" />
+
 
         </LinearLayout>
-    </LinearLayout>
+
 </LinearLayout>

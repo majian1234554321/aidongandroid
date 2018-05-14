@@ -137,7 +137,7 @@
                 android:layout_marginTop="15dp"
                 android:text="@string/price"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -217,7 +217,7 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/time"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -239,7 +239,7 @@
                 android:layout_marginTop="15dp"
                 android:text="@string/place"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -291,6 +291,7 @@
 
             <com.leyuan.aidong.widget.richtext.RichWebView
                 android:id="@+id/web_view"
+                android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="55dp" />

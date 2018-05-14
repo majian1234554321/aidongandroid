@@ -5,48 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/bt_all"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_height="match_parent"
-            android:background="@color/transparent"
-            android:text="@string/appoint_course"
-            android:textColor="@color/main_red"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/bt_join_no"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_height="match_parent"
-            android:background="@color/transparent"
-            android:text="@string/queue_course"
-            android:textColor="@color/c6"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/bt_joined"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_height="match_parent"
-            android:background="@color/transparent"
-            android:text="@string/history_course"
-            android:textColor="@color/c6"
-            android:textSize="14sp" />
-
-
-    </LinearLayout>
+        android:layout_height="@dimen/height_top_bar"
+        app:tabBackground="@color/white"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/main_red"
+        app:tabTextColor="@color/black1"/>
 
 
     <android.support.v4.view.ViewPager

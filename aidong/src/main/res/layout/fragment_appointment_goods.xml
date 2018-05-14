@@ -6,24 +6,20 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <FrameLayout
+
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        android:background="@color/black">
+        app:tabBackground="@color/white"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/main_red"
+        app:tabTextColor="@color/black1"/>
 
-        <com.ogaclejapan.smarttablayout.SmartTabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/height_top_bar"
-            android:layout_gravity="center"
-            app:stl_defaultTabTextColor="@color/gray_normal"
-            app:stl_defaultTabTextHorizontalPadding="40dp"
-            app:stl_defaultTabTextSize="17sp"
-            app:stl_indicatorColor="@color/main_red"
-            app:stl_indicatorInterpolation="smart"
-            app:stl_indicatorThickness="3dp"
-            app:stl_indicatorWidth="auto" />
-    </FrameLayout>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
