@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ConfirmOrderShopAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.GoodsBean;
@@ -49,6 +51,8 @@ import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +61,7 @@ import java.util.Map;
 
 import static com.leyuan.aidong.R.id.ll__receiving_time;
 import static com.leyuan.aidong.R.id.txt_receving_time;
+import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
@@ -445,36 +450,50 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 }
             }
         }
+
+        if (PAY_WEIXIN.equals(payType)) {
+
+
+            if (api == null) {
+                api = WXAPIFactory.createWXAPI(context, ConstantUrl.WX_APP_ID, false);
+            }
+            if (!api.isWXAppInstalled()) {
+                Toast.makeText(context, "没有安装微信", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         Logger.i(TAG, "pickUpDate = " + pickUpDate + "pick_up_period =" + pick_up_period);
         present.payCart(integral, coin, couponId, payType,
                 addressId, pickUpDate, payListener, itemIds);
     }
 
-    private PayInterface.PayListener payListener = new SimplePayListener(this) {
-        @Override
-        public void onSuccess(String code, Object object) {
-            LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
-            //ToastGlobal.showLong("支付成功");
-            PaySuccessActivity.start(ConfirmOrderCartActivity.this, present.getShareInfo());
-            finish();
-        }
+    private IWXAPI api;
+    private PayInterface.PayListener payListener =
+            new SimplePayListener(this) {
+                @Override
+                public void onSuccess(String code, Object object) {
+                    LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
+                    //ToastGlobal.showLong("支付成功");
+                    PaySuccessActivity.start(ConfirmOrderCartActivity.this, present.getShareInfo());
+                    finish();
+                }
 
-        @Override
-        public void onFail(String code, Object object) {
-            super.onFail(code, object);
-            LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL));
-            AppointmentMineActivityNew.start(ConfirmOrderCartActivity.this, 6);
-            finish();
-        }
+                @Override
+                public void onFail(String code, Object object) {
+                    super.onFail(code, object);
+                    LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL));
+                    AppointmentMineActivityNew.start(ConfirmOrderCartActivity.this, 6);
+                    finish();
+                }
 
-        @Override
-        public void onFree() {
-            LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
-            PaySuccessActivity.start(ConfirmOrderCartActivity.this, present.getShareInfo());
-            ToastGlobal.showLong("支付成功");
-            finish();
-        }
-    };
+                @Override
+                public void onFree() {
+                    LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
+                    PaySuccessActivity.start(ConfirmOrderCartActivity.this, present.getShareInfo());
+                    ToastGlobal.showLong("支付成功");
+                    finish();
+                }
+            };
 
 
     @Override
@@ -503,8 +522,8 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
         if (usableCoupons == null || usableCoupons.isEmpty()) {
             tvCoupon.setText("无可用");
             //tvCoupon.setCompoundDrawables(null, null, null, null);
-            tvCoupon.setTextColor(ContextCompat.getColor(this,R.color.c9));
-        }else {
+            tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
+        } else {
             tvCoupon.setText("请选择");
             tvCoupon.setTextColor(Color.BLACK);
         }

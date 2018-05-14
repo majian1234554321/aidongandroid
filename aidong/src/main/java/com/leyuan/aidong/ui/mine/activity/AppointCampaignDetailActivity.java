@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
@@ -51,6 +52,8 @@ import com.leyuan.aidong.widget.dialog.BaseDialog;
 import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
 import com.leyuan.aidong.widget.dialog.ButtonOkListener;
 import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import cn.iwgang.countdownview.CountdownView;
 
@@ -140,6 +143,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
     private TextView txtRoomName;
     private TextView txtCourseLocation;
+
 
     public static void start(Context context, String orderId) {
         Intent starter = new Intent(context, AppointCampaignDetailActivity.class);
@@ -477,6 +481,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         }
     }
 
+    public final static String WX_APP_ID = "wx365ab323b9269d30";
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -484,6 +490,17 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 finish();
                 break;
             case R.id.tv_pay:
+
+                if (PAY_WEIXIN.equals(payType)){
+                    if (api == null) {
+                        api = WXAPIFactory.createWXAPI(context, WX_APP_ID, false);
+                    }
+                    if (!api.isWXAppInstalled()) {
+                        Toast.makeText(context, "没有安装微信", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
                 PayInterface payInterface = PAY_ALI.equals(payType) ?
                         new AliPay(this, payListener) : new WeiXinPay(this, payListener);
                 payInterface.payOrder(bean.getPay().getpayOption());
@@ -551,7 +568,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
         }
     }
-
+    private IWXAPI api;
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
