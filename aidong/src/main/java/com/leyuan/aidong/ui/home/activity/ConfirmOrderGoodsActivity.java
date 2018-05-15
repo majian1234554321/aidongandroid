@@ -607,21 +607,20 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     }
 
     private void updateAddressStatus(AddressBean address) {
-        if (address == null) {
-            addressLayout.setVisibility(View.GONE);
-            emptyAddressLayout.setVisibility(View.VISIBLE);
-        } else {
-            setAddressInfo(address);
-            addressLayout.setVisibility(View.VISIBLE);
-            emptyAddressLayout.setVisibility(View.GONE);
-        }
+
 
         if (is_virtual) {
             emptyAddressLayout.setVisibility(View.GONE);
             addressLayout.setVisibility(View.GONE);
         }else {
-            emptyAddressLayout.setVisibility(View.VISIBLE);
-            addressLayout.setVisibility(View.VISIBLE);
+            if (address == null) {
+                addressLayout.setVisibility(View.GONE);
+                emptyAddressLayout.setVisibility(View.VISIBLE);
+            } else {
+                setAddressInfo(address);
+                addressLayout.setVisibility(View.VISIBLE);
+                emptyAddressLayout.setVisibility(View.GONE);
+            }
         }
     }
 

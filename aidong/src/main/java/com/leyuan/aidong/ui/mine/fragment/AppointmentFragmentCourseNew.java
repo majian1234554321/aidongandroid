@@ -88,11 +88,11 @@ public class AppointmentFragmentCourseNew extends BaseFragment {
 
 
         pages.add(FragmentPagerItem.of("预约课程", all.getClass(),
-                new Bundler().putString("type", OrderFragment.ALL).get()));
+                new Bundler().putString("type", CourseAppointBean.APPOINTED).get()));
         pages.add(FragmentPagerItem.of("排队课程", joined.getClass(),
-                new Bundler().putString("type", OrderFragment.UN_PAID).get()));
+                new Bundler().putString("type", CourseAppointBean.QUEUED).get()));
         pages.add(FragmentPagerItem.of("历史课程", unJoined.getClass(),
-                new Bundler().putString("type", OrderFragment.PAID).get()));
+                new Bundler().putString("type", CourseAppointBean.HISTORY).get()));
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
 
