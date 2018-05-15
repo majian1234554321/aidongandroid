@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
         initView();
         initData();
         registerMessageReceiver();
-        checkAutoStart();
+       // checkAutoStart();
     }
 
     private void initView() {
