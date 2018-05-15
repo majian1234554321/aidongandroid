@@ -9,6 +9,11 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <com.leyuan.aidong.ui.home.view.CourseListFilterNew
+        android:id="@+id/view_filter_course"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
@@ -18,10 +23,7 @@
         app:stl_defaultTabTextSize="17sp"
         app:stl_indicatorThickness="0dp"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
+
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
@@ -29,9 +31,6 @@
             android:layout_height="match_parent" />
 
 
-        <com.leyuan.aidong.ui.home.view.CourseListFilterNew
-            android:id="@+id/view_filter_course"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </FrameLayout>
+
+
 </LinearLayout>

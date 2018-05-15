@@ -1,3 +1,4 @@
+/*
 package com.leyuan.aidong.adapter.home
 
 import android.content.Context
@@ -17,9 +18,11 @@ import kotlinx.android.synthetic.main.item_home_recommend_course2.view.*
 
 import java.util.ArrayList
 
+*/
 /**
  * Created by user on 2018/1/5.
- */
+ *//*
+
 class HomeRecommendCourseAdapter2(val context: Context) : RecyclerView.Adapter<HomeRecommendCourseAdapter2.ViewHolder>() {
 
 
@@ -48,3 +51,4 @@ class HomeRecommendCourseAdapter2(val context: Context) : RecyclerView.Adapter<H
         notifyDataSetChanged()
     }
 }
+*/

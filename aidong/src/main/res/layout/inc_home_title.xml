@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:background="@color/colorPrimary"
         app:stl_defaultTabTextColor="@color/gray_normal"
@@ -18,7 +19,6 @@
         app:stl_dividerColor="@color/transparent"
         app:stl_indicatorColor="@color/white"
         app:stl_indicatorInterpolation="linear"
-android:layout_centerVertical="true"
 
         app:stl_indicatorThickness="3dp"
         app:stl_indicatorWidth="auto"

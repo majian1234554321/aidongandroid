@@ -10,8 +10,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
@@ -21,7 +23,7 @@ import android.widget.CheckBox;
 import com.leyuan.aidong.R;
 
 
-public class UISwitchButton extends CheckBox {
+public class UISwitchButton extends AppCompatCheckBox {
 	private Paint mPaint;
 	private RectF mSaveLayerRectF;
 	private float mFirstDownY;
@@ -260,10 +262,9 @@ public class UISwitchButton extends CheckBox {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		canvas.saveLayerAlpha(mSaveLayerRectF, mAlpha, Canvas.MATRIX_SAVE_FLAG
-				| Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG
-				| Canvas.FULL_COLOR_LAYER_SAVE_FLAG
-				| Canvas.CLIP_TO_LAYER_SAVE_FLAG);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			canvas.saveLayerAlpha(mSaveLayerRectF, mAlpha);
+		}
 
 		// 绘制底部图片
 		canvas.drawBitmap(bmCurBgPic, 0, 0, mPaint);
