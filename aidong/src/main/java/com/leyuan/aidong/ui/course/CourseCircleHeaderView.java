@@ -50,9 +50,7 @@ import static com.leyuan.aidong.R.id.txt_course_intro;
  */
 public class CourseCircleHeaderView extends RelativeLayout implements View.OnClickListener, FollowView {
 
-    private RelativeLayout relTop;
-    private ImageView imgBg;
-    private ImageView imgLiveBeginOrEnd;
+
     private RichWebView txtCourseIntro;
     private TextView txtSuggestFrequency;
     private RelativeLayout layoutAttention;
@@ -114,9 +112,9 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         View view = LayoutInflater.from(context).inflate(R.layout.header_course_circle_detail, this, true);
         this.context = context;
-        relTop = (RelativeLayout) view.findViewById(R.id.rel_top);
-        imgBg = (ImageView) view.findViewById(R.id.img_bg);
-        imgLiveBeginOrEnd = (ImageView) view.findViewById(img_live_begin_or_end);
+        //relTop = (RelativeLayout) view.findViewById(R.id.rel_top);
+        //imgBg = (ImageView) view.findViewById(R.id.img_bg);
+        //imgLiveBeginOrEnd = (ImageView) view.findViewById(img_live_begin_or_end);
 
         rootView = (RelativeLayout) view.findViewById(R.id.rootView);
         txtCourseName = (TextView) view.findViewById(R.id.txt_course_name);
@@ -149,7 +147,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         initRelativeCourseVideo(view);
 
         imgCoach.setVisibility(GONE);
-        imgLiveBeginOrEnd.setOnClickListener(this);
+
         rootView.setOnClickListener(this);
         txt_bt_attention_num.setOnClickListener(this);
         view.findViewById(R.id.bt_attention).setOnClickListener(this);
@@ -265,9 +263,9 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         relativeViedeoAdapter.setCourseID(course.getId());
 
-        if (course.getVideo_cover() != null) {
-            GlideLoader.getInstance().displayImage(course.getVideo_cover(), imgBg);
-        }
+//        if (course.getVideo_cover() != null) {
+//            GlideLoader.getInstance().displayImage(course.getVideo_cover(), imgBg);
+//        }
 
         txtCourseName.setText(course.getName());
         txtAttentionNum.setText(course.getFollows_count() + "人关注");

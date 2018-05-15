@@ -3,16 +3,21 @@ package com.leyuan.aidong.ui.course;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +63,7 @@ import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -105,6 +111,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     private ArrayList<BaseMedia> selectedMedia;
     private boolean refresh;
     private LinearLayoutManager linearLayoutManager;
+    private CollapsingToolbarLayout collapsingToolbar;
 
 
     public static void start(Context context, String id) {
@@ -142,16 +149,38 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
         coursePresent.getRelateCourseVideo(id, null);
     }
-
+    private RelativeLayout relTop;
+    private ImageView imgBg;
+    private ImageView imgLiveBeginOrEnd;
     private void initView() {
         txt_share_image = (TextView) findViewById(R.id.txt_share_image);
         bt_share = (ImageButton) findViewById(R.id.bt_share);
         txt_appoint_immediately = (TextView) findViewById(R.id.txt_appoint_immediately);
 
+
+        imgBg = (ImageView) findViewById(R.id.img_bg);
+        imgLiveBeginOrEnd = (ImageView) findViewById(R.id.img_live_begin_or_end);
+        imgLiveBeginOrEnd.setOnClickListener(this);
         findViewById(R.id.iv_back).setOnClickListener(this);
         txt_share_image.setOnClickListener(this);
         bt_share.setOnClickListener(this);
         txt_appoint_immediately.setOnClickListener(this);
+
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
+        collapsingToolbar.setExpandedTitleColor(Color.BLACK);
+        //collapsingToolbar
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
 
@@ -314,6 +343,10 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     public void setCourseDetail(CourseDetailBean courseDetailBean) {
         this.courseDetailBean = courseDetailBean;
         headView.setData(courseDetailBean,this);
+        if (courseDetailBean.getVideo_cover() != null) {
+            GlideLoader.getInstance().displayImage(courseDetailBean.getVideo_cover(), imgBg);
+        }
+        collapsingToolbar.setTitle(courseDetailBean.getName());
 
         if(recyclerView != null){
             int top = recyclerView.getChildAt(0).getTop();
