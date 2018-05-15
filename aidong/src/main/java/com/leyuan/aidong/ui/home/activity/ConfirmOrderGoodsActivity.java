@@ -604,8 +604,10 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
         if (is_virtual) {
             emptyAddressLayout.setVisibility(View.GONE);
+            addressLayout.setVisibility(View.GONE);
         }else {
             emptyAddressLayout.setVisibility(View.VISIBLE);
+            addressLayout.setVisibility(View.VISIBLE);
         }
     }
 
