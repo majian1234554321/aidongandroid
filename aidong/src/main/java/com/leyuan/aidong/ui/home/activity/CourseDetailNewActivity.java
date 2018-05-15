@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.button.MaterialButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -70,9 +71,9 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     private ImageView ivBack;
     private TextView tvTitle;
     private ImageView ivShare;
-    private LinearLayout llApply;
+    private RelativeLayout llApply;
     private TextView tvPrice;
-    private TextView tvState;
+    private MaterialButton tvState;
     private LinearLayout layout_course_location;
 
     private RichWebView webView;
@@ -175,10 +176,10 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
-        llApply = (LinearLayout) findViewById(R.id.ll_apply);
+        llApply =  findViewById(R.id.ll_apply);
         tvPrice = (TextView) findViewById(R.id.tv_price);
-        tvState = (TextView) findViewById(R.id.tv_state);
-        layout_course_location = (LinearLayout) findViewById(R.id.layout_course_location);
+        tvState =  findViewById(R.id.tv_state);
+
         layout_course_coach = (RelativeLayout) findViewById(R.id.layout_course_coach);
         webView = (RichWebView) findViewById(R.id.web_view);
     }
@@ -208,7 +209,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         ivShare.setOnClickListener(this);
         llApply.setOnClickListener(this);
         layout_course_coach.setOnClickListener(this);
-        layout_course_location.setOnClickListener(this);
+        txtCourseLocation.setOnClickListener(this);
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
@@ -246,7 +247,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                       image  , ConstantUrl.URL_SHARE_COURSE+course.getId()+"/course");
 
                 break;
-            case R.id.layout_course_location:
+            case R.id.txt_course_location:
                 CourseStore store = course.getStore();
                 if (store != null) {
                     if (store.getCoordinate()!=null&&store.getCoordinate().length>=2){

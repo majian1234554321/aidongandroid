@@ -67,6 +67,17 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         holder.txtCourseTime.setText(courseBean.getClass_time());
         holder.txtCourseDesc.setText(courseBean.getTagString());
 
+        if (courseBean.getStrength()>=5) {
+            holder. tv_level.setText("(高难度)");
+        }else if (courseBean.getStrength()<=5&&courseBean.getStrength()>=3){
+            holder. tv_level.setText("(中级进阶)");
+        }else {
+            holder. tv_level.setText("(初级难度)");
+        }
+
+
+
+
 //        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
 
         holder.txtCourseOriginPrice.setText(String.format(context.getString(R.string.rmb_price_double), courseBean.getPrice()));
@@ -167,7 +178,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         private ImageView imgCourseState;
         // ,img_star_first,img_star_second,img_star_three,img_star_four,img_star_five;
         private TextView txtCourseOriginPrice;
-        private TextView txtCourseMemberPrice;
+        private TextView txtCourseMemberPrice,tv_level;
         private LinearLayout rootView, layout_type;
 
         public CourseViewHolder(View view) {
@@ -183,6 +194,9 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             imgCourseState = (ImageView) view.findViewById(R.id.img_course_state);
             txtCourseOriginPrice = (TextView) view.findViewById(R.id.txt_course_origin_price);
             txtCourseMemberPrice = (TextView) view.findViewById(R.id.txt_course_member_price);
+            tv_level = (TextView) view.findViewById(R.id.tv_level);
+
+
 
             starList.add((ImageView) view.findViewById(R.id.img_star_first));
             starList.add((ImageView) view.findViewById(R.id.img_star_second));

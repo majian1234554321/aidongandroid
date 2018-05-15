@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -55,10 +55,10 @@
             android:layout_weight="1"
             android:background="?selectableItemBackground"
             android:clickable="true"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp">
 
             <TextView
                 android:id="@+id/tv_course_name"
@@ -66,9 +66,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
                 android:layout_centerHorizontal="true"
-                android:singleLine="true"
-                android:maxEms="6"
                 android:ellipsize="end"
+                android:maxEms="6"
+                android:singleLine="true"
                 android:text="@string/course"
                 android:textColor="@color/c3"
                 android:textSize="13sp" />
@@ -361,11 +361,78 @@
         <LinearLayout
             android:id="@+id/ll003"
             android:layout_width="match_parent"
-           android:visibility="gone"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
+            <TextView
+                android:paddingLeft="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="专业程度" />
+
+            <RadioGroup
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rb001"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selctor_radiobutton"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="4dp"
+                    android:text="初级难度" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rb002"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selctor_radiobutton"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="4dp"
+                    android:text="中级进阶" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rb003"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selctor_radiobutton"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="4dp"
+                    android:text="高难度" />
+
+
+            </RadioGroup>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:paddingLeft="12dp"
+                android:layout_height="wrap_content"
+                android:text="时间" />
 
             <LinearLayout
                 android:id="@+id/rg"
@@ -376,50 +443,50 @@
 
                 <TextView
                     android:id="@+id/rb1"
-                    android:textColor="@color/red_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
                     android:layout_weight="1"
                     android:background="@drawable/selctor_radiobutton"
                     android:button="@null"
                     android:checked="true"
                     android:gravity="center"
-                    android:layout_marginRight="12dp"
                     android:paddingBottom="4dp"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
                     android:paddingTop="4dp"
-                    android:text="全部" />
+                    android:text="00:00-12:00"
+                    android:textColor="@color/red_price" />
 
                 <TextView
                     android:id="@+id/rb2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
                     android:layout_weight="1"
                     android:background="@drawable/selctor_radiobutton"
                     android:button="@null"
                     android:gravity="center"
                     android:paddingBottom="4dp"
                     android:paddingLeft="12dp"
-                    android:layout_marginRight="12dp"
                     android:paddingRight="12dp"
                     android:paddingTop="4dp"
-                    android:text="上午" />
+                    android:text="12:00-18:00" />
 
                 <TextView
                     android:id="@+id/rb3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
                     android:layout_weight="1"
                     android:background="@drawable/selctor_radiobutton"
                     android:button="@null"
                     android:gravity="center"
                     android:paddingBottom="4dp"
-                    android:layout_marginRight="12dp"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
                     android:paddingTop="4dp"
-                    android:text="下午" />
+                    android:text="18:00-24:00" />
 
                 <TextView
                     android:id="@+id/rb4"
@@ -433,51 +500,48 @@
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
                     android:paddingTop="4dp"
-                    android:text="夜晚" />
+                    android:text="夜晚"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
 
-
-
             <LinearLayout
                 android:id="@+id/lls"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="1221"
                     android:id="@+id/tv_time"
-                    android:padding="8dp"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_height="wrap_content" />
+                    android:padding="8dp"
+                    android:text="1221" />
 
                 <com.leyuan.aidong.widget.RangeSeekBar
                     android:id="@+id/seekbar3"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    app:rsb_lineColorSelected="@color/color_red"
+                    app:rsb_cellMode="number"
+                    app:rsb_hintBGHeight="50dp"
+                    app:rsb_hintBGWith="60dp"
                     app:rsb_lineColorEdge="#c3c3c3"
+                    app:rsb_lineColorSelected="@color/color_red"
+                    app:rsb_max="24"
+                    app:rsb_min="0"
+                    app:rsb_progressHintMode="alwaysShow"
+                    app:rsb_reserve="1"
+                    app:rsb_seekBarHeight="2dp"
+                    app:rsb_seekBarMode="range"
                     app:rsb_textPadding="17dp"
                     app:rsb_textSize="16sp"
-                    app:rsb_min="0"
-                    app:rsb_max="24"
-                    app:rsb_reserve="1"
-                    app:rsb_hintBGHeight="50dp"
-                    app:rsb_seekBarHeight="2dp"
-                    app:rsb_hintBGWith="60dp"
-                    app:rsb_thumbSize="20dp"
-                    app:rsb_cellMode="number"
-                    app:rsb_seekBarMode="range"
-                    app:rsb_progressHintMode="alwaysShow"
                     app:rsb_thumbResId="@drawable/custom_thumb"
-                    />
+                    app:rsb_thumbSize="20dp" />
 
 
             </LinearLayout>
-
 
 
             <View

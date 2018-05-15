@@ -10,43 +10,59 @@
 
     <ImageView
         android:id="@+id/iv"
+
         android:layout_width="match_parent"
         android:layout_height="250dp" />
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:textSize="@dimen/sp_16"
-        android:textStyle="bold"
-        tools:text="MMMMMMMMM" />
 
-    <TextView
-        android:id="@+id/tv_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_name"
+    <LinearLayout
         android:layout_centerInParent="true"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        tools:text="MMMMMMMMM" />
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
-<android.support.design.button.MaterialButton
-    android:layout_below="@+id/tv_type"
-    android:layout_centerHorizontal="true"
-    tools:text="12121211212"
-    android:id="@+id/mb_lev"
-    android:layout_marginTop="8dp"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
-    app:backgroundTint="@color/transpance"
-    app:strokeColor="@color/white"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            tools:text="MMMMMMMMM" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:textColor="@color/white"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="MMMMMMMMM" />
+
+        <android.support.design.button.MaterialButton
+            android:layout_below="@+id/tv_type"
+            android:layout_centerHorizontal="true"
+            tools:text="12121211212"
+            android:id="@+id/mb_level"
+            android:textColor="@color/white"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            app:backgroundTint="@color/transpance"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp"
+            app:cornerRadius="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 
 
 </RelativeLayout>

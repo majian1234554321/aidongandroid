@@ -28,7 +28,6 @@
         android:layout_height="match_parent"
         android:background="@color/line_color"
         android:layout_alignParentTop="true"
-        android:paddingTop="45dp"
         android:layout_toRightOf="@+id/rl_empty"
         android:layout_toEndOf="@+id/rl_empty">
 

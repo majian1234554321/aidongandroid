@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
+
+import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter2;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.App;
@@ -40,13 +41,13 @@ import static android.app.Activity.RESULT_OK;
 /**
  * Created by user on 2018/1/5.
  */
-public class CircleCourseListFragment extends BaseFragment implements CourserFragmentView, OnRefreshListener, FollowView, HomeRecommendCourseAdapter.OnAttentionClickListener {
+public class CircleCourseListFragment extends BaseFragment implements CourserFragmentView, OnRefreshListener, FollowView {
 
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private SwitcherLayout switcherLayout;
     private int currPage;
-    private HomeRecommendCourseAdapter adapter;
+    private HomeRecommendCourseAdapter2 adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
     private CoursePresentImpl coursePresent;
@@ -101,8 +102,8 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
 
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_order);
-        adapter = new HomeRecommendCourseAdapter(getActivity());
-        adapter.setOnAttentionClickListener(this);
+        adapter = new HomeRecommendCourseAdapter2(activity,data);
+        //adapter.setOnAttentionClickListener(this);
 
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -172,32 +173,32 @@ public class CircleCourseListFragment extends BaseFragment implements CourserFra
         recyclerView.scrollToPosition(0);
     }
 
-    @Override
-    public void onCourseAttentionClick(String id, int position, boolean followed) {
+//    @Override
+//    public void onCourseAttentionClick(String id, int position, boolean followed) {
+//
+//        if(!App.getInstance().isLogin()){
+//            UiManager.activityJump(getActivity(), LoginActivity.class);
+//            return;
+//        }
+//
+//
+//        if (followed) {
+//            followPresent.cancelFollow(id, Constant.COURSE);
+//        } else {
+//            followPresent.addFollow(id, Constant.COURSE);
+//        }
+//        this.clickedFollowPosition = position;
+//
+//    }
 
-        if(!App.getInstance().isLogin()){
-            UiManager.activityJump(getActivity(), LoginActivity.class);
-            return;
-        }
-
-
-        if (followed) {
-            followPresent.cancelFollow(id, Constant.COURSE);
-        } else {
-            followPresent.addFollow(id, Constant.COURSE);
-        }
-        this.clickedFollowPosition = position;
-
-    }
-
-    @Override
-    public void onItemClick(String id, int position) {
-
-        itemClickedPosition = position;
-
-        CourseCircleDetailActivity.startForResult(this, id,Constant.REQUEST_COURSE_DETAIL);
+//    @Override
+//    public void onItemClick(String id, int position) {
+//
+//        itemClickedPosition = position;
+//
+//        CourseCircleDetailActivity.startForResult(this, id,Constant.REQUEST_COURSE_DETAIL);
 //        UserInfoActivity.startForResult(this, id, Constant.REQUEST_USER_INFO);
-    }
+//    }
 
     @Override
     public void addFollowResult(BaseBean baseBean) {

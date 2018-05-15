@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,10 +38,13 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
         refreshLayout.setColorSchemeResources(R.color.black, R.color.red, R.color.orange, R.color.gray);
     }*/
 
+    public Activity activity ;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.w("className", getClass().getSimpleName());
+        activity = getActivity();
+
     }
 
     /**
@@ -107,11 +111,7 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         Logger.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
 
-        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-        // This will display a dialog directing them to enable the permission in app settings.
-       /* if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this).build().show();
-        }*/
+
     }
 
     @Override

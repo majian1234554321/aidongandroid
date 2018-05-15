@@ -460,11 +460,6 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         Logger.i(TAG, "pickUpDate = " + pickUpDate + "pick_up_period =" + pick_up_period);
 
 
-
-
-
-
-
         present.buyGoodsImmediately(settlementType, skuCode, amount, couponId, integral, coin, payType,
                 String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener, recommendCode);
 
@@ -528,9 +523,9 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         if (usableCoupons == null || usableCoupons.isEmpty()) {
             tvCoupon.setText("无可用");
             //tvCoupon.setCompoundDrawables(null, null, null, null);
-            tvCoupon.setTextColor(ContextCompat.getColor(this,R.color.c9));
-        }else {
-            if (TextUtils.isEmpty(couponId)){
+            tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
+        } else {
+            if (TextUtils.isEmpty(couponId)) {
                 tvCoupon.setText("请选择");
                 tvCoupon.setTextColor(Color.BLACK);
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
@@ -593,21 +588,20 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     }
 
     private void updateAddressStatus(AddressBean address) {
-        if (address == null) {
-            addressLayout.setVisibility(View.GONE);
-            emptyAddressLayout.setVisibility(View.VISIBLE);
-        } else {
-            setAddressInfo(address);
-            addressLayout.setVisibility(View.VISIBLE);
-            emptyAddressLayout.setVisibility(View.GONE);
-        }
+
 
         if (is_virtual) {
             emptyAddressLayout.setVisibility(View.GONE);
             addressLayout.setVisibility(View.GONE);
-        }else {
-            emptyAddressLayout.setVisibility(View.VISIBLE);
-            addressLayout.setVisibility(View.VISIBLE);
+        } else {
+            if (address == null) {
+                addressLayout.setVisibility(View.GONE);
+                emptyAddressLayout.setVisibility(View.VISIBLE);
+            } else {
+                setAddressInfo(address);
+                addressLayout.setVisibility(View.VISIBLE);
+                emptyAddressLayout.setVisibility(View.GONE);
+            }
         }
     }
 
