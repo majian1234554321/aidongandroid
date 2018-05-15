@@ -219,10 +219,9 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 if (TextUtils.isEmpty(userCoach.getMobile())) {
                     ToastGlobal.showLong("请先绑定手机");
                 } else {
-                    DialogUtils.showDialog(this, "", true);
 
 
-                    if (PAY_WEIXIN.equals(payType)){
+                    if (PAY_WEIXIN.equals(payType)) {
                         if (api == null) {
                             api = WXAPIFactory.createWXAPI(context, ConstantUrl.WX_APP_ID, false);
                         }
@@ -231,6 +230,8 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                             return;
                         }
                     }
+
+                    DialogUtils.showDialog(this, "", true);
 
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
                             payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount, edit_remark.getText().toString().trim());

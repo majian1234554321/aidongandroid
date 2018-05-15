@@ -201,7 +201,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.bt_pay_immediately:
                 Logger.i(TAG, "bt_pay_immediately onClick");
-                DialogUtils.showDialog(this, "", false);
+
 
                 if (PAY_WEIXIN.equals(payType)) {
 
@@ -214,7 +214,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
                         return;
                     }
                 }
-
+                DialogUtils.showDialog(this, "", false);
                 confirmOrderCoursePresent.confirmAppointCourse(course.getId(), couponId, course.getSeatChoosed(), payType, payListener);
                 break;
 
