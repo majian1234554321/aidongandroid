@@ -125,12 +125,15 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
         if (App.getInstance().isLogin()) {
             txtGroup.setText(App.getInstance().getUser().getGender() == 0 ? "男子组" : "女子组");
             gender = App.getInstance().getUser().getGender() == 0 ? "男" : "女";
+
+
+             genderint = "男".equals(gender)?0:1;
         }
 
         initFragments();
     }
 
-
+    int  genderint = 0;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -189,10 +192,11 @@ public class ContestRankingListActivity extends BaseActivity implements SmartTab
         new MaterialDialog.Builder(this)
                 .title(R.string.man_woman_group_select)
                 .items(R.array.gender)
-                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallbackSingleChoice(genderint, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         txtGroup.setText((which == 0) ? "男子组" : "女子组");
+                        genderint = which;
                         gender = (which == 0) ? "男" : "女";
                         refreshFragmentData();
                         return false;

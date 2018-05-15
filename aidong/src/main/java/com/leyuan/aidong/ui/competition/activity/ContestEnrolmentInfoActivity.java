@@ -121,9 +121,11 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
 
         if (App.getInstance().getUser().getGender() == Constant.MAN_GENDER) {
             txtBelongGroup.setText("选择分组: 男子组");
+            genderint = 0;
             gender = "男";
         } else {
             txtBelongGroup.setText("选择分组: 女子组");
+            genderint = 1;
             gender = "女";
         }
 
@@ -176,15 +178,17 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
                 break;
         }
     }
+    int genderint = 0;
 
     private void showGenderDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.man_woman_group_select)
                 .items(R.array.gender)
-                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallbackSingleChoice(genderint, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         txtBelongGroup.setText((which == 0) ? "选择分组: 男子组" : "选择分组: 女子组");
+                        genderint = which;
                         gender = (which == 0) ? "男" : "女";
                         return false;
                     }
