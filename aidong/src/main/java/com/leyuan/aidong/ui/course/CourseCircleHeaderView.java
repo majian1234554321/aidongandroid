@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.course;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,44 +56,34 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     private TextView txtSuggestFrequency;
     private RelativeLayout layoutAttention;
     private RecyclerView rvAttention;
-    private View incRelativeCoach;
-    private LinearLayout llRelateCourseVideo;
+
+
     private TextView txtRelateCourseVideo;
     private TextView txtCheckAllVideo;
     private RecyclerView rvRelateVideo;
-    private LinearLayout llRelateDynamic;
+
     private TextView txtRelateDynamic;
 
     private RelativeLayout rootView;
     private TextView txtCourseName;
     private TextView txtAttentionNum;
-    private TextView txtCourseDesc;
-    private TextView txtCourseDifficulty;
-    private ImageView imgStarFirst;
-    private ImageView imgStarSecond;
-    private ImageView imgStarThree;
-    private ImageView imgStarFour;
-    private ImageView imgStarFive;
-    private ImageView imageView6;
-    private ImageView imgCoach;
-    private ImageButton bt_attention;
-    private ArrayList<ImageView> starList = new ArrayList<>();
 
-    private TextView txtRelativeCoach;
-    private TextView txtChechAllCoach;
-    private RecyclerView rvRelativeCoach;
-    private PersonHorizontalAdapter adapterRelativeCoach;
+
+    // private ImageButton bt_attention;
+
+
     private PersonAttentionAdapter adapterAttentionPerson;
     private Context context;
     private DetailsRelativeViedeoAdapter relativeViedeoAdapter;
-    private TextView txt_use_equipment;
+    private TextView txt_use_equipment, tv_subjecttitle;
     private TextView txt_target_population;
     private TextView txt_suggest_match_course;
-    private TextView txt_bt_attention_num;
+    private TextView tv_fans;
     private CourseDetailBean course;
 
     FollowPresentImpl followPresent;
     private String relativeVideoTitle;
+    private ImageView iv_share,iv_fansssss;
 
     public CourseCircleHeaderView(Context context) {
         this(context, null, 0);
@@ -112,26 +103,24 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         View view = LayoutInflater.from(context).inflate(R.layout.header_course_circle_detail, this, true);
         this.context = context;
-        //relTop = (RelativeLayout) view.findViewById(R.id.rel_top);
-        //imgBg = (ImageView) view.findViewById(R.id.img_bg);
-        //imgLiveBeginOrEnd = (ImageView) view.findViewById(img_live_begin_or_end);
 
-        rootView = (RelativeLayout) view.findViewById(R.id.rootView);
+
         txtCourseName = (TextView) view.findViewById(R.id.txt_course_name);
         txtAttentionNum = (TextView) view.findViewById(R.id.txt_attention_num);
-        txt_bt_attention_num = (TextView) view.findViewById(R.id.txt_bt_attention_num);
-        txtCourseDesc = (TextView) view.findViewById(R.id.txt_course_desc);
-        txtCourseDifficulty = (TextView) view.findViewById(R.id.txt_course_difficulty);
+        tv_fans = (TextView) view.findViewById(R.id.tv_fans);
 
-        starList.add((ImageView) view.findViewById(R.id.img_star_first));
-        starList.add((ImageView) view.findViewById(R.id.img_star_second));
-        starList.add((ImageView) view.findViewById(R.id.img_star_three));
-        starList.add((ImageView) view.findViewById(R.id.img_star_four));
-        starList.add((ImageView) view.findViewById(R.id.img_star_five));
-        bt_attention = (ImageButton) view.findViewById(R.id.bt_attention);
 
-        imageView6 = (ImageView) view.findViewById(R.id.imageView6);
-        imgCoach = (ImageView) view.findViewById(img_coach);
+        iv_fansssss = view.findViewById(R.id.iv_fansssss);
+
+        iv_share = view.findViewById(R.id.iv_share);
+        tv_subjecttitle = (TextView) view.findViewById(R.id.tv_subjecttitle);
+
+
+        //  bt_attention = (ImageButton) view.findViewById(R.id.bt_attention);
+
+
+        iv_share.setOnClickListener(this);
+
 
         txtCourseIntro = (RichWebView) view.findViewById(txt_course_intro);
         txtSuggestFrequency = (TextView) view.findViewById(R.id.txt_suggest_frequency);
@@ -139,18 +128,15 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         txt_target_population = (TextView) view.findViewById(R.id.txt_target_population);
         txt_suggest_match_course = (TextView) view.findViewById(R.id.txt_suggest_match_course);
 
-        llRelateDynamic = (LinearLayout) view.findViewById(R.id.ll_relate_dynamic);
+
         txtRelateDynamic = (TextView) view.findViewById(R.id.txt_relate_dynamic);
 
         initAttentionPerson(view);
-//        initRelativeCoach(view);
+
         initRelativeCourseVideo(view);
 
-        imgCoach.setVisibility(GONE);
 
-        rootView.setOnClickListener(this);
-        txt_bt_attention_num.setOnClickListener(this);
-        view.findViewById(R.id.bt_attention).setOnClickListener(this);
+        iv_fansssss.setOnClickListener(this);
 
         followPresent = new FollowPresentImpl(context);
         followPresent.setFollowListener(this);
@@ -161,28 +147,10 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_live_begin_or_end:
-                Intent intent = new Intent(getContext(), PlayerActivity.class)
-                        .setData(Uri.parse(course.getVideo()))
-                        .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
-                context.startActivity(intent);
-
-                break;
-            case R.id.rootView:
 
 
-                break;
-            case R.id.txt_bt_attention_num:
 
-                if (App.getInstance().isLogin()) {
-                    AppointmentUserActivity.start(context, course.getFollowers(), "已关注人列表");
-                } else {
-                    UiManager.activityJump(context, LoginActivity.class);
-                }
-
-
-                break;
-            case R.id.bt_attention:
+            case R.id.iv_fansssss:
                 if (!App.getInstance().isLogin()) {
                     UiManager.activityJump(context, LoginActivity.class);
                     return;
@@ -194,6 +162,11 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
                     followPresent.addFollow(course.getId(), Constant.COURSE);
                 }
 
+                break;
+
+            case R.id.iv_share:
+                if (onLoadListener != null)
+                    onLoadListener.share();
                 break;
         }
     }
@@ -213,7 +186,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
     private void initRelativeCourseVideo(View view) {
 
-        llRelateCourseVideo = (LinearLayout) view.findViewById(R.id.ll_relate_course_video);
+
         txtRelateCourseVideo = (TextView) view.findViewById(R.id.txt_relate_course_video);
         txtCheckAllVideo = (TextView) view.findViewById(R.id.txt_check_all_video);
         rvRelateVideo = (RecyclerView) view.findViewById(R.id.rv_relate_video);
@@ -228,74 +201,48 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
                 if (!TextUtils.isEmpty(course.getId()))
                     RelativeVideoListActivity.start(context, course.getId(), relativeVideoTitle);
 
-//                UiManager.activityJump(context, RelativeVideoListActivity.class);
+
             }
         });
 
     }
 
 
-//    private void initRelativeCoach(View view) {
-//        incRelativeCoach = view.findViewById(R.id.inc_relative_coach);
-//        txtRelativeCoach = (TextView) view.findViewById(R.id.txt_left_title);
-//        txtChechAllCoach = (TextView) view.findViewById(R.id.txt_check_all);
-//        rvRelativeCoach = (RecyclerView) view.findViewById(R.id.recyclerView);
-//
-//        txtRelativeCoach.setText(getResources().getString(R.string.relate_coach));
-//        txtChechAllCoach.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-//        rvRelativeCoach.setLayoutManager(manager);
-//        adapterRelativeCoach = new PersonHorizontalAdapter(context);
-//        rvRelativeCoach.setAdapter(adapterRelativeCoach);
-//
-//    }
-
-
-    public void setData(CourseDetailBean course,OnLoadListener listener) {
+    public void setData(CourseDetailBean course, OnLoadListener listener) {
 
         this.onLoadListener = listener;
         this.course = course;
 
         relativeViedeoAdapter.setCourseID(course.getId());
 
-//        if (course.getVideo_cover() != null) {
-//            GlideLoader.getInstance().displayImage(course.getVideo_cover(), imgBg);
-//        }
+        String values = "";
 
-        txtCourseName.setText(course.getName());
-        txtAttentionNum.setText(course.getFollows_count() + "人关注");
-        if (course.getFollowers()!=null) {
-            value =  course.getFollowers().size();
-            txt_bt_attention_num.setText((course.getFollowers().size()>0? course.getFollowers().size():0 )+ "人已关注");
-        }else {
-            txt_bt_attention_num.setText( "0人已关注");
-            value =  0;
+        if (course.getStrength() >= 5) {
+            values = "高难度";
+        } else if (course.getStrength() < 5 && course.getStrength() >= 3) {
+            values = "中级进阶";
+        } else {
+            values = "初级难度";
         }
 
+        tv_subjecttitle.setText(values);
 
 
-
-        if (course.getTagString()!=null) {
-            txtCourseDesc.setText( course.getTagString().replace("|","|"));
+//        txtCourseName.setText(course.getName());
+        tv_fans.setText(course.getFollows_count()+"");
+        if (course.getFollowers() != null) {
+            value = course.getFollowers().size();
+            tv_fans.setText((course.getFollowers().size() > 0 ? course.getFollowers().size() : 0)+"");
+        } else {
+            tv_fans.setText("0");
+            value = 0;
         }
 
-        for (int i = 0; i < 5; i++) {
-            if (i < course.getStrength()) {
-                starList.get(i).setVisibility(View.VISIBLE);
-            } else {
-                starList.get(i).setVisibility(View.GONE);
-            }
-        }
 
         if (course.isFollowed()) {
-            bt_attention.setImageResource(R.drawable.icon_attented);
+            setImageResourceVale(R.drawable.follw);
         } else {
-            bt_attention.setImageResource(R.drawable.icon_attention);
+            setImageResourceVale(R.drawable.unfollw);
         }
         txtCourseIntro.setRichText(course.getIntroduce());
         txtSuggestFrequency.setText("建议周频次: " + course.getFrequency() + "次/周");
@@ -313,12 +260,6 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     }
 
     public void setRelativeVideoData(String title, List<CourseVideoBean> videos) {
-//        if (videos != null && !videos.isEmpty()) {
-//            llRelateCourseVideo.setVisibility(VISIBLE);
-//            relativeViedeoAdapter.setData(videos);
-//        } else {
-//            llRelateCourseVideo.setVisibility(GONE);
-//        }D
         this.relativeVideoTitle = title;
         txtRelateCourseVideo.setText(title);
         relativeViedeoAdapter.setData(videos);
@@ -326,18 +267,23 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
     public int value;
 
+
+    public void setImageResourceVale(int id) {
+        iv_fansssss.setBackgroundResource(id);
+    }
+
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == 1) {
-            bt_attention.setImageResource(R.drawable.icon_followed);
+            setImageResourceVale(R.drawable.follw);
             course.setFollowed(true);
 
             course.setFollows_count(course.getFollows_count() + 1);
-            value = value+1;
-          //  txt_bt_attention_num.setText(value + "人已关注");
+            value = value + 1;
+            tv_fans.setText(value+"");
 
 
-            if (onLoadListener!=null) {
+            if (onLoadListener != null) {
                 onLoadListener.load();
             }
             ToastGlobal.showShortConsecutive(R.string.follow_success);
@@ -351,12 +297,12 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         if (baseBean.getStatus() == 1) {
             course.setFollowed(false);
             course.setFollows_count(course.getFollows_count() - 1);
-            value  = value-1;
-           // txt_bt_attention_num.setText(value + "人已关注");
-            bt_attention.setImageResource(R.drawable.icon_follow);
+            value = value - 1;
+            tv_fans.setText(value + "");
+            setImageResourceVale(R.drawable.unfollw);
             ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
 
-            if (onLoadListener!=null) {
+            if (onLoadListener != null) {
                 onLoadListener.load();
             }
 
@@ -365,6 +311,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
     }
+
 
     public void setDynamicEmpty(boolean empty) {
 
@@ -377,11 +324,12 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     }
 
 
-
-
-    public interface OnLoadListener{
+    public interface OnLoadListener {
         void load();
+
+        void share();
     }
+
 
     public OnLoadListener onLoadListener;
 }

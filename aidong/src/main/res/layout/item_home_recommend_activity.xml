@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     app:cardCornerRadius="5dp"
     android:layout_marginLeft="15dp"
-
+    android:background="@drawable/home01_bg_card"
     android:elevation="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

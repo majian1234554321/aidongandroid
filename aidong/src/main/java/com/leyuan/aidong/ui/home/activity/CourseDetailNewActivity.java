@@ -4,11 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.button.MaterialButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -71,7 +73,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     private ImageView ivBack;
     private TextView tvTitle;
     private ImageView ivShare;
-    private RelativeLayout llApply;
+    private LinearLayout llApply,ll005;
     private TextView tvPrice;
     private MaterialButton tvState;
     private LinearLayout layout_course_location;
@@ -177,6 +179,8 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
         llApply =  findViewById(R.id.ll_apply);
+        ll005 =  findViewById(R.id.ll005);
+
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvState =  findViewById(R.id.tv_state);
 
@@ -234,6 +238,12 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             case R.id.iv_back:
                 finish();
                 break;
+
+
+
+
+
+
             case R.id.layout_course_pack:
                 GoodsVirtualListActivity.start(this,coupon_pack.getItemProduct());
                 break;
@@ -418,6 +428,8 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             case CourseBeanNew.END:
                 tvPrice.setVisibility(View.GONE);
                 tvState.setText(R.string.ended);
+                ll005.setVisibility(View.GONE);
+                tvState.setBackgroundColor(Color.TRANSPARENT);
                 tvPrice.setTextColor(getResources().getColor(R.color.white));
                 tvState.setTextColor(getResources().getColor(R.color.white));
                 llApply.setBackgroundColor(getResources().getColor(R.color.list_line_color));

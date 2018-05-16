@@ -3,6 +3,7 @@
 
 <com.leyuan.custompullrefresh.CustomRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:swipe="http://schemas.android.com/tools"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -14,11 +15,11 @@
         android:background="@color/white">
 
         <LinearLayout
-            android:focusableInTouchMode="true"
-            android:focusable="true"
             android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <cn.bingoogolapple.bgabanner.BGABanner
@@ -44,9 +45,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginTop="20dp">
 
                     <RelativeLayout
@@ -57,7 +58,7 @@
                             android:id="@+id/txt_selection_course"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-android:layout_centerVertical="true"
+                            android:layout_centerVertical="true"
                             android:text="@string/selection_course"
                             android:textColor="@color/black"
                             android:textSize="15sp"
@@ -67,12 +68,12 @@ android:layout_centerVertical="true"
                             android:id="@+id/txt_selection_course_hint"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-android:visibility="gone"
                             android:layout_below="@id/txt_selection_course"
                             android:paddingTop="4dp"
                             android:text="练就你想要的身材"
                             android:textColor="@color/b3"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            android:visibility="gone" />
                     </RelativeLayout>
 
 
@@ -93,10 +94,19 @@ android:visibility="gone"
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
-
                     android:id="@+id/rv_course"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/activity_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="-15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp" />
+
             </LinearLayout>
 
 
@@ -113,8 +123,8 @@ android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:layout_marginLeft="15dp"
                     android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="20dp">
 
@@ -139,10 +149,10 @@ android:visibility="gone"
                             android:layout_below="@id/txt_selection_activity"
                             android:layout_marginTop="8dp"
                             android:paddingTop="4dp"
-                            android:visibility="gone"
                             android:text="你想要的都在这里"
                             android:textColor="@color/b3"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            android:visibility="gone" />
 
                     </RelativeLayout>
 
@@ -164,10 +174,16 @@ android:visibility="gone"
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_activity"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp" />
+                    android:layout_height="240dp" />
 
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/line_color" />
 
 
             <LinearLayout
@@ -181,8 +197,8 @@ android:visibility="gone"
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="20dp">
 
@@ -206,11 +222,11 @@ android:visibility="gone"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txt_star_coach"
                             android:layout_marginTop="8dp"
-                            android:visibility="gone"
                             android:paddingTop="4dp"
                             android:text="跟着教练去健身"
                             android:textColor="@color/b3"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            android:visibility="gone" />
 
                     </RelativeLayout>
 

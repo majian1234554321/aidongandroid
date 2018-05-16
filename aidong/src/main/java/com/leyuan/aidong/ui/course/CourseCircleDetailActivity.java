@@ -135,7 +135,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         dynamicPresent = new DynamicPresentImpl(this, this);
 
         initView();
-        initSwipeRefreshLayout();
+
         initRecyclerView();
         sharePopupWindow = new SharePopupWindow(this);
 //        dynamicPresent.commonLoadData(switcherLayout);
@@ -169,37 +169,27 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
         collapsingToolbar.setExpandedTitleColor(Color.BLACK);
-        //collapsingToolbar
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //关键下面两句话，设置了回退按钮，及点击事件的效果
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onBackPressed();
+            public void onClick(View v) {
+                finish();
             }
         });
+
+
+
+
     }
 
 
-    private void initSwipeRefreshLayout() {
-//        refreshLayout = (CustomRefreshLayout) findViewById(refreshLayout);
-//        switcherLayout = new SwitcherLayout(this, refreshLayout);
-//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                refreshData();
-//            }
-//        });
-//        switcherLayout.setOnRetryListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dynamicPresent.commonLoadData(switcherLayout);
-//            }
-//        });
-    }
+
 
     private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.rv_dynamic_list);
@@ -294,6 +284,16 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 if (!TextUtils.isEmpty(courseDetailBean.getName()))
                 CourseListActivityNew.start(this, "全部分类",courseDetailBean.getName());
                 break;
+
+
+
+            case R.id.img_live_begin_or_end:
+                Intent intent = new Intent(this, PlayerActivity.class)
+                        .setData(Uri.parse(courseDetailBean.getVideo()))
+                        .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+                startActivity(intent);
+
+                break;
         }
     }
 
@@ -310,7 +310,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
     public void refreshData() {
         currPage = 1;
-//        refreshLayout.setRefreshing(true);
+
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
         dynamicPresent.pullToRefreshRelativeDynamics(type, id);
     }
@@ -347,6 +347,8 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
             GlideLoader.getInstance().displayImage(courseDetailBean.getVideo_cover(), imgBg);
         }
         collapsingToolbar.setTitle(courseDetailBean.getName());
+
+
 
         if(recyclerView != null){
             int top = recyclerView.getChildAt(0).getTop();
@@ -496,6 +498,15 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     @Override
     public void load() {
        // coursePresent.getCourseDetail(id);
+    }
+
+    @Override
+    public void share() {
+        if (courseDetailBean == null) return;
+
+        sharePopupWindow.showAtBottom(courseDetailBean.getName(), courseDetailBean.getIntroduce(),
+                courseDetailBean.getVideo_cover(), ConstantUrl.URL_SHARE_COURSE_CIRCLE + courseDetailBean.getId() );
+
     }
 
 

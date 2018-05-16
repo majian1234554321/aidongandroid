@@ -19,8 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stl_defaultTabTextColor="@color/gray_normal"
-        app:stl_defaultTabTextHorizontalPadding="40dp"
+        app:stl_defaultTabTextHorizontalPadding="36dp"
         app:stl_defaultTabTextSize="17sp"
+        app:stl_dividerColor = "@color/transpance"
         app:stl_indicatorThickness="0dp"/>
 
 

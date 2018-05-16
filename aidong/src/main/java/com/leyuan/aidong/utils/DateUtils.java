@@ -300,9 +300,9 @@ public class DateUtils {
             SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
             String dateString = formatter.format(date);
             if (i == 0) {
-                dates.add(dateString + "(今天)");
+                dates.add(dateString + " (今天)");
             } else {
-                dates.add(dateString + weekOfDate);
+                dates.add(dateString + " "+weekOfDate);
             }
         }
         return dates;

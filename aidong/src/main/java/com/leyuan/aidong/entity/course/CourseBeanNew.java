@@ -52,6 +52,7 @@ public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
     CourseSeat seat;
     String class_room;
     String class_store;
+    public String video_cover;
 
     int status; //0-正常 1-已预约 2-已预约，未付款 3-已排队 4-紧张 5-可排队 6-已满员 7-已结束
     String seatChoosed;
@@ -74,7 +75,7 @@ public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
         if (tagString.length() == 0) {
             for (int i = 0; i < tags.size(); i++) {
                 if (i < tags.size() - 1) {
-                    tagString.append(tags.get(i)).append(" | ");
+                    tagString.append(tags.get(i)).append("  ");
                 } else {
                     tagString.append(tags.get(i));
                 }

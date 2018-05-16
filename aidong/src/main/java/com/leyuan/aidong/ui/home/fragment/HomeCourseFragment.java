@@ -1,19 +1,29 @@
 package com.leyuan.aidong.ui.home.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.kyleduo.switchbutton.SwitchButton;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.home.activity.LocationActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
@@ -22,7 +32,7 @@ import java.util.List;
 /**
  * Created by user on 2018/1/4.
  */
-public class HomeCourseFragment extends BaseFragment {
+public class HomeCourseFragment extends BaseFragment implements View.OnClickListener {
 
 
     private FrameLayout frame;
@@ -30,10 +40,33 @@ public class HomeCourseFragment extends BaseFragment {
     private List<Fragment> mFragments = new ArrayList<>();
     private FragmentTransaction ft;
     private SwitchButton btCheckout;
+    private TextView tv_location;
+
+
+    BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+             if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
+
+                 tv_location.setText(App.getInstance().getSelectedCity());
+
+            }
+
+
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
+
+        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
+
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
     }
 
     @Nullable
@@ -45,7 +78,7 @@ public class HomeCourseFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        tv_location = (TextView) view.findViewById(R.id.tv_location);
         btCheckout = (SwitchButton) view.findViewById(R.id.bt_checkout);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         fm = getChildFragmentManager();
@@ -63,6 +96,9 @@ public class HomeCourseFragment extends BaseFragment {
                 }
             }
         });
+
+
+        tv_location.setOnClickListener(this);
     }
 
     private void showFragment(int tag) {
@@ -86,4 +122,21 @@ public class HomeCourseFragment extends BaseFragment {
         ft.commit();
     }
 
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(getContext(), LocationActivity.class));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tv_location.setText(App.getInstance().getSelectedCity());
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(selectCityReceiver);
+    }
 }

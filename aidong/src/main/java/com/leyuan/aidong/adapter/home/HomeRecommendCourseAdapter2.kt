@@ -2,6 +2,8 @@ package com.leyuan.aidong.adapter.home
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import android.widget.TextView
 import com.leyuan.aidong.R
 import com.leyuan.aidong.R.id.iv
 import com.leyuan.aidong.entity.course.CourseBeanNew
+import com.leyuan.aidong.ui.course.CourseCircleDetailActivity
 import com.leyuan.aidong.utils.GlideLoader
 import kotlinx.android.synthetic.main.item_home_recommend_course2.view.*
 
@@ -47,7 +50,22 @@ class HomeRecommendCourseAdapter2(val context: Activity, var course: ArrayList<C
             }
 
 
-        GlideLoader.getInstance().displayImage(course[position].cover, iv)
+
+        GlideLoader.getInstance().displayImage(course[position].video_cover, iv)
+
+
+
+            setOnClickListener {
+
+                context.startActivity( Intent(context, CourseCircleDetailActivity::class.java).putExtra("id", course[position].id),
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity ,iv,"share").toBundle())
+
+            }
+
+
+
+
+
     }
 }
 

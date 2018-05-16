@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +27,14 @@ import com.leyuan.aidong.adapter.home.HomeRecommendActivityAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.data.HomeData;
-import com.leyuan.aidong.ui.App;
+
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.course.CourseCircleDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CircleListActivity;
-import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomeRecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowView;
@@ -39,11 +43,19 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.aidong.utils.UiManager;
+
 import com.leyuan.aidong.widget.SwitcherLayout;
+
+import com.leyuan.aidong.widget.card.OverLayCardLayoutManager;
+import com.leyuan.aidong.widget.card.RenRenCallback;
+
+
+import com.leyuan.aidong.widget.card.UniversalAdapter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
@@ -53,7 +65,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * Created by user on 2017/12/28.
  */
-public class HomeRecommendFragment extends BaseFragment implements View.OnClickListener, HomeRecommendView, HomeRecommendCourseAdapter.OnAttentionClickListener, FollowView {
+public class HomeRecommendFragment extends BaseFragment implements View.OnClickListener, HomeRecommendView, UniversalAdapter.OnItemClickListener, FollowView {
 
 
     private CustomRefreshLayout refreshLayout;
@@ -95,6 +107,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     private int itemClickedPosition;
     private HomeData homeData;
     private SwitcherLayout switcherLayout;
+    private RenRenCallback callback;
 
 
     @Override
@@ -123,15 +136,87 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         });
     }
 
+
+    private RecyclerView mActivity_review;
+    private UniversalAdapter mAdatper;
+
+
+    ArrayList<CourseBeanNew> list = new ArrayList<>();
+
+    ArrayList<CourseBeanNew> templist = new ArrayList<>();
+
+    private void setData(final ArrayList<CourseBeanNew> courseBeanNews) {
+        list.clear();
+        templist.clear();
+
+        templist.addAll(courseBeanNews);
+
+
+
+        Collections.reverse(templist);
+
+        list.addAll(templist);
+
+
+        mAdatper = new UniversalAdapter(list, getContext());
+        mAdatper.setOnItemClickListener(this);
+        mActivity_review.setAdapter(mAdatper);
+
+        callback.setSwipeListener(new RenRenCallback.OnSwipeListener() {
+            @Override
+            public void onSwiped(int adapterPosition, int direction) {
+                if (direction == ItemTouchHelper.DOWN || direction == ItemTouchHelper.UP) {
+                    list.add(0, list.remove(adapterPosition));
+                    mActivity_review.getAdapter().notifyDataSetChanged();
+                } else {
+
+                    if (list.size() > 0) {
+                        list.add(list.get(0));
+                        list.remove(0);
+
+
+                        if (flag){
+                        Collections.reverse(list);
+                        flag = false;
+                        }
+                    }
+
+
+                }
+
+
+                mAdatper.notifyDataSetChanged();
+               // Collections.reverse(list);
+
+            }
+
+            @Override
+            public void onSwipeTo(RecyclerView.ViewHolder viewHolder, float offset) {
+
+            }
+        });
+        new ItemTouchHelper(callback).attachToRecyclerView(mActivity_review);
+
+    }
+
+
+    public boolean flag = true;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
 
+        mActivity_review = (RecyclerView) view.findViewById(R.id.activity_review);
+
+        mActivity_review.setLayoutManager(new OverLayCardLayoutManager(getContext()));
+
+
+        callback = new RenRenCallback();
 
 
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
-       // initSwitcherLayout();
+        // initSwitcherLayout();
         scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
         llContent = (LinearLayout) view.findViewById(R.id.ll_content);
         banner = (BGABanner) view.findViewById(R.id.banner);
@@ -176,7 +261,6 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         courseAdapter = new HomeRecommendCourseAdapter(getActivity());
         activityAdapter = new HomeRecommendActivityAdapter(getActivity());
         coachAdapter = new CoachAttentionAdapter(getActivity());
-        courseAdapter.setOnAttentionClickListener(this);
 
 
         rvCourse.setAdapter(courseAdapter);
@@ -248,14 +332,13 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         if (homeData == null) return;
 
         if (homeData.getCourse() != null && !homeData.getCourse().isEmpty()) {
-            courseAdapter.setData(homeData.getCourse());
+            setData(homeData.getCourse());
 
 
-
-            llSelectionCourse.setVisibility(View.VISIBLE);
+            //llSelectionCourse.setVisibility(View.VISIBLE);
 
         } else {
-            llSelectionCourse.setVisibility(View.GONE);
+            //llSelectionCourse.setVisibility(View.GONE);
         }
 
         if (homeData.getCampaign() != null && !homeData.getCampaign().isEmpty()) {
@@ -292,27 +375,38 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         }
     }
 
+//    @Override
+//    public void onCourseAttentionClick(String id, int position, boolean followed) {
+//
+//        if (!App.getInstance().isLogin()) {
+//            UiManager.activityJump(getActivity(), LoginActivity.class);
+//            return;
+//        }
+//
+//        if (followed) {
+//            followPresent.cancelFollow(id, Constant.COURSE);
+//        } else {
+//            followPresent.addFollow(id, Constant.COURSE);
+//        }
+//
+//    }
+
     @Override
-    public void onCourseAttentionClick(String id, int position, boolean followed) {
-
-        if (!App.getInstance().isLogin()) {
-            UiManager.activityJump(getActivity(), LoginActivity.class);
-            return;
-        }
-
-        if (followed) {
-            followPresent.cancelFollow(id, Constant.COURSE);
-        } else {
-            followPresent.addFollow(id, Constant.COURSE);
-        }
-
-    }
-
-    @Override
-    public void onItemClick(String id, int position) {
+    public void onItemClick(String id, int position,View view ) {
         itemClickedPosition = position;
 
-        CourseCircleDetailActivity.startForResult(this, id,Constant.REQUEST_COURSE_DETAIL);
+      //  CourseCircleDetailActivity.startForResult(this, id, Constant.REQUEST_COURSE_DETAIL);
+
+
+        startActivity( new  Intent(getActivity(), CourseCircleDetailActivity.class).putExtra("id", id),
+                ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity() ,view,"share").toBundle());
+
+
+//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, transitionView, OPTION_IMAGE);
+//        ActivityCompat.startActivity(activity, intent, options.toBundle());
+
+
+
     }
 
     @Override
@@ -329,12 +423,11 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
             switch (requestCode) {
                 case Constant.REQUEST_COURSE_DETAIL:
 
-                    if (homeData.getCourse()!=null){
-                        homeData.getCourse().get(itemClickedPosition).setFollowed(data.getBooleanExtra(Constant.FOLLOW,false));
-                        Logger.i("follow", "onActivityResult follow = " +  homeData.getCourse().get(itemClickedPosition).isFollowed());
+                    if (homeData.getCourse() != null) {
+                        homeData.getCourse().get(itemClickedPosition).setFollowed(data.getBooleanExtra(Constant.FOLLOW, false));
+                        Logger.i("follow", "onActivityResult follow = " + homeData.getCourse().get(itemClickedPosition).isFollowed());
                         courseAdapter.notifyItemChanged(itemClickedPosition);
                     }
-
 
 
                     break;
