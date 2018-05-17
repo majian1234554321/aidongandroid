@@ -34,7 +34,7 @@
                 app:banner_pointTopBottomMargin="5dp"
                 app:banner_transitionEffect="depth" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_selection_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,13 +42,28 @@
 
                 android:visibility="visible">
 
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_course"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/activity_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="10dp">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -93,21 +108,7 @@
 
                 </RelativeLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_course"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/activity_review"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:layout_marginTop="-15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp" />
-
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <LinearLayout

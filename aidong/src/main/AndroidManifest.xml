@@ -130,6 +130,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.course.CourseCircleDetailActivity"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.course.activity.RelativeVideoListActivity"

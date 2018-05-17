@@ -181,6 +181,41 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         seekbar3 = (RangeSeekBar) view.findViewById(R.id.seekbar3);
 
 
+        RadioGroup rg000 = view.findViewById(R.id.rg000);
+        final RadioButton rb001 = view.findViewById(R.id.rb001);
+        final RadioButton rb002 = view.findViewById(R.id.rb002);
+        final RadioButton rb003 = view.findViewById(R.id.rb003);
+
+
+        rg000.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                rb001.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                rb002.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                rb003.setTextColor(ContextCompat.getColor(context, R.color.gray));
+
+
+                switch (i) {
+                    case R.id.rb001:
+                        rb001.setChecked(true);
+                        rb001.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        break;
+                    case R.id.rb002:
+                        rb002.setChecked(true);
+                        rb002.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        break;
+                    case R.id.rb003:
+                        rb003.setChecked(true);
+                        rb003.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        break;
+
+                }
+            }
+        });
+
+
         seekbar3.setValue(0, 24);
 
         seekbar3.setLeftProgressDescription(startTime + ":00");
@@ -529,10 +564,9 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                         } else {
 
                             refreshtCategoryAdapater(leftlist.indexOf(category), 0);
-                            tvCourseName.setText(category+ "全部课程");
+                            tvCourseName.setText(category + "全部课程");
                         }
                     }
-
 
 
                 }

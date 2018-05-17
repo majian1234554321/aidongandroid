@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -253,8 +254,8 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         @Override
         public void onLoadNextPage(View view) {
             currPage++;
-            if (dynamicList != null && dynamicList.size() >= pageSize) {
-                dynamicPresent.requestMoreRelativeData(recyclerView, pageSize, currPage, type, id);
+            if (dynamicList != null && dynamicList.size() >= 10) {
+                dynamicPresent.requestMoreRelativeData(recyclerView, 10, currPage, type, id);
             }
         }
     };

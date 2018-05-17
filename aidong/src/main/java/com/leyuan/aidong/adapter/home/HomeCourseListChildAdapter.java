@@ -1,6 +1,9 @@
 package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.support.design.button.MaterialButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,15 +70,13 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         holder.txtCourseTime.setText(courseBean.getClass_time());
         holder.txtCourseDesc.setText(courseBean.getTagString());
 
-        if (courseBean.getStrength()>=5) {
-            holder. tv_level.setText("(高难度)");
-        }else if (courseBean.getStrength()<=5&&courseBean.getStrength()>=3){
-            holder. tv_level.setText("(中级进阶)");
-        }else {
-            holder. tv_level.setText("(初级难度)");
+        if (courseBean.getStrength() >= 5) {
+            holder.tv_level.setText("(高难度)");
+        } else if (courseBean.getStrength() <= 5 && courseBean.getStrength() >= 3) {
+            holder.tv_level.setText("(中级进阶)");
+        } else {
+            holder.tv_level.setText("(初级难度)");
         }
-
-
 
 
 //        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
@@ -95,46 +96,81 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         switch (courseBean.getStatus()) {
 
             case CourseBeanNew.NORMAL:
+                holder.mb_level.setVisibility(View.GONE);
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
 
             case CourseBeanNew.APPOINTED:
+
+                holder.mb_level.setVisibility(View.VISIBLE);
+                holder.mb_level.setText("已预约");
+                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.c9)));
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_appointed);
                 break;
 
             case CourseBeanNew.APPOINTED_NO_PAY:
-
+                holder.mb_level.setVisibility(View.GONE);
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
 
             case CourseBeanNew.QUEUED:
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_queueing_tag);
+
+                holder.mb_level.setVisibility(View.VISIBLE);
+                holder.mb_level.setText("排队中");
+                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.course_oringe)));
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
                 break;
 
             case CourseBeanNew.FEW:
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_few);
+
+                holder.mb_level.setVisibility(View.VISIBLE);
+                holder.mb_level.setText("预约");
+                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.course_oringe)));
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
                 break;
 
             case CourseBeanNew.QUEUEABLE:
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_queue);
+
+
+                holder.mb_level.setVisibility(View.VISIBLE);
+                holder.mb_level.setText("排队");
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
+                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.course_oringe)));
                 break;
 
             case CourseBeanNew.FULL:
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_full);
+
+
+                holder.mb_level.setVisibility(View.VISIBLE);
+                holder.mb_level.setText("已满员");
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
+                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.c9)));
                 break;
 
             case CourseBeanNew.END:
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_end);
+
+
+                holder.mb_level.setVisibility(View.VISIBLE);
+                holder.mb_level.setText("已结束");
+                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.c9)));
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
                 break;
 
             default:
                 holder.imgCourseState.setVisibility(View.GONE);
+                holder.mb_level.setVisibility(View.GONE);
                 break;
         }
 
@@ -178,8 +214,10 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         private ImageView imgCourseState;
         // ,img_star_first,img_star_second,img_star_three,img_star_four,img_star_five;
         private TextView txtCourseOriginPrice;
-        private TextView txtCourseMemberPrice,tv_level;
+        private TextView txtCourseMemberPrice, tv_level;
         private LinearLayout rootView, layout_type;
+
+        public MaterialButton mb_level;
 
         public CourseViewHolder(View view) {
             super(view);
@@ -197,7 +235,6 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             tv_level = (TextView) view.findViewById(R.id.tv_level);
 
 
-
             starList.add((ImageView) view.findViewById(R.id.img_star_first));
             starList.add((ImageView) view.findViewById(R.id.img_star_second));
             starList.add((ImageView) view.findViewById(R.id.img_star_three));
@@ -212,6 +249,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             rootView = (LinearLayout) view.findViewById(R.id.rootView);
 
             layout_type = (LinearLayout) view.findViewById(R.id.layout_type);
+
+            mb_level = view.findViewById(R.id.mb_level);
         }
     }
 }

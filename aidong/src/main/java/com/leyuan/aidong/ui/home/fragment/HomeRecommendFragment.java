@@ -72,7 +72,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     private NestedScrollView scrollView;
     private LinearLayout llContent;
     private BGABanner banner;
-    private LinearLayout llSelectionCourse;
+
     private TextView txtSelectionCourse;
     private TextView txtSelectionCourseHint;
     private RecyclerView rvCourse;
@@ -220,7 +220,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
         llContent = (LinearLayout) view.findViewById(R.id.ll_content);
         banner = (BGABanner) view.findViewById(R.id.banner);
-        llSelectionCourse = (LinearLayout) view.findViewById(R.id.ll_selection_course);
+
         txtSelectionCourse = (TextView) view.findViewById(R.id.txt_selection_course);
         txtSelectionCourseHint = (TextView) view.findViewById(R.id.txt_selection_course_hint);
         rvCourse = (RecyclerView) view.findViewById(R.id.rv_course);
