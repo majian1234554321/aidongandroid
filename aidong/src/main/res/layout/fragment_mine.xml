@@ -239,10 +239,6 @@
             <include layout="@layout/inc_month_clock_info" />
 
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/mine_divider" />
 
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_coin"
@@ -258,6 +254,7 @@
                 android:id="@+id/item_my_member_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:divider_visible="true"
                 app:img_tag="@drawable/mine_love_coin"
                 app:txt_name="我的会员卡" />
