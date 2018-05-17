@@ -170,16 +170,18 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
                     mActivity_review.getAdapter().notifyDataSetChanged();
                 } else {
 
-                    if (list.size() > 0) {
-                        list.add(list.get(0));
-                        list.remove(0);
+//                    if (list.size() > 0) {
+//                        list.add(list.get(0));
+//                        list.remove(0);
+//
+//
+//                        if (flag){
+//                        Collections.reverse(list);
+//                        flag = false;
+//                        }
+//                    }
 
-
-                        if (flag){
-                        Collections.reverse(list);
-                        flag = false;
-                        }
-                    }
+                    list.add(0, list.remove(adapterPosition));
 
 
                 }
