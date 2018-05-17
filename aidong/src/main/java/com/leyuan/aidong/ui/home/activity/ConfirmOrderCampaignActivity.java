@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.model.UserCoach;
@@ -37,10 +38,13 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
@@ -215,7 +219,20 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 if (TextUtils.isEmpty(userCoach.getMobile())) {
                     ToastGlobal.showLong("请先绑定手机");
                 } else {
+
+
+                    if (PAY_WEIXIN.equals(payType)) {
+                        if (api == null) {
+                            api = WXAPIFactory.createWXAPI(context, ConstantUrl.WX_APP_ID, false);
+                        }
+                        if (!api.isWXAppInstalled()) {
+                            Toast.makeText(context, "没有安装微信", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+
                     DialogUtils.showDialog(this, "", true);
+
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
                             payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount, edit_remark.getText().toString().trim());
                 }
@@ -262,6 +279,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         }
     }
 
+    private IWXAPI api;
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {

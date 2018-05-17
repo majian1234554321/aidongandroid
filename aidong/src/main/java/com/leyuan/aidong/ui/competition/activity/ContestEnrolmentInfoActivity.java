@@ -121,10 +121,12 @@ public class ContestEnrolmentInfoActivity extends BaseActivity implements View.O
 
         if (App.getInstance().getUser().getGender() == Constant.MAN_GENDER) {
             txtBelongGroup.setText("选择分组: 男子组");
+            genderint = 0;
             gender = "男";
             genderint = 0;
         } else {
             txtBelongGroup.setText("选择分组: 女子组");
+            genderint = 1;
             gender = "女";
             genderint = 1;
         }

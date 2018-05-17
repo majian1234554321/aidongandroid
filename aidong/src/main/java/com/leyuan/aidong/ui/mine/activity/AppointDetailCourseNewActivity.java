@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.PayOptionBean;
 import com.leyuan.aidong.entity.course.CouponCourseShareBean;
@@ -48,10 +49,13 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.richtext.RichWebView;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import cn.iwgang.countdownview.CountdownView;
 
 import static com.leyuan.aidong.R.id.ll_timer;
+import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 
@@ -102,6 +106,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
     private LinearLayout layout_pay;
     private CourseBeanNew course;
     private CouponCourseShareBean courseShareBean;
+    private IWXAPI api;
 
 
     public static void appointStart(Context context, String appointId) {
@@ -364,7 +369,17 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
 
                 break;
             case R.id.tv_pay:
+                if (PAY_WEIXIN.equals(payType)){
 
+
+                    if (api == null) {
+                        api = WXAPIFactory.createWXAPI(context, ConstantUrl.WX_APP_ID, false);
+                    }
+                    if (!api.isWXAppInstalled()) {
+                        Toast.makeText(context, "没有安装微信", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 PayUtils.pay(this, payType, payOptionBean, payListener);
 
                 break;

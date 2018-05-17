@@ -10,10 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.OrderExpressAdapter;
 import com.leyuan.aidong.adapter.mine.OrderSelfDeliveryAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
@@ -40,6 +42,8 @@ import com.leyuan.aidong.widget.dialog.BaseDialog;
 import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
 import com.leyuan.aidong.widget.dialog.ButtonOkListener;
 import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +52,7 @@ import cn.iwgang.countdownview.CountdownView;
 
 import static com.leyuan.aidong.R.id.ll_express_info;
 import static com.leyuan.aidong.R.id.tv_delivery_time;
+import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
@@ -366,6 +371,8 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         }
     }
 
+    private IWXAPI  api;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -376,6 +383,18 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 orderPresent.cancelOrder(orderId);
                 break;
             case R.id.tv_pay:
+
+                if (PAY_WEIXIN.equals(payType)) {
+
+
+                    if (api == null) {
+                        api = WXAPIFactory.createWXAPI(context, ConstantUrl.WX_APP_ID, false);
+                    }
+                    if (!api.isWXAppInstalled()) {
+                        Toast.makeText(context, "没有安装微信", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 PayInterface payInterface = PAY_ALI.equals(payType) ?
                         new AliPay(this, payListener) : new WeiXinPay(this, payListener);
                 payInterface.payOrder(bean.getPay_option());

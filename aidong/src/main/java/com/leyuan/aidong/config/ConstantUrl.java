@@ -27,4 +27,6 @@ public class ConstantUrl {
     public static final String URL_ABOUT_US = BASE_URL_HTML + "aboutus";
     public final static String URL_FEEDBACK = BASE_URL_HTML + "feedback?iuser=";
 
+
+    public final static String WX_APP_ID = "wx365ab323b9269d30";
 }

@@ -20,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ConfirmOrderShopAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.GoodsBean;
@@ -50,6 +51,7 @@ import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
@@ -59,6 +61,7 @@ import java.util.Map;
 
 import static com.leyuan.aidong.R.id.ll__receiving_time;
 import static com.leyuan.aidong.R.id.txt_receving_time;
+import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
@@ -460,11 +463,27 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         Logger.i(TAG, "pickUpDate = " + pickUpDate + "pick_up_period =" + pick_up_period);
 
 
+
+        if (PAY_WEIXIN.equals(payType)) {
+
+
+            if (api == null) {
+                api = WXAPIFactory.createWXAPI(context, ConstantUrl.WX_APP_ID, false);
+            }
+            if (!api.isWXAppInstalled()) {
+                Toast.makeText(context, "没有安装微信", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+
+
         present.buyGoodsImmediately(settlementType, skuCode, amount, couponId, integral, coin, payType,
                 String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener, recommendCode);
 
     }
 
+    private IWXAPI api;
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
@@ -523,9 +542,9 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         if (usableCoupons == null || usableCoupons.isEmpty()) {
             tvCoupon.setText("无可用");
             //tvCoupon.setCompoundDrawables(null, null, null, null);
-            tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
-        } else {
-            if (TextUtils.isEmpty(couponId)) {
+            tvCoupon.setTextColor(ContextCompat.getColor(this,R.color.c9));
+        }else {
+            if (TextUtils.isEmpty(couponId)){
                 tvCoupon.setText("请选择");
                 tvCoupon.setTextColor(Color.BLACK);
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
@@ -593,7 +612,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         if (is_virtual) {
             emptyAddressLayout.setVisibility(View.GONE);
             addressLayout.setVisibility(View.GONE);
-        } else {
+        }else {
             if (address == null) {
                 addressLayout.setVisibility(View.GONE);
                 emptyAddressLayout.setVisibility(View.VISIBLE);
