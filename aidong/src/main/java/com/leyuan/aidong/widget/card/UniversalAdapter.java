@@ -1,6 +1,7 @@
 package com.leyuan.aidong.widget.card;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.v7.widget.RecyclerView;
@@ -10,14 +11,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.leyuan.aidong.R;
 
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 
 
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.GlideRoundTransform;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by ls on 2017/11/25.
@@ -44,7 +49,20 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
 
 
         final CourseBeanNew courseBean = courseBeanNews.get(position);
-        GlideLoader.getInstance().displayImage(courseBean.video_cover, holder.recy_item_im);
+
+
+        Glide.with(context)
+                .load(courseBean.video_cover)
+                .thumbnail(0.2f)
+
+                .placeholder(new ColorDrawable(0xffc6c6c6))
+                .bitmapTransform(new RoundedCornersTransformation(context, 8, 0,
+                        RoundedCornersTransformation.CornerType.TOP))
+                .into(holder.recy_item_im);
+
+
+
+
         holder.tv_1.setText(courseBean.getName());
 
         holder.tv_2.setText(courseBean.getTagString());

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
 
     <ScrollView
         android:id="@+id/scroll_view"
-        android:layout_marginTop="@dimen/height_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/height_top_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,29 +35,28 @@
                     app:banner_transitionEffect="alpha" />
 
 
-
             </FrameLayout>
 
             <TextView
                 android:id="@+id/txt_course_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="58dp"
                 android:gravity="center"
+                android:minHeight="58dp"
                 android:paddingLeft="15dp"
-                android:visibility="gone"
                 android:paddingRight="15dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:visibility="gone"
                 android:layout_marginLeft="15dp"
-                android:src="@color/mine_divider" />
+                android:src="@color/mine_divider"
+                android:visibility="gone" />
 
 
             <RelativeLayout
@@ -89,18 +88,18 @@
                             android:id="@+id/txt_coach_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
                             android:maxWidth="200dp"
                             android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <ImageView
                             android:id="@+id/img_coach_identify"
                             android:layout_width="14dp"
-                            android:baselineAlignBottom="true"
                             android:layout_height="14dp"
                             android:layout_marginLeft="5dp"
+                            android:baselineAlignBottom="true"
                             android:src="@drawable/icon_coach" />
 
                     </LinearLayout>
@@ -109,9 +108,9 @@
                         android:id="@+id/txt_coach_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLines="4"
-                        android:ellipsize="end"
                         android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:maxLines="4"
                         android:textColor="@color/txt_black"
                         android:textSize="13sp" />
 
@@ -122,54 +121,50 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    />
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
 
-
-
-
-            <android.support.v7.widget.CardView
-                android:layout_margin="15dp"
-                app:cardElevation="8dp"
-
-                app:cardCornerRadius="8dp"
-
-
+            <android.support.design.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:cardMaxElevation="6dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:padding="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:padding="15dp">
 
 
                     <TextView
                         android:id="@+id/txt_course_time"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center_vertical"
-                        android:drawablePadding="12dp"
+
                         android:drawableLeft="@drawable/icon_time2"
+                        android:drawablePadding="30px"
+                        android:gravity="center_vertical"
                         android:textColor="@color/txt_black"
                         android:textSize="15sp"
+                        tools:text="12121212"
 
                         />
 
                     <TextView
                         android:id="@+id/txt_course_room"
-                        android:drawableLeft="@drawable/icon_store"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+
+                        android:layout_marginTop="30px"
+                        android:drawableLeft="@drawable/icon_store"
+                        android:drawablePadding="30px"
                         android:gravity="center_vertical"
-                        android:layout_marginLeft="15dp"
-                        android:drawablePadding="12dp"
-                        android:layout_marginTop="15dp"
                         android:textColor="@color/black"
                         android:textSize="13sp" />
 
@@ -177,11 +172,11 @@
                         android:id="@+id/txt_course_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
 
-                        android:layout_marginTop="15dp"
+
+                        android:layout_marginTop="30px"
                         android:drawableLeft="@drawable/iconaddress2"
-                        android:drawablePadding="12dp"
+                        android:drawablePadding="30px"
                         android:gravity="center_vertical"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
@@ -190,8 +185,7 @@
                 </LinearLayout>
 
 
-
-            </android.support.v7.widget.CardView>
+            </android.support.design.card.MaterialCardView>
 
 
             <TextView
@@ -200,82 +194,77 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/price"
-                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:visibility="gone"
-                android:layout_marginRight="15dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="15dp">
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/txt_normal_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/txt_black"
-                    android:textSize="15sp"
                     android:layout_marginRight="25dp"
-                    />
+                    android:textColor="@color/txt_black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/txt_member_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/red_price"
-                    android:textSize="15sp"
-                    />
+                    android:textSize="15sp" />
 
             </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/layout_course_pack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingLeft="15dp"
-                android:visibility="visible"
                 android:paddingBottom="10dp"
-                android:paddingRight="15dp">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:visibility="visible">
 
 
                 <TextView
                     android:id="@+id/txt_course_pack_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/txt_black"
-                    android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:singleLine="true"
                     android:maxWidth="200dp"
-                    />
+                    android:singleLine="true"
+                    android:textColor="@color/txt_black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/txt_course_pack_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/red_price"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/txt_course_pack_info"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    />
+                    android:textColor="@color/red_price"
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/icon_right_arrow"
-                    />
+                    android:src="@drawable/icon_right_arrow" />
 
 
             </RelativeLayout>
-
 
 
             <ImageView
@@ -285,21 +274,20 @@
                 android:src="@color/mine_divider" />
 
 
-
             <com.leyuan.aidong.widget.richtext.RichWebView
                 android:id="@+id/web_view"
-                android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="55dp" />
+                android:layout_marginBottom="55dp"
+                android:layout_marginLeft="8dp" />
 
         </LinearLayout>
     </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:layout_height="@dimen/height_top_bar">
+        android:layout_height="@dimen/height_top_bar"
+        android:background="@color/colorPrimary">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -320,7 +308,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-           android:layout_marginRight="15dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/icon_share"
             android:visibility="visible" />
     </RelativeLayout>
@@ -328,7 +316,7 @@
     <LinearLayout
         android:id="@+id/ll_apply"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/red_price"
         android:gravity="center"
@@ -336,49 +324,82 @@
         android:visibility="visible">
 
 
-        <LinearLayout
-            android:id="@+id/ll005"
+        <RelativeLayout
+            android:id="@+id/rl_UnMember"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/icon_hot"
+                android:drawablePadding="12dp"
+                android:drawableRight="@drawable/icon_enter"
+                android:padding="15dp"
+                android:text="抢购套券享受特惠价,热门课程低至 59元/每节" />
+
+            <TextView
+                android:id="@+id/tv_UnMember"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tv_tips"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="立即预约" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_Member"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/tv_price"
-                tools:text="会员价：89"
-                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
-                android:textStyle="bold"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="会员价：89" />
 
             <TextView
                 android:id="@+id/tv_price2"
-                tools:text="会员价：89"
-                android:layout_marginLeft="@dimen/pref_12dp"
-                android:layout_alignBaseline="@+id/tv_price"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_price"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_price"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/pref_12dp"
+                android:layout_toRightOf="@+id/tv_price"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:text="会员价：89" />
 
 
+            <android.support.design.button.MaterialButton
+                android:id="@+id/tv_state"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/red_price"
+                android:textSize="14sp"
+                app:backgroundTint="@color/white"
+                tools:text="立即预约" />
 
-        </LinearLayout>
-        <android.support.design.button.MaterialButton
-            android:layout_weight="1"
-            android:id="@+id/tv_state"
-            android:gravity="center"
-            app:backgroundTint="@color/white"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            tools:text="123"
-            android:textColor="@color/red_price"
-            android:textSize="16sp" />
+        </RelativeLayout>
+
     </LinearLayout>
 
 </FrameLayout>

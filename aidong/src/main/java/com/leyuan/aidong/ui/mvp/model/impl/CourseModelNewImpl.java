@@ -40,9 +40,9 @@ public class CourseModelNewImpl {
     }
 
     public void getCourseList(Subscriber<CourseDataNew> subscriber, String store, String course, String time,
-                              String date, String page) {
+                              String date, String page,String idVlaue) {
         String mobile = App.getInstance().isLogin()?App.getInstance().getUser().getMobile():"";
-        courseService.getCourseList(store, course, time, date, page,mobile)
+        courseService.getCourseList(store, course, time, date, page,mobile,idVlaue)
                 .compose(RxHelper.<CourseDataNew>transform())
                 .subscribe(subscriber);
     }

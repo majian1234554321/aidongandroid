@@ -37,7 +37,7 @@ public class CourseListPresentImpl {
         this.requestResponse = requestResponse;
     }
 
-    private void getCourseList(String store, String course, String time, String date, String page) {
+    private void getCourseList(String store, String course, String time, String date, String page,String idValue) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -47,7 +47,7 @@ public class CourseListPresentImpl {
             public void onError(Throwable e) {
                 super.onError(e);
             }
-        }, store, course, time, date, page);
+        }, store, course, time, date, page,idValue);
     }
 
 
@@ -74,7 +74,7 @@ public class CourseListPresentImpl {
         }, mobile,date);
     }
 
-    public void pullRefreshCourseList(String store, final String course, String time, String date) {
+    public void pullRefreshCourseList(String store, final String course, String time, String date,String idValue) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -93,10 +93,10 @@ public class CourseListPresentImpl {
                 super.onError(e);
                 listener.onGetRefreshCourseList(null);
             }
-        }, store, course, time, date, "1");
+        }, store, course, time, date, "1",idValue);
     }
 
-    public void loadMoreCourseList(String store, String course, String time, String date, String page) {
+    public void loadMoreCourseList(String store, String course, String time, String date, String page,String idValue) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -113,7 +113,7 @@ public class CourseListPresentImpl {
                 super.onError(e);
                 listener.onGetMoreCourseList(null);
             }
-        }, store, course, time, date, page);
+        }, store, course, time, date, page,idValue);
     }
 
 

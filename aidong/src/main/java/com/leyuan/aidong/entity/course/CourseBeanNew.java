@@ -34,8 +34,8 @@ public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
     CoachBean coach;
 
     boolean reservable = true;// 　是否可以预约#0-否　１-是
-    boolean member_only;
-    boolean member;
+    public  boolean member_only;
+    public  boolean member;
 
     String reserve_time;// 预约时间
 

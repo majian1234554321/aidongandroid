@@ -345,10 +345,10 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         }
 
         @Override
-        public void onTimeItemClick(String timeValue) {
+        public void onTimeItemClick(String timeValue,String idValue) {
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
-                ((CourseListFragmentNew) page).resetCourseTime(timeValue);
+                ((CourseListFragmentNew) page).resetCourseTime(timeValue,idValue);
                 ((CourseListFragmentNew) page).fetchData();
             }
         }

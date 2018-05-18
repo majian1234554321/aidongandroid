@@ -12,6 +12,27 @@ public class CourseFilterBean {
     CourseName course;
     ArrayList<CourseBrand> mine;
 
+
+
+   public ArrayList<FilterBean> filter;
+
+   public static class FilterBean{
+       public String name;
+       public String key;
+
+       public ArrayList<ItemBean> item;
+   }
+
+
+   public static class ItemBean {
+       public String id ;
+       public String name;
+   }
+
+
+
+
+
     public CourseName getCourse() {
         return course;
     }

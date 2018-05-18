@@ -32,7 +32,7 @@ public interface CourseServiceNew {
                                                       @Query("time") String time,
                                                       @Query("date") String date,
                                                       @Query("page") String page,
-                                                      @Query("mobile") String mobile);
+                                                      @Query("mobile") String mobile,@Query("key") String key);
 
     @GET("app/api/coach/{mobile}/timetables")
     Observable<BaseBean<CourseDataNew>> getCoachCourseList(@Path("mobile") String mobile,@Query("date") String data);

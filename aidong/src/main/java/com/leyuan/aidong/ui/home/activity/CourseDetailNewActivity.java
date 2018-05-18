@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.button.MaterialButton;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -56,7 +60,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     private TextView txtCourseName;
     private TextView txtCoachName;
     private ImageView imgCoachIdentify;
-    private TextView txtCoachDesc;
+    private TextView txtCoachDesc, tv_UnMember, tv_price2, tv_price;
     private ImageView imgCoachAvatar;
     private TextView txtNormalPrice;
     private TextView txtMemberPrice;
@@ -66,15 +70,15 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
     private RelativeLayout layoutCoursePack;
     private TextView txtCoursePackInfo;
-    private TextView txtCoursePackPrice;
+    private TextView txtCoursePackPrice,tv_tips;
 
     //    private TextView tvDesc;
-    private RelativeLayout layout_course_coach;
+    private RelativeLayout layout_course_coach, rl_Member, rl_UnMember;
     private ImageView ivBack;
     private TextView tvTitle;
     private ImageView ivShare;
-    private LinearLayout llApply,ll005;
-    private TextView tvPrice;
+    private LinearLayout llApply;
+
     private MaterialButton tvState;
     private LinearLayout layout_course_location;
 
@@ -170,6 +174,8 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         txtCourseTime = (TextView) findViewById(R.id.txt_course_time);
         txtCourseRoom = (TextView) findViewById(R.id.txt_course_room);
         txtCourseLocation = (TextView) findViewById(R.id.txt_course_location);
+        tv_UnMember = (TextView) findViewById(R.id.tv_UnMember);
+
 
         layoutCoursePack = (RelativeLayout) findViewById(R.id.layout_course_pack);
         txtCoursePackInfo = (TextView) findViewById(R.id.txt_course_pack_info);
@@ -178,14 +184,25 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
-        llApply =  findViewById(R.id.ll_apply);
-        ll005 =  findViewById(R.id.ll005);
+        llApply = findViewById(R.id.ll_apply);
+        rl_UnMember = findViewById(R.id.rl_UnMember);
 
-        tvPrice = (TextView) findViewById(R.id.tv_price);
-        tvState =  findViewById(R.id.tv_state);
+        rl_Member = findViewById(R.id.rl_Member);
+
+        tv_price = (TextView) findViewById(R.id.tv_price);
+        tv_price2 = (TextView) findViewById(R.id.tv_price2);
+
+        tvState = findViewById(R.id.tv_state);
 
         layout_course_coach = (RelativeLayout) findViewById(R.id.layout_course_coach);
         webView = (RichWebView) findViewById(R.id.web_view);
+        tv_tips = findViewById(R.id.tv_tips);
+
+
+        String value = "抢购套券享受特惠价,热门课程低至 59元/每节";
+        SpannableString ss = new SpannableString(value);
+        ss.setSpan(new ForegroundColorSpan(Color.RED), value.length()-6, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tv_tips.setText(ss);
     }
 
     private void setListener() {
@@ -217,8 +234,8 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-              ImageView imageView =   (ImageView) view;
-              imageView.setScaleType(ImageView.ScaleType.CENTER);
+                ImageView imageView = (ImageView) view;
+                imageView.setScaleType(ImageView.ScaleType.CENTER);
 
                 GlideLoader.getInstance().displayImage2((String) model, imageView);
             }
@@ -240,32 +257,28 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 break;
 
 
-
-
-
-
             case R.id.layout_course_pack:
-                GoodsVirtualListActivity.start(this,coupon_pack.getItemProduct());
+                GoodsVirtualListActivity.start(this, coupon_pack.getItemProduct());
                 break;
             case R.id.iv_share:
-                String  image = "";
-                if(course.getImage()!=null && course.getImage().size() > 0){
+                String image = "";
+                if (course.getImage() != null && course.getImage().size() > 0) {
                     image = course.getImage().get(0);
                 }
 
                 sharePopupWindow.showAtBottom(course.getName(), course.getIntroduce(),
-                      image  , ConstantUrl.URL_SHARE_COURSE+course.getId()+"/course");
+                        image, ConstantUrl.URL_SHARE_COURSE + course.getId() + "/course");
 
                 break;
             case R.id.txt_course_location:
                 CourseStore store = course.getStore();
                 if (store != null) {
-                    if (store.getCoordinate()!=null&&store.getCoordinate().length>=2){
+                    if (store.getCoordinate() != null && store.getCoordinate().length >= 2) {
                         MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
                                 store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
-                    }else {
+                    } else {
                         MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
-                               "31.00","108.00");
+                                "31.00", "108.00");
                     }
                 }
 
@@ -333,14 +346,13 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         this.coupon_pack = courseData.getCoupon_pack();
         tvTitle.setText(courseData.getTimetable().getName());
 
-        if(TextUtils.isEmpty(coupon_pack.getItemProduct())){
+        if (TextUtils.isEmpty(coupon_pack.getItemProduct())) {
             layoutCoursePack.setVisibility(View.GONE);
-        }else {
+        } else {
             layoutCoursePack.setVisibility(View.VISIBLE);
             txtCoursePackInfo.setText(coupon_pack.getTitle());
-            txtCoursePackPrice.setText(coupon_pack.getPrice()+"元/节!");
+            txtCoursePackPrice.setText(coupon_pack.getPrice() + "元/节!");
         }
-
 
 
         banner.setData(course.getImage(), null);
@@ -349,7 +361,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             txtCoachName.setText(course.getCoach().getName());
             if (!TextUtils.isEmpty(course.getCoach().getIntroduce())) {
 
-               // txtCoachDesc.setText(course.getCoach().getIntroduce());
+                // txtCoachDesc.setText(course.getCoach().getIntroduce());
 
                 RichText.from(course.getCoach().getIntroduce()).placeHolder(R.drawable.place_holder_logo)
                         .error(R.drawable.place_holder_logo).into(txtCoachDesc);
@@ -357,11 +369,11 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             GlideLoader.getInstance().displayCircleImage(course.getCoach().getAvatar(), imgCoachAvatar);
         }
 
-        tvPrice.setVisibility(View.VISIBLE);
-        txtNormalPrice.setText( String.format(getString(R.string.rmb_price_double),  course.getPrice()));
-        txtMemberPrice.setText("会员价: "+String.format(getString(R.string.rmb_price_double),  course.getMember_price()));
+
+        txtNormalPrice.setText(String.format(getString(R.string.rmb_price_double), course.getPrice()));
+        txtMemberPrice.setText("会员: " + String.format(getString(R.string.rmb_price_double), course.getMember_price()));
         txtCourseTime.setText(course.getClass_time());
-        txtCourseRoom.setText(course.getStore().getName()+"-"+course.getStore().getClassroom());
+        txtCourseRoom.setText(course.getStore().getName() + "-" + course.getStore().getClassroom());
         txtCourseLocation.setText(course.getStore().getAddress());
         webView.setRichText(course.getIntroduce());
 
@@ -370,68 +382,104 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
             case CourseBeanNew.NORMAL:
             case CourseBeanNew.FEW:
-                tvPrice.setVisibility(View.VISIBLE);
-                tvPrice.setText(String.format(getString(R.string.rmb_price_double),  course.getPrice()));
-                tvState.setText(R.string.appointment_immediately);
-                tvPrice.setTextColor(getResources().getColor(R.color.white));
-                tvState.setTextColor(getResources().getColor(R.color.white));
+
+                tv_price.setTextColor(getResources().getColor(R.color.white));
+
                 llApply.setBackgroundColor(getResources().getColor(R.color.main_red));
                 llApply.setClickable(true);
+
                 if (course.getSeat() != null && course.getSeat().isNeed()) {
                     tvState.setText(R.string.appointment_choose_seat);
                 }
 
+
+                if (course.member) { //会员
+                    rl_Member.setVisibility(View.VISIBLE);
+                    rl_UnMember.setVisibility(View.GONE);
+
+                    tv_price.setText("会员: " + String.format(getString(R.string.rmb_price_double), course.getMember_price()));
+                    tv_price2.setText(String.format(getString(R.string.rmb_price_double), course.getPrice()));
+                    tv_price2.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
+
+                } else {
+                    rl_Member.setVisibility(View.GONE);
+                    rl_UnMember.setVisibility(View.VISIBLE);
+
+
+
+                    tv_UnMember.setText(String.format(getString(R.string.rmb_price_double), course.getPrice())+" 立即预约");
+                    tv_UnMember.setTextColor(getResources().getColor(R.color.white));
+
+                }
+
+
                 break;
             case CourseBeanNew.APPOINTED:
 
-                tvPrice.setVisibility(View.GONE);
-                tvState.setText(R.string.appointmented_look_detail);
-                tvPrice.setTextColor(getResources().getColor(R.color.white));
-                tvState.setTextColor(getResources().getColor(R.color.white));
+                rl_Member.setVisibility(View.GONE);
+                rl_UnMember.setVisibility(View.VISIBLE);
+
+                tv_UnMember.setText(R.string.appointmented_look_detail);
+                tv_UnMember.setTextColor(getResources().getColor(R.color.white));
+
                 llApply.setBackgroundColor(getResources().getColor(R.color.main_red));
                 llApply.setClickable(true);
 
+
                 break;
             case CourseBeanNew.APPOINTED_NO_PAY:
-                tvPrice.setVisibility(View.GONE);
-                tvState.setText(R.string.wait_pay_appointed);
-                tvPrice.setTextColor(getResources().getColor(R.color.white));
-                tvState.setTextColor(getResources().getColor(R.color.white));
+
+                rl_Member.setVisibility(View.GONE);
+                rl_UnMember.setVisibility(View.VISIBLE);
+
+                tv_UnMember.setText(R.string.wait_pay_appointed);
+                tv_UnMember.setTextColor(getResources().getColor(R.color.white));
+
                 llApply.setBackgroundColor(getResources().getColor(R.color.main_red));
                 llApply.setClickable(true);
                 break;
             case CourseBeanNew.QUEUED:
-                tvPrice.setVisibility(View.GONE);
-                tvState.setText(R.string.queueing_look_detail);
-                tvPrice.setTextColor(getResources().getColor(R.color.white));
-                tvState.setTextColor(getResources().getColor(R.color.white));
+
+                rl_Member.setVisibility(View.GONE);
+                rl_UnMember.setVisibility(View.VISIBLE);
+
+                tv_UnMember.setText(R.string.queueing_look_detail);
+                tv_UnMember.setTextColor(getResources().getColor(R.color.white));
+
                 llApply.setBackgroundColor(getResources().getColor(R.color.main_red));
                 llApply.setClickable(true);
                 break;
 
             case CourseBeanNew.QUEUEABLE:
-                tvPrice.setVisibility(View.GONE);
-                tvState.setText(R.string.appoint_full_queue_immedialtely);
-                tvPrice.setTextColor(getResources().getColor(R.color.white));
-                tvState.setTextColor(getResources().getColor(R.color.white));
+
+                rl_Member.setVisibility(View.GONE);
+                rl_UnMember.setVisibility(View.VISIBLE);
+
+                tv_UnMember.setText(R.string.appoint_full_queue_immedialtely);
+                tv_UnMember.setTextColor(getResources().getColor(R.color.white));
+
                 llApply.setBackgroundColor(getResources().getColor(R.color.main_red));
                 llApply.setClickable(true);
                 break;
             case CourseBeanNew.FULL:
-                tvPrice.setVisibility(View.GONE);
-                tvState.setText(R.string.fulled);
-                tvPrice.setTextColor(getResources().getColor(R.color.white));
-                tvState.setTextColor(getResources().getColor(R.color.white));
+
+                rl_Member.setVisibility(View.GONE);
+                rl_UnMember.setVisibility(View.VISIBLE);
+
+                tv_UnMember.setText(R.string.ended);
+                tv_UnMember.setTextColor(getResources().getColor(R.color.white));
+
                 llApply.setBackgroundColor(getResources().getColor(R.color.list_line_color));
                 llApply.setClickable(false);
                 break;
             case CourseBeanNew.END:
-                tvPrice.setVisibility(View.GONE);
-                tvState.setText(R.string.ended);
-                ll005.setVisibility(View.GONE);
-                tvState.setBackgroundColor(Color.TRANSPARENT);
-                tvPrice.setTextColor(getResources().getColor(R.color.white));
-                tvState.setTextColor(getResources().getColor(R.color.white));
+
+                rl_Member.setVisibility(View.GONE);
+                rl_UnMember.setVisibility(View.VISIBLE);
+
+                tv_UnMember.setText(R.string.ended);
+                tv_UnMember.setTextColor(getResources().getColor(R.color.white));
+
                 llApply.setBackgroundColor(getResources().getColor(R.color.list_line_color));
                 llApply.setClickable(false);
                 break;
@@ -441,34 +489,25 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
 
         if (DateUtils.compareLongTime(course.getReserve_time()) > 0) {
-            tvPrice.setVisibility(View.GONE);
+
             tvState.setText("预约开始时间:" + course.getReserve_time());
             tvState.setTextColor(getResources().getColor(R.color.white));
             llApply.setBackgroundColor(getResources().getColor(R.color.black));
             llApply.setClickable(false);
 
-            Logger.i(TAG,"DateUtils.compareLongTime(course.getReserve_time()) = " + DateUtils.compareLongTime(course.getReserve_time()));
+            Logger.i(TAG, "DateUtils.compareLongTime(course.getReserve_time()) = " + DateUtils.compareLongTime(course.getReserve_time()));
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     coursePresent.getCourseDetail(code);
                 }
-            },DateUtils.compareLongTime(course.getReserve_time())+2000);
+            }, DateUtils.compareLongTime(course.getReserve_time()) + 2000);
         }
 
-        if (course.isMember_only()) {
-            txtNormalPrice.setVisibility(View.GONE);
 
-            tvPrice.setText(String.format(getString(R.string.rmb_price_double),  course.getMember_price()));
-
-        }
-
-        if (course.isMember()) {
-            tvPrice.setText(String.format(getString(R.string.rmb_price_double),  course.getMember_price()));
-        }
 
         if (course.getReservable() == 0) {
-            tvPrice.setText("");
+
             tvState.setText(R.string.do_not_nedd_appointment);
             tvState.setTextColor(getResources().getColor(R.color.white));
             llApply.setBackgroundColor(getResources().getColor(R.color.list_line_color));

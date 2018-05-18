@@ -75,7 +75,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
     private TextView txtSelectionCourse;
     private TextView txtSelectionCourseHint;
-    private RecyclerView rvCourse;
+
     private LinearLayout llSelectionActivity;
     private TextView txtSelectionActivity;
     private TextView txtSelectionActivityHint;
@@ -225,7 +225,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
         txtSelectionCourse = (TextView) view.findViewById(R.id.txt_selection_course);
         txtSelectionCourseHint = (TextView) view.findViewById(R.id.txt_selection_course_hint);
-        rvCourse = (RecyclerView) view.findViewById(R.id.rv_course);
+
         llSelectionActivity = (LinearLayout) view.findViewById(R.id.ll_selection_activity);
         txtSelectionActivity = (TextView) view.findViewById(R.id.txt_selection_activity);
         txtSelectionActivityHint = (TextView) view.findViewById(R.id.txt_selection_activity_hint);
@@ -252,11 +252,11 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
             }
         });
 
-        rvCourse.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         rvActivity.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         rvStarCoach.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-        rvCourse.setNestedScrollingEnabled(false);
+
         rvActivity.setNestedScrollingEnabled(false);
         rvStarCoach.setNestedScrollingEnabled(false);
 
@@ -265,7 +265,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         coachAdapter = new CoachAttentionAdapter(getActivity());
 
 
-        rvCourse.setAdapter(courseAdapter);
+
         rvActivity.setAdapter(activityAdapter);
         rvStarCoach.setAdapter(coachAdapter);
 

@@ -43,4 +43,8 @@ public class CourseBrand {
                 ", area=" + area +
                 '}';
     }
+
+
+
+
 }

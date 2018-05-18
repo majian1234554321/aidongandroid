@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
+        android:background="#f2f2f2"
         android:orientation="vertical">
 
         <TextView
@@ -23,8 +24,9 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
+
             android:text="爱动自营门店"
-            android:textColor="@color/course_oringe"
+            android:textColor="@color/main_red"
             android:textSize="14sp"
             android:visibility="visible" />
 

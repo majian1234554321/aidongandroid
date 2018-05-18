@@ -231,10 +231,10 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
         }
 
         @Override
-        public void onTimeItemClick(String timeValue) {
+        public void onTimeItemClick(String timeValue,String idValue) {
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
-                ((HomeCourseListChildFragment) page).resetCourseTime(timeValue);
+                ((HomeCourseListChildFragment) page).resetCourseTime(timeValue,idValue);
                 ((HomeCourseListChildFragment) page).fetchData();
             }
         }

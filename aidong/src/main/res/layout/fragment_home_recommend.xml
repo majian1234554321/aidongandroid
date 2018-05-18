@@ -42,23 +42,8 @@
 
                 android:visibility="visible">
 
-
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_course"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/activity_review"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp" />
-
                 <RelativeLayout
+                    android:id="@+id/rrr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -107,6 +92,25 @@
                         android:textSize="13sp" />
 
                 </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_below="@+id/rrr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView
+
+                        android:id="@+id/activity_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="-15dp"
+                        />
+
+                </RelativeLayout>
+
 
             </RelativeLayout>
 

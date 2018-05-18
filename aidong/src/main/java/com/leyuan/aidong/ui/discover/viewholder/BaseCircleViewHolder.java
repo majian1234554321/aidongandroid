@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.discover.viewholder;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
@@ -281,6 +282,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         } else {
             img_parse.setBackgroundResource(isLike(dynamic)
                     ? R.drawable.icon_parsed : R.drawable.icon_parse);
+            txtParse.setTextColor( ContextCompat.getColor(context,isLike(dynamic)?R.color.main_red:R.color.c9));
 
         }
 

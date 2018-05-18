@@ -78,7 +78,7 @@ public class VenuesCourseNewFragment extends BaseFragment implements CourseDateA
         }
         initView(view);
 
-        coursePresent.pullRefreshCourseList(store, null, null, days.get(0));
+        coursePresent.pullRefreshCourseList(store, null, null, days.get(0),null);
     }
 
     private void initView(View view) {
@@ -107,7 +107,7 @@ public class VenuesCourseNewFragment extends BaseFragment implements CourseDateA
 //            days = DateUtils.getSevenDate();
 //        }
         if(!setStore){
-            coursePresent.pullRefreshCourseList(store, null, null, days.get(0));
+            coursePresent.pullRefreshCourseList(store, null, null, days.get(0),null);
             setStore = true;
         }
     }
@@ -116,7 +116,7 @@ public class VenuesCourseNewFragment extends BaseFragment implements CourseDateA
     public void onItemClick(int position) {
 //        venuesPresent.getCourses(switcherLayout, id, days.get(position));
         Logger.i(TAG,"onItemClick store = " +store);
-        coursePresent.pullRefreshCourseList(store, course, time, days.get(position));
+        coursePresent.pullRefreshCourseList(store, course, time, days.get(position),null);
     }
 
 //    @Override

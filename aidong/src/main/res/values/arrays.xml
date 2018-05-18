@@ -114,9 +114,9 @@
         <item>售后服务</item>
     </string-array>
     <string-array name="homeTab">
-        <item>热门推荐</item>
+        <item>推荐</item>
         <item>关注</item>
-        <item>爱动广场</item>
+        <item>广场</item>
     </string-array>
     <string-array name="circleList">
         <item>课程</item>

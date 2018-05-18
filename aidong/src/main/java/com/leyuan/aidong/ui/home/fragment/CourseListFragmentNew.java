@@ -74,7 +74,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
 
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        coursePresent.pullRefreshCourseList(store, course, time, date);
+        coursePresent.pullRefreshCourseList(store, course, time, date,idValue);
 
         initRecyclerView(view);
         return view;
@@ -83,7 +83,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
     @Override
     public void fetchData() {
 
-        coursePresent.pullRefreshCourseList(store, course, time, date);
+        coursePresent.pullRefreshCourseList(store, course, time, date,idValue);
     }
 
 
@@ -118,7 +118,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                coursePresent.loadMoreCourseList(store, course, time, date, currPage + "");
+                coursePresent.loadMoreCourseList(store, course, time, date, currPage + "",idValue);
             }
         }
 
@@ -198,7 +198,9 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
         switcherLayout.showCustomLayout("empty");
     }
 
-    public void resetCourseTime(String timeValue) {
+    public String idValue;
+    public void resetCourseTime(String timeValue,String idValue) {
         this.time = timeValue;
+        this.idValue = idValue;
     }
 }

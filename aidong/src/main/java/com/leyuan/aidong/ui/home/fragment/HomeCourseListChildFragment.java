@@ -76,7 +76,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
     @Override
     public void fetchData() {
 //        DialogUtils.showDialog(getActivity(),"",false);
-        coursePresent.pullRefreshCourseList(store, course, time, date);
+        coursePresent.pullRefreshCourseList(store, course, time, date,idValue);
     }
 
     private void initRefreshLayout(View view) {
@@ -103,7 +103,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        coursePresent.pullRefreshCourseList(store, course, time, date);
+        coursePresent.pullRefreshCourseList(store, course, time, date,idValue);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -111,7 +111,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                coursePresent.loadMoreCourseList(store, course, time, date, currPage + "");
+                coursePresent.loadMoreCourseList(store, course, time, date, currPage + "",idValue);
             }
         }
 
@@ -205,9 +205,11 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         super.onDestroy();
         DialogUtils.releaseDialog();
     }
+public String idValue;
 
-    public void resetCourseTime(String timeValue) {
+    public void resetCourseTime(String timeValue,String idValue) {
         this.time = timeValue;
+        this.idValue = idValue;
     }
 
     @Override

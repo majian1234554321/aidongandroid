@@ -67,7 +67,7 @@ public class VenuesCourseFragment extends BaseFragment implements CourseDateAdap
 //        }
         initView(view);
 
-        coursePresent.pullRefreshCourseList(store, null, null, days.get(0));
+        coursePresent.pullRefreshCourseList(store, null, null, days.get(0),null);
     }
 
     private void initView(View view) {
@@ -89,7 +89,7 @@ public class VenuesCourseFragment extends BaseFragment implements CourseDateAdap
     @Override
     public void onItemClick(int position) {
 //        venuesPresent.getCourses(switcherLayout, id, days.get(position));
-        coursePresent.pullRefreshCourseList(store, course, time, days.get(position));
+        coursePresent.pullRefreshCourseList(store, course, time, days.get(position),"");
     }
 
 //    @Override

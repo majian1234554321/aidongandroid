@@ -3,11 +3,18 @@ package com.leyuan.aidong.ui.home.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -15,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.course.CourseAreaFilterAdapter;
@@ -115,6 +123,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private TextView rb4;
     private RangeSeekBar seekbar3;
     public String startTime = "0", endTime = "24";
+    private GridView gridview;
 
     public CourseListFilterNew(Context context) {
         this(context, null);
@@ -178,42 +187,19 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         tv_true003.setOnClickListener(this);
         tv_reset003.setOnClickListener(this);
 
+
+        gridview = view.findViewById(R.id.gridview);
+
+
+
+
+
         seekbar3 = (RangeSeekBar) view.findViewById(R.id.seekbar3);
 
 
-        RadioGroup rg000 = view.findViewById(R.id.rg000);
-        final RadioButton rb001 = view.findViewById(R.id.rb001);
-        final RadioButton rb002 = view.findViewById(R.id.rb002);
-        final RadioButton rb003 = view.findViewById(R.id.rb003);
 
 
-        rg000.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
-
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                rb001.setTextColor(ContextCompat.getColor(context, R.color.gray));
-                rb002.setTextColor(ContextCompat.getColor(context, R.color.gray));
-                rb003.setTextColor(ContextCompat.getColor(context, R.color.gray));
-
-
-                switch (i) {
-                    case R.id.rb001:
-                        rb001.setChecked(true);
-                        rb001.setTextColor(ContextCompat.getColor(context, R.color.red_price));
-                        break;
-                    case R.id.rb002:
-                        rb002.setChecked(true);
-                        rb002.setTextColor(ContextCompat.getColor(context, R.color.red_price));
-                        break;
-                    case R.id.rb003:
-                        rb003.setChecked(true);
-                        rb003.setTextColor(ContextCompat.getColor(context, R.color.red_price));
-                        break;
-
-                }
-            }
-        });
 
 
         seekbar3.setValue(0, 24);
@@ -453,7 +439,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             case R.id.tv_true003:
 
                 if (listener != null) {
-                    listener.onTimeItemClick(startTime + ":00," + endTime + ":00");
+                    listener.onTimeItemClick(startTime + ":00," + endTime + ":00",idValue);
                 }
                 hidePopup();
 
@@ -489,7 +475,10 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         }
     }
 
-    public void setData(CourseFilterBean courseFilterConfig, String category, String rightText) {
+
+    public String selectValue  = "all";
+
+    public void setData(final CourseFilterBean courseFilterConfig, String category, String rightText) {
         if (courseFilterConfig == null) return;
         this.courseBrands = courseFilterConfig.getCompany();
         this.mineCourseBrand = courseFilterConfig.getMine();
@@ -502,6 +491,47 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 //        }else {
 //            tvCourseName.setTextColor(ContextCompat.getColor(context,R.color.red_price));
 //        }
+
+
+        /************************/
+
+        if (courseFilterConfig.filter!=null&&courseFilterConfig.filter.size()>0){
+
+
+            MyGrideViewAdapter myGrideViewAdapter = new MyGrideViewAdapter(context, courseFilterConfig.filter.get(0).item);
+
+            gridview.setAdapter(myGrideViewAdapter);
+
+            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                   // Toast.makeText(context, "i"+i, Toast.LENGTH_SHORT).show();
+
+                   // TextView button =   view.findViewById(R.id.rb000);
+                   // button.setText("12121");
+                    idValue = courseFilterConfig.filter.get(0).item.get(i).id;
+
+                    for (int i1 = 0; i1 < adapterView.getChildCount(); i1++) {
+                        TextView tv =    adapterView.getChildAt(i1).findViewById(R.id.rb000);
+                        if (i==i1){
+                            tv.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
+                            tv.setTextColor(ContextCompat.getColor(context, R.color.main_red));
+                        }else {
+                            tv.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                            tv.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+                        }
+                    }
+
+
+                }
+            });
+        }
+
+
+
+
+        /***********************/
+
 
 
         if (courseType != null) {
@@ -841,12 +871,54 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         this.listener = listener;
     }
 
+    String idValue = "";
 
     public interface OnCourseListFilterListener {
         void onAllStoreItemClick(CourseBrand currentBrand, CourseArea currentArea, CourseStore currentStore);
 
         void onCourseCategoryItemClick(String currentCoursePriceType, String currentCourseCategory);
 
-        void onTimeItemClick(String timeValue);
+        void onTimeItemClick(String timeValue,String idValue);
+    }
+
+
+    public class MyGrideViewAdapter extends BaseAdapter {
+
+        public Context context;
+        public ArrayList<CourseFilterBean.ItemBean> list;
+
+
+
+        public MyGrideViewAdapter(Context context, ArrayList<CourseFilterBean.ItemBean> list) {
+            this.list = list;
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size() > 0 ? list.size() : 0;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return list.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            if (view == null) {
+                view = View.inflate(context, R.layout.mygrideviewadapter, null);
+            }
+            TextView radioButton = view.findViewById(R.id.rb000);
+            radioButton.setText(list.get(i).name);
+
+
+            return view;
+        }
     }
 }

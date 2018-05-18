@@ -20,6 +20,7 @@
         android:drawableLeft="@drawable/shine_image"
         android:drawablePadding="12dp"
         android:gravity="center"
+        android:textColor="@color/black"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:text="@string/shine_image" />
