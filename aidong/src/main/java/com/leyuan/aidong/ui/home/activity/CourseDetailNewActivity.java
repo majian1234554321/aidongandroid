@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.button.MaterialButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -201,8 +202,9 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
         String value = "抢购套券享受特惠价,热门课程低至 59元/每节";
         SpannableString ss = new SpannableString(value);
-        ss.setSpan(new ForegroundColorSpan(Color.RED), value.length()-6, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this,R.color.main_red)), value.length()-6, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tv_tips.setText(ss);
+        tv_tips.setVisibility(View.GONE);
     }
 
     private void setListener() {

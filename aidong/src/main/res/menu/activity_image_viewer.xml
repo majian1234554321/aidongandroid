@@ -21,7 +21,8 @@
 
     <item
         android:id="@+id/menu_image_item_selected"
-        android:icon="@drawable/ic_unchecked"
+        android:icon="@null"
         android:title=""
+        android:visible="true"
         app:showAsAction="always" />
 </menu>

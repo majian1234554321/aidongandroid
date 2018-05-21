@@ -433,4 +433,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="TextAppearance.MyApp.Title.Collapsed" parent="android:TextAppearance">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="TextAppearance.MyApp.Title.Expanded" parent="android:TextAppearance">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+
+    </style>
+
 </resources>

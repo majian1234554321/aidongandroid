@@ -106,7 +106,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 holder.mb_level.setText("已预约");
                 holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.c9)));
                 holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
-                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setVisibility(View.GONE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_appointed);
                 break;
 
@@ -116,7 +116,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 break;
 
             case CourseBeanNew.QUEUED:
-                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setVisibility(View.GONE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_queueing_tag);
 
                 holder.mb_level.setVisibility(View.VISIBLE);
@@ -136,7 +136,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 break;
 
             case CourseBeanNew.QUEUEABLE:
-                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setVisibility(View.GONE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_queue);
 
 
@@ -158,7 +158,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 break;
 
             case CourseBeanNew.END:
-                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setVisibility(View.GONE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_end);
 
 

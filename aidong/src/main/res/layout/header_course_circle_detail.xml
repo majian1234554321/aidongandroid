@@ -44,7 +44,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/iv_share"
             android:drawablePadding="8dp"
-            android:text="299" />
+            tools:text="299" />
 
         <ImageView
             android:id="@+id/iv_fansssss"

@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -175,16 +176,23 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        //关键下面两句话，设置了回退按钮，及点击事件的效果
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void onClick(View view) {
+                finish();
             }
         });
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        //关键下面两句话，设置了回退按钮，及点击事件的效果
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
 
 
 
@@ -194,7 +202,13 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.activity_image_viewer, menu);
+        return true;
+
+    }
 
     private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.rv_dynamic_list);
