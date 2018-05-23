@@ -30,6 +30,7 @@ import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * 课程列表
@@ -198,8 +199,8 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
         switcherLayout.showCustomLayout("empty");
     }
 
-    public String idValue;
-    public void resetCourseTime(String timeValue,String idValue) {
+    public Map idValue;
+    public void resetCourseTime(String timeValue,Map idValue) {
         this.time = timeValue;
         this.idValue = idValue;
     }

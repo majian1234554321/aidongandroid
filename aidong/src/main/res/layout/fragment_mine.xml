@@ -278,6 +278,16 @@
                 app:img_tag="@drawable/mine_coupon"
                 app:txt_name="我的优惠券" />
 
+
+
+            <com.leyuan.aidong.widget.AidongMineItem
+                android:id="@+id/item_my_yaoqing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_visible="true"
+                app:img_tag="@drawable/mine_yaoqing"
+                app:txt_name="邀请有礼" />
+
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_sport_timing"
                 android:layout_width="match_parent"

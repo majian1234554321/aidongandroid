@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.home.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.text.TextUtils;
@@ -42,6 +43,7 @@ import com.leyuan.aidong.widget.RangeSeekBar;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static com.leyuan.aidong.R.id.layout_store_content_all;
 import static com.leyuan.aidong.R.id.left;
@@ -124,6 +126,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private RangeSeekBar seekbar3;
     public String startTime = "0", endTime = "24";
     private GridView gridview;
+    private String idKey;
 
     public CourseListFilterNew(Context context) {
         this(context, null);
@@ -191,15 +194,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         gridview = view.findViewById(R.id.gridview);
 
 
-
-
-
         seekbar3 = (RangeSeekBar) view.findViewById(R.id.seekbar3);
-
-
-
-
-
 
 
         seekbar3.setValue(0, 24);
@@ -438,8 +433,19 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
             case R.id.tv_true003:
 
+                if (!TextUtils.isEmpty(idValue)) {
+                    ivTimeArrow.setBackgroundResource(R.drawable.icon_filte);
+                    tvTimeFrame.setTextColor(ContextCompat.getColor(context,R.color.main_red));
+                } else {
+                    ivTimeArrow.setBackgroundResource(R.drawable.icon_unfilte);
+                    tvTimeFrame.setTextColor(ContextCompat.getColor(context,R.color.c9));
+                }
+
+
                 if (listener != null) {
-                    listener.onTimeItemClick(startTime + ":00," + endTime + ":00",idValue);
+                    Map<String,String> map = new ArrayMap<>();
+                    map.put(idKey,idValue);
+                    listener.onTimeItemClick(startTime + ":00," + endTime + ":00", map);
                 }
                 hidePopup();
 
@@ -447,6 +453,19 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
 
             case R.id.tv_reset003:
+
+
+                idValue = "";
+                ivTimeArrow.setBackgroundResource(R.drawable.icon_unfilte);
+                tvTimeFrame.setTextColor(ContextCompat.getColor(context,R.color.c9));
+
+                for (int i1 = 0; i1 < gridview.getChildCount(); i1++) {
+                    TextView tv = gridview.getChildAt(i1).findViewById(R.id.rb000);
+
+                    tv.setTextColor(ContextCompat.getColor(context, R.color.gray));
+                    tv.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
+
+                }
 
 
                 rb1.setTextColor(ContextCompat.getColor(context, R.color.gray));
@@ -475,8 +494,10 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         }
     }
 
+    public boolean filte = false;
 
-    public String selectValue  = "all";
+
+    public String selectValue = "all";
 
     public void setData(final CourseFilterBean courseFilterConfig, String category, String rightText) {
         if (courseFilterConfig == null) return;
@@ -495,7 +516,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
         /************************/
 
-        if (courseFilterConfig.filter!=null&&courseFilterConfig.filter.size()>0){
+        if (courseFilterConfig.filter != null && courseFilterConfig.filter.size() > 0) {
 
 
             MyGrideViewAdapter myGrideViewAdapter = new MyGrideViewAdapter(context, courseFilterConfig.filter.get(0).item);
@@ -505,18 +526,20 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                   // Toast.makeText(context, "i"+i, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(context, "i"+i, Toast.LENGTH_SHORT).show();
 
-                   // TextView button =   view.findViewById(R.id.rb000);
-                   // button.setText("12121");
+                    // TextView button =   view.findViewById(R.id.rb000);
+                    // button.setText("12121");
                     idValue = courseFilterConfig.filter.get(0).item.get(i).id;
 
+                    idKey = courseFilterConfig.filter.get(0).key;
+
                     for (int i1 = 0; i1 < adapterView.getChildCount(); i1++) {
-                        TextView tv =    adapterView.getChildAt(i1).findViewById(R.id.rb000);
-                        if (i==i1){
+                        TextView tv = adapterView.getChildAt(i1).findViewById(R.id.rb000);
+                        if (i == i1) {
                             tv.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
                             tv.setTextColor(ContextCompat.getColor(context, R.color.main_red));
-                        }else {
+                        } else {
                             tv.setTextColor(ContextCompat.getColor(context, R.color.gray));
                             tv.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                         }
@@ -528,10 +551,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         }
 
 
-
-
         /***********************/
-
 
 
         if (courseType != null) {
@@ -878,7 +898,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
         void onCourseCategoryItemClick(String currentCoursePriceType, String currentCourseCategory);
 
-        void onTimeItemClick(String timeValue,String idValue);
+        void onTimeItemClick(String timeValue, Map<String,String> map);
     }
 
 
@@ -886,7 +906,6 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
         public Context context;
         public ArrayList<CourseFilterBean.ItemBean> list;
-
 
 
         public MyGrideViewAdapter(Context context, ArrayList<CourseFilterBean.ItemBean> list) {

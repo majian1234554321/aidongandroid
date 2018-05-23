@@ -70,14 +70,15 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         holder.txtCourseTime.setText(courseBean.getClass_time());
         holder.txtCourseDesc.setText(courseBean.getTagString());
 
-        if (courseBean.getStrength() >= 5) {
-            holder.tv_level.setText("(高难度)");
-        } else if (courseBean.getStrength() <= 5 && courseBean.getStrength() >= 3) {
-            holder.tv_level.setText("(中级进阶)");
-        } else {
-            holder.tv_level.setText("(初级难度)");
-        }
+//        if (courseBean.getStrength() >= 5) {
+//            holder.tv_level.setText("(高难度)");
+//        } else if (courseBean.getStrength() <= 5 && courseBean.getStrength() >= 3) {
+//            holder.tv_level.setText("(中级进阶)");
+//        } else {
+//            holder.tv_level.setText("(初级难度)");
+//        }
 
+        holder.tv_level.setText("("+courseBean.professionalism+")");
 
 //        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
 

@@ -9,6 +9,8 @@ import com.leyuan.aidong.ui.mvp.view.CourseListView;
 import com.leyuan.aidong.ui.mvp.view.EmptyView;
 import com.leyuan.aidong.utils.RequestResponseCount;
 
+import java.util.Map;
+
 /**
  * Created by user on 2017/11/21.
  */
@@ -37,7 +39,7 @@ public class CourseListPresentImpl {
         this.requestResponse = requestResponse;
     }
 
-    private void getCourseList(String store, String course, String time, String date, String page,String idValue) {
+    private void getCourseList(String store, String course, String time, String date, String page,Map idValue) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -74,7 +76,7 @@ public class CourseListPresentImpl {
         }, mobile,date);
     }
 
-    public void pullRefreshCourseList(String store, final String course, String time, String date,String idValue) {
+    public void pullRefreshCourseList(String store, final String course, String time, String date,Map map) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -93,10 +95,10 @@ public class CourseListPresentImpl {
                 super.onError(e);
                 listener.onGetRefreshCourseList(null);
             }
-        }, store, course, time, date, "1",idValue);
+        }, store, course, time, date, "1",map);
     }
 
-    public void loadMoreCourseList(String store, String course, String time, String date, String page,String idValue) {
+    public void loadMoreCourseList(String store, String course, String time, String date, String page,Map map) {
         courseModel.getCourseList(new BaseSubscriber<CourseDataNew>(context) {
             @Override
             public void onNext(CourseDataNew courseDataNew) {
@@ -113,7 +115,7 @@ public class CourseListPresentImpl {
                 super.onError(e);
                 listener.onGetMoreCourseList(null);
             }
-        }, store, course, time, date, page,idValue);
+        }, store, course, time, date, page,map);
     }
 
 

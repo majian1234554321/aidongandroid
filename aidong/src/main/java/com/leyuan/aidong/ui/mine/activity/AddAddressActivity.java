@@ -39,7 +39,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     private CheckBox rbDefault;
 
     private SelectAddressDialog addressDialog;
-    private AddressPresent addressPresent;
+    private AddressPresentImpl addressPresent;
 
     private String province;
     private String city;

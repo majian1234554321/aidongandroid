@@ -11,27 +11,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-       <RelativeLayout
-           android:id="@+id/ll"
-           android:background="@drawable/shape_simi_circle_solid"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+
 
               <ImageView
                   android:id="@+id/recy_item_im"
-                  android:scaleType="fitXY"
+android:scaleType="centerCrop"
+
                   android:transitionName="share"
+
+
                   android:layout_width="match_parent"
                   android:layout_height="220dp" />
 
-       </RelativeLayout>
+
 
        <TextView
            android:textColor="@color/black"
            android:id="@+id/tv_1"
            tools:text="哈哈"
            android:layout_marginTop="16dp"
-           android:layout_below="@+id/ll"
+           android:layout_below="@+id/recy_item_im"
            android:textSize="16sp"
            android:gravity="center"
            android:layout_width="match_parent"

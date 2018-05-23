@@ -9,6 +9,8 @@ import com.leyuan.aidong.entity.course.CourseQueueResult;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.CourseFilterData;
 
+import java.util.Map;
+
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -16,6 +18,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -32,7 +35,17 @@ public interface CourseServiceNew {
                                                       @Query("time") String time,
                                                       @Query("date") String date,
                                                       @Query("page") String page,
-                                                      @Query("mobile") String mobile,@Query("key") String key);
+                                                      @Query("mobile") String mobile, @QueryMap Map<String, String> param );
+
+
+    @GET("app/api/timetables")
+    Observable<BaseBean<CourseDataNew>> getCourseList2(@Query("store") String store,
+                                                      @Query("course") String course,
+                                                      @Query("time") String time,
+                                                      @Query("date") String date,
+                                                      @Query("page") String page,
+                                                      @Query("mobile") String mobile);
+
 
     @GET("app/api/coach/{mobile}/timetables")
     Observable<BaseBean<CourseDataNew>> getCoachCourseList(@Path("mobile") String mobile,@Query("date") String data);

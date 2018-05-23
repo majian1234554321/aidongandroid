@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.home.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 课程表门店
@@ -76,7 +79,10 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
     @Override
     public void fetchData() {
 //        DialogUtils.showDialog(getActivity(),"",false);
-        coursePresent.pullRefreshCourseList(store, course, time, date,idValue);
+
+
+
+        coursePresent.pullRefreshCourseList(store, course, time, date,map);
     }
 
     private void initRefreshLayout(View view) {
@@ -103,7 +109,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        coursePresent.pullRefreshCourseList(store, course, time, date,idValue);
+        coursePresent.pullRefreshCourseList(store, course, time, date,map);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -111,7 +117,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                coursePresent.loadMoreCourseList(store, course, time, date, currPage + "",idValue);
+                coursePresent.loadMoreCourseList(store, course, time, date, currPage + "",map);
             }
         }
 
@@ -205,11 +211,11 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         super.onDestroy();
         DialogUtils.releaseDialog();
     }
-public String idValue;
+public Map map;
 
-    public void resetCourseTime(String timeValue,String idValue) {
+    public void resetCourseTime(String timeValue,Map map) {
         this.time = timeValue;
-        this.idValue = idValue;
+        this.map = map;
     }
 
     @Override

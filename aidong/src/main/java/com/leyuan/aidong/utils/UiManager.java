@@ -67,4 +67,12 @@ public class UiManager {
         from.startActivity(intent);
 
     }
+
+    public static void activityJump(Context from, Class<?> to, String key,String value) {
+        Intent intent = new Intent();
+        intent.setClass(from, to).putExtra(key,value);
+
+        from.startActivity(intent);
+
+    }
 }

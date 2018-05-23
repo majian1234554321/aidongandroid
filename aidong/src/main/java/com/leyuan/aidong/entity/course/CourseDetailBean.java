@@ -51,6 +51,8 @@ public class CourseDetailBean {
     }
 
 
+    public String professionalism;
+
     public String getId() {
         return id;
     }

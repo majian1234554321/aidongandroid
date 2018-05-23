@@ -287,6 +287,7 @@
     <string name="my_branch">我的品牌</string>
     <string name="other_branch">其他品牌</string>
     <string name="course_intro">课程简介</string>
+    <string name="course_intro2">视频简介</string>
     <string name="place">地点</string>
     <string name="time">时间</string>
     <string name="price">价格</string>

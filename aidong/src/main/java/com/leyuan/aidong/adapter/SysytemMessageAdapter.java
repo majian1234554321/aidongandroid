@@ -1,6 +1,7 @@
 package com.leyuan.aidong.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,14 +34,15 @@ public class SysytemMessageAdapter extends RecyclerView.Adapter<SysytemMessageAd
     }
 
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_sysytem_message, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         EMMessage message = messageList.get(position);
         String content = ((EMTextMessageBody) (message.getBody())).getMessage();
         final SystemMessageInfo info = gson.fromJson(content, SystemMessageInfo.class);

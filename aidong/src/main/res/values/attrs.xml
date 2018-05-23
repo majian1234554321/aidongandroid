@@ -396,4 +396,13 @@
         <attr name="rsb_lineRadius" format="dimension"/>
     </declare-styleable>
 
+
+
+
+        <declare-styleable name="FlowLayoutgroup">
+            <attr name="lineSpacing" format="dimension" />
+            <attr name="maxLine" format="integer" />
+        </declare-styleable>
+
+
 </resources>

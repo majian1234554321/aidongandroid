@@ -399,6 +399,8 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                     rl_Member.setVisibility(View.VISIBLE);
                     rl_UnMember.setVisibility(View.GONE);
 
+                            tvState.setText("立即预约");
+                    tvState.setTextColor(getResources().getColor(R.color.main_red));
                     tv_price.setText("会员: " + String.format(getString(R.string.rmb_price_double), course.getMember_price()));
                     tv_price2.setText(String.format(getString(R.string.rmb_price_double), course.getPrice()));
                     tv_price2.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
@@ -492,10 +494,10 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
         if (DateUtils.compareLongTime(course.getReserve_time()) > 0) {
 
-            tvState.setText("预约开始时间:" + course.getReserve_time());
-            tvState.setTextColor(getResources().getColor(R.color.white));
-            llApply.setBackgroundColor(getResources().getColor(R.color.black));
-            llApply.setClickable(false);
+//            tvState.setText("预约开始时间:" + course.getReserve_time());
+//            tvState.setTextColor(getResources().getColor(R.color.white));
+//            llApply.setBackgroundColor(getResources().getColor(R.color.black));
+//            llApply.setClickable(false);
 
             Logger.i(TAG, "DateUtils.compareLongTime(course.getReserve_time()) = " + DateUtils.compareLongTime(course.getReserve_time()));
             handler.postDelayed(new Runnable() {
@@ -508,13 +510,13 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
 
 
-        if (course.getReservable() == 0) {
-
-            tvState.setText(R.string.do_not_nedd_appointment);
-            tvState.setTextColor(getResources().getColor(R.color.white));
-            llApply.setBackgroundColor(getResources().getColor(R.color.list_line_color));
-            llApply.setClickable(false);
-        }
+//        if (course.getReservable() == 0) {
+//
+//            tvState.setText(R.string.do_not_nedd_appointment);
+//            tvState.setTextColor(getResources().getColor(R.color.white));
+//            llApply.setBackgroundColor(getResources().getColor(R.color.list_line_color));
+//            llApply.setClickable(false);
+//        }
 
 
     }

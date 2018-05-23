@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.course.CourseAppointListResult;
@@ -14,6 +15,8 @@ import com.leyuan.aidong.http.RetrofitCourseHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CourseServiceNew;
 import com.leyuan.aidong.ui.App;
+
+import java.util.Map;
 
 import retrofit2.http.Path;
 import rx.Subscriber;
@@ -40,11 +43,20 @@ public class CourseModelNewImpl {
     }
 
     public void getCourseList(Subscriber<CourseDataNew> subscriber, String store, String course, String time,
-                              String date, String page,String idVlaue) {
+                              String date, String page,Map map) {
         String mobile = App.getInstance().isLogin()?App.getInstance().getUser().getMobile():"";
-        courseService.getCourseList(store, course, time, date, page,mobile,idVlaue)
-                .compose(RxHelper.<CourseDataNew>transform())
-                .subscribe(subscriber);
+        if (map!=null&& map.keySet()!=null){
+            courseService.getCourseList(store, course, time, date, page,mobile,map)
+                    .compose(RxHelper.<CourseDataNew>transform())
+                    .subscribe(subscriber);
+        }else {
+            courseService.getCourseList2(store, course, time, date, page,mobile)
+                    .compose(RxHelper.<CourseDataNew>transform())
+                    .subscribe(subscriber);
+        }
+
+
+
     }
 
 

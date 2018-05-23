@@ -34,6 +34,7 @@
                 android:id="@+id/txt_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="【赛事】"
                 android:textColor="@color/main_red"
                 android:textSize="14sp"

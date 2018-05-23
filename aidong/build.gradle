@@ -11,8 +11,6 @@ configurations {
     all*.exclude group: 'com.android.support', module: 'support-v13'
 }
 android {
-
-
     signingConfigs {
         release {
             keyAlias 'aidong'
@@ -21,18 +19,17 @@ android {
             storePassword 'aidong'
         }
     }
-    compileSdkVersion "android-P"
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.example.aidong"
-
         minSdkVersion 16
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode        //old 25 5.0.1
+        //old 25 5.0.1
         versionName rootProject.ext.versionName
         multiDexEnabled true
+        signingConfig signingConfigs.release
     }
-
 //    productFlavors {
 //        dev {
 //            minSdkVersion 21
@@ -41,19 +38,16 @@ android {
 //            minSdkVersion 16
 //        }
 //    }
-
     sourceSets {
         main {
             java.srcDirs = ['src/main/java']
         }
     }
-
-
     dexOptions {
+        incremental true
         javaMaxHeapSize "4g" //specify the heap size for the dex process
         preDexLibraries = false //delete the already predexed libraries
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -67,10 +61,11 @@ android {
             signingConfig signingConfigs.release
         }
     }
-
     lintOptions {
         abortOnError false
         disable 'MissingTranslation'
+    }
+    productFlavors {
     }
 }
 
@@ -120,7 +115,7 @@ dependencies {
     implementation 'org.aspectj:aspectjrt:1.8.9'
     // implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.writingminds:FFmpegAndroid:0.3.2'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     compile 'com.github.florent37:arclayout:1.0.3'
     implementation project(':custompullrefresh')
     implementation project(':easeui')

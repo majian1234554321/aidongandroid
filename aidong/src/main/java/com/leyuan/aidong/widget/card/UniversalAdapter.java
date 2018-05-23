@@ -52,9 +52,9 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
 
 
         Glide.with(context)
-                .load(courseBean.video_cover)
-                .thumbnail(0.2f)
+                .load(courseBean.getCover())
 
+                .centerCrop()
                 .placeholder(new ColorDrawable(0xffc6c6c6))
                 .bitmapTransform(new RoundedCornersTransformation(context, 8, 0,
                         RoundedCornersTransformation.CornerType.TOP))
@@ -76,7 +76,7 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
             values = "初级难度";
         }
 
-        holder.tv_3.setText(values);
+        holder.tv_3.setText(courseBean.professionalism);
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

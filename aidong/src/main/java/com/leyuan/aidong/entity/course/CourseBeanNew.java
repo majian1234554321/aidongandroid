@@ -24,7 +24,7 @@ public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
     public static final int FULL = 6;
     public static final int END = 7;
 
-
+public String professionalism;
     public boolean modifyTag = false;
     String id;// 课程编号
     String name;// 课程名

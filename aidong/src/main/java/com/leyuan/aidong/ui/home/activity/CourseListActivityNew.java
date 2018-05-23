@@ -42,6 +42,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 小团体课列表
@@ -345,7 +346,7 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         }
 
         @Override
-        public void onTimeItemClick(String timeValue,String idValue) {
+        public void onTimeItemClick(String timeValue,Map idValue) {
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
                 ((CourseListFragmentNew) page).resetCourseTime(timeValue,idValue);

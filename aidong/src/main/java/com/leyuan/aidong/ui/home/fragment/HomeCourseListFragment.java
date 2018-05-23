@@ -39,6 +39,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by user on 2018/1/4.
@@ -231,7 +232,7 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
         }
 
         @Override
-        public void onTimeItemClick(String timeValue,String idValue) {
+        public void onTimeItemClick(String timeValue,Map idValue) {
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
                 ((HomeCourseListChildFragment) page).resetCourseTime(timeValue,idValue);

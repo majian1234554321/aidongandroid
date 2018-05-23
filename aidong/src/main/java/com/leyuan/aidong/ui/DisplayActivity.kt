@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import com.leyuan.aidong.R
 import com.leyuan.aidong.ui.activities.fragment.DetailsActivityH5Fragment
+import com.leyuan.aidong.ui.activities.fragment.InvitationFragment
 
 class DisplayActivity : BaseActivity() {
 
@@ -28,6 +29,12 @@ class DisplayActivity : BaseActivity() {
                 fragmentTransaction.replace(R.id.fragment, DetailsActivityH5Fragment.newInstance(url)
                 )
             }
+
+            "InvitationFragment" ->{
+                val url = intent.getStringExtra("url")
+                fragmentTransaction.replace(R.id.fragment, InvitationFragment.newInstance(url))
+            }
+
             else -> {
             }
         }

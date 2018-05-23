@@ -43,15 +43,11 @@ class HomeRecommendCourseAdapter2(val context: Activity, var course: ArrayList<C
 
             tv_type.text = course[position].tagString
 
-            mb_level.text = when {
-                course[position].strength >= 5 -> "高难度"
-                course[position].strength <= 5 &&course[position].strength <= 3 -> "中级进阶"
-                else -> "低难度"
-            }
+            mb_level.text =course[position].professionalism
 
 
 
-        GlideLoader.getInstance().displayImage(course[position].video_cover, iv)
+        GlideLoader.getInstance().displayImage(course[position].cover, iv)
 
 
 

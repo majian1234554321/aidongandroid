@@ -20,6 +20,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -89,7 +90,7 @@ public class VenuesCourseFragment extends BaseFragment implements CourseDateAdap
     @Override
     public void onItemClick(int position) {
 //        venuesPresent.getCourses(switcherLayout, id, days.get(position));
-        coursePresent.pullRefreshCourseList(store, course, time, days.get(position),"");
+        coursePresent.pullRefreshCourseList(store, course, time, days.get(position),new HashMap());
     }
 
 //    @Override

@@ -2,15 +2,20 @@ package com.leyuan.aidong.ui.course;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +42,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.widget.FlowLayoutgroup;
 import com.leyuan.aidong.widget.richtext.RichWebView;
 
 import java.util.ArrayList;
@@ -84,6 +90,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
     FollowPresentImpl followPresent;
     private String relativeVideoTitle;
     private ImageView iv_share,iv_fansssss;
+    private FlowLayoutgroup flowLayout;
 
     public CourseCircleHeaderView(Context context) {
         this(context, null, 0);
@@ -122,6 +129,8 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         iv_share.setOnClickListener(this);
 
 
+        flowLayout = (FlowLayoutgroup) findViewById(R.id.flowlayout);
+
         txtCourseIntro = (RichWebView) view.findViewById(txt_course_intro);
         txtSuggestFrequency = (TextView) view.findViewById(R.id.txt_suggest_frequency);
         txt_use_equipment = (TextView) view.findViewById(R.id.txt_use_equipment);
@@ -140,6 +149,15 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         followPresent = new FollowPresentImpl(context);
         followPresent.setFollowListener(this);
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -217,15 +235,40 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         String values = "";
 
-        if (course.getStrength() >= 5) {
-            values = "高难度";
-        } else if (course.getStrength() < 5 && course.getStrength() >= 3) {
-            values = "中级进阶";
-        } else {
-            values = "初级难度";
+//        if (course.getStrength() >= 5) {
+//            values = "高难度";
+//        } else if (course.getStrength() < 5 && course.getStrength() >= 3) {
+//            values = "中级进阶";
+//        } else {
+//            values = "初级难度";
+//        }
+        int ranHeight = dip2px(context, 30);
+        ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ranHeight);
+        lp.setMargins(dip2px(context, 10), 0, dip2px(context, 10), 0);
+
+        for (int i = 0; i < course.getTags().size(); i++) {
+
+
+            TextView tv = new TextView(context);
+            tv.setPadding(dip2px(context, 15), 0, dip2px(context, 15), 0);
+            tv.setTextColor(ContextCompat.getColor(context,R.color.main_red));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+
+            tv.setText(course.getTags().get(i));
+            tv.setGravity(Gravity.CENTER_VERTICAL);
+            tv.setLines(1);
+           tv.setBackgroundResource(R.drawable.shape_stroke_red_button);
+            flowLayout.addView(tv, lp);
         }
 
-        tv_subjecttitle.setText(values);
+
+
+
+
+
+
+
+        tv_subjecttitle.setText("#"+course.getCategory()+"#-"+course.professionalism);
 
 
 //        txtCourseName.setText(course.getName());
@@ -332,4 +375,14 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
 
     public OnLoadListener onLoadListener;
+
+
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
 }

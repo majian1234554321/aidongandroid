@@ -222,7 +222,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             if (Constant.COURSE.equals(dynamic.type)) {
                 //类型是课程
                 txtTime.setVisibility(View.GONE);
-                layout_difficulty_star.setVisibility(View.VISIBLE);
+                layout_difficulty_star.setVisibility(View.GONE);
                 txtDesc.setText(dynamic.related.getTagString());
                 for (int i = 0; i < 5; i++) {
                     if (i < dynamic.related.strength) {

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -82,6 +83,21 @@
         android:textColor="@color/c3"
         android:textSize="12sp"
         tools:text="钢管舞属于动作与机器相结合多少点卡了咯松井大辅卡拉，啊迪斯科解放和点卡收费就" />
+
+
+    <com.leyuan.aidong.widget.FlowLayoutgroup
+        android:id="@+id/flowlayout"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="-10dp"
+        android:paddingRight="-10dp"
+        app:lineSpacing="10dp"
+        app:maxLine="3"
+       />
+
+
+
 
     <TextView
         android:id="@+id/txt_suggest_frequency"

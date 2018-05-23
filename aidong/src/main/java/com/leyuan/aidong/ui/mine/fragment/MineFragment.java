@@ -26,6 +26,7 @@ import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.receivers.ChatMessageReceiver;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.DisplayActivity;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
@@ -54,6 +55,7 @@ import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
 
+import java.security.Key;
 import java.util.Random;
 
 
@@ -74,7 +76,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     private TextView txtClassTotalTime;
     private TextView txtExpendCal;
 
-    private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address,
+    private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address, item_my_yaoqing,
             item_recommend_friend, item_after_sale, item_setting, item_my_member_card, item_my_orders;
     private UserCoach user;
     private ChatMessageReceiver chatMessageReceiver;
@@ -88,7 +90,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         }
     };
     private SportPresentImpl sportPresent;
-   // private SwipeRefreshLayout swipe;
+    // private SwipeRefreshLayout swipe;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,7 +122,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void initView() {
-       // swipeRefreshView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
+        // swipeRefreshView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 
 
         layout_no_login = (LinearLayout) rootView.findViewById(R.id.layout_no_login);
@@ -141,10 +143,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         txtGoCourseNum = (TextView) rootView.findViewById(R.id.txt_go_course_num);
         txtClassTotalTime = (TextView) rootView.findViewById(R.id.txt_class_total_time);
         txtExpendCal = (TextView) rootView.findViewById(R.id.txt_expend_cal);
-        ImageView  iv = (ImageView) rootView.findViewById(R.id.iv);
+        ImageView iv = (ImageView) rootView.findViewById(R.id.iv);
 
         iv.setOnClickListener(this);
-
 
 
 //        relativeLayout_yuyue = (LinearLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
@@ -173,6 +174,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         item_recommend_friend = (AidongMineItem) rootView.findViewById(R.id.item_recommend_friend);
         item_after_sale = (AidongMineItem) rootView.findViewById(R.id.item_after_sale);
         item_setting = (AidongMineItem) rootView.findViewById(R.id.item_setting);
+
+
+        item_my_yaoqing = (AidongMineItem) rootView.findViewById(R.id.item_my_yaoqing);
+
+
     }
 
     private void setViewEvent() {
@@ -204,8 +210,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 //        });
 
 
-
-
     }
 
     private void initData() {
@@ -230,7 +234,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             user = App.getInstance().getUser();
             textView_name.setText(user.getName());
             presenter.getMineInfo();
-            sportPresent.getSportRecordNoProgress( "",  "");
+            sportPresent.getSportRecordNoProgress("", "");
 
             GlideLoader.getInstance().displayCircleImage(user.getAvatar(), imageView_head);
         } else {
@@ -250,6 +254,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.item_my_yaoqing:
+                UiManager.activityJump(getActivity(), DisplayActivity.class, "TYPE","InvitationFragment");
+
+                break;
 
             case R.id.iv:
                 UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
