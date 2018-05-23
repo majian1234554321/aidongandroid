@@ -433,7 +433,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
             case R.id.tv_true003:
 
-                if (!TextUtils.isEmpty(idValue)) {
+                if (!TextUtils.isEmpty(idValue)||!startTime.equals("0")||!endTime.equals("24")) {
                     ivTimeArrow.setBackgroundResource(R.drawable.icon_filte);
                     tvTimeFrame.setTextColor(ContextCompat.getColor(context,R.color.main_red));
                 } else {
@@ -461,7 +461,6 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
                 for (int i1 = 0; i1 < gridview.getChildCount(); i1++) {
                     TextView tv = gridview.getChildAt(i1).findViewById(R.id.rb000);
-
                     tv.setTextColor(ContextCompat.getColor(context, R.color.gray));
                     tv.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
 

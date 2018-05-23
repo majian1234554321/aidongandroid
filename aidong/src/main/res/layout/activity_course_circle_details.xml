@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <include layout="@layout/inc_bottom_share_image_appoint" android:id="@+id/include"/>
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
+        android:layout_above="@+id/include"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
@@ -16,14 +20,15 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
-            android:layout_height="391dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:fitsSystemWindows="true"
                 app:collapsedTitleGravity="center"
@@ -41,10 +46,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fitsSystemWindows="true"
-                    app:layout_collapseMode="parallax"
-                    app:layout_collapseParallaxMultiplier="0.7">
+                   >
 
                     <com.github.florent37.arclayout.ArcLayout
+                        android:id="@+id/arc"
                         android:layout_width="match_parent"
                         android:layout_height="360dp"
                         android:elevation="5dp"
@@ -68,6 +73,61 @@
                             android:src="@drawable/play_small" />
 
                     </com.github.florent37.arclayout.ArcLayout>
+
+                    <RelativeLayout
+android:visibility="gone"
+                        android:layout_below="@id/arc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tv_subjecttitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:textColor="@color/black"
+                            android:text="@string/course_intro"
+                            android:textSize="12sp" />
+
+
+                        <RelativeLayout
+                            android:layout_below="@+id/tv_subjecttitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:id="@+id/iv_share"
+                                android:layout_width="20dp"
+                                android:layout_centerVertical="true"
+                                android:layout_height="20dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:src="@drawable/share"
+                                android:text="299" />
+
+                            <TextView
+                                android:id="@+id/tv_fans"
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@+id/iv_share"
+                                android:drawablePadding="8dp"
+                                tools:text="299" />
+
+                            <ImageView
+                                android:id="@+id/iv_fansssss"
+                                android:layout_toLeftOf="@+id/tv_fans"
+                                android:layout_marginRight="8dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp" />
+
+
+                        </RelativeLayout>
+                    </RelativeLayout>
 
 
                 </RelativeLayout>
@@ -113,6 +173,8 @@
             </android.support.design.widget.CollapsingToolbarLayout>
 
 
+
+
         </android.support.design.widget.AppBarLayout>
 
 
@@ -133,7 +195,7 @@
                     android:id="@+id/rv_dynamic_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="50dp" />
+                    />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -163,11 +225,11 @@
             </RelativeLayout>
 
 
-            <include layout="@layout/inc_bottom_share_image_appoint" />
+
         </RelativeLayout>
 
 
     </android.support.design.widget.CoordinatorLayout>
 
 
-</FrameLayout>
+</RelativeLayout>

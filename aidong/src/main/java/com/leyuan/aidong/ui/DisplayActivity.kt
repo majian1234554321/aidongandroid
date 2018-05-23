@@ -16,23 +16,19 @@ class DisplayActivity : BaseActivity() {
         val type = intent.getStringExtra("TYPE")
 
 
-
-
         val fragmentTransaction = supportFragmentManager.beginTransaction()
+
 
 
 
         when (type) {
             "DetailsActivityH5Fragment" -> {
-//123
                 val url = intent.getStringExtra("url")
-                fragmentTransaction.replace(R.id.fragment, DetailsActivityH5Fragment.newInstance(url)
-                )
+                fragmentTransaction.replace(R.id.fragment, DetailsActivityH5Fragment.newInstance(url))
             }
 
-            "InvitationFragment" ->{
-                val url = intent.getStringExtra("url")
-                fragmentTransaction.replace(R.id.fragment, InvitationFragment.newInstance(url))
+            "InvitationFragment" -> {
+                fragmentTransaction.replace(R.id.fragment, InvitationFragment.newInstance())
             }
 
             else -> {

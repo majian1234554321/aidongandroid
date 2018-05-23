@@ -46,12 +46,11 @@ android:scaleType="centerCrop"
            android:layout_width="match_parent"
            android:layout_height="wrap_content" />
 
-       <android.support.design.button.MaterialButton
+       <TextView
            android:textColor="@color/main_red"
-           app:backgroundTint="@color/transpance"
+
            android:layout_marginBottom="16dp"
-           app:strokeColor="@color/main_red"
-           app:strokeWidth="1dp"
+           android:background="@drawable/shape_stroke_red_button2"
            android:id="@+id/tv_3"
            android:layout_below="@+id/tv_2"
            tools:text="哈哈"

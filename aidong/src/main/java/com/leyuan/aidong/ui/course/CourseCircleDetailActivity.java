@@ -232,6 +232,8 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
 //        int top = recyclerView.getChildAt(0).getTop();
 //        recyclerView.scrollBy(0,top);
+
+
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {

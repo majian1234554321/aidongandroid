@@ -50,7 +50,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         GoodsSkuAdapter.SelectSkuListener, GoodsSkuPopupWindowView {
     private String selectedSkuCover;
     private TextView txt_limit_number;
-    private int limit;
+    private int limit = 9999;
 
     public enum GoodsStatus {
         SellOut,            //售罄状态
@@ -225,6 +225,9 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 detailBean.spec.item, selectedSkuValues);
         skuRecyclerView.setAdapter(goodsSkuAdapter);
 
+
+
+
         if (status == GoodsStatus.SellOut) {
             tvSellOut.setVisibility(View.VISIBLE);
             tvConfirm.setVisibility(View.GONE);
@@ -277,6 +280,19 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             } else
                 txt_limit_number.setText("(限购" + limit + "张)");
         }
+
+
+        if (localSkuBeanList!=null&&localSkuBeanList.size()==1&&localSkuBeanList.get(0).getSkuValues().size()==1){
+            selectedSkuValues.clear();
+            localSkuBeanList.get(0).getSkuValues().get(0).setSelected(true);
+            selectedSkuValues.add(localSkuBeanList.get(0).getSkuValues().get(0).getValue());
+            skuRecyclerView.setVisibility(View.GONE);
+        }else {
+            skuRecyclerView.setVisibility(View.VISIBLE);
+        }
+
+
+
     }
 
     private void setListener() {
@@ -479,6 +495,13 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 stock = line.getStock();
                 limit = line.getLimit_amount();
                 if (line.limit_amount > 0) {
+
+
+                    if (Integer.parseInt(tvCount.getText().toString().trim())>limit) {
+                        tvCount.setText(String.valueOf(limit));
+                        ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
+                    }
+
                     txt_limit_number.setText("(限购" + limit + "张)");
                 } else {
                     txt_limit_number.setText("");

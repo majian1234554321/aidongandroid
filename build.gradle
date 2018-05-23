@@ -24,7 +24,9 @@ buildscript {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath "io.realm:realm-gradle-plugin:2.2.1"
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-       // classpath "com.tencent.bugly:tinker-support:1.1.1"
+
+
+        // classpath "com.tencent.bugly:tinker-support:1.1.1"
     }
 }
 
@@ -48,8 +50,7 @@ ext {
 
   //  design = 'com.android.support:design:27.1.1'
 
-    design =  'com.android.support:design:28.0.0-alpha1'
-
+    design =  'com.android.support:design:27.1.1'
     appcompatv7 = 'com.android.support:appcompat-v7:27.1.1'
     recyclerviewv7 = 'com.android.support:recyclerview-v7:27.1.1'
     cardview7 = 'com.android.support:cardview-v7:27.1.1'

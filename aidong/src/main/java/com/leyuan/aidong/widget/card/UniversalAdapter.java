@@ -3,7 +3,7 @@ package com.leyuan.aidong.widget.card;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,7 +107,7 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
     public class UniversalViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_2,tv_1;
         public ImageView recy_item_im;
-        public MaterialButton tv_3;
+        public TextView tv_3;
         public UniversalViewHolder(View itemView) {
             super(itemView);
             recy_item_im=itemView.findViewById(R.id.recy_item_im);

@@ -177,6 +177,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
 
         item_my_yaoqing = (AidongMineItem) rootView.findViewById(R.id.item_my_yaoqing);
+        item_my_yaoqing.setOnClickListener(this);
 
 
     }
@@ -256,8 +257,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         switch (v.getId()) {
 
             case R.id.item_my_yaoqing:
-                UiManager.activityJump(getActivity(), DisplayActivity.class, "TYPE","InvitationFragment");
-
+                if (App.getInstance().isLogin()) {
+                    UiManager.activityJump(getActivity(), DisplayActivity.class, "TYPE","InvitationFragment");
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
                 break;
 
             case R.id.iv:

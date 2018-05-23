@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.button.MaterialButton;
+
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.SpannableString;
@@ -80,7 +80,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     private ImageView ivShare;
     private LinearLayout llApply;
 
-    private MaterialButton tvState;
+    private TextView tvState;
     private LinearLayout layout_course_location;
 
     private RichWebView webView;

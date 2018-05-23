@@ -47,7 +47,7 @@
             android:textStyle="bold"
             tools:text="MMMMMMMMM" />
 
-        <android.support.design.button.MaterialButton
+        <TextView
             android:layout_below="@+id/tv_type"
             android:layout_centerHorizontal="true"
             tools:text="12121211212"
@@ -57,10 +57,7 @@
             android:paddingLeft="12dp"
             android:layout_gravity="center"
             android:paddingRight="12dp"
-            app:backgroundTint="@color/transpance"
-            app:strokeColor="@color/white"
-            app:strokeWidth="1dp"
-            app:cornerRadius="5dp"
+            android:background="@drawable/shape_stroke_white_button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

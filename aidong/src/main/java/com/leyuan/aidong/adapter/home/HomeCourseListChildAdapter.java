@@ -2,7 +2,7 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.support.design.button.MaterialButton;
+
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -97,7 +97,11 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         switch (courseBean.getStatus()) {
 
             case CourseBeanNew.NORMAL:
-                holder.mb_level.setVisibility(View.GONE);
+                holder.mb_level.setVisibility(View.VISIBLE);
+                holder.mb_level.setText("预约");
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
+
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
 
@@ -105,7 +109,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("已预约");
-                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.c9)));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_gray_button);
                 holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
                 holder.imgCourseState.setVisibility(View.GONE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_appointed);
@@ -122,7 +126,10 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("排队中");
-                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.course_oringe)));
+
+
+
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
                 holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
                 break;
 
@@ -132,19 +139,19 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("预约");
-                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.course_oringe)));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
                 holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
                 break;
 
             case CourseBeanNew.QUEUEABLE:
                 holder.imgCourseState.setVisibility(View.GONE);
-                holder.imgCourseState.setImageResource(R.drawable.icon_course_queue);
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_full);
 
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("排队");
                 holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
-                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.course_oringe)));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
                 break;
 
             case CourseBeanNew.FULL:
@@ -155,7 +162,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("已满员");
                 holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
-                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.c9)));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_gray_button);
                 break;
 
             case CourseBeanNew.END:
@@ -165,7 +172,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("已结束");
-                holder.mb_level.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.c9)));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_gray_button);
                 holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
                 break;
 
@@ -182,8 +189,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
         if (courseBean.isMember_only()) {
             //只有会员可以
-            holder.txtCourseOriginPrice.setText("");
-            holder.txtCourseMemberPrice.setText("会员专享");
+            //holder.txtCourseOriginPrice.setText("");
+           // holder.txtCourseMemberPrice.setText("会员专享");
         }
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +225,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         private TextView txtCourseMemberPrice, tv_level;
         private LinearLayout rootView, layout_type;
 
-        public MaterialButton mb_level;
+        public TextView mb_level;
 
         public CourseViewHolder(View view) {
             super(view);
