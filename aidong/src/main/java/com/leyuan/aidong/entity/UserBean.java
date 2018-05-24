@@ -31,6 +31,7 @@ public class UserBean implements Parcelable, Serializable,  Comparable<UserBean>
     public String type;
     public int followers_count;
 
+    public String professionalism;
     public String simple_intro;
     public String image;
 
@@ -92,7 +93,7 @@ public class UserBean implements Parcelable, Serializable,  Comparable<UserBean>
         if (tagString.length() == 0 && tags != null) {
             for (int i = 0; i < tags.size(); i++) {
                 if (i < tags.size() - 1) {
-                    tagString.append(tags.get(i)).append(" | ");
+                    tagString.append(tags.get(i)).append("  ");
                 } else {
                     tagString.append(tags.get(i));
                 }

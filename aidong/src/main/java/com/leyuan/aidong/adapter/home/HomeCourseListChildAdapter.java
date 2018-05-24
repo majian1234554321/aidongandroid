@@ -3,8 +3,18 @@ package com.leyuan.aidong.adapter.home;
 import android.content.Context;
 import android.content.res.ColorStateList;
 
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TypefaceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +26,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.home.activity.CourseDetailNewActivity;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.widget.CustomTypefaceSpan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,11 +98,60 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
         for (int i = 0; i < 5; i++) {
             if (i < courseBean.getStrength()) {
-                holder.starList.get(i).setVisibility(View.VISIBLE);
+
             } else {
-                holder.starList.get(i).setVisibility(View.GONE);
+
             }
         }
+
+
+        String fontPath = "fonts/Hiragino_Sans_GB_W3.ttf";
+
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), fontPath);
+
+        holder.txtCourseTime.setTypeface(tf);
+        holder.txtCourseOriginPrice.setTypeface(tf);
+
+
+
+//        String values = "01234中国";
+//
+//        SpannableStringBuilder style=new SpannableStringBuilder(values);
+//
+//        for (int i = 0; i < values.length(); i++) {
+//
+//            if ()else{
+//
+//            }
+//
+//
+//        }
+//
+//        style.setSpan(new CustomTypefaceSpan(values,tf), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//
+//
+//
+//        holder.txtCourseName.setText(style);
+
+
+        holder.txtCourseName.setTypeface(tf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         switch (courseBean.getStatus()) {
@@ -121,8 +181,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 break;
 
             case CourseBeanNew.QUEUED:
-                holder.imgCourseState.setVisibility(View.GONE);
-                holder.imgCourseState.setImageResource(R.drawable.icon_course_queueing_tag);
+                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_full);
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("排队中");
@@ -144,7 +204,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 break;
 
             case CourseBeanNew.QUEUEABLE:
-                holder.imgCourseState.setVisibility(View.GONE);
+                holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_full);
 
 
@@ -218,7 +278,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         private TextView txtCourseTime;
         private TextView txtCourseDesc;
         private TextView txtCourseDifficulty;
-        private ArrayList<ImageView> starList = new ArrayList<>();
+
         private ImageView imgCourseState;
         // ,img_star_first,img_star_second,img_star_three,img_star_four,img_star_five;
         private TextView txtCourseOriginPrice;
@@ -243,16 +303,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             tv_level = (TextView) view.findViewById(R.id.tv_level);
 
 
-            starList.add((ImageView) view.findViewById(R.id.img_star_first));
-            starList.add((ImageView) view.findViewById(R.id.img_star_second));
-            starList.add((ImageView) view.findViewById(R.id.img_star_three));
-            starList.add((ImageView) view.findViewById(R.id.img_star_four));
-            starList.add((ImageView) view.findViewById(R.id.img_star_five));
-//            img_star_first = (ImageView) view.findViewById(R.id.img_star_first);
-//            img_star_second = (ImageView) view.findViewById(R.id.img_star_second);
-//            img_star_three = (ImageView) view.findViewById(R.id.img_star_three);
-//            img_star_four = (ImageView) view.findViewById(R.id.img_star_four);
-//            img_star_five = (ImageView) view.findViewById(R.id.img_star_five);
+
+
 
             rootView = (LinearLayout) view.findViewById(R.id.rootView);
 

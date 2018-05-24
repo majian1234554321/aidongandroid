@@ -85,9 +85,9 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
 
             for (int i = 0; i < 5; i++) {
                 if (i < courseBean.getStrength()) {
-                    holder.starList.get(i).setVisibility(View.VISIBLE);
+
                 } else {
-                    holder.starList.get(i).setVisibility(View.GONE);
+
                 }
             }
 
@@ -174,9 +174,9 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
         private TextView txtCourseTime;
         private TextView txtCourseDesc;
         private TextView txtCourseDifficulty;
-        private ArrayList<ImageView> starList = new ArrayList<>();
+
         private ImageView imgCourseState;
-        // ,img_star_first,img_star_second,img_star_three,img_star_four,img_star_five;
+
         private TextView txtCourseOriginPrice;
         private TextView txtCourseMemberPrice;
         private LinearLayout rootView,layout_type;
@@ -196,16 +196,8 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
 
             relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
 
-            starList.add((ImageView) view.findViewById(R.id.img_star_first));
-            starList.add((ImageView) view.findViewById(R.id.img_star_second));
-            starList.add((ImageView) view.findViewById(R.id.img_star_three));
-            starList.add((ImageView) view.findViewById(R.id.img_star_four));
-            starList.add((ImageView) view.findViewById(R.id.img_star_five));
-//            img_star_first = (ImageView) view.findViewById(R.id.img_star_first);
-//            img_star_second = (ImageView) view.findViewById(R.id.img_star_second);
-//            img_star_three = (ImageView) view.findViewById(R.id.img_star_three);
-//            img_star_four = (ImageView) view.findViewById(R.id.img_star_four);
-//            img_star_five = (ImageView) view.findViewById(R.id.img_star_five);
+
+
 
             rootView = (LinearLayout) view.findViewById(R.id.rootView);
 

@@ -62,8 +62,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
+
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/txt_course_difficulty"
@@ -73,40 +74,6 @@
                 android:textColor="@color/b3"
                 android:textSize="13sp" />
 
-            <ImageView
-                android:id="@+id/img_star_first"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:src="@drawable/icon_star_bar" />
-
-            <ImageView
-                android:id="@+id/img_star_second"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:src="@drawable/icon_star_bar" />
-
-            <ImageView
-                android:id="@+id/img_star_three"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:src="@drawable/icon_star_bar" />
-
-            <ImageView
-                android:id="@+id/img_star_four"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:src="@drawable/icon_star_bar" />
-
-            <ImageView
-                android:id="@+id/img_star_five"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:src="@drawable/icon_star_bar" />
 
         </LinearLayout>
 

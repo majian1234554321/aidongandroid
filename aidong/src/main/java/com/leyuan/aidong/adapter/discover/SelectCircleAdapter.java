@@ -46,13 +46,7 @@ public class SelectCircleAdapter extends RecyclerView.Adapter<SelectCircleAdapte
             holder.layoutStar.setVisibility(View.VISIBLE);
             holder.txtIntro.setTextColor(ContextCompat.getColor(context,R.color.b3));
             holder.txtIntro.setText(bean.getTagString());
-            for (int i = 0; i < 5; i++) {
-                if (i < bean.strength) {
-                    holder.starList.get(i).setVisibility(View.VISIBLE);
-                } else {
-                    holder.starList.get(i).setVisibility(View.GONE);
-                }
-            }
+
         } else {
             holder.layoutStar.setVisibility(View.GONE);
             holder.txtIntro.setTextColor(ContextCompat.getColor(context,R.color.c3));
@@ -93,14 +87,9 @@ public class SelectCircleAdapter extends RecyclerView.Adapter<SelectCircleAdapte
         private TextView txtTitle;
         private TextView txtIntro;
         private LinearLayout layoutStar;
-        private TextView txtCourseDifficulty;
-        private ImageView imgStarFirst;
-        private ImageView imgStarSecond;
-        private ImageView imgStarThree;
-        private ImageView imgStarFour;
-        private ImageView imgStarFive;
 
-        private ArrayList<ImageView> starList = new ArrayList<>();
+
+
 
         public ViewHolder(View view) {
             super(view);
@@ -109,19 +98,10 @@ public class SelectCircleAdapter extends RecyclerView.Adapter<SelectCircleAdapte
             txtTitle = (TextView) view.findViewById(R.id.txt_title);
             txtIntro = (TextView) view.findViewById(R.id.txt_intro);
             layoutStar = (LinearLayout) view.findViewById(R.id.layout_star);
-            txtCourseDifficulty = (TextView) view.findViewById(R.id.txt_course_difficulty);
-            starList.add((ImageView) view.findViewById(R.id.img_star_first));
-            starList.add((ImageView) view.findViewById(R.id.img_star_second));
-            starList.add((ImageView) view.findViewById(R.id.img_star_three));
-            starList.add((ImageView) view.findViewById(R.id.img_star_four));
-            starList.add((ImageView) view.findViewById(R.id.img_star_five));
 
 
-            imgStarFirst = (ImageView) view.findViewById(R.id.img_star_first);
-            imgStarSecond = (ImageView) view.findViewById(R.id.img_star_second);
-            imgStarThree = (ImageView) view.findViewById(R.id.img_star_three);
-            imgStarFour = (ImageView) view.findViewById(R.id.img_star_four);
-            imgStarFive = (ImageView) view.findViewById(R.id.img_star_five);
+
+
         }
 
 

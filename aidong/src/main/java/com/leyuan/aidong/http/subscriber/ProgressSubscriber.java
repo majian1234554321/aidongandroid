@@ -1,5 +1,6 @@
 package com.leyuan.aidong.http.subscriber;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
@@ -85,6 +86,8 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
 //            this.unsubscribe();
 //        }
         dismissProgressDialog();
+        if (context!=null)
+        ((Activity)context).finish();
     }
 
 }

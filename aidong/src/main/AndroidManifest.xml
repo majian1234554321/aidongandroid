@@ -16,9 +16,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
@@ -215,9 +215,7 @@
         <activity
             android:name=".ui.mine.activity.PaymentDetailActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.OrderActivity"
-            android:screenOrientation="portrait" />
+
         <!-- <activity -->
         <!-- android:name=".ui.mine.activity.AppointmentActivity" -->
         <!-- android:screenOrientation="portrait" /> -->
@@ -699,6 +697,8 @@
         <!-- ********************WeiXinPay************************* -->
         <activity
             android:name="com.example.aidong.wxapi.WXPayEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />

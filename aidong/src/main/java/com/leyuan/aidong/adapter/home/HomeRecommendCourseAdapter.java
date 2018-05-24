@@ -97,13 +97,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
 //            }
 
 
-            for (int i = 0; i < 5; i++) {
-                if (i < courseBean.getStrength()) {
-                    holder.starList.get(i).setVisibility(View.VISIBLE);
-                } else {
-                    holder.starList.get(i).setVisibility(View.GONE);
-                }
-            }
+
 
             if (courseBean.isFollowed()) {
                 holder.btAttention.setImageResource(R.drawable.icon_attented);
@@ -160,7 +154,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
         private TextView txtCourseDifficulty;
         private ImageButton btAttention;
 
-        private ArrayList<ImageView> starList = new ArrayList<>();
+
 
         public ViewHolder(View view) {
             super(view);
@@ -173,11 +167,7 @@ public class HomeRecommendCourseAdapter extends RecyclerView.Adapter<HomeRecomme
             btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
 
 
-            starList.add((ImageView) view.findViewById(R.id.img_star_first));
-            starList.add((ImageView) view.findViewById(R.id.img_star_second));
-            starList.add((ImageView) view.findViewById(R.id.img_star_three));
-            starList.add((ImageView) view.findViewById(R.id.img_star_four));
-            starList.add((ImageView) view.findViewById(R.id.img_star_five));
+
         }
     }
 

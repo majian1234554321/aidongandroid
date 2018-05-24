@@ -269,7 +269,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         ivAdd.setBackgroundResource(FormatUtil.parseInt(count) == stock ? R.drawable.icon_add_gray
                 : R.drawable.icon_add);
 
-        if (limit > 0) {
+        if (limit > 0&&limit!=9999) {
             txt_limit_number.setText("(限购" + limit + "张)");
         }
         txt_spec_remark.setText("");

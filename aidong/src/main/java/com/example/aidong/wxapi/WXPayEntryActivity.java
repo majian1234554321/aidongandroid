@@ -4,10 +4,12 @@ package com.example.aidong.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.WeiXinPay;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -23,7 +25,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pay_result);
+
         api = WXAPIFactory.createWXAPI(this, WeiXinPay.appId);
         api.handleIntent(getIntent(), this);
     }
@@ -52,12 +54,15 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                     break;
 
                 default:
-                    if (null != payListener) {
-                        payListener.onFail(code + "", resp);
-                    }
+
+                    finish();
+
+//                    if (null != payListener) {
+//                        payListener.onFail(code + "", resp);
+//                    }
                     break;
             }
-            finish();
+         //   finish();
         }
     }
 

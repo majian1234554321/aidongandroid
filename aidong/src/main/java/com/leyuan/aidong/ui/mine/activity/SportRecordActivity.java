@@ -1,8 +1,10 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.fragment.SportRecordFragment;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -64,6 +67,12 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);
+
+
+
+
+
+        viewPager.setCurrentItem(DateUtils.getMonth()-1);
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -73,6 +82,13 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
                     text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+
+                    if (i == position){
+                        text.setTextColor(ContextCompat.getColor(SportRecordActivity.this, R.color.black));
+                    }else {
+                        text.setTextColor(ContextCompat.getColor(SportRecordActivity.this, R.color.white));
+                    }
+
                 }
             }
         });
@@ -88,8 +104,9 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         String[] campaignTab = getResources().getStringArray(R.array.months);
         text.setText(campaignTab[position]);
-        if (position == 0) {
+        if (position == DateUtils.getMonth()-1) {
             text.setTypeface(Typeface.DEFAULT_BOLD);
+            text.setTextColor(ContextCompat.getColor(SportRecordActivity.this, R.color.black));
         }
         allTabView.add(tabView);
         return tabView;
@@ -123,7 +140,7 @@ public class SportRecordActivity extends BaseActivity implements SmartTabLayout.
                         for (int i = 0; i < 12; i++) {
                             SportRecordFragment page = (SportRecordFragment) adapter.getPage(i);
 
-                            Logger.i("SportRecordFragment"+page);
+                            Logger.i("SportRecordFragment" + page);
                             if (page != null) {
 //                                page.setyear(year);
                                 page.fetchData();

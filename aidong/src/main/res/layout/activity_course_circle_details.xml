@@ -54,7 +54,7 @@
                         android:layout_height="360dp"
                         android:elevation="5dp"
                         app:arc_cropDirection="cropOutside"
-                        app:arc_height="40dp">
+                        app:arc_height="20dp">
 
                         <ImageView
                             android:id="@+id/img_bg"
@@ -67,10 +67,10 @@
 
                         <ImageView
                             android:id="@+id/img_live_begin_or_end"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/play_small" />
+                            android:background="@drawable/play_small" />
 
                     </com.github.florent37.arclayout.ArcLayout>
 

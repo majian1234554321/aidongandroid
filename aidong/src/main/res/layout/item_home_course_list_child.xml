@@ -112,6 +112,7 @@ android:gravity="left|center"
                     android:id="@+id/txt_course_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     tools:text="12"
                     android:textColor="@color/course_oringe"
                     android:textSize="12sp" />
@@ -150,41 +151,7 @@ android:gravity="left|center"
                     android:textColor="@color/text_color_common"
                     android:textSize="13sp" />
 
-                <ImageView
 
-                    android:id="@+id/img_star_first"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:src="@drawable/icon_star_bar" />
-
-                <ImageView
-                    android:id="@+id/img_star_second"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:src="@drawable/icon_star_bar" />
-
-                <ImageView
-                    android:id="@+id/img_star_three"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:src="@drawable/icon_star_bar" />
-
-                <ImageView
-                    android:id="@+id/img_star_four"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:src="@drawable/icon_star_bar" />
-
-                <ImageView
-                    android:id="@+id/img_star_five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:src="@drawable/icon_star_bar" />
 
             </LinearLayout>
 

@@ -340,7 +340,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 if (course != null && course.getStore() != null) {
                     CourseStore store = course.getStore();
                     MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
-                            store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
+                            store.getCoordinate()[1] + "", store.getCoordinate()[0] + "");
                 }
 
 

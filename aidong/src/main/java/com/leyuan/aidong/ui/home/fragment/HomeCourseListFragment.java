@@ -135,14 +135,7 @@ public class HomeCourseListFragment extends BaseFragment implements SmartTabLayo
                     new Bundler().putString("date", days.get(i)).putString("category", allcategory).get()
             ));
 
-//            if (!TextUtils.isEmpty(category)) {
-//                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-//                        new Bundler().putString("date", days.get(i))
-//                                .putString("category", category).get()));
-//            } else {
-//                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-//                        new Bundler().putString("date", days.get(i)).get()));
-//            }
+
         }
         adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
         viewPager.setOffscreenPageLimit(6);

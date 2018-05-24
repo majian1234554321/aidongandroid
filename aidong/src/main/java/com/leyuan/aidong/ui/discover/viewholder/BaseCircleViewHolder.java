@@ -73,7 +73,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private boolean showCommentLayout = true;
     private boolean showFollowButton = false;
     private boolean showCMDMessageLayout = true;
-    private ArrayList<ImageView> starList = new ArrayList<>();
+
 
 
     public BaseCircleViewHolder(Context context, ViewGroup parent, int layoutResId) {
@@ -101,11 +101,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         txtTime = (TextView) itemView.findViewById(R.id.txt_time);
 
         layout_difficulty_star = (LinearLayout) itemView.findViewById(R.id.layout_difficulty_star);
-        starList.add((ImageView) itemView.findViewById(R.id.img_star_first));
-        starList.add((ImageView) itemView.findViewById(R.id.img_star_second));
-        starList.add((ImageView) itemView.findViewById(R.id.img_star_three));
-        starList.add((ImageView) itemView.findViewById(R.id.img_star_four));
-        starList.add((ImageView) itemView.findViewById(R.id.img_star_five));
+
 
         txtLocation = (TextView) itemView.findViewById(R.id.txt_location);
         txtParse = (TextView) itemView.findViewById(R.id.txt_parse);
@@ -226,17 +222,19 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 txtDesc.setText(dynamic.related.getTagString());
                 for (int i = 0; i < 5; i++) {
                     if (i < dynamic.related.strength) {
-                        starList.get(i).setVisibility(View.VISIBLE);
+
                     } else {
-                        starList.get(i).setVisibility(View.GONE);
+
                     }
                 }
 
             } else {
                 txtTime.setVisibility(View.VISIBLE);
                 layout_difficulty_star.setVisibility(View.GONE);
-                if (!TextUtils.isEmpty(dynamic.related.slogan))
+                if (!TextUtils.isEmpty(dynamic.related.slogan)){
                     txtDesc.setText("#" + dynamic.related.slogan + "#");
+                    txtDesc.setVisibility(View.GONE);
+                }
                 txtTime.setText(dynamic.related.start);
             }
 

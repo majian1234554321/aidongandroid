@@ -11,7 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.home.CourseListAdapterNew;
+
+import com.leyuan.aidong.adapter.home.HomeCourseListChildAdapter;
 import com.leyuan.aidong.entity.course.CourseArea;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.course.CourseBrand;
@@ -37,9 +38,7 @@ import java.util.Map;
  * Created by song on 2016/11/1.
  */
 public class CourseListFragmentNew extends BasePageFragment implements  CourseListView,EmptyView {
-    private static final int HIDE_THRESHOLD = 80;
-    private int scrolledDistance = 0;
-    private boolean filterViewVisible = true;
+
 
     private SwitcherLayout switcherLayout;
 
@@ -47,7 +46,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
 
 
     private int currPage = 1;
-    private CourseListAdapterNew courseAdapter;
+    private HomeCourseListChildAdapter courseAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private ArrayList<CourseBeanNew> data = new ArrayList<>();
 
@@ -92,7 +91,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
     private void initRecyclerView(View view) {
 
         data = new ArrayList<>();
-        courseAdapter = new CourseListAdapterNew(getContext());
+        courseAdapter = new HomeCourseListChildAdapter(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(courseAdapter);
 
 
@@ -123,30 +122,13 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
             }
         }
 
-//        @Override
-//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//            super.onScrolled(recyclerView, dx, dy);
-//
-//            if (scrolledDistance > HIDE_THRESHOLD && filterViewVisible) {           //手指向上滑动
-//                ((CourseListActivityNew) getActivity()).animatedHide(); //todo 设置回调无效
-//                filterViewVisible = false;
-//                scrolledDistance = 0;
-//
-//            } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
-//                ((CourseListActivityNew) getActivity()).animatedShow();
-//                scrolledDistance = 0;
-//                filterViewVisible = true;
-//            }
-//            if ((filterViewVisible && dy > 0) || (!filterViewVisible && dy < 0)) {
-//                scrolledDistance += dy;
-//            }
-//        }
+
     };
 
 
 
     public void scrollToTop() {
-        filterViewVisible = true;
+
         recyclerView.scrollToPosition(0);
     }
 

@@ -126,7 +126,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private RangeSeekBar seekbar3;
     public String startTime = "0", endTime = "24";
     private GridView gridview;
-    private String idKey;
+    private String idKey ="" ;
 
     public CourseListFilterNew(Context context) {
         this(context, null);
@@ -426,9 +426,42 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                 break;
 
             case R.id.view_mask_bg:
+
+                if (timeIsShowing){
+
+
+                    if (!TextUtils.isEmpty(idValue)||!startTime.equals("0")||!endTime.equals("24")) {
+                        ivTimeArrow.setBackgroundResource(R.drawable.icon_filte);
+                        tvTimeFrame.setTextColor(ContextCompat.getColor(context,R.color.main_red));
+                    } else {
+                        ivTimeArrow.setBackgroundResource(R.drawable.icon_unfilte);
+                        tvTimeFrame.setTextColor(ContextCompat.getColor(context,R.color.c9));
+                    }
+
+
+                    if (listener != null) {
+                        Map<String,String> map = new ArrayMap<>();
+                        map.put(idKey,idValue);
+                        if (map.isEmpty()){
+                            map.put("a","");
+                        }
+                        listener.onTimeItemClick(startTime + ":00," + endTime + ":00", map);
+                    }
+
+
+
+
+                }
+
+
+
                 if (isPopupShowing()) {
+
+
                     hidePopup();
                 }
+
+
                 break;
 
             case R.id.tv_true003:
@@ -445,6 +478,9 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                 if (listener != null) {
                     Map<String,String> map = new ArrayMap<>();
                     map.put(idKey,idValue);
+                    if (map.isEmpty()){
+                        map.put("a","");
+                    }
                     listener.onTimeItemClick(startTime + ":00," + endTime + ":00", map);
                 }
                 hidePopup();

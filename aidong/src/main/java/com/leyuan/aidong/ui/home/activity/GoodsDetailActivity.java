@@ -142,7 +142,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private boolean isSellOut = true;   //是否售罄
     private boolean hasSku = false;     //该商品是否配置规格
     private List<String> selectedSkuValues = new ArrayList<>();
-    private GoodsDetailPresent goodsPresent;
+    private GoodsDetailPresentImpl goodsPresent;
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override

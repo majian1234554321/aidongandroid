@@ -304,6 +304,9 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
               //  CourseListActivityNew.start(this, courseDetailBean.getCategory(),courseDetailBean.getName());
                 if (!TextUtils.isEmpty(courseDetailBean.getName()))
                 CourseListActivityNew.start(this, "全部分类",courseDetailBean.getName());
+
+
+
                 break;
 
 

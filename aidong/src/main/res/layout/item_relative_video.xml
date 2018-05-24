@@ -29,11 +29,11 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="8dp"
-            android:singleLine="true"
+
             android:textStyle="bold"
             android:text="111111111111"
             android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-
+android:visibility="gone"
             android:layout_marginLeft="15dp"
             android:text="111111111111"
             android:gravity="center"

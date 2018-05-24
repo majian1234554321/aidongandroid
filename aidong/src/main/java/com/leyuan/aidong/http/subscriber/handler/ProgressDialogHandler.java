@@ -1,5 +1,6 @@
 package com.leyuan.aidong.http.subscriber.handler;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -56,6 +57,15 @@ public class ProgressDialogHandler extends Handler {
             pd.dismiss();
             pd = null;
         }
+    }
+
+
+    public void dismissProgressDialog2(){
+        if (pd != null && pd.isShowing()) {
+            pd.dismiss();
+            pd = null;
+        }
+        ((Activity)context).finish();
     }
 
     @Override
