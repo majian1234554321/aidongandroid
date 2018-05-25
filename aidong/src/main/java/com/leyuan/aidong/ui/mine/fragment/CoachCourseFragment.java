@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CourseDateAdapter;
 import com.leyuan.aidong.adapter.home.CourseListAdapterNew;
+import com.leyuan.aidong.adapter.home.HomeCourseListChildAdapter;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.CourseListPresentImpl;
@@ -44,7 +45,7 @@ public class CoachCourseFragment extends BaseFragment implements  CourseListView
 
 
 
-    private CourseListAdapterNew courseAdapter;
+    private HomeCourseListChildAdapter courseAdapter;
 
     private ArrayList<CourseBeanNew> data = new ArrayList<>();
     private String date, store, course, time;
@@ -118,7 +119,7 @@ public class CoachCourseFragment extends BaseFragment implements  CourseListView
 
         FullyLinearLayoutManager full = new FullyLinearLayoutManager(getContext());
         switcherLayout = new SwitcherLayout(getContext(), recyclerView);
-        courseAdapter = new CourseListAdapterNew(getContext());
+        courseAdapter = new HomeCourseListChildAdapter(getContext());
         recyclerView.setLayoutManager(full);
         recyclerView.setAdapter(courseAdapter);
 

@@ -233,7 +233,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 layout_difficulty_star.setVisibility(View.GONE);
                 if (!TextUtils.isEmpty(dynamic.related.slogan)){
                     txtDesc.setText("#" + dynamic.related.slogan + "#");
-                    txtDesc.setVisibility(View.GONE);
+
                 }
                 txtTime.setText(dynamic.related.start);
             }

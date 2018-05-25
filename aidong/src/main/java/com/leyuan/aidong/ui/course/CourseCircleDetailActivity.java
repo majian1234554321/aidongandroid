@@ -92,7 +92,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * Created by user on 2018/1/9.
  */
 
-public class CourseCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, CourseDetailActivityView, View.OnClickListener, CourseVideoView,CourseCircleHeaderView.OnLoadListener {
+public class CourseCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, CourseDetailActivityView, View.OnClickListener, CourseVideoView, CourseCircleHeaderView.OnLoadListener {
     //    private SwitcherLayout switcherLayout;
 //    private CustomRefreshLayout refreshLayout;
     TextView txt_share_image, txt_appoint_immediately;
@@ -109,7 +109,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     private SharePopupWindow sharePopupWindow;
     private ImageButton bt_share;
     CoursePresentImpl coursePresent;
-   public String id = "1",  type = Constant.COURSE;
+    public String id = "1", type = Constant.COURSE;
     private CourseCircleHeaderView headView;
     private CourseDetailBean courseDetailBean;
     private ArrayList<BaseMedia> selectedMedia;
@@ -153,9 +153,11 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
         coursePresent.getRelateCourseVideo(id, null);
     }
+
     private RelativeLayout relTop;
     private ImageView imgBg;
     private ImageView imgLiveBeginOrEnd;
+
     private void initView() {
         txt_share_image = (TextView) findViewById(R.id.txt_share_image);
         bt_share = (ImageButton) findViewById(R.id.bt_share);
@@ -175,7 +177,6 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         collapsingToolbar.setExpandedTitleColor(Color.BLACK);
 
 
-
         findViewById(R.id.iv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,10 +194,6 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 //                onBackPressed();
 //            }
 //        });
-
-
-
-
 
 
     }
@@ -221,7 +218,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 .setDynamicCallback(new DynamicCallback());
         circleDynamicAdapter = builder.build();
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(circleDynamicAdapter);
-         linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
@@ -296,19 +293,22 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 if (courseDetailBean == null) return;
 
                 sharePopupWindow.showAtBottom(courseDetailBean.getName(), courseDetailBean.getIntroduce(),
-                        courseDetailBean.getVideo_cover(), ConstantUrl.URL_SHARE_COURSE_CIRCLE + courseDetailBean.getId() );
+                        courseDetailBean.getVideo_cover(), ConstantUrl.URL_SHARE_COURSE_CIRCLE + courseDetailBean.getId());
 
                 break;
             case R.id.txt_appoint_immediately:
 
-              //  CourseListActivityNew.start(this, courseDetailBean.getCategory(),courseDetailBean.getName());
-                if (!TextUtils.isEmpty(courseDetailBean.getName()))
-                CourseListActivityNew.start(this, "全部分类",courseDetailBean.getName());
+                //  CourseListActivityNew.start(this, courseDetailBean.getCategory(),courseDetailBean.getName());
+                if (!TextUtils.isEmpty(courseDetailBean.getName())) {
 
+                    if (courseDetailBean.getName().contains(" "))
+                        CourseListActivityNew.start(this, "全部分类", courseDetailBean.getName().split(" ")[0]);
+                    else
+                        CourseListActivityNew.start(this, "全部分类", courseDetailBean.getName());
+                }
 
 
                 break;
-
 
 
             case R.id.img_live_begin_or_end:
@@ -352,12 +352,12 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 //        circleDynamicAdapter.notifyDataSetChanged();
         headView.setDynamicEmpty(dynamicList.isEmpty());
 
-        if(recyclerView != null){
+        if (recyclerView != null) {
             int top = recyclerView.getChildAt(0).getTop();
             Logger.i("recyclerView.scrollBy updateRecyclerView ,top = " + top);
 //            recyclerView.scrollBy(0, -10000);
 
-            ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(0,0);
+            ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(0, 0);
         }
 
 
@@ -366,20 +366,19 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
     @Override
     public void setCourseDetail(CourseDetailBean courseDetailBean) {
         this.courseDetailBean = courseDetailBean;
-        headView.setData(courseDetailBean,this);
+        headView.setData(courseDetailBean, this);
         if (courseDetailBean.getVideo_cover() != null) {
             GlideLoader.getInstance().displayImage(courseDetailBean.getVideo_cover(), imgBg);
         }
         collapsingToolbar.setTitle(courseDetailBean.getName());
 
 
-
-        if(recyclerView != null){
+        if (recyclerView != null) {
             int top = recyclerView.getChildAt(0).getTop();
             Logger.i("recyclerView.scrollBy updateRelateVideo ,top = " + top);
 //            recyclerView.scrollBy(0, -10000);
 
-            ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(0,0);
+            ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(0, 0);
         }
     }
 
@@ -389,12 +388,12 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         headView.setRelativeVideoData(title, videos);
 
 
-        if(recyclerView != null && recyclerView.getChildAt(0) != null){
+        if (recyclerView != null && recyclerView.getChildAt(0) != null) {
             int top = recyclerView.getChildAt(0).getTop();
             Logger.i("recyclerView.scrollBy updateRelateVideo ,top = " + top);
 //            recyclerView.scrollBy(0, -10000);
 
-            ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(0,0);
+            ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(0, 0);
         }
 
     }
@@ -521,7 +520,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
 
     @Override
     public void load() {
-       // coursePresent.getCourseDetail(id);
+        // coursePresent.getCourseDetail(id);
     }
 
     @Override
@@ -529,7 +528,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         if (courseDetailBean == null) return;
 
         sharePopupWindow.showAtBottom(courseDetailBean.getName(), courseDetailBean.getIntroduce(),
-                courseDetailBean.getVideo_cover(), ConstantUrl.URL_SHARE_COURSE_CIRCLE + courseDetailBean.getId() );
+                courseDetailBean.getVideo_cover(), ConstantUrl.URL_SHARE_COURSE_CIRCLE + courseDetailBean.getId());
 
     }
 
@@ -558,7 +557,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         }
 
         @Override
-        public void onVideoClick(String url,View view ) {
+        public void onVideoClick(String url, View view) {
             Intent intent = new Intent(CourseCircleDetailActivity.this, PlayerActivity.class)
                     .setData(Uri.parse(url))
                     .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
@@ -566,9 +565,9 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         }
 
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition,View view ) {
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition, View view) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start((Activity) CourseCircleDetailActivity.this, info,view);
+            PhotoBrowseActivity.start((Activity) CourseCircleDetailActivity.this, info, view);
         }
 
         @Override

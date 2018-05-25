@@ -4,6 +4,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:background="@color/white">
 
@@ -112,7 +113,7 @@
                     android:id="@+id/txt_course_difficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="难度系数: "
+                    tools:text="难度系数: "
                     android:textColor="@color/text_color_common"
                     android:textSize="13sp" />
 

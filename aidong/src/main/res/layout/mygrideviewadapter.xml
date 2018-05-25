@@ -9,14 +9,14 @@
         android:layout_height="wrap_content"
 
         android:layout_centerHorizontal="true"
+        android:layout_marginRight="12dp"
         android:background="@drawable/selctor_radiobutton"
-        android:button="@null"
 
-android:singleLine="true"
+        android:button="@null"
         android:gravity="center"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
-        android:layout_marginRight="12dp"
+        android:singleLine="true"
         android:text="初级难度"
 
         android:textColor="@color/textselector" />

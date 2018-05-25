@@ -109,6 +109,12 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
         radioGroup = (CustomNestRadioGroup) findViewById(R.id.radio_group);
         cbAlipay = (RadioButton) findViewById(R.id.cb_alipay);
         cbWeixin = (RadioButton) findViewById(R.id.cb_weixin);
+
+
+
+
+
+
     }
 
 
@@ -217,6 +223,14 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
     @Override
     public void onGetCourseAvaliableCoupons(List<CouponBean> coupon) {
         this.usableCoupons = coupon;
+
+        if (usableCoupons != null && !usableCoupons.isEmpty()) {
+            layoutCourseCoupon.setVisibility(View.VISIBLE);
+        }else {
+            layoutCourseCoupon.setVisibility(View.GONE);
+        }
+
+
     }
 
     @Override

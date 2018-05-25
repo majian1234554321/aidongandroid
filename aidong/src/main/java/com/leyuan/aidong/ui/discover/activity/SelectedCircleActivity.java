@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.discover.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -55,6 +56,7 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
         refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
         initSwipeRefreshLayout();
         initRecyclerView();

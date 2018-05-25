@@ -268,14 +268,14 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
 
 
-        tv_subjecttitle.setText("#"+course.getCategory()+"#-"+course.professionalism);
+        tv_subjecttitle.setText("#"+course.getCategory()+"#-"+(!TextUtils.isEmpty(course.professionalism)?course.professionalism:""));
 
 
 //        txtCourseName.setText(course.getName());
         tv_fans.setText(course.getFollows_count()+"");
         if (course.getFollowers() != null) {
             value = course.getFollowers().size();
-            tv_fans.setText((course.getFollowers().size() > 0 ? course.getFollowers().size() : 0)+"");
+            tv_fans.setText(course.getFollows_count()+"");
         } else {
             tv_fans.setText("0");
             value = 0;

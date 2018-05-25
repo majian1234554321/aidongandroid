@@ -77,19 +77,12 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
             holder.txtCourseTime.setText(courseBean.getClass_time());
             holder.txtCourseDesc.setText(courseBean.getTagString());
 
-//        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
 
 
             holder.txtCourseOriginPrice.setText(String.format(context.getString(R.string.rmb_price_double), courseBean.getPrice()));
             holder.txtCourseMemberPrice.setText("会员价: " + String.format(context.getString(R.string.rmb_price_double), courseBean.getMember_price()));
 
-            for (int i = 0; i < 5; i++) {
-                if (i < courseBean.getStrength()) {
 
-                } else {
-
-                }
-            }
 
 
             switch (courseBean.getStatus()) {
@@ -138,16 +131,7 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
                     break;
             }
 
-            if (courseBean.getReservable() != 1 && courseBean.getStatus() != CourseBeanNew.END) {
-                //无需预约
-                holder.imgCourseState.setVisibility(View.GONE);
-            }
 
-            if (courseBean.isMember_only()) {
-                //只有会员可以
-                holder.txtCourseOriginPrice.setText("");
-                holder.txtCourseMemberPrice.setText("会员专享");
-            }
 
             holder.rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -158,13 +142,7 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
         }
     }
 
-//    private void resetStart(CourseViewHolder holder) {
-//        holder.img_star_first.setVisibility(View.VISIBLE);
-//        holder.img_star_second.setVisibility(View.VISIBLE);
-//        holder.img_star_three.setVisibility(View.VISIBLE);
-//        holder.img_star_four.setVisibility(View.VISIBLE);
-//        holder.img_star_five.setVisibility(View.VISIBLE);
-//    }
+
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
 

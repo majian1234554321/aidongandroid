@@ -3,6 +3,7 @@ package com.leyuan.aidong.adapter.mine;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,12 @@ public class MyAttentionCourseAdapter extends RecyclerView.Adapter<MyAttentionCo
         GlideLoader.getInstance().displayImage(courseBean.cover, holder.iv);
         holder.tv_name.setText(courseBean.getName());
         holder.tv_type.setText(courseBean.getTagString());
-        holder.mb_level.setText(courseBean.professionalism);
+        if(!TextUtils.isEmpty(courseBean.professionalism)) {
+            holder.mb_level.setText(courseBean.professionalism);
+            holder.mb_level.setVisibility(View.VISIBLE);
+        }else {
+            holder.mb_level.setVisibility(View.GONE);
+        }
 
 
 

@@ -30,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="11111"
+                android:gravity="left"
                 android:textColor="@color/main_red"
                 android:textSize="15sp" />
 
@@ -47,12 +48,14 @@
         </LinearLayout>
 
         <TextView
+
             android:id="@+id/txt_intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginRight="15dp"
             android:singleLine="true"
+            tools:text="12122"
             android:textColor="@color/c3"
             android:textSize="15sp" />
 
@@ -70,7 +73,7 @@
                 android:id="@+id/txt_course_difficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="难度系数: "
+                tools:text="难度系数: "
                 android:textColor="@color/b3"
                 android:textSize="13sp" />
 

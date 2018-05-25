@@ -141,10 +141,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="66dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:layout_marginTop="12dp"
                 android:paddingLeft="@dimen/left_margin"
                 android:paddingRight="@dimen/right_margin">
 

@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -62,7 +63,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
     }
 
     @Override
-    public void onBindViewHolder(CourseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
 
         final CourseBeanNew courseBean = data.get(position);
         if (position == 0) {
@@ -138,7 +139,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
 
 
-
+        holder.txtCourseName.getPaint().setFakeBoldText(true);
 
 
 

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/c1"
     android:orientation="vertical">
 
@@ -76,7 +77,7 @@
                     android:id="@+id/txt_course_difficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="难度系数: "
+                    tools:text="难度系数: "
                     android:textColor="@color/c9"
                     android:textSize="13sp" />
 

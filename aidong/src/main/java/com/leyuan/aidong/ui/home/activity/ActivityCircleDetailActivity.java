@@ -14,6 +14,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -411,7 +412,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
                     }
                 }
                 for (GoodsSkuBean goodsSkuBean : campaignBean.spec.item) {
-                    if (goodsSkuBean.value != null && !goodsSkuBean.value.isEmpty()) {
+                    if (!TextUtils.isEmpty(goodsSkuBean.code)) {
                         hasSku = true;
                         break;
                     }
@@ -713,13 +714,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
 
 
-//            String image = "";
-//
-//            if (venues.getPhoto() != null && !venues.getPhoto().isEmpty()) {
-//                image = venues.getPhoto().get(0);
-//            }
-//            sharePopupWindow.showAtBottom(dynamic.publisher.getName() + Constant.I_DONG_FITNESS, venues.getIntroduce(),
-//                    image, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
+
 
         }
     }

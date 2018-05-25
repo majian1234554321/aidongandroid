@@ -67,7 +67,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
     private ImageView ivMinus;
     private TextView tvCount;
     private ImageView ivAdd;
-    private TextView txt_limit_number,txt_spec_remark;
+    private TextView txt_limit_number, txt_spec_remark;
     private TextView tvConfirm;
     private TextView tvAdd;
     private LinearLayout buyLayout;
@@ -192,9 +192,9 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
             }
             totalStock += goodsSkuBean.getStock();
         }
-        if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()){
+        if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()) {
             unConfirmedSkuCover = campaignDetailBean.getImage().get(0);
-            confirmedSkuCover= campaignDetailBean.getImage().get(0);
+            confirmedSkuCover = campaignDetailBean.getImage().get(0);
         }
 
     }
@@ -269,10 +269,33 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         ivAdd.setBackgroundResource(FormatUtil.parseInt(count) == stock ? R.drawable.icon_add_gray
                 : R.drawable.icon_add);
 
-        if (limit > 0&&limit!=9999) {
+        if (limit > 0 && limit != 9999) {
             txt_limit_number.setText("(限购" + limit + "张)");
         }
         txt_spec_remark.setText("");
+
+
+        if (specBean.item.size() == 1) {
+            selectedSkuValues.clear();
+
+
+            for (int i = 0; i < localSkuBeanList.size(); i++) {
+                localSkuBeanList.get(i).getSkuValues().get(0).setSelected(true);
+                selectedSkuValues.add(localSkuBeanList.get(i).getSkuValues().get(0).getValue());
+            }
+
+
+            limit = specBean.item.get(0).limit_amount;
+            txt_limit_number.setText("(限购" + limit + "张)");
+
+
+            txt_spec_remark.setText(specBean.item.get(0).remark);
+            txt_spec_remark.setVisibility(View.VISIBLE);
+
+            skuRecyclerView.setVisibility(View.GONE);
+        } else {
+            skuRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setListener() {
@@ -338,7 +361,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                     }
                 } else {
                     this.dismiss();
-                     context.startActivity(new Intent(context,LoginActivity.class));
+                    context.startActivity(new Intent(context, LoginActivity.class));
                 }
                 break;
 //            case R.id.tv_add_cart:
@@ -398,14 +421,14 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         campaignDetailBean.amount = tvCount.getText().toString().trim();
         campaignDetailBean.skuPrice = line.price;
         StringBuilder sb = new StringBuilder();
-        if (line.value!=null){
+        if (line.value != null) {
             for (int i = 0; i < line.value.size(); i++) {
-                sb.append(line.value.get(i)+" ");
+                sb.append(line.value.get(i) + " ");
             }
         }
-        campaignDetailBean.skuTime  = sb.toString();
+        campaignDetailBean.skuTime = sb.toString();
 
-        ConfirmOrderCampaignActivity.start(context,campaignDetailBean);
+        ConfirmOrderCampaignActivity.start(context, campaignDetailBean);
 
 
     }
@@ -448,7 +471,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                 } else {
                     txt_limit_number.setText("");
                 }
-                if (line.remark!=null) {
+                if (line.remark != null) {
                     txt_spec_remark.setText(line.remark);
                     txt_spec_remark.setVisibility(View.VISIBLE);
                 }
