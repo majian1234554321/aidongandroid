@@ -177,6 +177,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         collapsingToolbar.setExpandedTitleColor(Color.BLACK);
 
 
+
         findViewById(R.id.iv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -368,9 +369,10 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         this.courseDetailBean = courseDetailBean;
         headView.setData(courseDetailBean, this);
         if (courseDetailBean.getVideo_cover() != null) {
-            GlideLoader.getInstance().displayImage(courseDetailBean.getVideo_cover(), imgBg);
+            GlideLoader.getInstance().displayImage2(courseDetailBean.getVideo_cover(), imgBg);
         }
-        collapsingToolbar.setTitle(courseDetailBean.getName());
+        collapsingToolbar.setTitle(courseDetailBean.getName().trim());
+
 
 
         if (recyclerView != null) {

@@ -27,6 +27,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.refreshlayout.FullyLinearLayoutManager;
+import com.leyuan.aidong.widget.vertical.VerticalRecyclerView;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
@@ -42,7 +43,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
 
     private SwitcherLayout switcherLayout;
 
-    private RecyclerView recyclerView;
+    private VerticalRecyclerView recyclerView;
 
 
     private int currPage = 1;
@@ -62,7 +63,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_course);
+        recyclerView = view.findViewById(R.id.rv_course);
         switcherLayout = new SwitcherLayout(getContext(), recyclerView);
         if (getArguments() != null) {
             date = getArguments().getString("date");

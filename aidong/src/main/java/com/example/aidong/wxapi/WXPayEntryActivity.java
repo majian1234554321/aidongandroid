@@ -55,7 +55,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
                 default:
 
-                    finish();
+                   // finish();
 
 //                    if (null != payListener) {
 //                        payListener.onFail(code + "", resp);

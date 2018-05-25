@@ -32,12 +32,12 @@
                 android:background="@color/white"
                 android:fitsSystemWindows="true"
                 app:collapsedTitleGravity="center"
-                app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
+                app:collapsedTitleTextAppearance="@style/TypeTextSize"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginBottom="4dp"
                 app:expandedTitleMarginStart="15dp"
 
-                app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
+                app:expandedTitleTextAppearance="@style/TypeTextSize"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
@@ -45,6 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fitsSystemWindows="true"
+android:layout_marginBottom="@dimen/sp_12"
                    >
 
                     <com.github.florent37.arclayout.ArcLayout
@@ -139,6 +140,7 @@ android:visibility="gone"
                     android:navigationIcon="@drawable/icon_back"
                     app:contentInsetEnd="0dp"
                     app:contentInsetLeft="0dp"
+                    app:titleTextAppearance="@style/TypeTextSize"
                     app:contentInsetRight="0dp"
                     app:contentInsetStart="0dp"
                     app:paddingEnd="0dp"

@@ -39,8 +39,7 @@ public class HomeRecommendAdapter2 extends BaseQuickAdapter<Object, BaseViewHold
             case 1:
                 if (homeData != null ) {
                     rv_course.setVisibility(View.VISIBLE);
-                    holder.setText(R.id.txt1, "精选课程");
-                    holder.setText(R.id.txt2, "练就你想要的身材");
+
                     rv_course.setLayoutManager(new LinearLayoutManager(context, VERTICAL, false));
                     rv_course.setAdapter(new HomeRecommendAdapter2_1(context, homeData));
                 } else {
@@ -51,8 +50,7 @@ public class HomeRecommendAdapter2 extends BaseQuickAdapter<Object, BaseViewHold
 
            case 2:
                 if (false ) {
-                    holder.setText(R.id.txt1, "精选活动");
-                    holder.setText(R.id.txt2, "你想要的都在这里");
+
                     rv_course.setLayoutManager(new LinearLayoutManager(context, HORIZONTAL, false));
                     rv_course.setAdapter(new HomeRecommendAdapter2_2(context,  homeData));
                 } else {
@@ -62,8 +60,7 @@ public class HomeRecommendAdapter2 extends BaseQuickAdapter<Object, BaseViewHold
                 break;
             case 3:
                 if (homeData != null ) {
-                    holder.setText(R.id.txt1, "明星教练");
-                    holder.setText(R.id.txt2, "跟着教练去健身");
+
                     rv_course.setLayoutManager(new LinearLayoutManager(context, HORIZONTAL, false));
                     rv_course.setAdapter(new HomeRecommendAdapter2_3(context, homeData));
                 } else {

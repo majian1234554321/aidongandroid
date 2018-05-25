@@ -661,7 +661,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/Wxpay"  />
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
         <receiver
             android:name=".receivers.WeixinRegisterReceiver"
@@ -699,9 +699,9 @@
             android:name="com.example.aidong.wxapi.WXPayEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
 
-            android:exported="true"
+            android:exported="false"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/Wxpay" />
 
         <!-- ********************QQ Login Share************************* -->
         <activity

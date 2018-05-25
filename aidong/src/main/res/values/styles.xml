@@ -258,5 +258,20 @@
         <item name="android:thumbOffset">4dip</item>
     </style>
 
+    <style name="TypeTextSize" parent="android:TextAppearance">
+        <item name="android:textSize"> @dimen/pref_19dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:max">8</item>
+        <item name="android:maxLength">8</item>
+
+    </style>
+
+
+    <style name="Wxpay" parent="android:Theme.Translucent.NoTitleBar">
+
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowBackground">@color/line_color</item>
+
+    </style>
 
 </resources>

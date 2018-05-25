@@ -286,6 +286,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             selectedSkuValues.clear();
             localSkuBeanList.get(0).getSkuValues().get(0).setSelected(true);
             selectedSkuValues.add(localSkuBeanList.get(0).getSkuValues().get(0).getValue());
+            GlideLoader.getInstance().displayImage(detailBean.spec.item.get(0).cover, dvGoodsCover);
             skuRecyclerView.setVisibility(View.GONE);
         }else {
             skuRecyclerView.setVisibility(View.VISIBLE);
