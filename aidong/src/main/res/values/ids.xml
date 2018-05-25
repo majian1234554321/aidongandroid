@@ -10,9 +10,4 @@
   <item type="id" name="restart_preview"/>
   <item type="id" name="return_scan_result"/>
 
-    <item name="title_bar_view" type="id"/>
-    <item name="recycler_view_tag" type="id"/>
-    <item name="glide_tag_id" type="id"/>
-    <item name="momentinfo_data_tag_id" type="id"/>
-
 </resources>

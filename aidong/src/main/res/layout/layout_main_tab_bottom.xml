@@ -27,7 +27,6 @@
                 android:src="@drawable/selctor_tab_home" />
 
             <TextView
-                android:id="@+id/tabNearTextView"
                 style="@style/tabTextStyle"
                 android:layout_below="@id/tabNearImageView"
                 android:layout_centerHorizontal="true"
@@ -74,7 +73,6 @@
                 android:src="@drawable/selector_tab_live_video" />
 
             <TextView
-                android:id="@+id/tabFoundTextView"
                 style="@style/tabTextStyle"
                 android:layout_below="@id/tabFoundImageView"
                 android:layout_centerHorizontal="true"
@@ -112,7 +110,6 @@
                 android:src="@drawable/selector_tab_store" />
 
             <TextView
-                android:id="@+id/tabStoreTextView"
                 style="@style/tabTextStyle"
                 android:layout_below="@id/tabStoreImageView"
                 android:layout_centerHorizontal="true"
@@ -152,7 +149,6 @@
 
 
             <TextView
-                android:id="@+id/tabMineTextView"
                 style="@style/tabTextStyle"
                 android:layout_below="@id/tabMineImageView"
                 android:layout_centerHorizontal="true"

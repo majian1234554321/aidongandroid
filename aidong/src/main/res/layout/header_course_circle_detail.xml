@@ -158,7 +158,6 @@
             android:layout_marginRight="100dp" />
 
         <TextView
-            android:id="@+id/txt_bt_attention_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -231,7 +230,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_relate_dynamic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 

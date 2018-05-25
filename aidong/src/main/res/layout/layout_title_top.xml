@@ -5,7 +5,6 @@
                 android:background="@color/color_black" >
 
     <ImageView
-        android:id="@+id/btnBack"
         style="@style/styleImageBack"
         android:layout_centerVertical="true"
         android:visibility="gone" >

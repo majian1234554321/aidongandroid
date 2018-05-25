@@ -10,35 +10,6 @@
         <item>教练</item>
     </string-array>
 
-    <string-array name="height">
-        <item>150-155cm</item>
-        <item>155-160cm</item>
-        <item>160-165cm</item>
-        <item>165-170cm</item>
-        <item>170-175cm</item>
-        <item>175-180cm</item>
-        <item>180-185cm</item>
-        <item>186-190cm</item>
-        <item>190-195cm</item>
-        <item>195-200cm</item>
-    </string-array>
-
-
-    <string-array name="weight">
-        <item>40-45kg</item>
-        <item>45-50kg</item>
-        <item>50-55kg</item>
-        <item>55-60kg</item>
-        <item>60-65kg</item>
-        <item>65-70kg</item>
-        <item>70-75cm</item>
-        <item>75-80cm</item>
-        <item>80-85cm</item>
-        <item>85-90cm</item>
-        <item>90-95cm</item>
-        <item>95-100cm</item>
-    </string-array>
-
 
     <string-array name="frequency">
         <item>1次/周</item>
@@ -62,24 +33,6 @@
         <item>装备</item>
         <item>活动</item>
         <item>用户</item>
-    </string-array>
-
-    <string-array name="orderTab">
-        <item>全部</item>
-        <item>待付款</item>
-        <item>已付款</item>
-        <item>已完成</item>
-    </string-array>
-
-    <string-array name="appointmentMineTab">
-        <item>课程预约</item>
-        <item>活动预约</item>
-    </string-array>
-
-    <string-array name="appointmentTab">
-        <item>全部</item>
-        <item>待参加</item>
-        <item>已参加</item>
     </string-array>
 
     <string-array name="infoTab">

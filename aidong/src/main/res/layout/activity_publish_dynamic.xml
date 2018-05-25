@@ -92,7 +92,6 @@
                 android:paddingRight="@dimen/media_margin" />
 
             <Button
-                android:id="@+id/bt_publish"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_top_bar"
                 android:layout_marginLeft="@dimen/pref_10dp"

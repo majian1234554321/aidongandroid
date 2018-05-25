@@ -13,33 +13,24 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_black">#000000</color>
     <color name="color_red">#ff0000</color>
-    <color name="color_light_blue">#19C7EC</color>
-    <color name="color_light_blue2">#0076FF</color>
     <color name="color_light_white">#eaebf0</color>
-    <color name="color_line_gray">#C6C5CA</color>
     <color name="color_txt_gray1">#999999</color>
-    <color name="green">#00dd00</color>
     <color name="color_home_tab_bg">#ffffff</color>
     <color name="color_tab_txt_default">#929292</color>
     <color name="color_tab_txt_select">#234969</color>
     <color name="color_list_distance">#ebebeb</color>
-    <color name="color_search_bg1">#F9F9FB</color>
     <color name="gray_normal">#666667</color>
     <color name="e_five">#eaebf0</color>
-    <color name="typeface_seven">#4d4d4d</color>
     <color name="typeface_five">#b3b3b3</color>
     <color name="background_one">#00c1eb</color>
     <color name="store">#8d97a6</color>
     <color name="sort">#D51121</color>
     <color name="new_background_one">#000000</color>
-    <color name="cecece">#cecece</color>
     <color name="orange">#FFA500</color>
     <color name="black">#000000</color>
-    <color name="alertdialog_line">#c6c6c6</color>
     <color name="actionsheet_blue">#037BFF</color>
     <color name="actionsheet_gray">#8F8F8F</color>
     <color name="white">#ffffffff</color>
-    <color name="blue">#0000ff</color>
     <color name="b3">#b3b3b3</color>
 
 

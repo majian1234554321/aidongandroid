@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/layout_about_mx_title_rel"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/pref_50dp"
         android:background="@color/new_background_one">
