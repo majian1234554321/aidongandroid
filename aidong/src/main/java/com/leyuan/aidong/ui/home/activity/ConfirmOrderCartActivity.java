@@ -155,7 +155,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
     private boolean needSelfDelivery = false;         //是否需要自提
     private Double expressPrice = 15d;
 
-    private ConfirmOrderPresent present;
+    private ConfirmOrderPresentImpl present;
     private TextView txtrecevingtime;
     private LinearLayout llReceivingTime;
     private List<String> receivingTimeQuantum;
@@ -325,10 +325,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
         double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
         tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
 
-//        if (shopBean != null && shopBean.getItem() != null && !shopBean.getItem().isEmpty() &&
-//                (TextUtils.equals(GOODS_FOODS, shopBean.getItem().get(0).getType()) ||
-//                        (TextUtils.equals(GOODS_NUTRITION, shopBean.getItem().get(0).getType())
-//                                && shopBean.getItem().get(0).getProductIdInteger() > Constant.GOODS_FOODS_START_INDEX))) {
+
 
         if (shopBeanList != null && !shopBeanList.isEmpty() && shopBeanList.get(0).getItem() != null &&
                 !shopBeanList.get(0).getItem().isEmpty() && GOODS_FOODS.equals(shopBeanList.get(0).getItem().get(0).getType())) {
@@ -519,6 +516,9 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
     @Override
     public void setSpecifyGoodsCouponResult(List<CouponBean> usableCoupons) {
         this.usableCoupons = usableCoupons;
+
+        if(TextUtils.isEmpty(selectedUserCouponId)){
+
         if (usableCoupons == null || usableCoupons.isEmpty()) {
             tvCoupon.setText("无可用");
             //tvCoupon.setCompoundDrawables(null, null, null, null);
@@ -529,15 +529,19 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
         }
 
         //把优惠券使用置为初始状态
-        selectedUserCouponId = null;
-        Logger.i("coupon", "setSpecifyGoodsCouponResult = " + selectedUserCouponId);
-        couponId = null;
-        couponPrice = null;
-        tvCoupon.setText(getString(R.string.please_select));
-        tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
-        double dPrice = needExpress ? expressPrice : 0d;
-        double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
-        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
+
+            selectedUserCouponId = null;
+            Logger.i("coupon", "setSpecifyGoodsCouponResult = " + selectedUserCouponId);
+            couponId = null;
+            couponPrice = null;
+            tvCoupon.setText(getString(R.string.please_select));
+            tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
+            double dPrice = needExpress ? expressPrice : 0d;
+            double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
+            tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
+        }
+
+
     }
 
     @Override

@@ -160,6 +160,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
     };
     private CouponModelImpl model;
+    private View view;
 
     public static void start(Context context, String goodsId, String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
@@ -267,6 +268,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         payLayout = (LinearLayout) findViewById(R.id.ll_pay);
         tvStockTip = (TextView) findViewById(R.id.tv_count_tip);
         tvSellOut = (TextView) findViewById(R.id.tv_sell_out);
+
+        view = findViewById(R.id.lineline);
+
         topLayout.setBackgroundColor(Color.argb(55, 0, 0, 0));
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
@@ -436,6 +440,16 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
 
         initFragments();
+
+
+        if (bean.spec!=null&&bean.spec.item.size()==1){
+            skuLayout.setVisibility(View.GONE);
+            view.setVisibility(View.GONE);
+        }else {
+            skuLayout.setVisibility(View.VISIBLE);
+            view.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -453,7 +467,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvSelectSku.setText(String.format(getString(R.string.sku_selected), skuTip));
             tvStockTip.setText(String.format(getString(R.string.surplus_goods_count), stock));
             tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
-            tvPrice.setText(String.format(getString(R.string.rmb_price_double), price));
+            tvPrice.setText(String.format(getString(R.string.rmb_price_double),
+                    FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price : bean.floor_price)));
         } else {
             tvSelectSku.setText(String.format(getString(R.string.sku_select), skuTip));
             tvStockTip.setVisibility(View.GONE);
@@ -470,6 +485,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         if (TextUtils.isEmpty(recommendId)) {
             recommendId = null;
         }
+
+
+
         skuPopupWindow = new GoodsSkuPopupWindow(this, bean, status, selectedSkuValues, selectedCount,
                 recommendId, goodsType);
         skuPopupWindow.setSelectSkuListener(this);

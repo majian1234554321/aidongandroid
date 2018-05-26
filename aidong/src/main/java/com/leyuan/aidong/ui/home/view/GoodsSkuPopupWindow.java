@@ -51,6 +51,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private String selectedSkuCover;
     private TextView txt_limit_number;
     private int limit = 9999;
+    private TextView tvGoodName;
 
     public enum GoodsStatus {
         SellOut,            //售罄状态
@@ -204,7 +205,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         selectProduct = false;
         dvGoodsCover = (ImageView) view.findViewById(R.id.dv_goods_cover);
         ivCancel = (ImageView) view.findViewById(R.id.iv_cancel);
-        TextView tvGoodName = (TextView) view.findViewById(R.id.tv_good_name);
+        tvGoodName = (TextView) view.findViewById(R.id.tv_good_name);
         tvGoodsPrice = (TextView) view.findViewById(R.id.tv_goods_price);
         tvStock = (TextView) view.findViewById(R.id.tv_stock);
         tvSelect = (TextView) view.findViewById(R.id.tv_select);
@@ -249,7 +250,14 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             tvAdd.setVisibility(View.GONE);
         }
 
-        tvGoodName.setText(detailBean.name);
+        if (selectedSkuValues.size() == detailBean.spec.name.size()) {
+            GoodsSkuBean line = getLine(selectedSkuValues);
+
+            tvGoodName.setText(line.name);
+        }else {
+            tvGoodName.setText(detailBean.name);
+        }
+
         tvSkuTip.setText(skuTip.toString());
         if (isAllSkuConfirm()) {
             GlideLoader.getInstance().displayImage(confirmedSkuCover, dvGoodsCover);
@@ -282,12 +290,29 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         }
 
 
-        if (localSkuBeanList!=null&&localSkuBeanList.size()==1&&localSkuBeanList.get(0).getSkuValues().size()==1){
+        if (detailBean.spec.item.size()==1){
             selectedSkuValues.clear();
-            localSkuBeanList.get(0).getSkuValues().get(0).setSelected(true);
-            selectedSkuValues.add(localSkuBeanList.get(0).getSkuValues().get(0).getValue());
+
+
+            for (int i = 0; i < localSkuBeanList.size(); i++) {
+
+                localSkuBeanList.get(i).getSkuValues().get(0).setSelected(true);
+                selectedSkuValues.add(localSkuBeanList.get(i).getSkuValues().get(0).getValue());
+            }
+
+
+
+
+                if (detailBean.spec.item.get(0).limit_amount>0)
+                    txt_limit_number.setText("(限购" + detailBean.spec.item.get(0).limit_amount + "张)");
+
+            tvGoodName.setText(detailBean.spec.item.get(0).name);
+
+
             GlideLoader.getInstance().displayImage(detailBean.spec.item.get(0).cover, dvGoodsCover);
             skuRecyclerView.setVisibility(View.GONE);
+
+            price = FormatUtil.parseDouble(detailBean.price);
         }else {
             skuRecyclerView.setVisibility(View.VISIBLE);
         }
@@ -358,7 +383,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 if (App.mInstance.isLogin()) {
                     if (isAllSkuConfirm()) {
                         if (tvCount.getText().toString() != null && !tvCount.getText().toString().equals("0")) {
-                            dismiss();
+
                             confirm();
                         } else {
                             Toast.makeText(context, "商品数量必须大于0", Toast.LENGTH_SHORT).show();
@@ -393,7 +418,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             case R.id.ll_buy:
                 if (App.mInstance.isLogin()) {
                     if (isAllSkuConfirm()) {
-                        dismiss();
+                       // dismiss();
                         buyImmediately();
                     } else {
                         tipUnSelectSku();
@@ -410,6 +435,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
 
     public void confirm() {
         if (status == GoodsStatus.ConfirmToAddCart) {
+             dismiss();
             addCart();
         } else if (status == GoodsStatus.ConfirmToBuy) {
             buyImmediately();
@@ -436,7 +462,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         goodsBean.setProductId(detailBean.id);
         goodsBean.setProductType(goodsType);
 
-        goodsBean.setName(detailBean.name);
+        goodsBean.setName(tvGoodName.getText().toString().trim());
         goodsBean.setCode(line.code);
 //        goodsBean.setCover(detailBean.image.get(0));
         goodsBean.setCover(selectedSkuCover);
@@ -507,6 +533,9 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 } else {
                     txt_limit_number.setText("");
                 }
+
+                tvGoodName.setText(line.name);
+
                 tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count), stock));
                 tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
                 if (Integer.parseInt(tvCount.getText().toString()) > stock) {

@@ -3,7 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/sp_12"
+            android:layout_width="wrap_content"
+            android:background="@drawable/icon_back"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="邀请有礼"
+            android:textSize="18sp"
+
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
     <WebView
+        android:layout_below="@+id/rl"
         android:id="@+id/mWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

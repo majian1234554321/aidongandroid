@@ -699,7 +699,7 @@
             android:name="com.example.aidong.wxapi.WXPayEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
 
-            android:exported="false"
+            android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/Wxpay" />
 

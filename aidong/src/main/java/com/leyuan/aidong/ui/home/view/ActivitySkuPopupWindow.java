@@ -286,7 +286,12 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
 
 
             limit = specBean.item.get(0).limit_amount;
-            txt_limit_number.setText("(限购" + limit + "张)");
+            if (limit>0){
+                txt_limit_number.setText("(限购" + limit + "张)");
+            }else {
+
+            }
+
 
 
             txt_spec_remark.setText(specBean.item.get(0).remark);
@@ -339,7 +344,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                     ToastGlobal.showLongConsecutive("超过最大库存");
                 }
 
-                if (count > limit) {
+                if (count > limit&&limit>0) {
                     count = limit;
                     ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
                     ToastGlobal.showLongConsecutive("超过限购数量");

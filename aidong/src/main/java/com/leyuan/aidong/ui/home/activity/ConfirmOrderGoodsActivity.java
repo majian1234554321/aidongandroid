@@ -148,7 +148,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private boolean needSelfDelivery = false;         //是否需要自提
     private Double expressPrice = 15d;
 
-    private ConfirmOrderPresent present;
+    private ConfirmOrderPresentImpl present;
     private TextView txtrecevingtime;
     private LinearLayout llReceivingTime;
     private List<String> receivingTimeQuantum;

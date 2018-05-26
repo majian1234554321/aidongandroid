@@ -30,7 +30,7 @@
                 style="@style/tabTextStyle"
                 android:layout_below="@id/tabNearImageView"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="@string/tabhome"
                 android:textSize="12sp" />
@@ -76,7 +76,7 @@
                 style="@style/tabTextStyle"
                 android:layout_below="@id/tabFoundImageView"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="@string/course"
                 android:textSize="12sp" />
@@ -113,7 +113,7 @@
                 style="@style/tabTextStyle"
                 android:layout_below="@id/tabStoreImageView"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="@string/store"
                 android:textSize="12sp" />
@@ -152,7 +152,7 @@
                 style="@style/tabTextStyle"
                 android:layout_below="@id/tabMineImageView"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="@string/tabMine"
                 android:textSize="12sp" />

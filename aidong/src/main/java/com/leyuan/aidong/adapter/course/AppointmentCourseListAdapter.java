@@ -16,6 +16,10 @@ import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.List;
 
@@ -60,7 +64,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
     }
 
     @Override
-    public void onBindViewHolder(AppointmentHolder holder, final int position) {
+    public void onBindViewHolder(final AppointmentHolder holder, final int position) {
         final CourseAppointBean bean = data.get(position);
 
         //与订单状态无关
@@ -209,18 +213,52 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
         holder.tvCancelQueue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (appointmentListener != null) {
-                    appointmentListener.onCancelQueue(position);
-                }
+
+
+                new DialogDoubleButton(context).setContentDesc("确定"+holder.tvCancelQueue.getText().toString().trim())
+                        .setBtnCancelListener(new ButtonCancelListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setBtnOkListener(new ButtonOkListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                                if (appointmentListener != null) {
+                                    appointmentListener.onCancelQueue(position);
+                                }
+                            }
+                        }).show();
+
+
             }
         });
 
         holder.tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (appointmentListener != null) {
-                    appointmentListener.onDeleteOrder(bean.getId());
-                }
+
+
+                new DialogDoubleButton(context).setContentDesc("确定"+holder.tvDelete.getText().toString().trim() + "?")
+                        .setBtnCancelListener(new ButtonCancelListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setBtnOkListener(new ButtonOkListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                                if (appointmentListener != null) {
+                                    appointmentListener.onDeleteOrder(bean.getId());
+                                }
+                            }
+                        }).show();
+
+
             }
         });
 
@@ -246,11 +284,36 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
         });
 
         holder.tvCancelAppoint.setOnClickListener(new View.OnClickListener() {
+
+
+
             @Override
             public void onClick(View v) {
-                if (appointmentListener != null) {
-                    appointmentListener.onCancelAppoint(bean.getId());
-                }
+
+
+
+
+
+                new DialogDoubleButton(context).setContentDesc("确定"+holder.tvCancelAppoint.getText().toString().trim() + "?")
+                        .setBtnCancelListener(new ButtonCancelListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setBtnOkListener(new ButtonOkListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                                if (appointmentListener != null) {
+                                    appointmentListener.onCancelAppoint(bean.getId());
+                                }
+                            }
+                        }).show();
+
+
+
+
             }
         });
 

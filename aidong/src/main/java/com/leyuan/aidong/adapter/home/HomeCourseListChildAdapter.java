@@ -139,7 +139,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
 
 
-        holder.txtCourseName.getPaint().setFakeBoldText(true);
+       // holder.txtCourseName.getPaint().setFakeBoldText(true);
 
 
 

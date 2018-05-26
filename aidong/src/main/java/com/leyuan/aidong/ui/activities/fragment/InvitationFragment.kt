@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.activities.fragment
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +14,10 @@ import com.leyuan.aidong.R
 import com.leyuan.aidong.config.UrlConfig
 import com.leyuan.aidong.ui.App
 import com.leyuan.aidong.ui.BaseFragment
+import com.leyuan.aidong.ui.activities.`interface`.MyJSInterface
 import com.leyuan.aidong.utils.GlideLoader
 import com.leyuan.aidong.utils.Logger
+import kotlinx.android.synthetic.main.detailsactivityh5fragment.*
 
 import kotlinx.android.synthetic.main.invitationfragment.*
 import java.util.HashMap
@@ -25,14 +28,20 @@ class InvitationFragment : BaseFragment() {
     }
 
 
-    @SuppressLint("SetJavaScriptEnabled", "AddJavascriptInterface")
+    @SuppressLint("SetJavaScriptEnabled", "AddJavascriptInterface", "JavascriptInterface")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         GlideLoader.getInstance().displayDrawableGifImage(R.drawable.loading, img_loading)
 
+
+
+        iv_back.setOnClickListener{
+            (context as Activity).finish()
+        }
+
         mWebView.clearCache(true)
 
-        val webSettings = mWebView.getSettings()
+        val webSettings = mWebView.settings
         webSettings.javaScriptEnabled = true
         webSettings.javaScriptCanOpenWindowsAutomatically = true
 
@@ -45,6 +54,8 @@ class InvitationFragment : BaseFragment() {
         //        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
         webSettings.domStorageEnabled = true
+
+
 
         webSettings.databaseEnabled = true
         mWebView.webChromeClient = object : WebChromeClient() {
@@ -61,12 +72,22 @@ class InvitationFragment : BaseFragment() {
             }
         }
 
+        mWebView.webViewClient = object :WebViewClient(){
+
+        }
+
 
         Logger.i(TAG, "mWebView.loadUrl start")
+        mWebView.addJavascriptInterface(MyJSInterface(context), "android")
+
+
 
         val map = HashMap<String, String>()
         map["mobile"] = App.getInstance().user.mobile
-        mWebView.loadUrl("${UrlConfig.BASE_URL_MEMBER_CARD}activity/inviting")
+        mWebView.loadUrl("${UrlConfig.BASE_URL_MEMBER_CARD}activity/inviting",map)
+
+
+
 
     }
 

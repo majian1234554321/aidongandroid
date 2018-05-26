@@ -1,10 +1,12 @@
 package com.leyuan.aidong.widget.richtext;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -26,9 +28,11 @@ public class RichWebView extends WebView {
         initSetting();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initSetting() {
 
         getSettings().setJavaScriptEnabled(true);
+
         setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -68,7 +72,7 @@ public class RichWebView extends WebView {
         if (content == null) return;
         String htmlHeader;
         String htmlFooter;
-
+        getSettings().setTextZoom(90);
         loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);
 
     }

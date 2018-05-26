@@ -106,9 +106,9 @@
             android:gravity="center"
             android:layout_alignParentLeft="true"
             android:singleLine="true"
+            android:maxLength="12"
             android:text="虹桥南丰城健身阿斯蒂蒂"
             android:ellipsize="end"
-            android:maxWidth="200dp"
             android:textColor="@color/b3"
             android:textSize="13sp" />
 
@@ -136,7 +136,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
 
-            android:layout_marginRight="18dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
             android:drawableLeft="@drawable/icon_recommend"
             android:drawablePadding="5dp"
             android:singleLine="true"
@@ -148,9 +149,10 @@
         <LinearLayout
             android:id="@+id/layout_parse"
            android:layout_toLeftOf="@+id/txt_comment"
+
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-           android:layout_marginRight="18dp"
+
 
             android:layout_centerVertical="true"
             android:gravity="bottom"

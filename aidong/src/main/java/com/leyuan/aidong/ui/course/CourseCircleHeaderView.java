@@ -242,7 +242,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 //        } else {
 //            values = "初级难度";
 //        }
-        int ranHeight = dip2px(context, 30);
+        int ranHeight = dip2px(context, 26);
         ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ranHeight);
         lp.setMargins(dip2px(context, 10), 0, dip2px(context, 10), 0);
 
@@ -250,9 +250,9 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
 
             TextView tv = new TextView(context);
-            tv.setPadding(dip2px(context, 15), 0, dip2px(context, 15), 0);
+            tv.setPadding(dip2px(context, 8), 0, dip2px(context, 8), 0);
             tv.setTextColor(ContextCompat.getColor(context,R.color.main_red));
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 
             tv.setText(course.getTags().get(i));
             tv.setGravity(Gravity.CENTER_VERTICAL);
