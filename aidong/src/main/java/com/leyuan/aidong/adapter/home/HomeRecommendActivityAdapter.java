@@ -38,7 +38,7 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CampaignBean campaignBean = campaigns.get(position);
         if (campaignBean != null) {
-            GlideLoader.getInstance().displayImage(campaignBean.getCover(), holder.imgCover);
+            GlideLoader.getInstance().displayImage2(campaignBean.getCover(), holder.imgCover);
             holder.txtType.setText("【" + campaignBean.getTypeCZ() + "】");
             holder.txtTime.setText(campaignBean.start_time+"-"+campaignBean.end_time);
             holder.txtName.setText(campaignBean.getName());

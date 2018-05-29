@@ -32,8 +32,8 @@
 
                 <ImageView
                     android:id="@+id/img_live_begin_or_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerInParent="true"
                     android:src="@drawable/play_small" />
 
@@ -161,8 +161,10 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="41dp"
-            android:layout_height="41dp"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/icon_back" />
 
         <ImageButton
@@ -174,7 +176,7 @@
             android:background="@color/transparent"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:src="@drawable/share" />
+            android:src="@drawable/icon_share" />
 
     </RelativeLayout>
 

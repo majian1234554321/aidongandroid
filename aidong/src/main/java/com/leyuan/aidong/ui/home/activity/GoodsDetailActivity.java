@@ -468,7 +468,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvStockTip.setText(String.format(getString(R.string.surplus_goods_count), stock));
             tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
             tvPrice.setText(String.format(getString(R.string.rmb_price_double),
-                    FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price : bean.floor_price)));
+                    price));
         } else {
             tvSelectSku.setText(String.format(getString(R.string.sku_select), skuTip));
             tvStockTip.setVisibility(View.GONE);

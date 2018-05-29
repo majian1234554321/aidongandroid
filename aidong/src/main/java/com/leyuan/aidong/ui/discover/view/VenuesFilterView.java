@@ -255,11 +255,12 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         leftCircleAdapter = new LeftFilterAdapter(context, leftCircleList);
         leftListView.setAdapter(leftCircleAdapter);
         if(leftSelectedPosition != -1){
-            leftListView.setSelection(leftSelectedPosition);
-            leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
+           // leftListView.setSelection(leftSelectedPosition);
+            leftCircleAdapter.setCheckItem(leftSelectedPosition);
+            // leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
         }else {
-            leftListView.setSelection(0);
-            leftCircleAdapter.setSelectedBean(leftCircleList.get(0));
+            leftCircleAdapter.setCheckItem(0);
+           // leftCircleAdapter.setSelectedBean(leftCircleList.get(0));
         }
 
         //右边列表
@@ -304,7 +305,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
                 rightSelectedPosition = rightPosition;           //改变右边选中item
                 rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
                 String address = rightCircleList.get(rightSelectedPosition).getArea();
-                tvCircle.setText(address);
+                tvCircle.setText(selectArea+address);
                 if (onFilterClickListener != null) {
                     onFilterClickListener.onBusinessCircleItemClick("热门商圈".equals(selectArea) ? "" :selectArea,
                             context.getString(R.string.all_circle).equals(address) ? "" :address);

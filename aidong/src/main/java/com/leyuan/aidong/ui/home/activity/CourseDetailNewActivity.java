@@ -470,7 +470,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 rl_Member.setVisibility(View.GONE);
                 rl_UnMember.setVisibility(View.VISIBLE);
 
-                tv_UnMember.setText(R.string.ended);
+                tv_UnMember.setText("已满员");
                 tv_UnMember.setTextColor(getResources().getColor(R.color.white));
 
                 llApply.setBackgroundColor(getResources().getColor(R.color.list_line_color));

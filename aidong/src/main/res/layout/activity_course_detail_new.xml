@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:minHeight="105dp">
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -106,11 +106,12 @@
 
                     <TextView
                         android:id="@+id/txt_coach_desc"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:ellipsize="end"
                         android:maxLines="4"
+                        tools:text="12121212122222222222222222222222222222222222222222222222222222222222222222222122222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222"
                         android:textColor="@color/txt_black"
                         android:textSize="13sp" />
 
@@ -126,67 +127,56 @@
             </RelativeLayout>
 
 
-<android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    app:cardCornerRadius="4dp"
-    android:layout_margin="15dp"
+            <LinearLayout
 
-    android:layout_height="wrap_content">
+                android:layout_margin="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/a"
+
+                android:orientation="vertical"
+                android:padding="15dp">
 
 
-
-                <LinearLayout
-
-
-                    android:elevation="4dp"
+                <TextView
+                    android:id="@+id/txt_course_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
+
+                    android:drawableLeft="@drawable/icon_time2"
+                    android:drawablePadding="30px"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/txt_black"
+                    android:textSize="15sp"
+                    tools:text="12121212"
+
+                    />
+
+                <TextView
+                    android:id="@+id/txt_course_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="30px"
+                    android:drawableLeft="@drawable/icon_store"
+                    android:drawablePadding="30px"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/txt_course_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30px"
+                    android:drawableLeft="@drawable/iconaddress2"
+                    android:drawablePadding="30px"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
 
-                    <TextView
-                        android:id="@+id/txt_course_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:drawableLeft="@drawable/icon_time2"
-                        android:drawablePadding="30px"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black"
-                        android:textSize="15sp"
-                        tools:text="12121212"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/txt_course_room"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_marginTop="30px"
-                        android:drawableLeft="@drawable/icon_store"
-                        android:drawablePadding="30px"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/txt_course_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30px"
-                        android:drawableLeft="@drawable/iconaddress2"
-                        android:drawablePadding="30px"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
-
-
-</android.support.v7.widget.CardView>
+            </LinearLayout>
 
 
             <TextView
@@ -266,9 +256,6 @@
 
 
             </RelativeLayout>
-
-
-
 
 
             <com.leyuan.aidong.widget.richtext.RichWebView
@@ -388,13 +375,13 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:layout_centerVertical="true"
+                android:background="@drawable/shape_white_button2"
                 android:gravity="center"
                 android:textColor="@color/main_red"
                 android:textSize="14sp"
-                android:background="@drawable/shape_white_button2"
                 android:textStyle="bold"
                 tools:text="立即预约" />
 
