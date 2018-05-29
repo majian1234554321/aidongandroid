@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,7 +38,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_person"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="112dp"
         />
+    <View android:layout_height="8dp"
+        android:background="@color/line_color"
+        android:layout_width="match_parent"/>
 
 </LinearLayout>

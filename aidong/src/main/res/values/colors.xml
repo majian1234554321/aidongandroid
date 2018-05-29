@@ -17,7 +17,7 @@
     <color name="color_txt_gray1">#999999</color>
     <color name="color_home_tab_bg">#ffffff</color>
     <color name="color_tab_txt_default">#929292</color>
-    <color name="color_tab_txt_select">#234969</color>
+    <color name="color_tab_txt_select">#000</color>
     <color name="color_list_distance">#ebebeb</color>
     <color name="gray_normal">#666667</color>
     <color name="e_five">#eaebf0</color>

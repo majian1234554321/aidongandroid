@@ -303,9 +303,9 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 if (!TextUtils.isEmpty(courseDetailBean.getName())) {
 
                     if (courseDetailBean.getName().contains(" "))
-                        CourseListActivityNew.start(this, "全部分类", courseDetailBean.getName().split(" ")[0]);
+                        CourseListActivityNew.start(this, "全部分类", courseDetailBean.getId());
                     else
-                        CourseListActivityNew.start(this, "全部分类", courseDetailBean.getName());
+                        CourseListActivityNew.start(this, "全部分类", courseDetailBean.getId());
                 }
 
 

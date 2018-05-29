@@ -36,6 +36,8 @@ import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.Utils;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 
@@ -163,9 +165,16 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
             tv_content.setText(highlightText);
             tv_content.setMovementMethod(LinkMovementMethod.getInstance());
+            tv_content.setVisibility(View.VISIBLE);
 
         } else {
-            tv_content.setText(dynamic.content);
+            if (!TextUtils.isEmpty(dynamic.content.trim())){
+                tv_content.setText(dynamic.content);
+                tv_content.setVisibility(View.VISIBLE);
+            }else {
+                tv_content.setVisibility(View.GONE);
+            }
+
         }
 
 

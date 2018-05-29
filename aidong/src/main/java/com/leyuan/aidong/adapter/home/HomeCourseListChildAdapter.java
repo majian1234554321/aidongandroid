@@ -97,13 +97,6 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         holder.txtCourseOriginPrice.setText(String.format(context.getString(R.string.rmb_price_double), courseBean.getPrice()));
         holder.txtCourseMemberPrice.setText("会员价: " + String.format(context.getString(R.string.rmb_price_double), courseBean.getMember_price()));
 
-        for (int i = 0; i < 5; i++) {
-            if (i < courseBean.getStrength()) {
-
-            } else {
-
-            }
-        }
 
 
         String fontPath = "fonts/Hiragino_Sans_GB_W3.ttf";
@@ -216,7 +209,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 break;
 
             case CourseBeanNew.FULL:
-                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setVisibility(View.GONE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_full);
 
 

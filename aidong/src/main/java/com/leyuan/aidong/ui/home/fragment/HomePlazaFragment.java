@@ -92,7 +92,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
     private DynamicBean invokeDynamicBean;
 
     private int currPage = 1;
-    private DynamicPresent dynamicPresent;
+    private DynamicPresentImpl dynamicPresent;
 
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;

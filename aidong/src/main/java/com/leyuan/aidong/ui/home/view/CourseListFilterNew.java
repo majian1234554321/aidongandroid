@@ -94,7 +94,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private CourseTypePriceFilterAdapter adapterTypePrice;
     private CourseCategoryFilterAdapter adapterCategoty;
 
-    private RightFilterAdapter rightCircleAdapter;
+
     private ArrayList<CourseBrand> courseBrands;
     private CourseBrand mineCourseBrand;
 
@@ -107,9 +107,9 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private ArrayList<CourseStore> currentStoreList;
     private ArrayList<CourseArea> currentAreaList;
     private CourseName courseType;
-    private String currentCoursePriceType;
 
-    private String currentCourseCategory;
+
+
 
     private ArrayList<CourseArea> currentMineAreaList;
     private CourseArea currentMineArea;
@@ -625,7 +625,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             refreshtCategoryAdapater(0, startPosition);
 
 
-            if (!TextUtils.isEmpty(category) && leftlist != null && leftlist.size() > 0 && leftlist.contains(category) && !TextUtils.isEmpty(rightText)) {
+            if (!TextUtils.isEmpty(category) && leftlist != null && leftlist.size() > 0 && !TextUtils.isEmpty(rightText)) {
 
                 if ("全部课程".equals(rightText)) {
                     tvCourseName.setText(category + " 全部课程");
@@ -633,22 +633,22 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                 } else {
 
 
-                    refreshtCategoryAdapater(leftlist.indexOf(category), startPosition);
+                    refreshtCategoryAdapater(0, startPosition);
 
 
                     int leftPostion = leftlist.indexOf(category);
 
 
                     for (int i = 0; i < rightlist.get(leftPostion).size(); i++) {
-                        if (rightlist.get(leftPostion).get(i).name.equals(rightText)) {
-                            refreshtCategoryAdapater(leftlist.indexOf(category), i);
+                        if (rightlist.get(leftPostion).get(i).id.equals(rightText)) {
+                            refreshtCategoryAdapater(0, i);
                             listCourseRight.setSelection(i);
 
-                            tvCourseName.setText(rightText);
+                            tvCourseName.setText(rightlist.get(leftPostion).get(i).name);
                             break;
                         } else {
 
-                            refreshtCategoryAdapater(leftlist.indexOf(category), 0);
+                            refreshtCategoryAdapater(0, 0);
                             tvCourseName.setText(category + "全部课程");
                         }
                     }

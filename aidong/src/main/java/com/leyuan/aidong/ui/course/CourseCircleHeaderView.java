@@ -284,8 +284,10 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         if (course.isFollowed()) {
             setImageResourceVale(R.drawable.follw);
+            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red));
         } else {
             setImageResourceVale(R.drawable.unfollw);
+            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.gray));
         }
         txtCourseIntro.setRichText(course.getIntroduce());
        // txtSuggestFrequency.setText("建议周频次: " + course.getFrequency() + "次/周");
@@ -321,7 +323,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         if (baseBean.getStatus() == 1) {
             setImageResourceVale(R.drawable.follw);
             course.setFollowed(true);
-
+            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red));
             course.setFollows_count(course.getFollows_count() + 1);
             value = value + 1;
             tv_fans.setText(value+"");
@@ -344,6 +346,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             value = value - 1;
             tv_fans.setText(value + "");
             setImageResourceVale(R.drawable.unfollw);
+            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.gray));
             ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
 
             if (onLoadListener != null) {

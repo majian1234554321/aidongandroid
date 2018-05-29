@@ -18,11 +18,11 @@
         android:layout_height="49dp"
         android:layout_below="@+id/view"
         android:drawableLeft="@drawable/shine_image"
-        android:drawablePadding="12dp"
+        android:drawablePadding="10dp"
         android:gravity="center"
         android:textColor="@color/black"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
         android:text="@string/shine_image" />
 
     <TextView

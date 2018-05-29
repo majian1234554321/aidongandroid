@@ -54,11 +54,16 @@
                 android:id="@+id/txt_course_sub_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="6dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingRight="6dp"
                 android:layout_marginLeft="15dp"
+                android:background="@drawable/shape_stroke_red_button"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
                 android:text="钢管舞"
-                android:textColor="@color/c3"
+                android:textColor="@color/main_red"
                 android:textSize="14sp" />
 
             <ImageView

@@ -36,10 +36,11 @@
             <RelativeLayout
                 android:id="@+id/layout_course_coupon"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp">
 
                 <TextView
+                    android:id="@+id/tv0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -50,9 +51,13 @@
                     />
 
                 <RelativeLayout
+                    android:id="@+id/rrr"
+
+                    android:layout_below="@+id/tv0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="8dp"
+
                     android:layout_marginBottom="15dp">
 
                     <TextView
@@ -78,6 +83,8 @@
 
 
                 <ImageView
+
+                    android:layout_below="@+id/rrr"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/pref_0.5dp"
                     android:layout_alignParentBottom="true"
@@ -90,9 +97,10 @@
                 android:id="@+id/layout_remark"
                 android:layout_width="match_parent"
                 android:visibility="gone"
-                android:layout_height="80dp">
+                android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -103,10 +111,13 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:layout_below="@+id/tv"
                     android:id="@+id/edit_remark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginRight="15dp"
                     android:hint="请输入需要备注的内容"
                     android:gravity="center_vertical"
@@ -118,6 +129,8 @@
 
 
                 <ImageView
+                    android:layout_marginLeft="15dp"
+                    android:layout_below="@+id/edit_remark"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/pref_0.5dp"
                     android:layout_alignParentBottom="true"

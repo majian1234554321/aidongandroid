@@ -2,10 +2,10 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -13,9 +13,9 @@
         android:id="@+id/layout_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
         android:background="#f2f2f2"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/txt_type"
@@ -46,8 +46,8 @@
 
         <RelativeLayout
             android:layout_width="84dp"
-            android:layout_gravity="center"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -55,7 +55,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
 
-              android:layout_centerInParent="true"
+                android:layout_centerInParent="true"
 
                 />
 
@@ -66,18 +66,18 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="14dp"
                 android:maxWidth="90dp"
-                android:visibility="gone"
                 android:singleLine="true"
                 android:textColor="@color/txt_black"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-android:gravity="left|center"
             android:layout_weight="1"
+            android:gravity="left|center"
             android:orientation="vertical">
 
             <TextView
@@ -86,10 +86,9 @@ android:gravity="left|center"
                 android:layout_height="wrap_content"
 
                 android:singleLine="true"
-                tools:text="1212"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
-
+                android:textSize="@dimen/x25"
+                tools:text="1212" />
 
 
             <TextView
@@ -104,18 +103,19 @@ android:gravity="left|center"
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/txt_course_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    tools:text="12"
                     android:textColor="@color/course_oringe"
-                    android:textSize="12sp" />
+                    android:textSize="11sp"
+                    tools:text="12" />
+
                 <TextView
                     android:id="@+id/txt_course_origin_price"
                     android:layout_width="wrap_content"
@@ -127,10 +127,10 @@ android:gravity="left|center"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:textSize="12sp"
                     android:id="@+id/tv_level"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -139,18 +139,17 @@ android:gravity="left|center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:visibility="gone"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/txt_course_difficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="难度系数: "
                     android:textColor="@color/text_color_common"
-                    android:textSize="13sp" />
-
+                    android:textSize="13sp"
+                    tools:text="难度系数: " />
 
 
             </LinearLayout>
@@ -159,7 +158,7 @@ android:gravity="left|center"
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="match_parent">
 
             <ImageView
@@ -171,31 +170,31 @@ android:gravity="left|center"
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               android:layout_centerInParent="true"
+                android:layout_centerInParent="true"
                 android:orientation="vertical">
 
 
-                
                 <TextView
-                    android:layout_width="70dp"
-                    android:text="排队"
-                    android:gravity="center"
                     android:id="@+id/mb_level"
-
-                    android:textSize="@dimen/sp_12"
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp_10"
-                    android:textColor="@color/red_price"
                     android:background="@drawable/shape_stroke_red_button"
-                    android:layout_height="36dp" />
-                
+                    android:gravity="center"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="排队"
+                    android:textColor="@color/red_price"
+                    android:textSize="@dimen/sp_12" />
+
                 <TextView
                     android:id="@+id/txt_course_member_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone"
                     android:textColor="@color/course_oringe"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
 
             </LinearLayout>

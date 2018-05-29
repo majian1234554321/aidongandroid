@@ -304,9 +304,9 @@
     <!--底部操作按钮信息-->
     <View
         android:layout_width="match_parent"
-        android:layout_marginLeft="15dp"
+
         android:background="@color/line_color"
-        android:layout_marginRight="15dp"
+
         android:layout_height="@dimen/pref_1dp"/>
     <LinearLayout
         android:id="@+id/ll_bottom"

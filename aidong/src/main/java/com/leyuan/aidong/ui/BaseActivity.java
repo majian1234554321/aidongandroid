@@ -61,14 +61,14 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        Logger.w("className", getClass().getSimpleName()+" -- onResume");
+        Logger.w("className", getClass().getSimpleName() + " -- onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        Logger.w("className", getClass().getSimpleName()+" -- onPause");
+        Logger.w("className", getClass().getSimpleName() + " -- onPause");
     }
 
 
@@ -92,7 +92,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
 
-   /* *//**
+    /* *//**
      * 设置SwipeRefreshLayout下拉刷新颜色
      *
      * @param refreshLayout
@@ -164,7 +164,8 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_NUTRITION);
                 break;
             case "22":
-                CourseListActivityNew.start(this,bannerBean.getLink());
+                CourseListActivityNew.start(this, "全部分类", bannerBean.getLink());
+
                 break;
             case "23":
                 ActivityCircleDetailActivity.start(this, bannerBean.getLink());
@@ -180,7 +181,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_TICKET);
                 break;
             case "28":
-                ContestHomeActivity.start(this,bannerBean.getLink());
+                ContestHomeActivity.start(this, bannerBean.getLink());
                 break;
             default:
                 break;

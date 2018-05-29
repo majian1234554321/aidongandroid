@@ -126,16 +126,19 @@
             </RelativeLayout>
 
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="5dp"
-                android:background="@drawable/shadow_12139"
-              >
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    app:cardCornerRadius="4dp"
+    android:layout_margin="15dp"
+
+    android:layout_height="wrap_content">
+
+
 
                 <LinearLayout
+
+
+                    android:elevation="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -172,8 +175,6 @@
                         android:id="@+id/txt_course_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-
                         android:layout_marginTop="30px"
                         android:drawableLeft="@drawable/iconaddress2"
                         android:drawablePadding="30px"
@@ -185,7 +186,7 @@
                 </LinearLayout>
 
 
-            </android.support.v7.widget.CardView>
+</android.support.v7.widget.CardView>
 
 
             <TextView
@@ -267,11 +268,7 @@
             </RelativeLayout>
 
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="15dp"
-                android:src="@color/mine_divider" />
+
 
 
             <com.leyuan.aidong.widget.richtext.RichWebView

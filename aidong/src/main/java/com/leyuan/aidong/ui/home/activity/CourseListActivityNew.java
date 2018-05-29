@@ -258,12 +258,12 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
 
                     for (int i = 0; i < rightlist.get(leftPostion).size(); i++) {
-                        if (rightlist.get(leftPostion).get(i).name.equals(rightText)) {
+                        if (rightlist.get(leftPostion).get(i).id.equals(rightText)) {
                             allcategory = category + "," + rightlist.get(leftPostion).get(i).id;
                             break;
                         }else {
 
-                                allcategory = category + "," + "0";
+                                allcategory = category + "," + 0;
 
                         }
                     }

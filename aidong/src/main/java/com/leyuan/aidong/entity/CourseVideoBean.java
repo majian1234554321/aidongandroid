@@ -17,6 +17,7 @@ public class CourseVideoBean  implements Serializable{
     private String introduce;
     private String type_name;
     private String category;
+    public String course_id;
 
     public String getId() {
         return id;

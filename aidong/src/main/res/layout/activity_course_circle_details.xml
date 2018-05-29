@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fitsSystemWindows="true"
-android:layout_marginBottom="@dimen/sp_12"
+android:layout_marginBottom="@dimen/sp_16"
                    >
 
                     <com.github.florent37.arclayout.ArcLayout
@@ -53,11 +53,13 @@ android:layout_marginBottom="@dimen/sp_12"
                         android:layout_width="match_parent"
                         android:layout_height="360dp"
                         android:elevation="5dp"
+                        android:background="@color/white"
                         app:arc_cropDirection="cropOutside"
                         app:arc_height="20dp">
 
                         <ImageView
                             android:id="@+id/img_bg"
+
                             android:layout_width="match_parent"
                             android:layout_height="360dp"
                             android:scaleType="centerCrop"

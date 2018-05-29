@@ -3,7 +3,9 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.data.HomeData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
+import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.HomeModelImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeRecommendView;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -43,7 +45,7 @@ public class HomeRecommendPresentImpl {
 
 
     public void getRecommendList2() {
-        homeModel.getRecommendList(new ProgressSubscriber<HomeData>(context) {
+        homeModel.getRecommendList(new RefreshSubscriber<HomeData>(context) {
             @Override
             public void onNext(HomeData homeData) {
 

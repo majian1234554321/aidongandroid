@@ -72,6 +72,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
     private String courseId;
     CourseVideoBean courseVideoBean;
 
+
     CoursePresentImpl coursePresent;
     private ArrayList<BaseMedia> selectedMedia;
     private String relateVideoTitle;
@@ -120,7 +121,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
 
             GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), imgBg);
             txt_course_name.setText(courseVideoBean.getName());
-            txt_course_sub_name.setText("#" + courseVideoBean.getTypeName() + "#");
+            txt_course_sub_name.setText( courseVideoBean.getTypeName() );
             txtCourseIntro.setText(courseVideoBean.getIntroduce());
 
         }
@@ -190,7 +191,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
                 break;
             case R.id.txt_appoint_immediately:
 
-                CourseListActivityNew.start(this, "全部分类",this.courseVideoBean.getTypeName());
+                CourseListActivityNew.start(this, "全部分类",this.courseVideoBean.course_id);
                 break;
         }
     }
