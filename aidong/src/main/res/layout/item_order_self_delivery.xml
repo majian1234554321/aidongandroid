@@ -6,14 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.leyuan.aidong.widget.ExtendTextView
-        android:id="@+id/tv_delivery_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:left_text="自提时间"
-        app:line_color="@color/line_color"
-        app:show_right_arrow="false"
-        app:text_height="45dp" />
+
 
     <RelativeLayout
         android:id="@+id/rl_qr_code"
@@ -49,6 +42,15 @@
             android:layout_alignParentBottom="true"
             android:src="@drawable/icon_line" />
     </RelativeLayout>
+
+    <com.leyuan.aidong.widget.ExtendTextView
+        android:id="@+id/tv_delivery_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text="自提时间"
+        app:line_color="@color/line_color"
+        app:show_right_arrow="false"
+        app:text_height="45dp" />
 
     <LinearLayout
         android:id="@+id/layout_delivery_type"

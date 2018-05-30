@@ -140,7 +140,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.tv_order:
-                AppointmentMineActivityNew.start(this, 6);
+                AppointmentMineActivityNew.start(this, 2,2);
                 break;
             case R.id.iv_back:
                 finish();

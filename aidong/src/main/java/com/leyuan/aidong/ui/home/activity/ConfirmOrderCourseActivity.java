@@ -291,7 +291,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                AppointmentMineActivityNew.start(ConfirmOrderCourseActivity.this, 0);
+                AppointmentMineActivityNew.start(ConfirmOrderCourseActivity.this, 0,0);
                 finish();
             }
 

@@ -68,6 +68,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         for (GoodsSkuValueBean skuValue : skuValues) {
             if (allLineNoStockSkuValue.contains(skuValue.getValue())) {
                 skuValue.setAvailable(false);
+
             }
         }
         skuValueAdapter.setData(bean.getSkuValues());

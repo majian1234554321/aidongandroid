@@ -301,8 +301,6 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             }
 
 
-
-
                 if (detailBean.spec.item.get(0).limit_amount>0)
                     txt_limit_number.setText("(限购" + detailBean.spec.item.get(0).limit_amount + "张)");
 

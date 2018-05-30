@@ -10,6 +10,7 @@
         android:id="@+id/txt_self_delivery_info"
         android:layout_width="wrap_content"
         android:layout_height="52dp"
+        android:visibility="gone"
         android:layout_marginLeft="@dimen/left_margin"
         android:gravity="center_vertical"
         android:text="自提信息"
@@ -17,6 +18,7 @@
         android:textSize="16sp" />
 
     <include
+        android:visibility="gone"
         android:id="@+id/line_black_self_delivery"
         layout="@layout/inc_line_black" />
 
@@ -29,6 +31,13 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_self_delivery_goods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/tv_delivery_time"
             android:layout_width="match_parent"
@@ -39,9 +48,5 @@
             android:visibility="gone"
             app:show_right_arrow="false"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_self_delivery_goods"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>

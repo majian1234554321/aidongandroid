@@ -126,7 +126,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.tv_appointment:
-                AppointmentMineActivityNew.start(this, 3);
+                AppointmentMineActivityNew.start(this, 1,0);
                 finish();
 
 //                startActivity(new Intent(this, AppointmentActivity.class));
@@ -156,6 +156,8 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         shareBean.setCoupons(share_coupons.getCoupons());
         CouponShareActivity.start(this, shareBean);
     }
+
+
 
     @Override
     public void hideHeadItemView() {

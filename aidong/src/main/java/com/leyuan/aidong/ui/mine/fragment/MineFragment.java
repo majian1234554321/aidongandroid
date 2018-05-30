@@ -281,7 +281,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.item_my_orders:
                 if (App.getInstance().isLogin()) {
-                    AppointmentMineActivityNew.start(getActivity(), 0);
+                    AppointmentMineActivityNew.start(getActivity(), 0,0);
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }

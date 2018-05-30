@@ -20,6 +20,7 @@ import com.leyuan.aidong.ui.mine.activity.CouponShareActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointSuccessActivityView;
+import com.leyuan.aidong.ui.mvp.view.HideHeadItemView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -29,10 +30,10 @@ import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import java.util.List;
 
 /**
- * 预约成功界面
+ * 预约成功界面(课程)
  * Created by song on 2016/9/12.
  */
-public class AppointCourseSuccessActivity extends BaseActivity implements View.OnClickListener, AppointSuccessActivityView {
+public class AppointCourseSuccessActivity extends BaseActivity implements View.OnClickListener, AppointSuccessActivityView, HideHeadItemView {
     private TextView tvRecommend;
     private TextView tvType;
     private TextView tvTime;
@@ -127,7 +128,7 @@ public class AppointCourseSuccessActivity extends BaseActivity implements View.O
                 break;
             case R.id.tv_appointment:
 
-                AppointmentMineActivityNew.start(this, 0);
+                AppointmentMineActivityNew.start(this, 0,0);
                 finish();
 
 //                startActivity(new Intent(this, AppointmentActivity.class));
@@ -152,5 +153,12 @@ public class AppointCourseSuccessActivity extends BaseActivity implements View.O
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    public void hideHeadItemView() {
+        if (tvRecommend != null) {
+            tvRecommend.setVisibility(View.GONE);
+        }
     }
 }

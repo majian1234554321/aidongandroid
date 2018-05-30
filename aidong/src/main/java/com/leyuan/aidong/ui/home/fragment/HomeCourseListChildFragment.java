@@ -80,7 +80,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
     public void fetchData() {
 //        DialogUtils.showDialog(getActivity(),"",false);
 
-
+        currPage =1;
 
         coursePresent.pullRefreshCourseList(store, course, time, date,map);
     }

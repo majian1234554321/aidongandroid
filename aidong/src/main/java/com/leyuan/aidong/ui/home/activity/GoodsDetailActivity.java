@@ -56,6 +56,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.KeyBoardUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.TransitionHelper;
@@ -450,6 +451,21 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             view.setVisibility(View.VISIBLE);
         }
 
+     List<GoodsSkuBean>  list =   new ArrayList<GoodsSkuBean>();
+
+        if(bean.spec!=null&&bean.spec.item!=null&&bean.spec.item.size()>1){
+            for (int i = 0; i < bean.spec.item.size(); i++) {
+                if (bean.spec.item.get(i).getStock()>0) {
+                    list.add(bean.spec.item.get(i));
+                }
+            }
+
+            if (list.size()==1){
+                this.selectedSkuValues.add(list.get(0).value.get(0));
+                this.selectedSkuValues.add(list.get(0).value.get(1));
+            }
+        }
+
     }
 
     @Override
@@ -497,6 +513,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private void showRecommendCodeDialog() {
         View view = View.inflate(this, R.layout.dialog_input_code, null);
         final EditText etCode = (EditText) view.findViewById(R.id.et_code);
+        KeyBoardUtil.openKeyboard(etCode,this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
         builder.setMessage(getString(R.string.input_recommend_code))
                 .setCancelable(true)

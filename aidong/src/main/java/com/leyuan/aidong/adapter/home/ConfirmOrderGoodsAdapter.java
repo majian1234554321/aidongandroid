@@ -52,7 +52,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
     @Override
     public void onBindViewHolder(final GoodsHolder holder, final int position) {
         final GoodsBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
+        GlideLoader.getInstance().displayImage2(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.count.setText(String.format(context.getString(R.string.x_count),bean.getAmount()));
         ArrayList<String> specName = bean.getSpecName();

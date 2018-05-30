@@ -302,7 +302,7 @@ public class PhotoBrowseActivity extends AppCompatActivity {
             });
             return;
         }
-        mCurImage = (ImageView) currentLayout.findViewById(R.id.image_view);
+        mCurImage =  currentLayout.findViewById(R.id.image_view);
         imageViewPager.setCurrentShowView(mCurImage);
     }
 

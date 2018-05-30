@@ -22,7 +22,7 @@
         android:background="@drawable/shape_radius_white"
         android:drawableLeft="@drawable/icon_search_gray"
         android:drawablePadding="10dp"
-        android:gravity="center"
+
         android:paddingLeft="@dimen/pref_12dp"
         android:hint="@string/search_more_circle"
         android:imeOptions="actionSearch"

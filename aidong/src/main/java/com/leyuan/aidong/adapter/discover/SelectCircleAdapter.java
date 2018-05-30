@@ -40,15 +40,15 @@ public class SelectCircleAdapter extends RecyclerView.Adapter<SelectCircleAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CampaignBean bean = items.get(position);
         GlideLoader.getInstance().displayCircleImage(bean.getCover(), holder.imgCover);
-        holder.txtType.setText("【" + bean.getTypeCZ() + "】");
+        holder.txtType.setText("[" + bean.getTypeCZ() + "]");
         holder.txtTitle.setText(bean.getName());
         if (bean.isCourse()) {
-            holder.layoutStar.setVisibility(View.VISIBLE);
+
             holder.txtIntro.setTextColor(ContextCompat.getColor(context,R.color.b3));
             holder.txtIntro.setText(bean.getTagString());
 
         } else {
-            holder.layoutStar.setVisibility(View.GONE);
+
             holder.txtIntro.setTextColor(ContextCompat.getColor(context,R.color.c3));
             holder.txtIntro.setText(bean.getSlogan());
         }
@@ -86,7 +86,7 @@ public class SelectCircleAdapter extends RecyclerView.Adapter<SelectCircleAdapte
         private TextView txtType;
         private TextView txtTitle;
         private TextView txtIntro;
-        private LinearLayout layoutStar;
+
 
 
 
@@ -97,7 +97,7 @@ public class SelectCircleAdapter extends RecyclerView.Adapter<SelectCircleAdapte
             txtType = (TextView) view.findViewById(R.id.txt_type);
             txtTitle = (TextView) view.findViewById(R.id.txt_title);
             txtIntro = (TextView) view.findViewById(R.id.txt_intro);
-            layoutStar = (LinearLayout) view.findViewById(R.id.layout_star);
+
 
 
 

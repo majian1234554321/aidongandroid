@@ -27,16 +27,20 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
     private ViewPager viewPager;
     private int currentItem;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private TextView bt_course_appoint, bt_event_appoint,bt_goods_appoint;
-    private int tranPosition;
+    private TextView bt_course_appoint, bt_event_appoint, bt_goods_appoint;
+    private int bottomPosition, topPosition;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        tranPosition = getIntent().getIntExtra("tranPosition", 0);
-        Logger.i(TAG,"tranPosition = "+tranPosition);
+
+        topPosition = getIntent().getIntExtra("topPosition", 0);
+
+        bottomPosition = getIntent().getIntExtra("bottomPosition", 0);
+
+
         setContentView(R.layout.activity_appointment_mine);
         bt_course_appoint = (TextView) findViewById(R.id.bt_course_appoint);
         bt_event_appoint = (TextView) findViewById(R.id.bt_event_appoint);
@@ -50,10 +54,10 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
 
-        AppointmentFragmentCourseNew course = AppointmentFragmentCourseNew.newInstance(tranPosition);
+        AppointmentFragmentCourseNew course = AppointmentFragmentCourseNew.newInstance(bottomPosition);
 
-        AppointmentFragmentEventNew event =  AppointmentFragmentEventNew.newInstance(tranPosition-3);
-        AppointmentFragmentGoods goods = AppointmentFragmentGoods.newInstance(tranPosition-6);
+        AppointmentFragmentEventNew event = AppointmentFragmentEventNew.newInstance(bottomPosition);
+        AppointmentFragmentGoods goods = AppointmentFragmentGoods.newInstance(bottomPosition);
 
 
         mFragments.add(course);
@@ -73,7 +77,7 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
 
         viewPager.addOnPageChangeListener(new MyPageChangeListener());
 
-        viewPager.setCurrentItem(tranPosition / 3);
+        viewPager.setCurrentItem(topPosition);
 
     }
 
@@ -131,9 +135,10 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
         }
     }
 
-    public static void start(Context context, int tranPosition) {
+    public static void start(Context context, int topPosition, int bottomPosition) {
         Intent intent = new Intent(context, AppointmentMineActivityNew.class);
-        intent.putExtra("tranPosition", tranPosition);
+        intent.putExtra("topPosition", topPosition);
+        intent.putExtra("bottomPosition", bottomPosition);
         context.startActivity(intent);
     }
 

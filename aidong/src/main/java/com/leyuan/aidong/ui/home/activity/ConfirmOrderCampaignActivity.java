@@ -51,7 +51,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
 
 /**
  * Created by user on 2017/11/2.
- * 详情确认订单
+ * 详情确认订单(活动)
  */
 
 public class ConfirmOrderCampaignActivity extends BaseActivity implements AppointCampaignActivityView, View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
@@ -305,7 +305,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
             //Toast.makeText(ConfirmOrderCampaignActivity.this, "支付失败", Toast.LENGTH_LONG).show();
 
-            AppointmentMineActivityNew.start(ConfirmOrderCampaignActivity.this, 3);
+            AppointmentMineActivityNew.start(ConfirmOrderCampaignActivity.this, 1,0);
             finish();
 
         }

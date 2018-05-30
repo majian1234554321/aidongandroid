@@ -479,7 +479,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 public void onFail(String code, Object object) {
                     super.onFail(code, object);
                     LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL));
-                    AppointmentMineActivityNew.start(ConfirmOrderCartActivity.this, 6);
+                    AppointmentMineActivityNew.start(ConfirmOrderCartActivity.this, 2,0);
                     finish();
                 }
 

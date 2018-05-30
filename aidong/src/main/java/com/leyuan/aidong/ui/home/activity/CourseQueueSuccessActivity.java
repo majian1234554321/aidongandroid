@@ -34,7 +34,7 @@ public class CourseQueueSuccessActivity extends BaseActivity implements View.OnC
 
                 break;
             case R.id.tv_look_queue:
-                AppointmentMineActivityNew.start(this,1);
+                AppointmentMineActivityNew.start(this,1,1);
                 finish();
                 break;
         }

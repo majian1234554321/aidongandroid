@@ -50,7 +50,7 @@ public class ContestRuleVideoAdapter extends RecyclerView.Adapter<ContestRuleVid
     @Override
     public void onBindViewHolder(NewsHolder holder, int position) {
         final ContestVideoBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.cover, holder.cover);
+        GlideLoader.getInstance().displayImage2(bean.cover, holder.cover);
         holder.title.setText(bean.title);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

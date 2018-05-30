@@ -498,11 +498,10 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             super.onFail(code, object);
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL));
 
-            Intent intent = new Intent(ConfirmOrderGoodsActivity.this, AppointmentMineActivityNew.class);
-            intent.putExtra("tranPosition", 6);
+
+            AppointmentMineActivityNew.start(ConfirmOrderGoodsActivity.this,2,0);
 
 
-            startActivity(intent);
             finish();
         }
 

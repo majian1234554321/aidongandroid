@@ -118,7 +118,7 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
 
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        layoutManager.setAutoMeasureEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
@@ -180,13 +180,13 @@ public class SelectedLocationActivity extends BaseActivity implements SearchHead
 
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
             for (PoiInfo info : result.getAllPoi()) {
-                Logger.i("PoiInfo : " + info.name + ", " + info.address+" ,lat = "
-                +info.location.latitude+", lon = " + info.location.longitude);
+                Logger.i("PoiInfo : " + info.name + ", " + info.address + " ,lat = "
+                        + info.location.latitude + ", lon = " + info.location.longitude);
                 VenuesBean venuesBean = new VenuesBean();
                 venuesBean.setName(info.name);
                 venuesBean.setAddress(info.address);
-                venuesBean.lat = info.location.latitude +"";
-                venuesBean.lng = info.location.longitude +"";
+                venuesBean.lat = info.location.latitude + "";
+                venuesBean.lng = info.location.longitude + "";
 
                 venuesArray.add(venuesBean);
             }
