@@ -17,6 +17,7 @@ android {
             keyPassword 'aidong'
             storeFile file('doc/aidong.keystore')
             storePassword 'aidong'
+            v2SigningEnabled false
         }
     }
     compileSdkVersion 27
@@ -25,10 +26,11 @@ android {
         applicationId "com.example.aidong"
         minSdkVersion 21
         targetSdkVersion rootProject.ext.targetSdkVersion
-        //old 25 5.0.1
+        versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled true
         signingConfig signingConfigs.release
+
     }
 //    productFlavors {
 //        dev {
