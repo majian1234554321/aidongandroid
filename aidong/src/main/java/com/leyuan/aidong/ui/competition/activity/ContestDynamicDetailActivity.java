@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -170,6 +171,37 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
         tvReportOrDelete = (TextView) findViewById(R.id.tv_report_or_delete);
         ivUserAvatar = (ImageView) findViewById(R.id.dv_user_avatar);
         etComment = (EditText) findViewById(R.id.et_comment);
+
+        etComment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!TextUtils.isEmpty(s.toString().trim())){
+                    Log.i("DynamicDetailById",s.toString()+"a");
+
+                }else {
+                    etComment.getText().clear();
+
+                    Log.i("DynamicDetailById","没有数据了");
+                }
+
+            }
+        });
+
+
+
+
         refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         commentView = (RecyclerView) findViewById(R.id.rv_comment);
         commentAdapter = new DynamicDetailAdapter(this);
@@ -288,6 +320,7 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
 
                 dynamicPresent.addComment(dynamic.id, content, itUser, replyUserMap);
                 KeyBoardUtil.closeKeyboard(etComment, this);
+                etComment.getText().clear();
 
                 return true;
             }

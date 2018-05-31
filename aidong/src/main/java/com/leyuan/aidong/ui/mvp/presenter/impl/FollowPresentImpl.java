@@ -12,6 +12,7 @@ import com.leyuan.aidong.entity.data.FollowData;
 import com.leyuan.aidong.entity.data.FollowUserData;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.Progress2Subscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -358,7 +359,7 @@ public class FollowPresentImpl implements FollowPresent {
 
     @Override
     public void addFollow(String id) {
-        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.addFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (appointmentUserActivityView != null) {
@@ -373,7 +374,7 @@ public class FollowPresentImpl implements FollowPresent {
 
     @Override
     public void addFollow(String id, String type) {
-        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.addFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
 
@@ -396,7 +397,7 @@ public class FollowPresentImpl implements FollowPresent {
 
     @Override
     public void cancelFollow(String id) {
-        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.cancelFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (appointmentUserActivityView != null) {
@@ -411,7 +412,7 @@ public class FollowPresentImpl implements FollowPresent {
 
     @Override
     public void cancelFollow(String id, String type) {
-        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.cancelFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 Logger.i("Appointuseractivity follow"," cancelFollow  onNext");

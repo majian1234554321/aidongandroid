@@ -192,21 +192,20 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                etComment.setHint("评论");
-                if(!TextUtils.isEmpty(s.toString().trim())){
-                    Log.i("DynamicDetailById",s.toString()+"a");
-                    etComment.setHint("评论");
-                }else {
-                    etComment.setHint("评论");
-                    Log.i("DynamicDetailById","没有数据了");
-                }
+
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.i("DynamicDetailById","1221");
+                if(!TextUtils.isEmpty(s.toString().trim())){
+                    Log.i("DynamicDetailById",s.toString()+"a");
 
-                etComment.setHint("评论");
+                }else {
+                    etComment.getText().clear();
+
+                    Log.i("DynamicDetailById","没有数据了");
+                }
 
             }
         });
@@ -322,7 +321,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             content = etComment.getText().toString();
             if (TextUtils.isEmpty(content)) {
                 Toast.makeText(this, "请输入评论内容", Toast.LENGTH_LONG).show();
-                return false;
+                return true;
             } else {
                 if (content.length() > MAX_TEXT_COUNT - 2) {
                     content = content.substring(0, MAX_TEXT_COUNT - 2) + "......";
@@ -333,8 +332,9 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
                 dynamicPresent.addComment(dynamic.id, content, itUser, replyUserMap);
                 KeyBoardUtil.closeKeyboard(etComment, DynamicDetailByIdActivity.this);
                 etComment.clearFocus();
+                etComment.getText().clear();
 
-                return true;
+                return false;
             }
         } else {
             return false;

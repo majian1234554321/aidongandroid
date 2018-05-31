@@ -24,7 +24,7 @@ public class EEditText extends EditText   {
      * @author admin 2016-9-5 下午4:32:19
      */
     private void init() {
-        hint = getHint().toString();
+        hint = getHint().toString().trim();
     }
 
     @Override
@@ -33,6 +33,7 @@ public class EEditText extends EditText   {
         if (focused) {
             setHint("评论");
         } else {
+            getText().clear();
             setHint(hint);
         }
         super.onFocusChanged(focused, direction, previouslyFocusedRect);

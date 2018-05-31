@@ -34,6 +34,11 @@
 
  <dimen name="x30">45px</dimen>
 
+
+ <dimen name="x140">210px</dimen>
+ <dimen name="x300">450px</dimen>
+
+
  <dimen name="x1279">1918.5px</dimen>
  <dimen name="x1280">1920px</dimen>
 

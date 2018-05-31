@@ -23,7 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-
+                android:maxLength="35"
+                android:ellipsize="end"
 
                 android:singleLine="true"
                 android:text="111112222222222222222222222222221"
@@ -40,7 +41,9 @@
                 android:layout_marginTop="2dp"
                 android:singleLine="true"
 
-                android:text="上单122222222222222222222222222222222222222222222222"
+                android:maxEms="20"
+                android:ellipsize="end"
+                android:text="上单122222222222222222222222121212121212121212121212222222222222222222222222"
                android:textColor="@color/c3"
                 android:textSize="10dp" />
         </RelativeLayout>
