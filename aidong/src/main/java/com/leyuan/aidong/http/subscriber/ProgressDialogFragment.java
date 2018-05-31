@@ -39,17 +39,20 @@ public class ProgressDialogFragment extends DialogFragment {
         super.onStart();
         Window win = getDialog().getWindow();
         // 一定要设置Background，如果不设置，window属性设置无效
-        win.setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
+        if (win != null) {
+            win.setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
+            DisplayMetrics dm = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics( dm );
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics( dm );
+            WindowManager.LayoutParams params = win.getAttributes();
+            params.gravity = Gravity.CENTER;
 
-        WindowManager.LayoutParams params = win.getAttributes();
-        params.gravity = Gravity.CENTER;
+            params.width = (int) getResources().getDimension(R.dimen.x300);
+            params.height = (int) getResources().getDimension(R.dimen.x140);
+            win.setAttributes(params);
+        }
 
-        params.width = (int) getResources().getDimension(R.dimen.x300);
-        params.height = (int) getResources().getDimension(R.dimen.x140);
-        win.setAttributes(params);
+
     }
 
 }

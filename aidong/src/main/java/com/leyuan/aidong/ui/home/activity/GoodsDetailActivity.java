@@ -461,8 +461,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
 
             if (list.size()==1){
-                this.selectedSkuValues.add(list.get(0).value.get(0));
-                this.selectedSkuValues.add(list.get(0).value.get(1));
+
+                this.selectedSkuValues.addAll(list.get(0).value);
+
+
             }
         }
 
