@@ -38,7 +38,7 @@ public class CouponPresentImpl implements CouponPresent {
     private  CouponNewUserValidView couponNewUserValidView;
     private CouponShareView couponShareView;
     private Context context;
-    private CouponModel couponModel;
+    private CouponModelImpl couponModel;
 
     //优惠劵列表View层对象
     private CouponFragmentView couponView;

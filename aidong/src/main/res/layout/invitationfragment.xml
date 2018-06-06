@@ -26,9 +26,10 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <WebView
+    <com.tencent.smtt.sdk.WebView
         android:layout_below="@+id/rl"
         android:id="@+id/mWebView"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <ImageView

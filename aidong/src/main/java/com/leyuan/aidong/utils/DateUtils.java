@@ -412,16 +412,6 @@ public class DateUtils {
         during.append(":");
         during.append(formatNumberZero(second));
 
-//        if (minute > 0) {
-//            during.append(minute).append("'");
-//        }
-//        if (second > 0) {
-//            during.append(second).append("\"");
-//        }
-
-//        if (million > 0) {
-//            during.append(million + "\"");
-//        }
 
         Logger.i(" vidoe duringToSecond = " + during.toString());
 

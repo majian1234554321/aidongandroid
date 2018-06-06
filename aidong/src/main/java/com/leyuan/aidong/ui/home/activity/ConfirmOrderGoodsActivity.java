@@ -35,9 +35,12 @@ import com.leyuan.aidong.ui.mine.activity.PaySuccessActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
+import com.leyuan.aidong.ui.mine.fragment.CouponFragment;
 import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
+import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
@@ -78,7 +81,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener {
+        CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener, CouponFragmentView {
     private static final String TAG = "ConfirmOrderActivity";
     private SimpleTitleBar titleBar;
     private LinearLayout contentLayout;
@@ -177,8 +180,15 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
         present = new ConfirmOrderPresentImpl(this, this);
+
+
         initVariable();
         initView();
+
+
+        CouponPresentImpl presents = new CouponPresentImpl(this, this);
+        presents.pullToRefreshData(CouponFragment.VALID);
+
         setChangeViewInfo();
         setListener();
         if (needExpress) {
@@ -463,7 +473,6 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         Logger.i(TAG, "pickUpDate = " + pickUpDate + "pick_up_period =" + pick_up_period);
 
 
-
         if (PAY_WEIXIN.equals(payType)) {
 
 
@@ -475,7 +484,6 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 return;
             }
         }
-
 
 
         present.buyGoodsImmediately(settlementType, skuCode, amount, couponId, integral, coin, payType,
@@ -499,7 +507,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL));
 
 
-            AppointmentMineActivityNew.start(ConfirmOrderGoodsActivity.this,2,0);
+            AppointmentMineActivityNew.start(ConfirmOrderGoodsActivity.this, 2, 0);
 
 
             finish();
@@ -541,11 +549,13 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         if (usableCoupons == null || usableCoupons.isEmpty()) {
             tvCoupon.setText("无可用");
             //tvCoupon.setCompoundDrawables(null, null, null, null);
-            tvCoupon.setTextColor(ContextCompat.getColor(this,R.color.c9));
-        }else {
-            if (TextUtils.isEmpty(couponId)){
-                tvCoupon.setText("请选择");
-                tvCoupon.setTextColor(Color.BLACK);
+            tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
+        } else {
+            if (TextUtils.isEmpty(couponId)) {
+                if (couponBeanList.size() > 0) {
+                    tvCoupon.setText(couponBeanList.size() + "张可用");
+                }
+                tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
             }
 
@@ -583,7 +593,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 couponPrice = couponBean.getActual();
                 tvCoupon.setText(FormatUtil.parseDouble(couponPrice) > 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
+                        FormatUtil.parseDouble(couponBean.getActual())) : couponBeanList.size() + "张可用" );
 
 
                 rightContent = String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice));
@@ -611,7 +621,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         if (is_virtual) {
             emptyAddressLayout.setVisibility(View.GONE);
             addressLayout.setVisibility(View.GONE);
-        }else {
+        } else {
             if (address == null) {
                 addressLayout.setVisibility(View.GONE);
                 emptyAddressLayout.setVisibility(View.VISIBLE);
@@ -645,5 +655,26 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         addressLayout.setVisibility(View.GONE);
         llReceivingTime.setVisibility(View.GONE);
         selfDeliveryLayout.setVisibility(View.GONE);
+    }
+
+    public List<CouponBean> couponBeanList;
+
+    @Override
+    public void updateRecyclerView(List<CouponBean> couponBeanList) {
+        this.couponBeanList = couponBeanList;
+
+        if (couponBeanList.size() > 0) {
+            tvCoupon.setText(couponBeanList.size() + "张可用");
+        }
+    }
+
+    @Override
+    public void showEmptyView() {
+
+    }
+
+    @Override
+    public void showEndFooterView() {
+
     }
 }

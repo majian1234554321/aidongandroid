@@ -274,33 +274,43 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         }
         txt_spec_remark.setText("");
 
-
-        if (specBean.item.size() == 1) {
+        if (specBean.item.size()==1){
             selectedSkuValues.clear();
 
 
             for (int i = 0; i < localSkuBeanList.size(); i++) {
+
                 localSkuBeanList.get(i).getSkuValues().get(0).setSelected(true);
                 selectedSkuValues.add(localSkuBeanList.get(i).getSkuValues().get(0).getValue());
             }
 
 
-            limit = specBean.item.get(0).limit_amount;
-            if (limit>0){
-                txt_limit_number.setText("(限购" + limit + "张)");
-            }else {
+            if (specBean.item.get(0).limit_amount>0)
+                txt_limit_number.setText("(限购" + specBean.item.get(0).limit_amount + "张)");
 
-            }
-
-
-
+            tvGoodName.setText(specBean.item.get(0).name);
             txt_spec_remark.setText(specBean.item.get(0).remark);
             txt_spec_remark.setVisibility(View.VISIBLE);
 
+
+            GlideLoader.getInstance().displayImage2(specBean.item.get(0).cover, dvGoodsCover);
             skuRecyclerView.setVisibility(View.GONE);
-        } else {
+
+          //  price = FormatUtil.parseDouble(detailBean.price);
+        }else {
             skuRecyclerView.setVisibility(View.VISIBLE);
         }
+
+
+
+
+
+
+
+
+
+
+
     }
 
     private void setListener() {
@@ -499,7 +509,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         } else {
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
             selectedSkuCover = unConfirmedSkuCover;
-            tvGoodsPrice.setText(maxPrice == minPrice ? String.valueOf(maxPrice) :
+            tvGoodsPrice.setText(maxPrice == minPrice ?String.format(context.getString(R.string.rmb_price_double),maxPrice):
                     String.format(context.getString(R.string.rmb_price_scope), minPrice, maxPrice));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));
             List<LocalGoodsSkuBean> unSelectedSkuBeanList = onGetUnSelectSku();

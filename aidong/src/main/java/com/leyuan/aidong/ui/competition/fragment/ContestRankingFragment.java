@@ -245,7 +245,7 @@ public class ContestRankingFragment extends BaseFragment implements OnRefreshLis
 
             data.get(position).followed = true;
             adapter.notifyDataSetChanged();
-            Toast.makeText(getContext(), R.string.follow_success, Toast.LENGTH_LONG).show();
+
         } else {
             Toast.makeText(getContext(), R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -256,7 +256,7 @@ public class ContestRankingFragment extends BaseFragment implements OnRefreshLis
         if (baseBean.getStatus() == Constant.OK) {
             data.get(position).followed = false;
             adapter.notifyDataSetChanged();
-            Toast.makeText(getContext(),  getResources().getString(R.string.cancel_follow_success), Toast.LENGTH_LONG).show();
+
         } else {
             Toast.makeText(getContext(),  baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }

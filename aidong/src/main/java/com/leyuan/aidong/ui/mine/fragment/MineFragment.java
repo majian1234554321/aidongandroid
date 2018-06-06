@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
+import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.data.SportRecordMonthData;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
@@ -43,8 +44,10 @@ import com.leyuan.aidong.ui.mine.activity.SportRecordActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SportPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
 import com.leyuan.aidong.ui.mvp.view.MineInfoView;
 import com.leyuan.aidong.ui.mvp.view.SportRecordView;
 import com.leyuan.aidong.utils.Constant;
@@ -56,10 +59,11 @@ import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
 
 import java.security.Key;
+import java.util.List;
 import java.util.Random;
 
 
-public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView, SportRecordView {
+public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView, SportRecordView , CouponFragmentView {
 
     private View rootView;
     private LinearLayout layout_no_login, linearLayout_guanzhu, linearLayout_beiguanzhu, layout_hot;
@@ -226,6 +230,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
 
         refreshLoginState();
+
+
+        CouponPresentImpl   present = new CouponPresentImpl(getContext(), this);
+        present.pullToRefreshData(CouponFragment.VALID);
+
+
     }
 
     private void refreshLoginState() {
@@ -399,5 +409,23 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         txtClockNum.setText(athletic.days);
         txtGoCourseNum.setText(athletic.frequency);
         txtClassTotalTime.setText(athletic.during);
+    }
+
+    @Override
+    public void updateRecyclerView(List<CouponBean> couponBeanList) {
+        //Toast.makeText(activity, couponBeanList.size()+"", Toast.LENGTH_SHORT).show();
+        if (couponBeanList.size()>0) {
+            item_my_coupon.setTextValue(couponBeanList.size()+"张可用");
+        }
+    }
+
+    @Override
+    public void showEmptyView() {
+
+    }
+
+    @Override
+    public void showEndFooterView() {
+
     }
 }

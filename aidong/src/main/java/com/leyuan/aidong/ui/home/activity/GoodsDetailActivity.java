@@ -523,11 +523,13 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         tvRecommendCode.setText(etCode.getText());
+                        KeyBoardUtil.closeKeyboard(etCode,GoodsDetailActivity.this);
                         dialog.dismiss();
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        KeyBoardUtil.closeKeyboard(etCode,GoodsDetailActivity.this);
                         dialog.dismiss();
                     }
                 });

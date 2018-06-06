@@ -442,7 +442,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         if (baseBean.getStatus() == Constant.OK) {
             contest.followed = true;
             img_attention.setImageResource(R.drawable.icon_contest_parsed);
-            Toast.makeText(this, R.string.follow_success, Toast.LENGTH_LONG).show();
+
         } else {
             Toast.makeText(this, R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -453,7 +453,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
         if (baseBean.getStatus() == Constant.OK) {
             contest.followed = false;
             img_attention.setImageResource(R.drawable.icon_contest_parse_not);
-            Toast.makeText(this, R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+
         } else {
             Toast.makeText(this, R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }

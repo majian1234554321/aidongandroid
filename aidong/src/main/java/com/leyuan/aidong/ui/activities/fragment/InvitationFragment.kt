@@ -7,9 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
+
 import com.leyuan.aidong.R
 import com.leyuan.aidong.config.UrlConfig
 import com.leyuan.aidong.ui.App
@@ -17,7 +15,9 @@ import com.leyuan.aidong.ui.BaseFragment
 import com.leyuan.aidong.ui.activities.`interface`.MyJSInterface
 import com.leyuan.aidong.utils.GlideLoader
 import com.leyuan.aidong.utils.Logger
-import kotlinx.android.synthetic.main.detailsactivityh5fragment.*
+import com.tencent.smtt.sdk.WebChromeClient
+import com.tencent.smtt.sdk.WebSettings
+import com.tencent.smtt.sdk.WebView
 
 import kotlinx.android.synthetic.main.invitationfragment.*
 import java.util.HashMap
@@ -49,16 +49,18 @@ class InvitationFragment : BaseFragment() {
 
         webSettings.setSupportZoom(true)
 
-        webSettings.builtInZoomControls = true
-        //        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        //        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+         webSettings.builtInZoomControls = true
+
 
         webSettings.domStorageEnabled = true
+        webSettings.loadWithOverviewMode = true
 
-
+        webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
 
         webSettings.databaseEnabled = true
-        mWebView.webChromeClient = object : WebChromeClient() {
+        webSettings.useWideViewPort = true
+
+        mWebView.setWebChromeClient(object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
                 if (newProgress > 70) {
@@ -70,11 +72,9 @@ class InvitationFragment : BaseFragment() {
                 super.onReceivedTitle(view, title)
 
             }
-        }
+        })
 
-        mWebView.webViewClient = object :WebViewClient(){
 
-        }
 
 
         Logger.i(TAG, "mWebView.loadUrl start")

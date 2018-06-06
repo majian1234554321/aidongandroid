@@ -149,7 +149,13 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         }
 
 
-        txtTime.setText(campaignDetailBean.getStartTime() + "-" + campaignDetailBean.getEndTime());
+        if (campaignDetailBean.getStartTime().equals(campaignDetailBean.getEndTime())){
+            txtTime.setText(campaignDetailBean.getStartTime());
+        }else {
+            txtTime.setText(campaignDetailBean.getStartTime() + "~" + campaignDetailBean.getEndTime());
+        }
+
+
         txtCityAddress.setText(campaignDetailBean.getLandmark());
         txtLocationDetail.setText(campaignDetailBean.getAddress());
         if (campaignDetailBean.getApplicant() != null && !campaignDetailBean.getApplicant().isEmpty()) {
@@ -239,7 +245,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
             campaignDetailBean.followed = true;
             txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
             bt_attention.setImageResource(R.drawable.icon_followed);
-            ToastGlobal.showShortConsecutive(R.string.follow_success);
+
         } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
@@ -253,7 +259,7 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
 
             txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
             bt_attention.setImageResource(R.drawable.icon_follow);
-            ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
+
         } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }

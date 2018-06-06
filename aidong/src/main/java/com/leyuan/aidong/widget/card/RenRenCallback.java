@@ -65,7 +65,7 @@ public class RenRenCallback extends ItemTouchHelper.SimpleCallback {
     @Override
     public float getSwipeThreshold(RecyclerView.ViewHolder viewHolder) {
         //滑动的比例达到多少之后, 视为滑动
-        return 0.3f;
+        return 0.1f;
     }
 
 

@@ -1,63 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-
-    android:background="@drawable/shadow_12139"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
+    android:layout_height="wrap_content"
+    android:background="@drawable/shadow_12139"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_margin="1px"
+        android:id="@+id/recy_item_im"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:scaleType="centerCrop"
+        android:transitionName="share" />
+
+    <RelativeLayout
+        android:id="@+id/rl"
+
+        android:layout_width="match_parent"
+        android:layout_height="220dp">
 
 
 
-              <ImageView
-                  android:id="@+id/recy_item_im"
-android:scaleType="centerCrop"
-
-                  android:transitionName="share"
-
-
-                  android:layout_width="match_parent"
-                  android:layout_height="220dp" />
+    </RelativeLayout>
 
 
 
-       <TextView
-           android:textColor="@color/black"
-           android:id="@+id/tv_1"
-           tools:text="哈哈"
-           android:layout_marginTop="16dp"
-           android:layout_below="@+id/recy_item_im"
-           android:textSize="16sp"
-           android:gravity="center"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content" />
-       <TextView
-           android:textColor="@color/black"
-           android:id="@+id/tv_2"
-           android:layout_below="@+id/tv_1"
-           tools:text="哈哈"
-           android:layout_margin="8dp"
-           android:textSize="14sp"
-           android:gravity="center"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:text="哈哈" />
 
-       <TextView
-           android:textColor="@color/main_red"
+    <TextView
+        android:id="@+id/tv_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_1"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:text="哈哈" />
 
-           android:layout_marginBottom="16dp"
-           android:background="@drawable/shape_stroke_red_button2"
-           android:id="@+id/tv_3"
-           android:layout_below="@+id/tv_2"
-           tools:text="哈哈"
-           android:layout_centerHorizontal="true"
-           android:textSize="15sp"
-           android:gravity="center"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_3"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_stroke_red_button2"
+        android:gravity="center"
+        android:textColor="@color/main_red"
+        android:textSize="15sp"
+        tools:text="哈哈" />
 
 </RelativeLayout>

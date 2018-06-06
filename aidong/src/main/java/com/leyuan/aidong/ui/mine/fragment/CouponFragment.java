@@ -54,7 +54,7 @@ public class CouponFragment extends BaseFragment implements CouponFragmentView {
     private List<CouponBean> data;
     private CouponAdapter couponAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private CouponPresent present;
+    private CouponPresentImpl present;
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

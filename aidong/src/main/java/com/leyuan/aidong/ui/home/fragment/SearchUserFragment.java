@@ -170,7 +170,7 @@ public class SearchUserFragment extends BasePageFragment implements SearchUserFr
         if(baseBean.getStatus() == Constant.OK){
             SystemInfoUtils.addFollow(data.get(position));
             userAdapter.notifyDataSetChanged();
-            ToastGlobal.showLong(R.string.follow_success);
+
         }else {
             ToastGlobal.showLong(R.string.follow_fail);
         }
@@ -181,7 +181,7 @@ public class SearchUserFragment extends BasePageFragment implements SearchUserFr
         if(baseBean.getStatus() == Constant.OK){
             SystemInfoUtils.removeFollow(data.get(position));
             userAdapter.notifyDataSetChanged();
-            ToastGlobal.showLong(R.string.cancel_follow_success);
+
         }else {
             ToastGlobal.showLong(R.string.cancel_follow_fail);
         }

@@ -26,8 +26,11 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
+import com.leyuan.aidong.ui.mine.fragment.CouponFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointCampaignActivityView;
+import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.FormatUtil;
@@ -54,7 +57,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
  * 详情确认订单(活动)
  */
 
-public class ConfirmOrderCampaignActivity extends BaseActivity implements AppointCampaignActivityView, View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
+public class ConfirmOrderCampaignActivity extends BaseActivity implements AppointCampaignActivityView, View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener, CouponFragmentView {
 
     private static final String TAG = "ConfirmOrderCourseActivity";
     private CommonTitleLayout layoutTitle;
@@ -113,6 +116,11 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
         initView();
         initData();
+
+
+        CouponPresentImpl presents = new CouponPresentImpl(this, this);
+        presents.pullToRefreshData(CouponFragment.VALID);
+
 
         campaignPresent = new CampaignPresentImpl(this, this);
         campaignPresent.getCampaignAvailableCoupon(course.skucode, course.amount);
@@ -255,7 +263,9 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
             //tvCoupon.setCompoundDrawables(null, null, null, null);
             txtCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
         } else {
-            txtCoupon.setText("请选择");
+            if (couponBeanList.size()>0) {
+                txtCoupon.setText(couponBeanList.size()+"张可用");
+            }
             txtCoupon.setTextColor(Color.BLACK);
         }
     }
@@ -346,4 +356,24 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         DialogUtils.releaseDialog();
     }
 
+    public List<CouponBean> couponBeanList;
+
+    @Override
+    public void updateRecyclerView(List<CouponBean> couponBeanList) {
+        this.couponBeanList = couponBeanList ;
+
+        if (couponBeanList.size()>0) {
+            txtCoupon.setText(couponBeanList.size()+"张可用");
+        }
+    }
+
+    @Override
+    public void showEmptyView() {
+
+    }
+
+    @Override
+    public void showEndFooterView() {
+
+    }
 }

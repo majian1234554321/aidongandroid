@@ -154,7 +154,7 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
         if (baseBean.getStatus() == Constant.OK) {
             data.get(position).followed = true;
             userAdapter.notifyDataSetChanged();
-            Toast.makeText(this, R.string.follow_success, Toast.LENGTH_LONG).show();
+
         } else {
             Toast.makeText(this, R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -174,7 +174,7 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
         if (baseBean.getStatus() == Constant.OK) {
             data.get(position).followed = false;
             userAdapter.notifyDataSetChanged();
-            Toast.makeText(this, R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+
         } else {
             Toast.makeText(this, R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }

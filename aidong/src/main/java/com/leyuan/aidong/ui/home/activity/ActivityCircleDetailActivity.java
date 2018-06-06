@@ -446,6 +446,25 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 //            Logger.i("recyclerView.scrollBy setCampaignDetail ,top = " + top1);
         }
 
+
+        List<GoodsSkuBean>  list =   new ArrayList<GoodsSkuBean>();
+
+        if(campaignBean.spec!=null&&campaignBean.spec.item!=null&&campaignBean.spec.item.size()>1){
+            for (int i = 0; i < campaignBean.spec.item.size(); i++) {
+                if (campaignBean.spec.item.get(i).getStock()>0) {
+                    list.add(campaignBean.spec.item.get(i));
+                }
+            }
+
+            if (list.size()==1){
+
+                this.selectedSkuValues.addAll(list.get(0).value);
+
+
+            }
+        }
+
+
     }
 
     private List<String> selectedSkuValues = new ArrayList<>();

@@ -251,7 +251,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
 //            userAdapter.notifyDataSetChanged();
 
 
-            ToastGlobal.showLong(R.string.follow_success);
+
         } else {
             ToastGlobal.showLong(R.string.follow_fail);
         }
@@ -268,7 +268,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
             userAdapter.notifyItemChanged(position);
 
 
-            ToastGlobal.showLong(R.string.cancel_follow_success);
+
         } else {
             ToastGlobal.showLong(R.string.cancel_follow_fail);
         }

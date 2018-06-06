@@ -47,7 +47,12 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
 //
 //        }
 
-        holder.txtTime.setText(bean.start_time + "-" + bean.end_time);
+        if (bean.start_time.equals(bean.end_time)){
+            holder.txtTime.setText(bean.start_time);
+        }else {
+            holder.txtTime.setText(bean.start_time + "~" + bean.end_time);
+        }
+
 
         holder.txt_sub_title.setText(((TextUtils.isEmpty(bean.getSlogan()))?"":bean.getSlogan()+ " | "  )+ bean.getFollows_count() + "人已关注");
 

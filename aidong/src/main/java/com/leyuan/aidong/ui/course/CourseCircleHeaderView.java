@@ -274,7 +274,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 //        txtCourseName.setText(course.getName());
         tv_fans.setText(course.getFollows_count()+"");
         if (course.getFollowers() != null) {
-            value = course.getFollowers().size();
+            value = course.getFollows_count();
             tv_fans.setText(course.getFollows_count()+"");
         } else {
             tv_fans.setText("0");
@@ -332,7 +332,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             if (onLoadListener != null) {
                 onLoadListener.load();
             }
-            ToastGlobal.showShortConsecutive(R.string.follow_success);
+
         } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
@@ -347,7 +347,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             tv_fans.setText(value + "");
             setImageResourceVale(R.drawable.unfollw);
             tv_fans.setTextColor(ContextCompat.getColor(context,R.color.gray));
-            ToastGlobal.showShortConsecutive(R.string.cancel_follow_success);
+
 
             if (onLoadListener != null) {
                 onLoadListener.load();

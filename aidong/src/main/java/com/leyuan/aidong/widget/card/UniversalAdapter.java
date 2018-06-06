@@ -1,5 +1,6 @@
 package com.leyuan.aidong.widget.card;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.leyuan.aidong.R;
@@ -37,6 +39,7 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
         this.context = context;
     }
 
+    @NonNull
     @Override
     public UniversalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recylerview_item, null);
@@ -45,7 +48,7 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final UniversalViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final UniversalViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
 
         final CourseBeanNew courseBean = courseBeanNews.get(position);
@@ -63,18 +66,12 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
 
 
 
+
         holder.tv_1.setText(courseBean.getName());
 
         holder.tv_2.setText(courseBean.getTagString());
 
-        String values = "" ;
-        if (courseBean.getStrength()>=5){
-            values = "高难度";
-        }else if(courseBean.getStrength()>=3&&courseBean.getStrength()<5){
-            values = "中级进阶";
-        }else {
-            values = "初级难度";
-        }
+
 
         holder.tv_3.setText(courseBean.professionalism);
 
@@ -83,7 +80,11 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onItemClick(courseBean.getId(), position,holder.itemView);
+                   // Toast.makeText(context, "position"+position, Toast.LENGTH_SHORT).show();
+                    if (position==courseBeanNews.size()-1){
+                        listener.onItemClick(courseBean.getId(), position,holder.itemView);
+                    }
+
                 }
             }
         });

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:background="@color/white"
@@ -28,7 +29,11 @@
             android:textColor="@color/black"
             android:textSize="@dimen/pref_16dp"
             />
+
+
+
         <ImageView
+            android:id="@+id/iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -36,6 +41,17 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/icon_right_arrow"
             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_tips"
+            tools:text="1212"
+            android:visibility="gone"
+            android:layout_marginRight="12dp"
+            android:textColor="@color/main_red"
+            android:layout_toLeftOf="@+id/iv"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/img_divider"
             android:layout_width="match_parent"

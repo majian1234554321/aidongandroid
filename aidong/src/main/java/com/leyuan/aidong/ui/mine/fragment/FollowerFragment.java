@@ -184,7 +184,7 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
 
             data.get(position).followed = true;
             followAdapter.notifyDataSetChanged();
-            Toast.makeText(getContext(), R.string.follow_success, Toast.LENGTH_LONG).show();
+
         } else {
             Toast.makeText(getContext(), R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -197,7 +197,7 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
 //            data.remove(data.get(position));
             data.get(position).followed = false;
             followAdapter.notifyDataSetChanged();
-            Toast.makeText(getContext(), R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+
         } else {
             Toast.makeText(getContext(), R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }

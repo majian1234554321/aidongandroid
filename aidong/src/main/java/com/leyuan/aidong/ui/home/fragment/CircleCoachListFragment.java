@@ -40,7 +40,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * Created by user on 2018/1/5.
  */
-public class CircleCoachListFragment extends BaseFragment implements UserInfoView, CircleCoachListAdapter.OnAttentionClickListener, FollowView,CircleView {
+public class CircleCoachListFragment extends BaseFragment implements UserInfoView, CircleCoachListAdapter.OnAttentionClickListener, FollowView, CircleView {
 
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -69,7 +69,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
         initSwitcherLayout();
         present = new FollowPresentImpl(getActivity());
         present.setUserViewListener(this);
-        present.getRecommendCoachList(switcherLayout,currPage);
+        present.getRecommendCoachList(switcherLayout, currPage);
         present.setFollowListener(this);
 //        if()
 //        present.getUserFollow("");
@@ -85,7 +85,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.getRecommendCoachList(switcherLayout,currPage);
+                present.getRecommendCoachList(switcherLayout, currPage);
             }
         });
     }
@@ -115,18 +115,13 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
     }
 
 
-
-
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
             currPage++;
-            FollowPresentImpl   present2 = new FollowPresentImpl(getActivity(),CircleCoachListFragment.this);
-            present2.requestMoreDataFollow(recyclerView,currPage,25);
+            FollowPresentImpl present2 = new FollowPresentImpl(getActivity(), CircleCoachListFragment.this);
+            present2.requestMoreDataFollow(recyclerView, currPage, 25);
         }
-
-
-
 
 
     };
@@ -143,9 +138,6 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
         data.addAll(followings);
         adapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
-
-
-
 
 
     }
@@ -166,7 +158,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
     public void onCourseAttentionClick(String id, int position, boolean followed) {
 
 
-        if(!App.getInstance().isLogin()){
+        if (!App.getInstance().isLogin()) {
             UiManager.activityJump(getActivity(), LoginActivity.class);
             return;
         }
@@ -191,6 +183,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
 
             if (clickedFollowPosition < data.size()) {
                 data.get(clickedFollowPosition).followed = true;
+                data.get(clickedFollowPosition).followers_count++;
                 adapter.notifyItemChanged(clickedFollowPosition);
 //                wrapperAdapter.notifyDataSetChanged();
                 ToastGlobal.showShortConsecutive(R.string.attention_success);
@@ -209,6 +202,7 @@ public class CircleCoachListFragment extends BaseFragment implements UserInfoVie
                 Logger.i("Myattention  cancelFollowResult");
 
                 data.get(clickedFollowPosition).followed = false;
+                data.get(clickedFollowPosition).followers_count--;
                 adapter.notifyItemChanged(clickedFollowPosition);
                 ToastGlobal.showShortConsecutive(R.string.attention_cancel_success);
             } else {

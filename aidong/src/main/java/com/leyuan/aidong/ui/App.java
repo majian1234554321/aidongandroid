@@ -33,6 +33,7 @@ import com.leyuan.aidong.utils.VersionManager;
 //import com.nostra13.universalimageloader.core.ImageLoader;
 //import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 //import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.tencent.smtt.sdk.QbSdk;
 import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
@@ -104,6 +105,8 @@ public class App extends MultiDexApplication {
         BaseUtils.init(this);
        // initImageLoader(this);
         initFFmpegBinary(this);
+
+        QbSdk.initX5Environment(getApplicationContext(),  null);
 
 //        Logger.i("md5", Md5Utils.createMd("ae2c037cd273f69bfb5c96902d95b151"));
     }
