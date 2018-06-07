@@ -15,7 +15,7 @@ import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.fragment.AiEaseChatFragment;

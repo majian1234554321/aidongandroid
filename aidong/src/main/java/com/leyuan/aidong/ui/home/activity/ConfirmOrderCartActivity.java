@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.home.ConfirmOrderShopAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.AddressBean;
@@ -59,8 +59,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.leyuan.aidong.R.id.ll__receiving_time;
-import static com.leyuan.aidong.R.id.txt_receving_time;
+import static com.example.aidong.R.id.ll__receiving_time;
+import static com.example.aidong.R.id.txt_receving_time;
 import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;

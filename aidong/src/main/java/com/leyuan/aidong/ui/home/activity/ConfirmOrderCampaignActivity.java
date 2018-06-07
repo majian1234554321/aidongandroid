@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.entity.CouponBean;
@@ -57,7 +57,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
  * 详情确认订单(活动)
  */
 
-public class ConfirmOrderCampaignActivity extends BaseActivity implements AppointCampaignActivityView, View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener, CouponFragmentView {
+public class ConfirmOrderCampaignActivity extends BaseActivity implements AppointCampaignActivityView, View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "ConfirmOrderCourseActivity";
     private CommonTitleLayout layoutTitle;
@@ -118,8 +118,8 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         initData();
 
 
-        CouponPresentImpl presents = new CouponPresentImpl(this, this);
-        presents.pullToRefreshData(CouponFragment.VALID);
+//        CouponPresentImpl presents = new CouponPresentImpl(this, this);
+//        presents.pullToRefreshData(CouponFragment.VALID);
 
 
         campaignPresent = new CampaignPresentImpl(this, this);
@@ -173,7 +173,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         txtCourseName.setText(course.getName());
         txtCoachName.setText(course.skuTime);
         if (course.getImage() != null && course.getImage().size() > 0) {
-            GlideLoader.getInstance().displayImage(course.getImage().get(0), imgCourse);
+            GlideLoader.getInstance().displayImage2(course.getImage().get(0), imgCourse);
         }
 
         txtCourseTime.setText("共" + course.amount + "张票");
@@ -263,10 +263,10 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
             //tvCoupon.setCompoundDrawables(null, null, null, null);
             txtCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
         } else {
-            if (couponBeanList.size()>0) {
-                txtCoupon.setText(couponBeanList.size()+"张可用");
+            if (usableCoupons.size()>0) {
+                txtCoupon.setText(usableCoupons.size()+"张可用");
             }
-            txtCoupon.setTextColor(Color.BLACK);
+
         }
     }
 
@@ -341,7 +341,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 couponId = couponBean.getId();
                 txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) > 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
+                        FormatUtil.parseDouble(couponBean.getActual())) :usableCoupons.size()+"张可用");
                 txtCouponSubtract.setText(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())));
                 txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
@@ -356,24 +356,24 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         DialogUtils.releaseDialog();
     }
 
-    public List<CouponBean> couponBeanList;
-
-    @Override
-    public void updateRecyclerView(List<CouponBean> couponBeanList) {
-        this.couponBeanList = couponBeanList ;
-
-        if (couponBeanList.size()>0) {
-            txtCoupon.setText(couponBeanList.size()+"张可用");
-        }
-    }
-
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void showEndFooterView() {
-
-    }
+//    public List<CouponBean> couponBeanList;
+//
+//    @Override
+//    public void updateRecyclerView(List<CouponBean> couponBeanList) {
+//        this.couponBeanList = couponBeanList ;
+//
+//        if (couponBeanList.size()>0) {
+//            txtCoupon.setText(couponBeanList.size()+"张可用");
+//        }
+//    }
+//
+//    @Override
+//    public void showEmptyView() {
+//
+//    }
+//
+//    @Override
+//    public void showEndFooterView() {
+//
+//    }
 }

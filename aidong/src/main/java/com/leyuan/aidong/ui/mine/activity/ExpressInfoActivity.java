@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.ExpressResultBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;

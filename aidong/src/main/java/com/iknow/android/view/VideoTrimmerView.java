@@ -26,7 +26,7 @@ import com.iknow.android.utils.TrimVideoUtil;
 import com.iknow.android.widget.RangeSeekBarView;
 import com.iknow.android.widget.Thumb;
 import com.iknow.android.widget.VideoThumbHorizontalListView;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.io.File;

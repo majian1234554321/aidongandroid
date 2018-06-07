@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.discover;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
@@ -12,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
@@ -25,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static com.leyuan.aidong.R.id.tv_content;
+import static com.example.aidong.R.id.tv_content;
 
 
 public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdapter.CommentHolder> {
@@ -48,7 +49,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
     }
 
     @Override
-    public CommentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CommentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_dynamic_detail_comment, parent, false);
         return new CommentHolder(view);
     }

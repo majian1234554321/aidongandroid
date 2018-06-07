@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.exoplayer.util.Util;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicDetailAdapter;
 import com.leyuan.aidong.config.ConstantUrl;

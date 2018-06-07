@@ -7,7 +7,7 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.Logger;

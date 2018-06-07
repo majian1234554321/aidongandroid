@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.VenuesDetailBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
@@ -31,7 +31,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-import static com.leyuan.aidong.R.id.tv_subbranch;
+import static com.example.aidong.R.id.tv_subbranch;
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 

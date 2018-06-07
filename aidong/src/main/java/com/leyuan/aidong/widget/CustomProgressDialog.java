@@ -6,7 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 
 public class CustomProgressDialog extends ProgressDialog {

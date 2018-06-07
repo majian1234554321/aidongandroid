@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.baseadapter.BaseRecyclerViewHolder;
 import com.leyuan.aidong.adapter.home.HorizontalCourseAdapter;
 import com.leyuan.aidong.entity.HomeBean;

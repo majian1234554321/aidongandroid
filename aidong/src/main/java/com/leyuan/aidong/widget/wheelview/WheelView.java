@@ -32,7 +32,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.util.LinkedList;
 import java.util.List;

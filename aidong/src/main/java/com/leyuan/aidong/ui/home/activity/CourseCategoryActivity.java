@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.home.CourseCategoryAdapter;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CategoryListBean;

@@ -1,4 +1,4 @@
-package com.leyuan.aidong.receivers;
+package com.example.aidong.Receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

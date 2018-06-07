@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.mine.AppointmentAdapter;
 import com.leyuan.aidong.entity.AppointmentBean;
 import com.leyuan.aidong.entity.BaseBean;

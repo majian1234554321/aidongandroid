@@ -15,7 +15,7 @@ import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.poi.PoiSortType;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.discover.SelectLocationAdapter;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.App;

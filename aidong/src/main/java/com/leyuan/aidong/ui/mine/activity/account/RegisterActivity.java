@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.ProfileBean;

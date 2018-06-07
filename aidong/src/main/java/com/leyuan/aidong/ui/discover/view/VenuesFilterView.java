@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.home.CategoryListAdapter;
 import com.leyuan.aidong.adapter.home.LeftFilterAdapter;
 import com.leyuan.aidong.adapter.home.RightFilterAdapter;

@@ -12,7 +12,7 @@
 //import android.widget.RelativeLayout;
 //import android.widget.TextView;
 //
-//import com.leyuan.aidong.R;
+//import com.example.aidong.R;
 //import com.leyuan.aidong.adapter.baseadapter.BaseRecyclerViewHolder;
 //import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
 //import com.leyuan.aidong.adapter.discover.DynamicCommentAdapter;

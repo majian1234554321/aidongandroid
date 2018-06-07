@@ -16,12 +16,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
-import com.leyuan.aidong.receivers.ChatMessageReceiver;
-import com.leyuan.aidong.receivers.NewPushMessageReceiver;
+import com.example.aidong.Receivers.ChatMessageReceiver;
+import com.example.aidong.Receivers.NewPushMessageReceiver;
 import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.home.fragment.StoreFragment;

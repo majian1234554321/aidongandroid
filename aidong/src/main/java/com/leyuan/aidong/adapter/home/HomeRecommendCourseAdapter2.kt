@@ -13,8 +13,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 
-import com.leyuan.aidong.R
-import com.leyuan.aidong.R.id.iv
+import com.example.aidong.R
 import com.leyuan.aidong.entity.course.CourseBeanNew
 import com.leyuan.aidong.ui.course.CourseCircleDetailActivity
 import com.leyuan.aidong.utils.GlideLoader

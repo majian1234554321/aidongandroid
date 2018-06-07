@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.iknow.android.interfaces.OnRangeSeekBarListener;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.util.ArrayList;
 import java.util.List;

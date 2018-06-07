@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.discover.DiscoverBrandsAdapter;
 import com.leyuan.aidong.adapter.discover.DiscoverNewsAdapter;
 import com.leyuan.aidong.adapter.discover.DiscoverUserAdapter;

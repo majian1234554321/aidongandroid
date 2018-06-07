@@ -17,7 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.HomeVideoAdapter;
 import com.leyuan.aidong.entity.video.LiveHomeResult;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;

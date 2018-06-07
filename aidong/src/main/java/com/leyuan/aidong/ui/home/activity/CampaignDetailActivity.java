@@ -16,7 +16,7 @@
 //import android.widget.RelativeLayout;
 //import android.widget.TextView;
 //
-//import com.leyuan.aidong.R;
+//import com.example.aidong.R;
 //import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 //import com.leyuan.aidong.config.ConstantUrl;
 //import com.leyuan.aidong.entity.CampaignDetailBean;
@@ -38,7 +38,7 @@
 //
 //import cn.bingoogolapple.bgabanner.BGABanner;
 //
-//import static com.leyuan.aidong.R.id.iv_back;
+//import static com.example.aidong.R.id.iv_back;
 //
 //
 ///**

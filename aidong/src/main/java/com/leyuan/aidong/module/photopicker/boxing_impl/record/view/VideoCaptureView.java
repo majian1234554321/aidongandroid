@@ -31,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.preview.CapturePreview;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.Logger;

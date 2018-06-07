@@ -62,7 +62,7 @@ import com.google.android.exoplayer.util.DebugTextViewHelper;
 import com.google.android.exoplayer.util.MimeTypes;
 import com.google.android.exoplayer.util.Util;
 import com.google.android.exoplayer.util.VerboseLogUtil;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.video.player.ExtractorRendererBuilder;
 import com.leyuan.aidong.ui.video.player.HlsRendererBuilder;

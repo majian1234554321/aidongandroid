@@ -22,7 +22,7 @@ package com.leyuan.aidong.utils;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

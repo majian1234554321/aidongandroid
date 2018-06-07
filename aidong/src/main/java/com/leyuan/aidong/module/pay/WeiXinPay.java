@@ -3,7 +3,7 @@ package com.leyuan.aidong.module.pay;
 import android.app.Activity;
 import android.content.Context;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.PayOptionBean;
 import com.leyuan.aidong.utils.ThirdClientValid;
 import com.leyuan.aidong.utils.ToastGlobal;

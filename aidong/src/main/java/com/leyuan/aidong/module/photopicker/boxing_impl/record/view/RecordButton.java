@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 /**
  * Record

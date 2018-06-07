@@ -3,7 +3,7 @@ package com.leyuan.aidong.ui.mine.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.chat.AiConversationListFragment;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.widget.SimpleTitleBar;

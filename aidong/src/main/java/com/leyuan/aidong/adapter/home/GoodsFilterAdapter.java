@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.EquipmentBean;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.mine.CouponNewcomerAdapter;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.ui.BaseActivity;

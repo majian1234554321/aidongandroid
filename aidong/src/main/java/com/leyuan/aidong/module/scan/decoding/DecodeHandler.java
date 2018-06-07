@@ -22,7 +22,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.scan.activity.MipcaActivityCapture;
 import com.leyuan.aidong.module.scan.camera.CameraManager;
 import com.leyuan.aidong.module.scan.camera.PlanarYUVLuminanceSource;

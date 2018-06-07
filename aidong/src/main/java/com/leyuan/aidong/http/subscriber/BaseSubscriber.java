@@ -2,7 +2,7 @@ package com.leyuan.aidong.http.subscriber;
 
 import android.content.Context;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.http.api.exception.NotLoginException;
 import com.leyuan.aidong.http.api.exception.ZeroException;
 import com.leyuan.aidong.utils.Logger;

@@ -37,7 +37,7 @@ import android.widget.FrameLayout;
 import android.widget.MediaController;
 import android.widget.TableLayout;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.services.MediaPlayerService;
 import com.leyuan.aidong.utils.Settings;
 

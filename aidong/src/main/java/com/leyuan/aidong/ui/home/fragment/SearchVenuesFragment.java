@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.discover.VenuesAdapter;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BasePageFragment;

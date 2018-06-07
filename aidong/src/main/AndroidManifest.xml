@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.leyuan.aidong">
+    package="com.example.aidong"
+   >
 
     <!-- Required -->
     <permission
@@ -80,7 +81,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
-        android:name=".ui.App"
+        android:name="com.leyuan.aidong.ui.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -89,7 +90,7 @@
         tools:replace="android:icon"
         android:theme="@style/AppTheme.FullScreen">
         <activity
-            android:name=".ui.SplashActivity"
+            android:name="com.leyuan.aidong.ui.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashBackgroundTheme">
             <intent-filter>
@@ -99,418 +100,418 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.leyuan.aidong.ui.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".ui.mine.activity.test.LocationTestActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.test.LocationTestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.account.LoginActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.account.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.account.RegisterActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.account.RegisterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".ui.mine.activity.account.CompleteUserInfoActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.account.CompleteUserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseVideoDetailActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.CourseVideoDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.course.CourseVideoDetailActivityNew"
+            android:name="com.leyuan.aidong.ui.course.CourseVideoDetailActivityNew"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.store.StoreDetailActivity"
+            android:name="com.leyuan.aidong.ui.store.StoreDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.store.StoreDetailActivity2"
+            android:name="com.leyuan.aidong.ui.store.StoreDetailActivity2"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.course.CourseCircleDetailActivity"
+            android:name="com.leyuan.aidong.ui.course.CourseCircleDetailActivity"
 
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.course.activity.RelativeVideoListActivity"
+            android:name="com.leyuan.aidong.ui.course.activity.RelativeVideoListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.RelatedVideoActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.RelatedVideoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.ClipPhotosActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.ClipPhotosActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.account.ChangePasswordActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.account.ChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.account.FastLoginActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.account.FastLoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.account.FindPasswordActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.account.FindPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.GoodsDetailActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.GoodsDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseCategoryActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.CourseCategoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.account.UserAgreementActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.account.UserAgreementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.account.XiuGaiGeXinQianMing"
+            android:name="com.leyuan.aidong.ui.mine.activity.account.XiuGaiGeXinQianMing"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.CouponNewcomerActivity"
-
-            android:theme="@style/ThemeSemitransparent" />
-        <activity
-            android:name=".ui.mine.activity.CouponShareActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity"
 
             android:theme="@style/ThemeSemitransparent" />
         <activity
-            android:name=".ui.mine.activity.setting.AboutMxActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.CouponShareActivity"
+
+            android:theme="@style/ThemeSemitransparent" />
+        <activity
+            android:name="com.leyuan.aidong.ui.mine.activity.setting.AboutMxActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.setting.VersionIntroActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.setting.VersionIntroActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.BingdingCommunityActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.BingdingCommunityActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.PrivacyActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.PrivacyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.ExpressInfoActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.ExpressInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.setting.TabHelpActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.setting.TabHelpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.setting.PhoneBindingThirdLoginActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingThirdLoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.setting.PhoneBindingActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.setting.PhoneUnBindingActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.setting.PhoneUnBindingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.setting.TabMineChangePasswordActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.setting.TabMineChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.setting.TabMineMessageReminderActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.setting.TabMineMessageReminderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.setting.TabMinePersonalSettingsActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.LoveCoinActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.LoveCoinActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.LoveCoinWithDrawActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.LoveCoinWithDrawActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.PaymentDetailActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.PaymentDetailActivity"
             android:screenOrientation="portrait" />
 
         <!-- <activity -->
-        <!-- android:name=".ui.mine.activity.AppointmentActivity" -->
+        <!-- android:name="com.leyuan.aidong.ui.mine.activity.AppointmentActivity" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
-            android:name=".ui.mine.activity.CouponActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.CouponActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.SelectCouponActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.SelectCouponActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.OrderDetailMultiplePackagesActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.OrderDetailMultiplePackagesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.FollowActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.FollowActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.AddAddressActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.AddAddressActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.AiDongMomentActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MessageActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.MessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.SystemMessageActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.SystemMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.AddressActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.AddressActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.SelectAddressActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.SelectAddressActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.CartActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.CartActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.CouponExchangeActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.CouponExchangeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.PaySuccessActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.PaySuccessActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.ApplyServiceNextActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.ApplyServiceNextActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.AppointDetailCourseNewActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.AppointDetailCourseNewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ConfirmOrderCourseActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.ConfirmOrderCourseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ConfirmOrderCampaignActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.ConfirmOrderCampaignActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".ui.home.activity.AppointCourseSuccessActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.AppointCourseSuccessActivity"
             android:screenOrientation="portrait" />
         <!-- <activity -->
-        <!-- android:name=".ui.mine.activity.AppointmentMineCampaignActivityNew" -->
+        <!-- android:name="com.leyuan.aidong.ui.mine.activity.AppointmentMineCampaignActivityNew" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
-            android:name=".ui.mine.activity.UserInfoActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.UserInfoActivity"
             android:screenOrientation="portrait" />
         <!-- <activity -->
-        <!-- android:name=".ui.mine.activity.CoachInfoActivity" -->
+        <!-- android:name="com.leyuan.aidong.ui.mine.activity.CoachInfoActivity" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
-            android:name=".ui.mine.activity.UpdateAddressActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.UpdateAddressActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.UpdateUserInfoActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.UpdateUserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.UpdateSignatureActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.UpdateSignatureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.UpdateDeliveryInfoActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.UpdateDeliveryInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.GuideActivity"
+            android:name="com.leyuan.aidong.ui.GuideActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.UpdatePhotoWallActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.UpdatePhotoWallActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.scan.activity.MipcaActivityCapture"
+            android:name="com.leyuan.aidong.module.scan.activity.MipcaActivityCapture"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.scan.activity.ScanActivity"
+            android:name="com.leyuan.aidong.module.scan.activity.ScanActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.FoodActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.FoodActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.GoodsBrandRecommendActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.GoodsBrandRecommendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.PastCampaignActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.PastCampaignActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ActivityCircleDetailActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.ActivityCircleDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestHomeActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestHomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestRuleActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestRuleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.PublishContestDynamicActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.PublishContestDynamicActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestQuarterFinalEnrolActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestQuarterFinalEnrolActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestQuarterFinalEnroledRecordActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestQuarterFinalEnroledRecordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestSemiFinalEnrolmentActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestSemiFinalEnrolmentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestRankingListActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestRankingListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestOfficialInformationActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestOfficialInformationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestEnrolmentInfoActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestEnrolmentInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestDynamicActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestDynamicActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.competition.activity.ContestDynamicDetailActivity"
+            android:name="com.leyuan.aidong.ui.competition.activity.ContestDynamicDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.iknow.android.TrimmerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CircleListActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.CircleListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseListActivityNew"
+            android:name="com.leyuan.aidong.ui.home.activity.CourseListActivityNew"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseDetailNewActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.CourseDetailNewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CampaignActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.CampaignActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.SearchActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SearchTheme" />
         <!-- <activity -->
-        <!-- android:name=".ui.home.activity.CampaignDetailActivity" -->
+        <!-- android:name="com.leyuan.aidongcom.leyuan.aidong.ui.home.activity.CampaignDetailActivity" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
-            android:name=".ui.home.activity.GoodsListActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.GoodsListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.NurtureActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.NurtureActivity"
 
             android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".ui.home.activity.EquipmentActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.EquipmentActivity"
 
             android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".ui.home.activity.FoodAndBeverageActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.FoodAndBeverageActivity"
 
             android:theme="@style/AppTheme.FullScreen" />
         <!-- <activity -->
-        <!-- android:name=".ui.home.activity.AppointCampaignActivity" -->
+        <!-- android:name="com.leyuan.aidong.ui.home.activity.AppointCampaignActivity" -->
         <!-- android:screenOrientation="portrait" -->
         <!-- android:windowSoftInputMode="stateHidden" /> -->
         <activity
-            android:name=".ui.mine.activity.AppointCampaignDetailActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.SportRecordActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.SportRecordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.BrandActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.BrandActivity"
 
             android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".ui.home.activity.DeliveryInfoActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.DeliveryInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ConfirmOrderCartActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.ConfirmOrderCartActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ConfirmOrderGoodsActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.ConfirmOrderGoodsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.SelfDeliveryVenuesActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.SelfDeliveryVenuesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ConfirmGoodsActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.ConfirmGoodsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ImagePreviewActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.ImagePreviewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.AppointmentUserActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.AppointmentUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.LocationActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.LocationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.SelectCityActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.SelectCityActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.PublishDynamicActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".ui.discover.activity.SelectedLocationActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.SelectedLocationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.SelectedCircleActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.SelectedCircleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.SelectedUserActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.SelectedUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyAttentionListActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.MyAttentionListActivity"
             android:screenOrientation="portrait" />
         <!-- <activity -->
-        <!-- android:name=".ui.discover.activity.DynamicDetailActivity" -->
+        <!-- android:name="com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
-            android:name=".ui.discover.activity.DynamicDetailByIdActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.CMDMessageActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.CMDMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.DynamicParseUserActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.DynamicParseUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.AppointVenuesActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.AppointVenuesActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.discover.activity.AppointCoachActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.AppointCoachActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.DiscoverVenuesActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.DiscoverVenuesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.VenuesSubbranchActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.VenuesSubbranchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.NewsActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.NewsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.NewsDetailActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.NewsDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.video.activity.WatchOfficeActivity"
+            android:name="com.leyuan.aidong.ui.video.activity.WatchOfficeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.GoodsVirtualListActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.GoodsVirtualListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.NewBarcodeActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.NewBarcodeActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.video.activity.VideoDetailActivity"
+            android:name="com.leyuan.aidong.ui.video.activity.VideoDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.video.activity.LiveCommentActivity"
+            android:name="com.leyuan.aidong.ui.video.activity.LiveCommentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.video.activity.LiveDetailActivity"
+            android:name="com.leyuan.aidong.ui.video.activity.LiveDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.AdvertisementActivity"
+            android:name="com.leyuan.aidong.ui.home.AdvertisementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyMemberCardActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.MyMemberCardActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".ui.video.activity.LivingVideoActivity"
+            android:name="com.leyuan.aidong.ui.video.activity.LivingVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/PlayerTheme">
@@ -533,16 +534,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.video.activity.VideoCommentActivity"
+            android:name="com.leyuan.aidong.ui.video.activity.VideoCommentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.video.activity.VideoMoreActivity"
+            android:name="com.leyuan.aidong.ui.video.activity.VideoMoreActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.WebViewActivity"
+            android:name="com.leyuan.aidong.ui.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.video.activity.PlayerActivity"
+            android:name="com.leyuan.aidong.ui.video.activity.PlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
@@ -560,15 +561,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.mine.activity.ApplyServiceActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.ApplyServiceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ui.mine.activity.AlbumActivity" />
+        <activity android:name="com.leyuan.aidong.ui.mine.activity.AlbumActivity" />
         <activity
-            android:name=".ui.discover.activity.VenuesDetailActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.WeiboResponseActivity"
+            android:name="com.leyuan.aidong.ui.WeiboResponseActivity"
 
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
@@ -578,56 +579,56 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.ShareActivityQQ"
+            android:name="com.leyuan.aidong.ui.ShareActivityQQ"
 
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".ui.home.activity.MapActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.MapActivity"
             android:screenOrientation="portrait" />
         <!-- <activity -->
-        <!-- android:name=".ui.mine.activity.AppointmentMineCourseActivityNew" -->
+        <!-- android:name="com.leyuan.aidong.ui.mine.activity.AppointmentMineCourseActivityNew" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
-            android:name=".ui.mine.activity.BarcodeActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.BarcodeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ImageTranslucentTheme" />
         <activity
-            android:name=".ui.home.activity.AppointSuccessActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.AppointSuccessActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discover.activity.DiscoverUserActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.DiscoverUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseChooseSeat"
+            android:name="com.leyuan.aidong.ui.home.activity.CourseChooseSeat"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseQueueConfirmActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.CourseQueueConfirmActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseQueueSuccessActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.CourseQueueSuccessActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseQueueDetailActivity"
+            android:name="com.leyuan.aidong.ui.home.activity.CourseQueueDetailActivity"
             android:screenOrientation="portrait" />
         <!-- <activity -->
-        <!-- android:name=".ui.discover.activity.DiscoverUserActivityTest" -->
+        <!-- android:name="com.leyuan.aidong.ui.discover.activity.DiscoverUserActivityTest" -->
         <!-- android:screenOrientation="portrait" /> -->
 
         <activity
-            android:name=".ui.mine.activity.EMChatActivity"
+            android:name="com.leyuan.aidong.ui.mine.activity.EMChatActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.mine.activity.AppointmentMineActivityNew"
+            android:name="com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.photopicker.boxing_impl.ui.BoxingActivity"
+            android:name="com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".module.photopicker.boxing_impl.ui.BoxingPreviewActivity"
+            android:name="com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingPreviewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -636,16 +637,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.discover.activity.PhotoBrowseActivity"
+            android:name="com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
 
 
             android:theme="@style/FullScreenStyle2" />
         <activity
-            android:name=".module.photopicker.boxing_impl.record.VideoCaptureActivity"
+            android:name="com.leyuan.aidong.module.photopicker.boxing_impl.record.VideoCaptureActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name=".module.ChatLoginService" />
+        <service android:name="com.leyuan.aidong.module.ChatLoginService" />
 
         <!-- android:launchMode="singleTop" -->
         <!-- android:screenOrientation="portrait" -->
@@ -664,7 +665,7 @@
             android:theme="@style/Wxpay"  />
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
         <receiver
-            android:name=".receivers.WeixinRegisterReceiver"
+            android:name="com.example.aidong.Receivers.WeixinRegisterReceiver"
             android:permission="com.tencent.mm.plugin.permission.SEND">
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
@@ -867,7 +868,7 @@
 
 
         <receiver
-            android:name=".receivers.JPushReceiver"
+            android:name="com.example.aidong.Receivers.JPushReceiver"
             android:enabled="true"
             android:exported="false">
 
@@ -917,10 +918,10 @@
                 android:resource="@xml/file_provider" />
         </provider>
 
-        <activity android:name=".ui.DisplayActivity"></activity>
+        <activity android:name="com.leyuan.aidong.ui.DisplayActivity"></activity>
 
         <activity
-            android:name=".ui.video.dragvideo.DragVideoActivity"
+            android:name="com.leyuan.aidong.ui.video.dragvideo.DragVideoActivity"
             android:theme="@style/Transparent"
             />
     </application>

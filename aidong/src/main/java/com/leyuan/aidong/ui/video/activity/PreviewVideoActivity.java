@@ -11,7 +11,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.io.IOException;
 

@@ -27,7 +27,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.camera.CameraWrapper;
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.camera.NativeCamera;
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.configuration.CaptureConfiguration;

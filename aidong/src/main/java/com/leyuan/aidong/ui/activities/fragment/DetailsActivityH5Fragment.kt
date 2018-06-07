@@ -11,7 +11,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.facebook.stetho.common.LogUtil
-import com.leyuan.aidong.R
+import com.example.aidong.R
 import com.leyuan.aidong.ui.App
 
 import com.leyuan.aidong.ui.BaseFragment

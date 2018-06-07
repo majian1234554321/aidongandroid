@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.widget.UISwitchButton;
 
 public class BingdingCommunityActivity extends BaseActivity implements Callback{

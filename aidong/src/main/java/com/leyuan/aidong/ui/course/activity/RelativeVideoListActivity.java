@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.video.RelativeViedeoAdapter;
 import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.ui.BaseActivity;

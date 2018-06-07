@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.util.List;
 

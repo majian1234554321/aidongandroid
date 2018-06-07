@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.home.activity.EquipmentActivity;

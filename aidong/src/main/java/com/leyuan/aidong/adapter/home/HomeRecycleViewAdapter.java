@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.home.activity.BrandActivity;
 import com.leyuan.aidong.utils.GlideLoader;

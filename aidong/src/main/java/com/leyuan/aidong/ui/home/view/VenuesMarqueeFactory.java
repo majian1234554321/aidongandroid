@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongwen.marqueen.MarqueeFactory;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.utils.GlideLoader;
 

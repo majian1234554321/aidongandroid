@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.mine.AddressAdapter;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.BaseBean;

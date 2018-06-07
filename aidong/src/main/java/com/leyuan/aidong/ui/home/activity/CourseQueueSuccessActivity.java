@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 
@@ -34,7 +34,7 @@ public class CourseQueueSuccessActivity extends BaseActivity implements View.OnC
 
                 break;
             case R.id.tv_look_queue:
-                AppointmentMineActivityNew.start(this,1,1);
+                AppointmentMineActivityNew.start(this,0,1);
                 finish();
                 break;
         }

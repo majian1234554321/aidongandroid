@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.course.CouponCourseShareBean;
@@ -28,8 +28,11 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
+import com.leyuan.aidong.ui.mine.fragment.CouponFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderCoursePresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderCourseView;
+import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.FormatUtil;
@@ -95,6 +98,10 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         setContentView(R.layout.activity_confirm_order_course);
         initView();
         initData();
+
+
+//        CouponPresentImpl presents = new CouponPresentImpl(this, this);
+//        presents.pullToRefreshData(CouponFragment.VALID);
     }
 
 
@@ -147,7 +154,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         txtCourseName.setText(course.getName());
         txtCoachName.setText(course.getCoach().getName());
         if (course.getImage() != null && course.getImage().size() > 0) {
-            GlideLoader.getInstance().displayImage(course.getImage().get(0), imgCourse);
+            GlideLoader.getInstance().displayImage2(course.getImage().get(0), imgCourse);
         }
 
         txtCourseTime.setText(course.getClass_time());
@@ -216,6 +223,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
                 }
                 DialogUtils.showDialog(this, "", false);
                 confirmOrderCoursePresent.confirmAppointCourse(course.getId(), couponId, course.getSeatChoosed(), payType, payListener);
+
                 break;
 
             default:
@@ -239,8 +247,10 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
             txtCoupon.setTextColor(ContextCompat.getColor(this,R.color.c9));
             layoutCourseCoupon.setVisibility(View.GONE);
         } else {
-            txtCoupon.setText("请选择");
-            txtCoupon.setTextColor(Color.BLACK);
+            if (usableCoupons.size()>0) {
+                txtCoupon.setText(usableCoupons.size()+"张可用");
+            }
+
             layoutCourseCoupon.setVisibility(View.VISIBLE);
         }
     }
@@ -318,7 +328,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
                 couponId = couponBean.getId();
                 txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) > 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
+                        FormatUtil.parseDouble(couponBean.getActual())) :usableCoupons.size()+"张可用");
                 txtCouponSubtract.setText(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())));
                 txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
@@ -332,4 +342,25 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         super.onDestroy();
         DialogUtils.releaseDialog();
     }
+
+  //  public List<CouponBean> couponBeanList;
+
+//    @Override
+//    public void updateRecyclerView(List<CouponBean> couponBeanList) {
+//        this.couponBeanList = couponBeanList ;
+//
+//        if (couponBeanList.size()>0) {
+//            txtCoupon.setText(couponBeanList.size()+"张可用");
+//        }
+//    }
+//
+//    @Override
+//    public void showEmptyView() {
+//
+//    }
+//
+//    @Override
+//    public void showEndFooterView() {
+//
+//    }
 }

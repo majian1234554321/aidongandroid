@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.discover.StoreListAdapter;
 import com.leyuan.aidong.entity.VenuesDetailBean;
 import com.leyuan.aidong.entity.course.CourseFilterBean;
@@ -28,7 +28,7 @@ import com.leyuan.aidong.widget.vertical.VerticalScrollView;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-import static com.leyuan.aidong.R.id.tv_price_separator;
+import static com.example.aidong.R.id.tv_price_separator;
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;

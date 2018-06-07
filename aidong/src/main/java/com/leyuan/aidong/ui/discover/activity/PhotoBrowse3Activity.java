@@ -11,7 +11,7 @@
 //import android.view.ViewGroup;
 //
 //import com.bumptech.glide.Glide;
-//import com.leyuan.aidong.R;
+//import com.example.aidong.R;
 //import com.leyuan.aidong.entity.PhotoBrowseInfo;
 //import com.leyuan.aidong.ui.BaseActivity;
 //import com.leyuan.aidong.ui.discover.view.DotIndicator;

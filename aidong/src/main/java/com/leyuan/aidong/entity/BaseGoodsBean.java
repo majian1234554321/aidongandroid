@@ -2,7 +2,7 @@ package com.leyuan.aidong.entity;
 
 import android.content.Context;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;

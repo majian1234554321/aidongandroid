@@ -18,7 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.MediaController;
 
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.io.IOException;
 

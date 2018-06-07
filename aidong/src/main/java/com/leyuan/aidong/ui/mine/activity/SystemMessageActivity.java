@@ -9,7 +9,7 @@ import android.view.View;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.SysytemMessageAdapter;
 import com.leyuan.aidong.entity.user.SystemMessageInfo;
 import com.leyuan.aidong.ui.BaseActivity;

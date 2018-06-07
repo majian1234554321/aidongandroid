@@ -19,7 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kyleduo.switchbutton.SwitchButton;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.home.activity.LocationActivity;

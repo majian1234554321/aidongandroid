@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.weibo.AccessTokenKeeper;
 import com.leyuan.aidong.module.weibo.WeiBoConstants;
 import com.leyuan.aidong.utils.DialogUtils;

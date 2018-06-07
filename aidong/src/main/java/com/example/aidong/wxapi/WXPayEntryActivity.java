@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -52,20 +52,18 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                     if (null != payListener) {
                         payListener.onSuccess(code + "", resp);
                         Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
-                        finish();
                     }
                     break;
 
                 default:
                     Toast.makeText(this, "支付失败", Toast.LENGTH_SHORT).show();
-                    finish();
 
-//                    if (null != payListener) {
-//                        payListener.onFail(code + "", resp);
-//                    }
+                    if (null != payListener) {
+                        payListener.onFail(code + "", resp);
+                    }
                     break;
             }
-         //   finish();
+            finish();
         }
     }
 

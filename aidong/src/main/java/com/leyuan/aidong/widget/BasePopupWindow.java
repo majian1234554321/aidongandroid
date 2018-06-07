@@ -11,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 /**
  * PopupWindow基类

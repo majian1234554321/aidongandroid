@@ -3,8 +3,8 @@ package com.leyuan.aidong.entity.model;
 
 import java.io.Serializable;
 
-import static com.leyuan.aidong.R.id.bmi;
-import static com.leyuan.aidong.R.id.zodiac;
+import static com.example.aidong.R.id.bmi;
+import static com.example.aidong.R.id.zodiac;
 
 public class UserCoach implements Serializable {
     private String token;

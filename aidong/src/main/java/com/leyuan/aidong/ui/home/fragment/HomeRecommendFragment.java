@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.CoachAttentionAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendActivityAdapter;
 import com.leyuan.aidong.adapter.home.HomeRecommendCourseAdapter;

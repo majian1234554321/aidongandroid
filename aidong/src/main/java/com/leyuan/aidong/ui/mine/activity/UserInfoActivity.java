@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.iknow.android.TrimmerActivity;
 import com.iknow.android.utils.TrimVideoUtil;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.mine.UserInfoPhotoAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
@@ -68,7 +68,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.leyuan.aidong.R.id.tv_message;
+import static com.example.aidong.R.id.tv_message;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
 import static com.leyuan.aidong.utils.Constant.REQUEST_PUBLISH_DYNAMIC;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.example.aidong.wxapi.WXEntryActivity;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.ui.ShareActivityQQ;
 import com.leyuan.aidong.ui.WeiboResponseActivity;
 import com.leyuan.aidong.utils.HtmlToStringUtils;

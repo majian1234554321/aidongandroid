@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingCallback;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 

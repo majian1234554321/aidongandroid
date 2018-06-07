@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateCoursesAdapter;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateGoodAdapter;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateVideoAdapter;

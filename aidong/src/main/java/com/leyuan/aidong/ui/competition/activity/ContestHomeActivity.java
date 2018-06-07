@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
 import com.iknow.android.utils.TrimVideoUtil;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CampaignBean;
@@ -48,7 +48,7 @@ import com.leyuan.aidong.utils.UiManager;
 
 import java.util.ArrayList;
 
-import static com.leyuan.aidong.R.id.img_post_or_enrol;
+import static com.example.aidong.R.id.img_post_or_enrol;
 import static com.leyuan.aidong.utils.Constant.REQUEST_PUBLISH_DYNAMIC;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;

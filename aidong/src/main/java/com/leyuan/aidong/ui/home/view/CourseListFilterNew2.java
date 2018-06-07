@@ -11,7 +11,7 @@
 //import android.widget.RelativeLayout;
 //import android.widget.TextView;
 //
-//import com.leyuan.aidong.R;
+//import com.example.aidong.R;
 //import com.leyuan.aidong.adapter.course.CourseAreaFilterAdapter;
 //import com.leyuan.aidong.adapter.course.CourseBrandFilterAdapter;
 //import com.leyuan.aidong.adapter.course.CourseCategoryFilterAdapter;
@@ -27,8 +27,8 @@
 //
 //import java.util.ArrayList;
 //
-//import static com.leyuan.aidong.R.id.layout_store_content_all;
-//import static com.leyuan.aidong.R.id.tv_store_all;
+//import static com.example.aidong.R.id.layout_store_content_all;
+//import static com.example.aidong.R.id.tv_store_all;
 //
 ///**
 // * 课程列表筛选控件

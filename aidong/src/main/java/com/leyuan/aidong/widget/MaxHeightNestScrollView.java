@@ -5,7 +5,7 @@ import android.content.res.TypedArray;
 import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 /**
  * 控制最大高度的NestScrollView

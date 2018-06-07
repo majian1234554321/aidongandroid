@@ -25,7 +25,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.model.FacePay;
 import com.leyuan.aidong.module.scan.camera.CameraManager;
 import com.leyuan.aidong.module.scan.decoding.CaptureActivityHandler;

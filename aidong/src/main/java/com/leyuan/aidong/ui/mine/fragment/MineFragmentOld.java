@@ -17,12 +17,12 @@
 //import android.widget.TextView;
 //import android.widget.Toast;
 //
-//import com.leyuan.aidong.R;
+//import com.example.aidong.R;
 //import com.leyuan.aidong.config.ConstantUrl;
 //import com.leyuan.aidong.entity.model.UserCoach;
 //import com.leyuan.aidong.entity.user.MineInfoBean;
 //import com.leyuan.aidong.module.chat.manager.EmMessageManager;
-//import com.leyuan.aidong.receivers.ChatMessageReceiver;
+//import com.example.aidong.Receivers.ChatMessageReceiver;
 //import com.leyuan.aidong.ui.App;
 //import com.leyuan.aidong.ui.BaseFragment;
 //import com.leyuan.aidong.ui.WebViewActivity;

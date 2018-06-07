@@ -20,7 +20,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.lang.ref.WeakReference;
 

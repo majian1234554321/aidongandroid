@@ -27,7 +27,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 
 public class RangeSeekBar extends View {

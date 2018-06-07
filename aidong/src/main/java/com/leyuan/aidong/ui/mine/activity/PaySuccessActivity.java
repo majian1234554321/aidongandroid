@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShareData;
@@ -78,7 +78,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
         shareBean = (ShareData.ShareCouponInfo) getIntent().getSerializableExtra("shareBean");
         is_virtual = getIntent().getBooleanExtra("is_virtual", false);
         setContentView(R.layout.activity_pay_success);
-        RecommendPresent present = new RecommendPresentImpl(this, this);
+        RecommendPresentImpl present = new RecommendPresentImpl(this, this);
         initView();
         setListener();
 

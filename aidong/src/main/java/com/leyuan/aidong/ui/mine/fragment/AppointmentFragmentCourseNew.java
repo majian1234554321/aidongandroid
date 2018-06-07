@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.utils.Logger;

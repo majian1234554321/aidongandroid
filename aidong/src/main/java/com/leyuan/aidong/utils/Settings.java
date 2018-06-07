@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 
 public class Settings {

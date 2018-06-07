@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.campaign.CompetitionAreaBean;
 import com.leyuan.aidong.entity.campaign.ContestBean;
 import com.leyuan.aidong.ui.App;
@@ -32,7 +32,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.R.id.txt_group;
+import static com.example.aidong.R.id.txt_group;
 
 /**
  * Created by user on 2018/2/9.

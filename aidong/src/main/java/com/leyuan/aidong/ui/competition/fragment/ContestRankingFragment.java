@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.contest.ContestRankingListAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static com.baidu.mapapi.BMapManager.getContext;
-import static com.leyuan.aidong.R.id.img_rank_none;
+import static com.example.aidong.R.id.img_rank_none;
 
 /**
  * Created by user on 2018/1/5.

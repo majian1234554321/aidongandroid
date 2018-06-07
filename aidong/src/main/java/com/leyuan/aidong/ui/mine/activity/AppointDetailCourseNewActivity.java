@@ -16,7 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.PayOptionBean;
@@ -54,7 +54,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import cn.iwgang.countdownview.CountdownView;
 
-import static com.leyuan.aidong.R.id.ll_timer;
+import static com.example.aidong.R.id.ll_timer;
 import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
@@ -381,6 +381,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                     }
                 }
                 PayUtils.pay(this, payType, payOptionBean, payListener);
+
 
                 break;
         }

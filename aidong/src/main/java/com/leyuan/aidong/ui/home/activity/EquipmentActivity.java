@@ -11,7 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.home.CategoryAdapter;
 import com.leyuan.aidong.adapter.home.EquipmentAdapter;
 import com.leyuan.aidong.entity.GoodsBean;

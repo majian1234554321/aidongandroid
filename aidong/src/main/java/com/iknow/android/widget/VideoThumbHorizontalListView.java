@@ -21,7 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.Scroller;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.course.CourseChooseSeatAdapter;
 import com.leyuan.aidong.adapter.course.CourseChooseSeatIndexAdapter;
 import com.leyuan.aidong.entity.course.CourseBeanNew;

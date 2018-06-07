@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.store.StoreDetailActivity;
 import com.leyuan.aidong.ui.store.StoreDetailActivity2;

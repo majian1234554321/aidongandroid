@@ -16,7 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
 import com.iknow.android.utils.TrimVideoUtil;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.video.DetailsRelativeViedeoAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CourseVideoBean;
@@ -45,7 +45,7 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.R.id.bt_share;
+import static com.example.aidong.R.id.bt_share;
 import static com.leyuan.aidong.utils.Constant.REQUEST_PUBLISH_DYNAMIC;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;

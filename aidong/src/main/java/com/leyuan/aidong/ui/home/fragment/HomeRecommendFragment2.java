@@ -14,7 +14,7 @@
 //import android.widget.ImageView;
 //import android.widget.TextView;
 //
-//import com.leyuan.aidong.R;
+//import com.example.aidong.R;
 //import com.leyuan.aidong.adapter.HomeRecommendAdapter2;
 //import com.leyuan.aidong.entity.BannerBean;
 //import com.leyuan.aidong.entity.data.HomeData;

@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.mine.OrderExpressAdapter;
 import com.leyuan.aidong.adapter.mine.OrderSelfDeliveryAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
@@ -50,8 +50,8 @@ import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
 
-import static com.leyuan.aidong.R.id.ll_express_info;
-import static com.leyuan.aidong.R.id.tv_delivery_time;
+import static com.example.aidong.R.id.ll_express_info;
+import static com.example.aidong.R.id.tv_delivery_time;
 import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;

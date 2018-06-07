@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 
 /**

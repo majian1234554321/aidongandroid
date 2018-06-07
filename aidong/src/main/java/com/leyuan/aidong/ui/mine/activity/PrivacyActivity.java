@@ -7,7 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.PrivacyPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.PrivacyActivityView;

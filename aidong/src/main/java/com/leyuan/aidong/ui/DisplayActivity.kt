@@ -1,9 +1,10 @@
 package com.leyuan.aidong.ui
 
+
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
-import com.leyuan.aidong.R
+import com.example.aidong.R
 import com.leyuan.aidong.ui.activities.fragment.DetailsActivityH5Fragment
 import com.leyuan.aidong.ui.activities.fragment.InvitationFragment
 

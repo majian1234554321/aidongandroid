@@ -9,7 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 public class UserAgreementActivity extends BaseActivity {
     private ImageView mimageview_user_agreement_back;

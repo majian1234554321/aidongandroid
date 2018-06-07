@@ -3,7 +3,7 @@ package com.leyuan.aidong.module.thirdpartylogin;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.utils.Logger;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;

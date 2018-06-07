@@ -44,4 +44,9 @@ public abstract class SimplePayListener implements PayInterface.PayListener{
 
 
     }
+
+    @Override
+    public void onSuccess(String code, Object object) {
+
+    }
 }

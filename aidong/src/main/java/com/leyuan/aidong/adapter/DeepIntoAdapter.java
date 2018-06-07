@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
 import com.leyuan.aidong.ui.video.fragment.DeepIntoFragment;
 import com.leyuan.aidong.utils.GlideLoader;

@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.ApplyServiceShopAdapter;
 import com.leyuan.aidong.adapter.discover.PublishDynamicAdapter;
 import com.leyuan.aidong.entity.GoodsBean;

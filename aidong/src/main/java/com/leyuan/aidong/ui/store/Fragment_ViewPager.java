@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.VenuesDetailBean;
 import com.leyuan.aidong.entity.course.CourseFilterBean;
 import com.leyuan.aidong.ui.home.fragment.CourseListFragmentNew;

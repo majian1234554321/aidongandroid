@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.widget.BaseAddressDialog;
 import com.leyuan.aidong.widget.wheelview.ArrayWheelAdapter;
 import com.leyuan.aidong.widget.wheelview.OnWheelChangedListener;

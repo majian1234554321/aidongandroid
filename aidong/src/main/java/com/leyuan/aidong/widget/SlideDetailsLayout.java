@@ -30,7 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.utils.Logger;
 
 

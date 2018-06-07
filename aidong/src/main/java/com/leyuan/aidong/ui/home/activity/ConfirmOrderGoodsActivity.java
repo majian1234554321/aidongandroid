@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.home.ConfirmOrderShopAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.AddressBean;
@@ -57,13 +57,14 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.leyuan.aidong.R.id.ll__receiving_time;
-import static com.leyuan.aidong.R.id.txt_receving_time;
+import static com.example.aidong.R.id.ll__receiving_time;
+import static com.example.aidong.R.id.txt_receving_time;
 import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
@@ -81,7 +82,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener, CouponFragmentView {
+        CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener {
     private static final String TAG = "ConfirmOrderActivity";
     private SimpleTitleBar titleBar;
     private LinearLayout contentLayout;
@@ -186,8 +187,8 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         initView();
 
 
-        CouponPresentImpl presents = new CouponPresentImpl(this, this);
-        presents.pullToRefreshData(CouponFragment.VALID);
+//        CouponPresentImpl presents = new CouponPresentImpl(this, this);
+//        presents.pullToRefreshData(CouponFragment.VALID);
 
         setChangeViewInfo();
         setListener();
@@ -495,7 +496,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            //ToastGlobal.showLong("支付成功");
+
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
             PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo(), is_virtual);
             finish();
@@ -552,8 +553,8 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
         } else {
             if (TextUtils.isEmpty(couponId)) {
-                if (couponBeanList.size() > 0) {
-                    tvCoupon.setText(couponBeanList.size() + "张可用");
+                if (usableCoupons.size() > 0) {
+                    tvCoupon.setText(usableCoupons.size() + "张可用");
                 }
                 tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
@@ -593,7 +594,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 couponPrice = couponBean.getActual();
                 tvCoupon.setText(FormatUtil.parseDouble(couponPrice) > 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getActual())) : couponBeanList.size() + "张可用" );
+                        FormatUtil.parseDouble(couponBean.getActual())) : usableCoupons.size() + "张可用" );
 
 
                 rightContent = String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice));
@@ -657,24 +658,24 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         selfDeliveryLayout.setVisibility(View.GONE);
     }
 
-    public List<CouponBean> couponBeanList;
-
-    @Override
-    public void updateRecyclerView(List<CouponBean> couponBeanList) {
-        this.couponBeanList = couponBeanList;
-
-        if (couponBeanList.size() > 0) {
-            tvCoupon.setText(couponBeanList.size() + "张可用");
-        }
-    }
-
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void showEndFooterView() {
-
-    }
+//    public List<CouponBean> couponBeanList;
+//
+//    @Override
+//    public void updateRecyclerView(List<CouponBean> couponBeanList) {
+//        this.couponBeanList = couponBeanList;
+//
+//        if (couponBeanList.size() > 0) {
+//            tvCoupon.setText(couponBeanList.size() + "张可用");
+//        }
+//    }
+//
+//    @Override
+//    public void showEmptyView() {
+//
+//    }
+//
+//    @Override
+//    public void showEndFooterView() {
+//
+//    }
 }

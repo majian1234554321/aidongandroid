@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.contest.ContestSemiFinalEnrolAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.campaign.ContestBean;
@@ -34,7 +34,7 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 
-import static com.leyuan.aidong.R.id.txt_right;
+import static com.example.aidong.R.id.txt_right;
 
 /**
  * Created by user on 2018/2/22.

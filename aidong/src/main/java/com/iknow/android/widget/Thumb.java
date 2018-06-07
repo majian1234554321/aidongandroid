@@ -4,7 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.util.List;
 import java.util.Vector;

@@ -10,7 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
@@ -35,8 +35,8 @@ import com.leyuan.aidong.widget.CustomNestRadioGroup;
 
 import java.util.List;
 
-import static com.leyuan.aidong.R.id.layout_course_coupon;
-import static com.leyuan.aidong.R.id.txt_queue_location;
+import static com.example.aidong.R.id.layout_course_coupon;
+import static com.example.aidong.R.id.txt_queue_location;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
 
 /**

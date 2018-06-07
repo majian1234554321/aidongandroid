@@ -21,7 +21,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.course.CourseArea;
 import com.leyuan.aidong.entity.course.CourseBrand;
 import com.leyuan.aidong.entity.course.CourseFilterBean;

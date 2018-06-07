@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.SpecialTopicAdapter;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
 

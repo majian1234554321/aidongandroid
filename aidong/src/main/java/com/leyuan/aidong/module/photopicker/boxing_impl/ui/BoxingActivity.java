@@ -28,7 +28,7 @@ import android.transition.Fade;
 import android.view.View;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.AbsBoxingActivity;
 import com.leyuan.aidong.module.photopicker.boxing.AbsBoxingViewFragment;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;

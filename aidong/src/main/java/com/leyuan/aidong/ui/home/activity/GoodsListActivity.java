@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.GoodsListAdapter;
 import com.leyuan.aidong.entity.BaseGoodsBean;
 import com.leyuan.aidong.entity.CategoryBean;

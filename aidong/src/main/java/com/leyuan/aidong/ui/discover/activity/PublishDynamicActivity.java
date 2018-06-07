@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
 import com.iknow.android.utils.TrimVideoUtil;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.discover.PublishDynamicAdapter;
 import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.data.DynamicsData;

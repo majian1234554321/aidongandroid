@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.module.weibo.AccessTokenKeeper;
 import com.leyuan.aidong.module.weibo.WeiBoConstants;
 import com.leyuan.aidong.utils.Logger;

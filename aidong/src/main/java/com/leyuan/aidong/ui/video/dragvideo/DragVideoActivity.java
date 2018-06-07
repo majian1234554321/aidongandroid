@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.ui.video.dragvideo.media.IjkVideoView;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;

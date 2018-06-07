@@ -9,7 +9,7 @@
 //import android.view.View;
 //import android.widget.TextView;
 //
-//import com.leyuan.aidong.R;
+//import com.example.aidong.R;
 //import com.leyuan.aidong.ui.BaseActivity;
 //import com.leyuan.aidong.ui.mine.fragment.AppointmentFragmentCampaignList;
 //import com.leyuan.aidong.utils.Logger;

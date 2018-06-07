@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.baseadapter.BaseRecyclerViewHolder;
 import com.leyuan.aidong.adapter.home.BigAndLittleImageAdapter;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.home.activity.BrandActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
-import static com.leyuan.aidong.R.id.rl_image;
+import static com.example.aidong.R.id.rl_image;
 
 /**
  * the holder of single image and horizontal image list

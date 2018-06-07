@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.home.HomeCourseListChildAdapter;
 import com.leyuan.aidong.entity.course.CourseArea;
 import com.leyuan.aidong.entity.course.CourseBeanNew;

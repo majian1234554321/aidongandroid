@@ -23,7 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.exoplayer.util.Util;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.PersonHorizontalAdapter;
 import com.leyuan.aidong.adapter.home.PersonAttentionAdapter;
 import com.leyuan.aidong.adapter.video.DetailsRelativeViedeoAdapter;
@@ -48,9 +48,9 @@ import com.leyuan.aidong.widget.richtext.RichWebView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.R.id.img_coach;
-import static com.leyuan.aidong.R.id.img_live_begin_or_end;
-import static com.leyuan.aidong.R.id.txt_course_intro;
+import static com.example.aidong.R.id.img_coach;
+import static com.example.aidong.R.id.img_live_begin_or_end;
+import static com.example.aidong.R.id.txt_course_intro;
 
 /**
  * d by user on 2018/1/11.

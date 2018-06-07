@@ -2,22 +2,23 @@ package com.leyuan.aidong.ui.activities.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.graphics.Bitmap
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
 
-import com.leyuan.aidong.R
+import com.example.aidong.R
 import com.leyuan.aidong.config.UrlConfig
 import com.leyuan.aidong.ui.App
 import com.leyuan.aidong.ui.BaseFragment
 import com.leyuan.aidong.ui.activities.`interface`.MyJSInterface
 import com.leyuan.aidong.utils.GlideLoader
 import com.leyuan.aidong.utils.Logger
-import com.tencent.smtt.sdk.WebChromeClient
-import com.tencent.smtt.sdk.WebSettings
-import com.tencent.smtt.sdk.WebView
+
 
 import kotlinx.android.synthetic.main.invitationfragment.*
 import java.util.HashMap
@@ -60,19 +61,22 @@ class InvitationFragment : BaseFragment() {
         webSettings.databaseEnabled = true
         webSettings.useWideViewPort = true
 
-        mWebView.setWebChromeClient(object : WebChromeClient() {
+        mWebView.webChromeClient  = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
                 if (newProgress > 70) {
-                    img_loading.setVisibility(View.GONE)
+                    img_loading.visibility = View.GONE
                 }
             }
 
             override fun onReceivedTitle(view: WebView, title: String) {
                 super.onReceivedTitle(view, title)
 
+                if (!TextUtils.isEmpty(title)){
+                    tv_title.text = title
+                }
             }
-        })
+        }
 
 
 

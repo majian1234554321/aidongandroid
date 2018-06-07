@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.home.CampaignAdapter;
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.ui.BaseActivity;

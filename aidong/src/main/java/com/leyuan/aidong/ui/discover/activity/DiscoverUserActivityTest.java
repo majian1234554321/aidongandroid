@@ -13,7 +13,7 @@
 //import android.widget.ScrollView;
 //import android.widget.TextView;
 //
-//import com.leyuan.aidong.R;
+//import com.example.aidong.R;
 //import com.leyuan.aidong.adapter.discover.UserAdapter;
 //import com.leyuan.aidong.entity.BaseBean;
 //import com.leyuan.aidong.entity.UserBean;

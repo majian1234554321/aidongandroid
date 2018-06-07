@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.discover.CourseDateAdapter;
 import com.leyuan.aidong.adapter.home.CourseListAdapterNew;
 import com.leyuan.aidong.entity.course.CourseBeanNew;

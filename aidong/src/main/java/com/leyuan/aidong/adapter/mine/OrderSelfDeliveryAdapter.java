@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.home.ConfirmOrderGoodsAdapter;
 import com.leyuan.aidong.entity.ParcelBean;
 import com.leyuan.aidong.ui.mine.activity.BarcodeActivity;

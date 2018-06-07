@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.mine.SelectAddressAdapter;

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.campaign.ContestScheduleBean;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.mvp.view.ContestSemiFinalEnrolClickListener;

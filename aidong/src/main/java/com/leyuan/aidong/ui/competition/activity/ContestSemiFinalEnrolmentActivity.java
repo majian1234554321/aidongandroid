@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.campaign.ContestBean;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
@@ -27,7 +27,7 @@ import com.leyuan.aidong.widget.CommonTitleLayout;
 
 import java.util.ArrayList;
 
-import static com.leyuan.aidong.R.id.txt_city;
+import static com.example.aidong.R.id.txt_city;
 
 /**
  * Created by user on 2018/2/6.

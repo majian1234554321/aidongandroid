@@ -18,7 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.video.AppointmentDetailBean2;
@@ -57,8 +57,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import cn.iwgang.countdownview.CountdownView;
 
-import static com.leyuan.aidong.R.id.iv;
-import static com.leyuan.aidong.R.id.txt_course_time;
+import static com.example.aidong.R.id.iv;
+import static com.example.aidong.R.id.txt_course_time;
 import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;

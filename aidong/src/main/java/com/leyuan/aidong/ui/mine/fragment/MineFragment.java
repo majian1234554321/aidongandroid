@@ -17,14 +17,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.data.SportRecordMonthData;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
-import com.leyuan.aidong.receivers.ChatMessageReceiver;
+import com.example.aidong.Receivers.ChatMessageReceiver;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.DisplayActivity;
@@ -230,7 +230,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
 
         refreshLoginState();
-
+        item_my_coupon.setTextValue("");
 
         CouponPresentImpl   present = new CouponPresentImpl(getContext(), this);
         present.pullToRefreshData(CouponFragment.VALID);

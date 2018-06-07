@@ -12,7 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.Window;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.home.ImagePreviewAdapter;
 import com.leyuan.aidong.ui.home.view.ImagePreviewTopBar;

@@ -18,7 +18,7 @@ import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.adapter.DeepIntoAdapter;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
 import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;

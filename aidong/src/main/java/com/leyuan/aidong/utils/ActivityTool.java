@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.lang.reflect.Method;
 import java.util.Calendar;

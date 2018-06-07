@@ -11,7 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.course.CourseQueueBean;
@@ -28,7 +28,7 @@ import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 
-import static com.leyuan.aidong.R.id.txt_queue_location;
+import static com.example.aidong.R.id.txt_queue_location;
 
 /**
  * Created by user on 2017/10/31.

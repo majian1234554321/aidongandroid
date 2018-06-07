@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
@@ -41,7 +41,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import static com.leyuan.aidong.R.id.zodiac;
+import static com.example.aidong.R.id.zodiac;
 
 /**
  * 修改用户资料

@@ -7,7 +7,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.TableLayout;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 
 import java.util.Locale;
 

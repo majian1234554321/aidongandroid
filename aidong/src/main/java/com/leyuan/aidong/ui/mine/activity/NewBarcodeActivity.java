@@ -11,7 +11,7 @@ import android.transition.TransitionInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
+import com.example.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.QRCodeUtil;
