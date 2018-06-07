@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <com.leyuan.aidong.ui.video.dragvideo.media.TextureRenderView
+    <com.example.aidong.ui.video.dragvideo.media.TextureRenderView
         android:id="@+id/renderView"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"

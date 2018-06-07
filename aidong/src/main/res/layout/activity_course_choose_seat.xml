@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.leyuan.aidong.widget.CommonTitleLayout
+        <com.example.aidong.widget.CommonTitleLayout
             android:id="@+id/layout_title"
             android:layout_width="match_parent"
             android:layout_height="45dp"

@@ -5,7 +5,7 @@
               android:background="@color/transparent"
               android:orientation="vertical">
 
-    <com.leyuan.aidong.widget.DragVideoView
+    <com.example.aidong.widget.DragVideoView
         android:id="@+id/drag_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,5 +16,5 @@
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </com.leyuan.aidong.widget.DragVideoView>
+    </com.example.aidong.widget.DragVideoView>
 </LinearLayout>

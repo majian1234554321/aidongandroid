@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.leyuan.aidong.widget.CommonTitleLayout
+    <com.example.aidong.widget.CommonTitleLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -271,7 +271,7 @@
                     android:textSize="16sp" />
 
 
-                <com.leyuan.aidong.widget.CustomNestRadioGroup
+                <com.example.aidong.widget.CustomNestRadioGroup
                     android:id="@+id/radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -334,7 +334,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
-                </com.leyuan.aidong.widget.CustomNestRadioGroup>
+                </com.example.aidong.widget.CustomNestRadioGroup>
 
             </LinearLayout>
 

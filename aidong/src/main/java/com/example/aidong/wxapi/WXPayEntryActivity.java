@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 
-import com.leyuan.aidong.module.pay.PayInterface;
-import com.leyuan.aidong.module.pay.WeiXinPay;
-import com.leyuan.aidong.ui.BaseActivity;
+import com.example.aidong .module.pay.PayInterface;
+import com.example.aidong .module.pay.WeiXinPay;
+import com.example.aidong .ui.BaseActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;

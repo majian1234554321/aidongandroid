@@ -105,7 +105,7 @@
                   预约活动    AppointCampaignActivity
     支付逻辑:
         目前支持微信和支付宝支付
-        相关类在C:\WorkSpace\Aidong_V5\aidong\src\main\java\com\leyuan\aidong\module\pay
+        相关类在C:\WorkSpace\Aidong_V5\aidong\src\main\java\com.example.aidong \module\pay
         PayInterface 定义了支付的具体方法与相关支付回调(成功、失败、免费),AliPay和WeiXinPay是其具体实现类
 
         一般使用步骤:

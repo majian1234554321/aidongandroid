@@ -74,7 +74,7 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
-    <com.leyuan.aidong.widget.richtext.RichWebView
+    <com.example.aidong.widget.richtext.RichWebView
         android:id="@+id/txt_course_intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         tools:text="钢管舞属于动作与机器相结合多少点卡了咯松井大辅卡拉，啊迪斯科解放和点卡收费就" />
 
 
-    <com.leyuan.aidong.widget.FlowLayoutgroup
+    <com.example.aidong.widget.FlowLayoutgroup
         android:id="@+id/flowlayout"
         android:layout_marginLeft="15dp"
         android:layout_width="match_parent"

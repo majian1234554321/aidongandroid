@@ -6,7 +6,7 @@
 
 
 
-            <com.leyuan.aidong.widget.vertical.VerticalRecyclerView
+            <com.example.aidong.widget.vertical.VerticalRecyclerView
                 android:id="@+id/rv_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

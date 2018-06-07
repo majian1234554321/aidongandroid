@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.leyuan.aidong.widget.CommonTitleLayout
+        <com.example.aidong.widget.CommonTitleLayout
             android:id="@+id/layout_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             android:textColor="@color/c9"
             android:textSize="13dp" />
 
-        <com.leyuan.aidong.widget.richtext.RichWebView
+        <com.example.aidong.widget.richtext.RichWebView
             android:id="@+id/rich_web_view"
             android:background="@color/transparent"
             android:layout_width="match_parent"

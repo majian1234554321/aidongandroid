@@ -14,7 +14,7 @@ import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.iknow.android.interfaces.OnTrimVideoListener;
 import com.iknow.android.models.VideoInfo;
-import com.leyuan.aidong.utils.Logger;
+import com.example.aidong .utils.Logger;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

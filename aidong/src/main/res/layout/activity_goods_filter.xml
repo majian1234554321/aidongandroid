@@ -61,7 +61,7 @@
             </android.support.v7.widget.RecyclerView>
         </com.leyuan.custompullrefresh.CustomRefreshLayout>
 
-        <com.leyuan.aidong.ui.home.view.GoodsFilterView
+        <com.example.aidong.ui.home.view.GoodsFilterView
             android:id="@+id/view_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

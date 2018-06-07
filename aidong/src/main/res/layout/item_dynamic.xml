@@ -53,7 +53,7 @@
     </RelativeLayout>
 
     <!--视频的布局-->
-    <com.leyuan.aidong.widget.SquareRelativeLayout
+    <com.example.aidong.widget.SquareRelativeLayout
         android:id="@+id/video_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -76,7 +76,7 @@
             android:adjustViewBounds="true"
             android:background="@drawable/play_small"
             android:scaleType="centerCrop" />
-    </com.leyuan.aidong.widget.SquareRelativeLayout>
+    </com.example.aidong.widget.SquareRelativeLayout>
 
     <!--1,2,4,6张图片的布局-->
     <android.support.v7.widget.RecyclerView

@@ -16,7 +16,7 @@
   ~
   -->
 
-<com.leyuan.aidong.module.photopicker.boxing_impl.view.MediaItemLayout
+<com.example.aidong.module.photopicker.boxing_impl.view.MediaItemLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/media_layout"
     android:layout_width="match_parent"

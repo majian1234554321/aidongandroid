@@ -27,7 +27,7 @@ import com.iknow.android.widget.RangeSeekBarView;
 import com.iknow.android.widget.Thumb;
 import com.iknow.android.widget.VideoThumbHorizontalListView;
 import com.example.aidong.R;
-import com.leyuan.aidong.utils.ToastGlobal;
+import com.example.aidong .utils.ToastGlobal;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

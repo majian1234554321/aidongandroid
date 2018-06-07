@@ -126,7 +126,7 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <com.leyuan.aidong.widget.SimpleTitleBar
+    <com.example.aidong.widget.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"

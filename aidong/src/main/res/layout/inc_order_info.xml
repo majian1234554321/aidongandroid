@@ -17,35 +17,35 @@
 
     <include layout="@layout/inc_line_black" />
 
-    <com.leyuan.aidong.widget.ExtendTextView
+    <com.example.aidong.widget.ExtendTextView
         android:id="@+id/tv_total_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text="商品总额:"
         app:line_color="@color/transparent"/>
 
-    <com.leyuan.aidong.widget.ExtendTextView
+    <com.example.aidong.widget.ExtendTextView
         android:id="@+id/tv_express_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text="运费:"
         app:line_color="@color/transparent"/>
 
-    <com.leyuan.aidong.widget.ExtendTextView
+    <com.example.aidong.widget.ExtendTextView
         android:id="@+id/coupon_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text="优惠劵:"
         app:line_color="@color/transparent"/>
 
-    <com.leyuan.aidong.widget.ExtendTextView
+    <com.example.aidong.widget.ExtendTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text="商品优惠:"
         android:visibility="gone"
         app:line_color="@color/transparent"/>
 
-    <com.leyuan.aidong.widget.ExtendTextView
+    <com.example.aidong.widget.ExtendTextView
         android:id="@+id/tv_aibi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         android:visibility="gone"
         app:line_color="@color/transparent"/>
 
-    <com.leyuan.aidong.widget.ExtendTextView
+    <com.example.aidong.widget.ExtendTextView
         android:id="@+id/tv_aidou"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,14 +61,14 @@
         android:visibility="gone"
         app:line_color="@color/transparent"/>
 
-    <com.leyuan.aidong.widget.ExtendTextView
+    <com.example.aidong.widget.ExtendTextView
         android:id="@+id/tv_start_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text="下单时间:"
         app:line_color="@color/transparent"/>
 
-    <com.leyuan.aidong.widget.ExtendTextView
+    <com.example.aidong.widget.ExtendTextView
         android:id="@+id/tv_pay_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         app:line_color="@color/transparent"
         android:visibility="gone"/>
 
-    <com.leyuan.aidong.widget.ExtendTextView
+    <com.example.aidong.widget.ExtendTextView
         android:id="@+id/tv_pay_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -75,7 +75,7 @@
                 <!--android:layout_marginRight="@dimen/right_margin"/>-->
         <!--</LinearLayout>-->
     <!--</ScrollView>-->
-    <com.leyuan.aidong.widget.richtext.RichWebView
+    <com.example.aidong.widget.richtext.RichWebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"

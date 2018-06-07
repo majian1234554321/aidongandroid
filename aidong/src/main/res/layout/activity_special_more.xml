@@ -44,7 +44,7 @@
             android:background="#77ebebeb" />
     </RelativeLayout>
 
-    <com.leyuan.aidong.widget.SmartScrollView
+    <com.example.aidong.widget.SmartScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -178,7 +178,7 @@
 
         <!---->
         <!--</RelativeLayout>-->
-    </com.leyuan.aidong.widget.SmartScrollView>
+    </com.example.aidong.widget.SmartScrollView>
 
 
 </FrameLayout>

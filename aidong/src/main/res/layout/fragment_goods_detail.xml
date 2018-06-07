@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:scrollbars="vertical">
 
-    <com.leyuan.aidong.widget.richtext.RichWebView
+    <com.example.aidong.widget.richtext.RichWebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

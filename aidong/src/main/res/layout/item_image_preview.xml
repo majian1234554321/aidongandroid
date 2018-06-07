@@ -24,7 +24,7 @@
         android:scaleType="fitCenter"
          />
 
-    <com.leyuan.aidong.ui.home.view.DonutProgress
+    <com.example.aidong.ui.home.view.DonutProgress
         android:id="@+id/view_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

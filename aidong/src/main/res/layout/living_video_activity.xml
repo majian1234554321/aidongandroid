@@ -4,14 +4,14 @@
     android:layout_height="match_parent">
 
 
-    <com.leyuan.aidong.widget.media.IjkVideoView
+    <com.example.aidong.widget.media.IjkVideoView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
 
-    </com.leyuan.aidong.widget.media.IjkVideoView>
+    </com.example.aidong.widget.media.IjkVideoView>
 
     <TextView
         android:id="@+id/txt_author"

@@ -11,13 +11,13 @@ import com.iknow.android.interfaces.OnTrimVideoListener;
 import com.iknow.android.utils.TrimVideoUtil;
 import com.iknow.android.view.VideoTrimmerView;
 import com.example.aidong.R;
-import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mvp.view.ContestEnrolView;
-import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.DialogUtils;
-import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.ToastGlobal;
+import com.example.aidong .entity.BaseBean;
+import com.example.aidong .ui.BaseActivity;
+import com.example.aidong .ui.mvp.view.ContestEnrolView;
+import com.example.aidong .utils.Constant;
+import com.example.aidong .utils.DialogUtils;
+import com.example.aidong .utils.Logger;
+import com.example.aidong .utils.ToastGlobal;
 
 import java.io.File;
 

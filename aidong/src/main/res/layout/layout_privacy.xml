@@ -52,7 +52,7 @@
             android:textColor="@color/color_black"
             android:textSize="@dimen/pref_16dp" />
 
-        <com.leyuan.aidong.widget.UISwitchButton xmlns:switch="http://schemas.android.com/apk/res-auto"
+        <com.example.aidong.widget.UISwitchButton xmlns:switch="http://schemas.android.com/apk/res-auto"
             android:id="@+id/switch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

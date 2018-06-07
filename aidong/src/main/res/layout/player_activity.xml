@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 
-<com.leyuan.aidong.widget.ScaleRelativeLayout
+<com.example.aidong.widget.ScaleRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -143,4 +143,4 @@
 
 </FrameLayout>
 
-</com.leyuan.aidong.widget.ScaleRelativeLayout>
+</com.example.aidong.widget.ScaleRelativeLayout>

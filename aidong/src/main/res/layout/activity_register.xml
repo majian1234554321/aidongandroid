@@ -5,7 +5,7 @@
     android:background="@color/background_main"
     android:orientation="vertical">
 
-    <com.leyuan.aidong.widget.CommonTitleLayout
+    <com.example.aidong.widget.CommonTitleLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/layout_title"
         android:layout_width="match_parent"

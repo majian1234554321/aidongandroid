@@ -110,7 +110,7 @@
             android:elevation="5dp" />
     </RelativeLayout>
 
-    <com.leyuan.aidong.widget.MaxHeightNestScrollView
+    <com.example.aidong.widget.MaxHeightNestScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -212,7 +212,7 @@
 
 
         </LinearLayout>
-    </com.leyuan.aidong.widget.MaxHeightNestScrollView>
+    </com.example.aidong.widget.MaxHeightNestScrollView>
 
 
     <RelativeLayout

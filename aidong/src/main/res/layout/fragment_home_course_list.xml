@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.leyuan.aidong.ui.home.view.CourseListFilterNew
+    <com.example.aidong.ui.home.view.CourseListFilterNew
         android:id="@+id/view_filter_course"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

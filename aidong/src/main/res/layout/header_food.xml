@@ -12,7 +12,7 @@
             android:id="@+id/vP_food"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <com.leyuan.aidong.widget.ViewPagerIndicator
+        <com.example.aidong.widget.ViewPagerIndicator
             android:id="@+id/vp_indicator"
             android:layout_width="match_parent"
             android:layout_height="30dp"

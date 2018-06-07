@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <com.leyuan.aidong.ui.video.dragvideo.DragVideoView
+    <com.example.aidong.ui.video.dragvideo.DragVideoView
         android:id="@+id/dragVideoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

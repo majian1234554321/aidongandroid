@@ -64,7 +64,7 @@
 
             <include layout="@layout/inc_bold_line" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                 app:text_height="45dp"
                 app:show_right_arrow="true"/>
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 app:show_right_arrow="true"
                 app:text_height="45dp" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/identify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                 app:show_right_arrow="false"
                 app:text_height="45dp" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/signature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
 
             <include layout="@layout/inc_bold_line" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                 app:show_right_arrow="true"
                 app:text_height="45dp" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/tv_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                 app:show_right_arrow="true"
                 app:text_height="45dp" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/zodiac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
 
             <include layout="@layout/inc_bold_line" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
                 app:show_right_arrow="true"
                 app:text_height="45dp" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                 app:show_right_arrow="true"
                 app:text_height="45dp" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/frequency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
                 app:text_height="45dp" />
 
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/bmi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

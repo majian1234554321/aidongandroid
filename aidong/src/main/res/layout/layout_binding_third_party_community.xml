@@ -49,7 +49,7 @@
             android:textColor="@color/color_black"
             android:textSize="@dimen/pref_16dp" />
 
-        <com.leyuan.aidong.widget.UISwitchButton
+        <com.example.aidong.widget.UISwitchButton
             xmlns:switch="http://schemas.android.com/apk/res-auto"
             android:id="@+id/switch_weibo"
             android:layout_width="wrap_content"

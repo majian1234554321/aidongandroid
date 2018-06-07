@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <com.leyuan.aidong.widget.SimpleTitleBar
+    <com.example.aidong.widget.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -122,7 +122,7 @@
                 android:layout_marginLeft="@dimen/left_margin"
                 android:layout_marginRight="@dimen/right_margin"/>
 
-            <com.leyuan.aidong.widget.stepview.StepView
+            <com.example.aidong.widget.stepview.StepView
                 android:id="@+id/stepView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

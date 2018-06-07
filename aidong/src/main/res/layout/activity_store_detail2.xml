@@ -43,7 +43,7 @@
     </RelativeLayout>
 
 
-    <com.leyuan.aidong.widget.VerticalSlide
+    <com.example.aidong.widget.VerticalSlide
         android:id="@+id/dragLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -58,7 +58,7 @@
             android:id="@+id/second"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </com.leyuan.aidong.widget.VerticalSlide>
+    </com.example.aidong.widget.VerticalSlide>
 
 
 </RelativeLayout>

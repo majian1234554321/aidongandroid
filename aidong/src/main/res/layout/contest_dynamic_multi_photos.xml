@@ -15,7 +15,7 @@
         android:layout_marginLeft="@dimen/left_margin"
         android:layout_marginRight="10dp">
 
-        <com.leyuan.aidong.widget.ninephotoview.PhotoLayout
+        <com.example.aidong.widget.ninephotoview.PhotoLayout
             android:id="@+id/circle_image_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

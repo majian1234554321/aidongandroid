@@ -6,7 +6,7 @@
     android:background="@color/c2"
     android:orientation="vertical">
 
-    <com.leyuan.aidong.widget.CommonTitleLayout
+    <com.example.aidong.widget.CommonTitleLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"

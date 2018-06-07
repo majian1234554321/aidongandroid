@@ -52,7 +52,7 @@
                 android:scrollbars="vertical"/>
         </com.leyuan.custompullrefresh.CustomRefreshLayout>
 
-        <com.leyuan.aidong.ui.discover.view.VenuesFilterView
+        <com.example.aidong.ui.discover.view.VenuesFilterView
             android:id="@+id/filter_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

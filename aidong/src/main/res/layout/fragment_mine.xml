@@ -245,7 +245,7 @@
 
 
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_coin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -255,7 +255,7 @@
                 app:txt_name="我的爱币" />
 
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_member_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -265,7 +265,7 @@
                 app:txt_name="我的会员卡" />
 
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_orders"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -274,7 +274,7 @@
                 app:img_tag="@drawable/mine_order"
                 app:txt_name="我的订单" />
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -284,7 +284,7 @@
 
 
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_yaoqing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -292,7 +292,7 @@
                 app:img_tag="@drawable/mine_yaoqing"
                 app:txt_name="邀请有礼" />
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_sport_timing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -301,7 +301,7 @@
                 app:img_tag="@drawable/mine_private"
                 app:txt_name="私人定制" />
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -310,7 +310,7 @@
                 android:layout_marginTop="@dimen/pref_10dp"
                 app:txt_name="收货地址" />
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_recommend_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -320,7 +320,7 @@
                 app:img_tag="@drawable/mine_add_friend"
                 app:txt_name="推荐好友" />
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_after_sale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -328,7 +328,7 @@
                 app:img_tag="@drawable/mine_after_sale"
                 app:txt_name="售后/退款" />
 
-            <com.leyuan.aidong.widget.AidongMineItem
+            <com.example.aidong.widget.AidongMineItem
                 android:id="@+id/item_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

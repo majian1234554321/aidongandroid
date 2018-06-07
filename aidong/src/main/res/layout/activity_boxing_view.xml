@@ -39,7 +39,7 @@
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
 
-        <com.leyuan.aidong.module.photopicker.boxing_impl.view.HackyViewPager
+        <com.example.aidong.module.photopicker.boxing_impl.view.HackyViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

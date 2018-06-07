@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.leyuan.aidong.widget.ObserveScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.aidong.widget.ObserveScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollview"
     android:layout_width="match_parent"
@@ -318,4 +318,4 @@
         </LinearLayout>
 
     </LinearLayout>
-</com.leyuan.aidong.widget.ObserveScrollView>
+</com.example.aidong.widget.ObserveScrollView>

@@ -80,7 +80,7 @@
         android:src="@drawable/btn_accept"
         android:visibility="visible" />
 
-    <com.leyuan.aidong.module.photopicker.boxing_impl.record.view.RecordButton
+    <com.example.aidong.module.photopicker.boxing_impl.record.view.RecordButton
         android:id="@+id/record_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

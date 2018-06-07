@@ -29,7 +29,7 @@
         </RelativeLayout>
 
 
-        <!--<com.leyuan.aidong.widget.MyListView-->
+        <!--<com.example.aidong.widget.MyListView-->
             <!--android:id="@+id/list_live"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->

@@ -258,7 +258,7 @@
             </RelativeLayout>
 
 
-            <com.leyuan.aidong.widget.richtext.RichWebView
+            <com.example.aidong.widget.richtext.RichWebView
                 android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -283,6 +283,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text=""
+            android:singleLine="true"
+            android:maxEms="15"
+            android:ellipsize="end"
             android:textColor="@color/white"
             android:textSize="17sp" />
 

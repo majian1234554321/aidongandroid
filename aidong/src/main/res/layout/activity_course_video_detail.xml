@@ -73,7 +73,7 @@
                 android:paddingLeft="15dp"
                 android:paddingTop="20dp">
 
-                <com.leyuan.aidong.widget.media.TextViewPrintly
+                <com.example.aidong.widget.media.TextViewPrintly
                     android:id="@+id/tv_course_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                     android:textColor="@color/white"
                     android:textSize="17sp" />
 
-                <com.leyuan.aidong.widget.media.TextViewPrintly
+                <com.example.aidong.widget.media.TextViewPrintly
                     android:id="@+id/tv_auth_and_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                     android:background="#77ebebeb" />
             </RelativeLayout>
 
-            <com.leyuan.aidong.widget.media.TextViewPrintly
+            <com.example.aidong.widget.media.TextViewPrintly
                 android:id="@+id/tv_course_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

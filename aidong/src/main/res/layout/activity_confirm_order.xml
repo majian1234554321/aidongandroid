@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.leyuan.aidong.widget.SimpleTitleBar
+    <com.example.aidong.widget.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -319,28 +319,28 @@
 
             <include layout="@layout/inc_line_black" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:line_color="@color/transparent"
                 app:left_text="商品总额:" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/tv_express_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:line_color="@color/transparent"
                 app:left_text="运费:" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/tv_coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:line_color="@color/transparent"
                 app:left_text="优惠劵:" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/tv_discount_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -348,7 +348,7 @@
                 android:visibility="gone"
                 app:left_text="商品优惠:" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -356,7 +356,7 @@
                 app:line_color="@color/transparent"
                 app:left_text="爱币:" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
+            <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:visibility="gone"
                 android:layout_width="match_parent"

@@ -76,7 +76,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <com.leyuan.aidong.widget.CircleImageView
+        <com.example.aidong.widget.CircleImageView
             android:id="@+id/img_header"
             android:layout_width="25dp"
             android:layout_height="25dp"

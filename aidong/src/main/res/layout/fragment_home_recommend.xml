@@ -98,7 +98,7 @@
                     android:layout_below="@+id/rrr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <com.leyuan.aidong.widget.card.AAA
+                    <com.example.aidong.widget.card.AAA
 
                         android:id="@+id/activity_review"
                         android:layout_width="match_parent"

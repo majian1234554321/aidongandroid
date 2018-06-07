@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.leyuan.aidong.widget.SimpleTitleBar
+    <com.example.aidong.widget.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -138,7 +138,7 @@
                     android:id="@+id/layout_course_location"
                     layout="@layout/inc_course_location_phone" />
 
-                <com.leyuan.aidong.widget.richtext.RichWebView
+                <com.example.aidong.widget.richtext.RichWebView
                     android:id="@+id/web_view"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="8dp"
@@ -170,7 +170,7 @@
                          />
 
 
-                    <com.leyuan.aidong.widget.CustomNestRadioGroup
+                    <com.example.aidong.widget.CustomNestRadioGroup
 
                         android:id="@+id/radio_group"
                         android:layout_width="match_parent"
@@ -234,7 +234,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
-                    </com.leyuan.aidong.widget.CustomNestRadioGroup>
+                    </com.example.aidong.widget.CustomNestRadioGroup>
 
                 </LinearLayout>
 

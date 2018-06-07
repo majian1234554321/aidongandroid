@@ -18,19 +18,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.leyuan.aidong.widget.wheelview.WheelView
+        <com.example.aidong.widget.wheelview.WheelView
             android:id="@+id/wv_province"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <com.leyuan.aidong.widget.wheelview.WheelView
+        <com.example.aidong.widget.wheelview.WheelView
             android:id="@+id/wv_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <com.leyuan.aidong.widget.wheelview.WheelView
+        <com.example.aidong.widget.wheelview.WheelView
             android:id="@+id/wv_district"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

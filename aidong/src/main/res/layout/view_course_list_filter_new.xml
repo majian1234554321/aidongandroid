@@ -485,7 +485,7 @@
                     android:padding="8dp"
                     android:text="1221" />
 
-                <com.leyuan.aidong.widget.RangeSeekBar
+                <com.example.aidong.widget.RangeSeekBar
                     android:id="@+id/seekbar3"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
