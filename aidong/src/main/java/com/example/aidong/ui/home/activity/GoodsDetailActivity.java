@@ -679,4 +679,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+
+
+
+
 }

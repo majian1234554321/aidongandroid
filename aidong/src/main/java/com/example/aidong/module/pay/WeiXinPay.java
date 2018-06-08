@@ -24,13 +24,12 @@ public class WeiXinPay implements PayInterface {
         //String appId = context.getString(R.string.weixingAppID);
         msgApi = WXAPIFactory.createWXAPI(context, null);
         //msgApi.registerApp(appId);
-        this.payListener = payListener;
+        WeiXinPay.payListener = payListener;
 
     }
 
     @Override
     public void payOrder(PayOptionBean payOptionBean) {
-
 
         if (payOptionBean != null) {
             PayReq payReq = new PayReq();

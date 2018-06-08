@@ -10,15 +10,15 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.WebViewClient
 
 import com.example.aidong.R
-import com.example.aidong .config.UrlConfig
-import com.example.aidong .ui.App
-import com.example.aidong .ui.BaseFragment
-import com.example.aidong .ui.activities.`interface`.MyJSInterface
-import com.example.aidong .utils.GlideLoader
-import com.example.aidong .utils.Logger
-
+import com.example.aidong.config.UrlConfig
+import com.example.aidong.ui.App
+import com.example.aidong.ui.BaseFragment
+import com.example.aidong.ui.activities.`interface`.MyJSInterface
+import com.example.aidong.utils.GlideLoader
+import com.example.aidong.utils.Logger
 
 import kotlinx.android.synthetic.main.invitationfragment.*
 import java.util.HashMap
@@ -48,15 +48,14 @@ class InvitationFragment : BaseFragment() {
 
         webSettings.allowFileAccess = true// 设置允许访问文件数据 v
 
-        webSettings.setSupportZoom(true)
+        webSettings.setSupportZoom(false)
 
-         webSettings.builtInZoomControls = true
-
+        webSettings.builtInZoomControls = false
 
         webSettings.domStorageEnabled = true
         webSettings.loadWithOverviewMode = true
 
-        webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
+        webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
 
         webSettings.databaseEnabled = true
         webSettings.useWideViewPort = true
@@ -81,8 +80,7 @@ class InvitationFragment : BaseFragment() {
 
 
 
-        Logger.i(TAG, "mWebView.loadUrl start")
-        mWebView.addJavascriptInterface(MyJSInterface(context), "android")
+
 
 
 
@@ -91,7 +89,18 @@ class InvitationFragment : BaseFragment() {
         mWebView.loadUrl("${UrlConfig.BASE_URL_MEMBER_CARD}activity/inviting",map)
 
 
+        mWebView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView, url: String) {
+                super.onPageFinished(view, url)
+                 mWebView.loadUrl("javascript:var imgs=document.getElementsByClassName('main-box');for(var i=0;i<imgs.length;i++){imgs[i].style.width='100%';};void(0);")
+                // mWebView.loadUrl("javascript:var width=document.getElementsByClassName('bigbox');width.style.width='640px';};void(0);")
+               // mWebView.loadUrl("javascript:var imgs=document.getElementsByClassName('bigbox');for(var i=0;i<imgs.length;i++){imgs[i].style.width='100%';};void(0);")
 
+               // mWebView.loadUrl("javascript:var imgs=document.getElementsByClassName('bigbox');for(var i=0;i<imgs.length;i++){imgs[i].style.width='100%';};void(0);")
+            }
+        }
+        Logger.i(TAG, "mWebView.loadUrl start")
+        mWebView.addJavascriptInterface(MyJSInterface(context), "android")
 
     }
 

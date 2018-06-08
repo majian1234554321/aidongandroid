@@ -24,7 +24,7 @@ import com.example.aidong .entity.data.SportRecordMonthData;
 import com.example.aidong .entity.model.UserCoach;
 import com.example.aidong .entity.user.MineInfoBean;
 import com.example.aidong .module.chat.manager.EmMessageManager;
-import com.example.aidong.Receivers.ChatMessageReceiver;
+import com.example.aidong.receivers.ChatMessageReceiver;
 import com.example.aidong .ui.App;
 import com.example.aidong .ui.BaseFragment;
 import com.example.aidong .ui.DisplayActivity;

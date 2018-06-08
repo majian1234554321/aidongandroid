@@ -11,23 +11,24 @@
     android:orientation="vertical">
 
 
-    <ImageView
-        android:layout_margin="1px"
-        android:id="@+id/recy_item_im"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:scaleType="centerCrop"
-        android:transitionName="share" />
 
-    <RelativeLayout
+
+    <com.example.aidong.widget.RCRelativeLayout
         android:id="@+id/rl"
-
+        app:round_corner_top_left="5dp"
+        app:round_corner_top_right="5dp"
         android:layout_width="match_parent"
         android:layout_height="220dp">
 
+        <ImageView
+            android:layout_margin="1px"
+            android:id="@+id/recy_item_im"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:transitionName="share" />
 
-
-    </RelativeLayout>
+    </com.example.aidong.widget.RCRelativeLayout>
 
 
 

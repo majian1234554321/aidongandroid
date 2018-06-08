@@ -291,7 +291,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                     return;
                 }
 
-                if (course.isMember_only() && !course.isMember()) {
+                if (course!=null&&course.isMember_only() && !course.isMember()) {
                     ToastGlobal.showShortConsecutive("该课程只有会员才能预约");
                     return;
                 }

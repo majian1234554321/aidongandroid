@@ -333,7 +333,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 if (course != null) {
                     CourseDetailNewActivity.start(this, course.getId());
                 }
-//                    UserInfoActivity.start(this, course.getCoach().getContact());
+
 
                 break;
             case R.id.layout_course_location:

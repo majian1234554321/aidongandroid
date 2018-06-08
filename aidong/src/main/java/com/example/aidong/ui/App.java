@@ -9,9 +9,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
-import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
-import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+
 import com.example.aidong .config.UrlConfig;
 import com.example.aidong .entity.CircleDynamicBean;
 import com.example.aidong .entity.VenuesBean;
@@ -28,12 +26,11 @@ import com.example.aidong .utils.LogAidong;
 import com.example.aidong .utils.Logger;
 import com.example.aidong .utils.SharePrefUtils;
 import com.example.aidong .utils.VersionManager;
-//import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-//import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
-//import com.nostra13.universalimageloader.core.ImageLoader;
-//import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-//import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+
+import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
+import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
+import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
@@ -103,7 +100,7 @@ public class App extends MultiDexApplication {
         RichText.initCacheDir(this);
 
         BaseUtils.init(this);
-       // initImageLoader(this);
+
         initFFmpegBinary(this);
 
 
@@ -392,16 +389,7 @@ public class App extends MultiDexApplication {
     }
 
 
-   /* public static void initImageLoader(Context context) {
-        int memoryCacheSize = (int) (Runtime.getRuntime().maxMemory() / 10);
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-                .memoryCache(new LRULimitedMemoryCache(memoryCacheSize))
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .build();
-        // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config);
-    }*/
+
 
     private void initFFmpegBinary(Context context) {
 

@@ -293,7 +293,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
             txt_spec_remark.setVisibility(View.VISIBLE);
 
 
-            GlideLoader.getInstance().displayImage2(specBean.item.get(0).cover, dvGoodsCover);
+
             skuRecyclerView.setVisibility(View.GONE);
 
           //  price = FormatUtil.parseDouble(detailBean.price);

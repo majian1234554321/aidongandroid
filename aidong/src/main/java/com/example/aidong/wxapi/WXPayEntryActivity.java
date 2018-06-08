@@ -49,9 +49,10 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             PayInterface.PayListener payListener = WeiXinPay.payListener;
             switch (code) {
                 case 0:		//成功
+                    Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
                     if (null != payListener) {
                         payListener.onSuccess(code + "", resp);
-                        Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
+
                     }
                     break;
 

@@ -58,10 +58,10 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
                 .load(courseBean.getCover())
 
                 .centerCrop()
-                .placeholder(new ColorDrawable(0xffc6c6c6))
+                .placeholder(R.drawable.img_default)
 //                .bitmapTransform(new RoundedCornersTransformation(context, 8, 0,
 //                        RoundedCornersTransformation.CornerType.TOP))
-                .transform(new GlideRoundTransform(context, 10))
+               // .transform(new GlideRoundTransform(context, 10))
                 .into(holder.recy_item_im);
 
 

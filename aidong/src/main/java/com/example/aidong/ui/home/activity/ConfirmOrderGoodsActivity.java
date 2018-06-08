@@ -499,7 +499,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
             LocalBroadcastManager.getInstance(ConfirmOrderGoodsActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS));
             PaySuccessActivity.start(ConfirmOrderGoodsActivity.this, present.getShareInfo(), is_virtual);
-            finish();
+            //finish();
         }
 
         @Override
