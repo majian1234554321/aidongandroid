@@ -302,7 +302,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
                     if (Integer.parseInt(String.valueOf(s))>limit){
-                        tvCount.setText(String.valueOf(s));
+                        tvCount.setText(limit+"");
                     }
                 }
             }
