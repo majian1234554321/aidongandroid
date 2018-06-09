@@ -249,6 +249,14 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/x12"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="@dimen/right_margin"
+                    android:background="@color/c9" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="52dp"
@@ -268,7 +276,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="48dp"
                         android:layout_marginLeft="@dimen/left_margin"
                         android:layout_marginRight="@dimen/right_margin"
                         android:gravity="center_vertical"
@@ -365,7 +373,7 @@
         android:id="@+id/bt_pay_immediately"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/course_oringe"
+        android:background="@color/main_red"
         android:gravity="center"
         android:text="@string/pay_immediately"
         android:textColor="@color/white"

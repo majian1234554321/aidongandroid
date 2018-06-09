@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:layout_marginBottom="6dp"
     android:orientation="vertical">
 
     <ImageView
@@ -62,10 +63,7 @@
         android:textColor="@color/b3"
         android:textSize="14sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/list_line_color"
-        android:layout_height="6dp"/>
+
 
 
 </LinearLayout>

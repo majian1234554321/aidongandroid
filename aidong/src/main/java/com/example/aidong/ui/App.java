@@ -2,6 +2,7 @@ package com.example.aidong.ui;
 
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
+import android.text.TextUtils;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -158,18 +159,18 @@ public class App extends MultiDexApplication {
         mLocationClient.setLocOption(option);
     }
 
-    public void saveJpushId(String regId) {
-        this.jPushId = regId;
-        SharePrefUtils.putString(context, "jPushId", regId);
-        Logger.i("saveJpushId = " + jPushId);
-    }
+
 
     public String getjPushId() {
-        if (jPushId == null) {
-            jPushId = SharePrefUtils.getString(context, "jPushId", null);
-        }
+//        if (jPushId == null) {
+//            jPushId = SharePrefUtils.getString(context, "jPushId", null);
+//        }
+//
+//        Logger.i("getjPushId = " + jPushId);
 
-        Logger.i("getjPushId = " + jPushId);
+        if (TextUtils.isEmpty(jPushId))
+            jPushId =   JPushInterface.getRegistrationID(getApplicationContext());
+
         return jPushId;
     }
 

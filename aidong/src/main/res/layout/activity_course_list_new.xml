@@ -44,13 +44,17 @@
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/height_top_bar"
+
+
         app:stl_defaultTabTextColor="@color/gray_normal"
-        app:stl_defaultTabTextHorizontalPadding="36dp"
         app:stl_defaultTabTextSize="17sp"
-        app:stl_dividerColor = "@color/transpance"
-        app:stl_indicatorThickness="0dp"/>
+        app:stl_dividerColor="@color/transparent"
+        app:stl_indicatorColor="@color/white"
+        app:stl_indicatorInterpolation="smart"
+        app:stl_indicatorThickness="3dp"
+        app:stl_indicatorWidth="auto" />
 
 
 

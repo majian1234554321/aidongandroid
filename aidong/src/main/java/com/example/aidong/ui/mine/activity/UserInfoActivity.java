@@ -46,7 +46,7 @@ import com.example.aidong .ui.mine.activity.account.LoginActivity;
 import com.example.aidong .ui.mine.fragment.CoachCourseFragment;
 import com.example.aidong .ui.mine.fragment.UserDynamicFragment;
 import com.example.aidong .ui.mine.fragment.UserInfoFragment;
-import com.example.aidong .ui.mvp.presenter.UserInfoPresent;
+
 import com.example.aidong .ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.example.aidong .ui.mvp.view.UserInfoActivityView;
 import com.example.aidong .utils.Constant;
@@ -108,7 +108,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private boolean isSelf = false;
     private UserInfoData userInfoData;
     private UserInfoPhotoAdapter wallAdapter;
-    private UserInfoPresent userInfoPresent;
+    private UserInfoPresentImpl userInfoPresent;
 
     private FragmentPagerItemAdapter adapter;
     private boolean needRefreshFragment = false;

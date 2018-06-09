@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:background="@color/transparent"
             android:text="@string/not_join"
-            android:textColor="@color/c6"
+            android:textColor="@color/c9"
             android:textSize="14sp" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_height="match_parent"
             android:background="@color/transparent"
             android:text="@string/joined"
-            android:textColor="@color/c6"
+            android:textColor="@color/c9"
             android:textSize="14sp" />
 
 

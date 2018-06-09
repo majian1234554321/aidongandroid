@@ -41,6 +41,11 @@ public class SearchHeaderView extends RelativeLayout {
         etSearch = (EditText) view.findViewById(R.id.et_search);
         txtSearchTitle = (TextView) view.findViewById(R.id.txt_search_title);
 
+
+
+
+
+
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

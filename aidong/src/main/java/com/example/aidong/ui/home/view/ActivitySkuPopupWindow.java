@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,7 +66,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
     private TextView tvSkuTip;
     private GoodsSkuAdapter goodsSkuAdapter;
     private ImageView ivMinus;
-    private TextView tvCount;
+    private EditText tvCount;
     private ImageView ivAdd;
     private TextView txt_limit_number, txt_spec_remark;
     private TextView tvConfirm;
@@ -208,7 +209,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         tvSelect = (TextView) view.findViewById(R.id.tv_select);
         tvSkuTip = (TextView) view.findViewById(R.id.tv_sku_tip);
         ivMinus = (ImageView) view.findViewById(R.id.iv_minus);
-        tvCount = (TextView) view.findViewById(R.id.tv_count);
+        tvCount = view.findViewById(R.id.tv_count);
         ivAdd = (ImageView) view.findViewById(R.id.iv_add);
         txt_limit_number = (TextView) view.findViewById(R.id.txt_limit_number);
         txt_spec_remark = (TextView) view.findViewById(R.id.txt_spec_remark);

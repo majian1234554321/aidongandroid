@@ -258,11 +258,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:layout_marginTop="@dimen/x12"
                 android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="@dimen/right_margin"
+                    android:background="@color/c9" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="52dp"
+                    android:layout_height="48dp"
                     android:layout_marginLeft="@dimen/left_margin"
                     android:gravity="center_vertical"
                     android:text="@string/pay_type"

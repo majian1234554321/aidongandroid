@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#f2f2f2"
     android:orientation="vertical">
 
     <com.example.aidong.widget.CommonTitleLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,9 +11,12 @@
         android:layout_height="45dp"
         app:txtTitle="圈子" />
 
+
+
     <com.leyuan.custompullrefresh.CustomRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
+        android:background="#f2f2f2"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView

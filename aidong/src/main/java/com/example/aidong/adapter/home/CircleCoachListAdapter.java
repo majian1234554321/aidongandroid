@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong .entity.UserBean;
+import com.example.aidong.ui.App;
 import com.example.aidong .utils.GlideLoader;
 import com.example.aidong .widget.richtext.RichWebView;
 
@@ -60,6 +61,16 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
         } else {
             holder.txtIntro.setText("这个人很懒,什么都没留下");
         }
+
+
+        if (user.id!=null&&App.getInstance().getUser()!=null){
+            if (user.id.equals( String.valueOf(App.getInstance().getUser().getId()))){
+                holder.btAttention.setVisibility(View.INVISIBLE);
+            }else {
+                holder.btAttention.setVisibility(View.VISIBLE);
+            }
+        }
+
 
 
         holder.btAttention.setImageResource(user.followed ? R.drawable.icon_followed : R.drawable.icon_follow);

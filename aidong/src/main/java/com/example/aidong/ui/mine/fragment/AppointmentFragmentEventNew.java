@@ -139,17 +139,17 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
         switch (i) {
             case 0:
                 btAll.setTextColor(getResources().getColor(R.color.main_red));
-                btJoinNo.setTextColor(getResources().getColor(R.color.c6));
-                btJoined.setTextColor(getResources().getColor(R.color.c6));
+                btJoinNo.setTextColor(getResources().getColor(R.color.c9));
+                btJoined.setTextColor(getResources().getColor(R.color.c9));
                 break;
             case 1:
-                btAll.setTextColor(getResources().getColor(R.color.c6));
+                btAll.setTextColor(getResources().getColor(R.color.c9));
                 btJoinNo.setTextColor(getResources().getColor(R.color.main_red));
-                btJoined.setTextColor(getResources().getColor(R.color.c6));
+                btJoined.setTextColor(getResources().getColor(R.color.c9));
                 break;
             case 2:
-                btAll.setTextColor(getResources().getColor(R.color.c6));
-                btJoinNo.setTextColor(getResources().getColor(R.color.c6));
+                btAll.setTextColor(getResources().getColor(R.color.c9));
+                btJoinNo.setTextColor(getResources().getColor(R.color.c9));
                 btJoined.setTextColor(getResources().getColor(R.color.main_red));
                 break;
         }

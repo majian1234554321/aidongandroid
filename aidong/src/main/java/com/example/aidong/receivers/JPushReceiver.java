@@ -41,7 +41,7 @@ public class JPushReceiver extends BroadcastReceiver {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             LogAidong.i(TAG, "[MyReceiver] 接收 注册Registration Id : " + regId);
 
-            App.getInstance().saveJpushId(regId);
+
 
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             String value = bundle.getString(JPushInterface.EXTRA_EXTRA);

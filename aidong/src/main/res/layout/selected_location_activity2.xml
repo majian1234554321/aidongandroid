@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    android:orientation="vertical">
+
+    <com.example.aidong.widget.CommonTitleLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:txtTitle="圈子" />
+
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/shape_radius_white"
+        android:drawableLeft="@drawable/icon_search_gray"
+        android:drawablePadding="10dp"
+
+        android:paddingLeft="@dimen/pref_12dp"
+        android:hint="@string/search_more_circle"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:textColorHint="@color/c9"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/txt_search_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:text="@string/nearly_store"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#f2f2f2"
+        android:layout_height="wrap_content">
+
+
+        <com.leyuan.custompullrefresh.CustomRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:background="#f2f2f2"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.leyuan.custompullrefresh.CustomRefreshLayout>
+
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="#f2f2f2"
+            android:drawablePadding="20dp"
+            android:visibility="gone"
+            android:drawableTop="@drawable/empty_order"
+            android:gravity="center"
+            android:text="暂无订单"
+            android:textSize="14sp"
+            android:textColor="@color/c9" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -2,6 +2,7 @@ package com.example.aidong.ui.mvp.presenter.impl;
 
 import android.Manifest;
 import android.app.Activity;
+import android.widget.Toast;
 
 import com.example.aidong .entity.model.result.LoginResult;
 import com.example.aidong .http.subscriber.IsLoginSubscriber;
@@ -45,6 +46,8 @@ public class SplashPresenterImpl {
                 if (requestResponse != null) {
                     requestResponse.onRequestResponse();
                 }
+
+               // Toast.makeText(context, App.getInstance().getjPushId(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

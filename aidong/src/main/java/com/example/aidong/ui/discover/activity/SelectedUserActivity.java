@@ -213,4 +213,9 @@ public class SelectedUserActivity extends BaseActivity implements OnRefreshListe
 //        switcherLayout.addCustomView(view, "empty");
 //        switcherLayout.showCustomLayout("empty");
     }
+
+    @Override
+    public void hideHeadItemView() {
+
+    }
 }

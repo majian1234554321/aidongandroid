@@ -38,7 +38,7 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CampaignBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getCover(), holder.imgCover);
+        GlideLoader.getInstance().displayImage2(bean.getCover(), holder.imgCover);
         holder.txtType.setText("【" + bean.getTypeCZ() + "】");
         holder.txtName.setText(bean.getName());
 //        if (TextUtils.isEmpty(bean.getLandmark())) {

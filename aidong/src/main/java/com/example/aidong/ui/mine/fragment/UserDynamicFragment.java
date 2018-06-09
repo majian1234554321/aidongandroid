@@ -217,7 +217,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             refreshLayout.setRefreshing(false);
         }
 
-        View view = View.inflate(getContext(), R.layout.empty_dynamic, null);
+        View view = View.inflate(activity, R.layout.empty_dynamic, null);
         switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
     }

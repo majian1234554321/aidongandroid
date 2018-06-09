@@ -1,10 +1,16 @@
 package com.example.aidong.ui.discover.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong .adapter.discover.SelectCircleAdapter;
@@ -23,13 +29,15 @@ import com.example.aidong .widget.endlessrecyclerview.utils.RecyclerViewStateUti
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
  * Created by user on 2018/1/9.
  */
 
-public class SelectedCircleActivity extends BaseActivity implements SearchHeaderView.OnSearchListener, SelectedCircleView {
+public class SelectedCircleActivity extends BaseActivity implements SelectedCircleView {
 
     private CommonTitleLayout layoutTitle;
     private CustomRefreshLayout refreshLayout;
@@ -45,12 +53,51 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
 
     boolean isSearch;
     private String keyword;
-    private SearchHeaderView headView;
+
+    private TextView tv,txt_search_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.selected_location_activity);
+        setContentView(R.layout.selected_location_activity2);
+
+
+        final EditText    etSearch = (EditText) findViewById(R.id.et_search);
+        tv = findViewById(R.id.tv);
+        txt_search_title = findViewById(R.id.txt_search_title);
+
+
+
+
+
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
+
+
+
+                    isSearch = true;
+                    currPage = 1;
+                    keyword = etSearch.getText().toString().trim();
+
+                    DialogUtils.showDialog(SelectedCircleActivity.this, "", true);
+                    circlePrensenter.searchCircle(keyword);
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+
+
+
+
 
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
         refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
@@ -108,12 +155,8 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
 
-        headView = new SearchHeaderView(this);
-        headView.setOnsearchListner(this);
-        headView.setSearchHint(getResources().getString(R.string.search_more_circle));
-        headView.setTxtSearchTitle(getResources().getString(R.string.hot_recommend));
 
-        RecyclerViewUtils.setHeaderView(recyclerView, headView);
+
 
     }
 
@@ -124,25 +167,38 @@ public class SelectedCircleActivity extends BaseActivity implements SearchHeader
         }
     };
 
-    @Override
-    public void onSearch(String keyword) {
-        isSearch = true;
-        currPage = 1;
-        this.keyword = keyword;
-        if (headView != null)
-            headView.setTxtSearchTitleVisible(View.GONE);
-        DialogUtils.showDialog(this, "", true);
-        circlePrensenter.searchCircle(keyword);
-    }
+
 
     @Override
     public void onGetRecommendCircle(ArrayList<CampaignBean> items) {
         adapter.setData(items);
+        tv.setVisibility(View.GONE);
+        txt_search_title.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+        refreshLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onSearchCircleResult(ArrayList<CampaignBean> items) {
         DialogUtils.dismissDialog();
+
+
+
+        txt_search_title.setVisibility(View.GONE);
+        tv.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        refreshLayout.setVisibility(View.VISIBLE);
+
+
+
         adapter.setData(items);
+    }
+
+    @Override
+    public void hideHeadItemView() {
+        txt_search_title.setVisibility(View.GONE);
+        tv.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        refreshLayout.setVisibility(View.GONE);
     }
 }

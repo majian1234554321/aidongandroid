@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by user on 2018/1/31.
  */
-public interface SelectedCircleView {
+public interface SelectedCircleView extends HideHeadItemView {
     void onGetRecommendCircle(ArrayList<CampaignBean> items);
 
     void onSearchCircleResult(ArrayList<CampaignBean> items);

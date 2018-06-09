@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.example.aidong .entity.model.result.LoginResult;
 import com.example.aidong .http.subscriber.IsLoginSubscriber;
@@ -73,6 +74,9 @@ public class LoginPresenter implements LoginPresenterInterface {
 
             @Override
             public void onNext(LoginResult user) {
+
+                //Toast.makeText(context, App.getInstance().getjPushId(), Toast.LENGTH_SHORT).show();
+
                 App.getInstance().setUser(user.getUser());
                 if (loginViewInterface != null) {
                     if (TextUtils.isEmpty(user.getUser().getMobile())) {

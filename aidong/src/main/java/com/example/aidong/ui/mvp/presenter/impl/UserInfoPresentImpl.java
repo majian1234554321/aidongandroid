@@ -9,6 +9,7 @@ import com.example.aidong .entity.data.UserInfoData;
 import com.example.aidong .entity.model.UserCoach;
 import com.example.aidong .http.subscriber.IsLoginSubscriber;
 import com.example.aidong .http.subscriber.CommonSubscriber;
+import com.example.aidong.http.subscriber.Progress2Subscriber;
 import com.example.aidong .http.subscriber.ProgressSubscriber;
 import com.example.aidong .http.subscriber.RequestMoreSubscriber;
 import com.example.aidong .ui.App;
@@ -193,7 +194,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
             followModel = new FollowModelImpl();
         }
 
-        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.addFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 userInfoActivityView.addFollowResult(baseBean);
@@ -208,7 +209,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
             followModel = new FollowModelImpl();
         }
 
-        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.cancelFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 userInfoActivityView.cancelFollowResult(baseBean);

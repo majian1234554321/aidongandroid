@@ -15,12 +15,13 @@ import com.example.aidong .http.subscriber.handler.ProgressDialogHandler;
 public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> implements ProgressDialogHandler.ProgressCancelListener{
     private boolean showDialog = true;
 
-    private ProgressDialogFragment progressDialogFragment;
+
+    private ProgressDialogFragment progressDialogFragment= new ProgressDialogFragment();
 
     public Progress2Subscriber(Context context) {
         super(context);
         this.context = context;
-        progressDialogFragment = new ProgressDialogFragment();
+
     }
 
     public Progress2Subscriber(Context context, boolean showDialog) {

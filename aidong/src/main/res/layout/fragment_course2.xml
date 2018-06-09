@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -27,18 +27,17 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/rl_empty"
         android:layout_toRightOf="@+id/rl_empty"
-        android:layout_toEndOf="@+id/rl_empty">
+        android:background="#f2f2f2">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_course"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:clipToPadding="false"
-             />
+            android:clipToPadding="false" />
 
     </com.leyuan.custompullrefresh.CustomRefreshLayout>
 

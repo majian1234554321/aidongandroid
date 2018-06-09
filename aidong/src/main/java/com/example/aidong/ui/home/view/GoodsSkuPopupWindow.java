@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -69,7 +72,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private TextView tvSkuTip;
     private GoodsSkuAdapter goodsSkuAdapter;
     private ImageView ivMinus;
-    private TextView tvCount;
+    private EditText tvCount;
     private ImageView ivAdd;
     private TextView tvConfirm;
     private TextView tvAdd;
@@ -211,7 +214,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvSelect = (TextView) view.findViewById(R.id.tv_select);
         tvSkuTip = (TextView) view.findViewById(R.id.tv_sku_tip);
         ivMinus = (ImageView) view.findViewById(R.id.iv_minus);
-        tvCount = (TextView) view.findViewById(R.id.tv_count);
+        tvCount =  view.findViewById(R.id.tv_count);
         ivAdd = (ImageView) view.findViewById(R.id.iv_add);
         txt_limit_number = (TextView) view.findViewById(R.id.txt_limit_number);
 
@@ -260,7 +263,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
 
         tvSkuTip.setText(skuTip.toString());
         if (isAllSkuConfirm()) {
-            GlideLoader.getInstance().displayImage(confirmedSkuCover, dvGoodsCover);
+            GlideLoader.getInstance().displayImage2(confirmedSkuCover, dvGoodsCover);
             selectedSkuCover = confirmedSkuCover;
             tvSelect.setText(context.getString(selected));
             tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double), price));
@@ -268,7 +271,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count), stock));
             tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
         } else {
-            GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
+            GlideLoader.getInstance().displayImage2(unConfirmedSkuCover, dvGoodsCover);
             selectedSkuCover = unConfirmedSkuCover;
             tvSelect.setText(context.getString(R.string.please_select));
             tvGoodsPrice.setText(maxPrice == minPrice
@@ -288,6 +291,27 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             } else
                 txt_limit_number.setText("(限购" + limit + "张)");
         }
+
+        tvCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)) {
+                    if (Integer.parseInt(String.valueOf(s))>limit){
+                        tvCount.setText(String.valueOf(s));
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
         if (detailBean.spec.item.size()==1){
@@ -515,7 +539,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),
                         FormatUtil.parseDouble(line.price)));
                 tvStock.setText(String.format(context.getString(R.string.stock_count), line.getStock() + ""));
-                GlideLoader.getInstance().displayImage(line.cover, dvGoodsCover);
+                GlideLoader.getInstance().displayImage2(line.cover, dvGoodsCover);
                 selectedSkuCover = line.cover;
                 stock = line.getStock();
                 limit = line.getLimit_amount();
@@ -551,7 +575,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             tvSkuTip.setText(skuTip.toString());
         } else {
             selectProduct = false;
-            GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
+            GlideLoader.getInstance().displayImage2(unConfirmedSkuCover, dvGoodsCover);
             selectedSkuCover = unConfirmedSkuCover;
             tvGoodsPrice.setText(maxPrice == minPrice ? String.valueOf(maxPrice) :
                     String.format(context.getString(R.string.rmb_price_scope), minPrice, maxPrice));
