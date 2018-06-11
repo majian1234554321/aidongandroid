@@ -1,5 +1,6 @@
 package com.example.aidong.ui.home.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,6 +18,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -474,6 +477,11 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
     private void showSkuPopupWindow(ActivitySkuPopupWindow.GoodsStatus status) {
         skuPopupWindow = new ActivitySkuPopupWindow(this, campaignDetailBean, campaignDetailBean.spec, status, selectedSkuValues, selectedCount,
                 null);
+
+
+
+        skuPopupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        skuPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         skuPopupWindow.setSelectSkuListener(this);
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
     }

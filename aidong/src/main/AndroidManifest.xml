@@ -321,6 +321,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.ActivityCircleDetailActivity"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.competition.activity.ContestHomeActivity"

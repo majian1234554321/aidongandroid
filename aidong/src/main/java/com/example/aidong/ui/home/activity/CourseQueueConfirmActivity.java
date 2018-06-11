@@ -121,12 +121,22 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
     private void initData() {
         if (course.isMember()) {
             realPrice = course.getMember_price();
-            txtPriceTotal.setText("￥" + course.getMember_price());
-            txtPriceReal.setText("￥" + realPrice);
+
+
+            txtPriceReal.setText(String.format(getString(R.string.rmb_minus_price_double),
+                    realPrice));
+            txtPriceTotal.setText(String.format(getString(R.string.rmb_minus_price_double),
+                    course.getMember_price()));
+
+
+
+
         } else {
             realPrice = course.getPrice();
-            txtPriceTotal.setText("￥" + course.getPrice());
-            txtPriceReal.setText("￥" + realPrice);
+            txtPriceReal.setText(String.format(getString(R.string.rmb_minus_price_double),
+                    realPrice));
+            txtPriceTotal.setText(String.format(getString(R.string.rmb_minus_price_double),
+                    course.getMember_price()));
         }
 
 

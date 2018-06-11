@@ -2,6 +2,7 @@ package com.example.aidong.http.subscriber;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.SystemClock;
 
 import com.example.aidong .http.subscriber.handler.ProgressDialogHandler;
 
@@ -12,8 +13,8 @@ import com.example.aidong .http.subscriber.handler.ProgressDialogHandler;
  * onError中对错误进行统一处理
  * //todo 去掉Presenter中Subscriber和控件的耦合,交由View来实现这部分逻辑
  */
-public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> implements ProgressDialogHandler.ProgressCancelListener{
-    private boolean showDialog = true;
+public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> {
+
 
 
     private ProgressDialogFragment progressDialogFragment= new ProgressDialogFragment();
@@ -21,14 +22,6 @@ public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> implement
     public Progress2Subscriber(Context context) {
         super(context);
         this.context = context;
-
-    }
-
-    public Progress2Subscriber(Context context, boolean showDialog) {
-        super(context);
-        this.context = context;
-        this.showDialog = showDialog;
-        progressDialogFragment = new ProgressDialogFragment();
     }
 
 
@@ -38,9 +31,9 @@ public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> implement
      */
     @Override
     public void onStart() {
-        if(showDialog){
+
             showDialog();
-        }
+
     }
 
     /**
@@ -69,24 +62,14 @@ public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> implement
     @Override
     public abstract void onNext(T t);
 
-    /**
-     * 取消ProgressDialog的时候，取消对observable的订阅，同时也取消了http请求
-     */
-    @Override
-    public void onCancelProgress() {
-//        if (!this.isUnsubscribed()) {
-//            this.unsubscribe();
-//        }
-        dismissProgressDialog();
-        if (context!=null)
-        ((Activity)context).finish();
-    }
 
 
     public void  showDialog(){
-        if (progressDialogFragment!=null){
+
             progressDialogFragment.show(((Activity)context).getFragmentManager(),"TAG");
-        }
+
+
+
 
     }
 

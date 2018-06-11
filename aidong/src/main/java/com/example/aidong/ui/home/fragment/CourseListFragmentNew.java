@@ -1,6 +1,7 @@
 package com.example.aidong.ui.home.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.example.aidong .ui.mvp.presenter.CourseListPresentImpl;
 import com.example.aidong .ui.mvp.view.CourseListView;
 import com.example.aidong .ui.mvp.view.EmptyView;
 import com.example.aidong .utils.DialogUtils;
+import com.example.aidong.widget.SectionDecoration;
 import com.example.aidong .widget.SwitcherLayout;
 import com.example.aidong .widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.example.aidong .widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -61,7 +63,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
     private CourseListPresentImpl coursePresent;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course, container, false);
         recyclerView = view.findViewById(R.id.rv_course);
         switcherLayout = new SwitcherLayout(getContext(), recyclerView);
@@ -100,6 +102,25 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
+        recyclerView.addItemDecoration(new SectionDecoration(data, activity, new SectionDecoration.DecorationCallback() {
+            //返回标记id (即每一项对应的标志性的字符串)
+            @Override
+            public String getGroupId(int position) {
+                if (data.get(position).type != null) {
+                    return data.get(position).type;
+                }
+                return "-1";
+            }
+
+            //获取同组中的第一个内容
+            @Override
+            public String getGroupFirstLine(int position) {
+                if (data.get(position).type != null) {
+                    return data.get(position).type;
+                }
+                return "";
+            }
+        }));
 
 
 
@@ -145,6 +166,18 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
 
         }
 
+
+
+        for (int i = 0; i < data.size(); i++) {
+
+            data.get(i).type = (data.get(i).company_id == 1 ? "爱动自营门店" : "合作品牌门店");
+
+
+        }
+
+
+
+
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
         switcherLayout.showContentLayout();
@@ -155,6 +188,14 @@ public class CourseListFragmentNew extends BasePageFragment implements  CourseLi
         DialogUtils.dismissDialog();
         if (courseList != null)
             data.addAll(courseList);
+
+        for (int i = 0; i < data.size(); i++) {
+
+            data.get(i).type = (data.get(i).company_id == 1 ? "爱动自营门店" : "合作品牌门店");
+
+
+        }
+
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }

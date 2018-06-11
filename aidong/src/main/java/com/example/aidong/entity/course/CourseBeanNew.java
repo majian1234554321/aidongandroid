@@ -32,6 +32,7 @@ public String professionalism;
     ArrayList<String> tags;//  ["标签"]
     int strength =5;// 强度
     CoachBean coach;
+    public String type;
 
     boolean reservable = true;// 　是否可以预约#0-否　１-是
     public  boolean member_only;

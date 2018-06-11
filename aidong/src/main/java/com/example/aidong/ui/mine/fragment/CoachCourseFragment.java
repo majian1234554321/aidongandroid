@@ -21,6 +21,7 @@ import com.example.aidong .ui.mvp.view.CourseListView;
 import com.example.aidong .ui.mvp.view.EmptyView;
 import com.example.aidong .utils.DateUtils;
 import com.example.aidong .widget.CustomLayoutManager;
+import com.example.aidong.widget.SectionDecoration;
 import com.example.aidong .widget.SwitcherLayout;
 import com.example.aidong .widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.example.aidong .widget.refreshlayout.FullyLinearLayoutManager;
@@ -121,6 +122,34 @@ public class CoachCourseFragment extends BaseFragment implements  CourseListView
         switcherLayout = new SwitcherLayout(getContext(), recyclerView);
         courseAdapter = new HomeCourseListChildAdapter(getContext());
         recyclerView.setLayoutManager(full);
+
+
+        recyclerView.addItemDecoration(new SectionDecoration(data, activity, new SectionDecoration.DecorationCallback() {
+            //返回标记id (即每一项对应的标志性的字符串)
+            @Override
+            public String getGroupId(int position) {
+                if (data.get(position).type != null) {
+                    return data.get(position).type;
+                }
+                return "-1";
+            }
+
+            //获取同组中的第一个内容
+            @Override
+            public String getGroupFirstLine(int position) {
+                if (data.get(position).type != null) {
+                    return data.get(position).type;
+                }
+                return "";
+            }
+        }));
+
+
+
+
+
+
+
         recyclerView.setAdapter(courseAdapter);
 
 
@@ -139,6 +168,17 @@ public class CoachCourseFragment extends BaseFragment implements  CourseListView
             switcherLayout.showContentLayout();
             data.addAll(courseList);
             Collections.sort(data);
+
+
+            for (int i = 0; i < data.size(); i++) {
+
+                data.get(i).type = (data.get(i).company_id == 1 ? "爱动自营门店" : "合作品牌门店");
+
+
+            }
+
+
+
             courseAdapter.setData(data);
             courseAdapter.notifyDataSetChanged();
         }
@@ -151,6 +191,16 @@ public class CoachCourseFragment extends BaseFragment implements  CourseListView
         if (courseList != null && courseList.size() > 0) {
             data.addAll(courseList);
             switcherLayout.showContentLayout();
+
+
+            for (int i = 0; i < data.size(); i++) {
+
+                data.get(i).type = (data.get(i).company_id == 1 ? "爱动自营门店" : "合作品牌门店");
+
+
+            }
+
+
             courseAdapter.setData(data);
             courseAdapter.notifyDataSetChanged();
         }

@@ -20,6 +20,9 @@ public class AppointmentDetailBean {
     @SerializedName("address")
     private String cover2;
 
+
+    public String landmark;
+
     private String cover;             //产品封面
     private AppointInfo appointment;    //预约信息
     private PayOrderBean pay;            //支付信息
@@ -35,6 +38,7 @@ public class AppointmentDetailBean {
         private String classroom;       //上课时间
         private String address;         //上课地址
         private String organizer;
+        public String landmark;
         public String amount;
         private String status;
         private String verify_no; //"核销码"

@@ -11,20 +11,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.HomeCourseListChildAdapter;
-import com.example.aidong .entity.course.CourseArea;
-import com.example.aidong .entity.course.CourseBeanNew;
-import com.example.aidong .entity.course.CourseBrand;
-import com.example.aidong .entity.course.CourseStore;
-import com.example.aidong .ui.BasePageFragment;
-import com.example.aidong .ui.mvp.presenter.CourseListPresentImpl;
-import com.example.aidong .ui.mvp.view.CourseListView;
-import com.example.aidong .ui.mvp.view.EmptyView;
-import com.example.aidong .utils.DialogUtils;
-import com.example.aidong .widget.SwitcherLayout;
-import com.example.aidong .widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
-import com.example.aidong .widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.example.aidong .widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.example.aidong.adapter.home.HomeCourseListChildAdapter;
+import com.example.aidong.entity.course.CourseArea;
+import com.example.aidong.entity.course.CourseBeanNew;
+import com.example.aidong.entity.course.CourseBrand;
+import com.example.aidong.entity.course.CourseStore;
+import com.example.aidong.ui.BasePageFragment;
+import com.example.aidong.ui.mvp.presenter.CourseListPresentImpl;
+import com.example.aidong.ui.mvp.view.CourseListView;
+import com.example.aidong.ui.mvp.view.EmptyView;
+import com.example.aidong.utils.DialogUtils;
+import com.example.aidong.widget.SectionDecoration;
+import com.example.aidong.widget.SwitcherLayout;
+import com.example.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
+import com.example.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.example.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
@@ -69,7 +70,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
             course = getArguments().getString("category");
             store = getArguments().getString("store");
         }
-        coursePresent = new CourseListPresentImpl(getContext(), this,this);
+        coursePresent = new CourseListPresentImpl(getContext(), this, this);
 
         initRefreshLayout(view);
         initRecyclerView(view);
@@ -80,9 +81,9 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
     public void fetchData() {
 //        DialogUtils.showDialog(getActivity(),"",false);
 
-        currPage =1;
+        currPage = 1;
 
-        coursePresent.pullRefreshCourseList(store, course, time, date,map);
+        coursePresent.pullRefreshCourseList(store, course, time, date, map);
     }
 
     private void initRefreshLayout(View view) {
@@ -100,6 +101,29 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         data = new ArrayList<>();
         courseAdapter = new HomeCourseListChildAdapter(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(courseAdapter);
+
+
+        recyclerView.addItemDecoration(new SectionDecoration(data, activity, new SectionDecoration.DecorationCallback() {
+            //返回标记id (即每一项对应的标志性的字符串)
+            @Override
+            public String getGroupId(int position) {
+                if (data.get(position).type != null) {
+                    return data.get(position).type;
+                }
+                return "-1";
+            }
+
+            //获取同组中的第一个内容
+            @Override
+            public String getGroupFirstLine(int position) {
+                if (data.get(position).type != null) {
+                    return data.get(position).type;
+                }
+                return "";
+            }
+        }));
+
+
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addOnScrollListener(onScrollListener);
@@ -109,7 +133,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        coursePresent.pullRefreshCourseList(store, course, time, date,map);
+        coursePresent.pullRefreshCourseList(store, course, time, date, map);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -117,7 +141,7 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                coursePresent.loadMoreCourseList(store, course, time, date, currPage + "",map);
+                coursePresent.loadMoreCourseList(store, course, time, date, currPage + "", map);
             }
         }
 
@@ -179,9 +203,14 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         }
 
 
-       // Collections.sort(data);
+        // Collections.sort(data);
+
+        for (int i = 0; i < data.size(); i++) {
+
+            data.get(i).type = (data.get(i).company_id == 1 ? "爱动自营门店" : "合作品牌门店");
 
 
+        }
 
 
         courseAdapter.setData(data);
@@ -194,6 +223,16 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         DialogUtils.dismissDialog();
         if (courseList != null)
             data.addAll(courseList);
+
+
+        for (int i = 0; i < data.size(); i++) {
+
+            data.get(i).type = (data.get(i).company_id == 1 ? "爱动自营门店" : "合作品牌门店");
+
+
+        }
+
+
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
@@ -211,9 +250,10 @@ public class HomeCourseListChildFragment extends BasePageFragment implements OnR
         super.onDestroy();
         DialogUtils.releaseDialog();
     }
-public Map map;
 
-    public void resetCourseTime(String timeValue,Map map) {
+    public Map map;
+
+    public void resetCourseTime(String timeValue, Map map) {
         this.time = timeValue;
         this.map = map;
     }

@@ -214,7 +214,7 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
         txtCourseLocation.setText(course.getStore().getAddress());
         txtPhone.setText(userCoach.getMobile());
 
-        txtCouponSubtract.setText("-￥" + queue.getCoupon());
+        txtCouponSubtract.setText("￥" + queue.getCoupon());
         txtPriceTotal.setText("￥" + queue.getTotal());
         txtPriceReal.setText("￥" + queue.getPay_amount());
         button.setVisibility(View.VISIBLE);

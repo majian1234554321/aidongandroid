@@ -3,9 +3,9 @@ apply plugin: 'com.android.library'
 android {
     // http://tools.android.com/tech-docs/new-build-system/tips
     //noinspection GroovyAssignabilityCheck
-    compileSdkVersion 27
+    compileSdkVersion 28
     //noinspection GroovyAssignabilityCheck
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.0'
 
     defaultConfig {
         minSdkVersion 12

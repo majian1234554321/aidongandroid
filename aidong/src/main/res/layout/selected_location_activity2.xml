@@ -75,7 +75,7 @@
             android:visibility="gone"
             android:drawableTop="@drawable/empty_order"
             android:gravity="center"
-            android:text="暂无订单"
+            android:text="没有内容"
             android:textSize="14sp"
             android:textColor="@color/c9" />
 

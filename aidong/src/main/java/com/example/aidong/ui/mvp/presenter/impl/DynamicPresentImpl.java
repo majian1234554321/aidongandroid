@@ -13,6 +13,7 @@ import com.example.aidong .entity.data.LikeData;
 import com.example.aidong .http.subscriber.BaseSubscriber;
 import com.example.aidong .http.subscriber.CommonSubscriber;
 import com.example.aidong .http.subscriber.IsLoginSubscriber;
+import com.example.aidong.http.subscriber.Progress2Subscriber;
 import com.example.aidong .http.subscriber.ProgressSubscriber;
 import com.example.aidong .http.subscriber.RefreshSubscriber;
 import com.example.aidong .http.subscriber.RequestMoreSubscriber;
@@ -495,7 +496,7 @@ public class DynamicPresentImpl implements DynamicPresent {
         if (followModel == null) {
             followModel = new FollowModelImpl();
         }
-        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.cancelFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (baseBean != null) {
@@ -510,7 +511,7 @@ public class DynamicPresentImpl implements DynamicPresent {
         if (followModel == null) {
             followModel = new FollowModelImpl();
         }
-        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.addFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (baseBean != null) {

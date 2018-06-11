@@ -66,15 +66,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
 
         final CourseBeanNew courseBean = data.get(position);
-        if (position == 0) {
-            holder.layout_type.setVisibility(View.VISIBLE);
-            holder.txt_type.setText(courseBean.company_id == 1 ? "爱动自营门店" : "合作品牌门店");
-        } else if (courseBean.company_id != data.get(position - 1).company_id && data.get(position - 1).company_id == 1) {
-            holder.layout_type.setVisibility(View.VISIBLE);
-            holder.txt_type.setText(courseBean.company_id == 1 ? "爱动自营门店" : "合作品牌门店");
-        } else {
-            holder.layout_type.setVisibility(View.GONE);
-        }
+
 
         GlideLoader.getInstance().displayCircleImage(courseBean.getCoach().getAvatar(), holder.imgCoach);
         holder.txtCoachName.setText(courseBean.getCoach().getName());
@@ -268,7 +260,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
         private ImageView imgCoach;
         private TextView txtCoachName;
-        private TextView txtCourseName, txt_type;
+        private TextView txtCourseName;
         private TextView txtCourseTime;
         private TextView txtCourseDesc;
         private TextView txtCourseDifficulty;
@@ -277,7 +269,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         // ,img_star_first,img_star_second,img_star_three,img_star_four,img_star_five;
         private TextView txtCourseOriginPrice;
         private TextView txtCourseMemberPrice, tv_level;
-        private LinearLayout rootView, layout_type;
+        private LinearLayout rootView;
 
         public TextView mb_level;
 
@@ -285,7 +277,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             super(view);
             imgCoach = (ImageView) view.findViewById(R.id.img_coach);
 
-            txt_type = (TextView) view.findViewById(R.id.txt_type);
+
             txtCoachName = (TextView) view.findViewById(R.id.txt_coach_name);
             txtCourseName = (TextView) view.findViewById(R.id.txt_course_name);
             txtCourseTime = (TextView) view.findViewById(R.id.txt_course_time);
@@ -302,7 +294,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
             rootView = (LinearLayout) view.findViewById(R.id.rootView);
 
-            layout_type = (LinearLayout) view.findViewById(R.id.layout_type);
+
 
             mb_level = view.findViewById(R.id.mb_level);
         }

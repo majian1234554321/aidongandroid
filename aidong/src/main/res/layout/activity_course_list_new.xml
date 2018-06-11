@@ -48,6 +48,7 @@
         android:layout_height="@dimen/height_top_bar"
 
 
+        android:background="@color/white"
         app:stl_defaultTabTextColor="@color/gray_normal"
         app:stl_defaultTabTextSize="17sp"
         app:stl_dividerColor="@color/transparent"

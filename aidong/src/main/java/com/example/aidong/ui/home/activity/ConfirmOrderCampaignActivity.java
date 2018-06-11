@@ -16,41 +16,41 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aidong.R;
-import com.example.aidong .config.ConstantUrl;
-import com.example.aidong .entity.CampaignDetailBean;
-import com.example.aidong .entity.CouponBean;
-import com.example.aidong .entity.model.UserCoach;
-import com.example.aidong .module.pay.PayInterface;
-import com.example.aidong .module.pay.SimplePayListener;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.mine.activity.AppointmentMineActivityNew;
-import com.example.aidong .ui.mine.activity.SelectCouponActivity;
-import com.example.aidong .ui.mine.fragment.CouponFragment;
-import com.example.aidong .ui.mvp.presenter.impl.CampaignPresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.CouponPresentImpl;
-import com.example.aidong .ui.mvp.view.AppointCampaignActivityView;
-import com.example.aidong .ui.mvp.view.CouponFragmentView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DialogUtils;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.TelephoneManager;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .utils.constant.PayType;
-import com.example.aidong .widget.CommonTitleLayout;
-import com.example.aidong .widget.CustomNestRadioGroup;
+import com.example.aidong.config.ConstantUrl;
+import com.example.aidong.entity.CampaignDetailBean;
+import com.example.aidong.entity.CouponBean;
+import com.example.aidong.entity.model.UserCoach;
+import com.example.aidong.module.pay.PayInterface;
+import com.example.aidong.module.pay.SimplePayListener;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.mine.activity.AppointmentMineActivityNew;
+import com.example.aidong.ui.mine.activity.SelectCouponActivity;
+import com.example.aidong.ui.mine.fragment.CouponFragment;
+import com.example.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
+import com.example.aidong.ui.mvp.view.AppointCampaignActivityView;
+import com.example.aidong.ui.mvp.view.CouponFragmentView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DialogUtils;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.TelephoneManager;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.utils.constant.PayType;
+import com.example.aidong.widget.CommonTitleLayout;
+import com.example.aidong.widget.CustomNestRadioGroup;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.aidong .ui.App.context;
-import static com.example.aidong .utils.Constant.PAY_ALI;
-import static com.example.aidong .utils.Constant.PAY_WEIXIN;
-import static com.example.aidong .utils.Constant.REQUEST_SELECT_COUPON;
+import static com.example.aidong.ui.App.context;
+import static com.example.aidong.utils.Constant.PAY_ALI;
+import static com.example.aidong.utils.Constant.PAY_WEIXIN;
+import static com.example.aidong.utils.Constant.REQUEST_SELECT_COUPON;
 
 /**
  * Created by user on 2017/11/2.
@@ -164,8 +164,12 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         DialogUtils.showDialog(this, "", false);
         totalPrice = FormatUtil.parseInt(course.amount) * FormatUtil.parseDouble(course.skuPrice);
         realPrice = totalPrice;
-        txtPriceReal.setText("￥" + realPrice);
-        txtPriceTotal.setText("￥" + totalPrice);
+
+
+        txtPriceReal.setText(String.format(getString(R.string.rmb_minus_price_double),
+                realPrice));
+        txtPriceTotal.setText(String.format(getString(R.string.rmb_minus_price_double),
+                totalPrice));
 
         payType = PAY_ALI;
         userCoach = App.getInstance().getUser();
@@ -263,8 +267,8 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
             //tvCoupon.setCompoundDrawables(null, null, null, null);
             txtCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
         } else {
-            if (usableCoupons.size()>0) {
-                txtCoupon.setText(usableCoupons.size()+"张可用");
+            if (usableCoupons.size() > 0) {
+                txtCoupon.setText(usableCoupons.size() + "张可用");
             }
 
         }
@@ -315,7 +319,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
             //Toast.makeText(ConfirmOrderCampaignActivity.this, "支付失败", Toast.LENGTH_LONG).show();
 
-            AppointmentMineActivityNew.start(ConfirmOrderCampaignActivity.this, 1,0);
+            AppointmentMineActivityNew.start(ConfirmOrderCampaignActivity.this, 1, 0);
             finish();
 
         }
@@ -341,7 +345,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 couponId = couponBean.getId();
                 txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) > 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getActual())) :usableCoupons.size()+"张可用");
+                        FormatUtil.parseDouble(couponBean.getActual())) : usableCoupons.size() + "张可用");
                 txtCouponSubtract.setText(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())));
                 txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),

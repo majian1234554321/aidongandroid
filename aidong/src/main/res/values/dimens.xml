@@ -111,6 +111,8 @@
 
     <dimen name="x30">30px</dimen>
 
+    <dimen name="x60">60px</dimen>
+
     <dimen name="x140">140px</dimen>
 
 

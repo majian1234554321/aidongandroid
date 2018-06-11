@@ -296,7 +296,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvCampaignOrganization.setRightContent(bean.getAppoint().getOrganizer());
         tvCampaignTime.setRightContent(bean.getAppoint().getClassTime());
         txtCourseLocation.setText(bean.getAppoint().getAddress());
-        txtRoomName.setText(bean.getSubName());
+        txtRoomName.setText(bean.getAppoint().landmark);
 
 
 
@@ -419,6 +419,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 codeLayout.setVisibility(View.GONE);
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.GONE);
+
+                tvStartTime.setLeftTextContent("实付款");
+                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.red_price));
+                tvStartTime.setRightContent(String.format(getString(R.string.rmb_price_double),
+                        FormatUtil.parseDouble(bean.getPay().getPayAmount())));
                 break;
             case REFUNDING:           //退款中
                 tvState.setText(context.getString(R.string.order_refunding));
@@ -554,7 +559,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
             case R.id.txt_course_room:
             case R.id.txt_course_location:
-                MapActivity.start(this, bean.getName(), bean.getAppoint().getOrganizer(), bean.getAppoint().getAddress(),
+                MapActivity.start(this, bean.getName(), bean.getAppoint().landmark, bean.getAppoint().getAddress(),
                         bean.getAppoint().getLat(), bean.getAppoint().getLng());
 
 
