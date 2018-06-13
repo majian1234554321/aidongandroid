@@ -30,6 +30,7 @@ import com.example.aidong .entity.PhotoBrowseInfo;
 import com.example.aidong .services.DownLoadImageService;
 import com.example.aidong .services.ImageDownLoadCallBack;
 import com.example.aidong .ui.App;
+import com.example.aidong.ui.BaseActivity;
 import com.example.aidong .ui.discover.view.DotIndicator;
 import com.example.aidong .utils.ImageSaveUtils;
 import com.example.aidong .utils.ToastGlobal;
@@ -52,7 +53,7 @@ import java.util.Map;
 
 /**
  */
-public class PhotoBrowseActivity extends AppCompatActivity {
+public class PhotoBrowseActivity extends BaseActivity {
 
 
     private int firstDisplayImageIndex = 0;

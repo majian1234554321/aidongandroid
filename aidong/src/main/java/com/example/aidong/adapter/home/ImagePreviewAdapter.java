@@ -2,6 +2,7 @@ package com.example.aidong.adapter.home;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,7 @@ public class ImagePreviewAdapter extends PagerAdapter{
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
 

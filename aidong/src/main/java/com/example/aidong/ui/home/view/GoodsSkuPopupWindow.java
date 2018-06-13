@@ -292,6 +292,17 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 txt_limit_number.setText("(限购" + limit + "张)");
         }
 
+
+
+
+        tvCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
         tvCount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -301,9 +312,11 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
-                    if (Integer.parseInt(String.valueOf(s))>limit){
+                    if (Integer.parseInt(String.valueOf(s))>limit&&limit!=0){
                         tvCount.setText(limit+"");
                     }
+                }else {
+                    tvCount.setText(1+"");
                 }
             }
 

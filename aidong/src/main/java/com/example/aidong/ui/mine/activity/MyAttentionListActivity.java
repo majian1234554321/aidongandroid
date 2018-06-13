@@ -31,7 +31,6 @@ import java.util.List;
 public class MyAttentionListActivity extends BaseActivity implements SmartTabLayout.TabProvider {
 
     private List<View> allTabView = new ArrayList<>();
-    private FragmentPagerItemAdapter adapter;
 
     public static void start(Context context, int position) {
         Intent intent = new Intent(context,MyAttentionListActivity.class);
@@ -58,7 +57,7 @@ public class MyAttentionListActivity extends BaseActivity implements SmartTabLay
 
         pages.add(FragmentPagerItem.of(null,MyAttentionUserListFragment.class,new Bundler().
                 putString("type", "follows").putString("type_cancel","user").get()));
-        adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){

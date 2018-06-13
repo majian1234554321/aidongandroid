@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="titleBg" format="color"/>
-    <attr name="titleColor" format="color"/>
-    <attr name="txtTitle" format="string"/>
-    <attr name="txtRight" format="string"/>
-    <attr name="imgRight" format="reference"/>
-    <attr name="imgLeft" format="reference"/>
+    <attr name="titleBg" format="color" />
+    <attr name="titleColor" format="color" />
+    <attr name="txtTitle" format="string" />
+    <attr name="txtRight" format="string" />
+    <attr name="imgRight" format="reference" />
+    <attr name="imgLeft" format="reference" />
 
     <declare-styleable name="HorizontalListView">
         <attr name="hori_listview_dividerWidth" format="dimension" />
@@ -15,12 +15,12 @@
     </declare-styleable>
 
     <declare-styleable name="CircleImageView">
-        <attr name="border_width" format="dimension"/>
-        <attr name="border_color" format="color"/>
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
     </declare-styleable>
     <declare-styleable name="StaggeredGridView">
-        <attr name="drawSelectorOnTop" format="boolean"/>
-        <attr name="numColumns" format="integer"/>
+        <attr name="drawSelectorOnTop" format="boolean" />
+        <attr name="numColumns" format="integer" />
     </declare-styleable>
     <declare-styleable name="SwitchButton">
         <attr name="bmWidth" format="dimension"></attr>
@@ -28,13 +28,13 @@
     </declare-styleable>
 
     <declare-styleable name="RoundAngleImageView">
-        <attr name="roundWidth" format="dimension"/>
-        <attr name="roundHeight" format="dimension"/>
+        <attr name="roundWidth" format="dimension" />
+        <attr name="roundHeight" format="dimension" />
     </declare-styleable>
     <declare-styleable name="AidongMineItem">
-        <attr name="img_tag" format="reference"/>
-        <attr name="txt_name" format="string"/>
-        <attr name="divider_visible" format="boolean"/>
+        <attr name="img_tag" format="reference" />
+        <attr name="txt_name" format="string" />
+        <attr name="divider_visible" format="boolean" />
 
     </declare-styleable>
     <declare-styleable name="verticaltextview">
@@ -46,66 +46,66 @@
         </attr>
     </declare-styleable>
     <declare-styleable name="RecordButton">
-        <attr name="record_inner_image" format="reference"/>
-        <attr name="record_outer_image" format="reference"/>
+        <attr name="record_inner_image" format="reference" />
+        <attr name="record_outer_image" format="reference" />
     </declare-styleable>
 
     <!--ForceClickImageView-->
     <declare-styleable name="ForceClickImageView">
-        <attr name="foregroundColor" format="reference|color"/>
+        <attr name="foregroundColor" format="reference|color" />
     </declare-styleable>
 
     <declare-styleable name="ViewPagerIndicator">
         reference
-        <attr name="ci_height" format="dimension"/>
-        <attr name="ci_margin" format="dimension"/>
-        <attr name="ci_animator" format="reference"/>
-        <attr name="ci_animator_reverse" format="reference"/>
-        <attr name="ci_drawable" format="reference"/>
-        <attr name="ci_drawable_unselected" format="reference"/>
+        <attr name="ci_height" format="dimension" />
+        <attr name="ci_margin" format="dimension" />
+        <attr name="ci_animator" format="reference" />
+        <attr name="ci_animator_reverse" format="reference" />
+        <attr name="ci_drawable" format="reference" />
+        <attr name="ci_drawable_unselected" format="reference" />
 
         <attr name="ci_orientation" format="enum">
             <!-- Defines an horizontal widget. -->
-            <enum name="horizontal" value="0"/>
+            <enum name="horizontal" value="0" />
             <!-- Defines a vertical widget. -->
-            <enum name="vertical" value="1"/>
+            <enum name="vertical" value="1" />
         </attr>
 
         <attr name="ci_gravity">
             <!-- Push object to the top of its container, not changing its size. -->
-            <flag name="top" value="0x30"/>
+            <flag name="top" value="0x30" />
             <!-- Push object to the bottom of its container, not changing its size. -->
-            <flag name="bottom" value="0x50"/>
+            <flag name="bottom" value="0x50" />
             <!-- Push object to the left of its container, not changing its size. -->
-            <flag name="left" value="0x03"/>
+            <flag name="left" value="0x03" />
             <!-- Push object to the right of its container, not changing its size. -->
-            <flag name="right" value="0x05"/>
+            <flag name="right" value="0x05" />
             <!-- Place object in the vertical center of its container, not changing its size. -->
-            <flag name="center_vertical" value="0x10"/>
+            <flag name="center_vertical" value="0x10" />
             <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
-            <flag name="fill_vertical" value="0x70"/>
+            <flag name="fill_vertical" value="0x70" />
             <!-- Place object in the horizontal center of its container, not changing its size. -->
-            <flag name="center_horizontal" value="0x01"/>
+            <flag name="center_horizontal" value="0x01" />
             <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
-            <flag name="fill_horizontal" value="0x07"/>
+            <flag name="fill_horizontal" value="0x07" />
             <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
-            <flag name="center" value="0x11"/>
+            <flag name="center" value="0x11" />
             <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
-            <flag name="fill" value="0x77"/>
+            <flag name="fill" value="0x77" />
             <!-- Additional option that can be set to have the top and/or bottom edges of
             the child clipped to its container's bounds.
             The clip will be based on the vertical gravity: a top gravity will clip the bottom
             edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
-            <flag name="clip_vertical" value="0x80"/>
+            <flag name="clip_vertical" value="0x80" />
             <!-- Additional option that can be set to have the left and/or right edges of
             the child clipped to its container's bounds.
             The clip will be based on the horizontal gravity: a left gravity will clip the right
             edge, a right gravity will clip the left edge, and neither will clip both edges. -->
-            <flag name="clip_horizontal" value="0x08"/>
+            <flag name="clip_horizontal" value="0x08" />
             <!-- Push object to the beginning of its container, not changing its size. -->
-            <flag name="start" value="0x00800003"/>
+            <flag name="start" value="0x00800003" />
             <!-- Push object to the end of its container, not changing its size. -->
-            <flag name="end" value="0x00800005"/>
+            <flag name="end" value="0x00800005" />
         </attr>
     </declare-styleable>
     <!-- RingProgressBar -->
@@ -117,38 +117,38 @@
 
     <declare-styleable name="AVLoadingIndicatorView">
         <attr name="minWidth" format="dimension" />
-        <attr name="maxWidth" format="dimension"/>
+        <attr name="maxWidth" format="dimension" />
         <attr name="minHeight" format="dimension" />
-        <attr name="maxHeight" format="dimension"/>
-        <attr name="indicatorName" format="string"/>
-        <attr name="indicatorColor" format="color"/>
+        <attr name="maxHeight" format="dimension" />
+        <attr name="indicatorName" format="string" />
+        <attr name="indicatorColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="DropDownMenu">
-        <attr name="ddunderlineColor" format="color"/>
-        <attr name="dddividerColor" format="color"/>
-        <attr name="ddtextSelectedColor" format="color"/>
-        <attr name="ddtextUnselectedColor" format="color"/>
-        <attr name="ddmenuBackgroundColor" format="color"/>
-        <attr name="ddmaskColor" format="color"/>
-        <attr name="ddmenuTextSize" format="dimension"/>
-        <attr name="ddmenuSelectedIcon" format="reference"/>
-        <attr name="ddmenuUnselectedIcon" format="reference"/>
+        <attr name="ddunderlineColor" format="color" />
+        <attr name="dddividerColor" format="color" />
+        <attr name="ddtextSelectedColor" format="color" />
+        <attr name="ddtextUnselectedColor" format="color" />
+        <attr name="ddmenuBackgroundColor" format="color" />
+        <attr name="ddmaskColor" format="color" />
+        <attr name="ddmenuTextSize" format="dimension" />
+        <attr name="ddmenuSelectedIcon" format="reference" />
+        <attr name="ddmenuUnselectedIcon" format="reference" />
     </declare-styleable>
-
 
 
     <declare-styleable name="ExtendTextView">
         <attr name="text_height" format="dimension" />
         <attr name="padding_left" format="dimension" />
-        <attr name="padding_right" format="dimension"/>
-        <attr name="left_text_color" format="color"/>
+        <attr name="padding_right" format="dimension" />
+        <attr name="left_text_color" format="color" />
         <attr name="right_text_color" format="color" />
         <attr name="left_text_size" format="dimension" />
         <attr name="right_text_size" format="dimension" />
         <attr name="show_right_arrow" format="boolean" />
         <attr name="line_color" format="color" />
         <attr name="left_text" format="string" />
+        <attr name="left_text_style" format="string" />
     </declare-styleable>
 
 
@@ -162,109 +162,109 @@
 
     <declare-styleable name="MsgView">
         <!-- 圆角矩形背景色 -->
-        <attr name="mv_backgroundColor" format="color"/>
+        <attr name="mv_backgroundColor" format="color" />
         <!-- 圆角弧度,单位dp-->
-        <attr name="mv_cornerRadius" format="dimension"/>
+        <attr name="mv_cornerRadius" format="dimension" />
         <!-- 圆角弧度,单位dp-->
-        <attr name="mv_strokeWidth" format="dimension"/>
+        <attr name="mv_strokeWidth" format="dimension" />
         <!-- 圆角边框颜色-->
-        <attr name="mv_strokeColor" format="color"/>
+        <attr name="mv_strokeColor" format="color" />
         <!-- 圆角弧度是高度一半-->
-        <attr name="mv_isRadiusHalfHeight" format="boolean"/>
+        <attr name="mv_isRadiusHalfHeight" format="boolean" />
         <!-- 圆角矩形宽高相等,取较宽高中大值-->
-        <attr name="mv_isWidthHeightEqual" format="boolean"/>
+        <attr name="mv_isWidthHeightEqual" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="CommonTabLayout">
         <!-- indicator -->
-        <attr name="tl_indicator_color" format="color"/>
-        <attr name="tl_indicator_height" format="dimension"/>
-        <attr name="tl_indicator_width" format="dimension"/>
-        <attr name="tl_indicator_margin_left" format="dimension"/>
-        <attr name="tl_indicator_margin_top" format="dimension"/>
-        <attr name="tl_indicator_margin_right" format="dimension"/>
-        <attr name="tl_indicator_margin_bottom" format="dimension"/>
-        <attr name="tl_indicator_corner_radius" format="dimension"/>
-        <attr name="tl_indicator_gravity" format="integer"/>
-        <attr name="tl_indicator_style" format="integer"/>
-        <attr name="tl_indicator_anim_enable"  format="boolean"/>
-        <attr name="tl_indicator_anim_duration" format="integer"/>
-        <attr name="tl_indicator_bounce_enable"  format="boolean"/>
+        <attr name="tl_indicator_color" format="color" />
+        <attr name="tl_indicator_height" format="dimension" />
+        <attr name="tl_indicator_width" format="dimension" />
+        <attr name="tl_indicator_margin_left" format="dimension" />
+        <attr name="tl_indicator_margin_top" format="dimension" />
+        <attr name="tl_indicator_margin_right" format="dimension" />
+        <attr name="tl_indicator_margin_bottom" format="dimension" />
+        <attr name="tl_indicator_corner_radius" format="dimension" />
+        <attr name="tl_indicator_gravity" format="integer" />
+        <attr name="tl_indicator_style" format="integer" />
+        <attr name="tl_indicator_anim_enable" format="boolean" />
+        <attr name="tl_indicator_anim_duration" format="integer" />
+        <attr name="tl_indicator_bounce_enable" format="boolean" />
 
         <!-- underline -->
-        <attr name="tl_underline_color" format="color"/>
-        <attr name="tl_underline_height" format="dimension"/>
-        <attr name="tl_underline_gravity" format="integer"/>
+        <attr name="tl_underline_color" format="color" />
+        <attr name="tl_underline_height" format="dimension" />
+        <attr name="tl_underline_gravity" format="integer" />
 
         <!-- divider -->
-        <attr name="tl_divider_color" format="color"/>
-        <attr name="tl_divider_width" format="dimension"/>
-        <attr name="tl_divider_padding" format="dimension"/>
+        <attr name="tl_divider_color" format="color" />
+        <attr name="tl_divider_width" format="dimension" />
+        <attr name="tl_divider_padding" format="dimension" />
 
         <!-- tab -->
-        <attr name="tl_tab_padding" format="dimension"/>
-        <attr name="tl_tab_space_equal" format="boolean"/>
-        <attr name="tl_tab_width" format="dimension"/>
+        <attr name="tl_tab_padding" format="dimension" />
+        <attr name="tl_tab_space_equal" format="boolean" />
+        <attr name="tl_tab_width" format="dimension" />
 
         <!-- title -->
-        <attr name="tl_textsize" format="dimension"/>
-        <attr name="tl_textSelectColor" format="color"/>
-        <attr name="tl_textUnselectColor" format="color"/>
-        <attr name="tl_textBold" format="integer"/>
-        <attr name="tl_textAllCaps" format="boolean"/>
+        <attr name="tl_textsize" format="dimension" />
+        <attr name="tl_textSelectColor" format="color" />
+        <attr name="tl_textUnselectColor" format="color" />
+        <attr name="tl_textBold" format="integer" />
+        <attr name="tl_textAllCaps" format="boolean" />
 
         <!-- icon -->
         <!-- 设置icon宽度 -->
-        <attr name="tl_iconWidth" format="dimension"/>
+        <attr name="tl_iconWidth" format="dimension" />
         <!-- 设置icon高度 -->
-        <attr name="tl_iconHeight" format="dimension"/>
+        <attr name="tl_iconHeight" format="dimension" />
         <!-- 设置icon是否可见 -->
-        <attr name="tl_iconVisible" format="boolean"/>
+        <attr name="tl_iconVisible" format="boolean" />
         <!-- 设置icon显示位置,对应Gravity中常量值 -->
         <attr name="tl_iconGravity" format="enum">
-            <enum name="LEFT" value="3"/>
-            <enum name="TOP" value="48"/>
-            <enum name="RIGHT" value="5"/>
-            <enum name="BOTTOM" value="80"/>
+            <enum name="LEFT" value="3" />
+            <enum name="TOP" value="48" />
+            <enum name="RIGHT" value="5" />
+            <enum name="BOTTOM" value="80" />
         </attr>
         <!-- 设置icon与文字间距 -->
-        <attr name="tl_iconMargin" format="dimension"/>
+        <attr name="tl_iconMargin" format="dimension" />
 
     </declare-styleable>
 
     <declare-styleable name="SegmentTabLayout">
         <!-- indicator -->
-        <attr name="stl_indicator_color" format="color"/>
-        <attr name="stl_indicator_height"  format="dimension"/>
-        <attr name="stl_indicator_margin_left"  format="dimension"/>
-        <attr name="stl_indicator_margin_top"  format="dimension"/>
-        <attr name="stl_indicator_margin_right"  format="dimension"/>
-        <attr name="stl_indicator_margin_bottom"  format="dimension"/>
-        <attr name="stl_indicator_corner_radius"  format="dimension"/>
-        <attr name="stl_indicator_anim_enable" format="boolean"/>
-        <attr name="stl_indicator_anim_duration" format="integer"/>
-        <attr name="stl_indicator_bounce_enable"  format="boolean"/>
+        <attr name="stl_indicator_color" format="color" />
+        <attr name="stl_indicator_height" format="dimension" />
+        <attr name="stl_indicator_margin_left" format="dimension" />
+        <attr name="stl_indicator_margin_top" format="dimension" />
+        <attr name="stl_indicator_margin_right" format="dimension" />
+        <attr name="stl_indicator_margin_bottom" format="dimension" />
+        <attr name="stl_indicator_corner_radius" format="dimension" />
+        <attr name="stl_indicator_anim_enable" format="boolean" />
+        <attr name="stl_indicator_anim_duration" format="integer" />
+        <attr name="stl_indicator_bounce_enable" format="boolean" />
 
         <!-- divider -->
-        <attr name="stl_divider_color" format="color"/>
-        <attr name="stl_divider_width" format="dimension"/>
-        <attr name="stl_divider_padding" format="dimension"/>
+        <attr name="stl_divider_color" format="color" />
+        <attr name="stl_divider_width" format="dimension" />
+        <attr name="stl_divider_padding" format="dimension" />
 
         <!-- tab -->
-        <attr name="stl_tab_padding" format="dimension"/>
-        <attr name="stl_tab_space_equal" format="boolean"/>
-        <attr name="stl_tab_width" format="dimension"/>
+        <attr name="stl_tab_padding" format="dimension" />
+        <attr name="stl_tab_space_equal" format="boolean" />
+        <attr name="stl_tab_width" format="dimension" />
 
         <!-- title -->
-        <attr name="stl_textsize" format="dimension"/>
-        <attr name="stl_textSelectColor" format="color"/>
-        <attr name="stl_textUnselectColor" format="color"/>
-        <attr name="stl_textBold"  format="integer"/>
-        <attr name="stl_textAllCaps" format="boolean"/>
+        <attr name="stl_textsize" format="dimension" />
+        <attr name="stl_textSelectColor" format="color" />
+        <attr name="stl_textUnselectColor" format="color" />
+        <attr name="stl_textBold" format="integer" />
+        <attr name="stl_textAllCaps" format="boolean" />
 
-        <attr name="stl_bar_color" format="color"/>
-        <attr name="stl_bar_stroke_color" format="color"/>
-        <attr name="stl_bar_stroke_width" format="dimension"/>
+        <attr name="stl_bar_color" format="color" />
+        <attr name="stl_bar_stroke_color" format="color" />
+        <attr name="stl_bar_stroke_width" format="dimension" />
 
     </declare-styleable>
 
@@ -312,12 +312,12 @@
 
     <declare-styleable name="CommonTitleLayout">
 
-        <attr name="titleBg"/>
-        <attr name="txtTitle"/>
-        <attr name="txtRight"/>
-        <attr name="imgRight"/>
-        <attr name="imgLeft"/>
-        <attr name="titleColor"/>
+        <attr name="titleBg" />
+        <attr name="txtTitle" />
+        <attr name="txtRight" />
+        <attr name="imgRight" />
+        <attr name="imgLeft" />
+        <attr name="titleColor" />
     </declare-styleable>
 
     <declare-styleable name="PublicTitleBar">
@@ -360,51 +360,47 @@
 
 
     <declare-styleable name="RangeSeekBar">
-        <attr name="rsb_max" format="float"/>
-        <attr name="rsb_min" format="float"/>
-        <attr name="rsb_reserve" format="float"/>
-        <attr name="rsb_cells" format="integer"/>
+        <attr name="rsb_max" format="float" />
+        <attr name="rsb_min" format="float" />
+        <attr name="rsb_reserve" format="float" />
+        <attr name="rsb_cells" format="integer" />
         <attr name="rsb_progressHintMode" format="enum">
-            <enum name="defaultMode" value="0"/>
-            <enum name="alwaysHide" value="1"/>
-            <enum name="touchAlwaysShow" value="2"/>
-            <enum name="alwaysShow" value="3"/>
+            <enum name="defaultMode" value="0" />
+            <enum name="alwaysHide" value="1" />
+            <enum name="touchAlwaysShow" value="2" />
+            <enum name="alwaysShow" value="3" />
         </attr>
-        <attr name="rsb_lineColorSelected" format="color"/>
-        <attr name="rsb_lineColorEdge" format="color"/>
-        <attr name="rsb_thumbPrimaryColor" format="color"/>
-        <attr name="rsb_thumbSecondaryColor" format="color"/>
-        <attr name="rsb_markTextArray" format="reference"/>
-        <attr name="rsb_thumbResId" format="reference"/>
+        <attr name="rsb_lineColorSelected" format="color" />
+        <attr name="rsb_lineColorEdge" format="color" />
+        <attr name="rsb_thumbPrimaryColor" format="color" />
+        <attr name="rsb_thumbSecondaryColor" format="color" />
+        <attr name="rsb_markTextArray" format="reference" />
+        <attr name="rsb_thumbResId" format="reference" />
         <!-- must use 9 path ！！！-->
-        <attr name="rsb_progressHintResId" format="reference"/>
+        <attr name="rsb_progressHintResId" format="reference" />
         <attr name="rsb_textPadding" format="dimension" />
         <attr name="rsb_textSize" format="dimension" />
         <attr name="rsb_hintBGHeight" format="dimension" />
         <attr name="rsb_hintBGWith" format="dimension" />
         <attr name="rsb_hintBGPadding" format="dimension" />
-        <attr name="rsb_seekBarHeight" format="dimension"/>
-        <attr name="rsb_thumbSize" format="dimension"/>
+        <attr name="rsb_seekBarHeight" format="dimension" />
+        <attr name="rsb_thumbSize" format="dimension" />
         <attr name="rsb_cellMode" format="enum">
-            <enum name="number" value="0"/>
-            <enum name="other" value="1"/>
+            <enum name="number" value="0" />
+            <enum name="other" value="1" />
         </attr>
         <attr name="rsb_seekBarMode" format="enum">
-            <enum name="single" value="1"/>
-            <enum name="range" value="2"/>
+            <enum name="single" value="1" />
+            <enum name="range" value="2" />
         </attr>
-        <attr name="rsb_lineRadius" format="dimension"/>
+        <attr name="rsb_lineRadius" format="dimension" />
     </declare-styleable>
 
 
-
-
-        <declare-styleable name="FlowLayoutgroup">
-            <attr name="lineSpacing" format="dimension" />
-            <attr name="maxLine" format="integer" />
-        </declare-styleable>
-
-
+    <declare-styleable name="FlowLayoutgroup">
+        <attr name="lineSpacing" format="dimension" />
+        <attr name="maxLine" format="integer" />
+    </declare-styleable>
 
 
     <!-- *公共属性* -->
@@ -462,6 +458,15 @@
         <attr name="stroke_color" />
         <attr name="stroke_width" />
         <attr name="clip_background" />
+    </declare-styleable>
+
+    <!-- Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels. -->
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference" />
+        <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
 
 

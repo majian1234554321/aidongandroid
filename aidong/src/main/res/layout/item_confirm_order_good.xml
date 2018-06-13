@@ -24,6 +24,7 @@
         android:layout_toRightOf="@+id/dv_cover"
         android:singleLine="true"
         android:text="健身"
+        android:textStyle="bold"
         android:textColor="@color/c3"
         android:textSize="16sp" />
 

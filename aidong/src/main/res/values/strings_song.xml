@@ -23,7 +23,7 @@
     <string name="recommend_code">推荐码:%1$s</string>
     <string name="settlement_count">结算(%1$d)</string>
     <string name="rmb_price_double">¥ %1$.2f</string>
-    <string name="rmb_minus_price_double">¥ %1$.2f</string>
+    <string name="rmb_minus_price_double">-¥ %1$.2f</string>
     <string name="rmb_price_scope">¥ %1$.2f - ¥ %2$.2f</string>
     <string name="time_with_line">%1$s—%2$s</string>
     <string name="course_count">&#160;(%1$s/%2$s&#160;人)&#160;&#160;/&#160;&#160;</string>

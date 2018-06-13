@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -45,18 +46,18 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
         //设置悬浮栏中文本的画笔
         textPaint = new TextPaint();
         textPaint.setAntiAlias(true);
-        textPaint.setTextSize(dip2px(context, 14));
+        textPaint.setTextSize(dip2px(context, 13));
         textPaint.setColor(Color.DKGRAY);
         textPaint.setTextAlign(Paint.Align.LEFT);
         fontMetrics = new Paint.FontMetrics();
         //决定悬浮栏的高度等
         topGap = res.getDimensionPixelSize(R.dimen.x60);
         //决定文本的显示位置等
-        alignBottom = res.getDimensionPixelSize(R.dimen.x20);
+        alignBottom = res.getDimensionPixelSize(R.dimen.x19);
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         int pos = parent.getChildAdapterPosition(view);
         Log.i(TAG, "getItemOffsets：" + pos);

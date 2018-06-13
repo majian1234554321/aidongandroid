@@ -100,4 +100,6 @@
     <color name="c1">#111111</color>
     <color name="c17">#171717</color>
     <color name="f9">#f9f9f9</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

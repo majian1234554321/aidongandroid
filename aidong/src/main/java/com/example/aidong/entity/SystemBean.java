@@ -25,6 +25,16 @@ public class SystemBean implements Serializable {
     private List<CategoryBean> gym_brand;   //场馆品牌
     private ArrayList<String> gym_types;
 
+
+    public static List<MarketPartsBean> market_parts;
+
+
+
+
+
+
+
+
     private int order_countdown; // 订单倒计时,单位分钟
     private int appointment_countdown;// 预约倒计时,单位分钟
     private long current_time;

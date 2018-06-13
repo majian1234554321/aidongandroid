@@ -2,10 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-
-
-
-
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -114,24 +110,24 @@
             android:elevation="5dp" />
     </RelativeLayout>
 
-    <com.example.aidong.widget.MaxHeightNestScrollView
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:scrollbars="vertical"
-        app:scrollView_maxHeight="350dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:descendantFocusability="blocksDescendants"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_sku"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
 
             <TextView
                 android:id="@+id/txt_spec_remark"
@@ -144,32 +140,26 @@
                 android:textSize="14sp"
                 android:visibility="gone" />
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/left_margin"
+                android:paddingRight="@dimen/right_margin"
+                android:text="数量"
+                android:textColor="@color/c9"
+                android:textSize="14sp" />
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/left_margin"
-                android:paddingRight="@dimen/right_margin">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="数量"
-                    android:textColor="@color/c9"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:background="@color/white"
-
+                android:descendantFocusability="blocksDescendants"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/left_margin"
@@ -186,6 +176,8 @@
                     android:id="@+id/tv_count"
                     android:layout_width="43dp"
                     android:layout_height="32dp"
+                    android:layout_marginBottom="@dimen/x12"
+                    android:layout_marginTop="@dimen/x12"
                     android:background="@drawable/shape_stroke_black"
                     android:gravity="center"
                     android:inputType="number"
@@ -219,8 +211,8 @@
 
 
         </LinearLayout>
-    </com.example.aidong.widget.MaxHeightNestScrollView>
 
+    </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"

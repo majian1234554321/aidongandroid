@@ -73,7 +73,7 @@
             android:background="#f2f2f2"
             android:drawablePadding="20dp"
             android:visibility="gone"
-            android:drawableTop="@drawable/empty_order"
+            android:drawableTop="@drawable/nodata"
             android:gravity="center"
             android:text="没有内容"
             android:textSize="14sp"

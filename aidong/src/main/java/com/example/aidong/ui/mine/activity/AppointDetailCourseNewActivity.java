@@ -133,14 +133,8 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         setContentView(R.layout.activity_appoint_detail_course_and_event);
         initView();
         initData();
-
-        appointmentCourseDetailPresenter = new AppointmentCoursePresentImpl(this, this);
         DialogUtils.showDialog(this,"",false);
-        if ("appoint".equals(type)) {
-            appointmentCourseDetailPresenter.getCourseAppointDetail(appointId);
-        } else {
-            appointmentCourseDetailPresenter.checkCourseAppoint(courseId);
-        }
+
 
     }
 
@@ -198,6 +192,19 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         tvDelete.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         dvQr.setOnClickListener(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        appointmentCourseDetailPresenter = new AppointmentCoursePresentImpl(this, this);
+
+        if ("appoint".equals(type)) {
+            appointmentCourseDetailPresenter.getCourseAppointDetail(appointId);
+        } else {
+            appointmentCourseDetailPresenter.checkCourseAppoint(courseId);
+        }
     }
 
     @Override

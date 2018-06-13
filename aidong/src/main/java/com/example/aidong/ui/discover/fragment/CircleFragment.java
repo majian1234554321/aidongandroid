@@ -16,7 +16,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.example.aidong.ui.discover.activity.ImageShowActivity;
 import com.google.android.exoplayer.util.Util;
 import com.example.aidong.R;
 import com.example.aidong .adapter.discover.CircleDynamicAdapter;
@@ -227,10 +229,22 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         }
 
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition,View view ) {
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition, View view) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start((Activity) getContext(), info,view);
+            // PhotoBrowseActivity.start((Activity) getContext(), info,view);
+
+
+
+            ImageView[]  imageViews = new ImageView[photoUrls.size()];
+
+            for (int i = 0; i < photoUrls.size(); i++) {
+                imageViews[i] = (ImageView) view;
+            }
+
+
+            ImageShowActivity.startImageActivity(activity, imageViews, photoUrls.toArray(new String[photoUrls.size()]), currPosition);
         }
+
 
         @Override
         public void onLikeClick(int position, String id, boolean isLike) {

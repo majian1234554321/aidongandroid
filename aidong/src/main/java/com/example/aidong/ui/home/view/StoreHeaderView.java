@@ -7,14 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong .entity.BannerBean;
+import com.example.aidong.entity.SystemBean;
 import com.example.aidong .ui.MainActivity;
 import com.example.aidong .ui.home.activity.EquipmentActivity;
 import com.example.aidong .ui.home.activity.FoodAndBeverageActivity;
 import com.example.aidong .ui.home.activity.GoodsBrandRecommendActivity;
 import com.example.aidong .ui.home.activity.NurtureActivity;
+import com.example.aidong.utils.Constant;
 import com.example.aidong .utils.GlideLoader;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
@@ -55,7 +58,11 @@ public class StoreHeaderView extends RelativeLayout{
             }
         });
 
-        headerView.findViewById(R.id.ll_nurture).setOnClickListener(new OnClickListener() {
+        TextView ll_nurture =  headerView.findViewById(R.id.ll_nurture);
+
+        ll_nurture.setText(Constant.systemInfoBean.market_parts.get(0).name);
+
+        ll_nurture .setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, NurtureActivity.class);

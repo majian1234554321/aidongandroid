@@ -69,10 +69,16 @@ public class MyAttentionCampaignListFragment extends BaseFragment implements OnR
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
         followPresent = new FollowPresentImpl(getActivity(), this);
         followPresent.commonLoadData(switcherLayout, TYPE);
     }
-
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);

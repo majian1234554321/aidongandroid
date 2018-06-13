@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -73,7 +74,7 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_store, container, false);
     }
 
@@ -163,3 +164,5 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
         homeAdapter.notifyDataSetChanged();
     }
 }
+
+

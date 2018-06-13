@@ -20,50 +20,51 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.aidong.ui.discover.activity.ImageShowActivity;
 import com.google.android.exoplayer.util.Util;
 import com.example.aidong.R;
-import com.example.aidong .adapter.discover.CircleDynamicAdapter;
-import com.example.aidong .config.ConstantUrl;
-import com.example.aidong .entity.BaseBean;
-import com.example.aidong .entity.CircleDynamicBean;
-import com.example.aidong .entity.CommentBean;
-import com.example.aidong .entity.DynamicBean;
-import com.example.aidong .entity.PhotoBrowseInfo;
-import com.example.aidong .entity.UserBean;
-import com.example.aidong .entity.model.UserCoach;
-import com.example.aidong .module.chat.CMDMessageManager;
-import com.example.aidong .module.share.SharePopupWindow;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.BasePageFragment;
-import com.example.aidong .ui.discover.activity.DiscoverUserActivity;
-import com.example.aidong .ui.discover.activity.DynamicDetailByIdActivity;
+import com.example.aidong.adapter.discover.CircleDynamicAdapter;
+import com.example.aidong.config.ConstantUrl;
+import com.example.aidong.entity.BaseBean;
+import com.example.aidong.entity.CircleDynamicBean;
+import com.example.aidong.entity.CommentBean;
+import com.example.aidong.entity.DynamicBean;
+import com.example.aidong.entity.PhotoBrowseInfo;
+import com.example.aidong.entity.UserBean;
+import com.example.aidong.entity.model.UserCoach;
+import com.example.aidong.module.chat.CMDMessageManager;
+import com.example.aidong.module.share.SharePopupWindow;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.BasePageFragment;
+import com.example.aidong.ui.discover.activity.DiscoverUserActivity;
+import com.example.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 
-import com.example.aidong .ui.discover.activity.PhotoBrowseActivity;
-import com.example.aidong .ui.discover.viewholder.MultiImageViewHolder;
-import com.example.aidong .ui.discover.viewholder.VideoViewHolder;
-import com.example.aidong .ui.home.view.PersonHorizontalView;
-import com.example.aidong .ui.mine.activity.UserInfoActivity;
-import com.example.aidong .ui.mine.activity.account.LoginActivity;
-import com.example.aidong .ui.mvp.presenter.DynamicPresent;
-import com.example.aidong .ui.mvp.presenter.impl.DiscoverPresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.DynamicPresentImpl;
-import com.example.aidong .ui.mvp.view.SportCircleFragmentView;
-import com.example.aidong .ui.mvp.view.UserInfoView;
-import com.example.aidong .ui.video.activity.PlayerActivity;
-import com.example.aidong .ui.video.activity.PreviewVideoActivity;
-import com.example.aidong .ui.video.dragvideo.ImageLoaderAdapter;
-import com.example.aidong .ui.video.dragvideo.MVideo;
-import com.example.aidong .ui.video.dragvideo.media.IjkVideoView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .utils.UiManager;
-import com.example.aidong .widget.SwitcherLayout;
-import com.example.aidong .widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
-import com.example.aidong .widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.example.aidong .widget.endlessrecyclerview.RecyclerViewUtils;
-import com.example.aidong .widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.example.aidong .widget.endlessrecyclerview.weight.LoadingFooter;
+import com.example.aidong.ui.discover.activity.PhotoBrowseActivity;
+import com.example.aidong.ui.discover.viewholder.MultiImageViewHolder;
+import com.example.aidong.ui.discover.viewholder.VideoViewHolder;
+import com.example.aidong.ui.home.view.PersonHorizontalView;
+import com.example.aidong.ui.mine.activity.UserInfoActivity;
+import com.example.aidong.ui.mine.activity.account.LoginActivity;
+import com.example.aidong.ui.mvp.presenter.DynamicPresent;
+import com.example.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
+import com.example.aidong.ui.mvp.view.SportCircleFragmentView;
+import com.example.aidong.ui.mvp.view.UserInfoView;
+import com.example.aidong.ui.video.activity.PlayerActivity;
+import com.example.aidong.ui.video.activity.PreviewVideoActivity;
+import com.example.aidong.ui.video.dragvideo.ImageLoaderAdapter;
+import com.example.aidong.ui.video.dragvideo.MVideo;
+import com.example.aidong.ui.video.dragvideo.media.IjkVideoView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.utils.UiManager;
+import com.example.aidong.widget.SwitcherLayout;
+import com.example.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
+import com.example.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.example.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.example.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.example.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
@@ -71,11 +72,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.aidong .utils.Constant.DYNAMIC_MULTI_IMAGE;
-import static com.example.aidong .utils.Constant.DYNAMIC_VIDEO;
-import static com.example.aidong .utils.Constant.REQUEST_LOGIN;
-import static com.example.aidong .utils.Constant.REQUEST_REFRESH_DYNAMIC;
-import static com.example.aidong .utils.Constant.REQUEST_TO_DYNAMIC;
+import static com.example.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
+import static com.example.aidong.utils.Constant.DYNAMIC_VIDEO;
+import static com.example.aidong.utils.Constant.REQUEST_LOGIN;
+import static com.example.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
+import static com.example.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
 
 
 /**
@@ -239,7 +240,6 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
     }
 
 
-
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
@@ -265,18 +265,17 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         }
 
         @Override
-        public void onVideoClick(String url,View view ) {
+        public void onVideoClick(String url, View view) {
 //            Intent intent = new Intent(getContext(), PlayerActivity.class)
 //                    .setData(Uri.parse(url))
 //                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
 //            startActivity(intent);
 
 
-
             MVideo.getInstance()
                     .setProgressColor(Color.GRAY)
                     .setPreviewImage(R.drawable.img_default)
-                    .setRotateDirection(IjkVideoView.RotateDirection.DEFAULT )
+                    .setRotateDirection(IjkVideoView.RotateDirection.DEFAULT)
                     .bind(new ImageLoaderAdapter() {
                         @Override
                         public void bind(ImageView imageView, String imagePath) {
@@ -289,9 +288,20 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
         }
 
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition,View view ) {
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition, View view) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start((Activity) getContext(), info,view);
+            // PhotoBrowseActivity.start((Activity) getContext(), info,view);
+
+
+
+            ImageView[]  imageViews = new ImageView[photoUrls.size()];
+
+            for (int i = 0; i < photoUrls.size(); i++) {
+                imageViews[i] = (ImageView) view;
+            }
+            
+
+            ImageShowActivity.startImageActivity(activity, imageViews, photoUrls.toArray(new String[photoUrls.size()]), currPosition);
         }
 
         @Override
@@ -446,7 +456,7 @@ public class HomePlazaFragment extends BasePageFragment implements SportCircleFr
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (sharePopupWindow!=null){
+        if (sharePopupWindow != null) {
             sharePopupWindow.release();
         }
 

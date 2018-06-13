@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class VenuesPresentImpl implements VenuesPresent {
     private Context context;
-    private VenuesModel venuesModel;
+    private VenuesModelImpl venuesModel;
 
     private List<VenuesBean> venuesBeanList;
     private DiscoverVenuesActivityView discoverVenuesActivityView;  //场馆列表View层对象

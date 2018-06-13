@@ -8,6 +8,7 @@ import com.example.aidong .entity.BannerBean;
 import com.example.aidong .entity.CategoryBean;
 import com.example.aidong .entity.DistrictBean;
 import com.example.aidong .entity.DistrictDescBean;
+import com.example.aidong.entity.MarketPartsBean;
 import com.example.aidong .entity.SystemBean;
 import com.example.aidong .http.subscriber.BaseSubscriber;
 import com.example.aidong .ui.mvp.model.SystemModel;
@@ -107,6 +108,22 @@ public class SystemPresentImpl implements SystemPresent {
 //                        districtValues.add(0, descBean);
 //                        landmark.get(0).setDistrict_values(districtValues);
                     }
+
+
+
+
+//                    List<MarketPartsBean>  market_parts =  systemBean.market_parts;
+//
+//                    if (market_parts!=null&&!market_parts.isEmpty()){
+//                        for (int i = 0; i < market_parts.size(); i++) {
+//                            List<DistrictDescBean> districtValues = districtBean.getDistrictValues();
+//
+//                            DistrictDescBean descBean = new DistrictDescBean();
+//                            descBean.setArea(context.getString(R.string.all_circle));
+//                            districtValues.add(0, descBean);
+//                        }
+//                    }
+
 
                     ArrayList<CategoryBean> equipments = systemBean.getEquipment();
                     if (equipments != null) {
@@ -246,12 +263,12 @@ public class SystemPresentImpl implements SystemPresent {
 
                     }
 
-//                    List<DistrictDescBean> districtValues = landmark.get(0).getDistrictValues();
-//                    DistrictDescBean descBean = new DistrictDescBean();
-//                    descBean.setArea(context.getString(R.string.all_circle));
-//                    districtValues.add(0, descBean);
-//                    landmark.get(0).setDistrict_values(districtValues);
+//
                 }
+
+
+
+
 
                 ArrayList<CategoryBean> equipments = systemBean.getEquipment();
                 if (equipments != null) {

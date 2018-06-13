@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.home;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -43,14 +44,15 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         return data.size();
     }
 
+    @NonNull
     @Override
-    public GoodsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GoodsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_confirm_order_good,parent,false);
         return new GoodsHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final GoodsHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final GoodsHolder holder, final int position) {
         final GoodsBean bean = data.get(position);
         GlideLoader.getInstance().displayImage2(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());

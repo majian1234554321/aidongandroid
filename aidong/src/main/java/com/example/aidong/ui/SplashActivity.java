@@ -33,6 +33,7 @@ import com.example.aidong .widget.dialog.ButtonCancelListener;
 import com.example.aidong .widget.dialog.ButtonOkListener;
 import com.example.aidong .widget.dialog.DialogDoubleButton;
 import com.example.aidong .widget.dialog.DialogSingleButton;
+import com.example.aidong.R;
 
 //todo fix
 public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView, SplashView, RequestCountInterface {
@@ -79,8 +80,13 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+       // initStatusBar(true);
+
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_splash);
+
+
+       // setContentView(R.layout.activity_splash);
 
 //        if((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0){
 //            finish();

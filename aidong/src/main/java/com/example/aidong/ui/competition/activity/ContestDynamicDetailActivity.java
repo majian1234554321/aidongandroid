@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.aidong.ui.discover.activity.ImageShowActivity;
 import com.google.android.exoplayer.util.Util;
 import com.example.aidong.R;
 import com.example.aidong .adapter.discover.CircleDynamicAdapter;
@@ -547,11 +548,35 @@ public class ContestDynamicDetailActivity extends BaseActivity implements Dynami
             startActivity(intent);
         }
 
+
+
+
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition,View view) {
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition, View view) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start(ContestDynamicDetailActivity.this, info,view);
+            // PhotoBrowseActivity.start((Activity) getContext(), info,view);
+
+
+            ImageView[]  imageViews = new ImageView[photoUrls.size()];
+
+            for (int i = 0; i < photoUrls.size(); i++) {
+                imageViews[i] = (ImageView) view;
+            }
+
+            ImageShowActivity.startImageActivity(ContestDynamicDetailActivity.this, imageViews, photoUrls.toArray(new String[photoUrls.size()]), currPosition);
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
         @Override
         public void onLikeClick(int position, String id, boolean isLike) {

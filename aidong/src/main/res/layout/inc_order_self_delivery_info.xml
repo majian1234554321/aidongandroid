@@ -43,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="自提时间"
+            
             app:line_color="@color/line_color"
             app:text_height="45dp"
             android:visibility="gone"

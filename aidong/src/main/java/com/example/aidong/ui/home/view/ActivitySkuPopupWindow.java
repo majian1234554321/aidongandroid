@@ -4,33 +4,41 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.Spannable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.GoodsSkuAdapter;
-import com.example.aidong .entity.BaseBean;
-import com.example.aidong .entity.CampaignDetailBean;
-import com.example.aidong .entity.GoodsSkuBean;
-import com.example.aidong .entity.GoodsSkuValueBean;
-import com.example.aidong .entity.GoodsSpecBean;
-import com.example.aidong .entity.LocalGoodsSkuBean;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.home.activity.ConfirmOrderCampaignActivity;
-import com.example.aidong .ui.home.activity.GoodsDetailActivity;
-import com.example.aidong .ui.mine.activity.account.LoginActivity;
-import com.example.aidong .ui.mvp.presenter.CartPresent;
-import com.example.aidong .ui.mvp.presenter.impl.CartPresentImpl;
-import com.example.aidong .ui.mvp.view.GoodsSkuPopupWindowView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .widget.BasePopupWindow;
+import com.example.aidong.adapter.home.GoodsSkuAdapter;
+import com.example.aidong.entity.BaseBean;
+import com.example.aidong.entity.CampaignDetailBean;
+import com.example.aidong.entity.GoodsSkuBean;
+import com.example.aidong.entity.GoodsSkuValueBean;
+import com.example.aidong.entity.GoodsSpecBean;
+import com.example.aidong.entity.LocalGoodsSkuBean;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.home.activity.ConfirmOrderCampaignActivity;
+import com.example.aidong.ui.home.activity.GoodsDetailActivity;
+import com.example.aidong.ui.mine.activity.account.LoginActivity;
+import com.example.aidong.ui.mvp.presenter.CartPresent;
+import com.example.aidong.ui.mvp.presenter.impl.CartPresentImpl;
+import com.example.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.KeyBoardUtil;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.widget.BasePopupWindow;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -264,7 +272,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                     : String.format(context.getString(R.string.rmb_price_scope), minPrice, maxPrice));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));
         }
-        tvCount.setText(TextUtils.isEmpty(count) ? "1" : count);
+        tvCount.setText(TextUtils.isEmpty(count) ? "1" : count.trim());
         ivMinus.setBackgroundResource(FormatUtil.parseInt(count) > 1 ? R.drawable.icon_minus
                 : R.drawable.icon_minus_gray);
         ivAdd.setBackgroundResource(FormatUtil.parseInt(count) == stock ? R.drawable.icon_add_gray
@@ -275,7 +283,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         }
         txt_spec_remark.setText("");
 
-        if (specBean.item.size()==1){
+        if (specBean.item.size() == 1) {
             selectedSkuValues.clear();
 
 
@@ -286,7 +294,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
             }
 
 
-            if (specBean.item.get(0).limit_amount>0)
+            if (specBean.item.get(0).limit_amount > 0)
                 txt_limit_number.setText("(限购" + specBean.item.get(0).limit_amount + "张)");
 
             tvGoodName.setText(specBean.item.get(0).name);
@@ -294,14 +302,37 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
             txt_spec_remark.setVisibility(View.VISIBLE);
 
 
-
             skuRecyclerView.setVisibility(View.GONE);
 
-          //  price = FormatUtil.parseDouble(detailBean.price);
-        }else {
+            //  price = FormatUtil.parseDouble(detailBean.price);
+        } else {
             skuRecyclerView.setVisibility(View.VISIBLE);
         }
 
+
+        tvCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)) {
+                    if (Integer.parseInt(String.valueOf(s)) > limit&&limit<=0) {
+
+                        tvCount.setText(limit + "");
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
 
@@ -313,6 +344,11 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
 
 
     }
+
+
+
+
+
 
     private void setListener() {
         ivCancel.setOnClickListener(this);
@@ -355,7 +391,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                     ToastGlobal.showLongConsecutive("超过最大库存");
                 }
 
-                if (count > limit&&limit>0) {
+                if (count > limit && limit > 0) {
                     count = limit;
                     ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
                     ToastGlobal.showLongConsecutive("超过限购数量");
@@ -494,6 +530,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
 
                 tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count), stock));
                 tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
+
                 if (Integer.parseInt(tvCount.getText().toString()) > stock) {
                     tvCount.setText(String.valueOf(line.getStock()));
                 }
@@ -510,7 +547,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         } else {
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
             selectedSkuCover = unConfirmedSkuCover;
-            tvGoodsPrice.setText(maxPrice == minPrice ?String.format(context.getString(R.string.rmb_price_double),maxPrice):
+            tvGoodsPrice.setText(maxPrice == minPrice ? String.format(context.getString(R.string.rmb_price_double), maxPrice) :
                     String.format(context.getString(R.string.rmb_price_scope), minPrice, maxPrice));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));
             List<LocalGoodsSkuBean> unSelectedSkuBeanList = onGetUnSelectSku();

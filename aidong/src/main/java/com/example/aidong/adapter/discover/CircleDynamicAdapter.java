@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.aidong .adapter.baseadapter.BaseHolderViewAdapter;
 import com.example.aidong .entity.CommentBean;

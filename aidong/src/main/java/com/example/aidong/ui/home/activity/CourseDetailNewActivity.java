@@ -244,6 +244,10 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         });
     }
 
+
+
+    
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

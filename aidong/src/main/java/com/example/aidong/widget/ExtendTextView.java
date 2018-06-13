@@ -2,7 +2,9 @@ package com.example.aidong.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.text.style.TypefaceSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .utils.DensityUtil;
+import com.example.aidong.entity.user.Type;
+import com.example.aidong.utils.DensityUtil;
 
 /**
  * 用于购买商品时显示购买信息界面的行控件
@@ -22,6 +25,7 @@ public class ExtendTextView extends RelativeLayout {
     private TextView rightTextView;
 
     private String leftText;
+    public String leftTextStyle = "DEFAULT";
     private int height;
     private int leftPadding;
     private int rightPadding;
@@ -60,12 +64,15 @@ public class ExtendTextView extends RelativeLayout {
         leftText = typedArray.getString(R.styleable.ExtendTextView_left_text);
         leftPadding = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_padding_left, DensityUtil.dp2px(context, 15));
         rightPadding = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_padding_right, DensityUtil.dp2px(context, 15));
-        leftTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_left_text_size, 14);
+        leftTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_left_text_size, 16);
         rightTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_right_text_size, 14);
         showArrow = typedArray.getBoolean(R.styleable.ExtendTextView_show_right_arrow, false);
         leftTextColor = typedArray.getColor(R.styleable.ExtendTextView_left_text_color, getResources().getColor(R.color.black));
         rightTextColor = typedArray.getColor(R.styleable.ExtendTextView_right_text_color, getResources().getColor(R.color.black));
         lineColor = typedArray.getColor(R.styleable.ExtendTextView_line_color, getResources().getColor(R.color.black));
+
+        leftTextStyle = typedArray.getString(R.styleable.ExtendTextView_left_text_style);
+
         typedArray.recycle();
     }
 
@@ -81,6 +88,21 @@ public class ExtendTextView extends RelativeLayout {
         leftTextView.setTextColor(leftTextColor);
         leftTextView.setTextSize(leftTextSize);
         leftTextView.setText(leftText);
+
+        if (leftTextStyle!=null){
+            switch (leftTextStyle) {
+                case "bold":
+
+                    leftTextView .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                    break;
+                default:
+                    leftTextView.setTypeface(Typeface.DEFAULT);
+                    break;
+
+            }
+        }
+
+
         rightTextView.setTextColor(rightTextColor);
         rightTextView.setTextSize(rightTextSize);
         line.setBackgroundColor(lineColor);
@@ -95,13 +117,13 @@ public class ExtendTextView extends RelativeLayout {
     public void setRightContent(String content) {
         rightTextView.setText(content);
     }
-    public void setRightTextColor(int color){
+
+    public void setRightTextColor(int color) {
         rightTextView.setTextColor(color);
     }
 
 
-
-    public void setRightTextViewdrawable(){
+    public void setRightTextViewdrawable() {
         Drawable drawable = getResources().getDrawable(
                 R.drawable.icon_fire);
         // / 这一步必须要做,否则不会显示.

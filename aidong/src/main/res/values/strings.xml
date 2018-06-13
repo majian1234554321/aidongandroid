@@ -336,4 +336,8 @@
     <string name="contest_shedule_explain">赛事讲解</string>
     <string name="time_of_contest_colon">比赛时间:</string>
     <string name="address_of_final_colon">总决赛地点:</string>
+
+    <string name="title_activity_image_show">ImageShowActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

@@ -166,9 +166,9 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         realPrice = totalPrice;
 
 
-        txtPriceReal.setText(String.format(getString(R.string.rmb_minus_price_double),
+        txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
                 realPrice));
-        txtPriceTotal.setText(String.format(getString(R.string.rmb_minus_price_double),
+        txtPriceTotal.setText(String.format(getString(R.string.rmb_price_double),
                 totalPrice));
 
         payType = PAY_ALI;
@@ -343,7 +343,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 selectedUserCouponId = couponBean.getUser_coupon_id();
                 couponId = couponBean.getId();
-                txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) > 0
+                txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) >= 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())) : usableCoupons.size() + "张可用");
                 txtCouponSubtract.setText(String.format(getString(R.string.rmb_minus_price_double),

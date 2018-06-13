@@ -19,11 +19,13 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.aidong.ui.discover.activity.ImageShowActivity;
 import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
 import com.iknow.android.utils.TrimVideoUtil;
@@ -480,8 +482,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
 
 
-        skuPopupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
-        skuPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         skuPopupWindow.setSelectSkuListener(this);
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
     }
@@ -664,9 +665,20 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
         }
 
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition,View view) {
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition, View view) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start((Activity) ActivityCircleDetailActivity.this, info,view);
+            // PhotoBrowseActivity.start((Activity) getContext(), info,view);
+
+
+
+            ImageView[]  imageViews = new ImageView[photoUrls.size()];
+
+            for (int i = 0; i < photoUrls.size(); i++) {
+                imageViews[i] = (ImageView) view;
+            }
+
+
+            ImageShowActivity.startImageActivity(ActivityCircleDetailActivity.this, imageViews, photoUrls.toArray(new String[photoUrls.size()]), currPosition);
         }
 
         @Override

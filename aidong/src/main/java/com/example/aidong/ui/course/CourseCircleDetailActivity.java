@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.SharedElementCallback;
@@ -18,6 +20,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.aidong.ui.discover.activity.ImageShowActivity;
 import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
 import com.iknow.android.utils.TrimVideoUtil;
@@ -130,12 +135,20 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         fragment.startActivityForResult(starter, request_code);
     }
 
+
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         id = getIntent().getStringExtra("id");
         setContentView(R.layout.activity_course_circle_details);
+
+
+        initStatusBar(true);
+
         dynamicPresent = new DynamicPresentImpl(this, this);
 
         initView();
@@ -569,8 +582,20 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
         @Override
         public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition, View view) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start((Activity) CourseCircleDetailActivity.this, info, view);
+            // PhotoBrowseActivity.start((Activity) getContext(), info,view);
+
+
+
+            ImageView[]  imageViews = new ImageView[photoUrls.size()];
+
+            for (int i = 0; i < photoUrls.size(); i++) {
+                imageViews[i] = (ImageView) view;
+            }
+
+
+            ImageShowActivity.startImageActivity(CourseCircleDetailActivity.this, imageViews, photoUrls.toArray(new String[photoUrls.size()]), currPosition);
         }
+
 
         @Override
         public void onLikeClick(int position, String id, boolean isLike) {
