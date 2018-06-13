@@ -531,20 +531,10 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
         } else {
             tvCoupon.setText(usableCoupons.size()+"张可用");
-            tvCoupon.setTextColor(Color.BLACK);
+            tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red));
         }
 
-        //把优惠券使用置为初始状态
 
-            selectedUserCouponId = null;
-            Logger.i("coupon", "setSpecifyGoodsCouponResult = " + selectedUserCouponId);
-            couponId = null;
-            couponPrice = null;
-            tvCoupon.setText(getString(R.string.please_select));
-            tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
-            double dPrice = needExpress ? expressPrice : 0d;
-            double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
-            tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
         }
 
 
