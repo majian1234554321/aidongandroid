@@ -100,10 +100,10 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
        // categoryAdapter.setData(SystemInfoUtils.getNurtureCategory(this));
-        categoryAdapter.setData(SystemInfoUtils.getMarketPartsBean(this).get(position).category);
+        categoryAdapter.setData(SystemInfoUtils.getMarketPartsBean(this).get(position).children);
 
 
-        List<List<MarketPartsBean.SeachCategoryBean>> seach_category = SystemInfoUtils.getMarketPartsBean(this).get(position).seach_category;
+       // List<List<MarketPartsBean.ChildrenBeanX>> seach_category = SystemInfoUtils.getMarketPartsBean(this).get(position).seach_category;
 
 
       //  seach_category.fo

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong.entity.BaseGoodsBean;
-import com.example.aidong.entity.CategoryBean;
+
 import com.example.aidong.entity.MarketPartsBean;
 import com.example.aidong.ui.home.activity.GoodsListActivity;
 import com.example.aidong.utils.GlideLoader;
@@ -32,7 +32,7 @@ public class CategoryAdapter2 extends RecyclerView.Adapter<CategoryAdapter2.Food
     private BaseGoodsBean.GoodsType goodsType;
     private Context context;
     private String type;
-    private List<MarketPartsBean.CategoryBean> data;
+    private List<MarketPartsBean.ChildrenBeanX> data ;
 
 
     public CategoryAdapter2(Context context, @GoodsType String type) {
@@ -45,7 +45,7 @@ public class CategoryAdapter2 extends RecyclerView.Adapter<CategoryAdapter2.Food
         this.goodsType = goodsType;
     }
 
-    public void setData(List<MarketPartsBean.CategoryBean> data) {
+    public void setData(List<MarketPartsBean.ChildrenBeanX> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -65,7 +65,7 @@ public class CategoryAdapter2 extends RecyclerView.Adapter<CategoryAdapter2.Food
 
     @Override
     public void onBindViewHolder(FoodViewHolder holder, final int position) {
-        MarketPartsBean.CategoryBean bean = data.get(position);
+        MarketPartsBean.ChildrenBeanX bean = data.get(position);
         if (TextUtils.isEmpty(bean.cover)) {
             if (GOODS_EQUIPMENT.equals(type)) {
                 GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_equipment, holder.cover);

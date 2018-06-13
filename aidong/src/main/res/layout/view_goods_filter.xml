@@ -147,22 +147,26 @@
             android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <ListView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@color/line_color"
                 android:divider="@null"
                 android:dividerHeight="0dp"
                 android:scrollbars="none" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/popup_bottom"/>
+
+
+
+
+
+
+
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>
