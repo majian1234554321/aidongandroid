@@ -595,9 +595,21 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
     @Override
-    public void onPreviewPhotoWallImage(List<String> urls, List<Rect> rectList, int currPosition,View view) {
-        PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, rectList, currPosition);
-        PhotoBrowseActivity.start(this, info,view);
+    public void onPreviewPhotoWallImage(List<String> photoUrls, List<Rect> rectList, int currPosition,View view) {
+//        PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, rectList, currPosition);
+//        PhotoBrowseActivity.start(this, info,view);
+
+
+
+        ImageView[]  imageViews = new ImageView[photoUrls.size()];
+
+        for (int i = 0; i < photoUrls.size(); i++) {
+            imageViews[i] = (ImageView) view;
+        }
+
+
+        ImageShowActivity.startImageActivity(this, imageViews, photoUrls.toArray(new String[photoUrls.size()]), currPosition);
+
     }
 
     @Override
