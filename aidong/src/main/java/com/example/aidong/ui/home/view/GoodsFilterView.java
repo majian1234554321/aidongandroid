@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.example.aidong.R;
 import com.example.aidong .entity.CategoryBean;
 import com.example.aidong .adapter.home.GoodsFilterCategoryAdapter;
+import com.example.aidong.entity.MarketPartsBean;
+import com.example.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +62,20 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     public GoodsFilterView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
+
+        intData();
+
+
         init();
+
+
         setListener();
+    }
+
+    private void intData() {
+
+
+
     }
 
     private void init() {

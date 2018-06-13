@@ -19,6 +19,7 @@ import com.example.aidong .ui.home.activity.GoodsBrandRecommendActivity;
 import com.example.aidong .ui.home.activity.NurtureActivity;
 import com.example.aidong.utils.Constant;
 import com.example.aidong .utils.GlideLoader;
+import com.example.aidong.utils.SystemInfoUtils;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -60,7 +61,7 @@ public class StoreHeaderView extends RelativeLayout{
 
         TextView ll_nurture =  headerView.findViewById(R.id.ll_nurture);
 
-        ll_nurture.setText(Constant.systemInfoBean.market_parts.get(0).name);
+        ll_nurture.setText(SystemInfoUtils.getMarketPartsBean(context).get(0).name);
 
         ll_nurture .setOnClickListener(new OnClickListener() {
             @Override

@@ -13,8 +13,10 @@ import android.view.View;
 
 import com.example.aidong.R;
 import com.example.aidong .adapter.home.CategoryAdapter;
+import com.example.aidong.adapter.home.CategoryAdapter2;
 import com.example.aidong .adapter.home.NurtureAdapter;
 import com.example.aidong .entity.GoodsBean;
+import com.example.aidong.entity.MarketPartsBean;
 import com.example.aidong .ui.BaseActivity;
 import com.example.aidong .ui.mvp.presenter.RecommendPresent;
 import com.example.aidong .ui.mvp.presenter.impl.RecommendPresentImpl;
@@ -66,12 +68,15 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             }
         }
     };
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initBroadCastReceiver();
         setContentView(R.layout.activity_nurture);
+
+        position = getIntent().getIntExtra("position",0);
         recommendPresent = new RecommendPresentImpl(this,this);
         initTopLayout();
         initSwipeRefreshLayout();
@@ -89,12 +94,21 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private void initTopLayout(){
         SimpleTitleBar titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         RecyclerView categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this, GOODS_NUTRITION);
+        CategoryAdapter2 categoryAdapter = new CategoryAdapter2(this, GOODS_NUTRITION);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
-        categoryAdapter.setData(SystemInfoUtils.getNurtureCategory(this));
+       // categoryAdapter.setData(SystemInfoUtils.getNurtureCategory(this));
+        categoryAdapter.setData(SystemInfoUtils.getMarketPartsBean(this).get(position).category);
+
+
+        List<List<MarketPartsBean.SeachCategoryBean>> seach_category = SystemInfoUtils.getMarketPartsBean(this).get(position).seach_category;
+
+
+      //  seach_category.fo
+
+
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

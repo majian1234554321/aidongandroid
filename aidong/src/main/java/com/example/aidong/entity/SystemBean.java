@@ -26,7 +26,7 @@ public class SystemBean implements Serializable {
     private ArrayList<String> gym_types;
 
 
-    public static List<MarketPartsBean> market_parts;
+    public  List<MarketPartsBean> market_parts;
 
 
 
