@@ -399,19 +399,6 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
                 }
@@ -638,15 +625,6 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         return !TextUtils.isEmpty(otherId) && App.mInstance.getUser() != null &&
                 otherId.equals(String.valueOf(App.mInstance.getUser().getId()));
     }
-
-
-
-
-
-
-
-
-
 
 
 

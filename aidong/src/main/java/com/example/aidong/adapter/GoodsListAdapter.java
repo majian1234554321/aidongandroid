@@ -1,6 +1,7 @@
 package com.example.aidong.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -43,16 +44,17 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Filt
         this.goodList = beanList;
     }
 
+    @NonNull
     @Override
-    public GoodsListAdapter.FilterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GoodsListAdapter.FilterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_nurture_filter, parent, false);
         return new GoodsListAdapter.FilterViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(GoodsListAdapter.FilterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GoodsListAdapter.FilterViewHolder holder, int position) {
         final GoodsBean bean = goodList.get(position);
-        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
+        GlideLoader.getInstance().displayImage2(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.brand.setText(bean.getBrandName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),

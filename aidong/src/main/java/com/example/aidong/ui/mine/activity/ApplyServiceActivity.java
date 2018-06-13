@@ -84,6 +84,16 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
 
     private void initData() {
         shop_list.setLayoutManager(new LinearLayoutManager(this));
+
+        if (goodsBeen!=null&&goodsBeen.size()>0){
+
+            for (int i = 0; i < goodsBeen.size(); i++) {
+                if (goodsBeen.get(i).getCan_return()==0){
+                    goodsBeen.remove(i);
+                }
+            }
+        }
+
         shopAdapter = new ApplyServiceShopAdapter(this, goodsBeen);
         shop_list.setAdapter(shopAdapter);
 

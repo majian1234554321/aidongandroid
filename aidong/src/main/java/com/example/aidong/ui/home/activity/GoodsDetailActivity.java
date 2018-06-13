@@ -276,7 +276,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage((String) model, (ImageView) view);
+                GlideLoader.getInstance().displayImage2((String) model, (ImageView) view);
             }
         });
         couponView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
