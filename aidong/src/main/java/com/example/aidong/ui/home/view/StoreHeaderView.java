@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong .entity.BannerBean;
+import com.example.aidong.entity.MarketPartsBean;
 import com.example.aidong.entity.SystemBean;
 import com.example.aidong .ui.MainActivity;
 import com.example.aidong .ui.home.activity.EquipmentActivity;
@@ -20,6 +24,8 @@ import com.example.aidong .ui.home.activity.NurtureActivity;
 import com.example.aidong.utils.Constant;
 import com.example.aidong .utils.GlideLoader;
 import com.example.aidong.utils.SystemInfoUtils;
+
+import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -45,6 +51,8 @@ public class StoreHeaderView extends RelativeLayout{
     private void initView(final Context context){
         View headerView = LayoutInflater.from(context).inflate(R.layout.header_store,this,true);
         banner = (BGABanner) headerView.findViewById(R.id.banner);
+
+
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
@@ -59,17 +67,22 @@ public class StoreHeaderView extends RelativeLayout{
             }
         });
 
-        TextView ll_nurture =  headerView.findViewById(R.id.ll_nurture);
+        GridView gridView =  headerView.findViewById(R.id.gridview);
 
-        ll_nurture.setText(SystemInfoUtils.getMarketPartsBean(context).get(0).name);
+        MyGridAdapter gridAdapter =    new MyGridAdapter(context ,SystemInfoUtils.getMarketPartsBean(context));
 
-        ll_nurture .setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, NurtureActivity.class);
-                (context).startActivity(intent);
-            }
-        });
+        gridView.setAdapter(gridAdapter);
+
+
+
+//
+//        ll_nurture .setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, NurtureActivity.class);
+//                (context).startActivity(intent);
+//            }
+//        });
         headerView.findViewById(R.id.ll_equipment).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,5 +108,46 @@ public class StoreHeaderView extends RelativeLayout{
 
     public BGABanner getBannerView(){
         return banner;
+    }
+
+
+
+
+    public class MyGridAdapter extends BaseAdapter{
+
+
+        public Context context;
+        public  List<MarketPartsBean> marketPartsBean;
+
+        public MyGridAdapter(Context context, List<MarketPartsBean> marketPartsBean) {
+            this.context = context;
+            this.marketPartsBean = marketPartsBean;
+        }
+
+        @Override
+        public int getCount() {
+            return marketPartsBean.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return marketPartsBean.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            if (view!=null){
+                view =    View.inflate(context,R.layout.mygridadapter,null);
+            }
+
+            view.findViewById(R.id.)
+
+            return null;
+        }
     }
 }
