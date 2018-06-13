@@ -44,12 +44,13 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     private LinearLayout contentLayout;
     private ListView listView;
     private GoodsFilterCategoryAdapter categoryAdapter;
-    private List<CategoryBean> categoryList = new ArrayList<>();
+
 
     private String  category;
     private boolean isPopupShowing = false;
     private boolean isLow2High = true;
     private int panelHeight;
+    private List<CategoryBean> categoryList;
 
     public GoodsFilterView(Context context) {
         this(context, null);
@@ -63,20 +64,13 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         super(context, attrs, defStyleAttr);
         this.context = context;
 
-        intData();
-
-
+        categoryList = new ArrayList<>();
         init();
-
 
         setListener();
     }
 
-    private void intData() {
 
-
-
-    }
 
     private void init() {
         View view = LayoutInflater.from(context).inflate(R.layout.view_goods_filter, this);
@@ -164,10 +158,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         if (categoryList.isEmpty()) {
             Log.d("GoodsFilterView", "you need set categoryList data first");
         }
-        if(categoryAdapter == null){
-            categoryAdapter = new GoodsFilterCategoryAdapter(context, categoryList);
-        }
-        listView.setAdapter(categoryAdapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -189,16 +180,18 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         category = categoryList.get(position).getName();
         categoryAdapter.setCheckItem(position);
         tvCategory.setText(category);
+
+        listView.setAdapter(categoryAdapter);
         if (onFilterClickListener != null) {
             onFilterClickListener.onCategoryItemClick(categoryList.get(position).getId());
         }
     }
 
+
     //设置分类筛选数据
-    public void setCategoryList(List<CategoryBean> categoryList) {
-        if(categoryList != null){
-            this.categoryList = categoryList;
-        }
+    public void setCategoryList(List<CategoryBean> list) {
+        categoryList.clear();
+        categoryList.addAll(list);
     }
 
     // 动画显示

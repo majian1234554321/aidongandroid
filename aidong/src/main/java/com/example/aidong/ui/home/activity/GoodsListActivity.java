@@ -123,9 +123,6 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
             }
         }
 
-
-
-
         goodsListPrenset = new GoodsListPrensetImpl(this,this,goodsType);
 
         initFilterLayout();

@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class RecommendPresentImpl implements RecommendPresent{
     private Context context;
-    private RecommendModel recommendModel;
+    private RecommendModelImpl recommendModel;
     private NurtureActivityView nurtureActivityView;
     private EquipmentActivityView equipmentActivityView;
     private CartActivityView cartActivityView;

@@ -11,12 +11,15 @@ public class CategoryBean implements Serializable {
     private String name;    //分类名称
     private String image;   //分类图标
 
+    private String category_id;
+
     //课程分类需要使用
     private String cover;
     private String during;
     private String video;
     private String video_desc;
     private String video_name;
+
 
     public String getId() {
         return id;
@@ -40,6 +43,14 @@ public class CategoryBean implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id = category_id;
     }
 
     public String getCover() {
@@ -82,17 +93,6 @@ public class CategoryBean implements Serializable {
         this.video_name = video_name;
     }
 
-    @Override
-    public String toString() {
-        return "CategoryBean{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
-                '}';
-    }
-
-    public CategoryBean() {
-    }
-
+    public CategoryBean(){}
 
 }

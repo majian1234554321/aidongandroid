@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     android:background="@color/line_color"
     android:orientation="vertical"
+    android:layout_gravity="center"
+
     android:paddingBottom="10dp">
 
     <cn.bingoogolapple.bgabanner.BGABanner
@@ -21,6 +23,8 @@
 
 
     <GridView
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:layout_width="match_parent"
         android:numColumns="4"
         android:background="@color/white"

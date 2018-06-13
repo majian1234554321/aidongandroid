@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import com.example.aidong .entity.CategoryBean;
 import com.example.aidong .entity.GoodsBean;
 import com.example.aidong .entity.data.GoodsData;
+import com.example.aidong.http.RetrofitHelper;
+import com.example.aidong.http.api.GoodsService;
 import com.example.aidong .http.subscriber.BaseSubscriber;
 import com.example.aidong .http.subscriber.CommonSubscriber;
 import com.example.aidong .http.subscriber.RefreshSubscriber;
@@ -19,6 +21,12 @@ import com.example.aidong .widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import rx.Scheduler;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static com.example.aidong .utils.Constant.GOODS_EQUIPMENT;
 import static com.example.aidong .utils.Constant.GOODS_FOODS;
@@ -80,6 +88,28 @@ public class GoodsListPrensetImpl {
 
     }
 
+
+
+
+    public void commendLoadGoodsData2(final SwitcherLayout switcherLayout, String categoryId, String sort, String gymId) {
+        goodsModel.getGoods2(new CommonSubscriber<GoodsData>(context, switcherLayout) {
+            @Override
+            public void onNext(GoodsData nurtureDataBean) {
+                if (nurtureDataBean != null && nurtureDataBean.getProduct() != null) {
+                    nurtureBeanList = nurtureDataBean.getProduct();
+                }
+                if (!nurtureBeanList.isEmpty()) {
+                    switcherLayout.showContentLayout();
+                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
+                } else {
+                    filterActivityView.showEmptyView();
+                }
+            }
+        },goodsType, Constant.PAGE_FIRST, categoryId, sort, gymId);
+
+    }
+
+
     public void pullToRefreshGoodsData(String categoryId, String sort, String gymId) {
 
         goodsModel.getGoods(new RefreshSubscriber<GoodsData>(context) {
@@ -96,6 +126,51 @@ public class GoodsListPrensetImpl {
             }
         },goodsType, Constant.PAGE_FIRST, categoryId, sort, gymId);
     }
+
+
+    public void pullToRefreshGoodsData2(String categoryId, String sort, String gymId) {
+
+        goodsModel.getGoods2(new RefreshSubscriber<GoodsData>(context) {
+            @Override
+            public void onNext(GoodsData nurtureDataBean) {
+                if (nurtureDataBean != null && nurtureDataBean.getProduct() != null) {
+                    nurtureBeanList = nurtureDataBean.getProduct();
+                }
+                if (!nurtureBeanList.isEmpty()) {
+                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
+                } else {
+                    filterActivityView.showEmptyView();
+                }
+            }
+        },goodsType, Constant.PAGE_FIRST, categoryId, sort, gymId);
+    }
+
+
+    public void requestMoreGoodsData2(RecyclerView recyclerView, final int pageSize, int page,
+                                     String brandId, String sort, String gymId) {
+        goodsModel.getGoods2(new RequestMoreSubscriber<GoodsData>(context, recyclerView, pageSize) {
+            @Override
+            public void onNext(GoodsData nurtureDataBean) {
+
+                Logger.i(TAG,"requestMoreGoodsData onNext");
+                if (nurtureDataBean != null && nurtureDataBean.getProduct() != null) {
+                    nurtureBeanList = nurtureDataBean.getProduct();
+                }
+                if (!nurtureBeanList.isEmpty()) {
+                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
+                }
+                //没有更多数据了显示到底提示
+                if (nurtureBeanList.size() < pageSize) {
+                    filterActivityView.showEndFooterView();
+                }
+            }
+        }, goodsType,page, brandId, sort, gymId);
+    }
+
+
+
+
+
 
     public void requestMoreGoodsData(RecyclerView recyclerView, final int pageSize, int page,
                                      String brandId, String sort, String gymId) {

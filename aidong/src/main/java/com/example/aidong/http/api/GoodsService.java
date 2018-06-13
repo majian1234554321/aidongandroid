@@ -7,12 +7,15 @@ import com.example.aidong .entity.data.GoodsDetailData;
 import com.example.aidong .entity.data.PayOrderData;
 import com.example.aidong .entity.data.VenuesData;
 
+import java.util.Map;
+
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -27,6 +30,27 @@ public interface GoodsService {
                                              @Query("cat") String catId,
                                              @Query("sort") String sort,
                                              @Query("gym") String gymId);
+
+
+    @GET("market/products/{category_id}")
+    Observable<BaseBean<GoodsData>> getGoods2(@Path("category_id") String category_id,
+                                             @Query("page") int page,
+                                             @Query("cat") String catId,
+                                             @Query("sort") String sort,
+                                             @Query("gym") String gymId);
+
+
+
+
+
+
+
+
+
+    @GET("market/mutable_parts/{category_id}")
+    Observable<BaseBean<GoodsData>> getGoodsList(@Path("category_id") String category_id,
+                                                 @QueryMap Map<String, String> map);
+
 
 
     @GET("market/products/{type}/{id}")

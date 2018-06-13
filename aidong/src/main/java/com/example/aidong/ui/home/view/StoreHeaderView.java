@@ -73,13 +73,14 @@ public class StoreHeaderView extends RelativeLayout {
 
         MyGridAdapter gridAdapter = new MyGridAdapter(context, SystemInfoUtils.getMarketPartsBean(context));
 
+
         gridView.setAdapter(gridAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, NurtureActivity.class);
-                intent.putExtra("position",position);
+                intent.putExtra("selectPosition",position);
                 (context).startActivity(intent);
             }
         });
@@ -129,6 +130,8 @@ public class StoreHeaderView extends RelativeLayout {
 
         public Context context;
         public List<MarketPartsBean> marketPartsBean;
+        private ImageView iv;
+        private TextView tv;
 
         public MyGridAdapter(Context context, List<MarketPartsBean> marketPartsBean) {
             this.context = context;
@@ -152,16 +155,17 @@ public class StoreHeaderView extends RelativeLayout {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            if (view != null) {
+            if (view == null) {
                 view = View.inflate(context, R.layout.mygridadapter, null);
+                iv = view.findViewById(R.id.iv);
+                tv = view.findViewById(R.id.tv);
             }
 
-            ImageView iv = view.findViewById(R.id.iv);
-            TextView tv = view.findViewById(R.id.iv);
+
             GlideLoader.getInstance().displayImage2(marketPartsBean.get(i).cover,iv);
             tv.setText(marketPartsBean.get(i).name);
 
-            return null;
+            return view;
         }
     }
 }
