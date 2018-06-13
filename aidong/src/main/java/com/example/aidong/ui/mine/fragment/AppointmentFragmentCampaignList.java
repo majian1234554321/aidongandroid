@@ -57,7 +57,7 @@ public class AppointmentFragmentCampaignList extends BaseLazyFragment implements
     private AppointmentAdapter appointmentAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    private AppointmentPresent present;
+    private AppointmentPresentImpl present;
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

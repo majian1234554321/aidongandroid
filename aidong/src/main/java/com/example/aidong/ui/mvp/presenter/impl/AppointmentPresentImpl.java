@@ -10,6 +10,7 @@ import com.example.aidong .entity.BaseBean;
 import com.example.aidong .entity.ShareData;
 import com.example.aidong .entity.data.AppointmentData;
 import com.example.aidong .entity.data.AppointmentDetailData;
+import com.example.aidong.http.subscriber.BaseSubscriber;
 import com.example.aidong .http.subscriber.CommonSubscriber;
 import com.example.aidong .http.subscriber.ProgressSubscriber;
 import com.example.aidong .http.subscriber.RefreshSubscriber;
@@ -66,7 +67,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
 
     @Override
     public void commonLoadData(String type) {
-        appointmentModel.getAppointments(new ProgressSubscriber<AppointmentData>(context) {
+        appointmentModel.getAppointments(new BaseSubscriber<AppointmentData>(context) {
             @Override
             public void onNext(AppointmentData appointmentData) {
                 if (appointmentData != null && appointmentData.getAppointment() != null) {

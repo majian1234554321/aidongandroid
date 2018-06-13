@@ -1,13 +1,17 @@
 package com.example.aidong.ui.mine.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +29,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.aidong.ui.MainActivity;
+import com.example.aidong.ui.discover.activity.ImageShowActivity;
+import com.example.aidong.ui.home.activity.ActivityCircleDetailActivity;
 import com.iknow.android.TrimmerActivity;
 import com.iknow.android.utils.TrimVideoUtil;
 import com.example.aidong.R;
@@ -320,6 +328,14 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         }
     }
 
+
+
+
+
+
+
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -335,8 +351,19 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 urls.add(userInfoData.getProfile().getAvatar());
                 List<Rect> viewLocalRect = new ArrayList<>();
                 viewLocalRect.add(ImageRectUtils.getDrawableBoundsInView(ivAvatar));
-                PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, viewLocalRect, 0);
-                PhotoBrowseActivity.start(this, info,ivAvatar);
+//                PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, viewLocalRect, 0);
+//                PhotoBrowseActivity.start(this, info,ivAvatar);
+
+
+                ImageView[]  imageViews = new ImageView[urls.size()];
+
+                for (int i = 0; i < urls.size(); i++) {
+                    imageViews[i] = (ImageView) ivAvatar;
+                }
+
+
+                ImageShowActivity.startImageActivity(this, imageViews, urls.toArray(new String[urls.size()]), 0);
+
 
                 break;
 
@@ -350,7 +377,41 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             case R.id.tv_message:
                 if (App.mInstance.isLogin()) {
                     ProfileBean profile = userInfoData.getProfile();
-                    EMChatActivity.start(this, userId, profile.getName(), profile.getAvatar());
+                  //  EMChatActivity.start(this, userId, profile.getName(), profile.getAvatar());
+
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        // 权限未被授予
+                        Toast.makeText(this, "请去设置页面开启相机权限", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.i("TAG", "相机权限已经被受理，开始预览相机！");
+                        EMChatActivity.start(this, userId, profile.getName(), profile.getAvatar());
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
                 }
@@ -565,6 +626,20 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         return !TextUtils.isEmpty(otherId) && App.mInstance.getUser() != null &&
                 otherId.equals(String.valueOf(App.mInstance.getUser().getId()));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
