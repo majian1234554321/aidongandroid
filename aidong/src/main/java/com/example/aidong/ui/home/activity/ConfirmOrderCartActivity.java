@@ -36,10 +36,13 @@ import com.example.aidong .ui.mine.activity.SelectAddressActivity;
 import com.example.aidong .ui.mine.activity.SelectCouponActivity;
 import com.example.aidong .ui.mine.activity.UpdateDeliveryInfoActivity;
 import com.example.aidong .ui.mvp.presenter.ConfirmOrderPresent;
+import com.example.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.example.aidong .ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
+import com.example.aidong.ui.mvp.view.AppointCampaignActivityView;
 import com.example.aidong .ui.mvp.view.ConfirmOrderActivityView;
 import com.example.aidong .utils.Constant;
 import com.example.aidong .utils.DateUtils;
+import com.example.aidong.utils.DialogUtils;
 import com.example.aidong .utils.FormatUtil;
 import com.example.aidong .utils.Logger;
 import com.example.aidong .utils.SystemInfoUtils;
@@ -82,7 +85,7 @@ import static com.example.aidong .utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderCartActivity extends BaseActivity implements View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener {
+        CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener,AppointCampaignActivityView {
     private static final java.lang.String TAG = "ConfirmOrderActivity";
     private SimpleTitleBar titleBar;
     private LinearLayout contentLayout;
@@ -182,7 +185,10 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             present.getDefaultAddress(switcherLayout);
         }
 
-//        present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
+        present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
+
+//        CampaignPresentImpl  campaignPresent = new CampaignPresentImpl(this, this);
+//        campaignPresent.getCampaignAvailableCoupon(course.skucode, course.amount);
     }
 
 
@@ -524,7 +530,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             //tvCoupon.setCompoundDrawables(null, null, null, null);
             tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
         } else {
-            tvCoupon.setText("请选择");
+            tvCoupon.setText(usableCoupons.size()+"张可用");
             tvCoupon.setTextColor(Color.BLACK);
         }
 
@@ -560,9 +566,12 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 Logger.i("coupon", "onActivityResult selectedUserCouponId = " + selectedUserCouponId);
                 couponId = couponBean.getId();
                 couponPrice = couponBean.getActual();
-                tvCoupon.setText(FormatUtil.parseDouble(couponPrice) != 0
+
+
+                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) >= 0&&!TextUtils.isEmpty(couponId)
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
+                        FormatUtil.parseDouble(couponBean.getActual())) : usableCoupons.size() + "张可用");
+
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice)));
                 double dPrice = needExpress ? expressPrice : 0;
                 double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
@@ -619,4 +628,27 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
         llReceivingTime.setVisibility(View.GONE);
         selfDeliveryLayout.setVisibility(View.GONE);
     }
+
+
+    @Override
+    public void setCampaignCouponResult(List<CouponBean> coupon) {
+
+        this.usableCoupons = coupon;
+        if (coupon == null || coupon.isEmpty()) {
+            tvCoupon.setText("无可用");
+            //tvCoupon.setCompoundDrawables(null, null, null, null);
+            tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
+        } else {
+            if (usableCoupons.size() > 0) {
+                tvCoupon.setText(usableCoupons.size() + "张可用");
+            }
+
+        }
+    }
+
+    @Override
+    public void OnBuyError() {
+
+    }
+
 }

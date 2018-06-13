@@ -41,7 +41,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView, C
     private List<ShopBean> shopBeanList = new ArrayList<>();
     private List<String> reBuyIds = new ArrayList<>();
 
-    private CartPresent cartPresent;
+    private CartPresentImpl cartPresent;
     private CartHeaderCallback callback;
     private int goodsCount;
 

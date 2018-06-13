@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.aidong .entity.BaseBean;
 import com.example.aidong .entity.data.PayOrderData;
 import com.example.aidong .entity.data.ShopData;
+import com.example.aidong.http.subscriber.BaseSubscriber;
 import com.example.aidong .http.subscriber.CommonSubscriber;
 import com.example.aidong .http.subscriber.ProgressSubscriber;
 import com.example.aidong .http.subscriber.RefreshSubscriber;
@@ -106,7 +107,7 @@ public class CartPresentImpl implements CartPresent{
 
     @Override
     public void updateGoodsCount(String id, int mount, final int shopPosition, final int goodsPosition,String gymId) {
-        cartModel.updateDeliveryInfo(new ProgressSubscriber<BaseBean>(context) {
+        cartModel.updateDeliveryInfo(new BaseSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 cartHeaderView.updateGoodsCountResult(baseBean,shopPosition,goodsPosition);  //未作校验 上层自行判断
