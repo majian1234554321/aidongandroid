@@ -140,15 +140,15 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         if (course.isMember()) {
             realPrice = course.getMember_price();
 
-            txtPriceReal.setText(String.format(getString(R.string.rmb_minus_price_double),
+            txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
                     realPrice));
-            txtPriceTotal.setText(String.format(getString(R.string.rmb_minus_price_double),
+            txtPriceTotal.setText(String.format(getString(R.string.rmb_price_double),
                     course.getMember_price()));
         } else {
             realPrice = course.getPrice();
-            txtPriceReal.setText(String.format(getString(R.string.rmb_minus_price_double),
+            txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
                     realPrice));
-            txtPriceTotal.setText(String.format(getString(R.string.rmb_minus_price_double),
+            txtPriceTotal.setText(String.format(getString(R.string.rmb_price_double),
                     course.getMember_price()));
         }
 
