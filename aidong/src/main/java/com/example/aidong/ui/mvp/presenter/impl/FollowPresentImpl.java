@@ -174,7 +174,7 @@ public class FollowPresentImpl implements FollowPresent {
             @Override
             public void onNext(FollowUserData followUserData) {
                 if (userInfoView != null) {
-                    switcherLayout.showContentLayout();
+                   // switcherLayout.showContentLayout();
                     userInfoView.onGetUserData(followUserData.getCoach());
                 }
             }
