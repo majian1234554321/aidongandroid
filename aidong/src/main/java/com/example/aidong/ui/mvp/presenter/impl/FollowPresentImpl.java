@@ -170,11 +170,11 @@ public class FollowPresentImpl implements FollowPresent {
 
 
     public void getRecommendCoachList(final SwitcherLayout switcherLayout, int page) {
-        followModel.getRecommendCoachList(new ProgressSubscriber<FollowUserData>(context) {
+        followModel.getRecommendCoachList(new BaseSubscriber<FollowUserData>(context) {
             @Override
             public void onNext(FollowUserData followUserData) {
                 if (userInfoView != null) {
-                    switcherLayout.showContentLayout();
+                   // switcherLayout.showContentLayout();
                     userInfoView.onGetUserData(followUserData.getCoach());
                 }
             }

@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.home;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -41,16 +42,17 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
         return data.size();
     }
 
+    @NonNull
     @Override
-    public NurtureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NurtureViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_nurture_or_equipment,parent,false);
         return new NurtureViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final NurtureViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final NurtureViewHolder holder, int position) {
         final GoodsBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
+        GlideLoader.getInstance().displayImage2(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(TextUtils.isEmpty(bean.getFloor_price()) ? bean.getPrice() : bean.getFloor_price())));

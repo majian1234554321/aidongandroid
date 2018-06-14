@@ -53,7 +53,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
     private OrderAdapter orderAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    private OrderPresent present;
+    private OrderPresentImpl present;
 
     public static OrderFragment newInstance(String type) {
         Bundle bundle = new Bundle();

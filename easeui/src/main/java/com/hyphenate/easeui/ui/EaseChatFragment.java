@@ -887,7 +887,7 @@ EaseChatFragment extends EaseBaseFragment implements EMMessageListener {
         cameraFile = new File(PathUtil.getInstance().getImagePath(), EMClient.getInstance().getCurrentUser()
                 + System.currentTimeMillis() + ".jpg");
         //noinspection ResultOfMethodCallIgnored
-        cameraFile.getParentFile().mkdirs();
+        cameraFile.getParentFile().mkdir();
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             final  int REQUEST_TAKE_PHOTO_PERMISSION = 123123;
 

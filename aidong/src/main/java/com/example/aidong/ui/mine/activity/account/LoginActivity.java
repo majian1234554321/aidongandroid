@@ -109,7 +109,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.btn_login:
                 if (verify()) {
                     loginPresenter.login(telephone, password);
-                    DialogUtils.showDialog(this, "", true);
+                  //  DialogUtils.showDialog(this, "", true);
                 }
                 break;
             case R.id.forget_password:

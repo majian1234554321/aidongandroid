@@ -84,7 +84,7 @@ public class SelectedCircleActivity extends BaseActivity implements SelectedCirc
                     currPage = 1;
                     keyword = etSearch.getText().toString().trim();
 
-                    DialogUtils.showDialog(SelectedCircleActivity.this, "", true);
+                 //   DialogUtils.showDialog(SelectedCircleActivity.this, "", true);
                     circlePrensenter.searchCircle(keyword);
 
                     return true;

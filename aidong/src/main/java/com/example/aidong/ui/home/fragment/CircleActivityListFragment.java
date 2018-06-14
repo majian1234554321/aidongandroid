@@ -36,7 +36,7 @@ public class CircleActivityListFragment extends BaseFragment implements Campaign
     private int currPage;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private CircleActivityListAdapter campaignAdapter;
-    private CampaignPresent campaignPresent;
+    private CampaignPresentImpl campaignPresent;
     private List<CampaignBean> data = new ArrayList<>();
 
     @Override

@@ -78,7 +78,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     private int currPage = 1;
     private String useId;
-    private UserInfoPresent userInfoPresent;
+    private UserInfoPresentImpl userInfoPresent;
     private int clickPosition;
     private DynamicBean invokeDynamicBean;
     private SharePopupWindow sharePopupWindow;
@@ -120,7 +120,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         userInfoPresent = new UserInfoPresentImpl(getContext(), this);
         initRecyclerView(view);
 
-        DialogUtils.showDialog(getActivity(), "", true);
+       // DialogUtils.showDialog(getActivity(), "", true);
         userInfoPresent.pullToRefreshDynamic(useId);
     }
 
@@ -191,7 +191,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     @Override
     public void updateDynamic(List<DynamicBean> dynamicBeanList) {
-        DialogUtils.dismissDialog();
+     //   DialogUtils.dismissDialog();
 
 
 
@@ -213,7 +213,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     @Override
     public void showEmptyLayout() {
-        DialogUtils.dismissDialog();
+      //  DialogUtils.dismissDialog();
         if (refreshLayout.isRefreshing()) {
             dynamicList.clear();
             refreshLayout.setRefreshing(false);
