@@ -71,10 +71,11 @@ public class StoreHeaderView extends RelativeLayout {
 
         GridView gridView = headerView.findViewById(R.id.gridview);
 
-        MyGridAdapter gridAdapter = new MyGridAdapter(context, SystemInfoUtils.getMarketPartsBean(context));
+        if (SystemInfoUtils.getMarketPartsBean(context)!=null) {
+            MyGridAdapter gridAdapter = new MyGridAdapter(context, SystemInfoUtils.getMarketPartsBean(context));
+            gridView.setAdapter(gridAdapter);
 
-
-        gridView.setAdapter(gridAdapter);
+        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

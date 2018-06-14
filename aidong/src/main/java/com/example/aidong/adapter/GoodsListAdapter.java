@@ -63,7 +63,8 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Filt
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context, bean.getId(),type);
+                GoodsDetailActivity.start(context, bean.getId(),bean.getType());
+
             }
         });
     }

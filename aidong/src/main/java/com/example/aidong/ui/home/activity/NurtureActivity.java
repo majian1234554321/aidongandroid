@@ -86,7 +86,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-        recommendPresent.commendLoadRecommendData(switcherLayout, RECOMMEND_NUTRITION);
+
     }
 
     private void initBroadCastReceiver() {
@@ -97,6 +97,8 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     }
 
     private void initTopLayout() {
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(this, refreshLayout);
         SimpleTitleBar titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         RecyclerView categoryView = (RecyclerView) findViewById(R.id.rv_category);
         CategoryAdapter2 categoryAdapter = new CategoryAdapter2(this,position);
@@ -131,6 +133,8 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
 
 
             categoryAdapter.setData(list);
+
+            recommendPresent.commendLoadRecommendData(switcherLayout, SystemInfoUtils.getMarketPartsBean(this).get(position).category_id+"");
         }
 
 
@@ -145,8 +149,8 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     }
 
     private void initSwipeRefreshLayout() {
-        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(this, refreshLayout);
+
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {

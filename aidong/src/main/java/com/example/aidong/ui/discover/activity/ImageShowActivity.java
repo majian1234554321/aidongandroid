@@ -307,7 +307,7 @@ public class ImageShowActivity extends AppCompatActivity {
         imageView.setAdjustViewBounds(true);
         Glide.with(this).load(url)
                 .dontAnimate()
-              //  .placeholder(R.mipmap.ic_loding)
+                .placeholder(R.drawable.img_default)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                // .error(R.mipmap.ic_loding_error)
                 .into(imageView);
