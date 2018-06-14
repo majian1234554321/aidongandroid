@@ -167,7 +167,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 tvCategory.setText(category);
                 hidePopup();
                 if (onFilterClickListener != null) {
-                    onFilterClickListener.onCategoryItemClick(categoryList.get(position).getId());
+                    onFilterClickListener.onCategoryItemClick(categoryList.get(position).getCategory_id());
                 }
             }
         });
@@ -183,7 +183,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
 
         listView.setAdapter(categoryAdapter);
         if (onFilterClickListener != null) {
-            onFilterClickListener.onCategoryItemClick(categoryList.get(position).getId());
+            onFilterClickListener.onCategoryItemClick(categoryList.get(position).getCategory_id());
         }
     }
 

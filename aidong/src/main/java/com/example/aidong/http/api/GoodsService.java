@@ -32,7 +32,7 @@ public interface GoodsService {
                                              @Query("gym") String gymId);
 
 
-    @GET("market/products/{category_id}")
+    @GET("market/mutable_parts/{category_id}")
     Observable<BaseBean<GoodsData>> getGoods2(@Path("category_id") String category_id,
                                              @Query("page") int page,
                                              @Query("cat") String catId,

@@ -36,8 +36,8 @@ public class GoodsModelImpl  {
     }
 
 
-    public void getGoods2(Subscriber<GoodsData> subscriber, String type, int page, String brandId, String sort, String gymId) {
-        nurtureService.getGoods(type,page,brandId,sort,gymId)
+    public void getGoods2(Subscriber<GoodsData> subscriber, String category_id, int page, String brandId, String sort, String gymId) {
+        nurtureService.getGoods2(category_id,page,brandId,sort,gymId)
                 .compose(RxHelper.<GoodsData>transform())
                 .subscribe(subscriber);
     }

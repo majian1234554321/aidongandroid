@@ -56,7 +56,7 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<HomeBean> data = new ArrayList<>();
 
-    private HomePresent homePresent;
+    private HomePresentImpl homePresent;
 
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
         @Override

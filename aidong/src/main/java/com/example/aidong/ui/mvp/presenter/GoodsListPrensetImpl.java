@@ -105,7 +105,7 @@ public class GoodsListPrensetImpl {
                     filterActivityView.showEmptyView();
                 }
             }
-        },goodsType, Constant.PAGE_FIRST, categoryId, sort, gymId);
+        },categoryId, Constant.PAGE_FIRST, categoryId, sort, gymId);
 
     }
 
@@ -142,7 +142,7 @@ public class GoodsListPrensetImpl {
                     filterActivityView.showEmptyView();
                 }
             }
-        },goodsType, Constant.PAGE_FIRST, categoryId, sort, gymId);
+        },categoryId, Constant.PAGE_FIRST, categoryId, sort, gymId);
     }
 
 
@@ -164,7 +164,7 @@ public class GoodsListPrensetImpl {
                     filterActivityView.showEndFooterView();
                 }
             }
-        }, goodsType,page, brandId, sort, gymId);
+        }, brandId,page, brandId, sort, gymId);
     }
 
 
