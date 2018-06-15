@@ -13,6 +13,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,17 +23,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.course.CourseArea;
-import com.example.aidong .entity.course.CourseBrand;
-import com.example.aidong .entity.course.CourseFilterBean;
-import com.example.aidong .entity.course.CourseStore;
-import com.example.aidong .ui.BaseFragment;
-import com.example.aidong .ui.home.view.CourseListFilterNew;
-import com.example.aidong .ui.mvp.presenter.impl.CourseConfigPresentImpl;
-import com.example.aidong .ui.mvp.view.CourseFilterCallback;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DateUtils;
+import com.example.aidong.entity.course.CourseArea;
+import com.example.aidong.entity.course.CourseBrand;
+import com.example.aidong.entity.course.CourseFilterBean;
+import com.example.aidong.entity.course.CourseStore;
+import com.example.aidong.ui.BaseFragment;
+import com.example.aidong.ui.home.view.CourseListFilterNew;
+import com.example.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
+import com.example.aidong.ui.mvp.view.CourseFilterCallback;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DateUtils;
 
+import com.example.aidong.utils.SharePrefUtils;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -45,7 +47,7 @@ import java.util.Map;
 /**
  * Created by user on 2018/1/4.
  */
-public class HomeCourseListFragment extends BaseFragment implements  CourseFilterCallback {
+public class HomeCourseListFragment extends BaseFragment implements CourseFilterCallback {
 
     private static final java.lang.String TAG = "HomeCourseListFragment";
     private TabLayout tabLayout;
@@ -113,14 +115,29 @@ public class HomeCourseListFragment extends BaseFragment implements  CourseFilte
 
     private void initData() {
 
-         coursePresentNew = new CourseConfigPresentImpl(getActivity());
+        coursePresentNew = new CourseConfigPresentImpl(getActivity());
         coursePresentNew.getLocalCourseFilterConfig(this);
 
 //        present.getScrollDate(days.get(0), category);
     }
 
     private void initView(View view) {
-        tabLayout =  view.findViewById(R.id.tab_layout);
+        tabLayout = view.findViewById(R.id.tab_layout);
+        final TextView textView = view.findViewById(R.id.tv_tips);
+        if (SharePrefUtils.getBoolean(activity, "showTips", true)) {
+            textView.setVisibility(View.VISIBLE);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharePrefUtils.putBoolean(activity, "showTips", false);
+                    textView.setVisibility(View.GONE);
+                }
+            });
+        }else {
+            textView.setVisibility(View.GONE);
+        }
+
+
         filterView = (CourseListFilterNew) view.findViewById(R.id.view_filter_course);
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
 
@@ -140,15 +157,12 @@ public class HomeCourseListFragment extends BaseFragment implements  CourseFilte
         }
 
 
-
-
         adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
         viewPager.setOffscreenPageLimit(6);
         viewPager.setAdapter(adapter);
 
 
         tabLayout.setupWithViewPager(viewPager);
-
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -171,17 +185,13 @@ public class HomeCourseListFragment extends BaseFragment implements  CourseFilte
         });
 
 
-
-
         filterView.setListener(courseFilterListener);
     }
 
 
-
-
     @Override
     public void onGetCourseFilterConfig(CourseFilterBean courseFilterConfig) {
-        filterView.setData(courseFilterConfig, category,category);
+        filterView.setData(courseFilterConfig, category, category);
     }
 
     public void animatedShow() {
@@ -217,10 +227,10 @@ public class HomeCourseListFragment extends BaseFragment implements  CourseFilte
         }
 
         @Override
-        public void onTimeItemClick(String timeValue,Map idValue) {
+        public void onTimeItemClick(String timeValue, Map idValue) {
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
-                ((HomeCourseListChildFragment) page).resetCourseTime(timeValue,idValue);
+                ((HomeCourseListChildFragment) page).resetCourseTime(timeValue, idValue);
                 ((HomeCourseListChildFragment) page).fetchData();
             }
         }

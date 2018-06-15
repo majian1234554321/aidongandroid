@@ -8,6 +8,26 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <com.example.aidong.widget.AlwaysMarqueeTextView
+        android:id="@+id/tv_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fefced"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/iv_tips_left"
+        android:drawableRight="@drawable/iv_tips_right"
+        android:paddingBottom="6dp"
+        android:singleLine="true"
+        android:scrollbars = "vertical"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:ellipsize="marquee"
+        android:paddingTop="6dp"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:text="会籍会员购买课程即可享受会员价格                                   会籍会员购买课程即可享受会员价格"
+        android:textColor="#ff6244" />
+
     <com.example.aidong.ui.home.view.CourseListFilterNew
         android:id="@+id/view_filter_course"
         android:layout_width="match_parent"
@@ -22,17 +42,18 @@
         app:tabIndicatorHeight="0dp"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/main_red"
-        app:tabTextColor="@color/black1"/>
-<View
-    android:layout_width="match_parent"
-    android:background="#f2f2f2"
-    android:layout_height="1px"/>
+        app:tabTextColor="@color/black1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#f2f2f2" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
-        android:background="#f2f2f2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#f2f2f2" />
 
 
 </LinearLayout>

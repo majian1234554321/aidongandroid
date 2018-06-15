@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -136,6 +137,14 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         DialogUtils.showDialog(this,"",false);
 
 
+        appointmentCourseDetailPresenter = new AppointmentCoursePresentImpl(this, this);
+
+        if ("appoint".equals(type)) {
+            appointmentCourseDetailPresenter.getCourseAppointDetail(appointId);
+        } else {
+            appointmentCourseDetailPresenter.checkCourseAppoint(courseId);
+        }
+
     }
 
     private void initView() {
@@ -198,13 +207,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
     @Override
     protected void onResume() {
         super.onResume();
-        appointmentCourseDetailPresenter = new AppointmentCoursePresentImpl(this, this);
 
-        if ("appoint".equals(type)) {
-            appointmentCourseDetailPresenter.getCourseAppointDetail(appointId);
-        } else {
-            appointmentCourseDetailPresenter.checkCourseAppoint(courseId);
-        }
     }
 
     @Override
