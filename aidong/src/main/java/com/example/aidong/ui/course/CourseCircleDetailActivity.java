@@ -374,7 +374,6 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
             ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(0, 0);
         }
 
-
     }
 
     @Override
