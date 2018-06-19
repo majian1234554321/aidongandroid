@@ -35,6 +35,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
     private static final String PAID = "purchased";             //已支付
     private static final String FINISHED = "confirmed";         //已完成
     public static final String CLOSED = "canceled";             //已关闭
+
+    public static final String RETURNED = "returned";             //已关闭
     private long orderCountdownMill;
 
     private Context context;
@@ -131,6 +133,22 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
                 holder.tvConfirm.setVisibility(View.GONE);
                 holder.tvCancel.setVisibility(View.GONE);
                 holder.tvPay.setVisibility(View.GONE);
+                break;
+
+            case RETURNED:
+
+
+                holder.state.setText("已退款");
+                holder.tvOrderId.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
+                holder.payTip.setText(context.getString(R.string.true_pay));
+                holder.tvDelete.setVisibility(View.VISIBLE);
+                holder.tvReBuy.setVisibility(View.VISIBLE);
+                holder.tvConfirm.setVisibility(View.GONE);
+                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvPay.setVisibility(View.GONE);
+
+
                 break;
             default:
                 break;

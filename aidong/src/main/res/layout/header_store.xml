@@ -27,6 +27,7 @@
         android:paddingBottom="8dp"
         android:layout_width="match_parent"
         android:numColumns="4"
+
         android:background="@color/white"
         android:id="@+id/gridview"
         android:layout_height="wrap_content"></GridView>

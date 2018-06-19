@@ -75,6 +75,8 @@ public class StoreHeaderView extends RelativeLayout {
             MyGridAdapter gridAdapter = new MyGridAdapter(context, SystemInfoUtils.getMarketPartsBean(context));
             gridView.setAdapter(gridAdapter);
 
+        }else {
+            gridView.setVisibility(GONE);
         }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

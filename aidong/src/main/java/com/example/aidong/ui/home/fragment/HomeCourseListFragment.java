@@ -124,6 +124,7 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
     private void initView(View view) {
         tabLayout = view.findViewById(R.id.tab_layout);
         final TextView textView = view.findViewById(R.id.tv_tips);
+        textView.setText(SharePrefUtils.getString(activity,"tips","会籍会员购买课程即可享受会员价格"));
         if (SharePrefUtils.getBoolean(activity, "showTips", true)) {
             textView.setVisibility(View.VISIBLE);
             textView.setOnClickListener(new View.OnClickListener() {

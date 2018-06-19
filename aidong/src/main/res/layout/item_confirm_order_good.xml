@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/left_margin"
     android:paddingBottom="8dp"
+    android:paddingLeft="@dimen/left_margin"
     android:paddingRight="@dimen/right_margin">
 
     <ImageView
@@ -24,9 +24,9 @@
         android:layout_toRightOf="@+id/dv_cover"
         android:singleLine="true"
         android:text="健身"
-        android:textStyle="bold"
         android:textColor="@color/c3"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_goods_price"
@@ -40,6 +40,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tv_goods_name"
@@ -53,11 +54,11 @@
 
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/pref_12dp"
-            tools:text="X 1"
-            android:gravity="center"
             android:layout_marginTop="10dp"
+            android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="X 1" />
 
         <TextView
             android:id="@+id/tv_sku"
@@ -67,9 +68,9 @@
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/tv_count"
             android:singleLine="true"
-            tools:text="sku11"
             android:textColor="@color/c9"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="sku11" />
 
 
         <TextView
@@ -78,17 +79,27 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_sku"
             android:layout_marginRight="30dp"
-android:visibility="gone"
             android:layout_marginTop="10dp"
             android:singleLine="true"
             android:textColor="@color/c9"
             android:textSize="12sp"
+            android:visibility="gone"
             tools:text="1212"
 
             />
 
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:textColor="@color/main_red"
+        tools:text="122112" />
 
 
     <View

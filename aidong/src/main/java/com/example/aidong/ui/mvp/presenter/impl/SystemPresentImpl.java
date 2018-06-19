@@ -4,28 +4,29 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.BannerBean;
-import com.example.aidong .entity.CategoryBean;
-import com.example.aidong .entity.DistrictBean;
-import com.example.aidong .entity.DistrictDescBean;
+import com.example.aidong.entity.BannerBean;
+import com.example.aidong.entity.CategoryBean;
+import com.example.aidong.entity.DistrictBean;
+import com.example.aidong.entity.DistrictDescBean;
 import com.example.aidong.entity.MarketPartsBean;
-import com.example.aidong .entity.SystemBean;
-import com.example.aidong .http.subscriber.BaseSubscriber;
-import com.example.aidong .ui.mvp.model.SystemModel;
-import com.example.aidong .ui.mvp.model.impl.SystemModelImpl;
-import com.example.aidong .ui.mvp.presenter.SystemPresent;
-import com.example.aidong .ui.mvp.view.SplashView;
-import com.example.aidong .ui.mvp.view.SystemView;
-import com.example.aidong .utils.LogAidong;
-import com.example.aidong .utils.RequestResponseCount;
-import com.example.aidong .utils.SystemInfoUtils;
+import com.example.aidong.entity.SystemBean;
+import com.example.aidong.http.subscriber.BaseSubscriber;
+import com.example.aidong.ui.mvp.model.SystemModel;
+import com.example.aidong.ui.mvp.model.impl.SystemModelImpl;
+import com.example.aidong.ui.mvp.presenter.SystemPresent;
+import com.example.aidong.ui.mvp.view.SplashView;
+import com.example.aidong.ui.mvp.view.SystemView;
+import com.example.aidong.utils.LogAidong;
+import com.example.aidong.utils.RequestResponseCount;
+import com.example.aidong.utils.SharePrefUtils;
+import com.example.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
 
-import static com.example.aidong .utils.Constant.systemInfoBean;
+import static com.example.aidong.utils.Constant.systemInfoBean;
 
 
 /**
@@ -88,6 +89,15 @@ public class SystemPresentImpl implements SystemPresent {
                         gymList.add(0, allBean);
                     }
 
+
+                    if (systemBean.wx_report != null && systemBean.wx_report.title != null) {
+                        if (!SharePrefUtils.getString(context, "tips", "会籍会员购买课程即可享受会员价格").equals(systemBean.wx_report.title)) {
+                            SharePrefUtils.putString(context, "tips", systemBean.wx_report.title);
+                            SharePrefUtils.putBoolean(context, "showTips", true);
+                        }
+                    }
+
+
                     ArrayList<DistrictBean> landmark = systemBean.getLandmark();
                     if (landmark != null && !landmark.isEmpty()) {
                         for (DistrictBean districtBean : landmark) {
@@ -108,8 +118,6 @@ public class SystemPresentImpl implements SystemPresent {
 //                        districtValues.add(0, descBean);
 //                        landmark.get(0).setDistrict_values(districtValues);
                     }
-
-
 
 
 //                    List<MarketPartsBean>  market_parts =  systemBean.market_parts;
@@ -265,9 +273,6 @@ public class SystemPresentImpl implements SystemPresent {
 
 //
                 }
-
-
-
 
 
                 ArrayList<CategoryBean> equipments = systemBean.getEquipment();

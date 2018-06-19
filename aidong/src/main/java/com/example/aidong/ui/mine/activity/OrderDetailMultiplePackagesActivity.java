@@ -67,6 +67,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     private static final String PAID = "purchased";           //已支付
     private static final String FINISH = "confirmed";         //已确认
     private static final String CLOSE = "canceled";           //已关闭
+    private static final String REFUNDED = "returned";
     private static final java.lang.String TAG = "OrderDetailMultiplePackagesActivity";
     private long orderCountdownMill;
 
@@ -359,6 +360,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         tvState.setText(bean.getStatus().equals(UN_PAID) ? getString(R.string.un_paid)
                 : bean.getStatus().equals(PAID) ? getString(R.string.paid)
                 : bean.getStatus().equals(FINISH) ? getString(R.string.order_finish)
+                :bean.getStatus().equals(REFUNDED)?getString(R.string.order_refunded)
                 : getString(R.string.order_close));
 
         if(bean.is_virtual()){
