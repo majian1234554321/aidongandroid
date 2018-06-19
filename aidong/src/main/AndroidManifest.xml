@@ -258,7 +258,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.AppointDetailCourseNewActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.ConfirmOrderCourseActivity"
