@@ -87,6 +87,8 @@ public class RenRenCallback extends ItemTouchHelper.SimpleCallback {
         }
         //对每个ChildView进行缩放 位移
         int childCount = recyclerView.getChildCount();
+        if (viewHolder.getPosition()!=childCount)
+            return;
         for (int i = 0; i < childCount; i++) {
             View child = recyclerView.getChildAt(i);
             //第几层,举例子，count =7， 最后一个TopView（6）是第0层，
@@ -117,6 +119,9 @@ public class RenRenCallback extends ItemTouchHelper.SimpleCallback {
                     mSwipeListener.onSwipeTo(recyclerView.findViewHolderForAdapterPosition(adapterPosition), dX);
                 }
             }
+
+
+           // child.setRotation(0);
         }
     }
 

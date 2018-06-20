@@ -35,6 +35,9 @@ public class OverLayCardLayoutManager extends RecyclerView.LayoutManager {
         return this;
     }
 
+
+
+
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
 //        Log.e(TAG, "onLayoutChildren() called with: recycler = [" + recycler + "], state = [" + state + "]");

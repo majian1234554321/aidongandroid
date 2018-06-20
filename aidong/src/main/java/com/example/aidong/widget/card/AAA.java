@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 
 public class AAA extends RecyclerView {
@@ -18,26 +19,12 @@ public class AAA extends RecyclerView {
     }
 
 
-    public float xDistance,yDistance,xStart,yStart,xEnd,yEnd;
+    public float xDistance, yDistance, xStart, yStart, xEnd, yEnd;
+
 
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-
-//        switch (ev.getAction()) {
-//
-//        }
-//
-//
-//        if (){
-//            getParent().requestDisallowInterceptTouchEvent(true);
-//        }else {
-//            getParent().requestDisallowInterceptTouchEvent(true);
-//        }
-//
-//
-//        return super.dispatchTouchEvent(ev);
-
 
 
 
@@ -51,6 +38,11 @@ public class AAA extends RecyclerView {
 
                 yStart = ev.getY();
 
+
+                Log.i("YAG", "xStart:" + xStart );
+                Log.i("YAG", "yStart:" + yStart );
+
+
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -60,28 +52,19 @@ public class AAA extends RecyclerView {
                 yEnd = ev.getY();
 
 
-
-
-                xDistance = Math.abs(xEnd-xStart);
-                yDistance = Math.abs(yEnd-yStart);
-
-
-                Log.i("YAG","xStart:"+xStart+"xEnd:"+xEnd);
-                Log.i("YAG","yStart:"+yStart+"yEnd:"+yEnd);
-
-                Log.i("YAG","xDistance:"+xDistance);
-                Log.i("YAG","yDistance:"+yDistance);
+                xDistance = Math.abs(xEnd - xStart);
+                yDistance = Math.abs(yEnd - yStart);
 
 
 
-                if(xDistance>yDistance){
+
+
+                if (xDistance > yDistance) {
                     getParent().requestDisallowInterceptTouchEvent(true);
                 }
 
 
                 break;
-
-
 
 
             case MotionEvent.ACTION_UP:
@@ -96,15 +79,7 @@ public class AAA extends RecyclerView {
         }
 
 
-
-
-
-
-
-
         return super.dispatchTouchEvent(ev);//默认值为false
-
-
 
 
     }

@@ -45,8 +45,8 @@ ext {
 
     targetSdkVersion = 28
 
-    versionCode = 650
-    versionName = "6.5.0"
+    versionCode = 660
+    versionName = "6.6.0"
 
   //  design = 'com.android.support:design:27.1.1'
 

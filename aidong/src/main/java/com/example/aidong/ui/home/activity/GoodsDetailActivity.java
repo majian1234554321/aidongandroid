@@ -176,6 +176,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         initBroadCastReceiver();
 
         setContentView(R.layout.activity_goods_detail_deprecated);
+
         sharePopupWindow = new SharePopupWindow(this);
         goodsPresent = new GoodsDetailPresentImpl(this, this);
         if (getIntent() != null) {
@@ -272,7 +273,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
         view = findViewById(R.id.lineline);
 
-        topLayout.setBackgroundColor(Color.argb(55, 0, 0, 0));
+        topLayout.setBackgroundColor(Color.argb(0, 0, 0, 0));
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {

@@ -125,7 +125,7 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
         tabLayout = view.findViewById(R.id.tab_layout);
         final TextView textView = view.findViewById(R.id.tv_tips);
         if (SharePrefUtils.getBoolean(activity, "showTips", true)) {
-            textView.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.GONE);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

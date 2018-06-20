@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,11 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
 
 
         holder.tv_3.setText(courseBean.professionalism);
+
+
+
+
+
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

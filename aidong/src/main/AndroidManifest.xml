@@ -727,7 +727,7 @@
         <!-- 设置环信应用的AppKey debug:	leyuan-aidong#aidongouternettest  preRelease: leyuan-aidong#aidongprerelease   release : leyuan-aidong#aidong -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="leyuan-aidong#aidongouternettest" />
+            android:value="leyuan-aidong#aidong" />
         <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
@@ -866,7 +866,7 @@
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
