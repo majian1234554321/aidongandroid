@@ -84,6 +84,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         registerReceiver(registerReceiver, registerFilter);
 
         setContentView(R.layout.activity_login);
+        initStatusBar(true);
         loginPresenter = new LoginPresenter(this, this);
         chatLoginManager = new EmChatLoginManager(this);
 

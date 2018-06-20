@@ -107,7 +107,12 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         switch (v.getId()) {
             case R.id.ll_brand:
                 isLow2High = true;
-                setCategoryAdapter();
+                if(isPopupShowing){
+                    hidePopup();
+                }else {
+                    setCategoryAdapter();
+                }
+
                 break;
             case R.id.ll_popularity:
                 isLow2High = true;

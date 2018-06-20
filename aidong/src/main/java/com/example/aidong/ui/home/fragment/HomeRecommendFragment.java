@@ -214,6 +214,10 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         mActivity_review.setLayoutManager(new OverLayCardLayoutManager(getContext()));
 
 
+        mActivity_review.setNestedScrollingEnabled(false);
+
+
+
         callback = new RenRenCallback();
 
 
