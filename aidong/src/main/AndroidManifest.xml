@@ -30,7 +30,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -247,6 +247,11 @@
         <activity
             android:name=".ui.mine.activity.CartActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mine.activity.CartActivity2"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.mine.activity.CouponExchangeActivity"
             android:screenOrientation="portrait" />

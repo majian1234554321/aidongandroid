@@ -112,7 +112,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView, C
         if (callback != null) {
             callback.onBottomStatusChange(isAllShopChecked, totalPrice, getSelectedGoods().size());
         }
-        shopAdapter.notifyItemChanged(position);
+        shopAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -172,7 +172,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView, C
             ShopBean shop = shopBeanList.get(shopPosition);
             GoodsBean goods = shop.getItem().get(goodsPosition);
             goods.setAmount(String.valueOf(goodsCount));
-            shopAdapter.notifyItemChanged(shopPosition);
+            shopAdapter.notifyDataSetChanged();
             if (callback != null) {
                 callback.onBottomStatusChange(isAllShopChecked(), calculateTotalPrice(), getSelectedGoods().size());
             }

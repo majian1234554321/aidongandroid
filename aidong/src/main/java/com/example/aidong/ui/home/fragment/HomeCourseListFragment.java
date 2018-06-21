@@ -27,6 +27,7 @@ import com.example.aidong.entity.course.CourseArea;
 import com.example.aidong.entity.course.CourseBrand;
 import com.example.aidong.entity.course.CourseFilterBean;
 import com.example.aidong.entity.course.CourseStore;
+import com.example.aidong.ui.App;
 import com.example.aidong.ui.BaseFragment;
 import com.example.aidong.ui.home.view.CourseListFilterNew;
 import com.example.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
@@ -34,6 +35,7 @@ import com.example.aidong.ui.mvp.view.CourseFilterCallback;
 import com.example.aidong.utils.Constant;
 import com.example.aidong.utils.DateUtils;
 
+import com.example.aidong.utils.RxBus;
 import com.example.aidong.utils.SharePrefUtils;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -43,6 +45,8 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import rx.Subscriber;
 
 /**
  * Created by user on 2018/1/4.
@@ -71,6 +75,7 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
         }
     };
     private CourseConfigPresentImpl coursePresentNew;
+    private TextView textView;
 
     private void resetRefreshData() {
 
@@ -123,20 +128,63 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
 
     private void initView(View view) {
         tabLayout = view.findViewById(R.id.tab_layout);
-        final TextView textView = view.findViewById(R.id.tv_tips);
-        textView.setText(SharePrefUtils.getString(activity,"tips","会籍会员购买课程即可享受会员价格"));
-        if (SharePrefUtils.getBoolean(activity, "showTips", true)) {
-            textView.setVisibility(View.GONE);
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SharePrefUtils.putBoolean(activity, "showTips", false);
-                    textView.setVisibility(View.GONE);
-                }
-            });
-        }else {
-            textView.setVisibility(View.GONE);
-        }
+        textView = view.findViewById(R.id.tv_tips);
+        textView.setText(SharePrefUtils.getString(activity, "tips", "会籍会员购买课程即可享受会员价格"));
+
+
+        RxBus.getInstance().toObserverable(String.class)
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+               if (textView!=null){
+                   if (App.getInstance().isLogin()) {
+                       if (SharePrefUtils.getString(activity, "showTips", "NODATA").contains("@" + App.getInstance().getUser().getId())) {
+                           textView.setVisibility(View.GONE);
+                       } else {
+                           textView.setVisibility(View.VISIBLE);
+                           textView.setOnClickListener(new View.OnClickListener() {
+                               @Override
+                               public void onClick(View view) {
+
+                                   String value = SharePrefUtils.getString(activity, "showTips", "NODATA") + "@" + App.getInstance().getUser().getId();
+                                   SharePrefUtils.putString(activity, "showTips", value);
+                                   textView.setVisibility(View.GONE);
+                               }
+                           });
+                       }
+                   } else {
+                       if (SharePrefUtils.getString(activity, "showTips", "NODATA").contains("@@@@@")) {
+                           textView.setVisibility(View.GONE);
+                       } else {
+                           textView.setVisibility(View.VISIBLE);
+                           textView.setOnClickListener(new View.OnClickListener() {
+                               @Override
+                               public void onClick(View view) {
+
+                                   String value = SharePrefUtils.getString(activity, "showTips", "NODATA") + "@@@@@";
+                                   SharePrefUtils.putString(activity, "showTips", value);
+                                   textView.setVisibility(View.GONE);
+                               }
+                           });
+                       }
+
+
+                   }
+               }
+                    }
+                });
+
+
 
 
         filterView = (CourseListFilterNew) view.findViewById(R.id.view_filter_course);
@@ -253,5 +301,47 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
         super.onDestroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(selectCityReceiver);
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(textView!=null){
+            if (App.getInstance().isLogin()) {
+                if (SharePrefUtils.getString(activity, "showTips", "NODATA").contains("@" + App.getInstance().getUser().getId())) {
+                    textView.setVisibility(View.GONE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            String value = SharePrefUtils.getString(activity, "showTips", "NODATA") + "@" + App.getInstance().getUser().getId();
+                            SharePrefUtils.putString(activity, "showTips", value);
+                            textView.setVisibility(View.GONE);
+                        }
+                    });
+                }
+            } else {
+                if (SharePrefUtils.getString(activity, "showTips", "NODATA").contains("@@@@@")) {
+                    textView.setVisibility(View.GONE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            String value = SharePrefUtils.getString(activity, "showTips", "NODATA") + "@@@@@";
+                            SharePrefUtils.putString(activity, "showTips", value);
+                            textView.setVisibility(View.GONE);
+                        }
+                    });
+                }
+
+
+            }
+        }
+    }
+
 
 }

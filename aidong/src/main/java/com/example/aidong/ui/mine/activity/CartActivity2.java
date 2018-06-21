@@ -12,27 +12,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.RecommendAdapter;
-import com.example.aidong .entity.GoodsBean;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.mine.view.CartHeaderView;
-import com.example.aidong .ui.mvp.presenter.RecommendPresent;
-import com.example.aidong .ui.mvp.presenter.impl.RecommendPresentImpl;
-import com.example.aidong .ui.mvp.view.CartActivityView;
-import com.example.aidong.ui.mvp.view.HideHeadItemView;
-import com.example.aidong .widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
-import com.example.aidong .widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.example.aidong .widget.endlessrecyclerview.HeaderSpanSizeLookup;
-import com.example.aidong .widget.endlessrecyclerview.RecyclerViewUtils;
-import com.example.aidong .widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.example.aidong .widget.endlessrecyclerview.weight.LoadingFooter;
+import com.example.aidong.adapter.home.RecommendAdapter;
+import com.example.aidong.entity.GoodsBean;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.mine.view.CartHeaderView;
+import com.example.aidong.ui.mine.view.CartHeaderView2;
+import com.example.aidong.ui.mvp.presenter.RecommendPresent;
+import com.example.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
+import com.example.aidong.ui.mvp.view.CartActivityView;
+import com.example.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
+import com.example.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.example.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
+import com.example.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.example.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.example.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.aidong .utils.Constant.RECOMMEND_CART;
+import static com.example.aidong.utils.Constant.RECOMMEND_CART;
 
 
 /**
@@ -40,12 +40,12 @@ import static com.example.aidong .utils.Constant.RECOMMEND_CART;
  * Created by song on 2016/9/8.
  * //todo shit 购物车的实现需要重构
  */
-public class CartActivity extends BaseActivity implements CartActivityView, View.OnClickListener,
-        CartHeaderView.CartHeaderCallback, OnRefreshListener,HideHeadItemView {
+public class CartActivity2 extends BaseActivity implements CartActivityView, View.OnClickListener,
+        CartHeaderView.CartHeaderCallback, OnRefreshListener {
     private ImageView ivBack;
     private TextView tvEdit;
 
-    private CartHeaderView cartHeaderView;
+
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recommendView;
     private int currPage = 1;
@@ -62,15 +62,16 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private LinearLayout bottomDeleteLayout;
     private TextView tvDelete;
 
-    private RecommendPresentImpl recommendPresent;
+    private RecommendPresent recommendPresent;
     private boolean isEditing = false;
     private boolean needLoadRecommendData = true;
 
     private List<String> reBuyIds = new ArrayList<>();
+    private CartHeaderView2 cartHeaderView2;
 
     //再次购买
     public static void start(Context context,List<String> reBuyIds) {
-        Intent starter = new Intent(context, CartActivity.class);
+        Intent starter = new Intent(context, CartActivity2.class);
         starter.putStringArrayListExtra("reBuyIds", (ArrayList<String>) reBuyIds);
         context.startActivity(starter);
     }
@@ -89,7 +90,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
         initView();
         setListener();
-        cartHeaderView.pullToRefreshCartData();
+
     }
 
 
@@ -119,8 +120,8 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 recommendView.getAdapter(), manager.getSpanCount()));
         recommendView.setLayoutManager(manager);
         recommendView.addOnScrollListener(onScrollListener);
-        cartHeaderView = new CartHeaderView(this,reBuyIds);
-        RecyclerViewUtils.setHeaderView(recommendView, cartHeaderView);
+        cartHeaderView2 = new CartHeaderView2(this,reBuyIds);
+        RecyclerViewUtils.setHeaderView(recommendView, cartHeaderView2);
     }
 
     private void setListener(){
@@ -130,14 +131,14 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         tvDelete.setOnClickListener(this);
         rbSelectAll.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
-        cartHeaderView.setCartCallback(this);
+     //   cartHeaderView.setCartCallback(this);
     }
 
     @Override
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recommendView);
-        cartHeaderView.pullToRefreshCartData();
+      //  cartHeaderView.pullToRefreshCartData();
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -161,13 +162,13 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 updateEditStatus();
                 break;
             case R.id.tv_settlement:
-                cartHeaderView.settlementSelectGoods();
+             //   cartHeaderView.settlementSelectGoods();
                 break;
             case R.id.tv_delete:
-                cartHeaderView.deleteSelectedGoods();
+              //  cartHeaderView.deleteSelectedGoods();
                 break;
             case R.id.rb_select_all:
-                cartHeaderView.changeAllGoodsStatus(rbSelectAll.isChecked());
+              //  cartHeaderView.changeAllGoodsStatus(rbSelectAll.isChecked());
                 break;
             default:
                 break;
@@ -187,7 +188,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     @Override
     public void showEmptyRecommendView() {
-        cartHeaderView.showRecommendText(false);
+       // cartHeaderView.showRecommendText(false);
     }
 
     @Override
@@ -201,7 +202,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         if(needLoadRecommendData) {
             needLoadRecommendData = false;
             bottomLayout.setVisibility(View.VISIBLE);
-
+          //  cartHeaderView.showRecommendText(!isEditing);
             recommendPresent.pullToRefreshRecommendData(RECOMMEND_CART);
         }
 
@@ -220,9 +221,6 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         rbSelectAll.setChecked(allChecked);
         tvSettlement.setText(String.format(getString(R.string.settlement_count),settlementCount));
         tvTotalPrice.setText(String.format(getString(R.string.rmb_price_double),totalPrice));
-        if (recommendList!=null&&recommendList.size()==0&&cartHeaderView!=null){
-            cartHeaderView.showRecommendText(false);
-        }
     }
 
 
@@ -230,14 +228,9 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         tvEdit.setText(isEditing ? R.string.finish : R.string.edit);
         bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
         bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
-
-        cartHeaderView.setEditingStatus(isEditing);
+//        cartHeaderView.showRecommendText(!isEditing);
+//        cartHeaderView.setEditingStatus(isEditing);
         recommendAdapter.setData(isEditing ? emptyRecommendList : recommendList);
         wrapperAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void hideHeadItemView() {
-
     }
 }

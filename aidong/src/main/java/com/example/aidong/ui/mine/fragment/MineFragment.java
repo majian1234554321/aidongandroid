@@ -34,6 +34,7 @@ import com.example.aidong .ui.mine.activity.AddressActivity;
 import com.example.aidong .ui.mine.activity.AiDongMomentActivity;
 import com.example.aidong .ui.mine.activity.AppointmentMineActivityNew;
 import com.example.aidong .ui.mine.activity.CartActivity;
+import com.example.aidong.ui.mine.activity.CartActivity2;
 import com.example.aidong .ui.mine.activity.CouponActivity;
 import com.example.aidong .ui.mine.activity.FollowActivity;
 import com.example.aidong .ui.mine.activity.LoveCoinActivity;

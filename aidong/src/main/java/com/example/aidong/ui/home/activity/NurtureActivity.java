@@ -80,7 +80,6 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         setContentView(R.layout.activity_nurture);
 
 
-
         position = getIntent().getIntExtra("selectPosition", 0);
         recommendPresent = new RecommendPresentImpl(this, this);
         initTopLayout();
@@ -101,14 +100,14 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         switcherLayout = new SwitcherLayout(this, refreshLayout);
         SimpleTitleBar titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         RecyclerView categoryView = (RecyclerView) findViewById(R.id.rv_category);
-        CategoryAdapter2 categoryAdapter = new CategoryAdapter2(this,position);
+        CategoryAdapter2 categoryAdapter = new CategoryAdapter2(this, position);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false);
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
 
 
-        if (SystemInfoUtils.getMarketPartsBean(this)!=null){
+        if (SystemInfoUtils.getMarketPartsBean(this) != null) {
             List<CategoryBean> list = new ArrayList<>();
             titleBar.setTitle(SystemInfoUtils.getMarketPartsBean(this).get(position).name);
 
@@ -121,23 +120,31 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
                 list.add(storeChildBen);
             }
 
-            for (int i = 0; i < SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children.size(); i++) {
-                CategoryBean storeChildBen = new CategoryBean();
-                storeChildBen.setCategory_id(SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children.get(i).category_id);
-                storeChildBen.setCover(SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children.get(i).cover);
-                storeChildBen.setName(SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children.get(i).name);
+
+            if (SystemInfoUtils.getMarketPartsBean(this) != null &&
+                    SystemInfoUtils.getMarketPartsBean(this).get(position) != null &&
+                    SystemInfoUtils.getMarketPartsBean(this).get(position).children != null &&
+                    SystemInfoUtils.getMarketPartsBean(this).get(position).children.size()>0&&
+                    SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0) != null &&
+                    SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children != null) {
+
+                for (int i = 0; i < SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children.size(); i++) {
+                    CategoryBean storeChildBen = new CategoryBean();
+                    storeChildBen.setCategory_id(SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children.get(i).category_id);
+                    storeChildBen.setCover(SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children.get(i).cover);
+                    storeChildBen.setName(SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children.get(i).name);
 
 
-                list.add(storeChildBen);
+                    list.add(storeChildBen);
+                }
+
             }
 
 
             categoryAdapter.setData(list);
 
-            recommendPresent.commendLoadRecommendData(switcherLayout, SystemInfoUtils.getMarketPartsBean(this).get(position).category_id+"");
+            recommendPresent.commendLoadRecommendData(switcherLayout, SystemInfoUtils.getMarketPartsBean(this).get(position).category_id + "");
         }
-
-
 
 
         titleBar.setOnClickListener(new View.OnClickListener() {

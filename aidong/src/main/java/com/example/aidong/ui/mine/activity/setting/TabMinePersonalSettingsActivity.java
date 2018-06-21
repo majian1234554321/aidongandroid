@@ -33,6 +33,7 @@ import com.example.aidong .utils.Constant;
 import com.example.aidong .utils.DataCleanManager;
 import com.example.aidong .utils.Md5Utils;
 import com.example.aidong .utils.RequestResponseCount;
+import com.example.aidong.utils.SharePrefUtils;
 import com.example.aidong .utils.TelephoneManager;
 import com.example.aidong .utils.ToastGlobal;
 import com.example.aidong .utils.UiManager;
@@ -306,6 +307,8 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
         loginPresenter.setOnRequestResponse(requestResponse);
         loginPresenter.setExitLoginListener(this);
         loginPresenter.exitLogin();
+
+
 
     }
 

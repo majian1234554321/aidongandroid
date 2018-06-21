@@ -56,6 +56,7 @@ public class HomeCourseFragment extends BaseFragment implements View.OnClickList
 
         }
     };
+    private HomeCourseListFragment homeCourseListFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +83,12 @@ public class HomeCourseFragment extends BaseFragment implements View.OnClickList
         btCheckout = (SwitchButton) view.findViewById(R.id.bt_checkout);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         fm = getChildFragmentManager();
-        mFragments.add(new HomeCourseListFragment());
+
+
+        homeCourseListFragment = new HomeCourseListFragment();
+
+
+        mFragments.add(homeCourseListFragment);
         mFragments.add(new HomeStoreListFragment());
         showFragment(0);
         btCheckout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -133,10 +139,14 @@ public class HomeCourseFragment extends BaseFragment implements View.OnClickList
         tv_location.setText(App.getInstance().getSelectedCity());
     }
 
+//    public void setData(){
+//        homeCourseListFragment.setData();
+//    }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(selectCityReceiver);
+        LocalBroadcastManager.getInstance(activity).unregisterReceiver(selectCityReceiver);
     }
 }

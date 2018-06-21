@@ -121,9 +121,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'io.reactivex:rxjava:1.2.7'
     implementation 'io.reactivex:rxandroid:1.2.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     //    compile 'com.google.zxing:core:3.2.1'
     testImplementation 'junit:junit:4.12'
     //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
@@ -153,7 +153,7 @@ dependencies {
     implementation 'org.aspectj:aspectjrt:1.8.9'
     // implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.writingminds:FFmpegAndroid:0.3.2'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+   // implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     implementation 'com.github.florent37:arclayout:1.0.3'
     implementation project(':custompullrefresh')
     implementation project(':easeui')

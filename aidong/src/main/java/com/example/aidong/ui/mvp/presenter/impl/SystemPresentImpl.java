@@ -1,7 +1,9 @@
 package com.example.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.aidong.R;
 import com.example.aidong.entity.BannerBean;
@@ -23,6 +25,7 @@ import com.example.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import rx.Subscriber;
 
@@ -91,9 +94,24 @@ public class SystemPresentImpl implements SystemPresent {
 
 
                     if (systemBean.wx_report != null && systemBean.wx_report.title != null) {
+
+
+                        SharedPreferences sp =      context.getSharedPreferences("dataconfig",0);
+                        Map<String, ?> all =sp.getAll();
+
+                        for (Map.Entry<String, ?> entry : all.entrySet()) {
+                            String key = entry.getKey();
+                            String value = entry.getValue().toString();
+                            System.out.println("key=" + key + " value=" + value);
+                            Log.i("TAG","key=" + key + " value=" + value);
+                        }
+
                         if (!SharePrefUtils.getString(context, "tips", "会籍会员购买课程即可享受会员价格").equals(systemBean.wx_report.title)) {
                             SharePrefUtils.putString(context, "tips", systemBean.wx_report.title);
-                            SharePrefUtils.putBoolean(context, "showTips", true);
+
+
+                            SharePrefUtils.putString(context, "showTips","NODATA");
+
                         }
                     }
 

@@ -1,6 +1,7 @@
 package com.example.aidong.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -99,8 +100,9 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = null;
         switch (i) {
             case TYPE_HEADER:
@@ -114,7 +116,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
 
         switch (holder.getItemViewType()) {
             case TYPE_HEADER:
@@ -290,15 +292,15 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            layout_living = (FrameLayout) itemView.findViewById(R.id.layout_living);
-            viewPager_living = (ViewPager) itemView.findViewById(R.id.viewPager_living);
+            layout_living =  itemView.findViewById(R.id.layout_living);
+            viewPager_living =  itemView.findViewById(R.id.viewPager_living);
             layout_single_living = (RelativeLayout) itemView.findViewById(R.id.layout_single_living);
             rel_living = (RelativeLayout) itemView.findViewById(R.id.rel_living);
             list_live = (RecyclerView) itemView.findViewById(R.id.list_live);
             img_living_bg = (ImageView) itemView.findViewById(R.id.img_living_bg);
             img_living = (ImageView) itemView.findViewById(R.id.img_living);
             img_special = (ImageView) itemView.findViewById(R.id.img_special);
-            img_deep_into = (ImageView) itemView.findViewById(R.id.img_deep_into);
+            img_deep_into =  itemView.findViewById(R.id.img_deep_into);
             img_celebrity = (ImageView) itemView.findViewById(R.id.img_celebrity);
             img_play_back = (ImageView) itemView.findViewById(R.id.img_play_back);
 
@@ -353,17 +355,17 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object object) {
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view == object;
         }
 
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             //            container.removeView(livingViews.get(position % livingViews.size()));
         }
-
+        @NonNull
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
             View view = livingViews.get(position % livingViews.size());
             ViewGroup parent = (ViewGroup) view.getParent();
             //如果当前要显示的view有父布局先将父布局移除（view只能有一个父布局）

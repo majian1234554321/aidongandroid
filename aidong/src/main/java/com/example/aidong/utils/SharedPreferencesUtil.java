@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * SharedPreferences封装类SPUtils
@@ -39,8 +40,9 @@ public class SharedPreferencesUtil {
             editor.putFloat(key, (Float) object);
         } else if (object instanceof Long) {
             editor.putLong(key, (Long) object);
-        } else {
-            editor.putString(key, object.toString());
+        } else if (object instanceof Set){
+            editor.putStringSet(key, (Set<String>)object);
+
         }
 
         SharedPreferencesCompat.apply(editor);
