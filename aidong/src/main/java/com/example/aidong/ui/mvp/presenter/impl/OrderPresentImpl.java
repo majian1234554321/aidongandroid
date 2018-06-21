@@ -15,6 +15,7 @@ import com.example.aidong .entity.data.OrderDetailData;
 import com.example.aidong .http.subscriber.BaseSubscriber;
 import com.example.aidong .http.subscriber.CommonSubscriber;
 import com.example.aidong .http.subscriber.IsLoginSubscriber;
+import com.example.aidong.http.subscriber.Progress2Subscriber;
 import com.example.aidong .http.subscriber.ProgressSubscriber;
 import com.example.aidong .http.subscriber.RefreshSubscriber;
 import com.example.aidong .http.subscriber.RequestMoreSubscriber;
@@ -189,7 +190,7 @@ public class OrderPresentImpl implements OrderPresent {
 
     @Override
     public void cancelOrder(String id) {
-        orderModel.cancelOrder(new ProgressSubscriber<BaseBean>(context) {
+        orderModel.cancelOrder(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (orderFragmentView != null) {
@@ -254,7 +255,7 @@ public class OrderPresentImpl implements OrderPresent {
 
     @Override
     public void reBuyOrder(String orderId) {
-        orderModel.reBuyOrder(new ProgressSubscriber<CartIdBean>(context) {
+        orderModel.reBuyOrder(new Progress2Subscriber<CartIdBean>(context) {
             @Override
             public void onNext(CartIdBean cartIdBean) {
                 if (orderDetailActivityView != null) {

@@ -51,7 +51,6 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
     private StoreHeaderView headerView;
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
-    private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<HomeBean> data = new ArrayList<>();
@@ -70,7 +69,7 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
+        LocalBroadcastManager.getInstance(activity).registerReceiver(selectCityReceiver, filter);
     }
 
     @Override
@@ -88,10 +87,10 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
     }
 
     private void initView(View view){
-        ivSearch = (ImageView) view.findViewById(R.id.iv_search);
-        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
+        ivSearch =  view.findViewById(R.id.iv_search);
+        refreshLayout =  view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_goods);
+        RecyclerView recyclerView = view.findViewById(R.id.rv_goods);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         headerView = new StoreHeaderView(getContext());
         HomeAdapter.Builder<DynamicBean> builder = new HomeAdapter.Builder<>(getContext());

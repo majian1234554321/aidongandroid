@@ -132,7 +132,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     private OrderExpressAdapter expressAdapter;
     private OrderSelfDeliveryAdapter selfDeliveryAdapter;
     private String orderId;
-    private OrderPresent orderPresent;
+    private OrderPresentImpl orderPresent;
     private String payType;
     private OrderDetailBean bean;
     private String status;
@@ -354,7 +354,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
             tvAfterSell.setVisibility(View.GONE);
         }
         tvConfirm.setVisibility(PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
-        tvReBuy.setVisibility(FINISH.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())
+        tvReBuy.setVisibility(FINISH.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())||REFUNDED.equals(bean.getStatus())
                 ? View.VISIBLE : View.GONE);
 
         tvState.setText(bean.getStatus().equals(UN_PAID) ? getString(R.string.un_paid)

@@ -22,9 +22,8 @@
         app:banner_transitionEffect="depth" />
 
 
-    <GridView
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+    <com.example.aidong.widget.MyGridView
+
         android:layout_width="match_parent"
         android:numColumns="4"
         android:background="@color/white"

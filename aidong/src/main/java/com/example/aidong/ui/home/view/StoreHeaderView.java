@@ -25,6 +25,7 @@ import com.example.aidong.ui.home.activity.NurtureActivity;
 import com.example.aidong.utils.Constant;
 import com.example.aidong.utils.GlideLoader;
 import com.example.aidong.utils.SystemInfoUtils;
+import com.example.aidong.widget.MyGridView;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class StoreHeaderView extends RelativeLayout {
             }
         });
 
-        GridView gridView = headerView.findViewById(R.id.gridview);
+        MyGridView gridView = headerView.findViewById(R.id.gridview);
 
         if (SystemInfoUtils.getMarketPartsBean(context)!=null) {
             MyGridAdapter gridAdapter = new MyGridAdapter(context, SystemInfoUtils.getMarketPartsBean(context));
