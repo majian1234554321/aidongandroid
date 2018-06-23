@@ -40,7 +40,7 @@ import java.util.Map;
 public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     private Context context;
     private CartModel cartModel;
-    private CouponModel couponModel;
+    private CouponModelImpl couponModel;
     private AddressModel addressModel;
     private NurtureModel nurtureModel;
     private EquipmentModel equipmentModel;

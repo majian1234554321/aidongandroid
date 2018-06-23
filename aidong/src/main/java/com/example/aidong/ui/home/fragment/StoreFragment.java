@@ -62,6 +62,9 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
         public void onReceive(Context context, Intent intent) {
             refreshLayout.setRefreshing(true);
             initData();
+            if (headerView!=null){
+                headerView.setDataChange(activity);
+            }
         }
     };
 

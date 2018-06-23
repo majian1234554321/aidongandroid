@@ -155,9 +155,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         ivBrandArrow.setImageResource(R.drawable.icon_filter_arrow_selected);
         contentLayout.setVisibility(VISIBLE);
         rightListView.setVisibility(GONE);
-        if (brandAdapter == null) {
             brandAdapter = new CategoryListAdapter(context, brandList);
-        }
         leftListView.setAdapter(brandAdapter);
         brandAdapter.setCheckItem(brandSelectedPosition == -1 ? 0 : brandSelectedPosition);
         leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -375,8 +373,12 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
     }
 
     public void setBrandList(List<CategoryBean> brandList) {
-        if (brandList != null)
+        hidePopup();
+        if (brandList != null) {
             this.brandList = brandList;
+        }
+
+
     }
 
     public void setCircleList(List<DistrictBean> circleList) {

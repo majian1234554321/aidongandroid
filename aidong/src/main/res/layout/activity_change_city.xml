@@ -70,6 +70,7 @@
                 android:background="@color/line_color" />
 
             <RelativeLayout
+                android:id="@+id/rl2"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
@@ -80,7 +81,7 @@
                     android:layout_height="45dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/left_margin"
-                    android:text="未知"
+                    android:text="上海"
                     android:textSize="15sp"
                     android:textColor="@color/c3"/>
 

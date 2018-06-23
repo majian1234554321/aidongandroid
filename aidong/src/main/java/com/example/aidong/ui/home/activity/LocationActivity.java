@@ -8,27 +8,28 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.CityAdapter;
-import com.example.aidong .entity.user.MineInfoBean;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.mvp.presenter.HomePresent;
-import com.example.aidong .ui.mvp.presenter.impl.CourseConfigPresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.HomePresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.MineInfoPresenterImpl;
-import com.example.aidong .ui.mvp.presenter.impl.SystemPresentImpl;
-import com.example.aidong .ui.mvp.view.LocationActivityView;
-import com.example.aidong .ui.mvp.view.MineInfoView;
-import com.example.aidong .ui.mvp.view.RequestCountInterface;
-import com.example.aidong .ui.mvp.view.SystemView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.RequestResponseCount;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .widget.SimpleTitleBar;
+import com.example.aidong.adapter.home.CityAdapter;
+import com.example.aidong.entity.user.MineInfoBean;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.mvp.presenter.HomePresent;
+import com.example.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.HomePresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
+import com.example.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
+import com.example.aidong.ui.mvp.view.LocationActivityView;
+import com.example.aidong.ui.mvp.view.MineInfoView;
+import com.example.aidong.ui.mvp.view.RequestCountInterface;
+import com.example.aidong.ui.mvp.view.SystemView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.RequestResponseCount;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.widget.SimpleTitleBar;
 
 import java.util.List;
 
@@ -42,9 +43,9 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
     private RecyclerView recyclerView;
     private CityAdapter cityAdapter;
     private ImageView img_selected;
-//    private SystemPresentImpl systemPresent;
+    //    private SystemPresentImpl systemPresent;
 //    private MineInfoPresenterImpl presenter;
-    int requestNum ;
+    int requestNum;
     private ImageView iv_back;
 
     @Override
@@ -71,6 +72,17 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
             }
         });
 
+
+        RelativeLayout rl2 = findViewById(R.id.rl2);
+
+        rl2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                citySelect(tvLocation.getText().toString().trim());
+            }
+        });
+
+
         img_selected = (ImageView) findViewById(R.id.img_selected);
         tvLocation.setText(App.getInstance().getLocationCity() == null ? "上海" : App.getInstance().getLocationCity());
         img_selected.setVisibility(TextUtils.equals(App.getInstance().getLocationCity(), App.getInstance().getSelectedCity()) ?
@@ -96,6 +108,10 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
 
     @Override
     public void onCitySelect(String str) {
+        citySelect(str);
+    }
+
+    private void citySelect(String str) {
         if (!TextUtils.equals(App.getInstance().getSelectedCity(), str)) {
             App.getInstance().setSelectedCity(str);
 
@@ -114,17 +130,13 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
             requestNum++;
 
 
-
-
-
             CourseConfigPresentImpl coursePresentNew = new CourseConfigPresentImpl(this);
             coursePresentNew.setOnRequestResponse(requestResponse);
             coursePresentNew.getCourseFilterConfig();
             requestNum++;
 
 
-
-        }else {
+        } else {
             finish();
         }
     }
@@ -154,8 +166,8 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
     @Override
     public void onRequestCount(int requestCount) {
 
-        Logger.i("LocationActivity","requestCount = " +requestCount);
-        if(requestCount >= requestNum){
+        Logger.i("LocationActivity", "requestCount = " + requestCount);
+        if (requestCount >= requestNum) {
             sendBroadcastAndFinish();
         }
     }

@@ -1,185 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent">
+    android:background="@color/white"
+
+    >
 
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/ll_apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/red_price"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <include
+
+            layout="@layout/inc_bottom_share_image_appoint" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
-        android:scrollbars="none">
+
+        android:layout_above="@+id/ll_apply">
 
 
-        <LinearLayout
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/AppFragment_AppBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="360dp"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <RelativeLayout
-                android:id="@+id/rel_top"
-                android:layout_width="match_parent"
-                android:layout_height="360dp">
-
-                <ImageView
-                    android:id="@+id/img_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="360dp"
-                    android:scaleType="centerCrop"
-                    android:src="@color/black" />
-
-                <ImageView
-                    android:id="@+id/img_live_begin_or_end"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/play_small" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/txt_course_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:text="AND"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_course_sub_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="6dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:paddingRight="6dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/shape_stroke_red_button"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:text="钢管舞"
-                android:textColor="@color/main_red"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:src="@color/list_line_color"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/course_intro2"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_course_intro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:text="钢管舞属于动作与机器相结合多少点卡了咯松井大辅卡拉，啊迪斯科解放和点卡收费就"
-                android:textColor="@color/c3"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:src="@color/list_line_color"/>
-
-
-            <LinearLayout
-                android:id="@+id/ll_relate_course_video"
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/AppFragment_CollapsingToolbarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:layout_marginRight="15dp"
-                android:orientation="vertical">
+                android:background="@color/white"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <RelativeLayout
+                    android:id="@+id/rel_top"
+                    android:fitsSystemWindows="true"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp">
+                    android:layout_height="360dp">
 
+                    <ImageView
+                        android:id="@+id/img_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="360dp"
+                        android:scaleType="centerCrop"
+                        android:src="@color/black" />
 
-                    <TextView
-                        android:id="@+id/txt_relate_course_video"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-
-                        android:text="@string/relate_course_video"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_check_all_video"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/icon_right_arrow"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="@string/check_all"
-                        android:textColor="@color/b3"
-                        android:textSize="13sp" />
+                    <ImageView
+                        android:id="@+id/img_live_begin_or_end"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/play_small" />
 
                 </RelativeLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_relate_video"
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:minHeight="48dp"
+                    android:navigationIcon="@drawable/icon_back"
+                    app:contentInsetEnd="0dp"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetRight="0dp"
+                    app:contentInsetStart="0dp"
+                    app:layout_collapseMode="pin"
+                    app:paddingEnd="0dp"
+                    app:paddingStart="0dp"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:titleMarginStart="0dp"
+                    app:titleTextAppearance="@style/TypeTextSize">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                       >
+
+                        <ImageView
+                            android:id="@+id/iv_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
+                            android:src="@drawable/icon_back" />
+
+                        <TextView
+                            android:layout_toLeftOf="@+id/bt_share"
+                            android:layout_toRightOf="@+id/iv_back"
+                            android:layout_width="match_parent"
+                            android:id="@+id/tv_name"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:textSize="@dimen/font_16sp"
+                            android:textColor="@color/white"
+                            android:alpha="0"
+                            android:layout_centerInParent="true"
+                            android:layout_height="wrap_content" />
+
+
+
+
+                        <ImageButton
+                            android:id="@+id/bt_share"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@color/transparent"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:src="@drawable/icon_share" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/txt_course_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="AND"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_course_sub_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/shape_stroke_red_button"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="4dp"
+                    android:text="钢管舞"
+                    android:textColor="@color/main_red"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@color/list_line_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/course_intro2"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_course_intro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="钢管舞属于动作与机器相结合多少点卡了咯松井大辅卡拉，啊迪斯科解放和点卡收费就"
+                    android:textColor="@color/c3"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@color/list_line_color" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_relate_course_video"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginRight="15dp" />
+
+                    android:layout_marginRight="15dp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
+
+
+                        <TextView
+                            android:id="@+id/txt_relate_course_video"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+
+                            android:text="@string/relate_course_video"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_check_all_video"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:drawablePadding="5dp"
+                            android:drawableRight="@drawable/icon_right_arrow"
+                            android:paddingBottom="5dp"
+                            android:paddingTop="5dp"
+                            android:text="@string/check_all"
+                            android:textColor="@color/b3"
+                            android:textSize="13sp" />
+
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_relate_video"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginRight="15dp" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/semitransparent">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_back" />
-
-        <ImageButton
-            android:id="@+id/bt_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@color/transparent"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:src="@drawable/icon_share" />
-
-    </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
 
 
-    <include layout="@layout/inc_bottom_share_image_appoint" />
+    </android.support.design.widget.CoordinatorLayout>
+
 </RelativeLayout>
+
+
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@ package com.example.aidong.ui.home.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -198,7 +198,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
-
+    public String shopListType ;
     private void initVariable() {
         if (getIntent() == null) return;
         payType = PAY_ALI;
@@ -209,6 +209,8 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         shopBeanList = new ArrayList<>();
         ShopBean shop = getIntent().getParcelableExtra("shop");
         shopBeanList.add(shop);
+
+        shopListType = shop.getPickUp().getType();
         GoodsBean goods = shop.getItem().get(0);
         skuCode = goods.getCode();
         amount = FormatUtil.parseInt(goods.getAmount());
@@ -558,6 +560,14 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 }
                 tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
+            }else {
+                if (!TextUtils.isEmpty(shopListType)&&!shopBeanList.isEmpty()&&!shopListType.equals(shopBeanList.get(0).getPickUp().getType())){//有优惠券但是快递的信息变化了
+                    shopListType = shopBeanList.get(0).getPickUp().getType();
+                    tvCoupon.setText(usableCoupons.size() + "张可用");
+                    couponPrice =null;
+                    couponId = null;
+                    selectedUserCouponId = null;
+                }
             }
 
         }
@@ -574,6 +584,9 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
 
     }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -608,6 +621,11 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 shopAdapter.setData(shopBeanList);
                 resetStatus();
                 setChangeViewInfo();
+
+
+
+
+
                 if (needExpress) {
                     bottomLayout.setVisibility(View.GONE);
                     present.getDefaultAddress(switcherLayout);

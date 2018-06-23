@@ -1,9 +1,12 @@
 package com.example.aidong.ui.course;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,38 +20,38 @@ import com.google.android.exoplayer.util.Util;
 import com.iknow.android.TrimmerActivity;
 import com.iknow.android.utils.TrimVideoUtil;
 import com.example.aidong.R;
-import com.example.aidong .adapter.video.DetailsRelativeViedeoAdapter;
-import com.example.aidong .config.ConstantUrl;
-import com.example.aidong .entity.CourseVideoBean;
-import com.example.aidong .module.photopicker.boxing.Boxing;
-import com.example.aidong .module.photopicker.boxing.model.config.BoxingConfig;
-import com.example.aidong .module.photopicker.boxing.model.entity.BaseMedia;
-import com.example.aidong .module.photopicker.boxing.model.entity.impl.VideoMedia;
-import com.example.aidong .module.photopicker.boxing_impl.ui.BoxingActivity;
-import com.example.aidong .module.share.SharePopupWindow;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.course.activity.RelativeVideoListActivity;
-import com.example.aidong .ui.discover.activity.PublishDynamicActivity;
-import com.example.aidong .ui.home.activity.CourseListActivityNew;
-import com.example.aidong .ui.mine.activity.account.LoginActivity;
-import com.example.aidong .ui.mvp.presenter.impl.CoursePresentImpl;
-import com.example.aidong .ui.mvp.view.CourseVideoDetailActivityView;
-import com.example.aidong .ui.video.activity.PlayerActivity;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DialogUtils;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.ToastGlobal;
+import com.example.aidong.adapter.video.DetailsRelativeViedeoAdapter;
+import com.example.aidong.config.ConstantUrl;
+import com.example.aidong.entity.CourseVideoBean;
+import com.example.aidong.module.photopicker.boxing.Boxing;
+import com.example.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.example.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.example.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
+import com.example.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
+import com.example.aidong.module.share.SharePopupWindow;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.course.activity.RelativeVideoListActivity;
+import com.example.aidong.ui.discover.activity.PublishDynamicActivity;
+import com.example.aidong.ui.home.activity.CourseListActivityNew;
+import com.example.aidong.ui.mine.activity.account.LoginActivity;
+import com.example.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
+import com.example.aidong.ui.mvp.view.CourseVideoDetailActivityView;
+import com.example.aidong.ui.video.activity.PlayerActivity;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DialogUtils;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.aidong.R.id.bt_share;
-import static com.example.aidong .utils.Constant.REQUEST_PUBLISH_DYNAMIC;
-import static com.example.aidong .utils.Constant.REQUEST_SELECT_PHOTO;
-import static com.example.aidong .utils.Constant.REQUEST_SELECT_VIDEO;
+import static com.example.aidong.utils.Constant.REQUEST_PUBLISH_DYNAMIC;
+import static com.example.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
+import static com.example.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
 /**
  * Created by user on 2018/1/9.
@@ -60,7 +63,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
     private RelativeLayout relTop;
     private ImageView imgBg;
     private ImageView imgLiveBeginOrEnd;
-    private TextView txtCourseIntro, txt_course_name, txt_course_sub_name;
+    private TextView txtCourseIntro, txt_course_name, txt_course_sub_name,tv_name;
     private LinearLayout llRelateCourseVideo;
     private TextView txtRelateCourseVideo;
     private TextView txtCheckAllVideo;
@@ -90,7 +93,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         context.startActivity(intent);
     }
 
-
+    float start = 0f;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +101,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         courseVideoBean = (CourseVideoBean) getIntent().getSerializableExtra("courseVideoBean");
 
         setContentView(R.layout.activity_course_video_details_new);
+        initStatusBar(true);
 
         ivBack = (ImageView) findViewById(R.id.iv_back);
 
@@ -106,12 +110,62 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         imgLiveBeginOrEnd = (ImageView) findViewById(R.id.img_live_begin_or_end);
 
         txt_course_name = (TextView) findViewById(R.id.txt_course_name);
+
+        tv_name = (TextView) findViewById(R.id.tv_name);
+
+
+        AppBarLayout mAppBarLayout = findViewById(R.id.AppFragment_AppBarLayout);
+
+
+
+
+
+
+
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                Logger.i("mAppBarLayout",i+"mAppBarLayout"+appBarLayout.getTotalScrollRange());
+
+
+
+             //   tv_name.setAlpha(Math.abs(i)/appBarLayout.getTotalScrollRange());
+
+               ObjectAnimator animator = ObjectAnimator.ofFloat(tv_name, "alpha",  start,Math.abs(i)/appBarLayout.getTotalScrollRange());
+
+              //  start = Math.abs(i)/appBarLayout.getTotalScrollRange();
+
+//                // 表示的是:
+//                // 动画作用对象是mButton
+//                // 动画作用的对象的属性是透明度alpha
+//                // 动画效果是:常规 - 全透明 - 常规
+                animator.setDuration(1000);
+               animator.start();
+
+
+
+                tv_name.setTextColor(changeAlpha(getResources().getColor(R.color.white),Math.abs(i*1.0f)/appBarLayout.getTotalScrollRange()));
+
+
+
+
+
+            }
+        });
+
+
+
+
         txt_course_sub_name = (TextView) findViewById(R.id.txt_course_sub_name);
         txtCourseIntro = (TextView) findViewById(R.id.txt_course_intro);
         llRelateCourseVideo = (LinearLayout) findViewById(R.id.ll_relate_course_video);
         txtRelateCourseVideo = (TextView) findViewById(R.id.txt_relate_course_video);
         txtCheckAllVideo = (TextView) findViewById(R.id.txt_check_all_video);
         rvRelateVideo = (RecyclerView) findViewById(R.id.rv_relate_video);
+
+
+
+
 
 
         txt_share_image = (TextView) findViewById(R.id.txt_share_image);
@@ -121,7 +175,10 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
 
             GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), imgBg);
             txt_course_name.setText(courseVideoBean.getName());
-            txt_course_sub_name.setText( courseVideoBean.getTypeName() );
+
+            tv_name.setText(courseVideoBean.getName());
+
+            txt_course_sub_name.setText(courseVideoBean.getTypeName());
             txtCourseIntro.setText(courseVideoBean.getIntroduce());
 
         }
@@ -142,7 +199,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         txtCheckAllVideo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                RelativeVideoListActivity.start(CourseVideoDetailActivityNew.this, courseId, relateVideoTitle,courseVideoBean.getId());
+                RelativeVideoListActivity.start(CourseVideoDetailActivityNew.this, courseId, relateVideoTitle, courseVideoBean.getId());
 
             }
         });
@@ -150,6 +207,16 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         coursePresent = new CoursePresentImpl(this, this);
         coursePresent.getRelateCourseVideo(courseId, courseVideoBean.getId());
 
+    }
+
+
+    /** 根据百分比改变颜色透明度 */
+    public int changeAlpha(int color, float fraction) {
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        int alpha = (int) (Color.alpha(color) * fraction);
+        return Color.argb(alpha, red, green, blue);
     }
 
     @Override
@@ -186,12 +253,12 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
                 }
                 break;
             case R.id.bt_share:
-                sharePopupWindow.showAtBottom(courseVideoBean.getName()+" | 爱动健身", courseVideoBean.getIntroduce(),
+                sharePopupWindow.showAtBottom(courseVideoBean.getName() + " | 爱动健身", courseVideoBean.getIntroduce(),
                         courseVideoBean.getCover(), ConstantUrl.URL_SHARE_VIDEO + courseVideoBean.getId());
                 break;
             case R.id.txt_appoint_immediately:
 
-                CourseListActivityNew.start(this, "全部分类",this.courseVideoBean.course_id);
+                CourseListActivityNew.start(this, "全部分类", this.courseVideoBean.course_id);
                 break;
         }
     }

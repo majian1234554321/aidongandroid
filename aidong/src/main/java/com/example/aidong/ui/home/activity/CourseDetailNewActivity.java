@@ -56,7 +56,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 public class CourseDetailNewActivity extends BaseActivity implements View.OnClickListener, CourseDetailViewNew {
 
     private static final java.lang.String TAG = "CourseDetailNewActivity";
-    private ScrollView scrollView;
+
     private BGABanner banner;
     private TextView txtCourseName;
     private TextView txtCoachName;
@@ -147,6 +147,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail_new);
+        initStatusBar(true);
         coursePresent = new CourseDetailPresentImpl(this, this);
         if (getIntent() != null) {
             code = getIntent().getStringExtra("code");
@@ -163,7 +164,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
-        scrollView = (ScrollView) findViewById(R.id.scroll_view);
+
         banner = (BGABanner) findViewById(R.id.banner);
         txtCourseName = (TextView) findViewById(R.id.txt_course_name);
         txtCoachName = (TextView) findViewById(R.id.txt_coach_name);

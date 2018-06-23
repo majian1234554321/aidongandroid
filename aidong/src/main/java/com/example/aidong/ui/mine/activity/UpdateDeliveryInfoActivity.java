@@ -98,9 +98,13 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         }
     }
 
+
+    String shopListType = "";
+
     @Override
     public void onExpressClick(int position) {
         this.position = position;
+        shopListType = "快递";
         if(isChangeDeliveryInfoLocal()) {
             changeExpressInfoLocal();
         }else{
@@ -112,6 +116,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onSelfDeliveryClick(int position) {
+
         this.position = position;
         UpdateDeliveryBean bean = data.get(position);
         SelfDeliveryVenuesActivity.startForResult(this,bean.getGoods().getProductId(),
@@ -124,6 +129,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         if(intent != null){
             if(requestCode == REQUEST_UPDATE_DELIVERY){
                 venuesBean = intent.getParcelableExtra("venues");
+                shopListType = "快递";
                 if(isChangeDeliveryInfoLocal()){
                    changeSelfDeliveryInfoLocal();
                 }else {
@@ -240,6 +246,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     private void finishWithSendResult(){
         Intent intent = new Intent();
         intent.putParcelableArrayListExtra("shopList",allShopBeanList);
+
         setResult(RESULT_OK,intent);
 
         finish();

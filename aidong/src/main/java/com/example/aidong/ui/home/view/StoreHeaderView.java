@@ -37,6 +37,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 public class StoreHeaderView extends RelativeLayout {
     private BGABanner banner;
+    public MyGridView gridView;
 
     public StoreHeaderView(Context context) {
         this(context, null, 0);
@@ -70,15 +71,9 @@ public class StoreHeaderView extends RelativeLayout {
             }
         });
 
-        MyGridView gridView = headerView.findViewById(R.id.gridview);
+        gridView = headerView.findViewById(R.id.gridview);
 
-        if (SystemInfoUtils.getMarketPartsBean(context)!=null) {
-            MyGridAdapter gridAdapter = new MyGridAdapter(context, SystemInfoUtils.getMarketPartsBean(context));
-            gridView.setAdapter(gridAdapter);
-
-        }else {
-            gridView.setVisibility(GONE);
-        }
+        setDataChange(context);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -125,8 +120,15 @@ public class StoreHeaderView extends RelativeLayout {
         return banner;
     }
 
+    public void setDataChange(Context context) {
+        if (SystemInfoUtils.getMarketPartsBean(context)!=null) {
+            MyGridAdapter gridAdapter = new MyGridAdapter(context, SystemInfoUtils.getMarketPartsBean(context));
+            gridView.setAdapter(gridAdapter);
 
-
+        }else {
+            gridView.setVisibility(GONE);
+        }
+    }
 
 
     public class MyGridAdapter extends BaseAdapter {

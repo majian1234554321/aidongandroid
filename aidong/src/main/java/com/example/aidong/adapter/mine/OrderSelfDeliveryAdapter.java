@@ -40,6 +40,8 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
     private static final String PAID = "purchased";           //已支付
     private static final String FINISH = "confirmed";         //已确认
     private static final String CLOSE = "canceled";
+
+    private static final String REFUNDED = "returned";
     private String payStatus;
     private boolean isFood;
     private boolean isVirtual;
@@ -79,7 +81,7 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
             holder.tv_delivery_time.setRightContent(bean.getPickUpDate());
         }
 
-        if (UN_PAID.equals(payStatus) || CLOSE.equals(payStatus)) {
+        if (UN_PAID.equals(payStatus) || CLOSE.equals(payStatus)||REFUNDED.equals(payStatus)) {
             holder.rlQrCode.setVisibility(View.GONE);
         } else {
             holder.rlQrCode.setVisibility(View.VISIBLE);
