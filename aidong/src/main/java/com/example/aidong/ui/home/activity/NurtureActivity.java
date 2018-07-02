@@ -163,7 +163,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                recommendPresent.pullToRefreshRecommendData(RECOMMEND_NUTRITION);
+                recommendPresent.pullToRefreshRecommendData(SystemInfoUtils.getMarketPartsBean(NurtureActivity.this).get(position).category_id + "");
             }
         });
 
@@ -172,7 +172,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                recommendPresent.commendLoadRecommendData(switcherLayout, RECOMMEND_NUTRITION);
+                recommendPresent.commendLoadRecommendData(switcherLayout, SystemInfoUtils.getMarketPartsBean(NurtureActivity.this).get(position).category_id + "");
             }
         });
     }

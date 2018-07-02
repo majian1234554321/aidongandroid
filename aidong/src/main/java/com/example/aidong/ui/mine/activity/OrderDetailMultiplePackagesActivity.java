@@ -53,7 +53,8 @@ import cn.iwgang.countdownview.CountdownView;
 import static com.example.aidong.R.id.ll_express_info;
 import static com.example.aidong.R.id.tv_delivery_time;
 import static com.example.aidong .ui.App.context;
-import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
+
+import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS1;
 import static com.example.aidong .utils.Constant.PAY_ALI;
 import static com.example.aidong .utils.Constant.PAY_WEIXIN;
 
@@ -253,7 +254,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         }
 
         for (ParcelBean parcelBean : bean.getParcel()) {
-            if (DELIVERY_EXPRESS.equals(parcelBean.getPickUpWay())) {
+            if (DELIVERY_EXPRESS1.equals(parcelBean.getPickUpWay())) {
                 expressList.add(parcelBean);
             } else {
                 selfDeliveryList.add(parcelBean);

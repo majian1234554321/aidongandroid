@@ -183,9 +183,16 @@ public class Constant {
     public static final String RECOMMEND_CART = "cart";
     public static final String RECOMMEND_ORDER = "iorder";
 
-    //交货方式
+    //订单详情的快递
+    public static final String DELIVERY_EXPRESS1 = "express";  //快递
+    public static final String DELIVERY_SELF1 = "selfpick";     //自提
+
+
+    //商品的方式
     public static final String DELIVERY_EXPRESS = "0";  //快递
     public static final String DELIVERY_SELF = "1";     //自提
+
+
 
     //透传消息字段定义
     public static String KDNUSERNAME = "kDNUserName";

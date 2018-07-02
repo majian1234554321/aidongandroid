@@ -297,10 +297,15 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
             if (specBean.item.get(0).limit_amount > 0)
                 txt_limit_number.setText("(限购" + specBean.item.get(0).limit_amount + "张)");
 
+            stock = specBean.item.get(0).getStock();
             tvGoodName.setText(specBean.item.get(0).name);
             txt_spec_remark.setText(specBean.item.get(0).remark);
             txt_spec_remark.setVisibility(View.VISIBLE);
-
+            if (specBean.item.get(0).getLimit_amount()>0){
+                limit = specBean.item.get(0).getLimit_amount();
+            }else {
+                limit = 99999;
+            }
 
             skuRecyclerView.setVisibility(View.GONE);
 
@@ -321,7 +326,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                 if (!TextUtils.isEmpty(s)) {
                     if (Integer.parseInt(String.valueOf(s)) > limit&&limit<=0) {
 
-                        tvCount.setText(limit + "");
+                       // tvCount.setText(limit + "");
 
                     }
 

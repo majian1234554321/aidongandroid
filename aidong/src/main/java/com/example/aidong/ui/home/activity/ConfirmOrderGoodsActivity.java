@@ -66,8 +66,10 @@ import java.util.Map;
 import static com.example.aidong.R.id.ll__receiving_time;
 import static com.example.aidong.R.id.txt_receving_time;
 import static com.example.aidong .ui.App.context;
-import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
-import static com.example.aidong .utils.Constant.DELIVERY_SELF;
+
+
+import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.example.aidong.utils.Constant.DELIVERY_SELF;
 import static com.example.aidong .utils.Constant.GOODS_FOODS;
 import static com.example.aidong .utils.Constant.PAY_ALI;
 import static com.example.aidong .utils.Constant.PAY_WEIXIN;

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_gravity="center"
 
-    android:paddingBottom="10dp">
+    >
 
     <cn.bingoogolapple.bgabanner.BGABanner
         android:id="@+id/banner"

@@ -277,7 +277,13 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             @Override
             public void onFail() {
                 dismissProgressDialog();
-                ToastGlobal.showLong("上传失败");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastGlobal.showLong("上传失败");
+                    }
+                });
+
             }
         });
     }

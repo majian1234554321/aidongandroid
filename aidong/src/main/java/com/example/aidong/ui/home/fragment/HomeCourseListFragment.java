@@ -199,7 +199,7 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
         FragmentPagerItems pages = new FragmentPagerItems(getActivity());
         for (int i = 0; i < days.size(); i++) {
             HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
-            pages.add(FragmentPagerItem.of(DateUtils.getCourseSevenDate().get(i), courseFragment.getClass(),
+            pages.add(FragmentPagerItem.of(DateUtils.getCourseSevenDate2().get(i), courseFragment.getClass(),
                     new Bundler().putString("date", days.get(i)).putString("category", allcategory).get()
             ));
 

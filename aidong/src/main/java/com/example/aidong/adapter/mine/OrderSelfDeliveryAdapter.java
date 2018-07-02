@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
+import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS1;
 
 /**
  * 订单列表中自提包裹适配器
@@ -81,8 +82,10 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
             holder.tv_delivery_time.setRightContent(bean.getPickUpDate());
         }
 
-        if (UN_PAID.equals(payStatus) || CLOSE.equals(payStatus)||REFUNDED.equals(payStatus)) {
+        if (UN_PAID.equals(bean.getVerify_status()) || CLOSE.equals(bean.getVerify_status())||REFUNDED.equals(bean.getVerify_status())) {
             holder.rlQrCode.setVisibility(View.GONE);
+
+
         } else {
             holder.rlQrCode.setVisibility(View.VISIBLE);
 
@@ -111,12 +114,12 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
 
         }
 
-        if (DELIVERY_EXPRESS.equals(bean.getPickUpWay())) {
+        if (DELIVERY_EXPRESS1.equals(bean.getPickUpWay())) {
             holder.tvShopName.setText("仓库发货");
         } else {
             holder.tvShopName.setText(bean.getAddress());
         }
-        String type = DELIVERY_EXPRESS.equals(bean.getPickUpWay()) ? "快递" : "自提";
+        String type = DELIVERY_EXPRESS1.equals(bean.getPickUpWay()) ? "快递" : "自提";
         holder.tvDeliveryType.setText(type);
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
         final ConfirmOrderGoodsAdapter goodsAdapter = new ConfirmOrderGoodsAdapter(context);

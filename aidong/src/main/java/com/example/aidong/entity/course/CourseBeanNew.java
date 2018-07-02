@@ -42,6 +42,11 @@ public String professionalism;
 
     public ArrayList<String>   copyTag;
 
+
+    public String admission;
+    public String slogan;
+    public String market_price;
+
     double price;//价格
     double member_price;// 会员价格
     String class_start_time;  //上课时间

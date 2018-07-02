@@ -241,7 +241,13 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
 
             @Override
             public void onFail() {
-                Toast.makeText(UpdateUserInfoActivity.this, "修改失败", Toast.LENGTH_LONG).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(UpdateUserInfoActivity.this, "修改失败", Toast.LENGTH_LONG).show();
+                    }
+                });
+
             }
         });
     }

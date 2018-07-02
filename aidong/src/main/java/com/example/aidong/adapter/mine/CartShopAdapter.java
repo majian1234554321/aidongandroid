@@ -16,7 +16,8 @@ import com.example.aidong .entity.ShopBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
+
+import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 /**
  * 购物车中商家适配器

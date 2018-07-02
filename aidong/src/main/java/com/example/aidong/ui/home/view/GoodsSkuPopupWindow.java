@@ -347,7 +347,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             GlideLoader.getInstance().displayImage2(detailBean.spec.item.get(0).cover, dvGoodsCover);
             skuRecyclerView.setVisibility(View.GONE);
 
-            price = FormatUtil.parseDouble(detailBean.price);
+            price = FormatUtil.parseDouble(detailBean.spec.item.get(0).price);
         }else {
             skuRecyclerView.setVisibility(View.VISIBLE);
         }

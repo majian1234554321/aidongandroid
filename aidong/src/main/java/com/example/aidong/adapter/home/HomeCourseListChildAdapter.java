@@ -14,8 +14,11 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
+import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +27,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.course.CourseBeanNew;
-import com.example.aidong .ui.home.activity.CourseDetailNewActivity;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .widget.CustomTypefaceSpan;
+import com.example.aidong.entity.course.CourseBeanNew;
+import com.example.aidong.entity.user.Type;
+import com.example.aidong.ui.home.activity.CourseDetailNewActivity;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.widget.CustomTypefaceSpan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +60,9 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 //        return 9;
     }
 
+    @NonNull
     @Override
-    public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_home_course_list_child, parent, false);
         return new CourseViewHolder(view);
     }
@@ -74,21 +79,75 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         holder.txtCourseTime.setText(courseBean.getClass_time());
         holder.txtCourseDesc.setText(courseBean.getTagString());
 
-//        if (courseBean.getStrength() >= 5) {
-//            holder.tv_level.setText("(高难度)");
-//        } else if (courseBean.getStrength() <= 5 && courseBean.getStrength() >= 3) {
-//            holder.tv_level.setText("(中级进阶)");
-//        } else {
-//            holder.tv_level.setText("(初级难度)");
-//        }
 
-        holder.tv_level.setText("("+courseBean.professionalism+")");
+        holder.tv_level.setText("(" + courseBean.professionalism + ")");
 
-//        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
 
+        StringBuilder sb = new StringBuilder();
+
+
+        if (courseBean.market_price != null) {
+            sb.append("市场价：").append(String.format(context.getString(R.string.rmb_price_double2), courseBean.getPrice()));
+        }
+        if (courseBean.slogan != null) {
+            if (sb.length() > 0) {
+                sb.append(" ").append(courseBean.slogan);
+            } else {
+                sb.append(courseBean.slogan);
+            }
+
+        }
+
+
+        ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.main_red));
+        // TypefaceSpan span = new  TypefaceSpan(Typeface.create("serif",Typeface.ITALIC));
+        StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);//斜体
+        StrikethroughSpan StrikethroughSpan = new StrikethroughSpan(); //删除线
+        UnderlineSpan underlineSpan = new UnderlineSpan(); //下划线
+        //TextAppearanceSpan span =   new TextAppearanceSpan("serif", Typeface.BOLD_ITALIC);
+
+        if (sb.length() > 0) {
+            holder.txtCourseDifficulty.setVisibility(View.VISIBLE);
+
+
+            //如果市场价和提示语都有
+            if (courseBean.market_price != null && courseBean.slogan != null) {//既有提示语又有市场价格
+
+
+                SpannableStringBuilder builder = new SpannableStringBuilder(sb.toString());
+                String[] split = sb.toString().split(" ");
+                builder.setSpan(StrikethroughSpan, 0, split[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                builder.setSpan(redSpan, split[0].length(), sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.setSpan(styleSpan, split[0].length()+1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.setSpan(underlineSpan, split[0].length()+1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+                holder.txtCourseDifficulty.setText(builder);
+
+
+            } else {
+                if (courseBean.market_price != null && courseBean.slogan == null) { //如果 市场价格不为空但是没有提示语言
+                    holder.txtCourseDifficulty.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //市场价添加删除线
+                    holder.txtCourseDifficulty.setText(courseBean.market_price);
+
+                } else {//只有提示语没有市场价
+                    holder.txtCourseDifficulty.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
+                    holder.txtCourseDifficulty.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+                    holder.txtCourseDifficulty.setText(courseBean.slogan);
+                }
+            }
+
+
+        } else {
+            holder.txtCourseDifficulty.setVisibility(View.GONE);
+        }
+
+
+        holder.mb_level3.setText("非会员入场+" + courseBean.admission);
+        // holder.txtCourseDifficulty.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.txtCourseOriginPrice.setText(String.format(context.getString(R.string.rmb_price_double), courseBean.getPrice()));
-        holder.txtCourseMemberPrice.setText("会员价: " + String.format(context.getString(R.string.rmb_price_double), courseBean.getMember_price()));
-
+        holder.txtCourseMemberPrice.setText(String.format(context.getString(R.string.rmb_price_double), courseBean.getMember_price()));
 
 
         String fontPath = "fonts/Hiragino_Sans_GB_W3.ttf";
@@ -99,45 +158,10 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         holder.txtCourseOriginPrice.setTypeface(tf);
 
 
-
-//        String values = "01234中国";
-//
-//        SpannableStringBuilder style=new SpannableStringBuilder(values);
-//
-//        for (int i = 0; i < values.length(); i++) {
-//
-//            if ()else{
-//
-//            }
-//
-//
-//        }
-//
-//        style.setSpan(new CustomTypefaceSpan(values,tf), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//
-//
-//
-//        holder.txtCourseName.setText(style);
-
-
         holder.txtCourseName.setTypeface(tf);
 
 
-
-       // holder.txtCourseName.getPaint().setFakeBoldText(true);
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // holder.txtCourseName.getPaint().setFakeBoldText(true);
 
 
         switch (courseBean.getStatus()) {
@@ -172,7 +196,6 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("排队中");
-
 
 
                 holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
@@ -236,7 +259,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         if (courseBean.isMember_only()) {
             //只有会员可以
             //holder.txtCourseOriginPrice.setText("");
-           // holder.txtCourseMemberPrice.setText("会员专享");
+            // holder.txtCourseMemberPrice.setText("会员专享");
         }
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
@@ -269,9 +292,9 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         // ,img_star_first,img_star_second,img_star_three,img_star_four,img_star_five;
         private TextView txtCourseOriginPrice;
         private TextView txtCourseMemberPrice, tv_level;
-        private LinearLayout rootView;
+        private LinearLayout rootView, ll_extend;
 
-        public TextView mb_level;
+        public TextView mb_level, tv_link, mb_level3;
 
         public CourseViewHolder(View view) {
             super(view);
@@ -288,14 +311,14 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             txtCourseMemberPrice = (TextView) view.findViewById(R.id.txt_course_member_price);
             tv_level = (TextView) view.findViewById(R.id.tv_level);
 
-
-
+            tv_link = (TextView) view.findViewById(R.id.tv_link);
 
 
             rootView = (LinearLayout) view.findViewById(R.id.rootView);
+            ll_extend = view.findViewById(R.id.ll_extend);
 
 
-
+            mb_level3 = view.findViewById(R.id.mb_level3);
             mb_level = view.findViewById(R.id.mb_level);
         }
     }

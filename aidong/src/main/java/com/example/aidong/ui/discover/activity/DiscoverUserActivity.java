@@ -66,7 +66,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
 
     private String type = TYPE_ALL_IDENTIFY;
     private String gender = GENDER_ALL_GENDER;
-    private DiscoverPresent userPresent;
+    private DiscoverPresentImpl userPresent;
     private boolean isChange = false;
     private int position;
 

@@ -25,6 +25,8 @@ android {
     def BASE_URL_MEMBER_CARD_RELEASE = "\"http://open.aidong.me/\""
 
 
+    def EASEMOB_APPKEY_RELEASE = "leyuan-aidong#aidong"
+    def EASEMOB_APPKEY_DEVELOP = "leyuan-aidong#aidongouternettest"
 
 
 
@@ -48,7 +50,7 @@ android {
         versionName rootProject.ext.versionName
         multiDexEnabled true
         signingConfig signingConfigs.release
-
+        manifestPlaceholders = [EASEMOB_APPKEY_ID:"${EASEMOB_APPKEY_DEVELOP}"]
 //        buildConfigField "String", "BASE_URL", "${BASE_URL_RELEASE}"
 //        buildConfigField "String", "BASE_URL_HTML", "${BASE_URL_HTML_RELEASE}"
 //        buildConfigField "String", "BASE_URL_MEMBER_CARD", "${BASE_URL_MEMBER_CARD_RELEASE}"
@@ -81,6 +83,7 @@ android {
             buildConfigField "String", "BASE_URL_VERSION", "${BASE_URL_VERSION_RELEASE}"
 
 
+            manifestPlaceholders = [EASEMOB_APPKEY_ID:"${EASEMOB_APPKEY_RELEASE}"]
             minifyEnabled false
            // shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -92,6 +95,8 @@ android {
             buildConfigField "String", "BASE_URL_HTML", "${BASE_URL_HTML_DEVELOP}"
             buildConfigField "String", "BASE_URL_MEMBER_CARD", "${BASE_URL_MEMBER_CARD_DEVELOP}"
             buildConfigField "String", "BASE_URL_VERSION", "${BASE_URL_VERSION_DEVELOP}"
+
+            manifestPlaceholders = [EASEMOB_APPKEY_ID:"${EASEMOB_APPKEY_DEVELOP}"]
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

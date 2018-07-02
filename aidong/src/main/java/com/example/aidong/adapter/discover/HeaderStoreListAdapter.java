@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.aidong.R;
 import com.example.aidong .entity.VenuesBean;
 import com.example.aidong .ui.store.StoreDetailActivity;
+import com.example.aidong.ui.store.StoreDetailActivity2;
 import com.example.aidong .utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -41,7 +42,9 @@ public class HeaderStoreListAdapter extends RecyclerView.Adapter<HeaderStoreList
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StoreDetailActivity.start(context, bean.getId());
+
+
+                StoreDetailActivity2.start(context, bean.getId(),bean.getName());
             }
         });
 

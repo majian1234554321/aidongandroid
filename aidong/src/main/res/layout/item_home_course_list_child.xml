@@ -6,6 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="12dp"
+
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -14,7 +16,8 @@
     <LinearLayout
         android:id="@+id/rootView"
         android:layout_width="match_parent"
-        android:layout_height="115dp"
+
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -94,13 +97,15 @@
                     android:id="@+id/txt_course_origin_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
+
 
                     android:textColor="@color/course_oringe"
                     android:textSize="12sp" />
 
                 <TextView
+                    android:layout_marginLeft="6dp"
                     android:id="@+id/tv_level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,12 +115,13 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_extend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                >
 
                 <TextView
                     android:id="@+id/txt_course_difficulty"
@@ -123,7 +129,19 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_color_common"
                     android:textSize="13sp"
-                    tools:text="难度系数: " />
+                    tools:text="市场价￥189.00" />
+
+                <TextView
+                    android:id="@+id/tv_link"
+                    android:layout_marginLeft="@dimen/x12"
+                    android:layout_width="wrap_content"
+                    android:textStyle="italic"
+                    android:textColor="@color/main_red"
+                    android:autoLink="all"
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    android:text="618疯狂打折季,特惠价格"
+                    android:layout_height="wrap_content" />
 
 
             </LinearLayout>
@@ -163,13 +181,24 @@
 
                 <TextView
                     android:id="@+id/txt_course_member_price"
-                    android:layout_width="wrap_content"
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    tools:text = "12121"
                     android:textColor="@color/course_oringe"
                     android:textSize="12sp"
-                    android:visibility="gone" />
+                    />
 
+                <TextView
+                    android:id="@+id/mb_level3"
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    tools:text = "12121"
+                    android:textColor="@color/course_oringe"
+                    android:textSize="12sp"
+                    />
 
             </LinearLayout>
 
@@ -180,6 +209,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:layout_marginTop="12dp"
         android:layout_marginLeft="15dp"
         android:background="@color/line_color" />
 </LinearLayout>

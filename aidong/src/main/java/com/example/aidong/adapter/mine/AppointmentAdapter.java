@@ -109,7 +109,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             case UN_JOIN:           //待参加
                 holder.state.setText(context.getString(R.string.appointment_un_joined));
                 holder.payTip.setText(context.getString(R.string.true_pay));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
 
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
@@ -123,7 +123,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             case JOINED:            //已参加
                 holder.state.setText(context.getString(R.string.appointment_joined));
                 holder.payTip.setText(context.getString(R.string.true_pay));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -135,7 +135,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             case CLOSE:             //已关闭
                 holder.state.setText(context.getString(R.string.order_close));
                 holder.payTip.setText(context.getString(R.string.true_pay));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -146,7 +146,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 break;
             case REFUNDING:           //退款中
                 holder.state.setText(context.getString(R.string.order_refunding));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -157,7 +157,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 break;
             case REFUNDED:             //已退款
                 holder.state.setText(context.getString(R.string.order_refunded));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);

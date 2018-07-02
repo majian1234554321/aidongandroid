@@ -736,7 +736,7 @@
         <!-- 设置环信应用的AppKey debug:	leyuan-aidong#aidongouternettest  preRelease: leyuan-aidong#aidongprerelease   release : leyuan-aidong#aidong -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="leyuan-aidong#aidong" />
+            android:value="${EASEMOB_APPKEY_ID}" />
         <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
@@ -779,7 +779,9 @@
                 android:resource="@xml/file_provider" />
         </provider>
 
-        <activity android:name=".ui.DisplayActivity" />
+        <activity android:name=".ui.DisplayActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.video.dragvideo.DragVideoActivity"
             android:theme="@style/Transparent" />

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
+import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS1;
 
 /**
  * 订单列表中快递包裹适配器
@@ -50,7 +51,7 @@ public class OrderExpressAdapter extends RecyclerView.Adapter<OrderExpressAdapte
     @Override
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ParcelBean bean = data.get(position);
-        if(DELIVERY_EXPRESS.equals(bean.getPickUpWay())){
+        if(DELIVERY_EXPRESS1.equals(bean.getPickUpWay())){
             holder.tvShopName.setText("仓库发货");
         }else {
             holder.tvShopName.setText(bean.getAddress());

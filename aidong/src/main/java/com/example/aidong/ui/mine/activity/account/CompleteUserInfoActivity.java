@@ -242,7 +242,15 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
 
             @Override
             public void onFail() {
-                Toast.makeText(CompleteUserInfoActivity.this, "修改失败", Toast.LENGTH_LONG).show();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(CompleteUserInfoActivity.this, "修改失败", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
             }
         });
     }

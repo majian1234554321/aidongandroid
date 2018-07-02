@@ -1,5 +1,7 @@
 package com.example.aidong.ui.store;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,24 +12,32 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
+import com.example.aidong.adapter.MyGridAdapter;
 import com.example.aidong .adapter.discover.StoreListAdapter;
 import com.example.aidong .entity.VenuesDetailBean;
 import com.example.aidong .entity.course.CourseFilterBean;
 import com.example.aidong .ui.discover.activity.VenuesSubbranchActivity;
 import com.example.aidong .ui.home.activity.GoodsListActivity;
+import com.example.aidong.ui.home.activity.GoodsListActivity2;
 import com.example.aidong .ui.home.activity.MapActivity;
+import com.example.aidong.ui.home.activity.NurtureActivity;
+import com.example.aidong.ui.home.view.StoreHeaderView;
 import com.example.aidong .utils.GlideLoader;
 import com.example.aidong .utils.SharePrefUtils;
+import com.example.aidong.utils.SystemInfoUtils;
 import com.example.aidong .utils.TelephoneManager;
+import com.example.aidong.widget.MyGridView;
 import com.example.aidong .widget.vertical.VerticalScrollView;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
+import static android.view.View.GONE;
 import static com.example.aidong.R.id.tv_price_separator;
 import static com.example.aidong .utils.Constant.GOODS_EQUIPMENT;
 import static com.example.aidong .utils.Constant.GOODS_FOODS;
@@ -64,6 +74,7 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
     private ImageView ivBath;
     private ImageView ivFood;
     private TextView txt_relate_course;
+    private MyGridView gridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,6 +121,27 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
         ivBath = (ImageView) view.findViewById(R.id.iv_bath);
         ivFood = (ImageView) view.findViewById(R.id.iv_food);
 
+        gridView = view.findViewById(R.id.gridview);
+
+        setDataChange(getContext());
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(getContext(), NurtureActivity.class);
+//                intent.putExtra("selectPosition",position);
+//                startActivity(intent);
+
+
+
+                GoodsListActivity2.start(getContext(), "", 0,position, SystemInfoUtils.getMarketPartsBean(getContext()).get(position).category_id+"");
+
+
+
+            }
+        });
+
+
 
 
         img_address.setOnClickListener(this);
@@ -136,6 +168,19 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
 
 
     }
+
+
+
+    public void setDataChange(Context context) {
+        if (SystemInfoUtils.getMarketPartsBean(context)!=null) {
+            MyGridAdapter gridAdapter = new MyGridAdapter(context, SystemInfoUtils.getMarketPartsBean(context));
+            gridView.setAdapter(gridAdapter);
+
+        }else {
+            gridView.setVisibility(GONE);
+        }
+    }
+
 
 
     public VenuesDetailBean venues;
@@ -166,7 +211,7 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
             venuesAdapter.setData(venues.getBrother().size() > 2 ? venues.getBrother().subList(0, 2) : venues.getBrother());
             venuesAdapter.notifyDataSetChanged();
         } else {
-            llOtherSubStore.setVisibility(View.GONE);
+            llOtherSubStore.setVisibility(GONE);
         }
 
         if (venues.getService() != null) {

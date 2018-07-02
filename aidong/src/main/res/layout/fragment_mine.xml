@@ -102,6 +102,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/ll000"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/iv"
