@@ -33,7 +33,7 @@
             android:layout_gravity="center_horizontal"
             android:text="¥799.00"
             android:layout_marginTop="20dp"
-            android:textColor="@color/main_red"
+            android:textColor="@color/main_blue"
             android:textSize="30sp"  />
 
         <TextView
@@ -98,6 +98,7 @@
                 android:gravity="center_vertical"
                 android:text="爱动福利券"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:visibility="visible" />
 

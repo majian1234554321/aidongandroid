@@ -59,6 +59,8 @@
     <color name="half_transparent">#8f000000</color>
     <color name="main_gray">#c8c7cc</color>
     <color name="main_red">#D51121</color>
+
+    <color name="main_blue">#1d76c3</color>
     <color name="color_image_press">#88888888</color>
     <color name="c3">#333333</color>
     <color name="c6">#666666</color>
@@ -100,6 +102,8 @@
     <color name="c1">#111111</color>
     <color name="c17">#171717</color>
     <color name="f9">#f9f9f9</color>
+
+    <color name="orangeyellow">#ec5b21</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>

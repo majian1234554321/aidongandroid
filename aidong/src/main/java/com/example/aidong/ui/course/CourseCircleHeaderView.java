@@ -251,13 +251,13 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
             TextView tv = new TextView(context);
             tv.setPadding(dip2px(context, 8), 0, dip2px(context, 8), 0);
-            tv.setTextColor(ContextCompat.getColor(context,R.color.main_red));
+            tv.setTextColor(ContextCompat.getColor(context,R.color.white));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 
             tv.setText(course.getTags().get(i));
             tv.setGravity(Gravity.CENTER_VERTICAL);
             tv.setLines(1);
-           tv.setBackgroundResource(R.drawable.shape_stroke_red_button);
+           tv.setBackgroundResource(R.drawable.shape_blue_button);
             flowLayout.addView(tv, lp);
         }
 
@@ -284,7 +284,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         if (course.isFollowed()) {
             setImageResourceVale(R.drawable.follw);
-            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red));
+            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_blue));
         } else {
             setImageResourceVale(R.drawable.unfollw);
             tv_fans.setTextColor(ContextCompat.getColor(context,R.color.gray));
@@ -323,7 +323,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         if (baseBean.getStatus() == 1) {
             setImageResourceVale(R.drawable.follw);
             course.setFollowed(true);
-            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red));
+            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_blue));
             course.setFollows_count(course.getFollows_count() + 1);
             value = value + 1;
             tv_fans.setText(value+"");

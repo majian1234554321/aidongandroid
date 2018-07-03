@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
@@ -70,6 +71,11 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
     @Override
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
 
+
+        String fontPath = "fonts/Hiragino_Sans_GB_W3.ttf";
+
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), fontPath);
+
         final CourseBeanNew courseBean = data.get(position);
 
 
@@ -87,11 +93,11 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
 
         if (courseBean.market_price != null) {
-            sb.append("市场价：").append(String.format(context.getString(R.string.rmb_price_double2), courseBean.getPrice()));
+            sb.append("市场价：").append(String.format(context.getString(R.string.rmb_price_double2), Double.parseDouble(courseBean.market_price)));
         }
         if (courseBean.slogan != null) {
             if (sb.length() > 0) {
-                sb.append(" ").append(courseBean.slogan);
+                sb.append(" ").append(courseBean.slogan).append(" ");
             } else {
                 sb.append(courseBean.slogan);
             }
@@ -99,7 +105,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         }
 
 
-        ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.main_red));
+        ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.orangeyellow));
         // TypefaceSpan span = new  TypefaceSpan(Typeface.create("serif",Typeface.ITALIC));
         StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);//斜体
         StrikethroughSpan StrikethroughSpan = new StrikethroughSpan(); //删除线
@@ -124,7 +130,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
 
                 holder.txtCourseDifficulty.setText(builder);
-
+                holder.txtCourseDifficulty.setTypeface(tf);
 
             } else {
                 if (courseBean.market_price != null && courseBean.slogan == null) { //如果 市场价格不为空但是没有提示语言
@@ -144,20 +150,29 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         }
 
 
-        holder.mb_level3.setText("非会员入场+" + courseBean.admission);
+
+        if (!TextUtils.isEmpty(courseBean.admission)){
+            ForegroundColorSpan c9Span = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.c9));
+            SpannableStringBuilder builder2 = new SpannableStringBuilder("非会员入场+" + courseBean.admission);
+            builder2.setSpan(c9Span, 0, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.mb_level3.setText(builder2);
+            holder.mb_level3.setTypeface(tf);
+        }else {
+            holder.mb_level3.setVisibility(View.GONE);
+        }
+
+
         // holder.txtCourseDifficulty.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.txtCourseOriginPrice.setText(String.format(context.getString(R.string.rmb_price_double), courseBean.getPrice()));
         holder.txtCourseMemberPrice.setText(String.format(context.getString(R.string.rmb_price_double), courseBean.getMember_price()));
 
 
-        String fontPath = "fonts/Hiragino_Sans_GB_W3.ttf";
 
-        Typeface tf = Typeface.createFromAsset(context.getAssets(), fontPath);
 
         holder.txtCourseTime.setTypeface(tf);
         holder.txtCourseOriginPrice.setTypeface(tf);
 
-
+        holder.txtCourseMemberPrice.setTypeface(tf);
         holder.txtCourseName.setTypeface(tf);
 
 
@@ -169,8 +184,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             case CourseBeanNew.NORMAL:
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("预约");
-                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
-                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_333_button);
+                holder.mb_level.setTextColor(Color.parseColor("#333333"));
 
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
@@ -208,8 +223,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("预约");
-                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
-                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_333_button);
+                holder.mb_level.setTextColor(Color.parseColor("#333333"));
                 break;
 
             case CourseBeanNew.QUEUEABLE:
@@ -254,6 +269,12 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         if (courseBean.getReservable() != 1 && courseBean.getStatus() != CourseBeanNew.END) {
             //无需预约
             holder.imgCourseState.setVisibility(View.GONE);
+            holder.mb_level.setText("无需预约");
+            holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
+            holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_gray_button);
+            holder.txtCourseDifficulty.setVisibility(View.GONE);
+        }else {
+            holder.txtCourseDifficulty.setVisibility(View.VISIBLE);
         }
 
         if (courseBean.isMember_only()) {

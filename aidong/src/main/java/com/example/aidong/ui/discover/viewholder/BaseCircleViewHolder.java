@@ -291,7 +291,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         } else {
             img_parse.setBackgroundResource(isLike(dynamic)
                     ? R.drawable.icon_parsed : R.drawable.icon_parse);
-            txtParse.setTextColor( ContextCompat.getColor(context,isLike(dynamic)?R.color.main_red:R.color.c9));
+            txtParse.setTextColor( ContextCompat.getColor(context,isLike(dynamic)?R.color.main_blue:R.color.c9));
 
         }
 

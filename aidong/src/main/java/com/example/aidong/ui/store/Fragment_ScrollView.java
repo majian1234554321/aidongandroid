@@ -15,34 +15,35 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong.adapter.MyGridAdapter;
-import com.example.aidong .adapter.discover.StoreListAdapter;
-import com.example.aidong .entity.VenuesDetailBean;
-import com.example.aidong .entity.course.CourseFilterBean;
-import com.example.aidong .ui.discover.activity.VenuesSubbranchActivity;
-import com.example.aidong .ui.home.activity.GoodsListActivity;
+import com.example.aidong.adapter.discover.StoreListAdapter;
+import com.example.aidong.entity.VenuesDetailBean;
+import com.example.aidong.entity.course.CourseFilterBean;
+import com.example.aidong.ui.discover.activity.VenuesSubbranchActivity;
+import com.example.aidong.ui.home.activity.GoodsListActivity;
 import com.example.aidong.ui.home.activity.GoodsListActivity2;
-import com.example.aidong .ui.home.activity.MapActivity;
+import com.example.aidong.ui.home.activity.MapActivity;
 import com.example.aidong.ui.home.activity.NurtureActivity;
 import com.example.aidong.ui.home.view.StoreHeaderView;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.SharePrefUtils;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.SharePrefUtils;
 import com.example.aidong.utils.SystemInfoUtils;
-import com.example.aidong .utils.TelephoneManager;
+import com.example.aidong.utils.TelephoneManager;
 import com.example.aidong.widget.MyGridView;
-import com.example.aidong .widget.vertical.VerticalScrollView;
+import com.example.aidong.widget.vertical.VerticalScrollView;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static android.view.View.GONE;
 import static com.example.aidong.R.id.tv_price_separator;
-import static com.example.aidong .utils.Constant.GOODS_EQUIPMENT;
-import static com.example.aidong .utils.Constant.GOODS_FOODS;
-import static com.example.aidong .utils.Constant.GOODS_NUTRITION;
-import static com.example.aidong .utils.Constant.GOODS_TICKET;
+import static com.example.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.example.aidong.utils.Constant.GOODS_FOODS;
+import static com.example.aidong.utils.Constant.GOODS_NUTRITION;
+import static com.example.aidong.utils.Constant.GOODS_TICKET;
 
 
 public class Fragment_ScrollView extends Fragment implements View.OnClickListener {
@@ -58,7 +59,7 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
     private LinearLayout layoutRelateGoods;
     private LinearLayout llNurture;
     private LinearLayout llEquipment;
-    private LinearLayout llHealthyFood;
+    private LinearLayout llHealthyFood, ll_add;
     private LinearLayout llTicket;
     private LinearLayout llOtherSubStore;
     private TextView txtSubStore;
@@ -114,8 +115,10 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
         layoutStoreInnerFacility = (LinearLayout) view.findViewById(R.id.layout_store_inner_facility);
         layout_address = (LinearLayout) view.findViewById(R.id.layout_address);
 
+        ll_add = (LinearLayout) view.findViewById(R.id.ll_add);
 
-        img_address = (ImageView)  view.findViewById(R.id.img_address);
+
+        img_address = (ImageView) view.findViewById(R.id.img_address);
         ivParking = (ImageView) view.findViewById(R.id.iv_parking);
         ivWifi = (ImageView) view.findViewById(R.id.iv_wifi);
         ivBath = (ImageView) view.findViewById(R.id.iv_bath);
@@ -133,15 +136,11 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
 //                startActivity(intent);
 
 
-
-                GoodsListActivity2.start(getContext(), "", 0,position, SystemInfoUtils.getMarketPartsBean(getContext()).get(position).category_id+"");
-
+                GoodsListActivity2.start(getContext(), "", 0, position, SystemInfoUtils.getMarketPartsBean(getContext()).get(position).category_id + "");
 
 
             }
         });
-
-
 
 
         img_address.setOnClickListener(this);
@@ -151,8 +150,6 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
         llHealthyFood.setOnClickListener(this);
         llTicket.setOnClickListener(this);
         txtSubStoreNum.setOnClickListener(this);
-
-
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -170,17 +167,15 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
     }
 
 
-
     public void setDataChange(Context context) {
-        if (SystemInfoUtils.getMarketPartsBean(context)!=null) {
+        if (SystemInfoUtils.getMarketPartsBean(context) != null) {
             MyGridAdapter gridAdapter = new MyGridAdapter(context, SystemInfoUtils.getMarketPartsBean(context));
             gridView.setAdapter(gridAdapter);
 
-        }else {
+        } else {
             gridView.setVisibility(GONE);
         }
     }
-
 
 
     public VenuesDetailBean venues;
@@ -210,6 +205,48 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
             txtSubStoreNum.setText("共" + venues.getBrother().size() + "家分店");
             venuesAdapter.setData(venues.getBrother().size() > 2 ? venues.getBrother().subList(0, 2) : venues.getBrother());
             venuesAdapter.notifyDataSetChanged();
+
+
+            for (int i = 0; i < (venues.getBrother().size() > 2 ? 2 : 1); i++) {
+                View childView = View.inflate(getContext(), R.layout.item_store_list2, null);
+//                RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//                lp.setMargins(0,10,0,10);
+//                childView.setLayoutParams(lp);
+
+
+                ImageView  cover = (ImageView) childView.findViewById(R.id.dv_venues_cover);
+                TextView  name = (TextView) childView.findViewById(R.id.tv_venues_name);
+                TextView  address = (TextView) childView.findViewById(R.id.tv_venues_address);
+                TextView distance = (TextView) childView.findViewById(R.id.tv_venues_distance);
+
+
+                GlideLoader.getInstance().displayRoundImage(venues.getBrother().get(i).getBrandLogo(), cover);
+                name.setText(venues.getBrother().get(i).getName());
+
+                if (venues.getBrother().get(i).getDistanceFormat()!=null) {
+                    distance.setText(venues.getBrother().get(i).getDistanceFormat());
+                }
+
+                address.setText(venues.getBrother().get(i).getAddress());
+
+
+                final int finalI = i;
+                childView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        StoreDetailActivity2.start(getActivity(), venues.getBrother().get(finalI).getId(),venues.getBrother().get(finalI).getName());
+
+                    }
+                });
+
+
+
+
+                ll_add.addView(childView);
+            }
+
+
         } else {
             llOtherSubStore.setVisibility(GONE);
         }

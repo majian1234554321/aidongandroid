@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/tv_tips2"
-            android:background="@color/red_price"
+            android:background="@color/main_blue"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -424,5 +424,5 @@
 
         android:gravity="left|center_vertical"
         android:text="市场价21212"
-        android:textColor="#ff6244" />
+        android:textColor="@color/orangeyellow" />
 </RelativeLayout>

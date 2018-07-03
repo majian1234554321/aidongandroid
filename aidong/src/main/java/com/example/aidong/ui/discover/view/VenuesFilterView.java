@@ -14,13 +14,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.CategoryListAdapter;
-import com.example.aidong .adapter.home.LeftFilterAdapter;
-import com.example.aidong .adapter.home.RightFilterAdapter;
-import com.example.aidong .adapter.home.TypeListAdapter;
-import com.example.aidong .entity.CategoryBean;
-import com.example.aidong .entity.DistrictBean;
-import com.example.aidong .entity.DistrictDescBean;
+import com.example.aidong.adapter.home.CategoryListAdapter;
+import com.example.aidong.adapter.home.LeftFilterAdapter;
+import com.example.aidong.adapter.home.RightFilterAdapter;
+import com.example.aidong.adapter.home.TypeListAdapter;
+import com.example.aidong.entity.CategoryBean;
+import com.example.aidong.entity.DistrictBean;
+import com.example.aidong.entity.DistrictDescBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,7 +155,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         ivBrandArrow.setImageResource(R.drawable.icon_filter_arrow_selected);
         contentLayout.setVisibility(VISIBLE);
         rightListView.setVisibility(GONE);
-            brandAdapter = new CategoryListAdapter(context, brandList);
+        brandAdapter = new CategoryListAdapter(context, brandList);
         leftListView.setAdapter(brandAdapter);
         brandAdapter.setCheckItem(brandSelectedPosition == -1 ? 0 : brandSelectedPosition);
         leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -167,7 +167,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
                 hidePopup();
                 if (onFilterClickListener != null) {
                     onFilterClickListener.onBrandItemClick("全部品牌".equals(brandList.get(position).getId())
-                        ? "" : brandList.get(position).getId());
+                            ? "" : brandList.get(position).getId());
                 }
             }
         });
@@ -188,7 +188,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
 
         isTypeShowing = true;
         isCategoryShowing = false;
-        isCircleShowing =false;
+        isCircleShowing = false;
 
         tvType.setTextColor(context.getResources().getColor(R.color.main_red));
         ivTypeArrow.setImageResource(R.drawable.icon_filter_arrow_selected);
@@ -252,22 +252,22 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         // 左边列表
         leftCircleAdapter = new LeftFilterAdapter(context, leftCircleList);
         leftListView.setAdapter(leftCircleAdapter);
-        if(leftSelectedPosition != -1){
-           // leftListView.setSelection(leftSelectedPosition);
+        if (leftSelectedPosition != -1) {
+            // leftListView.setSelection(leftSelectedPosition);
             leftCircleAdapter.setCheckItem(leftSelectedPosition);
             // leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
-        }else {
+        } else {
             leftCircleAdapter.setCheckItem(0);
-           // leftCircleAdapter.setSelectedBean(leftCircleList.get(0));
+            // leftCircleAdapter.setSelectedBean(leftCircleList.get(0));
         }
 
         //右边列表
-        rightCircleAdapter = new RightFilterAdapter(context,rightCircleList);
+        rightCircleAdapter = new RightFilterAdapter(context, rightCircleList);
         rightListView.setAdapter(rightCircleAdapter);
-        if(rightSelectedPosition != -1) {
+        if (rightSelectedPosition != -1) {
             rightListView.setSelection(rightSelectedPosition);
             rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
-        }else {
+        } else {
             rightListView.setSelection(0);
             rightCircleAdapter.setSelectedBean(rightCircleList.get(0));
         }
@@ -303,13 +303,13 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
                 rightSelectedPosition = rightPosition;           //改变右边选中item
                 rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
                 String address = rightCircleList.get(rightSelectedPosition).getArea();
-               // tvCircle.setText(selectArea+address);
+                // tvCircle.setText(selectArea+address);
 
-                 tvCircle.setText(address);
+                tvCircle.setText(address);
 
                 if (onFilterClickListener != null) {
-                    onFilterClickListener.onBusinessCircleItemClick("热门商圈".equals(selectArea) ? "" :selectArea,
-                            context.getString(R.string.all_circle).equals(address) ? "" :address);
+                    onFilterClickListener.onBusinessCircleItemClick("热门商圈".equals(selectArea) ? "" : selectArea,
+                            context.getString(R.string.all_circle).equals(address) ? "" : address);
                 }
             }
         });
@@ -346,7 +346,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         ivBrandArrow.setImageResource(R.drawable.icon_filter_arrow);
     }
 
-    public void resetTypeStatus(){
+    public void resetTypeStatus() {
         tvType.setTextColor(context.getResources().getColor(R.color.black));
         ivTypeArrow.setImageResource(R.drawable.icon_filter_arrow);
     }
@@ -367,7 +367,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
     public interface OnFilterClickListener {
         void onBrandItemClick(String brandId);
 
-        void onBusinessCircleItemClick(String area,String address);
+        void onBusinessCircleItemClick(String area, String address);
 
         void onTypeItemClick(String type);
     }
@@ -382,8 +382,21 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
     }
 
     public void setCircleList(List<DistrictBean> circleList) {
-        if (circleList != null)
+        if (circleList != null) {
             this.leftCircleList = circleList;
+            if (circleList.size() > 1) {
+
+                for (int i = 1; i < circleList.size(); i++) {
+                    if (circleList.get(i).getDistrictValues().get(0).getArea() != null
+                            && "全部商圈".equals(circleList.get(i).getDistrictValues().get(0).getArea())) {
+
+                        this.leftCircleList.get(i).getDistrictValues().get(0).setArea(circleList.get(i).getDistrictName() + circleList.get(i).getDistrictValues().get(0).getArea());
+                    }
+                }
+            }
+        }
+
+
     }
 
     public void setTypeList(List<String> typeList) {

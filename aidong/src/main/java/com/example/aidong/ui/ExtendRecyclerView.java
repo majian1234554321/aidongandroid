@@ -8,19 +8,19 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class OOXXRecyclerView extends RecyclerView {
+public class ExtendRecyclerView extends RecyclerView {
 
     public View mEmptyView;
 
-    public OOXXRecyclerView(@NonNull Context context) {
+    public ExtendRecyclerView(@NonNull Context context) {
         super(context);
     }
 
-    public OOXXRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public ExtendRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public OOXXRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public ExtendRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -37,10 +37,10 @@ public class OOXXRecyclerView extends RecyclerView {
             if (adapter != null) {
                 if (adapter.getItemCount() == 0) {
                     mEmptyView.setVisibility(VISIBLE);
-                    OOXXRecyclerView.this.setVisibility(GONE);
+                    ExtendRecyclerView.this.setVisibility(GONE);
                 } else {
                     mEmptyView.setVisibility(GONE);
-                    OOXXRecyclerView.this.setVisibility(VISIBLE);
+                    ExtendRecyclerView.this.setVisibility(VISIBLE);
                 }
             }
         }

@@ -395,7 +395,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
                 // tv_price.setTextColor(getResources().getColor(R.color.white));
 
-                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_red));
+                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_blue));
                 ll_pay.setClickable(true);
 
 
@@ -416,7 +416,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                     }
 
 
-                 //   ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.main_red));
+                    //   ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.main_red));
                     // TypefaceSpan span = new  TypefaceSpan(Typeface.create("serif",Typeface.ITALIC));
                     StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);//斜体
                     StrikethroughSpan StrikethroughSpan = new StrikethroughSpan(); //删除线
@@ -427,7 +427,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
 
                     if (course.market_price != null) {
-                        sb.append("市场价：").append(String.format(getString(R.string.rmb_price_double2), course.getPrice()));
+                        sb.append("市场价：").append(String.format(getString(R.string.rmb_price_double2), Double.parseDouble(course.market_price)));
                     }
                     if (course.slogan != null) {
                         if (sb.length() > 0) {
@@ -448,7 +448,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                             String[] split = sb.toString().split(" ");
                             builder.setSpan(StrikethroughSpan, 0, split[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                          //  builder.setSpan(redSpan, split[0].length(), sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            //  builder.setSpan(redSpan, split[0].length(), sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                             builder.setSpan(styleSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                             builder.setSpan(underlineSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -485,7 +485,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 tv_UnMember.setText(R.string.appointmented_look_detail);
                 tv_UnMember.setTextColor(getResources().getColor(R.color.white));
                 tv_admission.setVisibility(View.GONE);
-                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_red));
+                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_blue));
                 ll_pay.setClickable(true);
 
 
@@ -498,7 +498,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 tv_UnMember.setText(R.string.wait_pay_appointed);
                 tv_UnMember.setTextColor(getResources().getColor(R.color.white));
                 tv_admission.setVisibility(View.GONE);
-                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_red));
+                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_blue));
                 ll_pay.setClickable(true);
                 break;
             case CourseBeanNew.QUEUED:
@@ -509,7 +509,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 tv_UnMember.setText(R.string.queueing_look_detail);
                 tv_UnMember.setTextColor(getResources().getColor(R.color.white));
                 tv_admission.setVisibility(View.GONE);
-                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_red));
+                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_blue));
                 ll_pay.setClickable(true);
                 break;
 
@@ -520,8 +520,8 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 tv_tips2.setVisibility(View.GONE);
                 tv_UnMember.setText(R.string.appoint_full_queue_immedialtely);
                 tv_UnMember.setTextColor(getResources().getColor(R.color.white));
-
-                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_red));
+                tv_admission.setVisibility(View.GONE);
+                ll_pay.setBackgroundColor(getResources().getColor(R.color.main_blue));
                 ll_pay.setClickable(true);
                 break;
             case CourseBeanNew.FULL:
@@ -549,6 +549,18 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 break;
             default:
                 break;
+        }
+
+
+        if (course.getReservable() != 1 && course.getStatus() != CourseBeanNew.END) {
+            //无需预约
+            // holder.imgCourseState.setVisibility(View.GONE);
+            tv_UnMember.setText("无需预约");
+            tv_admission.setVisibility(View.GONE);
+            tv_UnMember.setTextColor(ContextCompat.getColor(this, R.color.white));
+            ll_pay.setBackgroundColor(getResources().getColor(R.color.list_line_color));
+            ll_pay.setClickable(false);
+            tv_tips2.setVisibility(View.GONE);
         }
 
 

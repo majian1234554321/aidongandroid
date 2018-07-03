@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="12dp"
+
 
     android:background="@color/white"
     android:orientation="vertical">
@@ -14,12 +14,14 @@
 
 
     <LinearLayout
+        android:paddingTop="@dimen/pref_12dp"
+        android:layout_marginRight="8dp"
         android:id="@+id/rootView"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+       >
 
         <RelativeLayout
             android:layout_width="84dp"
@@ -52,6 +54,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
+
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="left|center"
@@ -89,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textColor="@color/course_oringe"
+                    android:textColor="@color/main_blue"
                     android:textSize="11sp"
                     tools:text="12" />
 
@@ -97,18 +100,18 @@
                     android:id="@+id/txt_course_origin_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_marginLeft="6dp"
-
-
                     android:textColor="@color/course_oringe"
-                    android:textSize="12sp" />
+
+
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
                 <TextView
-                    android:layout_marginLeft="6dp"
                     android:id="@+id/tv_level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -120,28 +123,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/txt_course_difficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_color_common"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     tools:text="市场价￥189.00" />
 
                 <TextView
                     android:id="@+id/tv_link"
-                    android:layout_marginLeft="@dimen/x12"
                     android:layout_width="wrap_content"
-                    android:textStyle="italic"
-                    android:textColor="@color/main_red"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x12"
                     android:autoLink="all"
-                    android:textSize="13sp"
-                    android:visibility="gone"
                     android:text="618疯狂打折季,特惠价格"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/main_red"
+                    android:textSize="13sp"
+                    android:textStyle="italic"
+                    android:visibility="gone" />
 
 
             </LinearLayout>
@@ -153,30 +155,28 @@
             android:layout_width="70dp"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/img_course_state"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true" />
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_marginRight="4dp"
+               android:layout_centerVertical="true"
                 android:orientation="vertical">
 
 
                 <TextView
                     android:id="@+id/mb_level"
-                    android:layout_width="65dp"
+                    android:layout_width="60dp"
+
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:background="@drawable/shape_stroke_red_button"
+                    android:layout_marginRight="14dp"
+                    android:background="@drawable/shape_stroke_333_button"
                     android:gravity="center"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
+
+                   android:padding="4dp"
                     android:text="排队"
-                    android:textColor="@color/red_price"
+                    android:textColor="#333"
                     android:textSize="@dimen/font_12sp" />
 
                 <TextView
@@ -185,20 +185,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    tools:text = "12121"
-                    android:textColor="@color/course_oringe"
+                    android:textColor="@color/main_blue"
                     android:textSize="12sp"
-                    />
+                    tools:text="12121" />
 
                 <TextView
+                    android:layout_marginTop="4dp"
                     android:id="@+id/mb_level3"
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    tools:text = "12121"
-                    android:textColor="@color/course_oringe"
-                    android:textSize="12sp"
-                    />
+                    android:textColor="@color/main_blue"
+                    android:textSize="8sp"
+                    tools:text="12121" />
 
             </LinearLayout>
 
@@ -206,10 +205,17 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/img_course_state"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true" />
+
     <View
+        android:layout_below="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="12dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
         android:background="@color/line_color" />
-</LinearLayout>
+</RelativeLayout>
