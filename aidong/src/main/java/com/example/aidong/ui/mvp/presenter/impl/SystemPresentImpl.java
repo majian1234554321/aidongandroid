@@ -106,7 +106,7 @@ public class SystemPresentImpl implements SystemPresent {
                             Log.i("TAG","key=" + key + " value=" + value);
                         }
 
-                        if (!SharePrefUtils.getString(context, "tips", "会籍会员购买课程即可享受会员价格").equals(systemBean.wx_report.title)) {
+                        if (!SharePrefUtils.getString(context, "tips", "积聚能量,随心而动").equals(systemBean.wx_report.title)) {
                             SharePrefUtils.putString(context, "tips", systemBean.wx_report.title);
 
 

@@ -93,7 +93,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         if(holder instanceof AlbumHolder){
             final AlbumHolder albumHolder = ((AlbumHolder)holder);
             if (bean.isSelected()) {
-                albumHolder.select.setImageResource(R.drawable.radio_checked);
+                albumHolder.select.setImageResource(R.drawable.radio_checked3);
                 albumHolder.image.setColorFilter(Color.parseColor("#77000000"));
             } else {
                 albumHolder.select.setImageResource(R.drawable.radio_unchecked);
@@ -115,7 +115,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                             Toast.makeText(context,"最多只能选择"+ DEFAULT_MAX_UPLOAD_IMAGE_COUNT +"张图片",Toast.LENGTH_LONG).show();
                             return;
                         }
-                        albumHolder.select.setImageResource(R.drawable.radio_checked);
+                        albumHolder.select.setImageResource(R.drawable.radio_checked3);
                         albumHolder.image.setColorFilter(Color.parseColor("#77000000"));
                         bean.setIsSelected(true);
                         addToSelectImgList(selectImages, bean);

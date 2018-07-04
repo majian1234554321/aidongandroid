@@ -21,6 +21,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -207,11 +208,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             }
         });
 
-        String value = "抢购套券享受特惠价,热门课程低至 59元/每节";
-        SpannableString ss = new SpannableString(value);
-        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.main_red)), value.length() - 6, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv_tips.setText(ss);
-        tv_tips.setVisibility(View.GONE);
+
     }
 
     private void setListener() {
@@ -234,7 +231,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 
-        layoutCoursePack.setOnClickListener(this);
+        tv_tips.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         ivShare.setOnClickListener(this);
         ll_pay.setOnClickListener(this);
@@ -267,7 +264,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 break;
 
 
-            case R.id.layout_course_pack:
+            case R.id.tv_tips:
                 GoodsVirtualListActivity.start(this, coupon_pack.getItemProduct());
                 break;
             case R.id.iv_share:
@@ -359,9 +356,10 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         if (TextUtils.isEmpty(coupon_pack.getItemProduct())) {
             layoutCoursePack.setVisibility(View.GONE);
         } else {
-            layoutCoursePack.setVisibility(View.VISIBLE);
+            layoutCoursePack.setVisibility(View.GONE);
             txtCoursePackInfo.setText(coupon_pack.getTitle());
             txtCoursePackPrice.setText(coupon_pack.getPrice() + "元/节!");
+
         }
 
 
@@ -398,81 +396,82 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 ll_pay.setBackgroundColor(getResources().getColor(R.color.main_blue));
                 ll_pay.setClickable(true);
 
-
+                tv_UnMember.setTextColor(getResources().getColor(R.color.white));
+                tv_UnMember.setText(String.format(getString(R.string.rmb_price_double), course.getMember_price()) + "立即预约");
                 if (course.member) { //会员
                     tv_admission.setVisibility(View.GONE);
-                    tv_UnMember.setTextColor(getResources().getColor(R.color.white));
-                    tv_UnMember.setText(String.format(getString(R.string.rmb_price_double), course.getMember_price()) + "立即预约");
                 } else {
+                    tv_admission.setVisibility(View.VISIBLE);
+                }
 
-                    tv_UnMember.setText(String.format(getString(R.string.rmb_price_double), course.getMember_price()) + " 立即预约");
-                    tv_UnMember.setTextColor(getResources().getColor(R.color.white));
-
-                    if (course.admission != null) {
-                        tv_admission.setText("非会员入场+" + course.admission);
-                        tv_admission.setVisibility(View.VISIBLE);
-                    } else {
-                        tv_admission.setVisibility(View.GONE);
-                    }
-
-
-                    //   ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.main_red));
-                    // TypefaceSpan span = new  TypefaceSpan(Typeface.create("serif",Typeface.ITALIC));
-                    StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);//斜体
-                    StrikethroughSpan StrikethroughSpan = new StrikethroughSpan(); //删除线
-                    UnderlineSpan underlineSpan = new UnderlineSpan(); //下划线
-                    //TextAppearanceSpan span =   new TextAppearanceSpan("serif", Typeface.BOLD_ITALIC);
-
-                    StringBuilder sb = new StringBuilder();
+                if (!TextUtils.isEmpty(course.admission) && !"0.0".equals(course.admission) && !"0.000".equals(course.admission)) {
+                    tv_admission.setText("非会员入场+" + course.admission);
+                    tv_admission.setVisibility(View.VISIBLE);
+                } else {
+                    tv_admission.setVisibility(View.GONE);
+                }
 
 
-                    if (course.market_price != null) {
-                        sb.append("市场价：").append(String.format(getString(R.string.rmb_price_double2), Double.parseDouble(course.market_price)));
-                    }
-                    if (course.slogan != null) {
-                        if (sb.length() > 0) {
-                            sb.append(" ").append(course.slogan);
-                        } else {
-                            sb.append(course.slogan);
-                        }
+                //   ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.main_red));
+                // TypefaceSpan span = new  TypefaceSpan(Typeface.create("serif",Typeface.ITALIC));
+                StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);//斜体
+                StrikethroughSpan StrikethroughSpan = new StrikethroughSpan(); //删除线
+                UnderlineSpan underlineSpan = new UnderlineSpan(); //下划线
+                //TextAppearanceSpan span =   new TextAppearanceSpan("serif", Typeface.BOLD_ITALIC);
 
-                    }
+                StringBuilder sb = new StringBuilder();
 
+
+                if (course.market_price > course.getMember_price()) {
+                    sb.append("市场价：").append(String.format(getString(R.string.rmb_price_double2), course.market_price));
+                }
+                if (course.slogan != null) {
                     if (sb.length() > 0) {
-                        tv_tips2.setVisibility(View.VISIBLE);
-                        //如果市场价和提示语都有
-                        if (course.market_price != null && course.slogan != null) {//既有提示语又有市场价格
-
-
-                            SpannableStringBuilder builder = new SpannableStringBuilder(sb.toString());
-                            String[] split = sb.toString().split(" ");
-                            builder.setSpan(StrikethroughSpan, 0, split[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                            //  builder.setSpan(redSpan, split[0].length(), sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            builder.setSpan(styleSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            builder.setSpan(underlineSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
-                            tv_tips2.setText(builder);
-
-
-                        } else {
-                            if (course.market_price != null && course.slogan == null) { //如果 市场价格不为空但是没有提示语言
-                                tv_tips2.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //市场价添加删除线
-                                tv_tips2.setText(course.market_price);
-
-                            } else {//只有提示语没有市场价
-                                tv_tips2.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
-                                tv_tips2.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
-                                tv_tips2.setText(course.slogan);
-                            }
-                        }
-
-
+                        sb.append(" ").append(course.slogan).append(" ");
                     } else {
-                        tv_tips2.setVisibility(View.GONE);
+                        sb.append(course.slogan);
                     }
 
+                }
+
+                if (sb.length() > 0) {
+
+                    //如果市场价和提示语都有
+                    if (course.market_price > course.getMember_price() && !TextUtils.isEmpty(course.slogan)) {//既有提示语又有市场价格
+
+
+                        SpannableStringBuilder builder = new SpannableStringBuilder(sb.toString());
+                        String[] split = sb.toString().split(" ");
+                        builder.setSpan(StrikethroughSpan, 0, split[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        //  builder.setSpan(redSpan, split[0].length(), sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        builder.setSpan(styleSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        builder.setSpan(underlineSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+                        tv_tips2.setText(builder);
+                        tv_tips2.setVisibility(View.VISIBLE);
+
+                    } else {
+                        if (course.market_price > 0f && course.market_price > course.getMember_price() && TextUtils.isEmpty(course.slogan)) { //如果 市场价格不为空但是没有提示语言
+                            tv_tips2.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //市场价添加删除线
+                            tv_tips2.setText("市场价：" + course.market_price);
+                            tv_tips2.setTextColor(ContextCompat.getColor(this, R.color.c9));
+                            tv_tips2.setVisibility(View.VISIBLE);
+                        } else if (!TextUtils.isEmpty(course.slogan)) {//只有提示语没有市场价
+                            tv_tips2.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
+                            tv_tips2.getPaint().setColor(ContextCompat.getColor(this, R.color.orangeyellow));
+                            tv_tips2.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+                            tv_tips2.setText(course.slogan);
+                            tv_tips2.setVisibility(View.VISIBLE);
+                        } else {
+                            tv_tips2.setVisibility(View.GONE);
+                        }
+                    }
+
+
+                } else {
+                    tv_tips2.setVisibility(View.GONE);
                 }
 
 
@@ -552,6 +551,24 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         }
 
 
+        if (course != null && course.isMember_only() && !course.isMember()) {
+            tv_tips2.setVisibility(View.GONE);
+        }
+
+
+        if (DateUtils.compareLongTime(course.getReserve_time()) > 0) {
+
+
+            tv_tips2.setVisibility(View.GONE);
+            tv_UnMember.setText("预约开始时间：" + course.getReserve_time());
+            tv_admission.setVisibility(View.GONE);
+            tv_UnMember.setTextColor(Color.WHITE);
+            ll_pay.setBackgroundColor(Color.BLACK);
+            ll_pay.setClickable(false);
+
+        }
+
+
         if (course.getReservable() != 1 && course.getStatus() != CourseBeanNew.END) {
             //无需预约
             // holder.imgCourseState.setVisibility(View.GONE);
@@ -564,16 +581,23 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         }
 
 
-        if (DateUtils.compareLongTime(course.getReserve_time()) > 0) {
+        Log.i("AAAAAAAAA", tv_tips2.getVisibility() + "");
 
 
-            Logger.i(TAG, "DateUtils.compareLongTime(course.getReserve_time()) = " + DateUtils.compareLongTime(course.getReserve_time()));
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    coursePresent.getCourseDetail(code);
-                }
-            }, DateUtils.compareLongTime(course.getReserve_time()) + 2000);
+        if (!TextUtils.isEmpty(coupon_pack.getItemProduct()) && tv_tips2.getVisibility() != View.VISIBLE) {
+            //        String value = "抢购套券享受特惠价,热门课程低至 59元/每节";
+//        SpannableString ss = new SpannableString(value);
+//        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.main_red)), value.length() - 6, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        tv_tips.setText(ss);
+//        tv_tips.setVisibility(View.GONE);
+
+
+            tv_tips.setText(coupon_pack.getTitle() + " " + coupon_pack.getPrice() + "元/节!");
+            tv_tips.setVisibility(View.VISIBLE);
+        } else {
+            tv_tips.setVisibility(View.GONE);
+
+
         }
 
 

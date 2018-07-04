@@ -225,28 +225,28 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
                     if ((int) min == 0 && (int) max == 24) {
 
-                        rb1.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        rb1.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
                         rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
                         rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                         rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                         rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                     } else if ((int) min >= 0 && (int) max <= 12) {
 
-                        rb2.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        rb2.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
                         rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                         rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
                         rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                         rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                     } else if ((int) min >= 12 && (int) max <= 18) {
 
-                        rb3.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        rb3.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
                         rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                         rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                         rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_red_button));
                         rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                     } else if ((int) min >= 18 && (int) max <= 24) {
 
-                        rb4.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                        rb4.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
                         rb1.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                         rb2.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                         rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
@@ -309,7 +309,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
             switch (v.getId()) {
                 case R.id.rb1:
-                    rb1.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                    rb1.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
 
                     seekbar3.setValue(0, 24);
                     seekbar3.setLeftProgressDescription(0 + ":00");
@@ -323,7 +323,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                     break;
                 case R.id.rb2:
 
-                    rb2.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                    rb2.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
                     seekbar3.setValue(0, 12);
                     seekbar3.setLeftProgressDescription(0 + ":00");
                     seekbar3.setRightProgressDescription(12 + ":00");
@@ -334,7 +334,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                     break;
                 case R.id.rb3:
 
-                    rb3.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                    rb3.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
                     seekbar3.setValue(12, 18);
                     seekbar3.setLeftProgressDescription(12 + ":00");
                     seekbar3.setRightProgressDescription(18 + ":00");
@@ -344,7 +344,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                     tv_time.setText("当前时间段选择为:" + startTime + ":00-" + endTime + ":00");
                     break;
                 case R.id.rb4:
-                    rb4.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                    rb4.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
                     seekbar3.setValue(18, 24);
                     seekbar3.setLeftProgressDescription(18 + ":00");
                     seekbar3.setRightProgressDescription(24 + ":00");
@@ -512,7 +512,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                 rb3.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
                 rb4.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_stroke_gray_button));
 
-                rb1.setTextColor(ContextCompat.getColor(context, R.color.red_price));
+                rb1.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
 
                 seekbar3.setValue(0, 24);
                 seekbar3.setLeftProgressDescription(0 + ":00");

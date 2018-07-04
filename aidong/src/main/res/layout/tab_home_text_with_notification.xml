@@ -26,5 +26,5 @@
         android:textSize="11sp"
         android:gravity="center"
         android:layout_marginLeft="5dp"
-        android:background="@drawable/shape_solid_orange"/>
+        android:background="@drawable/shape_solid_orange2"/>
 </LinearLayout>

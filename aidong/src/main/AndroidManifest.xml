@@ -30,7 +30,6 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -247,11 +246,9 @@
         <activity
             android:name=".ui.mine.activity.CartActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.CartActivity2"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.CouponExchangeActivity"
             android:screenOrientation="portrait" />
@@ -377,7 +374,6 @@
         <activity
             android:name=".ui.home.activity.GoodsListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.GoodsListActivity2"
             android:screenOrientation="portrait" />
@@ -779,9 +775,9 @@
                 android:resource="@xml/file_provider" />
         </provider>
 
-        <activity android:name=".ui.DisplayActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".ui.DisplayActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.dragvideo.DragVideoActivity"
             android:theme="@style/Transparent" />
@@ -936,6 +932,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_image_show"
             android:theme="@style/FullScreenStyle2" />
+        <activity
+            android:name=".ui.home.activity.ShowWebImageActivity"
+            android:theme="@style/AppTheme.FullScreen" />
     </application>
 
 </manifest>

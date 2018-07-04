@@ -155,7 +155,7 @@
         android:id="@+id/button_register"
         style="@style/common_button_style"
         android:text="@string/register_complete"
-        android:background="@color/sort"
+        android:background="@drawable/shape_radius_origin2"
         />
 
 

@@ -42,7 +42,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:text="价格"
-        android:textColor="@color/text_veiw_red"
+        android:textColor="@color/main_blue"
         android:textSize="13sp" />
 
 </RelativeLayout>

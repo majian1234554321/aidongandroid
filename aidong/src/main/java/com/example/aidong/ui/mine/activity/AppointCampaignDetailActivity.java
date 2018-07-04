@@ -343,7 +343,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvStartTime.setLeftTextContent("实付款");
 
 
-                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.red_price));
+                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.main_blue));
                 tvStartTime.setRightContent(String.format(getString(R.string.rmb_price_double),
                         FormatUtil.parseDouble(bean.getPay().getPayAmount())));
                 tvConfirmJoin.setVisibility(View.GONE);
@@ -421,7 +421,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvPayType.setVisibility(View.GONE);
 
                 tvStartTime.setLeftTextContent("实付款");
-                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.red_price));
+                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.main_blue));
                 tvStartTime.setRightContent(String.format(getString(R.string.rmb_price_double),
                         FormatUtil.parseDouble(bean.getPay().getPayAmount())));
                 break;

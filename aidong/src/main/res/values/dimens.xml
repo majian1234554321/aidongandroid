@@ -76,7 +76,6 @@
     <dimen name="frames_video_height">60dip</dimen>
 
 
-
     <dimen name="x1">1px</dimen>
     <dimen name="x2">2px</dimen>
     <dimen name="x3">3px</dimen>
@@ -121,7 +120,7 @@
 
     <dimen name="x1279">1279px</dimen>
     <dimen name="x1280">1280px</dimen>
-
+    <dimen name="fab_margin">16dp</dimen>
 
 
 </resources>

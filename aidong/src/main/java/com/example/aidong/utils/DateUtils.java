@@ -27,7 +27,7 @@ public class DateUtils {
     public static final String NEWS_ITEM_DATE_FORMAT = "hh:mm M月d日 yyyy";
     public static final String WeiBo_ITEM_DATE_FORMAT = "EEE MMM d HH:mm:ss Z yyyy";
 
-    private static SimpleDateFormat SecondFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    private static SimpleDateFormat SecondFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
     public static long compareLongTime(String time) {
         long sysSecond = System.currentTimeMillis();

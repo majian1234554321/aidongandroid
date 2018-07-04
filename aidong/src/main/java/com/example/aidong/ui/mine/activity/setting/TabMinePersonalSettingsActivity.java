@@ -235,7 +235,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
                         builder.show();
                     }
                 });
-        button_personal_settings_unlogin.setBackgroundResource(R.drawable.shape_radius_origin);
+        button_personal_settings_unlogin.setBackgroundResource(R.drawable.shape_radius_origin2);
     }
 
     private void data() {

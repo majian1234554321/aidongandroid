@@ -310,5 +310,9 @@
         <item name="colorControlActivated">@color/main_blue</item>
     </style>
 
+    <style name="AppTheme.FullScreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.FullScreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.aidong.R;
@@ -64,6 +68,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     };
     private UserCoach user;
     private int requestCounts;
+    private Button btn_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +96,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         loginPresenter.setLoginViewInterface(this);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
-        findViewById(R.id.btn_login).setOnClickListener(this);
+        btn_login = findViewById(R.id.btn_login);
+
+        btn_login.setOnClickListener(this);
         findViewById(R.id.forget_password).setOnClickListener(this);
         findViewById(R.id.register).setOnClickListener(this);
         findViewById(R.id.button_weixin).setOnClickListener(this);
@@ -161,6 +168,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         telephone = getEditTelephone().getText().toString().trim();
         if (!StringUtils.isMatchTel(telephone)) {
             getEditTelephone().setError("请输入正确手机号");
+
+
+            TranslateAnimation animation = new TranslateAnimation(0, -20, 0, 0);
+            animation.setInterpolator(new OvershootInterpolator());
+            animation.setDuration(100);
+            animation.setRepeatCount(5);
+            animation.setRepeatMode(Animation.REVERSE);
+            btn_login.startAnimation(animation);
+
+
             return false;
         }
 

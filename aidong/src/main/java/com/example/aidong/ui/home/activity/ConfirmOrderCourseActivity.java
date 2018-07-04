@@ -148,8 +148,17 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
             realPrice = course.getPrice();
             txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
                     realPrice));
-            txtPriceTotal.setText(String.format(getString(R.string.rmb_price_double),
-                    course.getMember_price()));
+
+            if (!course.member_only){
+                txtPriceTotal.setText(String.format(getString(R.string.rmb_price_double),
+                        realPrice ));
+
+            }else {
+                txtPriceTotal.setText(String.format(getString(R.string.rmb_price_double),
+                        course.market_price));
+
+            }
+
         }
 
         payType = PAY_ALI;

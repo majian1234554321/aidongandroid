@@ -309,7 +309,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
 
                 if (onFilterClickListener != null) {
                     onFilterClickListener.onBusinessCircleItemClick("热门商圈".equals(selectArea) ? "" : selectArea,
-                            context.getString(R.string.all_circle).equals(address) ? "" : address);
+                            address.contains(context.getString(R.string.all_circle)) ? "" : address);
                 }
             }
         });

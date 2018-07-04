@@ -18,19 +18,25 @@
         android:visibility="visible">
 
 
-        <TextView
+        <com.example.aidong.widget.AlwaysMarqueeTextView
             android:id="@+id/tv_tips"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
-            android:drawableLeft="@drawable/icon_hot"
-            android:drawablePadding="12dp"
-            android:drawableRight="@drawable/icon_enter"
+            android:background="#fefced"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/icon_fire"
+            android:drawableRight="@drawable/icon_rightmore"
+            android:paddingBottom="10dp"
+            android:singleLine="true"
+            android:scrollbars = "vertical"
+            android:paddingRight="15dp"
             android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="抢购套券享受特惠价,热门课程低至 59元/每节"
-            android:textColor="@color/white"
-            android:visibility="visible" />
+            android:paddingLeft="15dp"
+            android:ellipsize="marquee"
+            android:paddingTop="10dp"
+            android:marqueeRepeatLimit="marquee_forever"
+            tools:text="会籍会员购买课程即可享受会员价格                                   会籍会员购买课程即可享受会员价格"
+            android:textColor="#ff6244" />
 
         <LinearLayout
             android:id="@+id/ll_pay"
@@ -414,15 +420,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="60dp"
         android:layout_marginLeft="8dp"
-        android:visibility="gone"
+android:visibility="gone"
         android:layout_marginRight="8dp"
-        android:background="@drawable/bg_address"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:background="@drawable/icon_pop"
         android:drawablePadding="8dp"
         android:drawableRight="@drawable/iv_tips_right"
 
         android:gravity="left|center_vertical"
-        android:text="市场价21212"
+        tools:text="市场价21212"
         android:textColor="@color/orangeyellow" />
 </RelativeLayout>

@@ -120,9 +120,10 @@
 
             <ImageButton
                 android:id="@+id/img_bt_telephone"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="8dp"
                 android:background="@color/transparent"
                 android:src="@drawable/icon_telephone_red" />
         </LinearLayout>

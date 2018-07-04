@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.home;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -50,7 +51,7 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
     }
 
     @Override
-    public CouponHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CouponHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_goods_detail_coupon, parent, false);
         return new CouponHolder(view);
     }

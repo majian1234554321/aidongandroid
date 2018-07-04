@@ -138,7 +138,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 }
                 resetSortStatus();
                 onFilterClickListener.onPriceClick(isLow2High);
-                ivPriceArrow.setImageResource(isLow2High ?R.drawable.icon_red_arrow_up : R.drawable.icon_red_arrow_down);
+                ivPriceArrow.setImageResource(isLow2High ?R.drawable.icon_blue_arrow_up : R.drawable.icon_blue_arrow_down);
                 tvPrice.setTextColor(context.getResources().getColor(R.color.main_red));
                 isLow2High = !isLow2High;
                 break;

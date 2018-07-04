@@ -62,7 +62,7 @@ public class GoodsFilterCategoryAdapter extends BaseAdapter {
         viewHolder.mText.setText(list.get(position).getName());
         if (checkItemPosition != -1) {
             if (checkItemPosition == position) {
-                viewHolder.mText.setTextColor(context.getResources().getColor(R.color.drop_down_selected));
+                viewHolder.mText.setTextColor(context.getResources().getColor(R.color.main_blue));
                 viewHolder.mText.setCompoundDrawablesWithIntrinsicBounds(null, null, context.getResources().getDrawable(R.mipmap.drop_down_checked), null);
             } else {
                 viewHolder.mText.setTextColor(context.getResources().getColor(R.color.drop_down_unselected));
