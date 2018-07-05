@@ -36,8 +36,6 @@ class MyJSInterface(var mContext: Context?) {
     @JavascriptInterface
     fun shareToWeChat(json: String?) {
 
-
-
         val jsonObject = JSONObject(json)
         WXEntryActivity.start(mContext, jsonObject.getString("shareTitle"), jsonObject.getString("shareDescription"), jsonObject.getString("shareThumb"), jsonObject.getString("shareUrl"), false)
 
@@ -46,10 +44,7 @@ class MyJSInterface(var mContext: Context?) {
     @JavascriptInterface
     fun shareToFriendCircle(json:String?) {
         Log.i("TAG",json)
-
-
       val jsonObject =   JSONObject(json)
-
         WXEntryActivity.start(mContext, jsonObject.getString("shareTitle"), jsonObject.getString("shareDescription"), jsonObject.getString("shareThumb"), jsonObject.getString("shareUrl"), true)
     }
 
