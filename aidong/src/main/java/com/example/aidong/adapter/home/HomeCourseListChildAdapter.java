@@ -98,11 +98,9 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             sb.append("市场价：").append(String.format(context.getString(R.string.rmb_price_double2), courseBean.market_price));
         }
         if (courseBean.slogan != null) {
-            if (sb.length() > 0) {
-                sb.append(" ").append(courseBean.slogan).append(" ");
-            } else {
-                sb.append(courseBean.slogan);
-            }
+
+            sb.append(" ").append(courseBean.slogan).append(" ");
+
 
         }
 
