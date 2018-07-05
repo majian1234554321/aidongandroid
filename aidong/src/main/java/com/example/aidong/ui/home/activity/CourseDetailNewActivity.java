@@ -551,9 +551,9 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         }
 
 
-        if (course != null && course.isMember_only() && !course.isMember()) {
-            tv_tips2.setVisibility(View.GONE);
-        }
+//        if (course != null && course.isMember_only() && !course.isMember()) {
+//            tv_tips2.setVisibility(View.GONE);
+//        }
 
 
         if (DateUtils.compareLongTime(course.getReserve_time()) > 0) {
