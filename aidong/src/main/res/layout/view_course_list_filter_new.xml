@@ -420,7 +420,7 @@
                     android:paddingTop="4dp"
                     android:visibility="gone"
                     android:text="00:00-12:00"
-                    android:textColor="@color/main_blue" />
+                    android:textColor="@color/red_price" />
 
                 <TextView
                     android:id="@+id/rb2"
@@ -502,7 +502,7 @@
                     app:rsb_seekBarMode="range"
                     app:rsb_textPadding="17dp"
                     app:rsb_textSize="16sp"
-                    app:rsb_thumbResId="@drawable/custom_thumb"
+                    app:rsb_thumbResId="@drawable/custom_thumb2"
                     app:rsb_thumbSize="20dp" />
 
 

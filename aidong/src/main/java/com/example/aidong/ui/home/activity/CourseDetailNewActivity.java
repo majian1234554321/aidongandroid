@@ -401,22 +401,22 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 if (course.member) { //会员
                     tv_admission.setVisibility(View.GONE);
                 } else {
-                    tv_admission.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(course.admission) && !"0.0".equals(course.admission) && !"0.000".equals(course.admission)) {
+                        tv_admission.setText("非会员入场+" + course.admission);
+                        tv_admission.setVisibility(View.VISIBLE);
+                    } else {
+                        tv_admission.setVisibility(View.GONE);
+                    }
                 }
 
-                if (!TextUtils.isEmpty(course.admission) && !"0.0".equals(course.admission) && !"0.000".equals(course.admission)) {
-                    tv_admission.setText("非会员入场+" + course.admission);
-                    tv_admission.setVisibility(View.VISIBLE);
-                } else {
-                    tv_admission.setVisibility(View.GONE);
-                }
+
 
 
                 //   ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.main_red));
                 // TypefaceSpan span = new  TypefaceSpan(Typeface.create("serif",Typeface.ITALIC));
-                StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);//斜体
+                //StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);//斜体
                 StrikethroughSpan StrikethroughSpan = new StrikethroughSpan(); //删除线
-                UnderlineSpan underlineSpan = new UnderlineSpan(); //下划线
+               // UnderlineSpan underlineSpan = new UnderlineSpan(); //下划线
                 //TextAppearanceSpan span =   new TextAppearanceSpan("serif", Typeface.BOLD_ITALIC);
 
                 StringBuilder sb = new StringBuilder();
@@ -445,8 +445,8 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                         builder.setSpan(StrikethroughSpan, 0, split[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                         //  builder.setSpan(redSpan, split[0].length(), sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        builder.setSpan(styleSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        builder.setSpan(underlineSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                        builder.setSpan(styleSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                        builder.setSpan(underlineSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 
                         tv_tips2.setText(builder);
@@ -456,12 +456,12 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                         if (course.market_price > 0f && course.market_price > course.getMember_price() && TextUtils.isEmpty(course.slogan)) { //如果 市场价格不为空但是没有提示语言
                             tv_tips2.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //市场价添加删除线
                             tv_tips2.setText("市场价：" + course.market_price);
-                            tv_tips2.setTextColor(ContextCompat.getColor(this, R.color.c9));
+                            tv_tips2.setTextColor(ContextCompat.getColor(this, R.color.orangeyellow));
                             tv_tips2.setVisibility(View.VISIBLE);
                         } else if (!TextUtils.isEmpty(course.slogan)) {//只有提示语没有市场价
-                            tv_tips2.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
+                           // tv_tips2.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
                             tv_tips2.getPaint().setColor(ContextCompat.getColor(this, R.color.orangeyellow));
-                            tv_tips2.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+                           // tv_tips2.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
                             tv_tips2.setText(course.slogan);
                             tv_tips2.setVisibility(View.VISIBLE);
                         } else {
@@ -556,7 +556,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 //        }
 
 
-        if (DateUtils.compareLongTime(course.getReserve_time()) > 0) {
+        if (DateUtils.compareLongTime(course.getReserve_time()) > 0&&course.getStatus() != CourseBeanNew.END) {
 
 
             tv_tips2.setVisibility(View.GONE);

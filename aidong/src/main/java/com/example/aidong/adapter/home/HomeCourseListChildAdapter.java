@@ -150,7 +150,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                     builder.setSpan(styleSpan, 0, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     builder.setSpan(underlineSpan, 0, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+                    builder.setSpan(redSpan, 0, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                     holder.txtCourseDifficulty.setText(builder);
                     holder.txtCourseDifficulty.setTypeface(tf);

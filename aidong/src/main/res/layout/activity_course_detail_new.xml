@@ -432,7 +432,7 @@ android:visibility="gone"
         android:drawablePadding="8dp"
         android:drawableRight="@drawable/iv_tips_right"
 
-        android:gravity="left|center_vertical"
+        android:gravity="center"
         tools:text="市场价21212"
         android:textColor="@color/orangeyellow" />
 </RelativeLayout>
