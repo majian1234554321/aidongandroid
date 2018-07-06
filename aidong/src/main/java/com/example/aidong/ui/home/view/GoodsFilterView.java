@@ -87,6 +87,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         maskBgView = view.findViewById(R.id.view_mask_bg);
         contentLayout = (LinearLayout) view.findViewById(R.id.ll_content);
         listView = (ListView) view.findViewById(R.id.list);
+        tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
     }
 
     private void setListener() {
@@ -112,6 +113,8 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 }else {
                     setCategoryAdapter();
                 }
+                resetSortStatus();
+                tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
 
                 break;
             case R.id.ll_popularity:
@@ -170,7 +173,9 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 category = categoryList.get(position).getName();
                 categoryAdapter.setCheckItem(position);
                 tvCategory.setText(category);
+
                 hidePopup();
+                tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
                 if (onFilterClickListener != null) {
                     onFilterClickListener.onCategoryItemClick(categoryList.get(position).getCategory_id());
                 }
@@ -239,6 +244,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         tvPopularity.setTextColor(context.getResources().getColor(R.color.black));
         tvSale.setTextColor(context.getResources().getColor(R.color.black));
         tvPrice.setTextColor(context.getResources().getColor(R.color.black));
+        tvCategory.setTextColor(context.getResources().getColor(R.color.black));
         ivPriceArrow.setImageResource(R.drawable.icon_double_arrow);
     }
 

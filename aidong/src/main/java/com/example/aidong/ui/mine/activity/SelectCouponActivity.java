@@ -31,8 +31,8 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
     private SelectCouponAdapter couponAdapter;
 
     private List<CouponBean> couponBeanList = new ArrayList<>();
-    private String totalGoodsPrice;
-    private String selectedCouponId;
+
+
     private String selectedUserCouponId;
 
     public static void startForResult(Activity context, String totalGoodsPrice, @Nullable String selectedCouponId,@Nullable String selectedUserCouponId,
@@ -54,8 +54,8 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
         setContentView(R.layout.activity_select_coupon);
         if (getIntent() != null) {
             couponBeanList = getIntent().getParcelableArrayListExtra("couponList");
-            totalGoodsPrice = getIntent().getStringExtra("totalGoodsPrice");
-            selectedCouponId = getIntent().getStringExtra("selectedCouponId");
+
+
             selectedUserCouponId = getIntent().getStringExtra("selectedUserCouponId");
         }
         Logger.i("coupon","onCreate selectedUserCouponId = " + selectedUserCouponId);

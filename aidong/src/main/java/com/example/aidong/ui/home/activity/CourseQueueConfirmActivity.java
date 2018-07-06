@@ -3,7 +3,9 @@ package com.example.aidong.ui.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -11,33 +13,33 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.CouponBean;
-import com.example.aidong .entity.course.CourseAppointBean;
-import com.example.aidong .entity.course.CourseBeanNew;
-import com.example.aidong .entity.course.CourseQueueBean;
-import com.example.aidong .entity.course.CourseStore;
-import com.example.aidong .entity.model.UserCoach;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.mine.activity.AppointDetailCourseNewActivity;
-import com.example.aidong .ui.mine.activity.SelectCouponActivity;
-import com.example.aidong .ui.mvp.presenter.impl.ConfirmCourseQueuePresentImpl;
-import com.example.aidong .ui.mvp.view.ConfirmCourseQueueView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DialogUtils;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.TelephoneManager;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .widget.CommonTitleLayout;
-import com.example.aidong .widget.CustomNestRadioGroup;
+import com.example.aidong.entity.CouponBean;
+import com.example.aidong.entity.course.CourseAppointBean;
+import com.example.aidong.entity.course.CourseBeanNew;
+import com.example.aidong.entity.course.CourseQueueBean;
+import com.example.aidong.entity.course.CourseStore;
+import com.example.aidong.entity.model.UserCoach;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.mine.activity.AppointDetailCourseNewActivity;
+import com.example.aidong.ui.mine.activity.SelectCouponActivity;
+import com.example.aidong.ui.mvp.presenter.impl.ConfirmCourseQueuePresentImpl;
+import com.example.aidong.ui.mvp.view.ConfirmCourseQueueView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DialogUtils;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.TelephoneManager;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.widget.CommonTitleLayout;
+import com.example.aidong.widget.CustomNestRadioGroup;
 
 import java.util.List;
 
 import static com.example.aidong.R.id.layout_course_coupon;
 import static com.example.aidong.R.id.txt_queue_location;
-import static com.example.aidong .utils.Constant.REQUEST_SELECT_COUPON;
+import static com.example.aidong.utils.Constant.REQUEST_SELECT_COUPON;
 
 /**
  * Created by user on 2017/10/31.
@@ -111,10 +113,6 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
         cbWeixin = (RadioButton) findViewById(R.id.cb_weixin);
 
 
-
-
-
-
     }
 
 
@@ -123,19 +121,17 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
             realPrice = course.getMember_price();
 
 
-            txtPriceReal.setText(String.format(getString(R.string.rmb_minus_price_double),
+            txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
                     realPrice));
-            txtPriceTotal.setText(String.format(getString(R.string.rmb_minus_price_double),
+            txtPriceTotal.setText(String.format(getString(R.string.rmb_price_double),
                     course.getMember_price()));
-
-
 
 
         } else {
             realPrice = course.getPrice();
-            txtPriceReal.setText(String.format(getString(R.string.rmb_minus_price_double),
+            txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
                     realPrice));
-            txtPriceTotal.setText(String.format(getString(R.string.rmb_minus_price_double),
+            txtPriceTotal.setText(String.format(getString(R.string.rmb_price_double),
                     course.getMember_price()));
         }
 
@@ -205,7 +201,7 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
                     SelectCouponActivity.startForResult(this, course.getPrice() + "",
                             couponId, selectedUserCouponId, usableCoupons, REQUEST_SELECT_COUPON);
-                }else {
+                } else {
                     ToastGlobal.showLongConsecutive("无可用优惠券");
                 }
                 break;
@@ -236,8 +232,32 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
 
         if (usableCoupons != null && !usableCoupons.isEmpty()) {
             layoutCourseCoupon.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             layoutCourseCoupon.setVisibility(View.GONE);
+        }
+
+
+        if (usableCoupons == null || usableCoupons.isEmpty()) {
+            txtCoupon.setText("无可用");
+            //tvCoupon.setCompoundDrawables(null, null, null, null);
+            txtCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
+        } else {
+            if (TextUtils.isEmpty(couponId)) {
+                if (usableCoupons.size() > 0) {
+                    txtCoupon.setText(usableCoupons.size() + "张可用");
+                }
+                txtCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red2));
+                // txtCoupon.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
+            } else {
+//                if (!TextUtils.isEmpty(shopListType)&&!shopBeanList.isEmpty()&&!shopListType.equals(shopBeanList.get(0).getPickUp().getType())){//有优惠券但是快递的信息变化了
+//                    shopListType = shopBeanList.get(0).getPickUp().getType();
+//                    tvCoupon.setText(usableCoupons.size() + "张可用");
+//                    couponPrice =null;
+//                    couponId = null;
+//                    selectedUserCouponId = null;
+//                }
+            }
+
         }
 
 
@@ -260,7 +280,16 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
                 couponId = couponBean.getId();
                 txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) > 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
+                        FormatUtil.parseDouble(couponBean.getActual())) : ((usableCoupons.size() > 0 ? usableCoupons.size() + "张可用" : getString(R.string.please_select))));
+
+
+                txtCoupon.setTextColor(FormatUtil.parseDouble(couponBean.getActual()) > 0
+                        ? ContextCompat.getColor(this, R.color.main_red2) :
+                        (usableCoupons.size() > 0 ? ContextCompat.getColor(this, R.color.main_red2) : ContextCompat.getColor(this, R.color.c9)
+                        )
+                );
+
+
                 txtCouponSubtract.setText(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())));
                 txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),

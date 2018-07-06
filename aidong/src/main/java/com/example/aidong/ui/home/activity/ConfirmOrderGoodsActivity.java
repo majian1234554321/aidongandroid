@@ -93,7 +93,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     //收货或自提地址
     private RelativeLayout emptyAddressLayout;
     private RelativeLayout addressLayout;
-    private ImageView ivDefault;
+    private TextView ivDefault;
     private TextView tvName;
     private TextView tvPhone;
     private TextView tvAddress;
@@ -247,7 +247,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         emptyAddressLayout = (RelativeLayout) findViewById(R.id.rl_empty_address);
         addressLayout = (RelativeLayout) findViewById(R.id.rl_address);
-        ivDefault = (ImageView) findViewById(R.id.iv_default);
+        ivDefault = findViewById(R.id.iv_default);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvPhone = (TextView) findViewById(R.id.tv_phone);
         tvAddress = (TextView) findViewById(R.id.tv_address);
@@ -560,7 +560,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 if (usableCoupons.size() > 0) {
                     tvCoupon.setText(usableCoupons.size() + "张可用");
                 }
-                tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red));
+                tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red2));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
             }else {
                 if (!TextUtils.isEmpty(shopListType)&&!shopBeanList.isEmpty()&&!shopListType.equals(shopBeanList.get(0).getPickUp().getType())){//有优惠券但是快递的信息变化了

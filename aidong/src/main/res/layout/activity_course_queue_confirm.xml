@@ -14,6 +14,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/white"
         android:layout_weight="100">
 
         <LinearLayout
@@ -28,6 +29,7 @@
                 android:background="@color/white"
                 android:gravity="center_horizontal"
                 android:paddingTop="15dp"
+                android:elevation="1dp"
                 android:text="当前排队: 第6位"
                 android:textColor="@color/course_oringe"
                 android:textSize="14sp"

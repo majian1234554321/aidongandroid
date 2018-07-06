@@ -66,7 +66,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
         }
 
         if (extras != null && extras.length > 0) {
-            SpannableStringBuilder highlightText = StringUtils.highlight(context, bean.getContent(), extras, "#EA2D2D", 1);
+            SpannableStringBuilder highlightText = StringUtils.highlight(context, bean.getContent(), extras, ContextCompat.getColor(context,R.color.main_blue), 1);
 
             holder.content.setText(highlightText);
             holder.content.setMovementMethod(LinkMovementMethod.getInstance());

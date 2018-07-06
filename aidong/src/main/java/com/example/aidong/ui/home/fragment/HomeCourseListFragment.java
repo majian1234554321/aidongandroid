@@ -12,8 +12,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -214,17 +217,53 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
         tabLayout.setupWithViewPager(viewPager);
 
 
+
+
+        for (int i = 0; i < adapter.getCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);//获得每一个tab
+            tab.setCustomView(R.layout.tabitemview);//给每一个tab设置view
+
+            TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_week);
+
+            if (i == 0) {
+                textView.setSelected(true);
+
+                textView.setTextColor( getResources().getColorStateList( R.color.main_blue) );
+
+            } else {
+                textView.setSelected(false);
+                textView.setTextColor( getResources().getColorStateList( R.color.c9) );
+            }
+
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//斜体
+            SpannableStringBuilder builder = new SpannableStringBuilder(DateUtils.getCourseSevenDate2().get(i));
+            builder.setSpan(styleSpan, 0,2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textView.setText(builder);//设置tab上的文字
+
+        }
+
+
+
+
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (filterView.isPopupShowing()) {
                     filterView.hidePopup();
                 }
+
+
+                tab.getCustomView().findViewById(R.id.tv_week).setSelected(true);
+                ((TextView) tab.getCustomView().findViewById(R.id.tv_week)).setTextColor( getResources().getColorStateList( R.color.main_blue) );
+                viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                tab.getCustomView().findViewById(R.id.tv_week).setSelected(false);
+                ((TextView) tab.getCustomView().findViewById(R.id.tv_week)).setTextColor( getResources().getColorStateList( R.color.c9) );
             }
 
             @Override

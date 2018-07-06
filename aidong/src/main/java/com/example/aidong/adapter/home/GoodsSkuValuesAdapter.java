@@ -2,6 +2,7 @@ package com.example.aidong.adapter.home;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,8 +57,8 @@ public class GoodsSkuValuesAdapter extends RecyclerView.Adapter<GoodsSkuValuesAd
         holder.value.setText(bean.getValue());
 
         if(bean.isSelected()){
-            holder.value.setTextColor(Color.parseColor("#ffffffff"));
-            holder.value.setBackgroundResource(R.drawable.shape_solid_corner_black);
+            holder.value.setTextColor(ContextCompat.getColor(context,R.color.main_blue));
+            holder.value.setBackgroundResource(R.drawable.shape_solid_corner_blue);
         }else if(!bean.isAvailable()){
             holder.value.setTextColor(Color.parseColor("#55999999"));
             holder.value.setBackgroundResource(R.drawable.shape_solid_corner_white);

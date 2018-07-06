@@ -224,8 +224,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 holder.mb_level.setText("排队中");
 
 
-                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
-                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_gray_button);
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
                 break;
 
             case CourseBeanNew.FEW:
@@ -245,8 +245,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("排队");
-                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.main_blue));
-                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_gray_button);
                 break;
 
             case CourseBeanNew.FULL:

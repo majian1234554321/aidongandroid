@@ -134,8 +134,8 @@
         <CheckBox
             android:id="@+id/checkbox_protocol"
             style="@style/common_checkBox_style"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:checked="true"
             android:padding="5dp"/>
 
@@ -143,7 +143,7 @@
             android:id="@+id/txt_protocol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
+
             android:padding="6dp"
             android:text="@string/protocol"
             android:textColor="@color/text_color_common"
@@ -155,7 +155,7 @@
         android:id="@+id/button_register"
         style="@style/common_button_style"
         android:text="@string/register_complete"
-        android:background="@drawable/shape_radius_origin2"
+        android:background="@drawable/shape_solid_black"
         />
 
 

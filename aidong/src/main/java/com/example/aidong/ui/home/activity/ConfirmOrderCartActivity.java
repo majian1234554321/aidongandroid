@@ -19,41 +19,41 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.ConfirmOrderShopAdapter;
-import com.example.aidong .config.ConstantUrl;
-import com.example.aidong .entity.AddressBean;
-import com.example.aidong .entity.CouponBean;
-import com.example.aidong .entity.GoodsBean;
-import com.example.aidong .entity.ShopBean;
-import com.example.aidong .module.pay.PayInterface;
-import com.example.aidong .module.pay.SimplePayListener;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.mine.activity.AddAddressActivity;
+import com.example.aidong.adapter.home.ConfirmOrderShopAdapter;
+import com.example.aidong.config.ConstantUrl;
+import com.example.aidong.entity.AddressBean;
+import com.example.aidong.entity.CouponBean;
+import com.example.aidong.entity.GoodsBean;
+import com.example.aidong.entity.ShopBean;
+import com.example.aidong.module.pay.PayInterface;
+import com.example.aidong.module.pay.SimplePayListener;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.mine.activity.AddAddressActivity;
 
-import com.example.aidong .ui.mine.activity.AppointmentMineActivityNew;
-import com.example.aidong .ui.mine.activity.PaySuccessActivity;
-import com.example.aidong .ui.mine.activity.SelectAddressActivity;
-import com.example.aidong .ui.mine.activity.SelectCouponActivity;
-import com.example.aidong .ui.mine.activity.UpdateDeliveryInfoActivity;
-import com.example.aidong .ui.mvp.presenter.ConfirmOrderPresent;
+import com.example.aidong.ui.mine.activity.AppointmentMineActivityNew;
+import com.example.aidong.ui.mine.activity.PaySuccessActivity;
+import com.example.aidong.ui.mine.activity.SelectAddressActivity;
+import com.example.aidong.ui.mine.activity.SelectCouponActivity;
+import com.example.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
+import com.example.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.example.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
 import com.example.aidong.ui.mvp.view.AppointCampaignActivityView;
-import com.example.aidong .ui.mvp.view.ConfirmOrderActivityView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DateUtils;
+import com.example.aidong.ui.mvp.view.ConfirmOrderActivityView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DateUtils;
 import com.example.aidong.utils.DialogUtils;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.SystemInfoUtils;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .utils.constant.DeliveryType;
-import com.example.aidong .utils.constant.PayType;
-import com.example.aidong .utils.constant.SettlementType;
-import com.example.aidong .widget.CustomNestRadioGroup;
-import com.example.aidong .widget.ExtendTextView;
-import com.example.aidong .widget.SimpleTitleBar;
-import com.example.aidong .widget.SwitcherLayout;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.SystemInfoUtils;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.utils.constant.DeliveryType;
+import com.example.aidong.utils.constant.PayType;
+import com.example.aidong.utils.constant.SettlementType;
+import com.example.aidong.widget.CustomNestRadioGroup;
+import com.example.aidong.widget.ExtendTextView;
+import com.example.aidong.widget.SimpleTitleBar;
+import com.example.aidong.widget.SwitcherLayout;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -64,20 +64,20 @@ import java.util.Map;
 
 import static com.example.aidong.R.id.ll__receiving_time;
 import static com.example.aidong.R.id.txt_receving_time;
-import static com.example.aidong .ui.App.context;
-import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
-import static com.example.aidong .utils.Constant.DELIVERY_SELF;
-import static com.example.aidong .utils.Constant.GOODS_FOODS;
-import static com.example.aidong .utils.Constant.PAY_ALI;
-import static com.example.aidong .utils.Constant.PAY_WEIXIN;
-import static com.example.aidong .utils.Constant.REQUEST_ADD_ADDRESS;
-import static com.example.aidong .utils.Constant.REQUEST_SELECT_ADDRESS;
-import static com.example.aidong .utils.Constant.REQUEST_SELECT_COUPON;
-import static com.example.aidong .utils.Constant.REQUEST_UPDATE_DELIVERY;
-import static com.example.aidong .utils.Constant.SETTLEMENT_CART;
-import static com.example.aidong .utils.Constant.SETTLEMENT_EQUIPMENT_IMMEDIATELY;
-import static com.example.aidong .utils.Constant.SETTLEMENT_FOOD_IMMEDIATELY;
-import static com.example.aidong .utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
+import static com.example.aidong.ui.App.context;
+import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.example.aidong.utils.Constant.DELIVERY_SELF;
+import static com.example.aidong.utils.Constant.GOODS_FOODS;
+import static com.example.aidong.utils.Constant.PAY_ALI;
+import static com.example.aidong.utils.Constant.PAY_WEIXIN;
+import static com.example.aidong.utils.Constant.REQUEST_ADD_ADDRESS;
+import static com.example.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
+import static com.example.aidong.utils.Constant.REQUEST_SELECT_COUPON;
+import static com.example.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
+import static com.example.aidong.utils.Constant.SETTLEMENT_CART;
+import static com.example.aidong.utils.Constant.SETTLEMENT_EQUIPMENT_IMMEDIATELY;
+import static com.example.aidong.utils.Constant.SETTLEMENT_FOOD_IMMEDIATELY;
+import static com.example.aidong.utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
 
 
 /**
@@ -85,7 +85,7 @@ import static com.example.aidong .utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderCartActivity extends BaseActivity implements View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener,AppointCampaignActivityView {
+        CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener, AppointCampaignActivityView {
     private static final java.lang.String TAG = "ConfirmOrderActivity";
     private SimpleTitleBar titleBar;
     private LinearLayout contentLayout;
@@ -94,7 +94,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
     //收货或自提地址
     private RelativeLayout emptyAddressLayout;
     private RelativeLayout addressLayout;
-    private ImageView ivDefault;
+    private TextView ivDefault;
     private TextView tvName;
     private TextView tvPhone;
     private TextView tvAddress;
@@ -229,7 +229,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         emptyAddressLayout = (RelativeLayout) findViewById(R.id.rl_empty_address);
         addressLayout = (RelativeLayout) findViewById(R.id.rl_address);
-        ivDefault = (ImageView) findViewById(R.id.iv_default);
+        ivDefault = findViewById(R.id.iv_default);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvPhone = (TextView) findViewById(R.id.tv_phone);
         tvAddress = (TextView) findViewById(R.id.tv_address);
@@ -330,7 +330,6 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
         double dPrice = needExpress ? expressPrice : 0d;
         double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
         tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
-
 
 
         if (shopBeanList != null && !shopBeanList.isEmpty() && shopBeanList.get(0).getItem() != null &&
@@ -485,7 +484,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 public void onFail(String code, Object object) {
                     super.onFail(code, object);
                     LocalBroadcastManager.getInstance(ConfirmOrderCartActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL));
-                    AppointmentMineActivityNew.start(ConfirmOrderCartActivity.this, 2,0);
+                    AppointmentMineActivityNew.start(ConfirmOrderCartActivity.this, 2, 0);
                     finish();
                 }
 
@@ -523,16 +522,16 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
     public void setSpecifyGoodsCouponResult(List<CouponBean> usableCoupons) {
         this.usableCoupons = usableCoupons;
 
-        if(TextUtils.isEmpty(selectedUserCouponId)){
+        if (TextUtils.isEmpty(selectedUserCouponId)) {
 
-        if (usableCoupons == null || usableCoupons.isEmpty()) {
-            tvCoupon.setText("无可用");
-            //tvCoupon.setCompoundDrawables(null, null, null, null);
-            tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
-        } else {
-            tvCoupon.setText(usableCoupons.size()+"张可用");
-            tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red));
-        }
+            if (usableCoupons == null || usableCoupons.isEmpty()) {
+                tvCoupon.setText("无可用");
+                //tvCoupon.setCompoundDrawables(null, null, null, null);
+                tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.c9));
+            } else {
+                tvCoupon.setText(usableCoupons.size() + "张可用");
+                tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red2));
+            }
 
 
         }
@@ -558,7 +557,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 couponPrice = couponBean.getActual();
 
 
-                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) >= 0&&!TextUtils.isEmpty(couponId)
+                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) >= 0 && !TextUtils.isEmpty(couponId)
                         ? String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())) : usableCoupons.size() + "张可用");
 

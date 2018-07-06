@@ -4,37 +4,43 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.PagerAdapter;
+
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.view.View;
-import android.view.ViewGroup;
+
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.example.aidong.R;
-import com.example.aidong .entity.course.CourseArea;
-import com.example.aidong .entity.course.CourseBrand;
-import com.example.aidong .entity.course.CourseFilterBean;
-import com.example.aidong .entity.course.CourseName;
-import com.example.aidong .entity.course.CourseStore;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.home.fragment.CourseListFragmentNew;
-import com.example.aidong .ui.home.fragment.HomeCourseListChildFragment;
-import com.example.aidong .ui.home.view.CourseListFilterNew;
-import com.example.aidong .ui.mvp.presenter.impl.CourseConfigPresentImpl;
-import com.example.aidong .ui.mvp.view.CourseFilterCallback;
-import com.example.aidong .ui.mvp.view.EmptyView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DateUtils;
-import com.example.aidong .utils.Logger;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.example.aidong.entity.course.CourseArea;
+import com.example.aidong.entity.course.CourseBrand;
+import com.example.aidong.entity.course.CourseFilterBean;
+import com.example.aidong.entity.course.CourseName;
+import com.example.aidong.entity.course.CourseStore;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.home.fragment.CourseListFragmentNew;
+
+import com.example.aidong.ui.home.view.CourseListFilterNew;
+import com.example.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
+import com.example.aidong.ui.mvp.view.CourseFilterCallback;
+
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DateUtils;
+import com.example.aidong.utils.Logger;
+
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -48,11 +54,11 @@ import java.util.Map;
  * 小团体课列表
  * Created by song on 2016/10/31.
  */
-public class CourseListActivityNew extends BaseActivity implements SmartTabLayout.TabProvider, View.OnClickListener, CourseFilterCallback {
+public class CourseListActivityNew extends BaseActivity implements View.OnClickListener, CourseFilterCallback {
     private static final java.lang.String TAG = "CourseListActivityNew";
     //todo 使用SmartTabLayout使Activity和Fragment传值失效,设置回调无效??
     private ImageView ivBack;
-    private SmartTabLayout tabLayout;
+    private TabLayout tabLayout;
     private CourseListFilterNew filterView;
     private List<String> days = new ArrayList<>();
     private FragmentPagerItemAdapter adapter;
@@ -60,12 +66,6 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
     private String category;
     private ViewPager viewPager;
 
-
-//    private DrawerLayout drawerLayout;
-//    private LinearLayout filterLayout;
-//    private TextView tvFinishFilter;
-
-//    private CourseListSideFilterView courseListSideFilterView;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -142,39 +142,13 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
     private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
-        tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
+        tabLayout = findViewById(R.id.tab_layout);
         filterView = (CourseListFilterNew) findViewById(R.id.view_filter_course);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
+
         days = DateUtils.getSevenDate();
 
-        tabLayout.setCustomTabView(this);
-
-        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                for (int i = 0; i < allTabView.size(); i++) {
-                    View tabAt = tabLayout.getTabAt(i);
-                    TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-
-                    //reset fragment
-                    CourseListFragmentNew page = (CourseListFragmentNew) adapter.getPage(position);
-                    //page.scrollToTop();
-//                    filterView.animate().translationY(0).setInterpolator
-//                            (new DecelerateInterpolator(2)).start();
-                }
-            }
-        });
-
-        tabLayout.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClicked(int position) {
-                if (filterView.isPopupShowing()) {
-                    filterView.hidePopup();
-                }
-            }
-        });
 
         filterView.setListener(courseFilterListener);
     }
@@ -209,17 +183,6 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         }
     };
 
-    @Override
-    public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_course_text, container, false);
-        TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
-        text.setText(DateUtils.getCourseSevenDate().get(position));
-        if (position == 0) {
-            text.setTypeface(Typeface.DEFAULT_BOLD);
-        }
-        allTabView.add(tabView);
-        return tabView;
-    }
 
     @Override
     public void onClick(View v) {
@@ -254,20 +217,19 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
                 if (leftlist.contains(category)) {
 
-                  int leftPostion  =   leftlist.indexOf(category);
+                    int leftPostion = leftlist.indexOf(category);
 
 
                     for (int i = 0; i < rightlist.get(leftPostion).size(); i++) {
                         if (rightlist.get(leftPostion).get(i).id.equals(rightText)) {
                             allcategory = category + "," + rightlist.get(leftPostion).get(i).id;
                             break;
-                        }else {
+                        } else {
 
-                                allcategory = category + "," + 0;
+                            allcategory = category + "," + 0;
 
                         }
                     }
-
 
 
                 }
@@ -278,7 +240,7 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
             for (int i = 0; i < days.size(); i++) {
                 CourseListFragmentNew courseFragment = new CourseListFragmentNew();
 //            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
-                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
+                pages.add(FragmentPagerItem.of(DateUtils.getCourseSevenDate2().get(i), courseFragment.getClass(),
                         new Bundler().putString("date", days.get(i)).putString("category", allcategory).get()
                 ));
 
@@ -299,7 +261,7 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
             for (int i = 0; i < days.size(); i++) {
                 CourseListFragmentNew courseFragment = new CourseListFragmentNew();
 //            HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
-                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
+                pages.add(FragmentPagerItem.of(DateUtils.getCourseSevenDate2().get(i), courseFragment.getClass(),
                         new Bundler().putString("date", days.get(i)).putString("category", allcategory).get()
                 ));
 
@@ -309,7 +271,53 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
             viewPager.setOffscreenPageLimit(6);
             viewPager.setAdapter(adapter);
         }
-        tabLayout.setViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+
+
+        for (int i = 0; i < adapter.getCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);//获得每一个tab
+            tab.setCustomView(R.layout.tabitemview);//给每一个tab设置view
+
+            TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_week);
+
+            if (i == 0) {
+                textView.setSelected(true);
+
+                textView.setTextColor( getResources().getColorStateList( R.color.main_blue) );
+
+            } else {
+                textView.setSelected(false);
+                textView.setTextColor( getResources().getColorStateList( R.color.c9) );
+            }
+
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//斜体
+            SpannableStringBuilder builder = new SpannableStringBuilder(DateUtils.getCourseSevenDate2().get(i));
+            builder.setSpan(styleSpan, 0,2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textView.setText(builder);//设置tab上的文字
+
+        }
+
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tab.getCustomView().findViewById(R.id.tv_week).setSelected(true);
+                ((TextView) tab.getCustomView().findViewById(R.id.tv_week)).setTextColor( getResources().getColorStateList( R.color.main_blue) );
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tab.getCustomView().findViewById(R.id.tv_week).setSelected(false);
+                ((TextView) tab.getCustomView().findViewById(R.id.tv_week)).setTextColor( getResources().getColorStateList( R.color.c9) );
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
     }
 
@@ -346,10 +354,10 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         }
 
         @Override
-        public void onTimeItemClick(String timeValue,Map idValue) {
+        public void onTimeItemClick(String timeValue, Map idValue) {
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
-                ((CourseListFragmentNew) page).resetCourseTime(timeValue,idValue);
+                ((CourseListFragmentNew) page).resetCourseTime(timeValue, idValue);
                 ((CourseListFragmentNew) page).fetchData();
             }
         }
@@ -371,21 +379,4 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
     }
 
 
-    //    private class SimpleDrawerDrawerListener extends DrawerLayout.SimpleDrawerListener {
-//        @Override
-//        public void onDrawerOpened(View drawerView) {
-//            super.onDrawerOpened(drawerView);
-////            isChange = false;
-//        }
-//
-//        @Override
-//        public void onDrawerClosed(View drawerView) {
-////            if (isChange) {
-////                currPage = 1;
-////                refreshLayout.setRefreshing(true);
-////                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-////                userPresent.pullToRefreshUserData(App.lat, App.lon, gender, type);
-////            }
-//        }
-//    }
 }
