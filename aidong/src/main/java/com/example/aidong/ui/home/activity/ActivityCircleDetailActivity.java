@@ -465,6 +465,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
                 this.selectedSkuValues.addAll(list.get(0).value);
 
+                this.mark = list.get(0).remark;
 
             }
         }
@@ -474,11 +475,12 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
     private List<String> selectedSkuValues = new ArrayList<>();
     private boolean isSellOut = true;   //是否售罄
-    private boolean hasSku = false;     //该商品是否配置规格
+    private boolean hasSku = false;
+    public  String  mark ;//该商品是否配置规格
 
     private void showSkuPopupWindow(ActivitySkuPopupWindow.GoodsStatus status) {
         skuPopupWindow = new ActivitySkuPopupWindow(this, campaignDetailBean, campaignDetailBean.spec, status, selectedSkuValues, selectedCount,
-                null);
+                null,mark);
 
 
 

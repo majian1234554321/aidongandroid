@@ -100,8 +100,10 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
     private CartPresent cartPresent;
     private GoodsStatus status;
 
+    public String mark;
+
     public ActivitySkuPopupWindow(Context context, CampaignDetailBean campaignDetailBean, GoodsSpecBean specBean, GoodsStatus status,
-                                  List<String> selectedSkuValues, String count, String recommendCode) {
+                                  List<String> selectedSkuValues, String count, String recommendCode,String mark) {
         super(context);
         this.campaignDetailBean = campaignDetailBean;
         this.context = context;
@@ -111,6 +113,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         this.recommendCode = recommendCode;
         this.count = count;
         cartPresent = new CartPresentImpl(context, this);
+        this.mark = mark;
         init();
     }
 
@@ -281,7 +284,13 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         if (limit > 0 && limit != 9999) {
             txt_limit_number.setText("(限购" + limit + "张)");
         }
-        txt_spec_remark.setText("");
+        if (!TextUtils.isEmpty(mark)){
+            txt_spec_remark.setText(mark);
+        }else {
+            txt_spec_remark.setText("");
+        }
+
+
 
         if (specBean.item.size() == 1) {
             selectedSkuValues.clear();
@@ -298,6 +307,9 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                 txt_limit_number.setText("(限购" + specBean.item.get(0).limit_amount + "张)");
 
             stock = specBean.item.get(0).getStock();
+
+
+
             tvGoodName.setText(specBean.item.get(0).name);
             txt_spec_remark.setText(specBean.item.get(0).remark);
             txt_spec_remark.setVisibility(View.VISIBLE);
@@ -480,7 +492,7 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
         StringBuilder sb = new StringBuilder();
         if (line.value != null) {
             for (int i = 0; i < line.value.size(); i++) {
-                sb.append(line.value.get(i) + " ");
+                sb.append(line.value.get(i)).append(" ");
             }
         }
         campaignDetailBean.skuTime = sb.toString();
@@ -528,9 +540,11 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
                 } else {
                     txt_limit_number.setText("");
                 }
-                if (line.remark != null) {
+                if (line.remark != null&&allSelectedNodes.size()==campaignDetailBean.spec.name.size()) {
                     txt_spec_remark.setText(line.remark);
                     txt_spec_remark.setVisibility(View.VISIBLE);
+                }else {
+                    txt_spec_remark.setVisibility(View.INVISIBLE);
                 }
 
                 tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count), stock));
@@ -562,6 +576,16 @@ public class ActivitySkuPopupWindow extends BasePopupWindow implements View.OnCl
             tvSelect.setText(context.getString(R.string.please_select));
             tvSkuTip.setText(skuTip.toString());
             tvStockTip.setVisibility(View.GONE);
+
+            GoodsSkuBean line = getLine(allSelectedNodes);
+            if (line != null) {
+                if (line.remark != null && allSelectedNodes.size() == campaignDetailBean.spec.name.size()) {
+                    txt_spec_remark.setText(line.remark);
+                    txt_spec_remark.setVisibility(View.VISIBLE);
+                }else {
+                    txt_spec_remark.setVisibility(View.INVISIBLE);
+                }
+            }
         }
     }
 

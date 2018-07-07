@@ -114,8 +114,11 @@
 
     <dimen name="x140">140px</dimen>
 
-
+    <dimen name="x180">180px</dimen>
+    <dimen name="x240">240px</dimen>
     <dimen name="x300">300px</dimen>
+    <dimen name="x320">320px</dimen>
+
 
 
     <dimen name="x1279">1279px</dimen>

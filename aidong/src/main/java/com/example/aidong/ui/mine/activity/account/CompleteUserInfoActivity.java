@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
@@ -219,7 +220,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
                 .inputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .inputRange(1, 12)
+                .inputRange(1, 12, ContextCompat.getColor(this,R.color.main_red))
                 .positiveText(R.string.sure)
                 .input(getString(R.string.confirm_nickname), null, false, new MaterialDialog.InputCallback() {
                     @Override
@@ -328,7 +329,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
                 .inputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .inputRange(1, 20)
+                .inputRange(1, 20, ContextCompat.getColor(this,R.color.main_red))
                 .positiveText(R.string.sure)
                 .input(getString(R.string.confirm_signature_hint), tvSignature.getText(), false, new MaterialDialog.InputCallback() {
                     @Override

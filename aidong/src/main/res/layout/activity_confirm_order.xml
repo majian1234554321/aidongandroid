@@ -423,7 +423,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="¥300"
-                android:textColor="@color/main_red"
+                android:textColor="@color/main_white"
                 android:textSize="16sp" />
         </LinearLayout>
 

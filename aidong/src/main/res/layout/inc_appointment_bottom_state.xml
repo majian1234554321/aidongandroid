@@ -19,12 +19,14 @@
             android:layout_height="wrap_content"
             android:text="实付款:"
             android:textColor="@color/c3"
+            android:textStyle="bold"
             android:textSize="16sp"
             android:layout_marginLeft="11dp"/>
 
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:text="¥300.00"
             android:textColor="@color/c3"

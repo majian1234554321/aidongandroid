@@ -38,8 +38,11 @@
  <dimen name="x60">75px</dimen>
 
  <dimen name="x140">210px</dimen>
- <dimen name="x300">450px</dimen>
+ <dimen name="x180">270px</dimen>
 
+ <dimen name="x240">360px</dimen>
+ <dimen name="x300">450px</dimen>
+ <dimen name="x320">480px</dimen>
 
  <dimen name="x1279">1918.5px</dimen>
  <dimen name="x1280">1920px</dimen>

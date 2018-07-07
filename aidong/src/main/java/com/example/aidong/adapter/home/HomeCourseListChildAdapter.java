@@ -97,7 +97,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         if (courseBean.market_price > 0f && courseBean.market_price > courseBean.getMember_price()) {
             sb.append("市场价：").append(String.format(context.getString(R.string.rmb_price_double2), courseBean.market_price));
         }
-        if (courseBean.slogan != null) {
+        if (!TextUtils.isEmpty(courseBean.slogan)) {
 
             sb.append(" ").append(courseBean.slogan).append(" ");
 
@@ -245,8 +245,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("排队");
-                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
-                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_gray_button);
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.main_black));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_black_button);
                 break;
 
             case CourseBeanNew.FULL:

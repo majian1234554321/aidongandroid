@@ -292,7 +292,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         txtCourseIntro.setRichText(course.getIntroduce());
        // txtSuggestFrequency.setText("建议周频次: " + course.getFrequency() + "次/周");
         txtSuggestFrequency.setVisibility(GONE);
-        txt_use_equipment.setText("使用机械: " + course.getInstrument());
+        txt_use_equipment.setText("使用器械: " + course.getInstrument());
         txt_target_population.setText("针对人群: " + course.getCrowd());
         txt_suggest_match_course.setText("建议课程搭配: " + course.getCollocation());
 

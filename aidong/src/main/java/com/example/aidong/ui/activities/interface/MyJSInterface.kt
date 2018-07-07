@@ -33,14 +33,16 @@ class MyJSInterface(var mContext: Context?) {
         }
     }
 
+
+    //邀请有礼分享到微信好友
     @JavascriptInterface
     fun shareToWeChat(json: String?) {
-
         val jsonObject = JSONObject(json)
         WXEntryActivity.start(mContext, jsonObject.getString("shareTitle"), jsonObject.getString("shareDescription"), jsonObject.getString("shareThumb"), jsonObject.getString("shareUrl"), false)
 
     }
 
+    //邀请有礼分享到朋友圈
     @JavascriptInterface
     fun shareToFriendCircle(json:String?) {
         Log.i("TAG",json)

@@ -3,6 +3,7 @@ package com.example.aidong.ui.mine.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -363,6 +364,10 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 : bean.getStatus().equals(FINISH) ? getString(R.string.order_finish)
                 :bean.getStatus().equals(REFUNDED)?getString(R.string.order_refunded)
                 : getString(R.string.order_close));
+
+
+        tvState.setTextColor(bean.getStatus().equals(UN_PAID)? ContextCompat.getColor(this,R.color.main_red2):ContextCompat.getColor(this,R.color.main_black));
+
 
         if(bean.is_virtual()){
             expressInfoLayout.setVisibility(View.GONE);

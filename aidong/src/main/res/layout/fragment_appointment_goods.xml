@@ -16,7 +16,7 @@
         app:tabBackground="@color/white"
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/main_red"
+        app:tabSelectedTextColor="@color/main_black"
         app:tabTextColor="@color/c9"/>
 
 

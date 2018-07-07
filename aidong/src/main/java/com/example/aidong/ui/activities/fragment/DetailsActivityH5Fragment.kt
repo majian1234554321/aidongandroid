@@ -3,6 +3,7 @@ package com.example.aidong.ui.activities.fragment
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.aidong .ui.App
 
 import com.example.aidong .ui.BaseFragment
 import com.example.aidong .ui.activities.`interface`.MyJSInterface
+import com.example.aidong.utils.Logger
 
 import kotlinx.android.synthetic.main.detailsactivityh5fragment.*
 
@@ -94,4 +96,12 @@ class DetailsActivityH5Fragment : BaseFragment() {
             return detailsActivityH5Fragment
         }
     }
+
+
+
+
+
+   fun cancleSelect(){
+
+   }
 }

@@ -182,6 +182,19 @@ public class SharePrefUtils {
         mSharedPreferences.edit().putString(key, value).commit();
     }
 
+
+
+    public static void removeString(Context ctx, String key) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+
+        mSharedPreferences.edit().remove(key).commit();
+    }
+
+
+
     public static String getString(Context ctx, String key, String defaultValue) {
         if (mSharedPreferences == null) {
             mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,

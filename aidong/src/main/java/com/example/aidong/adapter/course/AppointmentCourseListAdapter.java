@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.course;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +96,11 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
                 holder.tvCancelQueue.setVisibility(View.VISIBLE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
+
+
+                holder.state.setTextColor(ContextCompat.getColor(context,R.color.main_black));
+
+
                 break;
 
             case CourseAppointBean.pending:
@@ -113,6 +119,11 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
 
+
+                holder.state.setTextColor(ContextCompat.getColor(context,R.color.main_red2));
+                holder.tv_times.setTextColor(ContextCompat.getColor(context,R.color.main_red2));
+
+
                 break;
 
             case CourseAppointBean.paid:
@@ -130,7 +141,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
                 holder.tvCancelQueue.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvSignImmedialtely.setVisibility(View.VISIBLE);
-
+                holder.state.setTextColor(ContextCompat.getColor(context,R.color.main_black));
                 break;
 
             case CourseAppointBean.canceled:
@@ -146,6 +157,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
                 holder.tvCancelAppoint.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
+                holder.state.setTextColor(ContextCompat.getColor(context,R.color.main_black));
                 break;
 
 
@@ -161,6 +173,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
                 holder.tvCancelAppoint.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
+                holder.state.setTextColor(ContextCompat.getColor(context,R.color.main_black));
 
 
                 break;
@@ -176,6 +189,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
                 holder.tvCancelAppoint.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
+                holder.state.setTextColor(ContextCompat.getColor(context,R.color.main_black));
 
                 break;
             case CourseAppointBean.suspended:
@@ -191,7 +205,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
                 holder.tvCancelAppoint.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
-
+                holder.state.setTextColor(ContextCompat.getColor(context,R.color.main_black));
 
                 break;
 
@@ -343,7 +357,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
         TextView tvSignImmedialtely;
         TextView tvDelete;
         TextView tvPay;
-        TextView tv_time;
+        TextView tv_time,tv_times;
 
         public AppointmentHolder(View itemView) {
             super(itemView);
@@ -356,6 +370,8 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
             name = (TextView) itemView.findViewById(R.id.tv_name);
             address = (TextView) itemView.findViewById(R.id.tv_address);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
+
+            tv_times = (TextView) itemView.findViewById(R.id.tv_times);
 
             price = (TextView) itemView.findViewById(R.id.tv_price);
             payTip = (TextView) itemView.findViewById(R.id.tv_price_tip);

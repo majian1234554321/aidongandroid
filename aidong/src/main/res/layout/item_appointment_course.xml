@@ -16,6 +16,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         android:text="state"
+        android:textStyle="bold"
         android:textColor="@color/main_red"
         android:textSize="15sp" />
 
@@ -40,8 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="支付时间:"
+            android:id="@+id/tv_times"
             android:textSize="14sp"
-            android:textColor="@color/main_red"/>
+            android:textColor="@color/main_red2"/>
 
         <cn.iwgang.countdownview.CountdownView
             android:id="@+id/timer"
@@ -58,8 +60,8 @@
             app:isTimeTextBold="false"
             android:layout_gravity="center"
             app:isShowMillisecond="false"
-            app:timeTextColor="@color/main_red"
-            app:suffixTextColor="@color/main_red"/>
+            app:timeTextColor="@color/main_red2"
+            app:suffixTextColor="@color/main_red2"/>
     </LinearLayout>
 
     <View
@@ -85,6 +87,7 @@
 
         <TextView
             android:id="@+id/tv_name"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="阿迪达斯-举重"
@@ -137,12 +140,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="实付款:"
+            android:textStyle="bold"
             android:textColor="@color/c3"
             android:textSize="16sp"
             android:layout_marginLeft="11dp"/>
 
         <TextView
             android:id="@+id/tv_price"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="¥300.00"

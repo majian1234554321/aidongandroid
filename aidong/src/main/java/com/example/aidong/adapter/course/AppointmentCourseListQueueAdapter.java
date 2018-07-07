@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.course;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.course.CourseAppointBean;
-import com.example.aidong .ui.home.activity.CourseQueueDetailActivity;
-import com.example.aidong .utils.DateUtils;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.SystemInfoUtils;
-import com.example.aidong .widget.dialog.BaseDialog;
-import com.example.aidong .widget.dialog.ButtonCancelListener;
-import com.example.aidong .widget.dialog.ButtonOkListener;
-import com.example.aidong .widget.dialog.DialogDoubleButton;
+import com.example.aidong.entity.course.CourseAppointBean;
+import com.example.aidong.ui.home.activity.CourseQueueDetailActivity;
+import com.example.aidong.utils.DateUtils;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.SystemInfoUtils;
+import com.example.aidong.widget.dialog.BaseDialog;
+import com.example.aidong.widget.dialog.ButtonCancelListener;
+import com.example.aidong.widget.dialog.ButtonOkListener;
+import com.example.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.List;
 
@@ -95,6 +96,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                 holder.tvCancelQueue.setVisibility(View.VISIBLE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.black));
                 break;
 
             case CourseAppointBean.pending:
@@ -112,7 +114,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                 holder.tvCancelQueue.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
-
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_red2));
                 break;
 
             case CourseAppointBean.appointed:
@@ -128,7 +130,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                 holder.tvCancelQueue.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvSignImmedialtely.setVisibility(View.VISIBLE);
-
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.black));
                 break;
 
             case CourseAppointBean.canceled:
@@ -144,6 +146,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
                 holder.tvCancelAppoint.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.black));
                 break;
 
 
@@ -159,7 +162,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
                 holder.tvCancelAppoint.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
-
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.black));
 
                 break;
             case CourseAppointBean.signed:
@@ -174,7 +177,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                 holder.tvSignImmedialtely.setVisibility(View.GONE);
                 holder.tvCancelAppoint.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
-
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.black));
                 break;
             case CourseAppointBean.suspended:
 
@@ -190,7 +193,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                 holder.tvCancelAppoint.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
 
-
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.black));
                 break;
 
             case CourseAppointBean.paid:
@@ -206,16 +209,18 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                 holder.tvPay.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvCancelAppoint.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.black));
+                break;
+            default:
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.black));
                 break;
         }
-
-
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseQueueDetailActivity.startFromAppoint(context,bean.getId());
+                CourseQueueDetailActivity.startFromAppoint(context, bean.getId());
 
             }
         });
@@ -225,8 +230,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
             public void onClick(View v) {
 
 
-
-                new DialogDoubleButton(context).setContentDesc("确定"+holder.tvCancelQueue.getText().toString().trim()+"?")
+                new DialogDoubleButton(context).setContentDesc("确定" + holder.tvCancelQueue.getText().toString().trim() + "?")
                         .setBtnCancelListener(new ButtonCancelListener() {
                             @Override
                             public void onClick(BaseDialog dialog) {
@@ -244,10 +248,6 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                         }).show();
 
 
-
-
-
-
             }
         });
 
@@ -256,9 +256,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
             public void onClick(View v) {
 
 
-
-
-                new DialogDoubleButton(context).setContentDesc("确定"+holder.tvDelete.getText().toString().trim()+"?")
+                new DialogDoubleButton(context).setContentDesc("确定" + holder.tvDelete.getText().toString().trim() + "?")
                         .setBtnCancelListener(new ButtonCancelListener() {
                             @Override
                             public void onClick(BaseDialog dialog) {
@@ -276,17 +274,13 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                         }).show();
 
 
-
-
-
-
             }
         });
 
         holder.tvSignImmedialtely.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseQueueDetailActivity.startFromAppoint(context,bean.getId());
+                CourseQueueDetailActivity.startFromAppoint(context, bean.getId());
                 if (appointmentListener != null) {
                     appointmentListener.onSignImmedialtely(position);
                 }
@@ -296,7 +290,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
         holder.tvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseQueueDetailActivity.startFromAppoint(context,bean.getId());
+                CourseQueueDetailActivity.startFromAppoint(context, bean.getId());
                 if (appointmentListener != null) {
                     appointmentListener.onPayOrder("course", bean.getId());
                 }

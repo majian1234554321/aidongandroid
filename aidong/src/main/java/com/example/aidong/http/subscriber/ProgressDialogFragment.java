@@ -47,8 +47,8 @@ public class ProgressDialogFragment extends DialogFragment {
             WindowManager.LayoutParams params = win.getAttributes();
             params.gravity = Gravity.CENTER;
 
-            params.width = (int) getResources().getDimension(R.dimen.x300);
-            params.height = (int) getResources().getDimension(R.dimen.x140);
+            params.width = (int) getResources().getDimension(R.dimen.x320);
+            params.height = (int) getResources().getDimension(R.dimen.x180);
             win.setAttributes(params);
         }
 

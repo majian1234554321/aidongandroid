@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:appt="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <android.support.design.widget.TabLayout
@@ -12,7 +13,7 @@
         app:tabBackground="@color/white"
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/main_red"
+        app:tabSelectedTextColor="@color/main_black"
         app:tabTextColor="@color/c9"/>
 
 

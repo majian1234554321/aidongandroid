@@ -60,7 +60,9 @@
     <color name="main_gray">#c8c7cc</color>
     <color name="main_red2">#D51121</color>
     <color name="main_red">#1d76c3</color>
+    <color name="main_black">#000000</color>
     <color name="main_blue">#1d76c3</color>
+    <color name="main_white">#FFFFFF</color>
     <color name="color_image_press">#88888888</color>
     <color name="c3">#333333</color>
     <color name="c6">#666666</color>

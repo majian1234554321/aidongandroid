@@ -44,13 +44,7 @@ public class DialogUtils {
 
         ImageView imageView = view.findViewById(R.id.loading);
         GlideLoader.getInstance().displayDrawableGifImage(R.drawable.loading, imageView);
-        TextView tv_message = (TextView) view
-                .findViewById(R.id.tv_message);
-        if (null == message || "".equals(message)) {
-            tv_message.setVisibility(View.GONE);
-        } else {
-            tv_message.setText(message);
-        }
+
         Dialog m_pDialog = new Dialog(context,
                 R.style.MyDialog2);
         m_pDialog.setContentView(view);

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -264,7 +265,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 tv_cancel_appoint.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.VISIBLE);
                 layout_pay.setVisibility(View.VISIBLE);
-
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_red2));
                 break;
 
             case CourseAppointBean.paid:
@@ -279,6 +280,9 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 } else {
                     tv_cancel_appoint.setText("取消预约");
                 }
+
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
+
                 break;
 
             case CourseAppointBean.canceled:
@@ -291,7 +295,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 tvPay.setVisibility(View.GONE);
 
                 tvDelete.setVisibility(View.VISIBLE);
-
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
                 break;
 
             case CourseAppointBean.absent:
@@ -303,7 +307,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.absent));
                 tvDelete.setVisibility(View.VISIBLE);
-
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
                 break;
             case CourseAppointBean.signed:
                 tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -314,17 +318,22 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.signed));
                 tvDelete.setVisibility(View.VISIBLE);
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
                 break;
             case CourseAppointBean.suspended:
                 rlQrCode.setVisibility(View.GONE);
                 tvState.setText(getString(R.string.suspended));
                 tvDelete.setVisibility(View.VISIBLE);
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
                 break;
 //            case CourseAppointBean.paid:
 //                rlQrCode.setVisibility(View.VISIBLE);
 //                tvState.setText(getString(R.string.with_sign_in));
 //                tv_cancel_appoint.setVisibility(View.VISIBLE);
 //                break;
+            default:
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
+                break;
         }
     }
 

@@ -113,6 +113,19 @@ public class SystemPresentImpl implements SystemPresent {
                             SharePrefUtils.putString(context, "showTips","NODATA");
 
                         }
+
+                        if (systemBean.wx_report!=null&&TextUtils.isEmpty(systemBean.wx_report.title)){
+                            SharePrefUtils.removeString(context,"tips");
+                            SharePrefUtils.removeString(context, "showTips");
+                        }
+
+
+                    }else {
+
+                            SharePrefUtils.removeString(context,"tips");
+                            SharePrefUtils.removeString(context, "showTips");
+
+
                     }
 
 

@@ -16,12 +16,13 @@ import com.example.aidong .http.subscriber.handler.ProgressDialogHandler;
 public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> {
 
 
-
-    private ProgressDialogFragment progressDialogFragment= new ProgressDialogFragment();
+    private final ProgressDialogFragment progressDialogFragment;
 
     public Progress2Subscriber(Context context) {
         super(context);
         this.context = context;
+        progressDialogFragment = new ProgressDialogFragment();
+        progressDialogFragment.show(((Activity)context).getFragmentManager(),"TAG");
     }
 
 
@@ -31,9 +32,8 @@ public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> {
      */
     @Override
     public void onStart() {
-
-            showDialog();
-
+        super.onStart();
+        SystemClock.sleep(500);
     }
 
     /**

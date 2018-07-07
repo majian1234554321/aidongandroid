@@ -678,24 +678,5 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         selfDeliveryLayout.setVisibility(View.GONE);
     }
 
-//    public List<CouponBean> couponBeanList;
-//
-//    @Override
-//    public void updateRecyclerView(List<CouponBean> couponBeanList) {
-//        this.couponBeanList = couponBeanList;
-//
-//        if (couponBeanList.size() > 0) {
-//            tvCoupon.setText(couponBeanList.size() + "张可用");
-//        }
-//    }
-//
-//    @Override
-//    public void showEmptyView() {
-//
-//    }
-//
-//    @Override
-//    public void showEndFooterView() {
-//
-//    }
+
 }

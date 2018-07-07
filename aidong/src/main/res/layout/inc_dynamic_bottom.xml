@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
 
-            android:drawableLeft="@drawable/iconaddress2"
+            android:drawableLeft="@drawable/icon_address"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:layout_alignParentLeft="true"
