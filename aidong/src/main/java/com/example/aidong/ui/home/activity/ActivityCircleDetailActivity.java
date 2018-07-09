@@ -1,7 +1,6 @@
 package com.example.aidong.ui.home.activity;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,15 +11,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
+
 import android.widget.ImageView;
-import android.widget.PopupWindow;
+
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,7 +50,7 @@ import com.example.aidong .module.share.SharePopupWindow;
 import com.example.aidong .ui.App;
 import com.example.aidong .ui.BaseActivity;
 import com.example.aidong .ui.discover.activity.DynamicDetailByIdActivity;
-import com.example.aidong .ui.discover.activity.PhotoBrowseActivity;
+
 import com.example.aidong .ui.discover.activity.PublishDynamicActivity;
 import com.example.aidong .ui.discover.viewholder.MultiImageViewHolder;
 import com.example.aidong .ui.discover.viewholder.VideoViewHolder;
@@ -97,8 +96,7 @@ import static com.example.aidong .utils.Constant.REQUEST_TO_DYNAMIC;
  */
 
 public class ActivityCircleDetailActivity extends BaseActivity implements SportCircleFragmentView, View.OnClickListener, CampaignDetailActivityView, ActivitySkuPopupWindow.SelectSkuListener, SportCircleFragmentExtendView {
-    //    private SwitcherLayout switcherLayout;
-//    private CustomRefreshLayout refreshLayout;
+
     TextView txt_share_image, txt_appoint_immediately;
     CommonTitleLayout layout_title;
     RelativeLayout rootLayout;
@@ -454,7 +452,7 @@ public class ActivityCircleDetailActivity extends BaseActivity implements SportC
 
         List<GoodsSkuBean>  list =   new ArrayList<GoodsSkuBean>();
 
-        if(campaignBean.spec!=null&&campaignBean.spec.item!=null&&campaignBean.spec.item.size()>1){
+        if(campaignBean!=null&&campaignBean.spec!=null&&campaignBean.spec.item!=null&&campaignBean.spec.item.size()>1){
             for (int i = 0; i < campaignBean.spec.item.size(); i++) {
                 if (campaignBean.spec.item.get(i).getStock()>0) {
                     list.add(campaignBean.spec.item.get(i));
