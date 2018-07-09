@@ -35,7 +35,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
 
             progressDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
 
-            SystemClock.sleep(1000);
+
         }
     }
 

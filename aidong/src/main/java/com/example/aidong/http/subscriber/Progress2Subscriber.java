@@ -23,6 +23,8 @@ public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> {
         this.context = context;
         progressDialogFragment = new ProgressDialogFragment();
         progressDialogFragment.show(((Activity) context).getFragmentManager(), "TAG");
+
+
     }
 
 
@@ -32,7 +34,7 @@ public abstract class Progress2Subscriber<T> extends BaseSubscriber<T> {
     @Override
     public void onStart() {
         super.onStart();
-        SystemClock.sleep(500);
+
     }
 
     /**

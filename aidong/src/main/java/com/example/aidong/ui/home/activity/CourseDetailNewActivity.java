@@ -401,7 +401,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 if (course.member) { //会员
                     tv_admission.setVisibility(View.GONE);
                 } else {
-                    if (!TextUtils.isEmpty(course.admission) && !"0".equals(course.admission)   && !"0.0".equals(course.admission) && !"0.000".equals(course.admission)) {
+                    if (course.admission!=0) {
                         tv_admission.setText("非会员入场+" + course.admission);
                         tv_admission.setVisibility(View.VISIBLE);
                     } else {

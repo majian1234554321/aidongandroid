@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -101,6 +102,7 @@ public class ProgressDialogHandler extends Handler {
         switch (msg.what) {
             case SHOW_PROGRESS_DIALOG:
                 initProgressDialog();
+
                 break;
             case DISMISS_PROGRESS_DIALOG:
                 dismissProgressDialog();
