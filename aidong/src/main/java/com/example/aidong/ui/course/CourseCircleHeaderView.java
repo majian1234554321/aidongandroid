@@ -251,13 +251,13 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
             TextView tv = new TextView(context);
             tv.setPadding(dip2px(context, 8), 0, dip2px(context, 8), 0);
-            tv.setTextColor(ContextCompat.getColor(context,R.color.white));
+            tv.setTextColor(ContextCompat.getColor(context,R.color.main_red));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 
             tv.setText(course.getTags().get(i));
             tv.setGravity(Gravity.CENTER_VERTICAL);
             tv.setLines(1);
-           tv.setBackgroundResource(R.drawable.shape_blue_button);
+           tv.setBackgroundResource(R.drawable.shape_blue_stork_button);
             flowLayout.addView(tv, lp);
         }
 

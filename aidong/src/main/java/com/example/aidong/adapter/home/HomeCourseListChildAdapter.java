@@ -163,7 +163,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         }
 
 
-        if (courseBean.admission!=0f) {
+        if (courseBean.admission!=0) {
             ForegroundColorSpan c9Span = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.c9));
             SpannableStringBuilder builder2 = new SpannableStringBuilder("非会员入场+" + courseBean.admission);
             builder2.setSpan(c9Span, 0, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -284,7 +284,7 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
             holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_gray_button);
 
-            if (courseBean.admission!=0f) {
+            if (courseBean.admission!=0) {
                 ForegroundColorSpan c9Span = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.c9));
                 SpannableStringBuilder builder2 = new SpannableStringBuilder("非会员入场+" + courseBean.admission);
                 builder2.setSpan(c9Span, 0, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

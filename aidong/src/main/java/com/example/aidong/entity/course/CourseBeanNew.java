@@ -44,7 +44,7 @@ public class CourseBeanNew implements Parcelable, Comparable<CourseBeanNew> {
     public ArrayList<String> copyTag;
 
 
-    public double admission;
+    public int admission;
     public String slogan;
     public double market_price;
 

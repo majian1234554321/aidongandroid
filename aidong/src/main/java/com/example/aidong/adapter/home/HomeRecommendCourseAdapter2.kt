@@ -46,8 +46,11 @@ class HomeRecommendCourseAdapter2(val context: Activity, var course: ArrayList<C
 
             setOnClickListener {
 
-                context.startActivity( Intent(context, CourseCircleDetailActivity::class.java).putExtra("id", course[position].id),
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity ,iv,"share").toBundle())
+//                context.startActivity( Intent(context, CourseCircleDetailActivity::class.java).putExtra("id", course[position].id),
+//                        ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity ,iv,"share").toBundle())
+
+
+                CourseCircleDetailActivity.start(context, course[position].id)
 
             }
 

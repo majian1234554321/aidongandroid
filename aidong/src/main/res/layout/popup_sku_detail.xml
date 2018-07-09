@@ -2,119 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
-
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_height="360dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_sku"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-            <TextView
-                android:id="@+id/txt_spec_remark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="8dp"
-                android:text=""
-                android:textColor="@color/main_red"
-                android:textSize="14sp"
-                android:visibility="gone" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/left_margin"
-                android:paddingRight="@dimen/right_margin"
-                android:text="数量"
-                android:textColor="@color/c9"
-                android:textSize="14sp" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:descendantFocusability="blocksDescendants"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/left_margin"
-                android:paddingRight="@dimen/right_margin">
-
-
-                <ImageView
-                    android:id="@+id/iv_minus"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/icon_minus_gray" />
-
-                <EditText
-                    android:id="@+id/tv_count"
-                    android:layout_width="43dp"
-                    android:layout_height="32dp"
-                    android:layout_marginBottom="@dimen/x12"
-                    android:layout_marginTop="@dimen/x12"
-                    android:background="@drawable/shape_stroke_black"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:text="1"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:id="@+id/iv_add"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/icon_add" />
-
-                <TextView
-                    android:id="@+id/txt_limit_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@color/white" />
-
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
     <RelativeLayout
         android:id="@+id/rl_top"
-        android:layout_above="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -219,11 +113,115 @@
             android:elevation="5dp" />
     </RelativeLayout>
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/scrollView"
+        android:background="@color/white"
+        android:layout_below="@+id/rl_top"
+        android:layout_height="360dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_sku"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:id="@+id/txt_spec_remark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:textColor="@color/main_red"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/left_margin"
+                android:paddingRight="@dimen/right_margin"
+                android:text="数量"
+                android:textColor="@color/c9"
+                android:textSize="14sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:descendantFocusability="blocksDescendants"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/left_margin"
+                android:paddingRight="@dimen/right_margin">
+
+
+                <ImageView
+                    android:id="@+id/iv_minus"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/icon_minus_gray" />
+
+                <EditText
+                    android:id="@+id/tv_count"
+                    android:layout_width="43dp"
+                    android:layout_height="32dp"
+                    android:layout_marginBottom="@dimen/x12"
+                    android:layout_marginTop="@dimen/x12"
+                    android:background="@drawable/shape_stroke_black"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/iv_add"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/icon_add" />
+
+                <TextView
+                    android:id="@+id/txt_limit_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/white" />
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/scrollView"
-
         android:background="@color/white">
 
         <View
@@ -311,5 +309,6 @@
                 android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
+
 
 </RelativeLayout>

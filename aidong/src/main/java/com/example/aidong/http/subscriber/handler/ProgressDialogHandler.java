@@ -47,7 +47,6 @@ public class ProgressDialogHandler extends Handler {
             ImageView imageView = view.findViewById(R.id.loading);
             GlideLoader.getInstance().displayDrawableGifImage(R.drawable.loading, imageView);
 
-
             pd = new Dialog(context,
                     R.style.MyDialog2);
             pd.setContentView(view);

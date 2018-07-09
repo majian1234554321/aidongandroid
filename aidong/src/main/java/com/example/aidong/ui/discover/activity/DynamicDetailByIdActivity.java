@@ -199,14 +199,14 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!TextUtils.isEmpty(s.toString().trim())){
-                    Log.i("DynamicDetailById",s.toString()+"a");
-
-                }else {
-                    etComment.getText().clear();
-
-                    Log.i("DynamicDetailById","没有数据了");
-                }
+//                if(!TextUtils.isEmpty(s.toString().trim())){
+//                    Log.i("DynamicDetailById",s.toString()+"a");
+//
+//                }else {
+//                    etComment.getText().clear();
+//
+//                    Log.i("DynamicDetailById","没有数据了");
+//                }
 
             }
         });
@@ -387,10 +387,10 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
                         , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.AITER, null, dynamic.getDynamicTypeInteger(), null, itUser, replyUserMap);
             }
 
-            if (!replyUserMap.isEmpty()) {
-                CMDMessageManager.sendCMDMessageReply(App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.REPLY, null, dynamic.getDynamicTypeInteger(), itUser, replyUserMap);
-            }
+//            if (!replyUserMap.isEmpty()) {
+//                CMDMessageManager.sendCMDMessageReply(App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+//                        , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.REPLY, null, dynamic.getDynamicTypeInteger(), itUser, replyUserMap);
+//            }
 
             itUser.clear();
             replyUserMap.clear();

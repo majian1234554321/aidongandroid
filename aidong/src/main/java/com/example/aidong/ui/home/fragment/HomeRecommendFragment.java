@@ -69,20 +69,20 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
 
     private CustomRefreshLayout refreshLayout;
-    private NestedScrollView scrollView;
-    private LinearLayout llContent;
+
+
     private BGABanner banner;
 
-    private TextView txtSelectionCourse;
-    private TextView txtSelectionCourseHint;
+
+
 
     private LinearLayout llSelectionActivity;
-    private TextView txtSelectionActivity;
-    private TextView txtSelectionActivityHint;
+
+
     private RecyclerView rvActivity;
     private LinearLayout llStarCoach;
-    private TextView txtStarCoach;
-    private TextView txtStarCoachHint;
+
+
     private RecyclerView rvStarCoach;
     private TextView txtCheckAllActivity, txt_check_all_coach, txt_check_all_course;
     HomeRecommendPresentImpl homePresent;
@@ -223,20 +223,20 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         // initSwitcherLayout();
-        scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
-        llContent = (LinearLayout) view.findViewById(R.id.ll_content);
+
+
         banner = (BGABanner) view.findViewById(R.id.banner);
 
-        txtSelectionCourse = (TextView) view.findViewById(R.id.txt_selection_course);
-        txtSelectionCourseHint = (TextView) view.findViewById(R.id.txt_selection_course_hint);
+
+
 
         llSelectionActivity = (LinearLayout) view.findViewById(R.id.ll_selection_activity);
-        txtSelectionActivity = (TextView) view.findViewById(R.id.txt_selection_activity);
-        txtSelectionActivityHint = (TextView) view.findViewById(R.id.txt_selection_activity_hint);
+
+
         rvActivity = (RecyclerView) view.findViewById(R.id.rv_activity);
         llStarCoach = (LinearLayout) view.findViewById(R.id.ll_star_coach);
-        txtStarCoach = (TextView) view.findViewById(R.id.txt_star_coach);
-        txtStarCoachHint = (TextView) view.findViewById(R.id.txt_star_coach_hint);
+
+
         rvStarCoach = (RecyclerView) view.findViewById(R.id.rv_star_coach);
         txt_check_all_course = (TextView) view.findViewById(R.id.txt_check_all_course);
         txt_check_all_coach = (TextView) view.findViewById(R.id.txt_check_all_coach);
@@ -401,11 +401,11 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     public void onItemClick(String id, int position,View view ) {
         itemClickedPosition = position;
 
-      //  CourseCircleDetailActivity.startForResult(this, id, Constant.REQUEST_COURSE_DETAIL);
+        CourseCircleDetailActivity.startForResult(this, id, Constant.REQUEST_COURSE_DETAIL);
 
 
-        startActivity( new  Intent(getActivity(), CourseCircleDetailActivity.class).putExtra("id", id),
-                ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity() ,view,"share").toBundle());
+//        startActivity( new  Intent(getActivity(), CourseCircleDetailActivity.class).putExtra("id", id),
+//                ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity() ,view,"share").toBundle());
 
 
 //        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, transitionView, OPTION_IMAGE);

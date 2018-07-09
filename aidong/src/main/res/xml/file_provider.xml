@@ -16,7 +16,9 @@
   ~
   -->
 
-<paths>
-    <cache-path  name="internal" path=""/>
-    <external-path name="external" path="" />
-</paths>
+<path>
+    <cache-path  name="internal" path="."/>
+    <external-path name="external" path="." />
+    <root-path name="root_path" path="."/>
+
+</path>
