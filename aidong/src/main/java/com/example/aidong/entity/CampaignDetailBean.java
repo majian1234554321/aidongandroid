@@ -11,7 +11,7 @@ import java.util.List;
  * Created by song on 2016/8/18.
  */
 public class CampaignDetailBean implements Parcelable {
-    private String id;                      //活动编号
+    public  String id;                      //活动编号
     private String name;                    //活动名称
     private List<String> image;             //活动封面图
     private String landmark;                //活动地标
@@ -43,6 +43,10 @@ public class CampaignDetailBean implements Parcelable {
     public boolean followed;
     public int follows_count;
     public String skuTime;
+
+    public String lat;
+    public String lng;
+    public String url;
 
 
     public String getViewCount() {
@@ -262,6 +266,10 @@ public class CampaignDetailBean implements Parcelable {
         dest.writeString(this.skuPrice);
         dest.writeInt(this.follows_count);
         dest.writeString(skuTime);
+        dest.writeString(this.lat);
+        dest.writeString(this.lng);
+        dest.writeString(this.url);
+
     }
 
     public CampaignDetailBean() {
@@ -294,6 +302,9 @@ public class CampaignDetailBean implements Parcelable {
         this.skuPrice = in.readString();
         this.follows_count = in.readInt();
         this.skuTime = in.readString();
+        this.lat = in.readString();
+        this.lng = in.readString();
+        this.url = in.readString();
     }
 
     public static final Creator<CampaignDetailBean> CREATOR = new Creator<CampaignDetailBean>() {

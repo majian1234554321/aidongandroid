@@ -3,6 +3,7 @@ package com.example.aidong.ui.discover.activity;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.aidong.adapter.FixMultiViewPager;
 import com.example.aidong.entity.PhotoBrowseInfo;
+import com.example.aidong.http.subscriber.ProgressDialogFragment;
 import com.example.aidong.services.DownLoadImageService;
 import com.example.aidong.services.ImageDownLoadCallBack;
 import com.example.aidong.ui.App;
@@ -68,6 +70,8 @@ public class ImageShowActivity extends AppCompatActivity {
 
     private boolean isShowStatusBar;
     private DotIndicator dotIndicator;
+    private ProgressDialogFragment pd;
+    private DownLoadImageService service;
 
 
     public static void startImageActivity(Activity activity, ImageView imageView, String imageUrl) {
@@ -108,6 +112,7 @@ public class ImageShowActivity extends AppCompatActivity {
         mStatusHeight = getStatusHeight();
         setContentView(R.layout.activity_image_show);
 
+        pd = new ProgressDialogFragment();
 
 
         Intent intent = getIntent();
@@ -125,17 +130,16 @@ public class ImageShowActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                onDownLoad(imageUrls[dotIndicator.getCurrentSelection() ]);
+                if (pd != null){
+                    pd.show(getFragmentManager(), "TAG");
+                }
+                onDownLoad(imageUrls[dotIndicator.getCurrentSelection()]);
 
 
             }
         });
         dotIndicator.init(this, imageUrls.length);
         dotIndicator.setCurrentSelection(currentPosition);
-
-
-
 
 
         mPhotoViews = new DragPhotoView[imageUrls.length];
@@ -193,21 +197,21 @@ public class ImageShowActivity extends AppCompatActivity {
                 }
             });
             final int index = i;
-            mPhotoViews[i].setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Dialog dialog = new AlertDialog.Builder(ImageShowActivity.this)
-                            .setTitle("长按Dialog").setMessage("这是第" + index + "个位置的图片")
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            }).create();
-                    dialog.show();
-                    return true;
-                }
-            });
+//            mPhotoViews[i].setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    Dialog dialog = new AlertDialog.Builder(ImageShowActivity.this)
+//                            .setTitle("长按Dialog").setMessage("这是第" + index + "个位置的图片")
+//                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    dialog.dismiss();
+//                                }
+//                            }).create();
+//                    dialog.show();
+//                    return true;
+//                }
+//            });
             mPhotoViews[i].setOnDragListener(new DragPhotoView.OnDragListener() {
                 @Override
                 public void onDrag(DragPhotoView view, float moveX, float moveY) {
@@ -241,18 +245,18 @@ public class ImageShowActivity extends AppCompatActivity {
             }
 
             @Override
-            public Object instantiateItem(ViewGroup container, int position) {
+            public Object instantiateItem(@NonNull ViewGroup container, int position) {
                 container.addView(mPhotoViews[position]);
                 return mPhotoViews[position];
             }
 
             @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
                 container.removeView(mPhotoViews[position]);
             }
 
             @Override
-            public boolean isViewFromObject(View view, Object object) {
+            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
                 return view == object;
             }
         });
@@ -309,7 +313,7 @@ public class ImageShowActivity extends AppCompatActivity {
                 .dontAnimate()
                 .placeholder(R.drawable.img_default)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-               // .error(R.mipmap.ic_loding_error)
+                // .error(R.mipmap.ic_loding_error)
                 .into(imageView);
 //        Picasso.with(this).load(url)
 //                .error(R.mipmap.ic_loding_error)
@@ -398,8 +402,6 @@ public class ImageShowActivity extends AppCompatActivity {
     }
 
 
-
-
     //设置不能在3秒内连续点击两次返回按钮
     private long mExitTime;
 
@@ -419,13 +421,16 @@ public class ImageShowActivity extends AppCompatActivity {
     private void onDownLoad(String url) {
         // 在这里执行图片保存方法
 // 图片保存失败
-        DownLoadImageService      service = new DownLoadImageService(getApplicationContext(),
+        // 在这里执行图片保存方法
+// 图片保存失败
+        service = new DownLoadImageService(getApplicationContext(),
                 url,
                 new ImageDownLoadCallBack() {
 
                     @Override
                     public void onDownLoadSuccess(File file) {
                     }
+
                     @Override
                     public void onDownLoadSuccess(Bitmap bitmap) {
                         // 在这里执行图片保存方法
@@ -447,21 +452,35 @@ public class ImageShowActivity extends AppCompatActivity {
     }
 
 
-
-    public static Handler handler = new Handler(){
+    public  Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 10086:
+
+                    if (pd != null){
+                        pd.dismiss();
+                    }
                     Toast.makeText(App.context, "保存成功", Toast.LENGTH_SHORT).show();
                     break;
 
                 case 10085:
+                    if (pd != null){
+                        pd.dismiss();
+                    }
                     Toast.makeText(App.context, "保存失败", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
     };
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (handler!=null){
+            handler.removeCallbacks(service);
+        }
+    }
 }

@@ -84,8 +84,6 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
 
         if (UN_PAID.equals(bean.getVerify_status()) || CLOSE.equals(bean.getVerify_status())||REFUNDED.equals(bean.getVerify_status())) {
             holder.rlQrCode.setVisibility(View.GONE);
-
-
         } else {
             holder.rlQrCode.setVisibility(View.VISIBLE);
 

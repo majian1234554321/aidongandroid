@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.aidong.R;
 import com.example.aidong .ui.App;
 import com.example.aidong .utils.Constant;
 import com.example.aidong .utils.Logger;
@@ -156,7 +157,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             }
         };
 
-        Glide.with(App.context).load(imageUrl).asBitmap()
+        Glide.with(App.context).load(imageUrl).asBitmap().error(R.mipmap.ic_launcher)
                 .into(target);
 
     }

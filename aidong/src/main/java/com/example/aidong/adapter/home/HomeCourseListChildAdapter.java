@@ -87,8 +87,13 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         holder.txtCourseTime.setText(courseBean.getClass_time());
         holder.txtCourseDesc.setText(courseBean.getTagString());
 
+        if (!TextUtils.isEmpty(courseBean.professionalism)) {
+            holder.tv_level.setText("(" + courseBean.professionalism + ")");
+            holder.tv_level.setVisibility(View.VISIBLE);
+        }else {
+            holder.tv_level.setVisibility(View.GONE);
+        }
 
-        holder.tv_level.setText("(" + courseBean.professionalism + ")");
 
 
         StringBuilder sb = new StringBuilder();

@@ -24,6 +24,8 @@ public class CampaignBean implements Parcelable{
     public String slogan;
     public int hard_degree;
     public int strength;
+    public String campaign_detail;
+
     private ArrayList<String> tags;//  ["标签"]
 
     private StringBuffer tagString = new StringBuffer();

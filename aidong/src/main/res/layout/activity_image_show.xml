@@ -36,7 +36,9 @@
         android:layout_height="30dp"
         android:layout_gravity="bottom"
         android:layout_margin="15dp"
-
+        android:background="@color/c9"
+        android:paddingLeft="@dimen/pref_12dp"
+        android:paddingRight="@dimen/pref_12dp"
         android:gravity="center"
         android:text="保存" />
 

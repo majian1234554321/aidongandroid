@@ -47,10 +47,19 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
 //
 //        }
 
-        if (bean.start_time.equals(bean.end_time)){
-            holder.txtTime.setText(bean.start_time);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (!TextUtils.isEmpty(bean.landmark)){
+            stringBuilder.append(bean.landmark).append(" ");
         }else {
-            holder.txtTime.setText(bean.start_time + "~" + bean.end_time);
+            stringBuilder.append("");
+        }
+
+
+        if (bean.start_time.equals(bean.end_time)){
+            holder.txtTime.setText(stringBuilder.append(bean.start_time));
+        }else {
+            holder.txtTime.setText(stringBuilder.append(bean.start_time).append("~") .append(bean.end_time));
         }
 
 

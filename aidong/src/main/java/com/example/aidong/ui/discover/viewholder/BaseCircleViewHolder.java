@@ -147,8 +147,13 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             tvName.setText(dynamic.publisher.getName());
             GlideLoader.getInstance().displayCircleImage(dynamic.publisher.getAvatar(), ivAvatar);
             tvTime.setText(Utils.getData(dynamic.published_at));
-            ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.getUser_type())
-                    ? View.VISIBLE : View.GONE);
+            if (!"ABOUTDONGTAI".equals(typeData)){
+                ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.getUser_type())
+                        ? View.VISIBLE : View.GONE);
+            }else {
+                ivCoachFlag.setVisibility(View.GONE);
+            }
+
             ivGender.setBackgroundResource("0".equals(dynamic.publisher.getGender())
                     ? R.drawable.icon_man : R.drawable.icon_woman);
             if (showFollowButton) {

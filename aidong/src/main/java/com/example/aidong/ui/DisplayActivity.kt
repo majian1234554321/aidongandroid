@@ -29,8 +29,8 @@ class DisplayActivity : BaseActivity() {
 
         when (type) {
             "DetailsActivityH5Fragment" -> {
-                val url = intent.getStringExtra("url")
-                fragments = DetailsActivityH5Fragment.newInstance(url)
+                val id = intent.getStringExtra("id")
+                fragments = DetailsActivityH5Fragment.newInstance(id)
                 fragmentTransaction.replace(R.id.fragment, fragments as DetailsActivityH5Fragment)
             }
 
@@ -49,19 +49,19 @@ class DisplayActivity : BaseActivity() {
     }
 
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-
-
-        if (keyCode == KeyEvent.KEYCODE_BACK && event?.action == KeyEvent.ACTION_DOWN) {
-            if (fragments is DetailsActivityH5Fragment) {
-                (fragments as DetailsActivityH5Fragment).cancleSelect()
-                return true
-            }
-        }
-
-
-        return super.onKeyDown(keyCode, event)
-    }
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//
+//
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event?.action == KeyEvent.ACTION_DOWN) {
+//            if (fragments is DetailsActivityH5Fragment) {
+//                (fragments as DetailsActivityH5Fragment).cancleSelect()
+//                return true
+//            }
+//        }
+//
+//
+//        return super.onKeyDown(keyCode, event)
+//    }
 
 
 }

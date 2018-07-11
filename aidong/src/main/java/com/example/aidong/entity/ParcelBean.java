@@ -24,6 +24,7 @@ public class ParcelBean {
     private String pick_up_status;  // 包裹状态
     private String pick_up_period;
 
+
     private String verify_no;  // "核销码",
     private String verify_status;  // "核销状态 undo-未核销 done-已核销",
 
