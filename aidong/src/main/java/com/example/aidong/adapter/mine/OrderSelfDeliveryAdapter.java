@@ -84,6 +84,8 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
 
         if (UN_PAID.equals(bean.getVerify_status()) || CLOSE.equals(bean.getVerify_status())||REFUNDED.equals(bean.getVerify_status())) {
             holder.rlQrCode.setVisibility(View.GONE);
+
+
         } else {
             holder.rlQrCode.setVisibility(View.VISIBLE);
 
@@ -111,6 +113,14 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
             }
 
         }
+
+
+        if (payStatus!=null&&(PAID.equals(payStatus)||FINISH.equals(payStatus))){
+            holder.rlQrCode.setVisibility(View.VISIBLE);
+        }else {
+            holder.rlQrCode.setVisibility(View.GONE);
+        }
+
 
         if (DELIVERY_EXPRESS1.equals(bean.getPickUpWay())) {
             holder.tvShopName.setText("仓库发货");

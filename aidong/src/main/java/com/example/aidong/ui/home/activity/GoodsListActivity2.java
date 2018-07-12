@@ -125,6 +125,15 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
 
 
 
+    public static void start(Context context,String goodsType, int pos,int selectPosition,String categoryId,String  gymId ) {
+        Intent starter = new Intent(context, GoodsListActivity2.class);
+        starter.putExtra("goodsType", goodsType);
+        starter.putExtra("pos", pos);
+        starter.putExtra("selectPoistion", selectPosition);
+        starter.putExtra("categoryId", categoryId);
+        starter.putExtra("gymId", gymId);
+        context.startActivity(starter);
+    }
 
 
 
@@ -143,7 +152,7 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
             selectPoistion = getIntent().getIntExtra("selectPoistion",0);
 
             categoryId = getIntent().getStringExtra("categoryId");
-
+            gymId = getIntent().getStringExtra("gymId");
 
 
 

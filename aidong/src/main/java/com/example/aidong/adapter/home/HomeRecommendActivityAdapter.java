@@ -56,7 +56,7 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
                 public void onClick(View v) {
 
                     if (Constant.CAMPAIGN.equals(campaignBean.type)) {
-                   //    ActivityCircleDetailActivity.start(context, campaignBean.getId());
+                    //   ActivityCircleDetailActivity.start(context, campaignBean.getId());
 
 
                         Intent intent = new Intent(context,DisplayActivity.class);

@@ -22,6 +22,7 @@
     <!-- Height of the fastscroll thumb -->
 
     <dimen name="font_12sp">12sp</dimen>
+    <dimen name="font_14sp">14sp</dimen>
     <dimen name="pref_1px">1px</dimen>
     <dimen name="font_16sp">16sp</dimen>
     <dimen name="pref__1dp">-1dp</dimen>
@@ -111,7 +112,7 @@
     <dimen name="x30">30px</dimen>
 
     <dimen name="x60">60px</dimen>
-
+    <dimen name="x100">100px</dimen>
     <dimen name="x140">140px</dimen>
 
     <dimen name="x180">180px</dimen>

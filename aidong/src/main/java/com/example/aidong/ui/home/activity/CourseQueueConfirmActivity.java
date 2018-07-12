@@ -132,8 +132,12 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
             txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
                     realPrice));
             txtPriceTotal.setText(String.format(getString(R.string.rmb_price_double),
-                    course.getMember_price()));
+                    realPrice));
         }
+
+
+
+
 
 
         UserCoach userCoach = App.getInstance().getUser();

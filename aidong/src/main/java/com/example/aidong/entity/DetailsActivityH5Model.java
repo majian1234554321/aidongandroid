@@ -45,6 +45,7 @@ public class DetailsActivityH5Model {
     public boolean followed;
     public List<String> image;
     public List<AppointedBean> appointed;
+    public String skuPrice;
 
     public static class CoordinateBean {
         /**
@@ -94,13 +95,13 @@ public class DetailsActivityH5Model {
          * type : coach
          */
 
-        public int id;
+        public String id;
         public String name;
         public String avatar;
-        public int gender;
+        public String gender;
         public String signature;
         public String personal_intro;
-        public int user_id;
+        public String user_id;
         public String type;
     }
 }

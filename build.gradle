@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply plugin: 'kotlin-android-extensions'
 buildscript {
-    ext.kotlin_version = '1.2.41'
+    ext.kotlin_version = '1.2.51'
 
 
     repositories {
@@ -45,8 +45,8 @@ ext {
 
     targetSdkVersion = 28
 
-    versionCode = 670
-    versionName = "6.7.0"
+    versionCode = 671
+    versionName = "6.7.1"
 
   //  design = 'com.android.support:design:27.1.1'
 

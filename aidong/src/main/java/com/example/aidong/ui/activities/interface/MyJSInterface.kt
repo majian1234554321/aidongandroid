@@ -17,6 +17,7 @@ import com.example.aidong.module.photopicker.boxing_impl.ui.BoxingActivity
 import com.example.aidong.module.share.SharePopupWindow
 import com.example.aidong.ui.App
 import com.example.aidong.ui.discover.activity.NewsDetailActivity
+import com.example.aidong.ui.home.activity.AppointmentUserActivity
 import com.example.aidong.ui.home.activity.ConfirmOrderCampaignActivity
 import com.example.aidong.ui.home.activity.GoodsDetailActivity
 import com.example.aidong.ui.home.activity.MapActivity
@@ -31,7 +32,7 @@ import org.json.JSONObject
 import com.example.aidong.utils.Constant.REQUEST_SELECT_PHOTO
 import com.example.aidong.utils.Constant.REQUEST_SELECT_VIDEO
 
-class MyJSInterface(var mContext: Context?, var mWebView: WebView,var url:String?) : FollowView {
+class MyJSInterface(var mContext: Context?, var mWebView: WebView, var url: String?) : FollowView {
 
 
     fun getJpushID(): String {
@@ -82,12 +83,9 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView,var url:String
     fun showDetail(json: String?) {
         Log.i("TAG", json + "点击查看图文详情")
 
-
-        if (true) {
-            val newsBean = NewsBean(model.name, model.introduce, null, null, "图文详情", model.id)
-            newsBean.isNotShare = true
-            NewsDetailActivity.start(mContext, newsBean)
-        }
+        val newsBean = NewsBean(model.name, model.introduce, null, null, "图文详情", model.id)
+        newsBean.isNotShare = true
+        NewsDetailActivity.start(mContext, newsBean)
 
 
     }
@@ -123,7 +121,7 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView,var url:String
     //活动详情  查看分享
     @JavascriptInterface
     fun onload(json: String?) {
-        var gson = Gson()
+        val gson = Gson()
         model = gson.fromJson(json, DetailsActivityH5Model::class.java)
 
 
@@ -176,8 +174,35 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView,var url:String
         }
     }
 
-    fun hasLogined(): Boolean {
-        return App.getInstance().isLogin
+
+    @JavascriptInterface
+    fun lookOverApplieds(json: String?) {
+        Log.i("lookOverApplieds", json)
+
+        if (App.getInstance().isLogin) {
+            if (mContext != null && model.appointed != null) {
+
+                val list = ArrayList<UserBean>()
+
+                for (appointedBean in model.appointed) {
+                    val bean = UserBean()
+                    bean.avatar = appointedBean.avatar
+                    bean.gender = appointedBean.gender
+                    bean.id = appointedBean.id
+                    bean.user_id = appointedBean.user_id
+                    bean.name = appointedBean.name
+                    bean.type = appointedBean.type
+                    bean.personal_intro = appointedBean.personal_intro
+                    bean.signature = appointedBean.signature
+                    list.add(bean)
+                }
+
+
+                AppointmentUserActivity.start(mContext, list, "已报名的人")
+            } else {
+                UiManager.activityJump(mContext, LoginActivity::class.java)
+            }
+        }
     }
 
 
@@ -203,7 +228,7 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView,var url:String
             campaignDetailBean.name = model.name
             campaignDetailBean.landmark = model.landmark
             campaignDetailBean.id = model.id
-            val coordinateBean = CoordinateBean(model.coordinate.lat,model.coordinate.lng)
+            val coordinateBean = CoordinateBean(model.coordinate.lat, model.coordinate.lng)
             campaignDetailBean.url = url
             campaignDetailBean.coordinate = coordinateBean
             val sb = StringBuilder()
@@ -213,6 +238,10 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView,var url:String
                 }
             }
             campaignDetailBean.skuTime = sb.toString()
+            campaignDetailBean.price = model.price
+            campaignDetailBean.market_price = model.market_price
+            campaignDetailBean.skuPrice = model.skuPrice
+
 
             ConfirmOrderCampaignActivity.start(mContext, campaignDetailBean)
 

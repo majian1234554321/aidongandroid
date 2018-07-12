@@ -205,7 +205,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 finish();
                 break;
             case R.id.layout_course_coach:
-             //   ActivityCircleDetailActivity.start(this, course.getCampaignId());
+              //  ActivityCircleDetailActivity.start(this, course.getCampaignId());
 
 
 
@@ -252,7 +252,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                         }
                     }
 
-                    DialogUtils.showDialog(this, "", true);
+                    DialogUtils.showDialog(this, "", false);
 
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
                             payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount, edit_remark.getText().toString().trim());

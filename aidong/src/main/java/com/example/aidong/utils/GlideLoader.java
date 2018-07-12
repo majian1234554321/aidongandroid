@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.aidong.R;
+import com.example.aidong.ui.App;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -41,7 +42,7 @@ public class GlideLoader {
     }
 
     public void displayImage2(String imgUrl, ImageView imageView) {
-        Glide.with(getContext(imageView))
+        Glide.with(App.context)
                 .load(imgUrl)
                 .thumbnail(0.2f)
                 .centerCrop()

@@ -18,7 +18,7 @@ import com.example.aidong.ui.activities.`interface`.MyJSInterface
 import com.example.aidong.ui.mvp.presenter.impl.FollowPresentImpl
 import com.example.aidong.ui.mvp.view.FollowView
 import com.example.aidong.utils.GlideLoader
-import com.example.aidong.utils.ToastGlobal
+
 
 
 import kotlinx.android.synthetic.main.invitationfragment2.*
@@ -40,7 +40,7 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
 
     override fun cancelFollowResult(baseBean: BaseBean<*>?) {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-       // ToastGlobal.showShortConsecutive(baseBean?.getMessage())
+        // ToastGlobal.showShortConsecutive(baseBean?.getMessage())
 
         if (baseBean?.status == 1) {
             mWebView.loadUrl("javascript:followCallback(0)")
@@ -58,7 +58,6 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
     @SuppressLint("JavascriptInterface", "SetJavaScriptEnabled", "AddJavascriptInterface")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         val url = arguments?.getString("id")
@@ -129,14 +128,14 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
 
 
         if (App.getInstance().isLogin) {
-              mWebView.loadUrl(url?.plus("?token=${App.getInstance().token}"))
+            mWebView.loadUrl(url?.plus("?token=${App.getInstance().token}"))
             //mWebView.loadUrl("http://192.168.0.7:3002/market/campaigns/940?token=${App.getInstance().token}")
         } else {
             mWebView.loadUrl(url)
-          //  mWebView.loadUrl("http://192.168.0.7:3002/market/campaigns/940?token=${App.getInstance().token}")
+            //  mWebView.loadUrl("http://192.168.0.7:3002/market/campaigns/940?token=${App.getInstance().token}")
         }
 
-        mWebView.addJavascriptInterface(MyJSInterface(context, mWebView,url), "android")
+        mWebView.addJavascriptInterface(MyJSInterface(context, mWebView, url), "android")
 
 
     }
@@ -153,6 +152,14 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
 
 
             return detailsActivityH5Fragment
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (mWebView != null) {
+            mWebView.destroy()
         }
     }
 

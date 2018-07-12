@@ -13,17 +13,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.mine.CartShopAdapter;
-import com.example.aidong .entity.BaseBean;
-import com.example.aidong .entity.GoodsBean;
-import com.example.aidong .entity.ShopBean;
-import com.example.aidong .ui.home.activity.ConfirmOrderCartActivity;
-import com.example.aidong .ui.mvp.presenter.CartPresent;
-import com.example.aidong .ui.mvp.presenter.impl.CartPresentImpl;
-import com.example.aidong .ui.mvp.view.ICartHeaderView;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .widget.SwitcherLayout;
+import com.example.aidong.adapter.mine.CartShopAdapter;
+import com.example.aidong.entity.BaseBean;
+import com.example.aidong.entity.GoodsBean;
+import com.example.aidong.entity.ShopBean;
+import com.example.aidong.ui.home.activity.ConfirmOrderCartActivity;
+import com.example.aidong.ui.mvp.presenter.CartPresent;
+import com.example.aidong.ui.mvp.presenter.impl.CartPresentImpl;
+import com.example.aidong.ui.mvp.view.ICartHeaderView;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +128,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView, C
 
 
     public void deleteSelectedGoods() {
-        List<GoodsBean> selectedGoods = getSelectedGoods();
+        List<GoodsBean> selectedGoods = deleteAllSelectedGoods();
         if (selectedGoods.isEmpty()) {
             Toast.makeText(context, R.string.tip_select_goods, Toast.LENGTH_LONG).show();
             return;
@@ -142,12 +142,21 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView, C
 
     public void changeAllGoodsStatus(boolean checked) {
         for (ShopBean bean : shopBeanList) {
-
             bean.setChecked(checked);
+
+
             for (GoodsBean goodsBean : bean.getItem()) {
-                if (goodsBean.isOnline() && goodsBean.getStock() != 0) {
-                    goodsBean.setChecked(checked);
+
+
+                if (isEditing) {
+                        goodsBean.setChecked(checked);
+                } else {
+                    if (goodsBean.isOnline() && goodsBean.getStock() != 0) {
+                        goodsBean.setChecked(checked);
+                    }
                 }
+
+
             }
         }
         if (callback != null) {
@@ -226,7 +235,11 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView, C
         tvRecommend.setVisibility(visibility ? VISIBLE : GONE);
     }
 
+
+    public boolean isEditing = false;
+
     public void setEditingStatus(boolean isEditing) {
+        this.isEditing = isEditing;
         shopAdapter.setEditing(isEditing);
     }
 
@@ -285,6 +298,20 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView, C
         List<GoodsBean> goodsBeanList = new ArrayList<>();
         for (ShopBean bean : shopBeanList) {
             for (GoodsBean goodsBean : bean.getItem()) {
+                if (goodsBean.isChecked()&&goodsBean.isOnline()) {
+                    goodsBeanList.add(goodsBean);
+                }
+            }
+        }
+        return goodsBeanList;
+    }
+
+
+
+    private List<GoodsBean> deleteAllSelectedGoods() {
+        List<GoodsBean> goodsBeanList = new ArrayList<>();
+        for (ShopBean bean : shopBeanList) {
+            for (GoodsBean goodsBean : bean.getItem()) {
                 if (goodsBean.isChecked()) {
                     goodsBeanList.add(goodsBean);
                 }
@@ -293,11 +320,18 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView, C
         return goodsBeanList;
     }
 
+
+
     private double calculateTotalPrice() {
         double totalPrice = 0;
         for (GoodsBean goodsBean : getSelectedGoods()) {
-            totalPrice += FormatUtil.parseDouble(goodsBean.getPrice())
-                    * FormatUtil.parseInt(goodsBean.getAmount());
+
+            if (goodsBean.isOnline()) {
+                totalPrice += FormatUtil.parseDouble(goodsBean.getPrice())
+                        * FormatUtil.parseInt(goodsBean.getAmount());
+            }
+
+
         }
         return totalPrice;
     }

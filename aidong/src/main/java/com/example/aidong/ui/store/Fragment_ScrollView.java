@@ -136,7 +136,7 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
 //                startActivity(intent);
 
 
-                GoodsListActivity2.start(getContext(), "", 0, position, SystemInfoUtils.getMarketPartsBean(getContext()).get(position).category_id + "");
+                GoodsListActivity2.start(getContext(), "", 0, position, SystemInfoUtils.getMarketPartsBean(getContext()).get(position).category_id + "",venues.getId());
 
 
             }
