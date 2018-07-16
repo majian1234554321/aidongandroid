@@ -106,7 +106,7 @@ class InvitationFragment : BaseFragment() {
             }
         }
         Logger.i(TAG, "mWebView.loadUrl start")
-        mWebView.addJavascriptInterface(MyJSInterface(context, mWebView,"noargs"), "android")
+        mWebView.addJavascriptInterface(MyJSInterface(context), "android")
 
     }
 

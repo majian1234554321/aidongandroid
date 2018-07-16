@@ -28,6 +28,7 @@ public class AppointmentDetailBean {
     private PayOrderBean pay;            //支付信息
     private PayInfo payInfo;
     private String remark;
+    public String campaign_detail;
 
 
     public class AppointInfo {

@@ -163,7 +163,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         findViewById(R.id.layout_remark).setVisibility(View.VISIBLE);
 
         DialogUtils.showDialog(this, "", false);
-        totalPrice = FormatUtil.parseInt(course.amount) * FormatUtil.parseDouble(course.skuPrice);
+        totalPrice = FormatUtil.parseInt(course.amount) * FormatUtil.parseDouble(course.getPrice());
         realPrice = totalPrice;
 
 
@@ -205,7 +205,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 finish();
                 break;
             case R.id.layout_course_coach:
-              //  ActivityCircleDetailActivity.start(this, course.getCampaignId());
+              // ActivityCircleDetailActivity.start(this, course.getCampaignId());
 
 
 

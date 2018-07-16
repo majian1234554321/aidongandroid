@@ -1,14 +1,14 @@
 package com.example.aidong.ui
 
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.view.KeyEvent
+
 import com.example.aidong.R
-import com.example.aidong.R.id.fragment
+
 import com.example.aidong.ui.activities.fragment.DetailsActivityH5Fragment
 import com.example.aidong.ui.activities.fragment.InvitationFragment
+
 
 class DisplayActivity : BaseActivity() {
 
@@ -21,11 +21,7 @@ class DisplayActivity : BaseActivity() {
 
         val type = intent.getStringExtra("TYPE")
 
-
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-
-
-
 
         when (type) {
             "DetailsActivityH5Fragment" -> {
@@ -48,6 +44,13 @@ class DisplayActivity : BaseActivity() {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
+}
+
 
 //    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 //
@@ -64,4 +67,3 @@ class DisplayActivity : BaseActivity() {
 //    }
 
 
-}

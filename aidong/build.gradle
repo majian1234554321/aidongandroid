@@ -176,6 +176,9 @@ dependencies {
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.4'
 
     implementation 'com.github.MrWangChong:DragPhotoView:1.1.2'
+
+    debugCompile 'com.readystatesoftware.chuck:library:1.1.0'
+    releaseCompile 'com.readystatesoftware.chuck:library-no-op:1.1.0'
 }
 //buildscript {
 //    repositories {

@@ -3,6 +3,7 @@ package com.example.aidong.ui.activities.`interface`
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
@@ -16,6 +17,8 @@ import com.example.aidong.module.photopicker.boxing.model.config.BoxingConfig
 import com.example.aidong.module.photopicker.boxing_impl.ui.BoxingActivity
 import com.example.aidong.module.share.SharePopupWindow
 import com.example.aidong.ui.App
+import com.example.aidong.ui.BaseFragment
+import com.example.aidong.ui.discover.activity.DynamicDetailByIdActivity
 import com.example.aidong.ui.discover.activity.NewsDetailActivity
 import com.example.aidong.ui.home.activity.AppointmentUserActivity
 import com.example.aidong.ui.home.activity.ConfirmOrderCampaignActivity
@@ -25,14 +28,15 @@ import com.example.aidong.ui.mine.activity.account.LoginActivity
 import com.example.aidong.ui.mvp.presenter.impl.FollowPresentImpl
 import com.example.aidong.ui.mvp.view.FollowView
 import com.example.aidong.utils.Constant
+import com.example.aidong.utils.Constant.*
 import com.example.aidong.utils.ToastGlobal
 import com.example.aidong.utils.UiManager
 import com.google.gson.Gson
 import org.json.JSONObject
-import com.example.aidong.utils.Constant.REQUEST_SELECT_PHOTO
-import com.example.aidong.utils.Constant.REQUEST_SELECT_VIDEO
 
-class MyJSInterface(var mContext: Context?, var mWebView: WebView, var url: String?) : FollowView {
+class MyJSInterface(val mContext: Context?, val mWebView: WebView, val url: String?,val fragment:BaseFragment) : FollowView {
+
+    constructor(mContext: Context?) : this(mContext,WebView(mContext),"",BaseFragment())
 
 
     fun getJpushID(): String {
@@ -131,28 +135,26 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView, var url: Stri
     @JavascriptInterface
     fun share(json: String?) {
         var value = model.simple_intro
-        if (model != null) {
-            val sharePopupWindow = SharePopupWindow(mContext as Activity)
-            var image = ""
-            if (model.image != null && !model.image.isEmpty()) {
-                image = model.image[0]
-            }
-
-            if (model.simple_intro != null) {
-
-                if (model.simple_intro.contains("<p>")) {
-                    value = value.replace("<p>", "")
-                }
-                if (value.length > 30) {
-                    value = value.substring(0, 30)
-
-                }
-
-            }
-            //活动分享
-            sharePopupWindow.showAtBottom(model.name + Constant.I_DONG_FITNESS, value,
-                    image, ConstantUrl.URL_SHARE_CAMPAIGN + model.id)
+        val sharePopupWindow = SharePopupWindow(mContext as Activity)
+        var image = ""
+        if (model.image != null && !model.image.isEmpty()) {
+            image = model.image[0]
         }
+
+        if (model.simple_intro != null) {
+
+            if (model.simple_intro.contains("<p>")) {
+                value = value.replace("<p>", "")
+            }
+            if (value.length > 30) {
+                value = value.substring(0, 30)
+
+            }
+
+        }
+        //活动分享
+        sharePopupWindow.showAtBottom(model.name + Constant.I_DONG_FITNESS, value,
+                image, ConstantUrl.URL_SHARE_CAMPAIGN + model.id)
     }
 
     @JavascriptInterface
@@ -171,6 +173,25 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView, var url: Stri
             ToastGlobal.showLong("请先登录再来发帖")
             mContext?.startActivity(Intent(mContext, LoginActivity::class.java))
 
+        }
+    }
+
+    @JavascriptInterface
+    fun dynamicDetail(json: String?) {
+        Log.i("dynamicDetail", json)
+
+        if (App.mInstance.isLogin) {
+            DynamicDetailByIdActivity.startResultById(fragment, json)
+
+
+            //                startActivityForResult(new Intent(ActivityCircleDetailActivity.this,
+            //                                DynamicDetailActivity.class)
+            //                                .putExtra("dynamic", dynamicBean)
+            //                                .putExtra("replyComment", item)
+            //                        , REQUEST_REFRESH_DYNAMIC);
+        } else {
+           // invokeDynamicBean = dynamicBean
+            UiManager.activityJump(mContext, LoginActivity::class.java)
         }
     }
 
@@ -220,7 +241,7 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView, var url: Stri
             val jsonObject = JSONObject(json)
             campaignDetailBean.skucode = signModel.selected_item.code
             campaignDetailBean.amount = signModel.amount
-            campaignDetailBean.skuPrice = signModel.selected_item.price
+            campaignDetailBean.price = signModel.selected_item.price
             campaignDetailBean.address = model.address
 //            campaignDetailBean.coordinate.setLat(model.coordinate.lat)
 
@@ -238,7 +259,7 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView, var url: Stri
                 }
             }
             campaignDetailBean.skuTime = sb.toString()
-            campaignDetailBean.price = model.price
+          //  campaignDetailBean.price = signModel.price
             campaignDetailBean.market_price = model.market_price
             campaignDetailBean.skuPrice = model.skuPrice
 
@@ -286,12 +307,12 @@ class MyJSInterface(var mContext: Context?, var mWebView: WebView, var url: Stri
     private fun takePhotos() {
         val multi = BoxingConfig(BoxingConfig.Mode.MULTI_IMG)
         multi.needCamera().maxCount(6).isNeedPaging
-        Boxing.of(multi).withIntent(mContext, BoxingActivity::class.java).start(mContext as Activity, REQUEST_SELECT_PHOTO)
+        Boxing.of(multi).withIntent(mContext, BoxingActivity::class.java).start(fragment, REQUEST_SELECT_PHOTO)
     }
 
     private fun takeVideo() {
         val videoConfig = BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera()
-        Boxing.of(videoConfig).withIntent(mContext, BoxingActivity::class.java).start(mContext as Activity, REQUEST_SELECT_VIDEO)
+        Boxing.of(videoConfig).withIntent(mContext, BoxingActivity::class.java).start(fragment, REQUEST_SELECT_VIDEO)
     }
 
 

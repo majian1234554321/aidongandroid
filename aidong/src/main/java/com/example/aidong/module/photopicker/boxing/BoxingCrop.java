@@ -52,9 +52,6 @@ public class BoxingCrop {
         if (ensureLoader()) {
             throw new IllegalStateException("init method should be called first");
         }
-        if (cropConfig == null) {
-            throw new IllegalArgumentException("crop config is null.");
-        }
         mCrop.onStartCrop(activity, fragment, cropConfig, path, requestCode);
     }
 

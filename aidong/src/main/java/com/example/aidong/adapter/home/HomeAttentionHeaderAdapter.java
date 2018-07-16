@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.aidong.R;
 import com.example.aidong .entity.UserBean;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong .ui.competition.activity.ContestHomeActivity;
 import com.example.aidong .ui.course.CourseCircleDetailActivity;
 import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
@@ -76,7 +78,15 @@ public class HomeAttentionHeaderAdapter extends RecyclerView.Adapter<HomeAttenti
                 if (Constant.COURSE.equals(bean.type)) {
                     CourseCircleDetailActivity.start(context, bean.getId());
                 } else if (Constant.CAMPAIGN.equals(bean.type)) {
-                    ActivityCircleDetailActivity.start(context, bean.getId());
+                  //  ActivityCircleDetailActivity.start(context, bean.getId());
+
+
+                    Intent intent = new Intent(context,DisplayActivity.class);
+                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                    intent.putExtra("id",bean.campaign_detail);
+                    context.startActivity(intent);
+
+
                 } else if (Constant.COACH.equals(bean.type)) {
                     UserInfoActivity.start(context, bean.getId());
                 } else if (Constant.CONTEST.equals(bean.type)) {

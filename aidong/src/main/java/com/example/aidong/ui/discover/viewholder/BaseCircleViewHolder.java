@@ -169,10 +169,12 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             SpannableStringBuilder highlightText = StringUtils.highlight(context, dynamic.content, dynamic.extras, ContextCompat.getColor(context,R.color.main_blue), 1);
 
 
+
+
             tv_content.setMovementMethod(LinkMovementMethod.getInstance());
 
             if (!TextUtils.isEmpty(highlightText.toString().trim())){
-                tv_content.setText(dynamic.content);
+                tv_content.setText(highlightText);
                 tv_content.setVisibility(View.VISIBLE);
             }else {
                 tv_content.setVisibility(View.GONE);

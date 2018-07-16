@@ -27,6 +27,7 @@ import com.example.aidong .module.pay.PayInterface;
 import com.example.aidong .module.pay.SimplePayListener;
 import com.example.aidong .module.pay.WeiXinPay;
 import com.example.aidong .ui.BaseActivity;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
 import com.example.aidong .ui.home.activity.AppointSuccessActivity;
 import com.example.aidong .ui.home.activity.MapActivity;
@@ -558,9 +559,16 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 present.deleteAppoint(bean.getId());
                 break;
             case R.id.rl_detail:
-
-                ActivityCircleDetailActivity.start(this, bean.getLinkId());
+            //    ActivityCircleDetailActivity.start(this, bean.getLinkId());
 //                CampaignDetailActivity.start(this, bean.getLinkId());
+
+
+                Intent intent = new Intent(context,DisplayActivity.class);
+                intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                intent.putExtra("id",bean.campaign_detail);
+                context.startActivity(intent);
+
+
                 break;
             case R.id.dv_qr:
                 if (UN_JOIN.equals(status)) {

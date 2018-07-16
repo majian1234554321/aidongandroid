@@ -139,6 +139,9 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
             holder.rlQrCode.setVisibility(View.GONE);
             holder.tvDeliveryType.setVisibility(View.GONE);
         }
+
+
+
     }
 
     public void setPayStatus(String payStatus) {

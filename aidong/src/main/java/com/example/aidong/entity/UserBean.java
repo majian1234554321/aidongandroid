@@ -24,6 +24,8 @@ public class UserBean implements Parcelable, Serializable,  Comparable<UserBean>
     public String signature;
     private String user_type;
 
+    public String campaign_detail;
+
     //compat
     private String publisher_id;
     public String user_id;

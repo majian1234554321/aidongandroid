@@ -17,6 +17,8 @@ public class BannerBean implements Serializable {
     private String image;       //广告图片
     private String link;        //关联信息当类型为网页时-关联信息为网址 当类型为场馆|营养品|课程|活动时为关联ID
 
+    public String campaign_detail;
+
     public String getTitle() {
         return title;
     }

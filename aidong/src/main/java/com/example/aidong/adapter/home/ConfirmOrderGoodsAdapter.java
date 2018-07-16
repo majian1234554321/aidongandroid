@@ -13,11 +13,14 @@ import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong .entity.GoodsBean;
+import com.example.aidong.ui.home.activity.GoodsDetailActivity;
 import com.example.aidong .utils.FormatUtil;
 import com.example.aidong .utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.aidong.utils.Constant.GOODS_FOODS;
 
 /**
  * 确认订单中单条商品适配器
@@ -83,6 +86,12 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
             public void onClick(View v) {
                 if(listener != null){
                     listener.onItemClick();
+                }else {
+
+
+                    GoodsDetailActivity.start(context,  bean.getProductId(), GOODS_FOODS);
+                   //;
+
                 }
             }
         });
