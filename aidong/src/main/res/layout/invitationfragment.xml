@@ -37,12 +37,30 @@
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <ImageView
-        android:id="@+id/img_loading"
-        android:layout_width="150dp"
-        android:layout_height="70dp"
+
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:src="@drawable/loading"
-        />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_loading"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+
+            android:src="@drawable/loading"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/i_fitness"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

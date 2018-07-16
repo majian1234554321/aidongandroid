@@ -75,8 +75,8 @@ class InvitationFragment : BaseFragment() {
         mWebView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
-                if (newProgress > 70 && img_loading != null) {
-                    img_loading.visibility = View.GONE
+                if (newProgress > 70 && ll != null) {
+                    ll.visibility = View.GONE
                 }
             }
 
