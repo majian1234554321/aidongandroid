@@ -26,7 +26,7 @@ public class ChatLoginService extends Service {
             if (success && userName != null) {
                 chatLoginManager.login(userName);
             } else {
-                ToastGlobal.showLong("聊天服务注册失败");
+               // ToastGlobal.showLong("聊天服务注册失败");
                 stopSelf();
             }
         }

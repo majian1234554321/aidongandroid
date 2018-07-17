@@ -84,11 +84,11 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
 
         webSettings.setSupportZoom(false)
 
-        webSettings.builtInZoomControls = false
+
 
         webSettings.useWideViewPort = true
         webSettings.domStorageEnabled = true
-        webSettings.loadWithOverviewMode = true
+
 
         webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
 
@@ -97,8 +97,20 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
 
 
 
+
+        webSettings.useWideViewPort = true;//设定支持viewport
+        webSettings.loadWithOverviewMode = true;   //自适应屏幕
+        webSettings.builtInZoomControls = true;
+        webSettings.displayZoomControls = false;
+        webSettings.setSupportZoom(true);//设定支持缩放
+
+
+
+
+
+
         webSettings.databaseEnabled = true
-        webSettings.useWideViewPort = true
+
 
         mWebView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
@@ -184,11 +196,11 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == Constant.REQUEST_SELECT_PHOTO) {
+        if (requestCode == Constant.REQUEST_SELECT_PHOTO&&data!=null) {
             PublishDynamicActivity.startForResult(this, requestCode == Constant.REQUEST_SELECT_PHOTO,
                     Boxing.getResult(data), Constant.REQUEST_PUBLISH_DYNAMIC)
 
-        } else if (requestCode == Constant.REQUEST_SELECT_VIDEO) {
+        } else if (requestCode == Constant.REQUEST_SELECT_VIDEO&&data!=null) {
             selectedMedia = Boxing.getResult(data) as ArrayList<BaseMedia>
             if (selectedMedia.size > 0) {
                 var duration = TrimVideoUtil.VIDEO_MAX_DURATION
@@ -200,14 +212,14 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
                 }
                 Logger.i("TrimmerActivity", "onActivityResult  durantion = $duration")
 
-                TrimmerActivity.startForResult(this, selectedMedia.get(0).getPath(), duration, Constant.REQUEST_VIDEO_TRIMMER)
+                TrimmerActivity.startForResult(this, selectedMedia[0].path, duration, Constant.REQUEST_VIDEO_TRIMMER)
 
             }
 
-        } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) run {
+        } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER&&data!=null) run {
             Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ")
             if (selectedMedia.isNotEmpty()) {
-                selectedMedia[0].path = data?.getStringExtra(Constant.VIDEO_PATH)
+                selectedMedia[0].path = data.getStringExtra(Constant.VIDEO_PATH)
                 PublishDynamicActivity.startForResult(DetailsActivityH5Fragment@ this, requestCode == Constant.REQUEST_SELECT_PHOTO,
                         selectedMedia, REQUEST_PUBLISH_DYNAMIC)
             }
