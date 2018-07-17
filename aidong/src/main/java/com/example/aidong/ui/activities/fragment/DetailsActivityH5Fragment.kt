@@ -86,10 +86,16 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
 
         webSettings.builtInZoomControls = false
 
+        webSettings.useWideViewPort = true
         webSettings.domStorageEnabled = true
         webSettings.loadWithOverviewMode = true
 
         webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+
+
+
+
+
 
         webSettings.databaseEnabled = true
         webSettings.useWideViewPort = true
@@ -121,8 +127,6 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
 //                } else {
 //                    webView.loadUrl("javascript:jpushId('" + App.getInstance().getjPushId() + "')")
 //                }
-//
-//
                 //   mWebView.loadUrl("javascript:followCallback(1)")
 
             }

@@ -13,130 +13,141 @@
         app:stb_title="查看物流" />
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/ll_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="115dp">
-
-                <TextView
-                    android:id="@+id/tv_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="共2件商品"
-                    android:textSize="12sp"
-                    android:background="@drawable/bg_express_counter"
-                    android:textColor="@color/white"
-                    android:gravity="center_horizontal"
-                    android:layout_alignBottom="@+id/iv_cover"
-                    android:layout_alignLeft="@+id/iv_cover"
-                    android:layout_alignRight="@+id/iv_cover"/>
-
-               <LinearLayout
-                   android:id="@+id/ll_company"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="horizontal"
-                   android:layout_toRightOf="@+id/iv_cover"
-                   android:layout_marginLeft="15dp"
-                   android:layout_marginTop="34dp">
-
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:textSize="14sp"
-                       android:textColor="@color/c3"
-                       android:text="快递公司："/>
-
-                   <TextView
-                       android:id="@+id/tv_company"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:textSize="14sp"
-                       android:textColor="@color/c9"
-                       android:text="EMS"/>
-               </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignLeft="@+id/ll_company"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="34dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/c3"
-                        android:text="运单编号："/>
-
-                    <TextView
-                        android:id="@+id/tv_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/c9"
-                        android:text="123456789"/>
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_cover"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:scaleType="centerCrop"
-                    android:layout_marginLeft="15dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="15dp" />
-
-            </RelativeLayout>
-
-            <include layout="@layout/inc_bold_line"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:gravity="center_vertical"
-                android:textSize="15sp"
-                android:paddingLeft="@dimen/left_margin"
-                android:textColor="@color/c3"
-                android:text="物流跟踪"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/line_color"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:layout_marginRight="@dimen/right_margin"/>
-
-            <com.example.aidong.widget.stepview.StepView
-                android:id="@+id/stepView"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/ll_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/right_margin"
-                android:background="#fff"
-                app:dotPosition="top"
-                app:highDotColor="@color/main_red"
-                app:lineColor="#eee"
-                app:lineWidth="1dp"
-                app:radius="3dp"
-                app:leftMargin="@dimen/left_margin"
-                app:rightMargin="@dimen/right_margin"
-                app:highDotDrawable="@drawable/dot_express"/>
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
-        </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="115dp">
+
+                    <TextView
+                        android:id="@+id/tv_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="共2件商品"
+                        android:textSize="12sp"
+                        android:background="@drawable/bg_express_counter"
+                        android:textColor="@color/white"
+                        android:gravity="center_horizontal"
+                        android:layout_alignBottom="@+id/iv_cover"
+                        android:layout_alignLeft="@+id/iv_cover"
+                        android:layout_alignRight="@+id/iv_cover"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_toRightOf="@+id/iv_cover"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="34dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/c3"
+                            android:text="快递公司："/>
+
+                        <TextView
+                            android:id="@+id/tv_company"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/c9"
+                            android:text="EMS"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_alignLeft="@+id/ll_company"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="34dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/c3"
+                            android:text="运单编号："/>
+
+                        <TextView
+                            android:id="@+id/tv_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/c9"
+                            android:text="123456789"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_cover"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="15dp" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/inc_bold_line"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:paddingLeft="@dimen/left_margin"
+                    android:textColor="@color/c3"
+                    android:text="物流跟踪"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_color"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="@dimen/right_margin"/>
+
+                <com.example.aidong.widget.stepview.StepView
+                    android:id="@+id/stepView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/right_margin"
+                    android:background="#fff"
+                    app:dotPosition="top"
+                    app:highDotColor="@color/main_red"
+                    app:lineColor="#eee"
+                    app:lineWidth="1dp"
+                    app:radius="3dp"
+                    app:leftMargin="@dimen/left_margin"
+                    app:rightMargin="@dimen/right_margin"
+                    app:highDotDrawable="@drawable/dot_express"/>
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

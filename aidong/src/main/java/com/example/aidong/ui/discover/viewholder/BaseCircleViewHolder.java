@@ -1,6 +1,7 @@
 package com.example.aidong.ui.discover.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.example.aidong .entity.DynamicBean;
 import com.example.aidong .entity.UserBean;
 import com.example.aidong .entity.model.UserCoach;
 import com.example.aidong .ui.App;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong .ui.MainActivity;
 import com.example.aidong .ui.competition.activity.ContestHomeActivity;
 import com.example.aidong .ui.course.CourseCircleDetailActivity;
@@ -39,6 +41,8 @@ import com.example.aidong .utils.Utils;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+import static com.example.aidong.ui.App.context;
 
 
 /**
@@ -341,7 +345,15 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             public void onClick(View v) {
                 if (dynamic.related == null) return;
                 if (Constant.CAMPAIGN.equals(dynamic.type)) {
-                    ActivityCircleDetailActivity.start(context, dynamic.related.getId());
+                  //  ActivityCircleDetailActivity.start(context, dynamic.related.getId());
+
+                    Intent intent = new Intent(context,DisplayActivity.class);
+                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                    intent.putExtra("id",dynamic.related.campaign_detail);
+                    context.startActivity(intent);
+
+
+
                 } else if (Constant.COURSE.equals(dynamic.type)) {
                     CourseCircleDetailActivity.start(context, dynamic.related.getId());
                 } else if (Constant.CONTEST.equals(dynamic.type)) {

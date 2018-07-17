@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,7 +60,9 @@ public class ExpressInfoActivity extends BaseActivity implements ExpressInfoActi
     private void initView(){
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         contentLayout = (LinearLayout) findViewById(R.id.ll_content);
-        switcherLayout = new SwitcherLayout(this,contentLayout);
+        NestedScrollView scrollView =  findViewById(R.id.scrollView);
+
+        switcherLayout = new SwitcherLayout(this,scrollView);
         ivCover = (ImageView) findViewById(R.id.iv_cover);
         tvCount = (TextView) findViewById(R.id.tv_count);
         tvCompany = (TextView) findViewById(R.id.tv_company);
@@ -104,6 +107,14 @@ public class ExpressInfoActivity extends BaseActivity implements ExpressInfoActi
 
     @Override
     public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
+      //  switcherLayout.showEmptyLayout();
+
+
+        View view = View.inflate(this, R.layout.empty_wuliu, null);
+        ((TextView) view.findViewById(R.id.tv)).setText("暂无物流信息");
+        switcherLayout.addCustomView(view, "empty");
+
+        switcherLayout.showCustomLayout("empty");
+
     }
 }
