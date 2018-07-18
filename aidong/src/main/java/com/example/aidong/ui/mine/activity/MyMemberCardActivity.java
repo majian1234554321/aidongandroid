@@ -19,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -55,7 +56,7 @@ public class MyMemberCardActivity extends BaseActivity {
 
         }
     };
-    private LinearLayout ll;
+    private RelativeLayout ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

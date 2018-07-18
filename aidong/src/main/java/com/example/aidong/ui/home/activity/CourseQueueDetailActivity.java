@@ -7,26 +7,27 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.BaseBean;
-import com.example.aidong .entity.course.CourseBeanNew;
-import com.example.aidong .entity.course.CourseQueueBean;
-import com.example.aidong .entity.course.CourseStore;
-import com.example.aidong .entity.model.UserCoach;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.mvp.presenter.impl.AppointmentCoursePresentImpl;
-import com.example.aidong .ui.mvp.view.CourseQueueView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DialogUtils;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.TelephoneManager;
-import com.example.aidong .widget.CommonTitleLayout;
-import com.example.aidong .widget.CustomNestRadioGroup;
+import com.example.aidong.entity.BaseBean;
+import com.example.aidong.entity.course.CourseBeanNew;
+import com.example.aidong.entity.course.CourseQueueBean;
+import com.example.aidong.entity.course.CourseStore;
+import com.example.aidong.entity.model.UserCoach;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.mvp.presenter.impl.AppointmentCoursePresentImpl;
+import com.example.aidong.ui.mvp.view.CourseQueueView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DialogUtils;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.TelephoneManager;
+import com.example.aidong.widget.CommonTitleLayout;
+import com.example.aidong.widget.CustomNestRadioGroup;
 
 import static com.example.aidong.R.id.txt_queue_location;
 
@@ -37,7 +38,7 @@ import static com.example.aidong.R.id.txt_queue_location;
 public class CourseQueueDetailActivity extends BaseActivity implements View.OnClickListener, CourseQueueView {
 
     private CommonTitleLayout layoutTitle;
-    private RelativeLayout layoutCourseCoach,rl_empty;
+    private RelativeLayout layoutCourseCoach, rl_empty;
     private RelativeLayout layoutCourseLocation;
     private RelativeLayout layoutCourseCoupon;
     private TextView txtCoupon;
@@ -53,13 +54,14 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
     private TextView txtCoachName;
     private TextView txtCourseTime;
     private TextView txtRoomName;
-    private TextView txtCourseLocation;
-    Button button;
+    private TextView txtCourseLocation, tv_price_tip;
+    TextView button;
     String queueId, courseId;
     private AppointmentCoursePresentImpl coursePresent;
     private double realPrice;
     private CourseQueueBean queue;
     private TextView txtqueuelocation;
+    private LinearLayout ll;
 
     public static void startFromAppoint(Context context, String queueId) {
         Intent intent = new Intent(context, CourseQueueDetailActivity.class);
@@ -101,10 +103,15 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
 
         layoutCourseCoach = (RelativeLayout) findViewById(R.id.layout_course_coach);
 
+
+        ll = findViewById(R.id.ll);
+
         imgCourse = (ImageView) findViewById(R.id.img_course);
         txtCourseName = (TextView) findViewById(R.id.txt_course_name);
         txtCoachName = (TextView) findViewById(R.id.txt_coach_name);
         txtCourseTime = (TextView) findViewById(R.id.txt_course_time);
+
+        tv_price_tip = (TextView) findViewById(R.id.tv_price_tip);
 
         txtRoomName = (TextView) findViewById(R.id.txt_room_name);
         txtCourseLocation = (TextView) findViewById(R.id.txt_course_location);
@@ -123,7 +130,7 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
 
     private void initData() {
         layoutCourseCoupon.setVisibility(View.GONE);
-        button = (Button) findViewById(R.id.bt_queue_immediately);
+        button = findViewById(R.id.bt_queue_immediately);
 
         layoutTitle.setLeftIconListener(this);
         findViewById(R.id.bt_queue_immediately).setOnClickListener(this);
@@ -192,12 +199,12 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
     public void ongetCourseQueueDetail(CourseQueueBean queue) {
         if (queue == null) {
             rl_empty.setVisibility(View.VISIBLE);
-            button.setVisibility(View.GONE);
+            ll.setVisibility(View.GONE);
             return;
         }
 
         rl_empty.setVisibility(View.GONE);
-        button.setVisibility(View.VISIBLE);
+        ll.setVisibility(View.VISIBLE);
 
         this.queue = queue;
 
@@ -217,7 +224,10 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
         txtCouponSubtract.setText("￥" + queue.getCoupon());
         txtPriceTotal.setText("￥" + queue.getTotal());
         txtPriceReal.setText("￥" + queue.getPay_amount());
-        button.setVisibility(View.VISIBLE);
+
+        tv_price_tip.setText("实付款：￥" + queue.getPay_amount());
+
+        ll.setVisibility(View.VISIBLE);
 
         switch (queue.getStatus()) {
             case CourseQueueBean.queued:

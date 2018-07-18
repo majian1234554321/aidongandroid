@@ -18,6 +18,7 @@ import com.example.aidong.adapter.MyGridAdapter;
 import com.example.aidong.entity.BannerBean;
 import com.example.aidong.entity.MarketPartsBean;
 import com.example.aidong.entity.SystemBean;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong.ui.MainActivity;
 import com.example.aidong.ui.home.activity.EquipmentActivity;
 import com.example.aidong.ui.home.activity.FoodAndBeverageActivity;
@@ -31,6 +32,8 @@ import com.example.aidong.widget.MyGridView;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
+
+import static com.example.aidong.ui.App.context;
 
 /**
  * the header of store activity
@@ -68,7 +71,19 @@ public class StoreHeaderView extends RelativeLayout {
         banner.setDelegate(new BGABanner.Delegate() {
             @Override
             public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
-                ((MainActivity) context).toTargetActivity((BannerBean) model);
+                //((MainActivity) context).toTargetActivity((BannerBean) model);
+
+
+                if ("23".equals(((BannerBean) model).getType())){
+                    Intent intent = new Intent(context,DisplayActivity.class);
+                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                    intent.putExtra("id",((BannerBean) model).campaign_detail);
+                    context.startActivity(intent);
+                }else{
+                    ((MainActivity) context).toTargetActivity((BannerBean) model);
+                }
+
+
             }
         });
 

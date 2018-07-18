@@ -225,7 +225,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         }
 
         GlideLoader.getInstance().displayImage(appointBean.getTimetable().getCover(), imgCourse);
-        tvOrderNum.setText("预约码: " + appointBean.getId());
+
         txtCourseName.setText(appointBean.getTimetable().getName());
         txtCoachName.setText(appointBean.getTimetable().getCoach().getName());
 
@@ -246,7 +246,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, Color.BLACK, appointBean.getId(),
                 DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
         tv_cancel_appoint.setText("取消预约");
-
+        tvOrderNum.setText("预约码: " + appointBean.getId());
         switch (appointBean.getCourseFinalStatus()) {
 
             case CourseAppointBean.pending:
@@ -260,7 +260,8 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                     }
                 });
 
-                tvOrderNum.setVisibility(View.GONE);
+                rlQrCode.setVisibility(View.GONE);
+
                 tvState.setText(getString(R.string.un_paid));
                 tv_cancel_appoint.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.VISIBLE);

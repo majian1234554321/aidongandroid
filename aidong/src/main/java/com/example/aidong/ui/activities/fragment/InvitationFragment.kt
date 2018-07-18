@@ -72,6 +72,9 @@ class InvitationFragment : BaseFragment() {
         webSettings.databaseEnabled = true
         webSettings.useWideViewPort = true
 
+        mWebView.setInitialScale(25)
+
+
         mWebView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
@@ -98,7 +101,7 @@ class InvitationFragment : BaseFragment() {
         mWebView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-                mWebView.loadUrl("javascript:var imgs=document.getElementsByClassName('main-box');for(var i=0;i<imgs.length;i++){imgs[i].style.width='100%';};void(0);")
+            //    mWebView.loadUrl("javascript:var imgs=document.getElementsByClassName('main-box');for(var i=0;i<imgs.length;i++){imgs[i].style.width='100%';};void(0);")
                 // mWebView.loadUrl("javascript:var width=document.getElementsByClassName('bigbox');width.style.width='640px';};void(0);")
                 // mWebView.loadUrl("javascript:var imgs=document.getElementsByClassName('bigbox');for(var i=0;i<imgs.length;i++){imgs[i].style.width='100%';};void(0);")
 

@@ -195,7 +195,7 @@ public class CouponFragment extends BaseFragment implements CouponFragmentView {
     public void onDestroy() {
         super.onDestroy();
         if (VALID.equals(type)) {
-            LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
+            LocalBroadcastManager.getInstance(activity).unregisterReceiver(receiver);
         }
 
     }
