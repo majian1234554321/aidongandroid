@@ -49,6 +49,8 @@ public class AppointmentDetailBean {
         String organizer_mobile;
         private ArrayList<String> spec_value;
 
+        public String campaign_detail;
+
         public String getVerify_no() {
             return verify_no + "";
         }
@@ -317,6 +319,9 @@ public class AppointmentDetailBean {
     public AppointInfo getAppoint() {
         return appointment;
     }
+
+
+
 
     public void setAppointment(AppointInfo appointment) {
         this.appointment = appointment;

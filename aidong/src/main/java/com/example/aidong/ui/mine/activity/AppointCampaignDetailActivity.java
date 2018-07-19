@@ -565,7 +565,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
                 Intent intent = new Intent(context,DisplayActivity.class);
                 intent.putExtra("TYPE","DetailsActivityH5Fragment");
-                intent.putExtra("id",bean.campaign_detail);
+                intent.putExtra("id",bean.getAppoint().campaign_detail);
                 context.startActivity(intent);
 
 
