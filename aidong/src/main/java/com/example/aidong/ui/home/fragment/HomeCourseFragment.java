@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,11 +21,11 @@ import android.widget.TextView;
 
 import com.kyleduo.switchbutton.SwitchButton;
 import com.example.aidong.R;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.BaseFragment;
-import com.example.aidong .ui.home.activity.LocationActivity;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.Logger;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.BaseFragment;
+import com.example.aidong.ui.home.activity.LocationActivity;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,16 +48,15 @@ public class HomeCourseFragment extends BaseFragment implements View.OnClickList
         @Override
         public void onReceive(Context context, Intent intent) {
 
-             if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
+            if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
 
-                 tv_location.setText(App.getInstance().getSelectedCity());
+                tv_location.setText(App.getInstance().getSelectedCity());
 
             }
 
 
         }
     };
-    private HomeCourseListFragment homeCourseListFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,12 +67,12 @@ public class HomeCourseFragment extends BaseFragment implements View.OnClickList
 
         filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
 
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
+        LocalBroadcastManager.getInstance(activity).registerReceiver(selectCityReceiver, filter);
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home_course, container, false);
     }
 
@@ -85,7 +85,7 @@ public class HomeCourseFragment extends BaseFragment implements View.OnClickList
         fm = getChildFragmentManager();
 
 
-        homeCourseListFragment = new HomeCourseListFragment();
+        HomeCourseListFragment homeCourseListFragment = new HomeCourseListFragment();
 
 
         mFragments.add(homeCourseListFragment);
@@ -94,10 +94,10 @@ public class HomeCourseFragment extends BaseFragment implements View.OnClickList
         btCheckout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Logger.i(TAG,"is checked = " + isChecked);
-                if(isChecked){
+                Logger.i(TAG, "is checked = " + isChecked);
+                if (isChecked) {
                     showFragment(1);
-                }else {
+                } else {
                     showFragment(0);
                 }
             }

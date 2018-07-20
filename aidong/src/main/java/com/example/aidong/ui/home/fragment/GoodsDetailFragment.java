@@ -1,24 +1,34 @@
 package com.example.aidong.ui.home.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong.ui.BaseFragment;
+import com.example.aidong.ui.discover.activity.ImageShowActivity;
 import com.example.aidong.ui.home.activity.ShowWebImageActivity;
 import com.example.aidong.utils.Logger;
 import com.example.aidong.widget.richtext.RichWebView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 商品图文详情
@@ -46,93 +56,103 @@ public class GoodsDetailFragment extends BaseFragment {
         if (!TextUtils.isEmpty(content)) {
             Logger.i("RichText", " body = " + content);
             webView.setRichText(content);
+            WebSettings webSettings = webView.getSettings();
+            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
 
-            webView.addJavascriptInterface(new JavascriptInterface(getContext()), "imagelistner");
-            webView.setWebViewClient(new MyWebViewClient());
+            webSettings.setUseWideViewPort(true); //设定支持viewport
+            webSettings.setLoadWithOverviewMode(true);   //自适应屏幕
+          //  webSettings.builtInZoomControls = true;
+           // webSettings.displayZoomControls = false;
+            webSettings.setSupportZoom(false);//设定支持缩放
+            webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+
+
+          //  webView.setInitialScale(25);
+
+
+
+
+            String[] mImageUrls = returnImageUrlsFromHtml(content);
+            webView.addJavascriptInterface(new MJavascriptInterface(activity, mImageUrls), "imagelistener");
+            webView.setWebViewClient(new MyTextViewWebViewClient());
 
 
         }
     }
 
 
-    //给webView添加js代码
-
-    // 添加js交互接口类，并起别名 imagelistner  addJavaScriptInterface方式帮助我们从一个网页传递值到Android XML视图（反之亦然）。
-
-
-    // 注入js函数监听
-    private void addImageClickListner() {
-        // 这段js函数的功能就是，遍历所有的img，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
-        webView.loadUrl("javascript:(function(){" +
-                "var objs = document.getElementsByTagName(\"img\"); " +
-                "for(var i=0;i<objs.length;i++)  " +
-                "{"
-                + "    objs[i].onclick=function()  " +
-                "    {  "
-                + "        window.imagelistner.openImage(this.src);  " +
-                "    }  " +
-                "}" +
-                "})()");
-    }
-
-    // js通信接口
-    public class JavascriptInterface {
-
-        private Context context;
-
-        public JavascriptInterface(Context context) {
-            this.context = context;
+    public String[] returnImageUrlsFromHtml(String desr) {
+        List<String> imageSrcList = new ArrayList<String>();
+        String htmlCode = desr;
+        Pattern p = Pattern.compile("<img\\b[^>]*\\bsrc\\b\\s*=\\s*('|\")?([^'\"\n\r\f>]+(\\.jpg|\\.bmp|\\.eps|\\.gif|\\.mif|\\.miff|\\.png|\\.tif|\\.tiff|\\.svg|\\.wmf|\\.jpe|\\.jpeg|\\.dib|\\.ico|\\.tga|\\.cut|\\.pic|\\b)\\b)[^>]*>", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(htmlCode);
+        String quote = null;
+        String src = null;
+        while (m.find()) {
+            quote = m.group(1);
+            src = (quote == null || quote.trim().length() == 0) ? m.group(2).split("//s+")[0] : m.group(2);
+            imageSrcList.add(src);
         }
-
-        public void openImage(String img) {
-            System.out.println(img);
-
-            Intent intent = new Intent();
-            intent.putExtra("image", img);
-            intent.setClass(context, ShowWebImageActivity.class);
-            context.startActivity(intent);
-            System.out.println(img);
+        if (imageSrcList == null || imageSrcList.size() == 0) {
+            Log.e("imageSrcList", "资讯中未匹配到图片链接");
+            return null;
         }
+        return imageSrcList.toArray(new String[imageSrcList.size()]);
     }
 
 
-    private class MyWebViewClient extends WebViewClient {
-
-        //在点击请求的是链接是才会调用，重写此方法返回true表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边。
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-            return super.shouldOverrideUrlLoading(view, url);
-        }
-
-        //在页面加载结束时调用。
+    public class MyTextViewWebViewClient extends WebViewClient {
+        @SuppressLint("SetJavaScriptEnabled")
         @Override
         public void onPageFinished(WebView view, String url) {
-
             view.getSettings().setJavaScriptEnabled(true);
-
             super.onPageFinished(view, url);
-            // html加载完成之后，添加监听图片的点击js函数
-            addImageClickListner();
-
+            addImageClickListener(view);//待网页加载完全后设置图片点击的监听方法
         }
 
-
-        //在页面加载开始时调用。
+        @SuppressLint("SetJavaScriptEnabled")
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             view.getSettings().setJavaScriptEnabled(true);
-
             super.onPageStarted(view, url, favicon);
         }
 
-        @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        private void addImageClickListener(WebView webView) {
+            webView.loadUrl("javascript:(function(){" +
+                    "var objs = document.getElementsByTagName(\"img\"); " +
+                    "for(var i=0;i<objs.length;i++) " +
+                    "{"
+                    + " objs[i].onclick=function() " +
+                    " { "
+                    + "  window.imagelistener.openImage(this.src); " +//通过js代码找到标签为img的代码块，设置点击的监听方法与本地的openImage方法进行连接
+                    " } " +
+                    "}" +
+                    "})()");
 
-            super.onReceivedError(view, errorCode, description, failingUrl);
+
+            webView.loadUrl("javascript:var imgs=document.getElementsByTagName('img');for(var i=0;i<imgs.length;i++){imgs[i].style.width='100%'; imgs[i].style.height='auto';};void(0);");
+
 
         }
     }
 
+
+    public class MJavascriptInterface {
+        private Activity mContext;
+        private String[] imageUrls;
+
+        public MJavascriptInterface(Activity context, String[] imageUrls) {
+            this.mContext = context;
+            this.imageUrls = imageUrls;
+        }
+
+        @android.webkit.JavascriptInterface
+        public void openImage(String img) {
+            //以下跳转你自己的大图预览页面即可
+            ImageView imageView = new ImageView(mContext);
+
+            ImageShowActivity.startImageActivity(mContext, imageView, img);
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.course;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,10 @@ import com.example.aidong .utils.ToastGlobal;
 /**
  * Created by user on 2017/11/28.
  */
-public class CourseChooseSeatAdapter extends RecyclerView.Adapter<CourseChooseSeatAdapter.ViewHoder> {
-    Context context;
-    CourseSeat seat;
-    int positionSelected = -1;
+public class CourseChooseSeatAdapter extends RecyclerView.Adapter<CourseChooseSeatAdapter.ViewHolder> {
+    private Context context;
+    private CourseSeat seat;
+    private int positionSelected = -1;
 
     public CourseChooseSeatAdapter(Context context, CourseSeat seat, OnItemClickListener listener) {
         this.listener = listener;
@@ -26,13 +27,14 @@ public class CourseChooseSeatAdapter extends RecyclerView.Adapter<CourseChooseSe
         this.seat = seat;
     }
 
+    @NonNull
     @Override
-    public ViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHoder(LayoutInflater.from(context).inflate(R.layout.item_choose_seat, parent, false));
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_choose_seat, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHoder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
          String positionSeat = seat.transformePositionToSeatX(position);
       final  String positionSeatS = seat.transformePositionToSeatS(position);
 
@@ -93,16 +95,16 @@ public class CourseChooseSeatAdapter extends RecyclerView.Adapter<CourseChooseSe
         positionSelected = -1;
     }
 
-    class ViewHoder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img_seat;
 
-        public ViewHoder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            img_seat = (ImageView) itemView.findViewById(R.id.img_seat);
+            img_seat = itemView.findViewById(R.id.img_seat);
         }
     }
 
-    OnItemClickListener listener;
+    private OnItemClickListener listener;
 
     public void setListener(OnItemClickListener listener) {
         this.listener = listener;
