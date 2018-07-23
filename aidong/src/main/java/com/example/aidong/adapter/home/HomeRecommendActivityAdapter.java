@@ -15,6 +15,7 @@ import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
 import com.example.aidong .utils.Constant;
 import com.example.aidong .utils.DateUtils;
 import com.example.aidong .utils.GlideLoader;
+import com.iknow.android.utils.GlideUtils;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,10 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CampaignBean campaignBean = campaigns.get(position);
         if (campaignBean != null) {
-            GlideLoader.getInstance().displayImage2(campaignBean.getCover(), holder.imgCover);
+         //   GlideLoader.getInstance().displayImage2(campaignBean.getCover(), holder.imgCover);
+
+            GlideUtils.loadIntoUseFitWidth(context,campaignBean.getCover(),R.drawable.img_default,holder.imgCover);
+
             holder.txtType.setText("【" + campaignBean.getTypeCZ() + "】");
 
             if(campaignBean.start_time.equals(campaignBean.end_time)){
