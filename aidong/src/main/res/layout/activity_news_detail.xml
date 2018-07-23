@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_title"
-            android:text="资讯详情"
+            android:text="图文详情"
             android:textColor="@color/color_title"
             android:layout_centerInParent="true"/>
 

@@ -615,7 +615,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         int height = DensityUtil.dp2px(this, 300);
         if (y <= 0) {
             topLayout.setBackgroundColor(Color.argb(55, 0, 0, 0));
-        } else if (y > 0 && y <= height) {
+        } else if (y <= height) {
             float ratio = (float) y / height;
             float alpha = (200 * ratio) + 55;
             topLayout.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
