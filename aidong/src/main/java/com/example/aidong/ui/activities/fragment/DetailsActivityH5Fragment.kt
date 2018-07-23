@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -82,17 +83,13 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
 
         webSettings.allowFileAccess = true// 设置允许访问文件数据 v
 
-        webSettings.setSupportZoom(false)
 
-
-
-        webSettings.useWideViewPort = true
         webSettings.domStorageEnabled = true
 
 
         webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
 
-
+        webSettings.setUserAgentString(System.getProperty("http.agent"));
         //  webSettings.defaultZoom = WebSettings.ZoomDensity.CLOSE
 
         webSettings.useWideViewPort = true;//设定支持viewport
@@ -100,20 +97,71 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
         webSettings.builtInZoomControls = true;
         webSettings.displayZoomControls = false;
         webSettings.setSupportZoom(false);//设定支持缩放
-        webSettings.textSize = WebSettings.TextSize.NORMAL;
+        // webSettings.textSize = WebSettings.TextSize.NORMAL;
+        webSettings.textZoom = 100
 
-
-        mWebView.setInitialScale(25)
+         mWebView.setInitialScale(25)
 
         // mWebView.setIn
 
         webSettings.databaseEnabled = true
 
 
+
+
+
+
+
+		// User settings
+        webSettings.setJavaScriptEnabled(true);
+		webSettings.setJavaScriptEnabled(true);
+		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+		webSettings.setUseWideViewPort(true);//关键点
+
+		webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+
+		webSettings.setDisplayZoomControls(false);
+		webSettings.setJavaScriptEnabled(true); // 设置支持javascript脚本
+		webSettings.setAllowFileAccess(true); // 允许访问文件
+		webSettings.setBuiltInZoomControls(true); // 设置显示缩放按钮
+		webSettings.setSupportZoom(true); // 支持缩放
+
+		webSettings.setLoadWithOverviewMode(true);
+
+		val metrics =  DisplayMetrics()
+		  activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		  val mDensity = metrics.densityDpi;
+		  Log.d("maomao", "densityDpi = " + mDensity);
+		  if (mDensity == 240) {
+		   webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+		  } else if (mDensity == 160) {
+		     webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+		  } else if(mDensity == 120) {
+		   webSettings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
+		  }else if(mDensity == DisplayMetrics.DENSITY_XHIGH){
+		   webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+		  }else if (mDensity == DisplayMetrics.DENSITY_TV){
+		   webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+		  }else{
+              webSettings.setTextSize(WebSettings.TextSize.SMALLER);
+		  }
+
+
+		/**
+		 * 用WebView显示图片，可使用这个参数 设置网页布局类型： 1、LayoutAlgorithm.NARROW_COLUMNS ：
+		 * 适应内容大小 2、LayoutAlgorithm.SINGLE_COLUMN:适应屏幕，内容将自动缩放
+		 */
+        webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING;
+
+
+
+
+
+
         mWebView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
-                if (newProgress > 70 && rl != null) {
+                if (newProgress > 30 && rl != null) {
                     rl.visibility = View.GONE
                 }
             }
@@ -131,7 +179,8 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
 
-
+                mWebView.loadUrl("javascript:var text=document.getElementsByClassName('scl-followico');" +
+                        "text.style.lineHeight = '0.3';")
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //                    webView.evaluateJavascript("javascript:jpushId('" + App.getInstance().getjPushId() + "')", { value -> LogUtil.i(TAG, "jpushId onReceiveValue = $value") })
 //                } else {

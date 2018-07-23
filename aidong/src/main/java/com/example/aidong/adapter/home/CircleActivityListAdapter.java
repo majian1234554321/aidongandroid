@@ -77,13 +77,13 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
             @Override
             public void onClick(View v) {
                 if (Constant.CAMPAIGN.equals(bean.type)) {
-                    ActivityCircleDetailActivity.start(context, bean.getId());
+                //    ActivityCircleDetailActivity.start(context, bean.getId());
 
 
-//                    Intent intent = new Intent(context,DisplayActivity.class);
-//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
-//                    intent.putExtra("id",bean.campaign_detail);
-//                    context.startActivity(intent);
+                    Intent intent = new Intent(context,DisplayActivity.class);
+                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                    intent.putExtra("id",bean.campaign_detail);
+                    context.startActivity(intent);
 
                 } else if (Constant.CONTEST.equals(bean.type)) {
                     ContestHomeActivity.start(context, bean);

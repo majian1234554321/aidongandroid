@@ -8,6 +8,9 @@ import com.example.aidong.R
 
 import com.example.aidong.ui.activities.fragment.DetailsActivityH5Fragment
 import com.example.aidong.ui.activities.fragment.InvitationFragment
+import android.util.DisplayMetrics
+
+
 
 
 class DisplayActivity : BaseActivity() {
@@ -18,6 +21,11 @@ class DisplayActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display)
+
+
+//        val displayMetrics = resources.displayMetrics
+//        displayMetrics.scaledDensity = displayMetrics.density
+
 
         val type = intent.getStringExtra("TYPE")
 
@@ -48,6 +56,13 @@ class DisplayActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+
+    override fun onRestart() {
+        super.onRestart()
+
+//        val displayMetrics = resources.displayMetrics
+//        displayMetrics.scaledDensity = displayMetrics.density
+    }
 
 }
 
