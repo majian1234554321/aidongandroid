@@ -35,9 +35,9 @@ public class ChatLoginService extends Service {
         @Override
         public void onChatLogin(boolean result) {
             if (result) {
-//                ToastGlobal.showLong(R.string.login_chat_success);
+              //  ToastGlobal.showLong(R.string.login_chat_success);
             } else {
-                ToastGlobal.showLong(R.string.login_chat_faile);
+               // ToastGlobal.showLong(R.string.login_chat_faile);
             }
             stopSelf();
 
