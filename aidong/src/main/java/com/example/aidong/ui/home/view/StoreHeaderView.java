@@ -71,17 +71,17 @@ public class StoreHeaderView extends RelativeLayout {
         banner.setDelegate(new BGABanner.Delegate() {
             @Override
             public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
-                ((MainActivity) context).toTargetActivity((BannerBean) model);
+               // ((MainActivity) context).toTargetActivity((BannerBean) model);
 
 
-//                if ("23".equals(((BannerBean) model).getType())){
-//                    Intent intent = new Intent(context,DisplayActivity.class);
-//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
-//                    intent.putExtra("id",((BannerBean) model).campaign_detail);
-//                    context.startActivity(intent);
-//                }else{
-//                    ((MainActivity) context).toTargetActivity((BannerBean) model);
-//                }
+                if ("23".equals(((BannerBean) model).getType())){
+                    Intent intent = new Intent(context,DisplayActivity.class);
+                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                    intent.putExtra("id",((BannerBean) model).campaign_detail);
+                    context.startActivity(intent);
+                }else{
+                    ((MainActivity) context).toTargetActivity((BannerBean) model);
+                }
 
 
             }

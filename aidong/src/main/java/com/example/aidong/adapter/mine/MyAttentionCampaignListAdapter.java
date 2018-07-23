@@ -90,13 +90,13 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
 
 
 
-//                    Intent intent = new Intent(context,DisplayActivity.class);
-//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
-//                    intent.putExtra("id",user.campaign_detail);
-//                    context.startActivity(intent);
+                    Intent intent = new Intent(context,DisplayActivity.class);
+                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                    intent.putExtra("id",user.campaign_detail);
+                    context.startActivity(intent);
 
 
-                    ActivityCircleDetailActivity.start(context, user.getId());
+                   // ActivityCircleDetailActivity.start(context, user.getId());
                 }
 
 

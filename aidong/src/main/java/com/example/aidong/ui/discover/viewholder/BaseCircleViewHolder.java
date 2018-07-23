@@ -345,12 +345,12 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             public void onClick(View v) {
                 if (dynamic.related == null) return;
                 if (Constant.CAMPAIGN.equals(dynamic.type)) {
-                    ActivityCircleDetailActivity.start(context, dynamic.related.getId());
+                  //  ActivityCircleDetailActivity.start(context, dynamic.related.getId());
 
-//                    Intent intent = new Intent(context,DisplayActivity.class);
-//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
-//                    intent.putExtra("id",dynamic.related.campaign_detail);
-//                    context.startActivity(intent);
+                    Intent intent = new Intent(context,DisplayActivity.class);
+                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                    intent.putExtra("id",dynamic.related.campaign_detail);
+                    context.startActivity(intent);
 
 
 

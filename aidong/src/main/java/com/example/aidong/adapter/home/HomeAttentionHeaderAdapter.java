@@ -78,13 +78,13 @@ public class HomeAttentionHeaderAdapter extends RecyclerView.Adapter<HomeAttenti
                 if (Constant.COURSE.equals(bean.type)) {
                     CourseCircleDetailActivity.start(context, bean.getId());
                 } else if (Constant.CAMPAIGN.equals(bean.type)) {
-                    ActivityCircleDetailActivity.start(context, bean.getId());
+                  //  ActivityCircleDetailActivity.start(context, bean.getId());
 
 
-//                    Intent intent = new Intent(context,DisplayActivity.class);
-//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
-//                    intent.putExtra("id",bean.campaign_detail);
-//                    context.startActivity(intent);
+                    Intent intent = new Intent(context,DisplayActivity.class);
+                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                    intent.putExtra("id",bean.campaign_detail);
+                    context.startActivity(intent);
 
 
                 } else if (Constant.COACH.equals(bean.type)) {

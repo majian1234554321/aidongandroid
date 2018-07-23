@@ -49,14 +49,14 @@ public class HomeRecommendAdapter2_2 extends RecyclerView.Adapter<HomeRecommendA
                 public void onClick(View v) {
 
                     if (Constant.CAMPAIGN.equals(campaignBean.type)) {
-                        ActivityCircleDetailActivity.start(context, campaignBean.getId());
+                      //  ActivityCircleDetailActivity.start(context, campaignBean.getId());
 
 
 
-//                        Intent intent = new Intent(context,DisplayActivity.class);
-//                        intent.putExtra("TYPE","DetailsActivityH5Fragment");
-//                        intent.putExtra("id",campaignBean.campaign_detail);
-//                        context.startActivity(intent);
+                        Intent intent = new Intent(context,DisplayActivity.class);
+                        intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                        intent.putExtra("id",campaignBean.campaign_detail);
+                        context.startActivity(intent);
 
                     } else if (Constant.CONTEST.equals(campaignBean.type)) {
                         ContestHomeActivity.start(context,campaignBean);

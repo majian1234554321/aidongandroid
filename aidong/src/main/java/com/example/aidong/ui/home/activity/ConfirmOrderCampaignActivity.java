@@ -205,14 +205,14 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 finish();
                 break;
             case R.id.layout_course_coach:
-               ActivityCircleDetailActivity.start(this, course.getCampaignId());
+             //  ActivityCircleDetailActivity.start(this, course.getCampaignId());
 
 
 
-//                Intent intent = new Intent(context,DisplayActivity.class);
-//                intent.putExtra("TYPE","DetailsActivityH5Fragment");
-//                intent.putExtra("id",course.url);
-//                context.startActivity(intent);
+                Intent intent = new Intent(context,DisplayActivity.class);
+                intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                intent.putExtra("id",course.url);
+                context.startActivity(intent);
 
 
                 break;

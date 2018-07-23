@@ -559,14 +559,14 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 present.deleteAppoint(bean.getId());
                 break;
             case R.id.rl_detail:
-                ActivityCircleDetailActivity.start(this, bean.getLinkId());
-//
+              //  ActivityCircleDetailActivity.start(this, bean.getLinkId());
 
 
-//                Intent intent = new Intent(context,DisplayActivity.class);
-//                intent.putExtra("TYPE","DetailsActivityH5Fragment");
-//                intent.putExtra("id",bean.getAppoint().campaign_detail);
-//                context.startActivity(intent);
+
+                Intent intent = new Intent(context,DisplayActivity.class);
+                intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                intent.putExtra("id",bean.getAppoint().campaign_detail);
+                context.startActivity(intent);
 
 
                 break;

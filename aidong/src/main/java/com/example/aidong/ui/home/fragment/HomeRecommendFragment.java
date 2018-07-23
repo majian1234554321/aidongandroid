@@ -255,15 +255,15 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         banner.setDelegate(new BGABanner.Delegate() {
             @Override
             public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
-                ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
-//                if ("23".equals(((BannerBean) model).getType())){
-//                    Intent intent = new Intent(context,DisplayActivity.class);
-//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
-//                    intent.putExtra("id",((BannerBean) model).campaign_detail);
-//                    context.startActivity(intent);
-//                }else{
-//                    ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
-//                }
+             //   ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
+                if ("23".equals(((BannerBean) model).getType())){
+                    Intent intent = new Intent(context,DisplayActivity.class);
+                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+                    intent.putExtra("id",((BannerBean) model).campaign_detail);
+                    context.startActivity(intent);
+                }else{
+                    ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
+                }
 
 
             }
