@@ -14,7 +14,7 @@ public class GlideUtils {
     public static void loadIntoUseFitWidth(Context context, final String imageUrl, int errorImageId, final ImageView imageView) {
         Glide.with(context)
                 .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                //.diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {

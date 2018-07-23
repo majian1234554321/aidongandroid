@@ -23,6 +23,7 @@ import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
 import com.example.aidong .utils.Constant;
 import com.example.aidong .utils.DateUtils;
 import com.example.aidong .utils.GlideLoader;
+import com.iknow.android.utils.GlideUtils;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,7 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final CampaignBean campaignBean = campaigns.get(position);
         if (campaignBean != null) {
-            GlideLoader.getInstance().displayImage2(campaignBean.getCover(), holder.imgCover);
+          //  GlideLoader.getInstance().displayImage2(campaignBean.getCover(), holder.imgCover);
             holder.txtType.setText("【" + campaignBean.getTypeCZ() + "】");
 
             if(campaignBean.start_time.equals(campaignBean.end_time)){
@@ -59,20 +60,20 @@ public class HomeRecommendActivityAdapter extends RecyclerView.Adapter<HomeRecom
 
             holder.txtName.setText(campaignBean.getName());
 
+            GlideUtils.loadIntoUseFitWidth(context,campaignBean.getCover(),R.drawable.img_default,holder.imgCover);
 
 
-
-            Glide.with(context)
-                    .load(campaignBean.getCover())
-                    .asBitmap()//强制Glide返回一个Bitmap对象
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                            int width = bitmap.getWidth();
-                            int height = bitmap.getHeight();
-                            Log.e("width_height", "width " + width  + "--------height " + height);
-                        }
-                    });
+//            Glide.with(context)
+//                    .load(campaignBean.getCover())
+//                    .asBitmap()//强制Glide返回一个Bitmap对象
+//                    .into(new SimpleTarget<Bitmap>() {
+//                        @Override
+//                        public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+//                            int width = bitmap.getWidth();
+//                            int height = bitmap.getHeight();
+//                            Log.e("width_height", "width " + width  + "--------height " + height);
+//                        }
+//                    });
 
 
 
