@@ -72,6 +72,12 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
         }
 
 
+        if ("0".equals(user.getGender())){
+            holder.iv_gender.setBackgroundResource(R.drawable.icon_man);
+        }else {
+            holder.iv_gender.setBackgroundResource(R.drawable.icon_woman);
+        }
+
 
         holder.btAttention.setImageResource(user.followed ? R.drawable.icon_followed : R.drawable.icon_follow);
 
@@ -106,7 +112,7 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgAvatar;
+        private ImageView imgAvatar,iv_gender;
         private TextView txtCoachName, txt_attention_num;
         private TextView txtIntro;
         private ImageButton btAttention;
@@ -118,6 +124,10 @@ public class CircleCoachListAdapter extends RecyclerView.Adapter<CircleCoachList
             txtIntro = (TextView) view.findViewById(R.id.txt_intro);
             btAttention = (ImageButton) view.findViewById(R.id.bt_attention);
             txt_attention_num = (TextView) view.findViewById(R.id.txt_attention_num);
+
+            iv_gender = view.findViewById(R.id.iv_gender);
+
+
         }
     }
 

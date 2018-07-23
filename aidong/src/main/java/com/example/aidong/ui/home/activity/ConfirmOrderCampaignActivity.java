@@ -24,6 +24,7 @@ import com.example.aidong.module.pay.PayInterface;
 import com.example.aidong.module.pay.SimplePayListener;
 import com.example.aidong.ui.App;
 import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.example.aidong.ui.mine.activity.SelectCouponActivity;
 import com.example.aidong.ui.mine.fragment.CouponFragment;
@@ -162,7 +163,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
         findViewById(R.id.layout_remark).setVisibility(View.VISIBLE);
 
         DialogUtils.showDialog(this, "", false);
-        totalPrice = FormatUtil.parseInt(course.amount) * FormatUtil.parseDouble(course.skuPrice);
+        totalPrice = FormatUtil.parseInt(course.amount) * FormatUtil.parseDouble(course.getPrice());
         realPrice = totalPrice;
 
 
@@ -204,7 +205,15 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                 finish();
                 break;
             case R.id.layout_course_coach:
-                ActivityCircleDetailActivity.start(this, course.getCampaignId());
+               ActivityCircleDetailActivity.start(this, course.getCampaignId());
+
+
+
+//                Intent intent = new Intent(context,DisplayActivity.class);
+//                intent.putExtra("TYPE","DetailsActivityH5Fragment");
+//                intent.putExtra("id",course.url);
+//                context.startActivity(intent);
+
 
                 break;
             case R.id.layout_course_location:
@@ -243,7 +252,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                         }
                     }
 
-                    DialogUtils.showDialog(this, "", true);
+                    DialogUtils.showDialog(this, "", false);
 
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
                             payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount, edit_remark.getText().toString().trim());

@@ -111,7 +111,13 @@ public class PublishContestDynamicActivity extends PublishDynamicActivity implem
             @Override
             public void onFail() {
                 DialogUtils.dismissDialog();
-                ToastGlobal.showLong("上传失败");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastGlobal.showLong("上传失败");
+                    }
+                });
+
             }
         });
     }

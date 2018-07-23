@@ -35,6 +35,15 @@ public class GoodsModelImpl  {
                 .subscribe(subscriber);
     }
 
+
+    public void getGoods2(Subscriber<GoodsData> subscriber, String category_id, int page, String brandId, String sort, String gymId) {
+        nurtureService.getGoods2(category_id,page,brandId,sort,gymId)
+                .compose(RxHelper.<GoodsData>transform())
+                .subscribe(subscriber);
+    }
+
+
+
     public void getVirtualGoodsList(Subscriber<GoodsData> subscriber, String product_ids) {
         nurtureService.getVirtualGoodsList(product_ids)
                 .compose(RxHelper.<GoodsData>transform())

@@ -28,7 +28,7 @@ public class SportPresentImpl {
     }
 
     public void getSportRecord(String year, String month) {
-        sportModel.getSportRecord(new ProgressSubscriber<SportRecordData>(context) {
+        sportModel.getSportRecord(new BaseSubscriber<SportRecordData>(context) {
             @Override
             public void onNext(SportRecordData sportRecordData) {
                 if (sportRecordView != null) {
@@ -50,6 +50,8 @@ public class SportPresentImpl {
             }
         }, year, month);
     }
+
+
 
 
 }

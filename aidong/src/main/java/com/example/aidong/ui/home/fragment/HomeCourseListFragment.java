@@ -12,8 +12,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ import com.example.aidong.entity.course.CourseArea;
 import com.example.aidong.entity.course.CourseBrand;
 import com.example.aidong.entity.course.CourseFilterBean;
 import com.example.aidong.entity.course.CourseStore;
+import com.example.aidong.ui.App;
 import com.example.aidong.ui.BaseFragment;
 import com.example.aidong.ui.home.view.CourseListFilterNew;
 import com.example.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
@@ -34,6 +38,7 @@ import com.example.aidong.ui.mvp.view.CourseFilterCallback;
 import com.example.aidong.utils.Constant;
 import com.example.aidong.utils.DateUtils;
 
+import com.example.aidong.utils.RxBus;
 import com.example.aidong.utils.SharePrefUtils;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -43,6 +48,8 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import rx.Subscriber;
 
 /**
  * Created by user on 2018/1/4.
@@ -71,6 +78,7 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
         }
     };
     private CourseConfigPresentImpl coursePresentNew;
+    private TextView textView;
 
     private void resetRefreshData() {
 
@@ -123,18 +131,63 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
 
     private void initView(View view) {
         tabLayout = view.findViewById(R.id.tab_layout);
-        final TextView textView = view.findViewById(R.id.tv_tips);
-        if (SharePrefUtils.getBoolean(activity, "showTips", true)) {
+        textView = view.findViewById(R.id.tv_tips);
+        textView.setText(SharePrefUtils.getString(activity, "tips", "积聚能量,随心而动"));
+
+        if ("积聚能量,随心而动".equals(SharePrefUtils.getString(activity, "tips", "积聚能量,随心而动"))) {
             textView.setVisibility(View.GONE);
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SharePrefUtils.putBoolean(activity, "showTips", false);
-                    textView.setVisibility(View.GONE);
-                }
-            });
-        }else {
-            textView.setVisibility(View.GONE);
+        } else {
+            RxBus.getInstance().toObserverable(String.class)
+                    .subscribe(new Subscriber<String>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(String s) {
+                            if (textView != null) {
+                                if (App.getInstance().isLogin()) {
+                                    if (SharePrefUtils.getString(activity, "showTips", "NODATA").contains("@" + App.getInstance().getUser().getId())) {
+                                        textView.setVisibility(View.GONE);
+                                    } else {
+                                        textView.setVisibility(View.VISIBLE);
+                                        textView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+
+                                                String value = SharePrefUtils.getString(activity, "showTips", "NODATA") + "@" + App.getInstance().getUser().getId();
+                                                SharePrefUtils.putString(activity, "showTips", value);
+                                                textView.setVisibility(View.GONE);
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    if (SharePrefUtils.getString(activity, "showTips", "NODATA").contains("@@@@@")) {
+                                        textView.setVisibility(View.GONE);
+                                    } else {
+                                        textView.setVisibility(View.VISIBLE);
+                                        textView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+
+                                                String value = SharePrefUtils.getString(activity, "showTips", "NODATA") + "@@@@@";
+                                                SharePrefUtils.putString(activity, "showTips", value);
+                                                textView.setVisibility(View.GONE);
+                                            }
+                                        });
+                                    }
+
+
+                                }
+                            }
+                        }
+                    });
         }
 
 
@@ -150,7 +203,7 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
         FragmentPagerItems pages = new FragmentPagerItems(getActivity());
         for (int i = 0; i < days.size(); i++) {
             HomeCourseListChildFragment courseFragment = new HomeCourseListChildFragment();
-            pages.add(FragmentPagerItem.of(DateUtils.getCourseSevenDate().get(i), courseFragment.getClass(),
+            pages.add(FragmentPagerItem.of(DateUtils.getCourseSevenDate2().get(i), courseFragment.getClass(),
                     new Bundler().putString("date", days.get(i)).putString("category", allcategory).get()
             ));
 
@@ -165,17 +218,48 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
         tabLayout.setupWithViewPager(viewPager);
 
 
+        for (int i = 0; i < adapter.getCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);//获得每一个tab
+            tab.setCustomView(R.layout.tabitemview);//给每一个tab设置view
+
+            TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_week);
+
+            if (i == 0) {
+                textView.setSelected(true);
+
+                textView.setTextColor(getResources().getColorStateList(R.color.main_blue));
+
+            } else {
+                textView.setSelected(false);
+                textView.setTextColor(getResources().getColorStateList(R.color.c9));
+            }
+
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//斜体
+            SpannableStringBuilder builder = new SpannableStringBuilder(DateUtils.getCourseSevenDate2().get(i));
+            builder.setSpan(styleSpan, 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textView.setText(builder);//设置tab上的文字
+
+        }
+
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (filterView.isPopupShowing()) {
                     filterView.hidePopup();
                 }
+
+
+                tab.getCustomView().findViewById(R.id.tv_week).setSelected(true);
+                ((TextView) tab.getCustomView().findViewById(R.id.tv_week)).setTextColor(getResources().getColorStateList(R.color.main_blue));
+                viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                tab.getCustomView().findViewById(R.id.tv_week).setSelected(false);
+                ((TextView) tab.getCustomView().findViewById(R.id.tv_week)).setTextColor(getResources().getColorStateList(R.color.c9));
             }
 
             @Override
@@ -252,5 +336,49 @@ public class HomeCourseListFragment extends BaseFragment implements CourseFilter
         super.onDestroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(selectCityReceiver);
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (textView != null && !"积聚能量,随心而动".equals(SharePrefUtils.getString(activity, "tips", "积聚能量,随心而动"))) {
+            if (App.getInstance().isLogin()) {
+                if (SharePrefUtils.getString(activity, "showTips", "NODATA").contains("@" + App.getInstance().getUser().getId())) {
+                    textView.setVisibility(View.GONE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            String value = SharePrefUtils.getString(activity, "showTips", "NODATA") + "@" + App.getInstance().getUser().getId();
+                            SharePrefUtils.putString(activity, "showTips", value);
+                            textView.setVisibility(View.GONE);
+                        }
+                    });
+                }
+            } else {
+                if (SharePrefUtils.getString(activity, "showTips", "NODATA").contains("@@@@@")) {
+                    textView.setVisibility(View.GONE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            String value = SharePrefUtils.getString(activity, "showTips", "NODATA") + "@@@@@";
+                            SharePrefUtils.putString(activity, "showTips", value);
+                            textView.setVisibility(View.GONE);
+                        }
+                    });
+                }
+
+
+            }
+        } else {
+            textView.setVisibility(View.GONE);
+        }
+    }
+
 
 }

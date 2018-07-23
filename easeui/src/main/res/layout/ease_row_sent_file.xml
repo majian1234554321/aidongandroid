@@ -59,7 +59,7 @@
                     android:layout_gravity="center_vertical"
                     android:ellipsize="middle"
                     android:singleLine="true"
-                    android:textColor="#000"
+                    android:textColor="#FFF"
                     android:textSize="15sp" />
 
                 <RelativeLayout
@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="100%"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:visibility="visible"
                 tools:ignore="HardcodedText" />
         </LinearLayout>

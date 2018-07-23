@@ -103,7 +103,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/shape_radius_origin"
+        android:background="@drawable/shape_radius_origin2"
         android:gravity="center"
         android:text="@string/login"
         android:textColor="@color/white"

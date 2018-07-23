@@ -6,11 +6,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-public class OOXXAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ExtendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public List<Integer> type;
 
-    public OOXXAdapter(List<Integer> type) {
+    public ExtendAdapter(List<Integer> type) {
         this.type = type;
     }
 

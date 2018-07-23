@@ -199,14 +199,14 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!TextUtils.isEmpty(s.toString().trim())){
-                    Log.i("DynamicDetailById",s.toString()+"a");
-
-                }else {
-                    etComment.getText().clear();
-
-                    Log.i("DynamicDetailById","没有数据了");
-                }
+//                if(!TextUtils.isEmpty(s.toString().trim())){
+//                    Log.i("DynamicDetailById",s.toString()+"a");
+//
+//                }else {
+//                    etComment.getText().clear();
+//
+//                    Log.i("DynamicDetailById","没有数据了");
+//                }
 
             }
         });
@@ -377,10 +377,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             //刷新头部评论数量
             headerAdapter.notifyDataSetChanged();
 
-            CMDMessageManager.sendCMDMessageAiteReply(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(),
-                    App.getInstance().getUser().getName(), dynamic.id, DateUtils.getCurrentTime(), content, dynamic.getUnifromCover(),
-                    CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName,
-                    itUser, replyUserMap);
+
 
             if (!itUser.isEmpty()) {
                 CMDMessageManager.sendCMDMessageAite(App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
@@ -390,6 +387,11 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             if (!replyUserMap.isEmpty()) {
                 CMDMessageManager.sendCMDMessageReply(App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
                         , dynamic.getUnifromCover(), CircleDynamicBean.ActionType.REPLY, null, dynamic.getDynamicTypeInteger(), itUser, replyUserMap);
+            }else {
+                CMDMessageManager.sendCMDMessageAiteReply(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(),
+                        App.getInstance().getUser().getName(), dynamic.id, DateUtils.getCurrentTime(), content, dynamic.getUnifromCover(),
+                        CircleDynamicBean.ActionType.COMMENT, null, dynamic.getDynamicTypeInteger(), replyName,
+                        itUser, replyUserMap);
             }
 
             itUser.clear();

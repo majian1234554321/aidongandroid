@@ -8,6 +8,7 @@ import com.example.aidong .entity.VenuesBean;
 import com.example.aidong .entity.data.CouponData;
 import com.example.aidong .entity.data.GoodsDetailData;
 import com.example.aidong .entity.data.VenuesData;
+import com.example.aidong.http.subscriber.BaseSubscriber;
 import com.example.aidong .http.subscriber.CommonSubscriber;
 import com.example.aidong .http.subscriber.IsLoginSubscriber;
 import com.example.aidong .http.subscriber.ProgressSubscriber;
@@ -71,7 +72,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
         if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }
-        couponModel.getGoodsDetailCoupon(new ProgressSubscriber<CouponData>(context) {
+        couponModel.getGoodsDetailCoupon(new BaseSubscriber<CouponData>(context) {
             @Override
             public void onNext(CouponData couponData) {
                 goodsDetailView.setGoodsDetailCoupon(couponData.getCoupons());

@@ -3,17 +3,19 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/inc_bottom_share_image_appoint" android:id="@+id/include"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/inc_bottom_share_image_appoint" />
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_above="@+id/include"
         android:layout_height="match_parent"
+        android:layout_above="@+id/include"
         android:fitsSystemWindows="true">
 
 
@@ -44,16 +46,15 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-android:layout_marginBottom="@dimen/sp_16"
-                   >
+                    android:layout_marginBottom="@dimen/font_16sp"
+                    android:fitsSystemWindows="true">
 
                     <com.github.florent37.arclayout.ArcLayout
                         android:id="@+id/arc"
                         android:layout_width="match_parent"
                         android:layout_height="360dp"
-                        android:elevation="5dp"
                         android:background="@color/white"
+                        android:elevation="5dp"
                         app:arc_cropDirection="cropOutside"
                         app:arc_height="20dp">
 
@@ -77,34 +78,35 @@ android:layout_marginBottom="@dimen/sp_16"
                     </com.github.florent37.arclayout.ArcLayout>
 
                     <RelativeLayout
-android:visibility="gone"
-                        android:layout_below="@id/arc"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/arc"
+                        android:visibility="gone">
+
                         <TextView
                             android:id="@+id/tv_subjecttitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:textColor="@color/black"
                             android:text="@string/course_intro"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
 
 
                         <RelativeLayout
-                            android:layout_below="@+id/tv_subjecttitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_subjecttitle"
+                            android:layout_marginBottom="8dp"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="8dp">
+                            android:layout_marginTop="4dp">
 
                             <ImageView
                                 android:id="@+id/iv_share"
                                 android:layout_width="20dp"
-                                android:layout_centerVertical="true"
                                 android:layout_height="20dp"
                                 android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
                                 android:layout_marginLeft="15dp"
                                 android:layout_marginRight="15dp"
                                 android:src="@drawable/share"
@@ -112,20 +114,20 @@ android:visibility="gone"
 
                             <TextView
                                 android:id="@+id/tv_fans"
-                                android:gravity="center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_centerVertical="true"
                                 android:layout_toLeftOf="@+id/iv_share"
                                 android:drawablePadding="8dp"
+                                android:gravity="center"
                                 tools:text="299" />
 
                             <ImageView
                                 android:id="@+id/iv_fansssss"
-                                android:layout_toLeftOf="@+id/tv_fans"
-                                android:layout_marginRight="8dp"
                                 android:layout_width="20dp"
-                                android:layout_height="20dp" />
+                                android:layout_height="20dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_toLeftOf="@+id/tv_fans" />
 
 
                         </RelativeLayout>
@@ -139,43 +141,39 @@ android:visibility="gone"
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:minHeight="?attr/actionBarSize"
                     android:navigationIcon="@drawable/icon_back"
                     app:contentInsetEnd="0dp"
                     app:contentInsetLeft="0dp"
-                    app:titleTextAppearance="@style/TypeTextSize"
                     app:contentInsetRight="0dp"
                     app:contentInsetStart="0dp"
+                    app:layout_collapseMode="pin"
                     app:paddingEnd="0dp"
                     app:paddingStart="0dp"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:titleMarginStart="0dp"
-                    android:minHeight="?attr/actionBarSize"
+                    app:titleTextAppearance="@style/TypeTextSize">
 
-                    app:layout_collapseMode="pin"
-
-
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
                     <ImageView
                         android:id="@+id/iv"
-                        android:layout_marginLeft="8dp"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:background="@drawable/icon_back"
-                        android:layout_height="wrap_content" />
+                        android:layout_marginLeft="8dp"
+                        android:background="@drawable/icon_back" />
 
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_marginRight="8dp"
-                        android:visibility="invisible"
                         android:background="@drawable/icon_back"
-                        android:layout_height="wrap_content" />
+                        android:visibility="invisible" />
 
                 </android.support.v7.widget.Toolbar>
 
 
             </android.support.design.widget.CollapsingToolbarLayout>
-
-
 
 
         </android.support.design.widget.AppBarLayout>
@@ -197,8 +195,7 @@ android:visibility="gone"
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_dynamic_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="match_parent" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -226,7 +223,6 @@ android:visibility="gone"
                 </RelativeLayout>
 
             </RelativeLayout>
-
 
 
         </RelativeLayout>

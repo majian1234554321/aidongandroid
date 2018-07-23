@@ -11,6 +11,26 @@ configurations {
     all*.exclude group: 'com.android.support', module: 'support-v13'
 }
 android {
+
+
+    def BASE_URL_HTML_DEVELOP = "\"http://share.51aidong.com/\""
+    def BASE_URL_VERSION_DEVELOP = "\"http://m.aidong.me:9020/v1/app/check/\""
+    def BASE_URL_DEVELOP = "\"http://app.51aidong.com/\""//测试服
+    def BASE_URL_MEMBER_CARD_DEVELOP = "\"http://opentest.aidong.me/\""
+
+
+    def BASE_URL_HTML_RELEASE = "\"http://share.aidong.me/\""
+    def BASE_URL_RELEASE = "\"http://a.aidong.me/\""
+    def BASE_URL_VERSION_RELEASE = "\"http://me.51aidong.com:9021/v1/app/check/\""
+    def BASE_URL_MEMBER_CARD_RELEASE = "\"http://open.aidong.me/\""
+
+
+    def EASEMOB_APPKEY_RELEASE = "leyuan-aidong#aidong"
+    def EASEMOB_APPKEY_DEVELOP = "leyuan-aidong#aidongouternettest"
+
+
+
+
     signingConfigs {
         release {
             keyAlias 'aidong'
@@ -21,7 +41,7 @@ android {
         }
     }
     compileSdkVersion 28
-    buildToolsVersion '28.0.0'
+    buildToolsVersion '28.0.1'
     defaultConfig {
         applicationId "com.example.aidong"
         minSdkVersion 21
@@ -30,6 +50,11 @@ android {
         versionName rootProject.ext.versionName
         multiDexEnabled true
         signingConfig signingConfigs.release
+        manifestPlaceholders = [EASEMOB_APPKEY_ID: "${EASEMOB_APPKEY_DEVELOP}"]
+//        buildConfigField "String", "BASE_URL", "${BASE_URL_RELEASE}"
+//        buildConfigField "String", "BASE_URL_HTML", "${BASE_URL_HTML_RELEASE}"
+//        buildConfigField "String", "BASE_URL_MEMBER_CARD", "${BASE_URL_MEMBER_CARD_RELEASE}"
+//        buildConfigField "String", "BASE_URL_VERSION", "${BASE_URL_VERSION_RELEASE}"
 
     }
 //    productFlavors {
@@ -52,12 +77,27 @@ android {
     }
     buildTypes {
         release {
+            buildConfigField "String", "BASE_URL", "${BASE_URL_RELEASE}"
+            buildConfigField "String", "BASE_URL_HTML", "${BASE_URL_HTML_RELEASE}"
+            buildConfigField "String", "BASE_URL_MEMBER_CARD", "${BASE_URL_MEMBER_CARD_RELEASE}"
+            buildConfigField "String", "BASE_URL_VERSION", "${BASE_URL_VERSION_RELEASE}"
+
+
+            manifestPlaceholders = [EASEMOB_APPKEY_ID: "${EASEMOB_APPKEY_RELEASE}"]
             minifyEnabled false
+            // shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
 
         debug {
+            buildConfigField "String", "BASE_URL", "${BASE_URL_DEVELOP}"
+            buildConfigField "String", "BASE_URL_HTML", "${BASE_URL_HTML_DEVELOP}"
+            buildConfigField "String", "BASE_URL_MEMBER_CARD", "${BASE_URL_MEMBER_CARD_DEVELOP}"
+            buildConfigField "String", "BASE_URL_VERSION", "${BASE_URL_VERSION_DEVELOP}"
+
+            manifestPlaceholders = [EASEMOB_APPKEY_ID: "${EASEMOB_APPKEY_DEVELOP}"]
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -86,11 +126,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'io.reactivex:rxjava:1.2.7'
     implementation 'io.reactivex:rxandroid:1.2.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     //    compile 'com.google.zxing:core:3.2.1'
-    testApi 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     implementation 'com.google.android.exoplayer:exoplayer:r1.5.7'
@@ -118,7 +158,7 @@ dependencies {
     implementation 'org.aspectj:aspectjrt:1.8.9'
     // implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.writingminds:FFmpegAndroid:0.3.2'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    // implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     implementation 'com.github.florent37:arclayout:1.0.3'
     implementation project(':custompullrefresh')
     implementation project(':easeui')
@@ -136,6 +176,9 @@ dependencies {
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.4'
 
     implementation 'com.github.MrWangChong:DragPhotoView:1.1.2'
+
+    debugCompile 'com.readystatesoftware.chuck:library:1.1.0'
+    releaseCompile 'com.readystatesoftware.chuck:library-no-op:1.1.0'
 }
 //buildscript {
 //    repositories {

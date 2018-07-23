@@ -70,7 +70,7 @@ public class StringUtils {
      * @return 处理完后的结果
      */
     public static SpannableStringBuilder highlight(Context context, String text, String target,
-                                                   String color, int start, int end) {
+                                                   int color, int start, int end) {
         SpannableStringBuilder spannableString = new SpannableStringBuilder(text);
 
         Pattern pattern = Pattern.compile(target);
@@ -92,7 +92,7 @@ public class StringUtils {
             spannableString.setSpan(clickableSpan, matcher.start() - start, matcher.end() + end,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor(color));
+            ForegroundColorSpan span = new ForegroundColorSpan(color);
             spannableString.setSpan(span, matcher.start() - start, matcher.end() + end,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
@@ -101,7 +101,7 @@ public class StringUtils {
 
 
     public static SpannableStringBuilder highlight(final Context context, String text, UserBean[] users,
-                                                   String color, int start) {
+                                                   int color, int start) {
         SpannableStringBuilder spannableString = new SpannableStringBuilder(text);
 
         for (final UserBean user : users) {
@@ -136,7 +136,7 @@ public class StringUtils {
                 spannableString.setSpan(clickableSpan, matcher.start() - start, matcher.end(),
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor(color));
+                ForegroundColorSpan span = new ForegroundColorSpan(color);
                 spannableString.setSpan(span, matcher.start() - start, matcher.end(),
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
@@ -146,7 +146,7 @@ public class StringUtils {
     }
 
     public static SpannableStringBuilder highlight(final Context context, String text, AiterUser[] users,
-                                                   String color, int start) {
+                                                   int color, int start) {
         SpannableStringBuilder spannableString = new SpannableStringBuilder(text);
 
         for (final AiterUser user : users) {
@@ -175,7 +175,7 @@ public class StringUtils {
                 spannableString.setSpan(clickableSpan, matcher.start() - start, matcher.end(),
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor(color));
+                ForegroundColorSpan span = new ForegroundColorSpan(color);
                 spannableString.setSpan(span, matcher.start() - start, matcher.end(),
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }

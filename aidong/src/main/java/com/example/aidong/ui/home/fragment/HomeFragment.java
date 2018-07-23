@@ -317,4 +317,6 @@ public class HomeFragment extends BaseFragment implements SmartTabLayout.TabProv
         Boxing.of(videoConfig).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
     }
 
+
+
 }

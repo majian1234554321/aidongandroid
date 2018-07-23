@@ -21,7 +21,8 @@
     <!-- Width of the fastscroll thumb -->
     <!-- Height of the fastscroll thumb -->
 
-
+    <dimen name="font_12sp">12sp</dimen>
+    <dimen name="font_14sp">14sp</dimen>
     <dimen name="pref_1px">1px</dimen>
     <dimen name="font_16sp">16sp</dimen>
     <dimen name="pref__1dp">-1dp</dimen>
@@ -76,7 +77,6 @@
     <dimen name="frames_video_height">60dip</dimen>
 
 
-
     <dimen name="x1">1px</dimen>
     <dimen name="x2">2px</dimen>
     <dimen name="x3">3px</dimen>
@@ -112,16 +112,19 @@
     <dimen name="x30">30px</dimen>
 
     <dimen name="x60">60px</dimen>
-
+    <dimen name="x100">100px</dimen>
     <dimen name="x140">140px</dimen>
 
-
+    <dimen name="x180">180px</dimen>
+    <dimen name="x240">240px</dimen>
     <dimen name="x300">300px</dimen>
+    <dimen name="x320">320px</dimen>
+
 
 
     <dimen name="x1279">1279px</dimen>
     <dimen name="x1280">1280px</dimen>
-
+    <dimen name="fab_margin">16dp</dimen>
 
 
 </resources>

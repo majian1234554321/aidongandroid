@@ -257,7 +257,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             tv.setText(course.getTags().get(i));
             tv.setGravity(Gravity.CENTER_VERTICAL);
             tv.setLines(1);
-           tv.setBackgroundResource(R.drawable.shape_stroke_red_button);
+           tv.setBackgroundResource(R.drawable.shape_blue_stork_button);
             flowLayout.addView(tv, lp);
         }
 
@@ -284,7 +284,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         if (course.isFollowed()) {
             setImageResourceVale(R.drawable.follw);
-            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red));
+            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red2));
         } else {
             setImageResourceVale(R.drawable.unfollw);
             tv_fans.setTextColor(ContextCompat.getColor(context,R.color.gray));
@@ -292,7 +292,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         txtCourseIntro.setRichText(course.getIntroduce());
        // txtSuggestFrequency.setText("建议周频次: " + course.getFrequency() + "次/周");
         txtSuggestFrequency.setVisibility(GONE);
-        txt_use_equipment.setText("使用机械: " + course.getInstrument());
+        txt_use_equipment.setText("使用器械: " + course.getInstrument());
         txt_target_population.setText("针对人群: " + course.getCrowd());
         txt_suggest_match_course.setText("建议课程搭配: " + course.getCollocation());
 
@@ -323,7 +323,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         if (baseBean.getStatus() == 1) {
             setImageResourceVale(R.drawable.follw);
             course.setFollowed(true);
-            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red));
+            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red2));
             course.setFollows_count(course.getFollows_count() + 1);
             value = value + 1;
             tv_fans.setText(value+"");

@@ -222,7 +222,7 @@ public class CameraPickerHelper {
 
     private Uri getFileUri(@NonNull Context context, @NonNull File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return FileProvider.getUriForFile(context, "com.example.aidong .file.provider", mOutputFile);
+            return FileProvider.getUriForFile(context, "com.example.aidong.file.provider", mOutputFile);
         } else {
             return Uri.fromFile(file);
         }

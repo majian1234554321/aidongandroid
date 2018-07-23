@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/appoint_pay_time"
-                        android:textColor="@color/main_red"
+                        android:textColor="@color/main_red2"
                         android:textSize="14sp" />
 
                     <cn.iwgang.countdownview.CountdownView
@@ -70,8 +70,8 @@
                         app:isShowMinute="true"
                         app:isShowSecond="true"
                         app:isTimeTextBold="false"
-                        app:suffixTextColor="@color/main_red"
-                        app:timeTextColor="@color/main_red"
+                        app:suffixTextColor="@color/main_red2"
+                        app:timeTextColor="@color/main_red2"
                         app:timeTextSize="14sp" />
                 </LinearLayout>
 

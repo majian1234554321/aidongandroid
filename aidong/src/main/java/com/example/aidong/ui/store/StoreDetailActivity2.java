@@ -159,11 +159,7 @@ public class StoreDetailActivity2 extends BaseActivity implements View.OnClickLi
                 bottomFragment.setData(venuesDetailBean);
             }
 
-
-
         }
-
-
 
 
     }

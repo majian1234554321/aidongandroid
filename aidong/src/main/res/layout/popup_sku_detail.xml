@@ -8,7 +8,7 @@
 
 
     <RelativeLayout
-      android:id="@+id/rl_top"
+        android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

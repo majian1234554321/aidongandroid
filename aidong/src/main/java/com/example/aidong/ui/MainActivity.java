@@ -17,45 +17,46 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.CouponBean;
-import com.example.aidong .entity.data.CouponData;
-import com.example.aidong .entity.data.SportRecordMonthData;
-import com.example.aidong .module.chat.manager.EmMessageManager;
+import com.example.aidong.entity.CouponBean;
+import com.example.aidong.entity.data.CouponData;
+import com.example.aidong.entity.data.SportRecordMonthData;
+import com.example.aidong.module.chat.manager.EmMessageManager;
 import com.example.aidong.receivers.ChatMessageReceiver;
 import com.example.aidong.receivers.NewPushMessageReceiver;
-import com.example.aidong .ui.home.fragment.HomeCourseFragment;
-import com.example.aidong .ui.home.fragment.HomeFragment;
-import com.example.aidong .ui.home.fragment.StoreFragment;
-import com.example.aidong .ui.mine.activity.CouponNewcomerActivity;
-import com.example.aidong .ui.mine.activity.setting.PhoneBindingActivity;
-import com.example.aidong .ui.mine.fragment.MineFragment;
-import com.example.aidong .ui.mvp.presenter.impl.CouponPresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.SportPresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.VersionPresenterImpl;
-import com.example.aidong .ui.mvp.view.CouponFragmentView;
-import com.example.aidong .ui.mvp.view.SportRecordView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DateUtils;
-import com.example.aidong .utils.LocatinCityManager;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.SharePrefUtils;
-import com.example.aidong .utils.UiManager;
-import com.example.aidong .utils.autostart.CheckAutoStartUtils;
-import com.example.aidong .widget.dialog.BaseDialog;
-import com.example.aidong .widget.dialog.ButtonCancelListener;
-import com.example.aidong .widget.dialog.ButtonOkListener;
-import com.example.aidong .widget.dialog.DialogDoubleButton;
+import com.example.aidong.ui.home.fragment.HomeCourseFragment;
+import com.example.aidong.ui.home.fragment.HomeFragment;
+import com.example.aidong.ui.home.fragment.StoreFragment;
+import com.example.aidong.ui.mine.activity.CouponNewcomerActivity;
+import com.example.aidong.ui.mine.activity.setting.PhoneBindingActivity;
+import com.example.aidong.ui.mine.fragment.MineFragment;
+import com.example.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.SportPresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
+import com.example.aidong.ui.mvp.view.CouponFragmentView;
+import com.example.aidong.ui.mvp.view.SportRecordView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DateUtils;
+import com.example.aidong.utils.LocatinCityManager;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.RxBus;
+import com.example.aidong.utils.SharePrefUtils;
+import com.example.aidong.utils.UiManager;
+import com.example.aidong.utils.autostart.CheckAutoStartUtils;
+import com.example.aidong.widget.dialog.BaseDialog;
+import com.example.aidong.widget.dialog.ButtonCancelListener;
+import com.example.aidong.widget.dialog.ButtonOkListener;
+import com.example.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener,SportRecordView {
+public class MainActivity extends BaseActivity implements View.OnClickListener, SportRecordView {
 
     private RelativeLayout tabNearLayout;
     private RelativeLayout tabFoundLayout;
     private RelativeLayout tabStoreLayout;
-//    private RelativeLayout tabDiscoverLayout;
+    //    private RelativeLayout tabDiscoverLayout;
     private RelativeLayout tabMineLayout;
     private ImageView img_new_message;
     private ImageView img_new_circle_message;
@@ -84,6 +85,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
         }
     };
     private MineFragment mineFragment;
+    private HomeCourseFragment main_2;
 
     public static void start(Context context, int index) {
         Intent starter = new Intent(context, MainActivity.class);
@@ -109,7 +111,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
         initView();
         initData();
         registerMessageReceiver();
-      //  checkAutoStart();
+        //  checkAutoStart();
     }
 
     private void initView() {
@@ -140,7 +142,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
         fm = getSupportFragmentManager();
         mFragments.add(new HomeFragment());
 //        mFragments.add(new VideoHomeFragment());
-        mFragments.add(new HomeCourseFragment());
+        main_2 = new HomeCourseFragment();
+        mFragments.add(main_2);
         mFragments.add(new StoreFragment());
 
         mineFragment = new MineFragment();
@@ -161,7 +164,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
             @Override
             public void updateRecyclerView(List<CouponBean> couponBeanList) {
 
-                if(couponBeanList != null && !couponBeanList.isEmpty()){
+                if (couponBeanList != null && !couponBeanList.isEmpty()) {
                     CouponNewcomerActivity.start(MainActivity.this, (ArrayList<CouponBean>) couponBeanList);
                 }
             }
@@ -239,6 +242,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
             case R.id.tabFoundLayout:
                 setTabSelection(1);
                 showFragment(1);
+                RxBus.getInstance().post("A");
                 break;
             case R.id.tabStoreLayout:
                 setTabSelection(2);
@@ -249,10 +253,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
                 showFragment(3);
 
 
-
                 SportPresentImpl sportPresent = new SportPresentImpl(App.context);
                 sportPresent.setSportRecordView(this);
-                sportPresent.getSportRecordNoProgress( "",  "");
+                sportPresent.getSportRecordNoProgress("", "");
 
                 break;
 //            case R.id.tabMineLayout:
@@ -332,9 +335,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
         super.onResume();
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
         CouponData couponData = SharePrefUtils.getNewUserCoupon(MainActivity.this);
-        if(couponData != null && couponData.getCoupon()!= null &&! couponData.getCoupon().isEmpty()){
+        if (couponData != null && couponData.getCoupon() != null && !couponData.getCoupon().isEmpty()) {
             CouponNewcomerActivity.start(this, (ArrayList<CouponBean>) couponData.getCoupons());
-            SharePrefUtils.putNewUserCoupon(this,null);
+            SharePrefUtils.putNewUserCoupon(this, null);
         }
     }
 
@@ -362,9 +365,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,S
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mainActivityReceiver);
     }
 
+
+
+
+
     @Override
     public void onGetSportRecordData(SportRecordMonthData athletic) {
-        if (mineFragment!=null){
+        if (mineFragment != null) {
             mineFragment.setData(athletic);
         }
     }

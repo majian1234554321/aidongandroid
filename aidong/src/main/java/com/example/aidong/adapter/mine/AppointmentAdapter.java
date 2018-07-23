@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.mine;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,15 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.AppointmentBean;
-import com.example.aidong .utils.DateUtils;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.SystemInfoUtils;
-import com.example.aidong .widget.dialog.BaseDialog;
-import com.example.aidong .widget.dialog.ButtonCancelListener;
-import com.example.aidong .widget.dialog.ButtonOkListener;
-import com.example.aidong .widget.dialog.DialogDoubleButton;
+import com.example.aidong.entity.AppointmentBean;
+import com.example.aidong.utils.DateUtils;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.SystemInfoUtils;
+import com.example.aidong.widget.dialog.BaseDialog;
+import com.example.aidong.widget.dialog.ButtonCancelListener;
+import com.example.aidong.widget.dialog.ButtonOkListener;
+import com.example.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,12 +105,16 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
                 holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), appointCountdownMill) > appointCountdownMill ? appointCountdownMill : DateUtils.getCountdown(bean.getCreated_at(), appointCountdownMill)
                 );
+
+
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_red2));
+
                 break;
 
             case UN_JOIN:           //待参加
                 holder.state.setText(context.getString(R.string.appointment_un_joined));
                 holder.payTip.setText(context.getString(R.string.true_pay));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
 
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
@@ -119,11 +124,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.tvPay.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvCancelPay.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
             case JOINED:            //已参加
                 holder.state.setText(context.getString(R.string.appointment_joined));
                 holder.payTip.setText(context.getString(R.string.true_pay));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -131,11 +137,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
                 holder.tvCancelPay.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
             case CLOSE:             //已关闭
                 holder.state.setText(context.getString(R.string.order_close));
                 holder.payTip.setText(context.getString(R.string.true_pay));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -143,10 +150,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
                 holder.tvCancelPay.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
             case REFUNDING:           //退款中
                 holder.state.setText(context.getString(R.string.order_refunding));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -154,10 +162,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
                 holder.tvCancelPay.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
             case REFUNDED:             //已退款
                 holder.state.setText(context.getString(R.string.order_refunded));
-                holder.date.setText("预约码: " + bean.getNo());
+                holder.date.setText("预约码: " + bean.getId());
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -165,8 +174,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
                 holder.tvCancelPay.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
             default:
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
         }
 

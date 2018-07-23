@@ -28,7 +28,7 @@ public class GuideActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
 
-        BGABanner banner = (BGABanner) findViewById(R.id.banner);
+        BGABanner banner =  findViewById(R.id.banner);
         banner.setOverScrollMode(View.OVER_SCROLL_NEVER);
         final List<View> views = new ArrayList<>();
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide1));

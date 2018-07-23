@@ -26,7 +26,7 @@ public class ImageAndHorizontalListHolder extends BaseRecyclerViewHolder<HomeBea
     private RelativeLayout imageLayout;
     private ImageView cover;
     private RecyclerView recyclerView;
-    private View line;
+  //  private View line;
 
     public ImageAndHorizontalListHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(context, viewGroup, layoutResId);
@@ -34,7 +34,7 @@ public class ImageAndHorizontalListHolder extends BaseRecyclerViewHolder<HomeBea
         imageLayout = (RelativeLayout) itemView.findViewById(rl_image);
         cover = (ImageView) itemView.findViewById(R.id.dv_cover);
         recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_recommend_good);
-        line = itemView.findViewById(R.id.line);
+     //   line = itemView.findViewById(R.id.line);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ImageAndHorizontalListHolder extends BaseRecyclerViewHolder<HomeBea
     }
 
     private void setLayoutVisibility(boolean v){
-        line.setVisibility(v ? View.VISIBLE : View.GONE);
+       // line.setVisibility(v ? View.VISIBLE : View.GONE);
         imageLayout.setVisibility(v ? View.VISIBLE : View.GONE);
         recyclerView.setVisibility(v ? View.VISIBLE : View.GONE);
     }

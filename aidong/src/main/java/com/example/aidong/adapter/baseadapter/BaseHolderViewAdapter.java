@@ -32,8 +32,9 @@ public abstract class BaseHolderViewAdapter<T> extends RecyclerView.Adapter<Base
         return getViewType(position, data.get(position));
     }
 
+    @NonNull
     @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BaseRecyclerViewHolder holder;
         if (getLayoutResId(viewType) != 0) {
             View rootView = inflater.inflate(getLayoutResId(viewType), parent, false);
@@ -45,7 +46,7 @@ public abstract class BaseHolderViewAdapter<T> extends RecyclerView.Adapter<Base
     }
 
     @Override
-    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseRecyclerViewHolder holder, int position) {
         T data = this.data.get(position);
         holder.onBindData(data,position);
         //onBindData(holder, data, position);

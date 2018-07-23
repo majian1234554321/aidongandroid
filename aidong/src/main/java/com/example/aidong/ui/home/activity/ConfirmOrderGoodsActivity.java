@@ -2,7 +2,7 @@ package com.example.aidong.ui.home.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -66,8 +66,10 @@ import java.util.Map;
 import static com.example.aidong.R.id.ll__receiving_time;
 import static com.example.aidong.R.id.txt_receving_time;
 import static com.example.aidong .ui.App.context;
-import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
-import static com.example.aidong .utils.Constant.DELIVERY_SELF;
+
+
+import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.example.aidong.utils.Constant.DELIVERY_SELF;
 import static com.example.aidong .utils.Constant.GOODS_FOODS;
 import static com.example.aidong .utils.Constant.PAY_ALI;
 import static com.example.aidong .utils.Constant.PAY_WEIXIN;
@@ -91,7 +93,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     //收货或自提地址
     private RelativeLayout emptyAddressLayout;
     private RelativeLayout addressLayout;
-    private ImageView ivDefault;
+    private TextView ivDefault;
     private TextView tvName;
     private TextView tvPhone;
     private TextView tvAddress;
@@ -198,7 +200,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
-
+    public String shopListType ;
     private void initVariable() {
         if (getIntent() == null) return;
         payType = PAY_ALI;
@@ -209,6 +211,8 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         shopBeanList = new ArrayList<>();
         ShopBean shop = getIntent().getParcelableExtra("shop");
         shopBeanList.add(shop);
+
+        shopListType = shop.getPickUp().getType();
         GoodsBean goods = shop.getItem().get(0);
         skuCode = goods.getCode();
         amount = FormatUtil.parseInt(goods.getAmount());
@@ -243,7 +247,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         emptyAddressLayout = (RelativeLayout) findViewById(R.id.rl_empty_address);
         addressLayout = (RelativeLayout) findViewById(R.id.rl_address);
-        ivDefault = (ImageView) findViewById(R.id.iv_default);
+        ivDefault = findViewById(R.id.iv_default);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvPhone = (TextView) findViewById(R.id.tv_phone);
         tvAddress = (TextView) findViewById(R.id.tv_address);
@@ -556,8 +560,16 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 if (usableCoupons.size() > 0) {
                     tvCoupon.setText(usableCoupons.size() + "张可用");
                 }
-                tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red));
+                tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red2));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
+            }else {
+                if (!TextUtils.isEmpty(shopListType)&&!shopBeanList.isEmpty()&&!shopListType.equals(shopBeanList.get(0).getPickUp().getType())){//有优惠券但是快递的信息变化了
+                    shopListType = shopBeanList.get(0).getPickUp().getType();
+                    tvCoupon.setText(usableCoupons.size() + "张可用");
+                    couponPrice =null;
+                    couponId = null;
+                    selectedUserCouponId = null;
+                }
             }
 
         }
@@ -574,6 +586,9 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
 
     }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -608,6 +623,11 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 shopAdapter.setData(shopBeanList);
                 resetStatus();
                 setChangeViewInfo();
+
+
+
+
+
                 if (needExpress) {
                     bottomLayout.setVisibility(View.GONE);
                     present.getDefaultAddress(switcherLayout);
@@ -658,24 +678,5 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         selfDeliveryLayout.setVisibility(View.GONE);
     }
 
-//    public List<CouponBean> couponBeanList;
-//
-//    @Override
-//    public void updateRecyclerView(List<CouponBean> couponBeanList) {
-//        this.couponBeanList = couponBeanList;
-//
-//        if (couponBeanList.size() > 0) {
-//            tvCoupon.setText(couponBeanList.size() + "张可用");
-//        }
-//    }
-//
-//    @Override
-//    public void showEmptyView() {
-//
-//    }
-//
-//    @Override
-//    public void showEndFooterView() {
-//
-//    }
+
 }

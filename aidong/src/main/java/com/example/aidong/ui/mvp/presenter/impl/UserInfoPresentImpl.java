@@ -224,7 +224,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
         if(dynamicModel == null){
             dynamicModel = new DynamicModelImpl();
         }
-        dynamicModel.addLike(new ProgressSubscriber<BaseBean>(context) {
+        dynamicModel.addLike(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if(dynamicFragmentView != null){
@@ -239,7 +239,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
         if(dynamicModel == null){
             dynamicModel = new DynamicModelImpl();
         }
-        dynamicModel.cancelLike(new ProgressSubscriber<BaseBean>(context) {
+        dynamicModel.cancelLike(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if(dynamicFragmentView != null){

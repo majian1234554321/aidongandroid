@@ -4,6 +4,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.example.aidong .config.UrlConfig;
 import com.example.aidong .ui.App;
 import com.example.aidong .utils.DeviceManager;
+import com.readystatesoftware.chuck.ChuckInterceptor;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -80,6 +81,7 @@ public class RetrofitHelper {
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .addInterceptor(new ChuckInterceptor(App.context))
                 .build();
     }
 

@@ -39,7 +39,7 @@ import com.example.aidong .ui.mvp.view.ContestHomeView;
 import com.example.aidong .ui.mvp.view.FollowView;
 import com.example.aidong .ui.video.activity.PlayerActivity;
 import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DialogUtils;
+
 import com.example.aidong .utils.FormatUtil;
 import com.example.aidong .utils.GlideLoader;
 import com.example.aidong .utils.Logger;
@@ -384,7 +384,7 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
                 }
 
             } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
-                DialogUtils.showDialog(this, "", true);
+
                 Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
                 if (selectedMedia != null && selectedMedia.size() > 0) {
 
@@ -427,12 +427,12 @@ public class ContestHomeActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onContestEnrolResult(BaseBean baseBean) {
-        DialogUtils.dismissDialog();
+
     }
 
     @Override
     public void onPostVideoResult(BaseBean baseBean) {
-        DialogUtils.dismissDialog();
+
         ToastGlobal.showLong("视频上传成功");
     }
 

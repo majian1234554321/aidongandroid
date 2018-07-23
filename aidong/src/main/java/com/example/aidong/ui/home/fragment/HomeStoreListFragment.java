@@ -80,13 +80,18 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
             if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
                 resetRefreshData();
 
+//                if (filterView!=null){
+//                    venuesPresent = new VenuesPresentImpl(context, HomeStoreListFragment.this);
+//                    venuesPresent.getGymBrand();
+//                }
+
             }
 
 
         }
     };
     private LinearLayout layout_mine_store;
-    private LinearLayout layout_head;
+
 
 
     @Override
@@ -108,7 +113,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
 
         venuesPresent = new VenuesPresentImpl(getActivity(), this);
         initView(view);
-        setListener();
+
 
         venuesPresent.getGymBrand();
         venuesPresent.getBusinessCircle();
@@ -152,7 +157,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
         layout_mine_store.animate().translationY(0).setInterpolator
                 (new DecelerateInterpolator(2)).start();
 
-        layout_mine_store.setVisibility(View.VISIBLE);
+
 
     }
 
@@ -161,11 +166,12 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
 
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        venuesPresent.getSlefSupportVenues(this);
         venuesPresent.pullToRefreshData(brand_id, landmark, bussiness_area, gymTypes);
         
         layout_mine_store.animate().translationY(0).setInterpolator
                   (new DecelerateInterpolator(2)).start();
-        layout_mine_store.setVisibility(View.VISIBLE);
+
 
     }
 
@@ -183,7 +189,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
 
         TextView txtStoreTypeName = (TextView) view.findViewById(R.id.txt_store_type_name);
 
-        layout_head = (LinearLayout) view.findViewById(R.id.layout_head);
+
         layout_mine_store = (LinearLayout) view.findViewById(R.id.layout_mine_store);
         headerRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
@@ -200,10 +206,7 @@ public class HomeStoreListFragment extends BaseFragment implements DiscoverVenue
             @Override
             public void onBrandItemClick(String brandId) {
                 brand_id = brandId;
-//
-//                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) layout_head.getLayoutParams();
-//                layoutParams.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-//                layout_head.setLayoutParams(layoutParams);
+
 
                 refreshData();
             }
@@ -266,9 +269,7 @@ Log.i("HIDE_THRESHOLD","dx："+dx+"  ---dy:"+dy);
     };
 
 
-    private void setListener() {
 
-    }
 
 
     @Override

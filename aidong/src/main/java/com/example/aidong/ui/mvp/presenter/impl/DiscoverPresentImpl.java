@@ -11,6 +11,7 @@ import com.example.aidong .entity.data.DiscoverNewsData;
 import com.example.aidong .entity.data.DiscoverUserData;
 import com.example.aidong .http.subscriber.CommonSubscriber;
 import com.example.aidong .http.subscriber.IsLoginSubscriber;
+import com.example.aidong.http.subscriber.Progress2Subscriber;
 import com.example.aidong .http.subscriber.ProgressSubscriber;
 import com.example.aidong .http.subscriber.RefreshSubscriber;
 import com.example.aidong .http.subscriber.RequestMoreSubscriber;
@@ -226,7 +227,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
         if (followModel == null) {
             followModel = new FollowModelImpl();
         }
-        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.addFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (baseBean != null) {
@@ -241,7 +242,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
         if (followModel == null) {
             followModel = new FollowModelImpl();
         }
-        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.cancelFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (baseBean != null) {
@@ -257,7 +258,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
         if (followModel == null) {
             followModel = new FollowModelImpl();
         }
-        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.addFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (baseBean != null) {
@@ -272,7 +273,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
         if (followModel == null) {
             followModel = new FollowModelImpl();
         }
-        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+        followModel.cancelFollow(new Progress2Subscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (baseBean != null) {

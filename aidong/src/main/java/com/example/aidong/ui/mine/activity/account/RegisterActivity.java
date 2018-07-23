@@ -224,7 +224,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         if (user != null) {
 
 //            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_NEW_USER_REGISTER));
-            DialogUtils.showDialog(this, "", false);
+
 
             ChatLoginService.startService(this, String.valueOf(user.getId()));
 

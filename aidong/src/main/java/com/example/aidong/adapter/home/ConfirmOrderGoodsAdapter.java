@@ -13,11 +13,14 @@ import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong .entity.GoodsBean;
+import com.example.aidong.ui.home.activity.GoodsDetailActivity;
 import com.example.aidong .utils.FormatUtil;
 import com.example.aidong .utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.aidong.utils.Constant.GOODS_FOODS;
 
 /**
  * 确认订单中单条商品适配器
@@ -83,10 +86,49 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
             public void onClick(View v) {
                 if(listener != null){
                     listener.onItemClick();
+                }else {
+
+
+                    GoodsDetailActivity.start(context,  bean.getProductId(), GOODS_FOODS);
+                   //;
+
                 }
             }
         });
-    }
+
+
+
+//        normal: 正常
+//        applied: 退款中
+//        returned: 已退款
+//        failed: 退款失败
+//        partial: 部分退款
+
+
+        if (TextUtils.isEmpty(bean.status)) return;
+        switch (bean.status) {
+            case "applied":
+                holder.status.setText("退款中");
+                break;
+            case "returned":
+                holder.status.setText("退款成功");
+                break;
+            case "failed":
+                holder.status.setText("退款失败");
+                break;
+            case "partial":
+                holder.status.setText("部分退款");
+                break;
+                default:
+                    holder.status.setText("");
+                    break;
+
+
+
+        }
+
+
+        }
 
     class GoodsHolder extends RecyclerView.ViewHolder {
         CheckBox check;
@@ -95,7 +137,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         TextView price;
         TextView sku;
         TextView code;
-        TextView count;
+        TextView count,status;
 
         public GoodsHolder(View itemView) {
             super(itemView);
@@ -106,6 +148,8 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
             sku = (TextView) itemView.findViewById(R.id.tv_sku);
             code = (TextView) itemView.findViewById(R.id.tv_recommend_code);
             count = (TextView) itemView.findViewById(R.id.tv_count);
+            status = (TextView) itemView.findViewById(R.id.status);
+
         }
     }
 

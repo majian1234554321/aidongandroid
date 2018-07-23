@@ -18,6 +18,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -54,12 +56,14 @@ public class MyMemberCardActivity extends BaseActivity {
 
         }
     };
+    private RelativeLayout ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_member_card);
 
+        ll = findViewById(R.id.ll);
         imgLoading = (ImageView) findViewById(R.id.img_loading);
         GlideLoader.getInstance().displayDrawableGifImage(R.drawable.loading, imgLoading);
         initWebView();
@@ -91,7 +95,7 @@ public class MyMemberCardActivity extends BaseActivity {
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
                 if (newProgress > 70) {
-                    imgLoading.setVisibility(View.GONE);
+                    ll.setVisibility(View.GONE);
                 }
             }
 

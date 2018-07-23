@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:background="@color/transparent"
             android:text="@string/all"
-            android:textColor="@color/main_red"
+            android:textColor="@color/main_black"
             android:textSize="14sp" />
 
         <TextView

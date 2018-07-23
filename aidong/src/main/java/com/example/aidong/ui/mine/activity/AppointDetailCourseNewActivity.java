@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -224,7 +225,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         }
 
         GlideLoader.getInstance().displayImage(appointBean.getTimetable().getCover(), imgCourse);
-        tvOrderNum.setText("预约码: " + appointBean.getId());
+
         txtCourseName.setText(appointBean.getTimetable().getName());
         txtCoachName.setText(appointBean.getTimetable().getCoach().getName());
 
@@ -245,7 +246,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, Color.BLACK, appointBean.getId(),
                 DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
         tv_cancel_appoint.setText("取消预约");
-
+        tvOrderNum.setText("预约码: " + appointBean.getId());
         switch (appointBean.getCourseFinalStatus()) {
 
             case CourseAppointBean.pending:
@@ -259,12 +260,13 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                     }
                 });
 
-                tvOrderNum.setVisibility(View.GONE);
+                rlQrCode.setVisibility(View.GONE);
+
                 tvState.setText(getString(R.string.un_paid));
                 tv_cancel_appoint.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.VISIBLE);
                 layout_pay.setVisibility(View.VISIBLE);
-
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_red2));
                 break;
 
             case CourseAppointBean.paid:
@@ -279,6 +281,9 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 } else {
                     tv_cancel_appoint.setText("取消预约");
                 }
+
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
+
                 break;
 
             case CourseAppointBean.canceled:
@@ -291,7 +296,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 tvPay.setVisibility(View.GONE);
 
                 tvDelete.setVisibility(View.VISIBLE);
-
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
                 break;
 
             case CourseAppointBean.absent:
@@ -303,7 +308,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.absent));
                 tvDelete.setVisibility(View.VISIBLE);
-
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
                 break;
             case CourseAppointBean.signed:
                 tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -314,17 +319,22 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.signed));
                 tvDelete.setVisibility(View.VISIBLE);
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
                 break;
             case CourseAppointBean.suspended:
                 rlQrCode.setVisibility(View.GONE);
                 tvState.setText(getString(R.string.suspended));
                 tvDelete.setVisibility(View.VISIBLE);
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
                 break;
 //            case CourseAppointBean.paid:
 //                rlQrCode.setVisibility(View.VISIBLE);
 //                tvState.setText(getString(R.string.with_sign_in));
 //                tv_cancel_appoint.setVisibility(View.VISIBLE);
 //                break;
+            default:
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_black));
+                break;
         }
     }
 

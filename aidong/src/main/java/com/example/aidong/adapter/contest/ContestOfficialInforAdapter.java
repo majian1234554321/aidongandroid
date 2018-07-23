@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.contest;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +40,9 @@ public class ContestOfficialInforAdapter extends RecyclerView.Adapter<ContestOff
         return data.size();
     }
 
+    @NonNull
     @Override
-    public NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_contest_infor,parent,false);
         return new NewsHolder(view);
     }

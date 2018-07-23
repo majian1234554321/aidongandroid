@@ -174,6 +174,8 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 break;
             case "23":
                 ActivityCircleDetailActivity.start(this, bannerBean.getLink());
+
+
 //                CampaignDetailActivity.start(this, bannerBean.getLink());
                 break;
             case "24":

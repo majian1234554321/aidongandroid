@@ -19,6 +19,7 @@ import com.example.aidong .ui.mine.view.CartHeaderView;
 import com.example.aidong .ui.mvp.presenter.RecommendPresent;
 import com.example.aidong .ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.example.aidong .ui.mvp.view.CartActivityView;
+import com.example.aidong.ui.mvp.view.HideHeadItemView;
 import com.example.aidong .widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.example.aidong .widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.example.aidong .widget.endlessrecyclerview.HeaderSpanSizeLookup;
@@ -40,7 +41,7 @@ import static com.example.aidong .utils.Constant.RECOMMEND_CART;
  * //todo shit 购物车的实现需要重构
  */
 public class CartActivity extends BaseActivity implements CartActivityView, View.OnClickListener,
-        CartHeaderView.CartHeaderCallback, OnRefreshListener {
+        CartHeaderView.CartHeaderCallback, OnRefreshListener,HideHeadItemView {
     private ImageView ivBack;
     private TextView tvEdit;
 
@@ -61,7 +62,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private LinearLayout bottomDeleteLayout;
     private TextView tvDelete;
 
-    private RecommendPresent recommendPresent;
+    private RecommendPresentImpl recommendPresent;
     private boolean isEditing = false;
     private boolean needLoadRecommendData = true;
 
@@ -88,13 +89,14 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
         initView();
         setListener();
+        cartHeaderView.pullToRefreshCartData();
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        cartHeaderView.pullToRefreshCartData();
+       //
     }
 
     private void initView(){
@@ -199,7 +201,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         if(needLoadRecommendData) {
             needLoadRecommendData = false;
             bottomLayout.setVisibility(View.VISIBLE);
-            cartHeaderView.showRecommendText(!isEditing);
+
             recommendPresent.pullToRefreshRecommendData(RECOMMEND_CART);
         }
 
@@ -218,6 +220,9 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         rbSelectAll.setChecked(allChecked);
         tvSettlement.setText(String.format(getString(R.string.settlement_count),settlementCount));
         tvTotalPrice.setText(String.format(getString(R.string.rmb_price_double),totalPrice));
+        if (recommendList!=null&&recommendList.size()==0&&cartHeaderView!=null){
+            cartHeaderView.showRecommendText(false);
+        }
     }
 
 
@@ -225,9 +230,14 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         tvEdit.setText(isEditing ? R.string.finish : R.string.edit);
         bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
         bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
-        cartHeaderView.showRecommendText(!isEditing);
+
         cartHeaderView.setEditingStatus(isEditing);
         recommendAdapter.setData(isEditing ? emptyRecommendList : recommendList);
         wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void hideHeadItemView() {
+
     }
 }

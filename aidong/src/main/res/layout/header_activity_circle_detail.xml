@@ -56,11 +56,11 @@
     <ImageView
         android:id="@+id/img_cover"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="210dp"
+        android:scaleType="fitCenter"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_default"
+        android:src="@drawable/img_default2"
 
         />
 

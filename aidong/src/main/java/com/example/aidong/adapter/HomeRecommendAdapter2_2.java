@@ -1,6 +1,7 @@
 package com.example.aidong.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong .entity.CampaignBean;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong .ui.competition.activity.ContestHomeActivity;
 import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
 import com.example.aidong .utils.Constant;
@@ -48,6 +50,14 @@ public class HomeRecommendAdapter2_2 extends RecyclerView.Adapter<HomeRecommendA
 
                     if (Constant.CAMPAIGN.equals(campaignBean.type)) {
                         ActivityCircleDetailActivity.start(context, campaignBean.getId());
+
+
+
+//                        Intent intent = new Intent(context,DisplayActivity.class);
+//                        intent.putExtra("TYPE","DetailsActivityH5Fragment");
+//                        intent.putExtra("id",campaignBean.campaign_detail);
+//                        context.startActivity(intent);
+
                     } else if (Constant.CONTEST.equals(campaignBean.type)) {
                         ContestHomeActivity.start(context,campaignBean);
                     }

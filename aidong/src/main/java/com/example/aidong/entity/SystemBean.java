@@ -26,13 +26,16 @@ public class SystemBean implements Serializable {
     private ArrayList<String> gym_types;
 
 
-    public static List<MarketPartsBean> market_parts;
+    public List<MarketPartsBean> market_parts;
 
 
+    public Tips wx_report;
 
+    public static class Tips {
+        public String id;
 
-
-
+        public String title;
+    }
 
 
     private int order_countdown; // 订单倒计时,单位分钟

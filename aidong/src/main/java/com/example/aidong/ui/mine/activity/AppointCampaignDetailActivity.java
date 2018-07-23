@@ -27,6 +27,7 @@ import com.example.aidong .module.pay.PayInterface;
 import com.example.aidong .module.pay.SimplePayListener;
 import com.example.aidong .module.pay.WeiXinPay;
 import com.example.aidong .ui.BaseActivity;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
 import com.example.aidong .ui.home.activity.AppointSuccessActivity;
 import com.example.aidong .ui.home.activity.MapActivity;
@@ -343,7 +344,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvStartTime.setLeftTextContent("实付款");
 
 
-                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.red_price));
+                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.main_blue));
                 tvStartTime.setRightContent(String.format(getString(R.string.rmb_price_double),
                         FormatUtil.parseDouble(bean.getPay().getPayAmount())));
                 tvConfirmJoin.setVisibility(View.GONE);
@@ -351,6 +352,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 codeLayout.setVisibility(View.GONE);
                 payLayout.setVisibility(View.VISIBLE);
                 tvPayType.setVisibility(View.GONE);
+
+
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.main_red2));
                 break;
             case UN_JOIN:           //待参加
                 tvState.setText(context.getString(R.string.appointment_un_joined));
@@ -377,6 +381,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 Logger.i(DensityUtil.dp2px(this, 312)+"");
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
+
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.black));
                 break;
             case JOINED:            //已参加
                 tvState.setText(context.getString(R.string.appointment_joined));
@@ -405,6 +411,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.black));
                 break;
             case CLOSE:             //已关闭
                 tvState.setText(context.getString(R.string.order_close));
@@ -421,9 +428,10 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvPayType.setVisibility(View.GONE);
 
                 tvStartTime.setLeftTextContent("实付款");
-                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.red_price));
+                tvStartTime.setRightTextColor(ContextCompat.getColor(context,R.color.main_blue));
                 tvStartTime.setRightContent(String.format(getString(R.string.rmb_price_double),
                         FormatUtil.parseDouble(bean.getPay().getPayAmount())));
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.black));
                 break;
             case REFUNDING:           //退款中
                 tvState.setText(context.getString(R.string.order_refunding));
@@ -452,6 +460,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.black));
                 break;
             case REFUNDED:             //已退款
                 tvState.setText(context.getString(R.string.order_refunded));
@@ -480,8 +489,10 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 312), DensityUtil.dp2px(this, 73), false));
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.black));
                 break;
             default:
+                tvState.setTextColor(ContextCompat.getColor(this,R.color.black));
                 break;
         }
     }
@@ -548,9 +559,16 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 present.deleteAppoint(bean.getId());
                 break;
             case R.id.rl_detail:
-
                 ActivityCircleDetailActivity.start(this, bean.getLinkId());
-//                CampaignDetailActivity.start(this, bean.getLinkId());
+//
+
+
+//                Intent intent = new Intent(context,DisplayActivity.class);
+//                intent.putExtra("TYPE","DetailsActivityH5Fragment");
+//                intent.putExtra("id",bean.getAppoint().campaign_detail);
+//                context.startActivity(intent);
+
+
                 break;
             case R.id.dv_qr:
                 if (UN_JOIN.equals(status)) {

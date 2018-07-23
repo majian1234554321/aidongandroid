@@ -2,6 +2,7 @@ package com.example.aidong.http.subscriber;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.SystemClock;
 
 import com.example.aidong .http.subscriber.handler.ProgressDialogHandler;
 
@@ -31,7 +32,10 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
 
     private void showProgressDialog(){
         if (progressDialogHandler != null) {
+
             progressDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
+
+
         }
     }
 

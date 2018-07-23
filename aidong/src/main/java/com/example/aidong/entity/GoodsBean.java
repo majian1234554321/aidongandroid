@@ -26,6 +26,7 @@ public class GoodsBean  implements Parcelable {
     private String type;
     private String floor_price;
     protected String brand_name;
+    public  String status;
 
     /******
      * 订单商品中需要用到的字段

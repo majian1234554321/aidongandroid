@@ -7,4 +7,5 @@ import com.example.aidong .entity.data.SportRecordMonthData;
  */
 public interface SportRecordView {
     void onGetSportRecordData(SportRecordMonthData athletic);
+
 }

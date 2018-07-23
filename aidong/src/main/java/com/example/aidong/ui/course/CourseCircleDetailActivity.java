@@ -69,7 +69,7 @@ import com.example.aidong .ui.mvp.view.CourseVideoView;
 import com.example.aidong .ui.mvp.view.SportCircleFragmentView;
 import com.example.aidong .ui.video.activity.PlayerActivity;
 import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DialogUtils;
+
 import com.example.aidong .utils.FormatUtil;
 import com.example.aidong .utils.GlideLoader;
 import com.example.aidong .utils.Logger;
@@ -374,7 +374,6 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
             ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(0, 0);
         }
 
-
     }
 
     @Override
@@ -506,7 +505,7 @@ public class CourseCircleDetailActivity extends BaseActivity implements SportCir
                 }
 
             } else if (requestCode == Constant.REQUEST_VIDEO_TRIMMER) {
-                DialogUtils.showDialog(this, "", true);
+
                 Logger.i("contest video ", "requestCode == Constant.REQUEST_VIDEO_TRIMMER = ");
                 if (selectedMedia != null && selectedMedia.size() > 0) {
                     selectedMedia.get(0).setPath(data.getStringExtra(Constant.VIDEO_PATH));

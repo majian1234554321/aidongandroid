@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.aidong.widget.vertical.VerticalScrollView android:id="@+id/scrollView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.aidong.widget.vertical.VerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <cn.bingoogolapple.bgabanner.BGABanner
             android:id="@+id/banner"
@@ -121,9 +120,10 @@
 
             <ImageButton
                 android:id="@+id/img_bt_telephone"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="8dp"
                 android:background="@color/transparent"
                 android:src="@drawable/icon_telephone_red" />
         </LinearLayout>
@@ -156,7 +156,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/ll_nurture"
@@ -269,6 +270,16 @@
 
             </LinearLayout>
 
+
+            <com.example.aidong.widget.MyGridView
+
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:numColumns="4" />
+
+
         </LinearLayout>
 
         <include layout="@layout/inc_line_margin_left" />
@@ -311,7 +322,7 @@
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
                     android:text="@string/check_all"
-                    android:textColor="@color/main_red"
+                    android:textColor="@color/main_red2"
                     android:textSize="13sp" />
 
             </RelativeLayout>
@@ -320,7 +331,15 @@
                 android:id="@+id/rv_other_sub_store"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+
         </LinearLayout>
 
         <TextView
@@ -380,16 +399,15 @@
         <TextView
             android:id="@+id/txt_relate_course"
             android:layout_width="wrap_content"
-            android:layout_gravity="center"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="15dp"
-            android:gravity="center"
             android:drawableLeft="@drawable/home_arrow1"
             android:drawablePadding="6dp"
+            android:gravity="center"
             android:text="上拉查看相关课程"
             android:textColor="@color/black"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
 
     </LinearLayout>

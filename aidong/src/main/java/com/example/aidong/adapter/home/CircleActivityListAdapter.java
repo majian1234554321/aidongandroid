@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,12 +12,16 @@ import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong .entity.CampaignBean;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong .ui.competition.activity.ContestHomeActivity;
 import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
 import com.example.aidong .utils.Constant;
 import com.example.aidong .utils.GlideLoader;
+import com.iknow.android.utils.GlideUtils;
 
 import java.util.List;
+
+import static com.example.aidong.ui.App.context;
 
 /**
  * Created by user on 2018/1/5.
@@ -38,7 +43,7 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CampaignBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage2(bean.getCover(), holder.imgCover);
+       // GlideLoader.getInstance().displayImage2(bean.getCover(), holder.imgCover);
         holder.txtType.setText("【" + bean.getTypeCZ() + "】");
         holder.txtName.setText(bean.getName());
 //        if (TextUtils.isEmpty(bean.getLandmark())) {
@@ -47,10 +52,22 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
 //
 //        }
 
-        if (bean.start_time.equals(bean.end_time)){
-            holder.txtTime.setText(bean.start_time);
+
+        GlideUtils.loadIntoUseFitWidth(context,bean.getCover(),R.drawable.img_default2, holder.imgCover);
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (!TextUtils.isEmpty(bean.landmark)){
+            stringBuilder.append(bean.landmark).append(" ");
         }else {
-            holder.txtTime.setText(bean.start_time + "~" + bean.end_time);
+            stringBuilder.append("");
+        }
+
+
+        if (bean.start_time.equals(bean.end_time)){
+            holder.txtTime.setText(stringBuilder.append(bean.start_time));
+        }else {
+            holder.txtTime.setText(stringBuilder.append(bean.start_time).append("~") .append(bean.end_time));
         }
 
 
@@ -61,6 +78,13 @@ public class CircleActivityListAdapter extends RecyclerView.Adapter<CircleActivi
             public void onClick(View v) {
                 if (Constant.CAMPAIGN.equals(bean.type)) {
                     ActivityCircleDetailActivity.start(context, bean.getId());
+
+
+//                    Intent intent = new Intent(context,DisplayActivity.class);
+//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+//                    intent.putExtra("id",bean.campaign_detail);
+//                    context.startActivity(intent);
+
                 } else if (Constant.CONTEST.equals(bean.type)) {
                     ContestHomeActivity.start(context, bean);
                 }

@@ -39,7 +39,7 @@
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/line_color"/>
+        android:layout_height="5dp"
+        android:background="#FFFFFF"/>
 
 </LinearLayout>

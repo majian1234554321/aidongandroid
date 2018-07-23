@@ -11,6 +11,7 @@ import com.example.aidong.R
 import com.example.aidong .entity.course.CourseBeanNew
 import com.example.aidong .ui.course.CourseCircleDetailActivity
 import com.example.aidong .utils.GlideLoader
+import com.iknow.android.utils.GlideUtils
 import kotlinx.android.synthetic.main.item_home_recommend_course2.view.*
 
 import java.util.ArrayList
@@ -43,11 +44,16 @@ class HomeRecommendCourseAdapter2(val context: Activity, var course: ArrayList<C
         GlideLoader.getInstance().displayImage(course[position].cover, iv)
 
 
+          //  GlideUtils.loadIntoUseFitWidth(context, course[position].cover, R.drawable.img_default, iv)
+
 
             setOnClickListener {
 
-                context.startActivity( Intent(context, CourseCircleDetailActivity::class.java).putExtra("id", course[position].id),
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity ,iv,"share").toBundle())
+//                context.startActivity( Intent(context, CourseCircleDetailActivity::class.java).putExtra("id", course[position].id),
+//                        ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity ,iv,"share").toBundle())
+
+
+                CourseCircleDetailActivity.start(context, course[position].id)
 
             }
 

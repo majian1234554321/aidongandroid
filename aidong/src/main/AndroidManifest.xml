@@ -31,7 +31,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -248,6 +247,9 @@
             android:name=".ui.mine.activity.CartActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.CartActivity2"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.CouponExchangeActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -371,6 +373,9 @@
         <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".ui.home.activity.GoodsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.GoodsListActivity2"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.NurtureActivity"
@@ -727,7 +732,7 @@
         <!-- 设置环信应用的AppKey debug:	leyuan-aidong#aidongouternettest  preRelease: leyuan-aidong#aidongprerelease   release : leyuan-aidong#aidong -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="leyuan-aidong#aidong" />
+            android:value="${EASEMOB_APPKEY_ID}" />
         <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
@@ -762,15 +767,18 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities=".file.provider"
+            android:authorities="com.example.aidong.file.provider"
             android:exported="false"
+
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider" />
         </provider>
 
-        <activity android:name=".ui.DisplayActivity" />
+        <activity
+            android:name=".ui.DisplayActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.dragvideo.DragVideoActivity"
             android:theme="@style/Transparent" />
@@ -925,6 +933,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_image_show"
             android:theme="@style/FullScreenStyle2" />
+        <activity
+            android:name=".ui.home.activity.ShowWebImageActivity"
+            android:theme="@style/AppTheme.FullScreen" />
     </application>
 
 </manifest>

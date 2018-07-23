@@ -1,6 +1,7 @@
 package com.example.aidong.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -81,8 +82,9 @@ public class DeepIntoAdapter extends RecyclerView.Adapter<DeepIntoAdapter.ViewHo
 
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = null;
         switch (i) {
             case TYPE_FOOTER:

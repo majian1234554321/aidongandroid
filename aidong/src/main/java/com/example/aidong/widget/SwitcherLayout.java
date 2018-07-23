@@ -151,7 +151,7 @@ public class SwitcherLayout {
     }
 
     private void setDefaultViews() {
-        View loadingView = initView(R.layout.view_loading_content, TAG_LOADING);
+        View loadingView = initView( R.layout.view_loading_content, TAG_LOADING);
         ImageView imageView = (ImageView) loadingView.findViewById(R.id.iv_loading);
         GlideLoader.getInstance().displayDrawableGifImage(R.drawable.loading, imageView);
 

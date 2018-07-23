@@ -1,33 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    android:background="@color/white">
+
+    <com.example.aidong.widget.CommonTitleLayout
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        app:txtTitle="@string/queue_detail" />
+
+
+    <LinearLayout
+        android:id="@+id/ll"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/c9" />
+
+        <TextView
+            android:id="@+id/tv_price_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:layout_marginTop="17dp"
+            android:gravity="center"
+            android:text="实付款:"
+            android:textColor="@color/c3"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/bt_queue_immediately"
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_solid_corner_white"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="删除"
+            android:textColor="@color/c3"
+            android:textSize="14sp"
+            android:visibility="visible"
+            tools:text="1212" />
+    </LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
-        >
+        android:layout_above="@+id/ll"
+
+        android:layout_below="@+id/layout_title"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <com.example.aidong.widget.CommonTitleLayout
-                android:id="@+id/layout_title"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                app:txtTitle="@string/queue_detail" />
+
 
             <TextView
                 android:id="@+id/txt_queue_location"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:background="@color/white"
-                android:gravity="center_horizontal"
-                android:paddingTop="15dp"
+                android:elevation="5dp"
+                android:gravity="center"
+
                 android:text="当前排队: 第6位"
                 android:textColor="@color/course_oringe"
                 android:textSize="14sp"
@@ -41,9 +94,6 @@
             <include
                 android:id="@+id/layout_course_location"
                 layout="@layout/inc_course_location_phone" />
-
-
-
 
 
             <RelativeLayout
@@ -222,34 +272,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:gravity="center"
                 android:text="@string/course_queue_desc"
                 android:textColor="@color/c9"
-
                 android:textSize="12sp" />
 
         </LinearLayout>
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/bt_queue_immediately"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:background="@color/course_oringe"
-        android:gravity="center"
-        android:visibility="visible"
-        android:text="@string/cancel_queue"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+
     <RelativeLayout
         android:id="@+id/rl_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffffff"
         android:layout_marginTop="45dp"
-        android:visibility="visible">
+        android:background="#ffffffff"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -264,5 +304,4 @@
     </RelativeLayout>
 
 
-
-</FrameLayout>
+</RelativeLayout>

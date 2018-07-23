@@ -12,6 +12,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong.entity.course.CourseBeanNew;
@@ -141,6 +142,8 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
             //left+2*alignBottom 决定了文本往左偏移的多少（加-->向左移）
             //textY-alignBottom  决定了文本往右偏移的多少  (减-->向上移)
             c.drawText(textLine, left + 2 * alignBottom, textY - alignBottom, textPaint);
+
+
         }
     }
 

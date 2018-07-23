@@ -42,20 +42,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.ogaclejapan.smarttablayout.SmartTabLayout
+    <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-
-
-        android:background="@color/white"
-        app:stl_defaultTabTextColor="@color/gray_normal"
-        app:stl_defaultTabTextSize="17sp"
-        app:stl_dividerColor="@color/transparent"
-        app:stl_indicatorColor="@color/white"
-        app:stl_indicatorInterpolation="smart"
-        app:stl_indicatorThickness="3dp"
-        app:stl_indicatorWidth="auto" />
+        app:tabBackground="@color/white"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/main_blue"
+        app:tabTextColor="@color/black1" />
 
 
 

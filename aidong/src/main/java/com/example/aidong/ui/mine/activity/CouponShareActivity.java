@@ -82,6 +82,7 @@ public class CouponShareActivity extends BaseActivity implements View.OnClickLis
             case R.id.img_weichat:
                 if(ThirdClientValid.isWeixinAvilible(this)){
                     WXEntryActivity.start(this, title, content, imageUrl, webUrl, false);
+                    finish();
                 }else{
                     ToastGlobal.showShortConsecutive(R.string.no_install_wx);
                 }
@@ -90,6 +91,7 @@ public class CouponShareActivity extends BaseActivity implements View.OnClickLis
             case R.id.img_wei_friend:
                 if(ThirdClientValid.isWeixinAvilible(this)){
                     WXEntryActivity.start(this, title, content, imageUrl, webUrl, true);
+                    finish();
                 }else{
                     ToastGlobal.showShortConsecutive(R.string.no_install_wx);
                 }

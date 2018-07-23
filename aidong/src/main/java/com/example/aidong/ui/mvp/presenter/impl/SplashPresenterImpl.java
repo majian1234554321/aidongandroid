@@ -10,9 +10,12 @@ import com.example.aidong .ui.App;
 import com.example.aidong .ui.mvp.model.impl.LoginModel;
 import com.example.aidong .ui.mvp.view.LoginAutoView;
 import com.example.aidong .utils.PermissionManager;
+import com.example.aidong.utils.PermissionManager2;
 import com.example.aidong .utils.RequestResponseCount;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -84,4 +87,27 @@ public class SplashPresenterImpl {
     public void setOnRequestResponse(RequestResponseCount requestResponse) {
         this.requestResponse = requestResponse;
     }
+
+
+
+
+
+    public void checkPermission2(PermissionManager2.OnCheckPermissionListener permissionListener) {
+        //        PermissionsUtil.checkAndRequestPermissions(this, null);
+        List<String> list = new ArrayList<>();
+        list.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        list.add(Manifest.permission.CALL_PHONE);
+        list.add(Manifest.permission.CAMERA);
+        list.add(Manifest.permission.RECORD_AUDIO);
+        list.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        PermissionManager2   permissionManager = new PermissionManager2(list, context, permissionListener);
+        permissionManager.checkPermissionList();
+    }
+
+
+
+
+
+
 }

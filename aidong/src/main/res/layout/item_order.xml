@@ -12,6 +12,7 @@
     <TextView
         android:id="@+id/tv_state"
         android:layout_width="wrap_content"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="支付时间:"
             android:textSize="14sp"
-            android:textColor="@color/main_red"/>
+            android:textColor="@color/main_red2"/>
 
         <cn.iwgang.countdownview.CountdownView
             android:id="@+id/timer"
@@ -59,8 +60,8 @@
             app:isTimeTextBold="false"
             android:layout_gravity="center"
             app:isShowMillisecond="false"
-            app:timeTextColor="@color/main_red"
-            app:suffixTextColor="@color/main_red"/>
+            app:timeTextColor="@color/main_red2"
+            app:suffixTextColor="@color/main_red2"/>
     </LinearLayout>
 
     <View

@@ -48,7 +48,7 @@
             tools:text="1212"
             android:visibility="gone"
             android:layout_marginRight="12dp"
-            android:textColor="@color/main_red"
+            android:textColor="@color/main_red2"
             android:layout_toLeftOf="@+id/iv"
             android:layout_centerVertical="true"
             android:layout_height="wrap_content" />

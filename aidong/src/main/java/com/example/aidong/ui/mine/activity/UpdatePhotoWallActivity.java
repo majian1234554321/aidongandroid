@@ -11,21 +11,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.mine.PhotoWallAdapter;
-import com.example.aidong .entity.BaseBean;
-import com.example.aidong .entity.ImageBean;
-import com.example.aidong .module.photopicker.boxing.Boxing;
-import com.example.aidong .module.photopicker.boxing.model.config.BoxingConfig;
-import com.example.aidong .module.photopicker.boxing.model.entity.BaseMedia;
-import com.example.aidong .module.photopicker.boxing_impl.ui.BoxingActivity;
-import com.example.aidong .module.photopicker.boxing_impl.view.SpacesItemDecoration;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.mvp.presenter.PhotoWallPresent;
-import com.example.aidong .ui.mvp.presenter.impl.PhotoWallPresentImpl;
-import com.example.aidong .ui.mvp.view.UpdatePhotoWallActivityView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.qiniu.IQiNiuCallback;
-import com.example.aidong .utils.qiniu.UploadToQiNiuManager;
+import com.example.aidong.adapter.mine.PhotoWallAdapter;
+import com.example.aidong.entity.BaseBean;
+import com.example.aidong.entity.ImageBean;
+import com.example.aidong.module.photopicker.boxing.Boxing;
+import com.example.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.example.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.example.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
+import com.example.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.mvp.presenter.PhotoWallPresent;
+import com.example.aidong.ui.mvp.presenter.impl.PhotoWallPresentImpl;
+import com.example.aidong.ui.mvp.view.UpdatePhotoWallActivityView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.qiniu.IQiNiuCallback;
+import com.example.aidong.utils.qiniu.UploadToQiNiuManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
 
     public static void start(Context context, List<ImageBean> photos) {
         Intent starter = new Intent(context, UpdatePhotoWallActivity.class);
-        starter.putParcelableArrayListExtra("photos",(ArrayList<ImageBean>) photos);
+        starter.putParcelableArrayListExtra("photos", (ArrayList<ImageBean>) photos);
         context.startActivity(starter);
     }
 
@@ -60,8 +60,8 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_photo_wall);
-        photoWallPresent = new PhotoWallPresentImpl(this,this);
-        if(getIntent() != null){
+        photoWallPresent = new PhotoWallPresentImpl(this, this);
+        if (getIntent() != null) {
             selectedNetImages = getIntent().getParcelableArrayListExtra("photos");
             allSelectedImages.addAll(selectedNetImages);
         }
@@ -69,18 +69,18 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         setListener();
     }
 
-    private void initView(){
+    private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvFinish = (TextView) findViewById(R.id.tv_finish);
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
         photoWallAdapter = new PhotoWallAdapter(this);
         rvPhoto.setAdapter(photoWallAdapter);
-        rvPhoto.setLayoutManager(new GridLayoutManager(this,4));
+        rvPhoto.setLayoutManager(new GridLayoutManager(this, 4));
         rvPhoto.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin), 4));
         photoWallAdapter.setData(selectedNetImages);
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(this);
         tvFinish.setOnClickListener(this);
         photoWallAdapter.setListener(this);
@@ -88,16 +88,16 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
-                if(isNetPhotoChanged){
-                    setResult(RESULT_OK,null);
+                if (isNetPhotoChanged) {
+                    setResult(RESULT_OK, null);
                 }
                 finish();
                 break;
             case R.id.tv_finish:
-                if(selectedLocalImages.isEmpty()){
-                    Toast.makeText(UpdatePhotoWallActivity.this,"请先选择要上传的本地图片",Toast.LENGTH_LONG).show();
+                if (selectedLocalImages.isEmpty()) {
+                    Toast.makeText(UpdatePhotoWallActivity.this, "请先选择要上传的本地图片", Toast.LENGTH_LONG).show();
                     return;
                 }
                 uploadToQiNiu();
@@ -107,22 +107,32 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         }
     }
 
-    private void uploadToQiNiu(){
+    private void uploadToQiNiu() {
         showProgressDialog();
-        UploadToQiNiuManager.getInstance().uploadImages(selectedLocalImages, new IQiNiuCallback(){
+        UploadToQiNiuManager.getInstance().uploadImages(selectedLocalImages, new IQiNiuCallback() {
             @Override
             public void onSuccess(List<String> urls) {
                 uploadToServer(urls);
             }
+
             @Override
             public void onFail() {
                 dismissProgressDialog();
-                Toast.makeText(UpdatePhotoWallActivity.this,"上传失败",Toast.LENGTH_LONG).show();
+                runOnUiThread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(UpdatePhotoWallActivity.this, "上传失败", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                );
+
+
             }
         });
     }
 
-    private void uploadToServer(List<String> qiNiuUrls){
+    private void uploadToServer(List<String> qiNiuUrls) {
         String[] photo = new String[qiNiuUrls.size()];
         for (int i = 0; i < qiNiuUrls.size(); i++) {
             photo[i] = qiNiuUrls.get(i);
@@ -135,22 +145,22 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
         multi.maxCount(8 - selectedNetImages.size()).isNeedPaging();
         Boxing.of(multi)
-                .withIntent(this, BoxingActivity.class,selectedLocalImages)
+                .withIntent(this, BoxingActivity.class, selectedLocalImages)
                 .start(this, REQUEST_CODE);
     }
 
     @Override
     public void onDeleteNetImage(int position) {
-        photoWallPresent.deletePhotos(allSelectedImages.get(position).getId(),position);
+        photoWallPresent.deletePhotos(allSelectedImages.get(position).getId(), position);
     }
 
     @Override
     public void onDeleteLocalImage(int position) {
         allSelectedImages.remove(position);
         photoWallAdapter.notifyItemRemoved(position);
-        photoWallAdapter.notifyItemRangeChanged(position,allSelectedImages.size());
+        photoWallAdapter.notifyItemRangeChanged(position, allSelectedImages.size());
         selectedLocalImages.remove(position - selectedNetImages.size());
-        tvFinish.setVisibility(selectedLocalImages.isEmpty()?View.GONE:View.VISIBLE);
+        tvFinish.setVisibility(selectedLocalImages.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -173,41 +183,41 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
                     allSelectedImages.add(imageBean);
                 }
                 photoWallAdapter.setData(allSelectedImages);
-                tvFinish.setVisibility(selectedLocalImages.isEmpty()?View.GONE:View.VISIBLE);
+                tvFinish.setVisibility(selectedLocalImages.isEmpty() ? View.GONE : View.VISIBLE);
             }
         }
     }
 
     @Override
     public void deleteNetPhotoResult(BaseBean baseBean, int position) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             selectedNetImages.remove(position);
             allSelectedImages.remove(position);
             photoWallAdapter.notifyItemRemoved(position);
-            photoWallAdapter.notifyItemRangeChanged(position,allSelectedImages.size());
+            photoWallAdapter.notifyItemRangeChanged(position, allSelectedImages.size());
             isNetPhotoChanged = true;
-            Toast.makeText(this,"删除成功",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,"删除失败"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "删除成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "删除失败" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void addPhotosResult(BaseBean baseBean) {
         dismissProgressDialog();
-        if(baseBean.getStatus() == Constant.OK){
-            setResult(RESULT_OK,null);
+        if (baseBean.getStatus() == Constant.OK) {
+            setResult(RESULT_OK, null);
             finish();
-            Toast.makeText(this,"添加成功",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "添加成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void onBackPressed() {
-        if(isNetPhotoChanged){
-            setResult(RESULT_OK,null);
+        if (isNetPhotoChanged) {
+            setResult(RESULT_OK, null);
         }
         finish();
     }

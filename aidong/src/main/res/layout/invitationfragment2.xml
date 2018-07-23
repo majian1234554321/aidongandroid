@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <WebView
+        android:id="@+id/mWebView"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbars="vertical" />
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="@dimen/x320"
+        android:layout_height="@dimen/x180"
+        android:layout_centerInParent="true"
+        android:background="@drawable/a">
+
+        <ImageView
+            android:id="@+id/img_loading"
+            android:layout_width="@dimen/x320"
+
+            android:layout_height="@dimen/x180"
+            android:src="@drawable/loading" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/i_fitness" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

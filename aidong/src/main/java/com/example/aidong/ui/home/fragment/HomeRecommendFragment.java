@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -31,6 +32,7 @@ import com.example.aidong .entity.course.CourseBeanNew;
 import com.example.aidong .entity.data.HomeData;
 
 import com.example.aidong .ui.BaseFragment;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong .ui.MainActivity;
 import com.example.aidong .ui.course.CourseCircleDetailActivity;
 import com.example.aidong .ui.home.activity.CircleListActivity;
@@ -61,6 +63,7 @@ import java.util.List;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.aidong.ui.App.context;
 
 /**
  * Created by user on 2017/12/28.
@@ -69,20 +72,20 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
 
     private CustomRefreshLayout refreshLayout;
-    private NestedScrollView scrollView;
-    private LinearLayout llContent;
+
+
     private BGABanner banner;
 
-    private TextView txtSelectionCourse;
-    private TextView txtSelectionCourseHint;
+
+
 
     private LinearLayout llSelectionActivity;
-    private TextView txtSelectionActivity;
-    private TextView txtSelectionActivityHint;
+
+
     private RecyclerView rvActivity;
     private LinearLayout llStarCoach;
-    private TextView txtStarCoach;
-    private TextView txtStarCoachHint;
+
+
     private RecyclerView rvStarCoach;
     private TextView txtCheckAllActivity, txt_check_all_coach, txt_check_all_course;
     HomeRecommendPresentImpl homePresent;
@@ -121,7 +124,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home_recommend, container, false);
     }
@@ -223,20 +226,20 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         // initSwitcherLayout();
-        scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
-        llContent = (LinearLayout) view.findViewById(R.id.ll_content);
+
+
         banner = (BGABanner) view.findViewById(R.id.banner);
 
-        txtSelectionCourse = (TextView) view.findViewById(R.id.txt_selection_course);
-        txtSelectionCourseHint = (TextView) view.findViewById(R.id.txt_selection_course_hint);
+
+
 
         llSelectionActivity = (LinearLayout) view.findViewById(R.id.ll_selection_activity);
-        txtSelectionActivity = (TextView) view.findViewById(R.id.txt_selection_activity);
-        txtSelectionActivityHint = (TextView) view.findViewById(R.id.txt_selection_activity_hint);
+
+
         rvActivity = (RecyclerView) view.findViewById(R.id.rv_activity);
         llStarCoach = (LinearLayout) view.findViewById(R.id.ll_star_coach);
-        txtStarCoach = (TextView) view.findViewById(R.id.txt_star_coach);
-        txtStarCoachHint = (TextView) view.findViewById(R.id.txt_star_coach_hint);
+
+
         rvStarCoach = (RecyclerView) view.findViewById(R.id.rv_star_coach);
         txt_check_all_course = (TextView) view.findViewById(R.id.txt_check_all_course);
         txt_check_all_coach = (TextView) view.findViewById(R.id.txt_check_all_coach);
@@ -253,6 +256,16 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
             @Override
             public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
                 ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
+//                if ("23".equals(((BannerBean) model).getType())){
+//                    Intent intent = new Intent(context,DisplayActivity.class);
+//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+//                    intent.putExtra("id",((BannerBean) model).campaign_detail);
+//                    context.startActivity(intent);
+//                }else{
+//                    ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
+//                }
+
+
             }
         });
 
@@ -401,11 +414,11 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
     public void onItemClick(String id, int position,View view ) {
         itemClickedPosition = position;
 
-      //  CourseCircleDetailActivity.startForResult(this, id, Constant.REQUEST_COURSE_DETAIL);
+        CourseCircleDetailActivity.startForResult(this, id, Constant.REQUEST_COURSE_DETAIL);
 
 
-        startActivity( new  Intent(getActivity(), CourseCircleDetailActivity.class).putExtra("id", id),
-                ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity() ,view,"share").toBundle());
+//        startActivity( new  Intent(getActivity(), CourseCircleDetailActivity.class).putExtra("id", id),
+//                ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity() ,view,"share").toBundle());
 
 
 //        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, transitionView, OPTION_IMAGE);

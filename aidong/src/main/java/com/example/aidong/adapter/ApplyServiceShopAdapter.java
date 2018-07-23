@@ -1,6 +1,7 @@
 package com.example.aidong.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,14 +33,16 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
         this.array = array;
     }
 
+
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_apply_service_shop, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final GoodsBean bean = array.get(position);
         final int amount =bean.getCan_return();
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.dvCover);

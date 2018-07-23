@@ -493,7 +493,7 @@
                     app:rsb_hintBGHeight="50dp"
                     app:rsb_hintBGWith="60dp"
                     app:rsb_lineColorEdge="#c3c3c3"
-                    app:rsb_lineColorSelected="@color/color_red"
+                    app:rsb_lineColorSelected="@color/main_blue"
                     app:rsb_max="24"
                     app:rsb_min="0"
                     app:rsb_progressHintMode="alwaysShow"
@@ -502,7 +502,7 @@
                     app:rsb_seekBarMode="range"
                     app:rsb_textPadding="17dp"
                     app:rsb_textSize="16sp"
-                    app:rsb_thumbResId="@drawable/custom_thumb"
+                    app:rsb_thumbResId="@drawable/custom_thumb2"
                     app:rsb_thumbSize="20dp" />
 
 

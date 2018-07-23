@@ -27,7 +27,7 @@ public class DateUtils {
     public static final String NEWS_ITEM_DATE_FORMAT = "hh:mm M月d日 yyyy";
     public static final String WeiBo_ITEM_DATE_FORMAT = "EEE MMM d HH:mm:ss Z yyyy";
 
-    private static SimpleDateFormat SecondFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    private static SimpleDateFormat SecondFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
     public static long compareLongTime(String time) {
         long sysSecond = System.currentTimeMillis();
@@ -302,11 +302,34 @@ public class DateUtils {
             if (i == 0) {
                 dates.add(dateString + " (今天)");
             } else {
-                dates.add(dateString + " "+weekOfDate);
+                dates.add(dateString + " " + weekOfDate);
             }
         }
         return dates;
     }
+
+
+    public static List<String> getCourseSevenDate2() {
+        List<String> dates = new ArrayList<String>();
+        Date date = new Date();//取时间
+        final Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        for (int i = 0; i < 7; i++) {
+            calendar.add(calendar.DATE, i == 0 ? 0 : +1);//把日期往前减少一天，若想把日期向后推一天则将负数改为正数
+            date = calendar.getTime();
+            String weekOfDate = getWeekOfDate2(date);
+            SimpleDateFormat formatter = new SimpleDateFormat("MM.dd");
+            String dateString = formatter.format(date);
+            if (dateString.startsWith("0")) {
+                dateString =   dateString.substring(1, dateString.length());
+            }
+
+            dates.add(weekOfDate + "\n" + dateString);
+
+        }
+        return dates;
+    }
+
 
     public static List<String> getLimitDays(int start, int limit) {
         Logger.i("getLimitDays", "start days = " + start + ", limit days = " + limit);
@@ -365,6 +388,16 @@ public class DateUtils {
         return weekDaysCode[intWeek];
     }
 
+
+    public static String getWeekOfDate2(Date date) {
+        String[] weekDaysCode = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int intWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        return weekDaysCode[intWeek];
+    }
+
+
     public static String parseTime(long msgTime) {
         String time;
         Date date = new Date(msgTime);
@@ -393,7 +426,7 @@ public class DateUtils {
         ;
         if (countdown < 0)
             countdown = 0;
-       // if(totalMilliseconds>)
+        // if(totalMilliseconds>)
 
         return countdown;
     }

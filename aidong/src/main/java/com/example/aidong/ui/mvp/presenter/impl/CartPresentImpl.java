@@ -27,7 +27,7 @@ import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
  */
 public class CartPresentImpl implements CartPresent{
     private Context context;
-    private CartModel cartModel;
+    private CartModelImpl cartModel;
     private CartHeaderView cartHeaderView;
     private GoodsSkuPopupWindowView skuPopupWindowView;
     private UpdateDeliveryInfoActivityView updateDeliveryInfoActivityView;

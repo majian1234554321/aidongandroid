@@ -153,6 +153,7 @@ public class PhoneBindingThirdLoginActivity extends BaseActivity implements View
     public void register(boolean success) {
         DialogUtils.dismissDialog();
         if (success) {
+            App.getInstance().getUser().setMobile(mobile);
             ToastUtil.showShort(App.context, "绑定成功");
             Intent intent = new Intent();
             intent.putExtra(Constant.BINDING_PHONE, presenter.getBingdingMobile());

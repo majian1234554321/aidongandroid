@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.mine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.example.aidong .entity.UserBean;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong .ui.competition.activity.ContestHomeActivity;
 import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
 import com.example.aidong .utils.Constant;
@@ -19,6 +21,8 @@ import com.example.aidong .utils.GlideLoader;
 import com.example.aidong .widget.richtext.RichWebView;
 
 import java.util.List;
+
+import static com.example.aidong.ui.App.context;
 
 /**
  * Created by user on 2018/1/5.
@@ -83,6 +87,15 @@ public class MyAttentionCampaignListAdapter extends RecyclerView.Adapter<MyAtten
                 if (TextUtils.equals(user.type, Constant.CONTEST)) {
                     ContestHomeActivity.start(context, user.getId());
                 } else {
+
+
+
+//                    Intent intent = new Intent(context,DisplayActivity.class);
+//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+//                    intent.putExtra("id",user.campaign_detail);
+//                    context.startActivity(intent);
+
+
                     ActivityCircleDetailActivity.start(context, user.getId());
                 }
 

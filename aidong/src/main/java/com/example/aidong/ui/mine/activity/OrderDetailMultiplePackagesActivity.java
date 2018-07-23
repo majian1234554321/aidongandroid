@@ -3,6 +3,7 @@ package com.example.aidong.ui.mine.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -53,7 +54,8 @@ import cn.iwgang.countdownview.CountdownView;
 import static com.example.aidong.R.id.ll_express_info;
 import static com.example.aidong.R.id.tv_delivery_time;
 import static com.example.aidong .ui.App.context;
-import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
+
+import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS1;
 import static com.example.aidong .utils.Constant.PAY_ALI;
 import static com.example.aidong .utils.Constant.PAY_WEIXIN;
 
@@ -67,6 +69,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     private static final String PAID = "purchased";           //已支付
     private static final String FINISH = "confirmed";         //已确认
     private static final String CLOSE = "canceled";           //已关闭
+    private static final String REFUNDED = "returned";
     private static final java.lang.String TAG = "OrderDetailMultiplePackagesActivity";
     private long orderCountdownMill;
 
@@ -131,7 +134,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     private OrderExpressAdapter expressAdapter;
     private OrderSelfDeliveryAdapter selfDeliveryAdapter;
     private String orderId;
-    private OrderPresent orderPresent;
+    private OrderPresentImpl orderPresent;
     private String payType;
     private OrderDetailBean bean;
     private String status;
@@ -252,7 +255,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         }
 
         for (ParcelBean parcelBean : bean.getParcel()) {
-            if (DELIVERY_EXPRESS.equals(parcelBean.getPickUpWay())) {
+            if (DELIVERY_EXPRESS1.equals(parcelBean.getPickUpWay())) {
                 expressList.add(parcelBean);
             } else {
                 selfDeliveryList.add(parcelBean);
@@ -353,13 +356,18 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
             tvAfterSell.setVisibility(View.GONE);
         }
         tvConfirm.setVisibility(PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
-        tvReBuy.setVisibility(FINISH.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())
+        tvReBuy.setVisibility(FINISH.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())||REFUNDED.equals(bean.getStatus())
                 ? View.VISIBLE : View.GONE);
 
         tvState.setText(bean.getStatus().equals(UN_PAID) ? getString(R.string.un_paid)
                 : bean.getStatus().equals(PAID) ? getString(R.string.paid)
                 : bean.getStatus().equals(FINISH) ? getString(R.string.order_finish)
+                :bean.getStatus().equals(REFUNDED)?getString(R.string.order_refunded)
                 : getString(R.string.order_close));
+
+
+        tvState.setTextColor(bean.getStatus().equals(UN_PAID)? ContextCompat.getColor(this,R.color.main_red2):ContextCompat.getColor(this,R.color.main_black));
+
 
         if(bean.is_virtual()){
             expressInfoLayout.setVisibility(View.GONE);

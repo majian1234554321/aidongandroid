@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.aidong.R;
+import com.example.aidong.module.ChatLoginService;
 import com.example.aidong .module.weibo.AccessTokenKeeper;
 import com.example.aidong .module.weibo.WeiBoConstants;
 import com.example.aidong .utils.Logger;

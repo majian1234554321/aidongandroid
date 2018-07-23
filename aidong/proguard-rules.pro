@@ -32,7 +32,6 @@
 
 
 # ------------------AliPay----------------------------------------
--libraryjars libs/alipaySDK-20150724.jar
 
 -keep class com.alipay.android.app.IAlixPay{*;}
 -keep class com.alipay.android.app.IAlixPay$Stub{*;}
@@ -65,12 +64,14 @@
 
 #----------------------Glide---------------------------------------
 -keep public class * implements com.bumptech.glide.module.GlideModule
--keep classcom.bumptech.glide.integration.okhttp.OkHttpGlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
   **[] $VALUES;
   public *;
 }
 
+# for DexGuard only
+#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 #----------------------JPush---------------------------------------
 -dontoptimize
 -dontpreverify
@@ -85,6 +86,22 @@
 -keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
      <init>(...);
 }
+#----------------------okhttp3&&retrofit---------------------------------------
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-dontwarn org.conscrypt.**
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+# Retain generic type information for use by reflection by converters and adapters.
+-keepattributes Signature
+# Retain service method parameters.
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+
+# Ignore annotation used for build tooling.
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
 
 #-dontwarn com.tencent.bugly.**

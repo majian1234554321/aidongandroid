@@ -12,10 +12,14 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
+import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +28,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.course.CourseBeanNew;
-import com.example.aidong .ui.home.activity.CourseDetailNewActivity;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .widget.CustomTypefaceSpan;
+import com.example.aidong.entity.course.CourseBeanNew;
+import com.example.aidong.entity.user.Type;
+import com.example.aidong.ui.home.activity.CourseDetailNewActivity;
+import com.example.aidong.utils.DateUtils;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.widget.CustomTypefaceSpan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +63,20 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 //        return 9;
     }
 
+    @NonNull
     @Override
-    public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_home_course_list_child, parent, false);
         return new CourseViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
+
+
+        String fontPath = "fonts/Hiragino_Sans_GB_W3.ttf";
+
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), fontPath);
 
         final CourseBeanNew courseBean = data.get(position);
 
@@ -74,70 +87,112 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         holder.txtCourseTime.setText(courseBean.getClass_time());
         holder.txtCourseDesc.setText(courseBean.getTagString());
 
-//        if (courseBean.getStrength() >= 5) {
-//            holder.tv_level.setText("(高难度)");
-//        } else if (courseBean.getStrength() <= 5 && courseBean.getStrength() >= 3) {
-//            holder.tv_level.setText("(中级进阶)");
-//        } else {
-//            holder.tv_level.setText("(初级难度)");
-//        }
+        if (!TextUtils.isEmpty(courseBean.professionalism)) {
+            holder.tv_level.setText("(" + courseBean.professionalism + ")");
+            holder.tv_level.setVisibility(View.VISIBLE);
+        }else {
+            holder.tv_level.setVisibility(View.GONE);
+        }
 
-        holder.tv_level.setText("("+courseBean.professionalism+")");
 
-//        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
 
+        StringBuilder sb = new StringBuilder();
+
+
+        if (courseBean.market_price > 0f && courseBean.market_price > courseBean.getMember_price()) {
+            sb.append("市场价：").append(String.format(context.getString(R.string.rmb_price_double2), courseBean.market_price));
+        }
+        if (!TextUtils.isEmpty(courseBean.slogan)) {
+
+            sb.append(" ").append(courseBean.slogan).append(" ");
+
+
+        }
+
+
+        ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.orangeyellow));
+        ForegroundColorSpan c9Span2 = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.c9));
+        // TypefaceSpan span = new  TypefaceSpan(Typeface.create("serif",Typeface.ITALIC));
+        StyleSpan styleSpan = new StyleSpan(Typeface.ITALIC);//斜体
+        StrikethroughSpan StrikethroughSpan = new StrikethroughSpan(); //删除线
+        UnderlineSpan underlineSpan = new UnderlineSpan(); //下划线
+        SpannableStringBuilder builder = new SpannableStringBuilder(sb.toString());
+        //TextAppearanceSpan span =   new TextAppearanceSpan("serif", Typeface.BOLD_ITALIC);
+
+        if (sb.length() > 0) {
+            holder.txtCourseDifficulty.setVisibility(View.VISIBLE);
+
+
+            //如果市场价和提示语都有 并且市场价大于0
+            if (courseBean.market_price > 0f && courseBean.market_price > courseBean.getMember_price() && !TextUtils.isEmpty(
+                    courseBean.slogan)) {//既有提示语又有市场价格
+
+
+                String[] split = sb.toString().split(" ");
+                builder.setSpan(StrikethroughSpan, 0, split[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                builder.setSpan(redSpan, split[0].length(), sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.setSpan(styleSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.setSpan(underlineSpan, split[0].length() + 1, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                holder.txtCourseDifficulty.setText(builder);
+                holder.txtCourseDifficulty.setTypeface(tf);
+
+            } else {
+                if (courseBean.market_price > 0f && courseBean.market_price > courseBean.getMember_price() && TextUtils.isEmpty(courseBean.slogan)) {//如果 市场价格不为空但是没有提示语言
+
+
+                    builder.setSpan(StrikethroughSpan, 0, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    builder.setSpan(c9Span2, sb.length(), sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    holder.txtCourseDifficulty.setText(builder);
+                    holder.txtCourseDifficulty.setTypeface(tf);
+
+
+                } else  {//只有提示语没有市场价
+
+
+                    builder.setSpan(styleSpan, 0, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    builder.setSpan(underlineSpan, 0, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    builder.setSpan(redSpan, 0, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    holder.txtCourseDifficulty.setText(builder);
+                    holder.txtCourseDifficulty.setTypeface(tf);
+
+
+                }
+            }
+
+
+        } else {
+            holder.txtCourseDifficulty.setVisibility(View.GONE);
+        }
+
+
+        if (courseBean.admission!=0) {
+            ForegroundColorSpan c9Span = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.c9));
+            SpannableStringBuilder builder2 = new SpannableStringBuilder("非会员入场+" + courseBean.admission);
+            builder2.setSpan(c9Span, 0, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.mb_level3.setText(builder2);
+            holder.mb_level3.setTypeface(tf);
+            holder.mb_level3.setVisibility(View.VISIBLE);
+        } else {
+            holder.mb_level3.setVisibility(View.GONE);
+        }
+
+
+        // holder.txtCourseDifficulty.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.txtCourseOriginPrice.setText(String.format(context.getString(R.string.rmb_price_double), courseBean.getPrice()));
-        holder.txtCourseMemberPrice.setText("会员价: " + String.format(context.getString(R.string.rmb_price_double), courseBean.getMember_price()));
+        holder.txtCourseMemberPrice.setText(String.format(context.getString(R.string.rmb_price_double), courseBean.getMember_price()));
 
-
-
-        String fontPath = "fonts/Hiragino_Sans_GB_W3.ttf";
-
-        Typeface tf = Typeface.createFromAsset(context.getAssets(), fontPath);
 
         holder.txtCourseTime.setTypeface(tf);
         holder.txtCourseOriginPrice.setTypeface(tf);
 
-
-
-//        String values = "01234中国";
-//
-//        SpannableStringBuilder style=new SpannableStringBuilder(values);
-//
-//        for (int i = 0; i < values.length(); i++) {
-//
-//            if ()else{
-//
-//            }
-//
-//
-//        }
-//
-//        style.setSpan(new CustomTypefaceSpan(values,tf), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//
-//
-//
-//        holder.txtCourseName.setText(style);
-
-
+        holder.txtCourseMemberPrice.setTypeface(tf);
         holder.txtCourseName.setTypeface(tf);
 
 
-
-       // holder.txtCourseName.getPaint().setFakeBoldText(true);
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // holder.txtCourseName.getPaint().setFakeBoldText(true);
 
 
         switch (courseBean.getStatus()) {
@@ -145,8 +200,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             case CourseBeanNew.NORMAL:
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("预约");
-                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
-                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_333_button);
+                holder.mb_level.setTextColor(Color.parseColor("#333333"));
 
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
@@ -174,9 +229,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
                 holder.mb_level.setText("排队中");
 
 
-
-                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
-                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_black_button);
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
 
             case CourseBeanNew.FEW:
@@ -185,8 +239,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("预约");
-                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
-                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_333_button);
+                holder.mb_level.setTextColor(Color.parseColor("#333333"));
                 break;
 
             case CourseBeanNew.QUEUEABLE:
@@ -196,8 +250,8 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
 
                 holder.mb_level.setVisibility(View.VISIBLE);
                 holder.mb_level.setText("排队");
-                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.course_oringe));
-                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_red_button);
+                holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.main_black));
+                holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_black_button);
                 break;
 
             case CourseBeanNew.FULL:
@@ -231,13 +285,30 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         if (courseBean.getReservable() != 1 && courseBean.getStatus() != CourseBeanNew.END) {
             //无需预约
             holder.imgCourseState.setVisibility(View.GONE);
+            holder.mb_level.setText("无需预约");
+            holder.mb_level.setTextColor(ContextCompat.getColor(context, R.color.c9));
+            holder.mb_level.setBackgroundResource(R.drawable.shape_stroke_gray_button);
+
+            if (courseBean.admission!=0) {
+                ForegroundColorSpan c9Span = new ForegroundColorSpan(ContextCompat.getColor(context, R.color.c9));
+                SpannableStringBuilder builder2 = new SpannableStringBuilder("非会员入场+" + courseBean.admission);
+                builder2.setSpan(c9Span, 0, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                holder.mb_level3.setText(builder2);
+                holder.mb_level3.setTypeface(tf);
+                holder.mb_level3.setVisibility(View.VISIBLE);
+            } else {
+                holder.mb_level3.setVisibility(View.GONE);
+            }
+
+
         }
 
         if (courseBean.isMember_only()) {
             //只有会员可以
             //holder.txtCourseOriginPrice.setText("");
-           // holder.txtCourseMemberPrice.setText("会员专享");
+            // holder.txtCourseMemberPrice.setText("会员专享");
         }
+
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -269,9 +340,9 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
         // ,img_star_first,img_star_second,img_star_three,img_star_four,img_star_five;
         private TextView txtCourseOriginPrice;
         private TextView txtCourseMemberPrice, tv_level;
-        private LinearLayout rootView;
+        private LinearLayout rootView, ll_extend;
 
-        public TextView mb_level;
+        public TextView mb_level, tv_link, mb_level3;
 
         public CourseViewHolder(View view) {
             super(view);
@@ -288,14 +359,14 @@ public class HomeCourseListChildAdapter extends RecyclerView.Adapter<HomeCourseL
             txtCourseMemberPrice = (TextView) view.findViewById(R.id.txt_course_member_price);
             tv_level = (TextView) view.findViewById(R.id.tv_level);
 
-
-
+            tv_link = (TextView) view.findViewById(R.id.tv_link);
 
 
             rootView = (LinearLayout) view.findViewById(R.id.rootView);
+            ll_extend = view.findViewById(R.id.ll_extend);
 
 
-
+            mb_level3 = view.findViewById(R.id.mb_level3);
             mb_level = view.findViewById(R.id.mb_level);
         }
     }

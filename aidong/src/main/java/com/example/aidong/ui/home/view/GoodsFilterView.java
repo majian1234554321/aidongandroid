@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.example.aidong.R;
 import com.example.aidong .entity.CategoryBean;
 import com.example.aidong .adapter.home.GoodsFilterCategoryAdapter;
+import com.example.aidong.entity.MarketPartsBean;
+import com.example.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +44,13 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     private LinearLayout contentLayout;
     private ListView listView;
     private GoodsFilterCategoryAdapter categoryAdapter;
-    private List<CategoryBean> categoryList = new ArrayList<>();
+
 
     private String  category;
     private boolean isPopupShowing = false;
     private boolean isLow2High = true;
     private int panelHeight;
+    private List<CategoryBean> categoryList;
 
     public GoodsFilterView(Context context) {
         this(context, null);
@@ -60,9 +63,14 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     public GoodsFilterView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
+
+        categoryList = new ArrayList<>();
         init();
+
         setListener();
     }
+
+
 
     private void init() {
         View view = LayoutInflater.from(context).inflate(R.layout.view_goods_filter, this);
@@ -79,6 +87,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         maskBgView = view.findViewById(R.id.view_mask_bg);
         contentLayout = (LinearLayout) view.findViewById(R.id.ll_content);
         listView = (ListView) view.findViewById(R.id.list);
+        tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
     }
 
     private void setListener() {
@@ -104,6 +113,8 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 }else {
                     setCategoryAdapter();
                 }
+                resetSortStatus();
+                tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
 
                 break;
             case R.id.ll_popularity:
@@ -130,7 +141,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 }
                 resetSortStatus();
                 onFilterClickListener.onPriceClick(isLow2High);
-                ivPriceArrow.setImageResource(isLow2High ?R.drawable.icon_red_arrow_up : R.drawable.icon_red_arrow_down);
+                ivPriceArrow.setImageResource(isLow2High ?R.drawable.icon_blue_arrow_up : R.drawable.icon_blue_arrow_down);
                 tvPrice.setTextColor(context.getResources().getColor(R.color.main_red));
                 isLow2High = !isLow2High;
                 break;
@@ -155,19 +166,18 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         if (categoryList.isEmpty()) {
             Log.d("GoodsFilterView", "you need set categoryList data first");
         }
-        if(categoryAdapter == null){
-            categoryAdapter = new GoodsFilterCategoryAdapter(context, categoryList);
-        }
-        listView.setAdapter(categoryAdapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 category = categoryList.get(position).getName();
                 categoryAdapter.setCheckItem(position);
                 tvCategory.setText(category);
+
                 hidePopup();
+                tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
                 if (onFilterClickListener != null) {
-                    onFilterClickListener.onCategoryItemClick(categoryList.get(position).getId());
+                    onFilterClickListener.onCategoryItemClick(categoryList.get(position).getCategory_id());
                 }
             }
         });
@@ -180,16 +190,18 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         category = categoryList.get(position).getName();
         categoryAdapter.setCheckItem(position);
         tvCategory.setText(category);
+
+        listView.setAdapter(categoryAdapter);
         if (onFilterClickListener != null) {
-            onFilterClickListener.onCategoryItemClick(categoryList.get(position).getId());
+            onFilterClickListener.onCategoryItemClick(categoryList.get(position).getCategory_id());
         }
     }
 
+
     //设置分类筛选数据
-    public void setCategoryList(List<CategoryBean> categoryList) {
-        if(categoryList != null){
-            this.categoryList = categoryList;
-        }
+    public void setCategoryList(List<CategoryBean> list) {
+        categoryList.clear();
+        categoryList.addAll(list);
     }
 
     // 动画显示
@@ -232,6 +244,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         tvPopularity.setTextColor(context.getResources().getColor(R.color.black));
         tvSale.setTextColor(context.getResources().getColor(R.color.black));
         tvPrice.setTextColor(context.getResources().getColor(R.color.black));
+        tvCategory.setTextColor(context.getResources().getColor(R.color.black));
         ivPriceArrow.setImageResource(R.drawable.icon_double_arrow);
     }
 

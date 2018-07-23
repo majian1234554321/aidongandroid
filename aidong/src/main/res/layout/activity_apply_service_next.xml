@@ -45,13 +45,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:text="新建地址"
-            android:drawableRight="@drawable/icon_right_arrow"
             android:drawablePadding="5dp"
+            android:drawableRight="@drawable/icon_right_arrow"
+            android:text="新建地址"
             android:textColor="@color/txt_black"
             android:textSize="16sp"
             android:visibility="visible" />
@@ -67,12 +67,20 @@
         android:paddingTop="10dp"
         android:visibility="gone">
 
-        <ImageView
+        <TextView
             android:id="@+id/iv_default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/left_margin"
-            android:src="@drawable/icon_default"
+            android:background="@color/main_blue"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:text="默认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_10"
+
             android:visibility="gone" />
 
         <TextView
@@ -103,9 +111,9 @@
             android:layout_below="@+id/tv_name"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="@dimen/left_margin"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:layout_marginRight="30dp"
             android:textSize="15sp" />
 
         <ImageView
@@ -132,6 +140,6 @@
         android:background="@color/main_red"
         android:gravity="center"
         android:text="提交申请"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="16sp" />
 </LinearLayout>

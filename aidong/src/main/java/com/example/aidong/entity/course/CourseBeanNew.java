@@ -7,14 +7,15 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.aidong .entity.CoachBean;
+import com.example.aidong.entity.CoachBean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by user on 2017/11/20.
  */
-public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
+public class CourseBeanNew implements Parcelable, Comparable<CourseBeanNew> {
     public static final int NORMAL = 0;
     public static final int APPOINTED = 1;
     public static final int APPOINTED_NO_PAY = 2;
@@ -24,23 +25,28 @@ public class CourseBeanNew implements Parcelable ,Comparable<CourseBeanNew>  {
     public static final int FULL = 6;
     public static final int END = 7;
 
-public String professionalism;
+    public String professionalism;
     public boolean modifyTag = false;
     String id;// 课程编号
     String name;// 课程名
     String class_time;//  上课时间 - 下课时间
     ArrayList<String> tags;//  ["标签"]
-    int strength =5;// 强度
+    int strength = 5;// 强度
     CoachBean coach;
     public String type;
 
     boolean reservable = true;// 　是否可以预约#0-否　１-是
-    public  boolean member_only;
-    public  boolean member;
+    public boolean member_only;
+    public boolean member;
 
     String reserve_time;// 预约时间
 
-    public ArrayList<String>   copyTag;
+    public ArrayList<String> copyTag;
+
+
+    public int admission;
+    public String slogan;
+    public double market_price;
 
     double price;//价格
     double member_price;// 会员价格
@@ -62,7 +68,18 @@ public String professionalism;
     boolean followed;
     int follows_count;
 
-//    @SerializedName("strength")
+    public static Couponpack    coupon_pack;
+
+
+    public static class Couponpack {
+        public static String title;
+        public static String price;
+        public static List<String> item;
+
+    }
+
+
+    //    @SerializedName("strength")
     String hard_degree;
     public int company_id;// 1 自营门店，其他：合作品牌门店
 
@@ -84,21 +101,6 @@ public String professionalism;
             }
         }
 
-//        Paint  paint  =    new Paint();
-//        paint.setTypeface(Typeface.DEFAULT);
-//        paint.setTextSize(12);
-//        Canvas canvas = new Canvas();
-//        canvas.drawText("tagString",0,100,paint);
-
-        Paint paint  =    new Paint();
-        paint.setTextSize(50);
-        Canvas canvas = new Canvas();
-        String str = "Hello";
-        canvas.drawText( str , 0 , 0 , paint);
-
-//1. 粗略计算文字宽度
-        Log.d("tagString", "measureText=" + paint.measureText(str));
-
 
         return tagString;
     }
@@ -112,11 +114,12 @@ public String professionalism;
         strength = in.readInt();
         coach = in.readParcelable(CoachBean.class.getClassLoader());
         reservable = in.readByte() != 0;
-        member_only =  in.readByte() != 0;
+        member_only = in.readByte() != 0;
         member = in.readByte() != 0;
 
         reserve_time = in.readString();
         price = in.readDouble();
+
         member_price = in.readDouble();
         class_start_time = in.readString();
         class_end_time = in.readString();
@@ -130,6 +133,7 @@ public String professionalism;
         status = in.readInt();
         seatChoosed = in.readString();
         queue_number = in.readInt();
+        market_price = in.readDouble();
     }
 
     public static final Creator<CourseBeanNew> CREATOR = new Creator<CourseBeanNew>() {
@@ -247,7 +251,7 @@ public String professionalism;
     }
 
     public int getReservable() {
-        return reservable?1:0;
+        return reservable ? 1 : 0;
     }
 
     public void setReservable(int reservable) {
@@ -393,14 +397,20 @@ public String professionalism;
         dest.writeInt(status);
         dest.writeString(seatChoosed);
         dest.writeInt(queue_number);
+        dest.writeDouble(market_price);
     }
 
     public int getMyQueue_number() {
-        return queue_number+1;
+        return queue_number + 1;
     }
+
+
+
+
+
 
     @Override
     public int compareTo(@NonNull CourseBeanNew o) {
-          return this.company_id-o.company_id;
+        return this.company_id - o.company_id;
     }
 }

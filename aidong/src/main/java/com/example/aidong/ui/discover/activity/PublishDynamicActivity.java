@@ -145,7 +145,10 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         tvContentCount = (TextView) findViewById(R.id.tv_content_count);
         recyclerView = (RecyclerView) findViewById(R.id.rv_image);
         btSend = (Button) findViewById(R.id.bt_send);
-        btSend.setEnabled(!selectedMedia.isEmpty());
+        if (selectedMedia!=null) {
+            btSend.setEnabled(!selectedMedia.isEmpty());
+        }
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         mediaAdapter = new PublishDynamicAdapter();
@@ -277,7 +280,13 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             @Override
             public void onFail() {
                 dismissProgressDialog();
-                ToastGlobal.showLong("上传失败");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastGlobal.showLong("上传失败");
+                    }
+                });
+
             }
         });
     }

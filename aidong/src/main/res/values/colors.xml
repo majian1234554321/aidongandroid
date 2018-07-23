@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#D51121</color>
+    <color name="colorAccent">#1d76c3</color>
 
     <!--灰色 -->
     <color name="gray">#808080</color><!--灰色 -->
@@ -58,7 +58,11 @@
     <color name="txt_appoint_num_gray">#ffebebeb</color>
     <color name="half_transparent">#8f000000</color>
     <color name="main_gray">#c8c7cc</color>
-    <color name="main_red">#D51121</color>
+    <color name="main_red2">#D51121</color>
+    <color name="main_red">#1d76c3</color>
+    <color name="main_black">#000000</color>
+    <color name="main_blue">#1d76c3</color>
+    <color name="main_white">#FFFFFF</color>
     <color name="color_image_press">#88888888</color>
     <color name="c3">#333333</color>
     <color name="c6">#666666</color>
@@ -84,12 +88,12 @@
     <color name="black_alpha15">#26000000</color>
     <color name="red_point">#D51121</color>
     <color name="jianxi">#EBEBEB</color>
-    <color name="red_origin">#D51121</color>
+    <color name="red_origin">#1d76c3</color>
     <color name="txt_gray">#cccccc</color>
     <color name="semitransparent">#22000000</color>
     <color name="subtransparent">#4f000000</color>
     <color name="semitransparent_standard">#80000000</color>
-    <color name="course_oringe">#D51121</color>
+    <color name="course_oringe">#1d76c3</color>
     <color name="course_black">#010101</color>
     <color name="red_price">#d51121</color>
     <color name="top_bottom">#42BAF8</color>
@@ -100,6 +104,8 @@
     <color name="c1">#111111</color>
     <color name="c17">#171717</color>
     <color name="f9">#f9f9f9</color>
+
+    <color name="orangeyellow">#ec5b21</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>

@@ -39,7 +39,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     private SimpleTitleBar titleBar;
     private RelativeLayout infoLayout;
     private TextView tvApply, tv_name, tv_address, tv_phone;
-    private ImageView iv_default;
+    private TextView iv_default;
 
     private String orderId;
     private int type;
@@ -99,7 +99,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
         tv_phone = (TextView) findViewById(R.id.tv_phone);
         tv_address = (TextView) findViewById(R.id.tv_address);
         layout_new_address = (RelativeLayout) findViewById(R.id.layout_new_address);
-        iv_default = (ImageView) findViewById(R.id.iv_default);
+        iv_default =  findViewById(R.id.iv_default);
 
         titleBar.setOnClickListener(this);
         infoLayout.setOnClickListener(this);

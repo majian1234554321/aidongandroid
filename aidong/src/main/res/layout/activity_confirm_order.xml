@@ -67,13 +67,29 @@
                 android:paddingTop="20dp"
                 android:visibility="gone">
 
-                <ImageView
+
+                <TextView
                     android:id="@+id/iv_default"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/left_margin"
-                    android:src="@drawable/icon_default"
-                    android:visibility="visible"/>
+                    android:background="@color/main_blue"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp"
+                    android:text="默认"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_10"
+
+                    android:visibility="gone" />
+
+
+
+
+
+
+
 
                 <TextView
                     android:id="@+id/tv_name"
@@ -407,7 +423,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="¥300"
-                android:textColor="@color/main_red"
+                android:textColor="@color/main_white"
                 android:textSize="16sp" />
         </LinearLayout>
 

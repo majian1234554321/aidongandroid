@@ -72,7 +72,7 @@ public class RichWebView extends WebView {
         if (content == null) return;
         String htmlHeader;
         String htmlFooter;
-        getSettings().setTextZoom(90);
+       // getSettings().setTextZoom(TEx);
         loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);
 
     }

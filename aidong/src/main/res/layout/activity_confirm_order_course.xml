@@ -72,7 +72,7 @@
                         android:layout_marginRight="15dp"
                         android:drawablePadding="10dp"
                         android:drawableRight="@drawable/icon_right_arrow"
-                        android:textColor="@color/main_red"
+                        android:textColor="@color/main_red2"
                         android:textSize="14sp" />
 
 
@@ -238,7 +238,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:text="￥69.00"
-                    android:textColor="@color/course_oringe"
+                    android:textColor="@color/main_blue"
                     android:textSize="14sp" />
             </RelativeLayout>
 

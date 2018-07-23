@@ -1,6 +1,7 @@
 package com.example.aidong.ui.discover.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.example.aidong .entity.DynamicBean;
 import com.example.aidong .entity.UserBean;
 import com.example.aidong .entity.model.UserCoach;
 import com.example.aidong .ui.App;
+import com.example.aidong.ui.DisplayActivity;
 import com.example.aidong .ui.MainActivity;
 import com.example.aidong .ui.competition.activity.ContestHomeActivity;
 import com.example.aidong .ui.course.CourseCircleDetailActivity;
@@ -39,6 +41,8 @@ import com.example.aidong .utils.Utils;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+import static com.example.aidong.ui.App.context;
 
 
 /**
@@ -147,8 +151,13 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             tvName.setText(dynamic.publisher.getName());
             GlideLoader.getInstance().displayCircleImage(dynamic.publisher.getAvatar(), ivAvatar);
             tvTime.setText(Utils.getData(dynamic.published_at));
-            ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.getUser_type())
-                    ? View.VISIBLE : View.GONE);
+            if (!"ABOUTDONGTAI".equals(typeData)){
+                ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.getUser_type())
+                        ? View.VISIBLE : View.GONE);
+            }else {
+                ivCoachFlag.setVisibility(View.GONE);
+            }
+
             ivGender.setBackgroundResource("0".equals(dynamic.publisher.getGender())
                     ? R.drawable.icon_man : R.drawable.icon_woman);
             if (showFollowButton) {
@@ -161,13 +170,15 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         }
 
         if (dynamic.extras != null && dynamic.extras.length > 0) {
-            SpannableStringBuilder highlightText = StringUtils.highlight(context, dynamic.content, dynamic.extras, "#EA2D2D", 1);
+            SpannableStringBuilder highlightText = StringUtils.highlight(context, dynamic.content, dynamic.extras, ContextCompat.getColor(context,R.color.main_blue), 1);
+
+
 
 
             tv_content.setMovementMethod(LinkMovementMethod.getInstance());
 
             if (!TextUtils.isEmpty(highlightText.toString().trim())){
-                tv_content.setText(dynamic.content);
+                tv_content.setText(highlightText);
                 tv_content.setVisibility(View.VISIBLE);
             }else {
                 tv_content.setVisibility(View.GONE);
@@ -291,7 +302,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         } else {
             img_parse.setBackgroundResource(isLike(dynamic)
                     ? R.drawable.icon_parsed : R.drawable.icon_parse);
-            txtParse.setTextColor( ContextCompat.getColor(context,isLike(dynamic)?R.color.main_red:R.color.c9));
+            txtParse.setTextColor( ContextCompat.getColor(context,isLike(dynamic)?R.color.main_blue:R.color.c9));
 
         }
 
@@ -335,6 +346,14 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 if (dynamic.related == null) return;
                 if (Constant.CAMPAIGN.equals(dynamic.type)) {
                     ActivityCircleDetailActivity.start(context, dynamic.related.getId());
+
+//                    Intent intent = new Intent(context,DisplayActivity.class);
+//                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
+//                    intent.putExtra("id",dynamic.related.campaign_detail);
+//                    context.startActivity(intent);
+
+
+
                 } else if (Constant.COURSE.equals(dynamic.type)) {
                     CourseCircleDetailActivity.start(context, dynamic.related.getId());
                 } else if (Constant.CONTEST.equals(dynamic.type)) {

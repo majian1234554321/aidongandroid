@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
@@ -18,52 +19,54 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aidong.R;
-import com.example.aidong .config.ConstantUrl;
-import com.example.aidong .entity.CouponBean;
-import com.example.aidong .entity.data.SportRecordMonthData;
-import com.example.aidong .entity.model.UserCoach;
-import com.example.aidong .entity.user.MineInfoBean;
-import com.example.aidong .module.chat.manager.EmMessageManager;
+import com.example.aidong.config.ConstantUrl;
+import com.example.aidong.entity.CouponBean;
+import com.example.aidong.entity.data.SportRecordMonthData;
+import com.example.aidong.entity.model.UserCoach;
+import com.example.aidong.entity.user.MineInfoBean;
+import com.example.aidong.module.chat.manager.EmMessageManager;
 import com.example.aidong.receivers.ChatMessageReceiver;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.BaseFragment;
-import com.example.aidong .ui.DisplayActivity;
-import com.example.aidong .ui.MainActivity;
-import com.example.aidong .ui.WebViewActivity;
-import com.example.aidong .ui.mine.activity.AddressActivity;
-import com.example.aidong .ui.mine.activity.AiDongMomentActivity;
-import com.example.aidong .ui.mine.activity.AppointmentMineActivityNew;
-import com.example.aidong .ui.mine.activity.CartActivity;
-import com.example.aidong .ui.mine.activity.CouponActivity;
-import com.example.aidong .ui.mine.activity.FollowActivity;
-import com.example.aidong .ui.mine.activity.LoveCoinActivity;
-import com.example.aidong .ui.mine.activity.MessageActivity;
-import com.example.aidong .ui.mine.activity.MyAttentionListActivity;
-import com.example.aidong .ui.mine.activity.MyMemberCardActivity;
-import com.example.aidong .ui.mine.activity.SportRecordActivity;
-import com.example.aidong .ui.mine.activity.UserInfoActivity;
-import com.example.aidong .ui.mine.activity.account.LoginActivity;
-import com.example.aidong .ui.mine.activity.setting.TabMinePersonalSettingsActivity;
-import com.example.aidong .ui.mvp.presenter.impl.CouponPresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.MineInfoPresenterImpl;
-import com.example.aidong .ui.mvp.presenter.impl.SportPresentImpl;
-import com.example.aidong .ui.mvp.view.CouponFragmentView;
-import com.example.aidong .ui.mvp.view.MineInfoView;
-import com.example.aidong .ui.mvp.view.SportRecordView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DateUtils;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.Md5Utils;
-import com.example.aidong .utils.ToastUtil;
-import com.example.aidong .utils.UiManager;
-import com.example.aidong .widget.AidongMineItem;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.BaseFragment;
+import com.example.aidong.ui.DisplayActivity;
+import com.example.aidong.ui.MainActivity;
+import com.example.aidong.ui.WebViewActivity;
+import com.example.aidong.ui.mine.activity.AddressActivity;
+import com.example.aidong.ui.mine.activity.AiDongMomentActivity;
+import com.example.aidong.ui.mine.activity.AppointmentMineActivityNew;
+import com.example.aidong.ui.mine.activity.CartActivity;
+import com.example.aidong.ui.mine.activity.CartActivity2;
+import com.example.aidong.ui.mine.activity.CouponActivity;
+import com.example.aidong.ui.mine.activity.FollowActivity;
+import com.example.aidong.ui.mine.activity.LoveCoinActivity;
+import com.example.aidong.ui.mine.activity.MessageActivity;
+import com.example.aidong.ui.mine.activity.MyAttentionListActivity;
+import com.example.aidong.ui.mine.activity.MyMemberCardActivity;
+import com.example.aidong.ui.mine.activity.SportRecordActivity;
+import com.example.aidong.ui.mine.activity.UserInfoActivity;
+import com.example.aidong.ui.mine.activity.account.LoginActivity;
+import com.example.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity;
+import com.example.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
+import com.example.aidong.ui.mvp.presenter.impl.SportPresentImpl;
+import com.example.aidong.ui.mvp.view.CouponFragmentView;
+import com.example.aidong.ui.mvp.view.MineInfoView;
+import com.example.aidong.ui.mvp.view.SportRecordView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DateUtils;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.Md5Utils;
+import com.example.aidong.utils.ToastUtil;
+import com.example.aidong.utils.UiManager;
+import com.example.aidong.widget.AidongMineItem;
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
-public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView, SportRecordView , CouponFragmentView {
+public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView, SportRecordView, CouponFragmentView {
 
     private View rootView;
     private LinearLayout layout_no_login, linearLayout_guanzhu, linearLayout_beiguanzhu, layout_hot;
@@ -94,6 +97,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         }
     };
     private SportPresentImpl sportPresent;
+    private LinearLayout ll000;
     // private SwipeRefreshLayout swipe;
 
     @Override
@@ -107,7 +111,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_mine, container, false);
         initView();
         setViewEvent();
@@ -127,7 +131,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
     private void initView() {
         // swipeRefreshView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-
+        ll000 = (LinearLayout) rootView.findViewById(R.id.ll000);
 
         layout_no_login = (LinearLayout) rootView.findViewById(R.id.layout_no_login);
         linearLayout_guanzhu = (LinearLayout) rootView.findViewById(R.id.linearLayout_guanzhu);
@@ -186,7 +190,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
     }
 
+
+
     private void setViewEvent() {
+
+
+
+
+
         txt_sport_record.setOnClickListener(this);
         btn_shop_car.setOnClickListener(this);
         btn_message.setOnClickListener(this);
@@ -204,15 +215,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         item_setting.setOnClickListener(this);
         item_my_orders.setOnClickListener(this);
         layout_no_login.setOnClickListener(this);
-
-
-//        swipeRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//                refreshLoginState();
-//            }
-//        });
+        ll000.setOnClickListener(this);
 
 
     }
@@ -232,7 +235,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         refreshLoginState();
         item_my_coupon.setTextValue("");
 
-        CouponPresentImpl   present = new CouponPresentImpl(getContext(), this);
+        CouponPresentImpl present = new CouponPresentImpl(getContext(), this);
         present.pullToRefreshData(CouponFragment.VALID);
 
 
@@ -268,12 +271,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
             case R.id.item_my_yaoqing:
                 if (App.getInstance().isLogin()) {
-                    UiManager.activityJump(getActivity(), DisplayActivity.class, "TYPE","InvitationFragment");
+                    UiManager.activityJump(getActivity(), DisplayActivity.class, "TYPE", "InvitationFragment");
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
                 break;
-
+            case R.id.ll000:
             case R.id.iv:
                 UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
                 break;
@@ -291,7 +294,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.item_my_orders:
                 if (App.getInstance().isLogin()) {
-                    AppointmentMineActivityNew.start(getActivity(), 0,0);
+                    AppointmentMineActivityNew.start(getActivity(), 0, 0);
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
@@ -414,8 +417,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void updateRecyclerView(List<CouponBean> couponBeanList) {
         //Toast.makeText(activity, couponBeanList.size()+"", Toast.LENGTH_SHORT).show();
-        if (couponBeanList.size()>0) {
-            item_my_coupon.setTextValue(couponBeanList.size()+"张可用");
+        if (couponBeanList.size() > 0) {
+            item_my_coupon.setTextValue(couponBeanList.size() + "张可用");
         }
     }
 

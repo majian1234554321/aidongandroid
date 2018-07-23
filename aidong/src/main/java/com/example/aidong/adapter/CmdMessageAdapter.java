@@ -1,6 +1,7 @@
 package com.example.aidong.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
@@ -59,7 +60,7 @@ public class CmdMessageAdapter extends RecyclerView.Adapter<CmdMessageAdapter.Vi
 
                 if(!bean.getAllUser().isEmpty()){
                     SpannableStringBuilder highlightText = StringUtils.highlight(context, bean.getContent(),
-                            bean.getAllUser().toArray(new AiterUser[bean.getAllUser().size()]), "#EA2D2D", 1);
+                            bean.getAllUser().toArray(new AiterUser[bean.getAllUser().size()]), ContextCompat.getColor(context,R.color.main_blue), 1);
 
                     holder.txtContent.setText(highlightText);
                     holder.txtContent.setMovementMethod(LinkMovementMethod.getInstance());
@@ -81,7 +82,7 @@ public class CmdMessageAdapter extends RecyclerView.Adapter<CmdMessageAdapter.Vi
             case CircleDynamicBean.ActionType.REPLY:
                 if(!bean.getAllUser().isEmpty()){
                     SpannableStringBuilder highlightText = StringUtils.highlight(context, bean.getContent(),
-                            bean.getAllUser().toArray(new AiterUser[bean.getAllUser().size()]), "#EA2D2D", 1);
+                            bean.getAllUser().toArray(new AiterUser[bean.getAllUser().size()]), ContextCompat.getColor(context,R.color.main_blue), 1);
 
                     holder.txtContent.setText(highlightText);
                     holder.txtContent.setMovementMethod(LinkMovementMethod.getInstance());

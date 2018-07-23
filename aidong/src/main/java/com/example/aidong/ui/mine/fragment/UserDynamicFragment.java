@@ -253,14 +253,11 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
             // PhotoBrowseActivity.start((Activity) getContext(), info,view);
 
-
-
             ImageView[]  imageViews = new ImageView[photoUrls.size()];
 
             for (int i = 0; i < photoUrls.size(); i++) {
                 imageViews[i] = (ImageView) view;
             }
-
 
             ImageShowActivity.startImageActivity(activity, imageViews, photoUrls.toArray(new String[photoUrls.size()]), currPosition);
         }

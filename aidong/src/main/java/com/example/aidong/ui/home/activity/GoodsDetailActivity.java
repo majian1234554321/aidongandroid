@@ -74,8 +74,9 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
-import static com.example.aidong .utils.Constant.DELIVERY_SELF;
+
+import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.example.aidong.utils.Constant.DELIVERY_SELF;
 import static com.example.aidong .utils.Constant.EMPTY_STR;
 import static com.example.aidong .utils.Constant.GOODS_FOODS;
 import static com.example.aidong .utils.Constant.REQUEST_ADD_CART;
@@ -486,8 +487,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvSelectSku.setText(String.format(getString(R.string.sku_selected), skuTip));
             tvStockTip.setText(String.format(getString(R.string.surplus_goods_count), stock));
             tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
-            tvPrice.setText(String.format(getString(R.string.rmb_price_double),
-                    price));
+            tvPrice.setText(String.format(getString(R.string.rmb_price_double), price));
         } else {
             tvSelectSku.setText(String.format(getString(R.string.sku_select), skuTip));
             tvStockTip.setVisibility(View.GONE);
@@ -504,8 +504,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         if (TextUtils.isEmpty(recommendId)) {
             recommendId = null;
         }
-
-
 
         skuPopupWindow = new GoodsSkuPopupWindow(this, bean, status, selectedSkuValues, selectedCount,
                 recommendId, goodsType);
@@ -617,7 +615,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         int height = DensityUtil.dp2px(this, 300);
         if (y <= 0) {
             topLayout.setBackgroundColor(Color.argb(55, 0, 0, 0));
-        } else if (y > 0 && y <= height) {
+        } else if (y <= height) {
             float ratio = (float) y / height;
             float alpha = (200 * ratio) + 55;
             topLayout.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));

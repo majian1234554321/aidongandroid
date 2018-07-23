@@ -9,6 +9,7 @@ import android.util.Base64;
 import com.example.aidong .entity.BannerBean;
 import com.example.aidong .entity.CategoryBean;
 import com.example.aidong .entity.DistrictBean;
+import com.example.aidong.entity.MarketPartsBean;
 import com.example.aidong .entity.SystemBean;
 import com.example.aidong .entity.UserBean;
 import com.example.aidong .entity.data.FollowData;
@@ -321,6 +322,30 @@ public class SystemInfoUtils {
             return null;
         }
     }
+
+
+
+    public static List<MarketPartsBean> getMarketPartsBean(Context context) {
+        if (systemInfoBean != null && systemInfoBean.market_parts != null) { //内存有直接从内存读取返回
+            return systemInfoBean.market_parts;
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                //把本地数据做进内存缓存
+                systemInfoBean = (SystemBean) bean;
+                return systemInfoBean.market_parts;
+            }
+            return null;
+        }
+    }
+
+
+
+
+
+
+
+
 
     /**
      * 获取装备分类信息

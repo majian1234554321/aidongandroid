@@ -29,6 +29,7 @@ import com.example.aidong .utils.GlideLoader;
 import com.example.aidong .utils.ToastGlobal;
 import com.example.aidong .utils.UiManager;
 import com.example.aidong .widget.richtext.RichWebView;
+import com.iknow.android.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,7 +107,9 @@ public class ActivityCircleHeaderView extends RelativeLayout implements View.OnC
         txtTitle.setText(campaignDetailBean.getName());
         txtAttentionNum.setText(campaignDetailBean.follows_count + "人已关注");
         if (campaignDetailBean.getImage() != null && !campaignDetailBean.getImage().isEmpty()) {
-            GlideLoader.getInstance().displayImage(campaignDetailBean.getImage().get(0), imgCover);
+            //GlideLoader.getInstance().displayImage(campaignDetailBean.getImage().get(0), imgCover);
+
+            GlideUtils.loadIntoUseFitWidth(context,campaignDetailBean.getImage().get(0),R.drawable.img_default2, imgCover);
 
         }
         if (campaignDetailBean.followed) {

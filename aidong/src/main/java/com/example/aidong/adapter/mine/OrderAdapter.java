@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.mine;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutParams;
@@ -12,14 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.ConfirmOrderGoodsAdapter;
-import com.example.aidong .entity.GoodsBean;
-import com.example.aidong .entity.OrderBean;
-import com.example.aidong .entity.ParcelBean;
-import com.example.aidong .utils.DateUtils;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.SystemInfoUtils;
-import com.example.aidong .utils.ToastGlobal;
+import com.example.aidong.adapter.home.ConfirmOrderGoodsAdapter;
+import com.example.aidong.entity.GoodsBean;
+import com.example.aidong.entity.OrderBean;
+import com.example.aidong.entity.ParcelBean;
+import com.example.aidong.utils.DateUtils;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.SystemInfoUtils;
+import com.example.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
     private static final String PAID = "purchased";             //已支付
     private static final String FINISHED = "confirmed";         //已完成
     public static final String CLOSED = "canceled";             //已关闭
+
+    public static final String RETURNED = "returned";             //已关闭
     private long orderCountdownMill;
 
     private Context context;
@@ -99,6 +102,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvReBuy.setVisibility(View.GONE);
                 holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), orderCountdownMill));
+
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_red2));
                 break;
             case PAID:              //已付款
                 holder.state.setText(context.getString(R.string.paid));
@@ -109,6 +114,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
                 holder.tvCancel.setVisibility(View.GONE);
                 holder.tvPay.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
             case FINISHED:            //已完成
                 holder.state.setText(context.getString(R.string.order_finish));
@@ -120,6 +126,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
                 holder.tvConfirm.setVisibility(View.GONE);
                 holder.tvCancel.setVisibility(View.GONE);
                 holder.tvPay.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
             case CLOSED:              //已关闭
                 holder.state.setText(context.getString(R.string.order_close));
@@ -131,8 +138,26 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
                 holder.tvConfirm.setVisibility(View.GONE);
                 holder.tvCancel.setVisibility(View.GONE);
                 holder.tvPay.setVisibility(View.GONE);
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
+                break;
+
+            case RETURNED:
+
+
+                holder.state.setText("已退款");
+                holder.tvOrderId.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
+                holder.payTip.setText(context.getString(R.string.true_pay));
+                holder.tvDelete.setVisibility(View.VISIBLE);
+                holder.tvReBuy.setVisibility(View.VISIBLE);
+                holder.tvConfirm.setVisibility(View.GONE);
+                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvPay.setVisibility(View.GONE);
+
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
             default:
+                holder.state.setTextColor(ContextCompat.getColor(context, R.color.main_black));
                 break;
         }
 
