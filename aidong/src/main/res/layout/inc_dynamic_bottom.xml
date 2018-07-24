@@ -49,7 +49,7 @@
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
                 tools:text="#解放自我 激情四射#"
-                android:textColor="@color/c3"
+                android:textColor="@color/c9"
                 android:textSize="13sp" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
                 android:text="2018-1-1-2018-1-5"
-                android:textColor="@color/c3"
+                android:textColor="@color/c9"
                 android:textSize="13sp"
                 android:visibility="gone" />
 
@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
 
-            android:drawableLeft="@drawable/icon_address"
+            android:drawableLeft="@drawable/icon_address2"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:layout_alignParentLeft="true"

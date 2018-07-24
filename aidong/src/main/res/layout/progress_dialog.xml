@@ -17,9 +17,11 @@
 
         <ImageView
             android:id="@+id/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:layout_width="@dimen/x240"
+            android:layout_height="@dimen/x100"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x20"
+            android:src="@drawable/loading" />
 
         <ImageView
             android:id="@+id/tv_message"
@@ -27,9 +29,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-
-            android:paddingLeft="5dp"
+            android:layout_marginBottom="@dimen/x20"
             android:src="@drawable/i_fitness" />
+
+
 
 
     </RelativeLayout>

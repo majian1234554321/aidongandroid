@@ -179,8 +179,7 @@ class DetailsActivityH5Fragment : BaseFragment(), FollowView {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
 
-                mWebView.loadUrl("javascript:var text=document.getElementsByClassName('scl-followico');" +
-                        "text.style.lineHeight = '0.3';")
+
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //                    webView.evaluateJavascript("javascript:jpushId('" + App.getInstance().getjPushId() + "')", { value -> LogUtil.i(TAG, "jpushId onReceiveValue = $value") })
 //                } else {

@@ -14,8 +14,10 @@
 
         <!--头部用户信息布局-->
         <RelativeLayout
+          android:paddingTop="@dimen/pref_16dp"
+            android:paddingBottom="@dimen/pref_16dp"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <ImageView
@@ -37,7 +39,7 @@
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="13dp"
+                android:layout_alignTop="@+id/dv_avatar"
                 android:layout_toRightOf="@+id/tv_name"
                 android:background="@drawable/icon_coach" />
 
@@ -48,6 +50,7 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_below="@+id/tv_name"
                 android:layout_marginTop="5dp"
+                android:layout_alignBottom="@+id/dv_avatar"
                 android:text="12分钟前"
                 android:textColor="@color/c9"
                 android:textSize="12sp" />
@@ -57,8 +60,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/dv_avatar"
-                android:layout_centerVertical="true"
+
                 android:layout_marginLeft="10dp"
+
                 android:layout_marginStart="12dp"
                 android:layout_toRightOf="@+id/dv_avatar"
                 android:singleLine="true"
