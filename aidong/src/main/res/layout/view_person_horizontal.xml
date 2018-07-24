@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="112dp"
         />
-    <View android:layout_height="8dp"
+    <View android:layout_height="@dimen/x20"
         android:background="@color/line_color"
         android:layout_width="match_parent"/>
 

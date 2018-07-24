@@ -1,94 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:id="@+id/item_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground">
+    android:background="?selectableItemBackground"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:paddingRight="@dimen/right_margin"
+        android:background="@color/white"
         android:paddingLeft="@dimen/left_margin"
-        android:background="@color/white">
+        android:paddingRight="@dimen/right_margin">
+
         <RadioButton
             android:id="@+id/rb_default"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/tv_default"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="设为默认"
-            android:textSize="13sp"
+            android:layout_toRightOf="@+id/rb_default"
             android:gravity="center_vertical"
+            android:text="设为默认"
             android:textColor="@color/c3"
-            android:layout_toRightOf="@+id/rb_default"/>
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tv_edit"
             android:layout_width="wrap_content"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
-            android:text="编辑"
-            android:layout_toRightOf="@+id/tv_default"
-            android:textSize="14sp"
-            android:textColor="@color/c3"
-            android:layout_marginLeft="10dp"
-            android:padding="10dp"
             android:layout_centerVertical="true"
-            android:background="?selectableItemBackground" />
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_default"
+            android:background="?selectableItemBackground"
+            android:padding="10dp"
+            android:text="编辑"
+            android:textColor="@color/c3"
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/iv_delete"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/icon_delete_black"
             android:layout_alignParentRight="true"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:src="@drawable/icon_delete_black" />
     </RelativeLayout>
 
-    <include layout="@layout/inc_line_with_margin"/>
+    <include layout="@layout/inc_line_with_margin" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="@dimen/right_margin"
-        android:paddingLeft="@dimen/left_margin"
         android:background="@color/white"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="姓名"
             android:textColor="@color/c3"
             android:textSize="14sp"
-            android:layout_marginTop="20dp"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/tv_name"
             android:text="13280145242"
             android:textColor="@color/c3"
             android:textSize="14sp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/c3"
             android:layout_below="@+id/tv_name"
+            android:layout_marginTop="20dp"
             android:text="上海市闵行区莲花路"
-            android:layout_marginTop="20dp"/>
+            android:textColor="@color/c3"
+            android:textSize="14sp" />
     </RelativeLayout>
 
 </LinearLayout>

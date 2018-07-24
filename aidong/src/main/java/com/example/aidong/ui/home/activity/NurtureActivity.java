@@ -107,7 +107,17 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         categoryView.setAdapter(categoryAdapter);
 
 
-        if (SystemInfoUtils.getMarketPartsBean(this) != null) {
+        if (
+                SystemInfoUtils.getMarketPartsBean(this) != null
+                        && SystemInfoUtils.getMarketPartsBean(this).size() > 0
+                        && SystemInfoUtils.getMarketPartsBean(this).get(position) != null
+                        && SystemInfoUtils.getMarketPartsBean(this).get(position).children != null
+                        && SystemInfoUtils.getMarketPartsBean(this).get(position).children.size() > 0
+                        && SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0) != null
+                        && SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children != null
+
+
+                ) {
             List<CategoryBean> list = new ArrayList<>();
             titleBar.setTitle(SystemInfoUtils.getMarketPartsBean(this).get(position).name);
 
@@ -124,7 +134,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             if (SystemInfoUtils.getMarketPartsBean(this) != null &&
                     SystemInfoUtils.getMarketPartsBean(this).get(position) != null &&
                     SystemInfoUtils.getMarketPartsBean(this).get(position).children != null &&
-                    SystemInfoUtils.getMarketPartsBean(this).get(position).children.size()>0&&
+                    SystemInfoUtils.getMarketPartsBean(this).get(position).children.size() > 0 &&
                     SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0) != null &&
                     SystemInfoUtils.getMarketPartsBean(this).get(position).children.get(0).children != null) {
 

@@ -337,6 +337,6 @@ Log.i("HIDE_THRESHOLD","dx："+dx+"  ---dy:"+dy);
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(selectCityReceiver);
+        LocalBroadcastManager.getInstance(activity).unregisterReceiver(selectCityReceiver);
     }
 }

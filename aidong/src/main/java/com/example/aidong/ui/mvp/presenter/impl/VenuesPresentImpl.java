@@ -142,7 +142,7 @@ public class VenuesPresentImpl implements VenuesPresent {
                     venuesBeanList = venuesData.getGym();
                 }
                 if (!venuesBeanList.isEmpty()) {
-                    switcherLayout.showContentLayout();
+                    //switcherLayout.showContentLayout();
                     discoverVenuesActivityView.onRefreshData(venuesBeanList);
                 } else {
                     discoverVenuesActivityView.showEmptyView();

@@ -83,7 +83,7 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()){
+            switch (intent.getAction()) {
                 case Constant.BROADCAST_ACTION_GOODS_PAY_FAIL:
                 case Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS:
                     finish();
@@ -94,7 +94,7 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
     private int selectPoistion;
 
     //从营养品或装备界面跳过来
-    public static void start(Context context,  String goodsType, int pos) {
+    public static void start(Context context, String goodsType, int pos) {
         Intent starter = new Intent(context, GoodsListActivity2.class);
         starter.putExtra("goodsType", goodsType);
         starter.putExtra("pos", pos);
@@ -103,7 +103,7 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
     }
 
     //从场馆详情跳过来
-    public static void start(Context context,String goodsType, String gymName, String gymId) {
+    public static void start(Context context, String goodsType, String gymName, String gymId) {
         Intent starter = new Intent(context, GoodsListActivity2.class);
         starter.putExtra("goodsType", goodsType);
         starter.putExtra("gymName", gymName);
@@ -112,9 +112,7 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
     }
 
 
-
-
-    public static void start(Context context,String goodsType, int gymId,int selectPosition,String categoryId ) {
+    public static void start(Context context, String goodsType, int gymId, int selectPosition, String categoryId) {
         Intent starter = new Intent(context, GoodsListActivity2.class);
         starter.putExtra("goodsType", goodsType);
         starter.putExtra("pos", gymId);
@@ -124,8 +122,7 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
     }
 
 
-
-    public static void start(Context context,String goodsType, int pos,int selectPosition,String categoryId,String  gymId ) {
+    public static void start(Context context, String goodsType, int pos, int selectPosition, String categoryId, String gymId) {
         Intent starter = new Intent(context, GoodsListActivity2.class);
         starter.putExtra("goodsType", goodsType);
         starter.putExtra("pos", pos);
@@ -134,10 +131,6 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
         starter.putExtra("gymId", gymId);
         context.startActivity(starter);
     }
-
-
-
-
 
 
     @Override
@@ -149,11 +142,10 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
         if (getIntent() != null) {
             gymName = getIntent().getStringExtra("gymName");
 
-            selectPoistion = getIntent().getIntExtra("selectPoistion",0);
+            selectPoistion = getIntent().getIntExtra("selectPoistion", 0);
 
             categoryId = getIntent().getStringExtra("categoryId");
             gymId = getIntent().getStringExtra("gymId");
-
 
 
             if (!TextUtils.isEmpty(gymName)) {
@@ -166,10 +158,7 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
         }
 
 
-
-
-
-        goodsListPrenset = new GoodsListPrensetImpl(this,this,goodsType);
+        goodsListPrenset = new GoodsListPrensetImpl(this, this, goodsType);
 
         initFilterLayout();
         initSwipeRefreshLayout();
@@ -182,7 +171,7 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver,filter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }
 
     private void initFilterLayout() {
@@ -196,12 +185,15 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
         filterView = (GoodsFilterView) findViewById(R.id.view_filter);
 
 
+        if (SystemInfoUtils.getMarketPartsBean(this) != null
+                && SystemInfoUtils.getMarketPartsBean(this).size() > 0
+                && SystemInfoUtils.getMarketPartsBean(this).get(selectPoistion) != null
+                && SystemInfoUtils.getMarketPartsBean(this).get(selectPoistion).children != null
+                && SystemInfoUtils.getMarketPartsBean(this).get(selectPoistion).children.size()>0
+                && SystemInfoUtils.getMarketPartsBean(this).get(selectPoistion).children.get(0)!=null
+                && SystemInfoUtils.getMarketPartsBean(this).get(selectPoistion).children.get(0).children != null
 
-
-
-
-
-        if (SystemInfoUtils.getMarketPartsBean(this)!=null){
+                ) {
             List<CategoryBean> list = new ArrayList<>();
 
 
@@ -224,33 +216,9 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
                 list.add(storeChildBen);
             }
             tvTitle.setText(SystemInfoUtils.getMarketPartsBean(this).get(selectPoistion).name);
-            filterView.setCategoryList( list);
+            filterView.setCategoryList(list);
             filterView.setSelectedCategoryPosition(selectedCategoryPosition);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         filterView.setOnFilterClickListener(new GoodsFilterView.OnFilterClickListener() {
@@ -307,7 +275,7 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
         @Override
         public void onLoadNextPage(View view) {
 
-            Logger.i(TAG,"onLoadNextPage");
+            Logger.i(TAG, "onLoadNextPage");
             getListData(REQUEST_MORE_DATA);
         }
     };
@@ -336,18 +304,18 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
     @Override
     public void updateGoodsRecyclerView(List<GoodsBean> beanList) {
 
-        Logger.i(TAG,"updateGoodsRecyclerView is refresh : " + refreshLayout.isRefreshing());
-        if(refreshLayout.isRefreshing()){
+        Logger.i(TAG, "updateGoodsRecyclerView is refresh : " + refreshLayout.isRefreshing());
+        if (refreshLayout.isRefreshing()) {
 
             goodsArray.clear();
             refreshLayout.setRefreshing(false);
-            Logger.i(TAG,"goodsArray.clear(); ");
+            Logger.i(TAG, "goodsArray.clear(); ");
         }
         goodsArray.addAll(beanList);
         adapter.setGoodsData(goodsArray);
         wrapperAdapter.notifyDataSetChanged();
         switcherLayout.showContentLayout();
-        Logger.i(TAG,"goodsArray.size : " +goodsArray.size());
+        Logger.i(TAG, "goodsArray.size : " + goodsArray.size());
     }
 
     @Override
@@ -383,9 +351,9 @@ public class GoodsListActivity2 extends BaseActivity implements View.OnClickList
 
                 break;
             case REQUEST_MORE_DATA:
-                Logger.i(TAG,"getListData case REQUEST_MORE_DATA");
+                Logger.i(TAG, "getListData case REQUEST_MORE_DATA");
                 currPage++;
-                if ( goodsArray.size() >= pageSize) {
+                if (goodsArray.size() >= pageSize) {
                     goodsListPrenset.requestMoreGoodsData2(recyclerView, pageSize, currPage, categoryId, sort, gymId);
                 }
                 break;

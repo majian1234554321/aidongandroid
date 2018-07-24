@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:background="@color/f9"
+        android:background="@color/f2"
         android:id="@+id/layout_course_or_activity"
         android:layout_width="match_parent"
         android:layout_height="70dp"

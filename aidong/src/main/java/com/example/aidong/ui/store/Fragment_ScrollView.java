@@ -36,6 +36,8 @@ import com.example.aidong.utils.TelephoneManager;
 import com.example.aidong.widget.MyGridView;
 import com.example.aidong.widget.vertical.VerticalScrollView;
 
+import java.util.Objects;
+
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static android.view.View.GONE;
@@ -135,8 +137,9 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
 //                intent.putExtra("selectPosition",position);
 //                startActivity(intent);
 
-
-                GoodsListActivity2.start(getContext(), "", 0, position, SystemInfoUtils.getMarketPartsBean(getContext()).get(position).category_id + "",venues.getId());
+                if (SystemInfoUtils.getMarketPartsBean(getContext()) != null) {
+                    GoodsListActivity2.start(getContext(), "", 0, position, Objects.requireNonNull(SystemInfoUtils.getMarketPartsBean(getContext())).get(position).category_id + "", venues.getId());
+                }
 
 
             }
@@ -214,16 +217,16 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
 //                childView.setLayoutParams(lp);
 
 
-                ImageView  cover = (ImageView) childView.findViewById(R.id.dv_venues_cover);
-                TextView  name = (TextView) childView.findViewById(R.id.tv_venues_name);
-                TextView  address = (TextView) childView.findViewById(R.id.tv_venues_address);
+                ImageView cover = (ImageView) childView.findViewById(R.id.dv_venues_cover);
+                TextView name = (TextView) childView.findViewById(R.id.tv_venues_name);
+                TextView address = (TextView) childView.findViewById(R.id.tv_venues_address);
                 TextView distance = (TextView) childView.findViewById(R.id.tv_venues_distance);
 
 
                 GlideLoader.getInstance().displayRoundImage(venues.getBrother().get(i).getBrandLogo(), cover);
                 name.setText(venues.getBrother().get(i).getName());
 
-                if (venues.getBrother().get(i).getDistanceFormat()!=null) {
+                if (venues.getBrother().get(i).getDistanceFormat() != null) {
                     distance.setText(venues.getBrother().get(i).getDistanceFormat());
                 }
 
@@ -235,12 +238,10 @@ public class Fragment_ScrollView extends Fragment implements View.OnClickListene
                     @Override
                     public void onClick(View v) {
 
-                        StoreDetailActivity2.start(getActivity(), venues.getBrother().get(finalI).getId(),venues.getBrother().get(finalI).getName());
+                        StoreDetailActivity2.start(getActivity(), venues.getBrother().get(finalI).getId(), venues.getBrother().get(finalI).getName());
 
                     }
                 });
-
-
 
 
                 ll_add.addView(childView);

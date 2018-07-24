@@ -16,11 +16,18 @@
         android:background="@drawable/a"
         android:orientation="vertical">
 
+
+
+
+
+
+
         <ImageView
             android:id="@+id/img_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x240"
+            android:layout_height="@dimen/x100"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x20"
             android:src="@drawable/loading" />
 
         <ImageView
@@ -28,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/x20"
             android:src="@drawable/i_fitness" />
 
     </RelativeLayout>
