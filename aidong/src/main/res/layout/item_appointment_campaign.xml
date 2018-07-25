@@ -83,9 +83,9 @@
 
         <ImageView
             android:id="@+id/dv_goods_cover"
-            android:layout_width="50dp"
+            android:layout_width="65dp"
 
-            android:layout_height="50dp"
+            android:layout_height="65dp"
             android:src="@color/black"
             android:layout_centerVertical="true" />
 
@@ -113,7 +113,7 @@
             android:singleLine="true"
             android:text="爱动"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/tv_name"
+          android:layout_centerVertical="true"
             android:textSize="12sp"
             android:textColor="@color/c9"
 
@@ -127,7 +127,6 @@
             android:textSize="12sp"
             android:textColor="@color/c9"
            android:layout_alignBottom="@+id/dv_goods_cover"
-            android:layout_below="@+id/tv_time"
             android:layout_alignLeft="@+id/tv_name"/>
 
 
