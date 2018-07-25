@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -75,23 +75,26 @@
     <RelativeLayout
         android:id="@+id/rl_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/x30"
+        android:paddingTop="@dimen/x30">
 
         <ImageView
             android:id="@+id/dv_goods_cover"
             android:layout_width="@dimen/pref_100dp"
             android:layout_height="@dimen/pref_100dp"
-            android:layout_centerVertical="true"
+
+
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="8dp"
             android:src="@color/black"
 
             />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/dv_goods_cover"
+            android:layout_alignTop="@+id/dv_goods_cover"
             android:layout_marginLeft="135dp"
             android:layout_marginRight="50dp"
             android:orientation="vertical">
@@ -113,9 +116,9 @@
                 android:id="@+id/txt_course_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_centerVertical="true"
                 android:lineSpacingExtra="5dp"
-                android:text="10-20 15:30-16:3"
+                tools:text="10-20 15:30-16:12222222222222222222222222222222223"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
@@ -123,15 +126,14 @@
                 android:id="@+id/tv_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
                 android:text="Jan chen"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
 
-
-
-        </LinearLayout>
+        </RelativeLayout>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -141,15 +143,15 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/icon_right_arrow" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/pref_0.5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="15dp"
-            android:src="@color/common_divider_color" />
 
     </RelativeLayout>
 
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_marginLeft="15dp"
+        android:src="@color/common_divider_color" />
     <!--二维码布局-->
     <RelativeLayout
         android:id="@+id/rl_qr_code"
@@ -165,21 +167,21 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
 
-            tools:text="88777"
             android:textColor="@color/black"
             android:textSize="30sp"
-            android:transitionName="@string/transition_code_num" />
+            android:transitionName="@string/transition_code_num"
+            tools:text="88777" />
 
         <ImageView
             android:id="@+id/dv_qr"
             android:layout_width="match_parent"
-            android:layout_margin="20dp"
             android:layout_height="73dp"
-            android:scaleType="fitXY"
             android:layout_below="@+id/tv_qr_num"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
             android:background="@color/line_color"
+            android:scaleType="fitXY"
             android:transitionName="@string/transition_code" />
 
         <ImageView

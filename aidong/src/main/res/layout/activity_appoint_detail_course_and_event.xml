@@ -45,9 +45,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -140,11 +140,10 @@
 
                 <com.example.aidong.widget.richtext.RichWebView
                     android:id="@+id/web_view"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="8dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="8dp" />
 
 
                 <!--支付方式-->
@@ -152,10 +151,10 @@
                     android:id="@+id/layout_pay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:visibility="gone"
                     android:layout_marginLeft="15dp"
-                    android:orientation="vertical">
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -166,8 +165,7 @@
                         android:textColor="@color/black"
 
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                         />
+                        android:textStyle="bold" />
 
 
                     <com.example.aidong.widget.CustomNestRadioGroup
@@ -239,28 +237,25 @@
                 </LinearLayout>
 
 
-
-
-
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:id="@+id/tv1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
+                        android:text="温馨提示:"
 
-                        android:text="温馨提示:" />
+                        android:visibility="gone" />
 
 
                     <TextView
-                        android:layout_below="@+id/tv1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv1"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="12dp"
                         android:gravity="center"
@@ -271,8 +266,6 @@
                         android:textSize="12sp" />
 
                 </RelativeLayout>
-
-
 
 
             </LinearLayout>
@@ -286,11 +279,14 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:paddingBottom="10dp"
+
         android:visibility="visible">
+
         <View
             android:layout_width="match_parent"
-            android:background="@color/c9"
-            android:layout_height="1px"/>
+            android:layout_height="1px"
+
+            android:background="@color/c9" />
 
         <LinearLayout
             android:layout_width="match_parent"

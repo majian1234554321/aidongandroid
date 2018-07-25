@@ -217,7 +217,7 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
         GlideLoader.getInstance().displayImage(course.getCover(), imgCourse);
 
         txtCourseTime.setText(course.getClass_time());
-        txtRoomName.setText(course.getStore().getRoom());
+        txtRoomName.setText(course.getStore().getName()+"-"+course.getStore().getRoom());
         txtCourseLocation.setText(course.getStore().getAddress());
         txtPhone.setText(userCoach.getMobile());
 

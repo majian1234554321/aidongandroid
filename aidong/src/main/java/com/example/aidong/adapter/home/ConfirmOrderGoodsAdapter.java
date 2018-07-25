@@ -12,10 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.GoodsBean;
+import com.example.aidong.entity.GoodsBean;
 import com.example.aidong.ui.home.activity.GoodsDetailActivity;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.GlideLoader;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import static com.example.aidong.utils.Constant.GOODS_FOODS;
  * 确认订单中单条商品适配器
  * Created by song on 2016/9/8.
  */
-public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderGoodsAdapter.GoodsHolder>{
+public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderGoodsAdapter.GoodsHolder> {
     private Context context;
     private List<GoodsBean> data = new ArrayList<>();
     private OnOrderItemClickListener listener;
@@ -36,7 +36,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
     }
 
     public void setData(List<GoodsBean> data) {
-        if(data != null){
+        if (data != null) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -50,7 +50,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
     @NonNull
     @Override
     public GoodsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_confirm_order_good,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_confirm_order_good, parent, false);
         return new GoodsHolder(view);
     }
 
@@ -59,19 +59,19 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         final GoodsBean bean = data.get(position);
         GlideLoader.getInstance().displayImage2(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
-        holder.count.setText(String.format(context.getString(R.string.x_count),bean.getAmount()));
+        holder.count.setText(String.format(context.getString(R.string.x_count), bean.getAmount()));
         ArrayList<String> specName = bean.getSpecName();
         ArrayList<String> specValue = bean.getSpecValue();
         StringBuilder result = new StringBuilder();
-        if(specName != null && specValue != null) {
+        if (specName != null && specValue != null) {
             for (int i = 0; i < specValue.size(); i++) {
                 result.append(specName.get(i)).append(":").append(specValue.get(i)).append(" ");
             }
         }
-        if(!TextUtils.isEmpty(bean.getRecommendCode())){
+        if (!TextUtils.isEmpty(bean.getRecommendCode())) {
             result.append(" ").append(String.format(context.getString(R.string.recommend_code),
                     bean.getRecommendCode()));
-        }else {
+        } else {
             result.append("");
         }
 
@@ -84,18 +84,17 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listener != null){
+                if (listener != null) {
                     listener.onItemClick();
-                }else {
+                } else {
 
 
-                    GoodsDetailActivity.start(context,  bean.getProductId(), GOODS_FOODS);
-                   //;
+                    GoodsDetailActivity.start(context, bean.getProductId(), GOODS_FOODS);
+                    //;
 
                 }
             }
         });
-
 
 
 //        normal: 正常
@@ -105,7 +104,6 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
 //        partial: 部分退款
 
 
-        if (TextUtils.isEmpty(bean.status)) return;
         switch (bean.status) {
             case "applied":
                 holder.status.setText("退款中");
@@ -119,16 +117,21 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
             case "partial":
                 holder.status.setText("部分退款");
                 break;
-                default:
-                    holder.status.setText("");
-                    break;
-
-
+            default:
+                holder.status.setText("");
+                break;
 
         }
 
 
+        if (TextUtils.isEmpty(bean.status) || "normal".equals(bean.status)) {
+            holder.status.setVisibility(View.GONE);
+        } else {
+            holder.status.setVisibility(View.VISIBLE);
         }
+
+
+    }
 
     class GoodsHolder extends RecyclerView.ViewHolder {
         CheckBox check;
@@ -137,7 +140,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         TextView price;
         TextView sku;
         TextView code;
-        TextView count,status;
+        TextView count, status;
 
         public GoodsHolder(View itemView) {
             super(itemView);
@@ -157,7 +160,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         this.listener = listener;
     }
 
-    public interface OnOrderItemClickListener{
+    public interface OnOrderItemClickListener {
         void onItemClick();
     }
 }
