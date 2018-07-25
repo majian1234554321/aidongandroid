@@ -26,11 +26,11 @@ import java.util.List;
 public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureViewHolder>{
     private Context context;
     private List<GoodsBean> data = new ArrayList<>();
-    public String type;
 
-    public NurtureAdapter(Context context,String type) {
+
+    public NurtureAdapter(Context context) {
         this.context = context;
-        this.type = type ;
+
     }
 
     public void setData(List<GoodsBean> data) {
@@ -59,7 +59,7 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,bean.getId(), type);
+                GoodsDetailActivity.start(context,bean.getId(), bean.getType());
             }
         });
     }

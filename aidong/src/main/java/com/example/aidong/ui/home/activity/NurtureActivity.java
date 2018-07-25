@@ -39,7 +39,7 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.aidong.utils.Constant.GOODS_NUTRITION;
+
 import static com.example.aidong.utils.Constant.RECOMMEND_NUTRITION;
 
 
@@ -191,7 +191,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private void initRecommendRecyclerView() {
         recommendView = (RecyclerView) findViewById(R.id.rv_recommend);
         nurtureList = new ArrayList<>();
-        nurtureAdapter = new NurtureAdapter(this, GOODS_NUTRITION);
+        nurtureAdapter = new NurtureAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
         recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this, 2);

@@ -104,30 +104,33 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
 //        partial: 部分退款
 
 
-        switch (bean.status) {
-            case "applied":
-                holder.status.setText("退款中");
-                break;
-            case "returned":
-                holder.status.setText("退款成功");
-                break;
-            case "failed":
-                holder.status.setText("退款失败");
-                break;
-            case "partial":
-                holder.status.setText("部分退款");
-                break;
-            default:
-                holder.status.setText("");
-                break;
 
-        }
 
 
         if (TextUtils.isEmpty(bean.status) || "normal".equals(bean.status)) {
             holder.status.setVisibility(View.GONE);
         } else {
             holder.status.setVisibility(View.VISIBLE);
+
+            switch (bean.status) {
+                case "applied":
+                    holder.status.setText("退款中");
+                    break;
+                case "returned":
+                    holder.status.setText("退款成功");
+                    break;
+                case "failed":
+                    holder.status.setText("退款失败");
+                    break;
+                case "partial":
+                    holder.status.setText("部分退款");
+                    break;
+                default:
+                    holder.status.setText("");
+                    break;
+
+            }
+
         }
 
 

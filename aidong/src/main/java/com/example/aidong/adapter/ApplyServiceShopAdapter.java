@@ -10,14 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.GoodsBean;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.ToastGlobal;
+import com.example.aidong.entity.GoodsBean;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 
 /**
- *
  * Created by user on 2017/3/24.
  */
 public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceShopAdapter.ViewHolder> {
@@ -44,7 +43,7 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final GoodsBean bean = array.get(position);
-        final int amount =bean.getCan_return();
+        final int amount = bean.getCan_return();
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.dvCover);
         holder.tvName.setText(bean.getName());
         holder.ivMinus.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +57,7 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
                     count = 0;
                     holder.ivMinus.setBackgroundResource(R.drawable.icon_minus_gray);
                     bean.setItem(null);
-                }else{
+                } else {
                     bean.setItem(bean.getId() + "-" + count);
                 }
                 holder.tvCount.setText(String.valueOf(count));
@@ -76,7 +75,7 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
 
                     ToastGlobal.showShort("超出最大数量");
                 }
-                if(count == amount){
+                if (count == amount) {
                     holder.ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
                 }
                 if (count >= 1) {
@@ -87,10 +86,10 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
             }
         });
 
-        if(bean.is_virtual()){
+        if (bean.is_virtual()) {
             holder.ivMinus.setVisibility(View.GONE);
             holder.ivAdd.setVisibility(View.GONE);
-            holder.tvCount.setText(""+amount);
+            holder.tvCount.setText("" + amount);
             bean.setItem(bean.getId() + "-" + amount);
         }
 
@@ -112,11 +111,11 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
 
         public ViewHolder(View itemView) {
             super(itemView);
-            dvCover = (ImageView) itemView.findViewById(R.id.dv_cover);
-            tvName = (TextView) itemView.findViewById(R.id.tv_name);
-            ivMinus = (ImageView) itemView.findViewById(R.id.iv_minus);
-            tvCount = (TextView) itemView.findViewById(R.id.tv_count);
-            ivAdd = (ImageView) itemView.findViewById(R.id.iv_add);
+            dvCover = itemView.findViewById(R.id.dv_cover);
+            tvName = itemView.findViewById(R.id.tv_name);
+            ivMinus = itemView.findViewById(R.id.iv_minus);
+            tvCount = itemView.findViewById(R.id.tv_count);
+            ivAdd = itemView.findViewById(R.id.iv_add);
         }
     }
 }
