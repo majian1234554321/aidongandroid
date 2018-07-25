@@ -301,11 +301,11 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                     return;
                 }
 
-                switch (course.getStatus()) {
+                switch (course != null ? course.getStatus() : 0) {
 
                     case CourseBeanNew.NORMAL:
                     case CourseBeanNew.FEW:
-                        if (course.getSeat() != null && course.getSeat().isNeed()) {
+                        if ((course != null ? course.getSeat() : null) != null && course.getSeat().isNeed()) {
                             CourseChooseSeat.start(this, course);
                         } else {
                             ConfirmOrderCourseActivity.start(this, course);
@@ -314,18 +314,18 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                         break;
                     case CourseBeanNew.APPOINTED:
                         //跳查看预约
-                        AppointDetailCourseNewActivity.courseStart(this, course.getId());
+                        AppointDetailCourseNewActivity.courseStart(this, course != null ? course.getId() : null);
 
                         break;
                     case CourseBeanNew.APPOINTED_NO_PAY:
                         ///跳查看预约
-                        AppointDetailCourseNewActivity.courseStart(this, course.getId());
+                        AppointDetailCourseNewActivity.courseStart(this, course != null ? course.getId() : null);
 
                         break;
                     case CourseBeanNew.QUEUED:
 
                         //跳查看排队
-                        CourseQueueDetailActivity.startFromCourse(this, course.getId());
+                        CourseQueueDetailActivity.startFromCourse(this, course != null ? course.getId() : null);
 
                         break;
 
