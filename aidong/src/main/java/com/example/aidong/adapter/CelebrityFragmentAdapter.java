@@ -26,7 +26,7 @@ public class CelebrityFragmentAdapter extends RecyclerView.Adapter<CelebrityFrag
     private Context mContext;
     private ArrayList<SpecialTopicInfo> mInfos = new ArrayList<>();
 
-    ArrayList<Integer> indexs = new ArrayList<>();
+    private ArrayList<Integer> indexs = new ArrayList<>();
 
     private int item_normal_height;
     private int item_max_height;

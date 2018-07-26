@@ -17,7 +17,7 @@ public class MyGridAdapter extends BaseAdapter {
 
 
     public Context context;
-    public List<MarketPartsBean> marketPartsBean;
+    private List<MarketPartsBean> marketPartsBean;
     private ImageView iv;
     private TextView tv;
 

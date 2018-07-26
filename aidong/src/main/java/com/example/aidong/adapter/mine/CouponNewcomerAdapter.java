@@ -1,6 +1,7 @@
 package com.example.aidong.adapter.mine;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,14 +42,15 @@ public class CouponNewcomerAdapter extends RecyclerView.Adapter<CouponNewcomerAd
         return data.size();
     }
 
+    @NonNull
     @Override
-    public CouponHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CouponHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_coupon_newcumer, parent, false);
         return new CouponHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CouponHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CouponHolder holder, int position) {
         CouponBean bean = data.get(position);
 
         //与优惠劵类型无关

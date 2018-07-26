@@ -98,7 +98,7 @@ public class DeepIntoAdapter extends RecyclerView.Adapter<DeepIntoAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int i) {
 
 
         switch (holder.getItemViewType()) {

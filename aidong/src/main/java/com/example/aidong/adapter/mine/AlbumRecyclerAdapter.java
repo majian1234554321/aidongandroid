@@ -2,6 +2,7 @@ package com.example.aidong.adapter.mine;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
@@ -62,7 +63,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         if(viewType == TYPE_CAMERA){
             view = View.inflate(context,R.layout.item_camera,null);
@@ -74,7 +75,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         if(position == 0){
             ((CameraHolder)holder).camera.setOnClickListener(new View.OnClickListener() {
                 @Override
