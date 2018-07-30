@@ -16,27 +16,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.baseadapter.BaseRecyclerViewHolder;
-import com.example.aidong .adapter.discover.CircleDynamicAdapter.IDynamicCallback;
-import com.example.aidong .adapter.discover.DynamicLikeAdapter;
-import com.example.aidong .entity.CircleDynamicBean;
-import com.example.aidong .entity.DynamicBean;
-import com.example.aidong .entity.UserBean;
-import com.example.aidong .entity.model.UserCoach;
-import com.example.aidong .ui.App;
+import com.example.aidong.adapter.baseadapter.BaseRecyclerViewHolder;
+import com.example.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
+import com.example.aidong.adapter.discover.DynamicLikeAdapter;
+import com.example.aidong.entity.CircleDynamicBean;
+import com.example.aidong.entity.DynamicBean;
+import com.example.aidong.entity.UserBean;
+import com.example.aidong.entity.model.UserCoach;
+import com.example.aidong.ui.App;
 import com.example.aidong.ui.DisplayActivity;
-import com.example.aidong .ui.MainActivity;
-import com.example.aidong .ui.competition.activity.ContestHomeActivity;
-import com.example.aidong .ui.course.CourseCircleDetailActivity;
-import com.example.aidong .ui.discover.activity.CMDMessageActivity;
-import com.example.aidong .ui.discover.activity.DynamicDetailByIdActivity;
-import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
-import com.example.aidong .ui.home.activity.MapActivity;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.StringUtils;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .utils.Utils;
+import com.example.aidong.ui.MainActivity;
+import com.example.aidong.ui.competition.activity.ContestHomeActivity;
+import com.example.aidong.ui.course.CourseCircleDetailActivity;
+import com.example.aidong.ui.discover.activity.CMDMessageActivity;
+import com.example.aidong.ui.discover.activity.DynamicDetailByIdActivity;
+import com.example.aidong.ui.home.activity.ActivityCircleDetailActivity;
+import com.example.aidong.ui.home.activity.MapActivity;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.StringUtils;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.utils.Utils;
 
 import org.w3c.dom.Text;
 
@@ -79,7 +79,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private boolean showCommentLayout = true;
     private boolean showFollowButton = false;
     private boolean showCMDMessageLayout = true;
-
 
 
     public BaseCircleViewHolder(Context context, ViewGroup parent, int layoutResId) {
@@ -151,10 +150,10 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             tvName.setText(dynamic.publisher.getName());
             GlideLoader.getInstance().displayCircleImage(dynamic.publisher.getAvatar(), ivAvatar);
             tvTime.setText(Utils.getData(dynamic.published_at));
-            if (!"ABOUTDONGTAI".equals(typeData)){
+            if (!"ABOUTDONGTAI".equals(typeData)) {
                 ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.getUser_type())
                         ? View.VISIBLE : View.GONE);
-            }else {
+            } else {
                 ivCoachFlag.setVisibility(View.GONE);
             }
 
@@ -170,27 +169,24 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         }
 
         if (dynamic.extras != null && dynamic.extras.length > 0) {
-            SpannableStringBuilder highlightText = StringUtils.highlight(context, dynamic.content, dynamic.extras, ContextCompat.getColor(context,R.color.main_blue), 1);
-
-
+            SpannableStringBuilder highlightText = StringUtils.highlight(context, dynamic.content, dynamic.extras, ContextCompat.getColor(context, R.color.main_blue), 1);
 
 
             tv_content.setMovementMethod(LinkMovementMethod.getInstance());
 
-            if (!TextUtils.isEmpty(highlightText.toString().trim())){
+            if (!TextUtils.isEmpty(highlightText.toString().trim())) {
                 tv_content.setText(highlightText);
                 tv_content.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 tv_content.setVisibility(View.GONE);
             }
 
 
-
         } else {
-            if (!TextUtils.isEmpty(dynamic.content.trim())){
+            if (!TextUtils.isEmpty(dynamic.content.trim())) {
                 tv_content.setText(dynamic.content);
                 tv_content.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 tv_content.setVisibility(View.GONE);
             }
 
@@ -247,13 +243,13 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 //类型是课程
                 txtTime.setVisibility(View.GONE);
                 layout_difficulty_star.setVisibility(View.GONE);
-               // txtDesc.setText("#" +dynamic.related.getTagString()+ "#");
+                // txtDesc.setText("#" +dynamic.related.getTagString()+ "#");
 
                 txtDesc.setText(dynamic.related.getTagString());
             } else {
                 txtTime.setVisibility(View.VISIBLE);
                 layout_difficulty_star.setVisibility(View.GONE);
-                if (!TextUtils.isEmpty(dynamic.related.slogan)){
+                if (!TextUtils.isEmpty(dynamic.related.slogan)) {
                     txtDesc.setText("#" + dynamic.related.slogan + "#");
 
                 }
@@ -302,7 +298,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         } else {
             img_parse.setBackgroundResource(isLike(dynamic)
                     ? R.drawable.icon_parsed : R.drawable.icon_parse);
-            txtParse.setTextColor( ContextCompat.getColor(context,isLike(dynamic)?R.color.main_blue:R.color.c9));
+            txtParse.setTextColor(ContextCompat.getColor(context, isLike(dynamic) ? R.color.main_blue : R.color.c9));
 
         }
 
@@ -313,7 +309,10 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         layout_parse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (System.currentTimeMillis() - lastClickTime < FAST_CLICK_DELAY_TIME) {
+                    return;
+                }
+                lastClickTime = System.currentTimeMillis();
 
                 if (callback != null) {
                     callback.onLikeClick(position, dynamic.id, isLike(dynamic));
@@ -324,6 +323,13 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         txtComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (System.currentTimeMillis() - lastClickTime < FAST_CLICK_DELAY_TIME) {
+                    return;
+                }
+                lastClickTime = System.currentTimeMillis();
+
+
                 if (callback != null) {
                     callback.onCommentClick(dynamic, position);
                 }
@@ -345,13 +351,12 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             public void onClick(View v) {
                 if (dynamic.related == null) return;
                 if (Constant.CAMPAIGN.equals(dynamic.type)) {
-                  //  ActivityCircleDetailActivity.start(context, dynamic.related.getId());
+                    //  ActivityCircleDetailActivity.start(context, dynamic.related.getId());
 
-                    Intent intent = new Intent(context,DisplayActivity.class);
-                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
-                    intent.putExtra("id",dynamic.related.campaign_detail);
+                    Intent intent = new Intent(context, DisplayActivity.class);
+                    intent.putExtra("TYPE", "DetailsActivityH5Fragment");
+                    intent.putExtra("id", dynamic.related.campaign_detail);
                     context.startActivity(intent);
-
 
 
                 } else if (Constant.COURSE.equals(dynamic.type)) {
@@ -376,6 +381,11 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
 
     }
+
+
+    private long lastClickTime = 0L;
+    private static final int FAST_CLICK_DELAY_TIME = 500;  // 快速点击间隔
+
 
     public void setCallback(IDynamicCallback callback) {
         this.callback = callback;
