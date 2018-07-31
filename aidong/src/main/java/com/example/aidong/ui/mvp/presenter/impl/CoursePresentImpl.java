@@ -17,6 +17,8 @@ import com.example.aidong .entity.data.CourseVideoData;
 import com.example.aidong .entity.data.PayOrderData;
 import com.example.aidong .http.subscriber.CommonSubscriber;
 import com.example.aidong .http.subscriber.IsLoginSubscriber;
+import com.example.aidong.http.subscriber.Progress2Subscriber;
+import com.example.aidong.http.subscriber.Progress3Subscriber;
 import com.example.aidong .http.subscriber.ProgressSubscriber;
 import com.example.aidong .http.subscriber.RefreshSubscriber;
 import com.example.aidong .http.subscriber.RequestMoreSubscriber;
@@ -209,7 +211,7 @@ public class CoursePresentImpl implements CoursePresent {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourseDetail(new ProgressSubscriber<CourseDetailData>(context) {
+        courseModel.getCourseDetail(new Progress3Subscriber<CourseDetailData>(context) {
 
             @Override
             public void onError(Throwable e) {
