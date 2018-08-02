@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.SystemClock;
 
-import com.example.aidong .http.subscriber.handler.ProgressDialogHandler;
+import com.example.aidong.http.subscriber.handler.ProgressDialogHandler;
 
 /**
  * 用于普通Http请求时，在页面中显示一个ProgressDialog
@@ -13,7 +13,7 @@ import com.example.aidong .http.subscriber.handler.ProgressDialogHandler;
  * onError中对错误进行统一处理
  * //todo 去掉Presenter中Subscriber和控件的耦合,交由View来实现这部分逻辑
  */
-public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements ProgressDialogHandler.ProgressCancelListener{
+public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements ProgressDialogHandler.ProgressCancelListener {
     private boolean showDialog = true;
     private ProgressDialogHandler progressDialogHandler;
 
@@ -23,14 +23,14 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
         progressDialogHandler = new ProgressDialogHandler(context, this, true);
     }
 
-    public ProgressSubscriber(Context context,boolean showDialog) {
+    public ProgressSubscriber(Context context, boolean showDialog) {
         super(context);
         this.context = context;
         this.showDialog = showDialog;
         progressDialogHandler = new ProgressDialogHandler(context, this, true);
     }
 
-    private void showProgressDialog(){
+    private void showProgressDialog() {
         if (progressDialogHandler != null) {
 
             progressDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
@@ -39,7 +39,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
         }
     }
 
-    private void dismissProgressDialog(){
+    private void dismissProgressDialog() {
         if (progressDialogHandler != null) {
             progressDialogHandler.obtainMessage(ProgressDialogHandler.DISMISS_PROGRESS_DIALOG).sendToTarget();
             progressDialogHandler = null;
@@ -51,8 +51,8 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
      */
     @Override
     public void onStart() {
-        if(showDialog){
-           showProgressDialog();
+        if (showDialog) {
+            showProgressDialog();
         }
     }
 
@@ -66,6 +66,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
 
     /**
      * 对错误进行统一处理隐藏ProgressDialog
+     *
      * @param e 异常信息
      */
     @Override
@@ -76,6 +77,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
 
     /**
      * 将onNext方法中的返回结果交给Activity或Fragment自己处理
+     *
      * @param t 创建Subscriber时的泛型类型
      */
     @Override
@@ -90,8 +92,8 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
 //            this.unsubscribe();
 //        }
         dismissProgressDialog();
-        if (context!=null)
-        ((Activity)context).finish();
+        if (context != null)
+            ((Activity) context).finish();
     }
 
 }

@@ -17,6 +17,7 @@ import com.example.aidong.R;
 public class DialogUtils {
 
     private static Dialog dialog;
+    private static View view;
 
     /**
      * you must call releaseDialog when view destroyed
@@ -35,27 +36,34 @@ public class DialogUtils {
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.MATCH_PARENT;
         dialog.getWindow().setAttributes(params);
+
+
+        dialog.getWindow().setWindowAnimations(R.style.MyDialog2);
+
         dialog.show();
     }
 
+
+
     private static Dialog wattingDialog(Context context, String message, boolean cancelable) {
         LayoutInflater factory = LayoutInflater.from(context);
-        View view = factory.inflate(R.layout.progress_dialog, null);
+        view = factory.inflate(R.layout.progress_dialog, null);
 
         ImageView imageView = view.findViewById(R.id.loading);
         GlideLoader.getInstance().displayDrawableGifImage(R.drawable.loading, imageView);
 
-        Dialog m_pDialog = new Dialog(context,
-                R.style.MyDialog2);
+        Dialog m_pDialog = new Dialog(context,R.style.MyDialog2);
         m_pDialog.setContentView(view);
 
-        m_pDialog.setCancelable(cancelable);
+     //   m_pDialog.setCancelable(cancelable);
         return m_pDialog;
     }
 
     public static void dismissDialog() {
         if (dialog != null && dialog.isShowing()) {
+
             dialog.dismiss();
+           // dialog.cancel();
         }
     }
 

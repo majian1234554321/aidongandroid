@@ -325,7 +325,7 @@ public class DynamicPresentImpl implements DynamicPresent {
         Collections.addAll(images, media);
         if (isPhoto) {
 
-            dynamicModel.postDynamic(new ProgressSubscriber<DynamicsData>(context, false) {
+            dynamicModel.postDynamic(new BaseSubscriber<DynamicsData>(context) {
                 @Override
                 public void onNext(DynamicsData baseBean) {
                     publishDynamicActivityView.publishDynamicResult(baseBean);
@@ -339,7 +339,7 @@ public class DynamicPresentImpl implements DynamicPresent {
             }, null, content, type, link_id, position_name, latitude, longitude, images, itUser);
 
         } else {
-            dynamicModel.postDynamic(new ProgressSubscriber<DynamicsData>(context, false) {
+            dynamicModel.postDynamic(new BaseSubscriber<DynamicsData>(context) {
                 @Override
                 public void onNext(DynamicsData baseBean) {
                     publishDynamicActivityView.publishDynamicResult(baseBean);

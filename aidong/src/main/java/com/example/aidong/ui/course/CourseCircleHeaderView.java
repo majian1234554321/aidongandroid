@@ -24,26 +24,26 @@ import android.widget.TextView;
 
 import com.google.android.exoplayer.util.Util;
 import com.example.aidong.R;
-import com.example.aidong .adapter.PersonHorizontalAdapter;
-import com.example.aidong .adapter.home.PersonAttentionAdapter;
-import com.example.aidong .adapter.video.DetailsRelativeViedeoAdapter;
-import com.example.aidong .entity.BaseBean;
-import com.example.aidong .entity.CourseVideoBean;
-import com.example.aidong .entity.course.CourseDetailBean;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.course.activity.RelativeVideoListActivity;
-import com.example.aidong .ui.home.activity.AppointmentUserActivity;
-import com.example.aidong .ui.mine.activity.account.LoginActivity;
-import com.example.aidong .ui.mvp.presenter.impl.FollowPresentImpl;
-import com.example.aidong .ui.mvp.view.FollowView;
-import com.example.aidong .ui.video.activity.PlayerActivity;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .utils.UiManager;
-import com.example.aidong .widget.FlowLayoutgroup;
-import com.example.aidong .widget.richtext.RichWebView;
+import com.example.aidong.adapter.PersonHorizontalAdapter;
+import com.example.aidong.adapter.home.PersonAttentionAdapter;
+import com.example.aidong.adapter.video.DetailsRelativeViedeoAdapter;
+import com.example.aidong.entity.BaseBean;
+import com.example.aidong.entity.CourseVideoBean;
+import com.example.aidong.entity.course.CourseDetailBean;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.course.activity.RelativeVideoListActivity;
+import com.example.aidong.ui.home.activity.AppointmentUserActivity;
+import com.example.aidong.ui.mine.activity.account.LoginActivity;
+import com.example.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
+import com.example.aidong.ui.mvp.view.FollowView;
+import com.example.aidong.ui.video.activity.PlayerActivity;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.utils.UiManager;
+import com.example.aidong.widget.FlowLayoutgroup;
+import com.example.aidong.widget.richtext.RichWebView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +89,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
     FollowPresentImpl followPresent;
     private String relativeVideoTitle;
-    private ImageView iv_share,iv_fansssss;
+    private ImageView iv_share, iv_fansssss;
     private FlowLayoutgroup flowLayout;
 
     public CourseCircleHeaderView(Context context) {
@@ -151,21 +151,12 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         followPresent.setFollowListener(this);
 
 
-
-
-
-
-
-
-
-
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
 
 
             case R.id.iv_fansssss:
@@ -251,31 +242,25 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
             TextView tv = new TextView(context);
             tv.setPadding(dip2px(context, 8), 0, dip2px(context, 8), 0);
-            tv.setTextColor(ContextCompat.getColor(context,R.color.main_red));
+            tv.setTextColor(ContextCompat.getColor(context, R.color.main_red));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 
             tv.setText(course.getTags().get(i));
             tv.setGravity(Gravity.CENTER_VERTICAL);
             tv.setLines(1);
-           tv.setBackgroundResource(R.drawable.shape_blue_stork_button);
+            tv.setBackgroundResource(R.drawable.shape_blue_stork_button);
             flowLayout.addView(tv, lp);
         }
 
 
-
-
-
-
-
-
-        tv_subjecttitle.setText("#"+course.getCategory()+"#-"+(!TextUtils.isEmpty(course.professionalism)?course.professionalism:""));
+        tv_subjecttitle.setText("#" + course.getCategory() + "#-" + (!TextUtils.isEmpty(course.professionalism) ? course.professionalism : ""));
 
 
 //        txtCourseName.setText(course.getName());
-        tv_fans.setText(course.getFollows_count()+"");
+        tv_fans.setText(course.getFollows_count() + "");
         if (course.getFollowers() != null) {
             value = course.getFollows_count();
-            tv_fans.setText(course.getFollows_count()+"");
+            tv_fans.setText(course.getFollows_count() + "");
         } else {
             tv_fans.setText("0");
             value = 0;
@@ -284,13 +269,13 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
 
         if (course.isFollowed()) {
             setImageResourceVale(R.drawable.follw);
-            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red2));
+            tv_fans.setTextColor(ContextCompat.getColor(context, R.color.main_red2));
         } else {
             setImageResourceVale(R.drawable.unfollw);
-            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.gray));
+            tv_fans.setTextColor(ContextCompat.getColor(context, R.color.gray));
         }
         txtCourseIntro.setRichText(course.getIntroduce());
-       // txtSuggestFrequency.setText("建议周频次: " + course.getFrequency() + "次/周");
+        // txtSuggestFrequency.setText("建议周频次: " + course.getFrequency() + "次/周");
         txtSuggestFrequency.setVisibility(GONE);
         txt_use_equipment.setText("使用器械: " + course.getInstrument());
         txt_target_population.setText("针对人群: " + course.getCrowd());
@@ -323,10 +308,10 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         if (baseBean.getStatus() == 1) {
             setImageResourceVale(R.drawable.follw);
             course.setFollowed(true);
-            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.main_red2));
+            tv_fans.setTextColor(ContextCompat.getColor(context, R.color.main_red2));
             course.setFollows_count(course.getFollows_count() + 1);
             value = value + 1;
-            tv_fans.setText(value+"");
+            tv_fans.setText(value + "");
 
 
             if (onLoadListener != null) {
@@ -346,7 +331,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
             value = value - 1;
             tv_fans.setText(value + "");
             setImageResourceVale(R.drawable.unfollw);
-            tv_fans.setTextColor(ContextCompat.getColor(context,R.color.gray));
+            tv_fans.setTextColor(ContextCompat.getColor(context, R.color.gray));
 
 
             if (onLoadListener != null) {
@@ -385,6 +370,7 @@ public class CourseCircleHeaderView extends RelativeLayout implements View.OnCli
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
+
     public static int px2dip(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);

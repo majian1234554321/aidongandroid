@@ -228,7 +228,8 @@
         <item name="android:windowNoTitle">true</item>
         <!--是否去除边框-->
         <item name="android:windowFrame">@null</item>
-
+        <item name="android:windowEnterAnimation" >@anim/dialog_anmi</item>
+        <item name="android:windowExitAnimation" >@anim/dialog_anmi_exit</item>
         <!--是否浮现在activity之上-->
         <item name="android:windowIsFloating">true</item>
         <!--是否模糊-->
@@ -240,6 +241,11 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="colorAccent">#000000</item>
+    </style>
+
+    <style name="progress3Dialog" parent="AppTheme">
+        <item name="android:windowEnterAnimation" >@anim/dialog_anmi</item>
+        <item name="android:windowExitAnimation" >@anim/dialog_anmi_exit</item>
     </style>
 
     <!--<color name="subtransparent">#77000000</color>-->

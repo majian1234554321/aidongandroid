@@ -63,7 +63,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
     private RelativeLayout relTop;
     private ImageView imgBg;
     private ImageView imgLiveBeginOrEnd;
-    private TextView txtCourseIntro, txt_course_name, txt_course_sub_name,tv_name;
+    private TextView txtCourseIntro, txt_course_name, txt_course_sub_name, tv_name;
     private LinearLayout llRelateCourseVideo;
     private TextView txtRelateCourseVideo;
     private TextView txtCheckAllVideo;
@@ -94,6 +94,7 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
     }
 
     float start = 0f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,43 +118,31 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         AppBarLayout mAppBarLayout = findViewById(R.id.AppFragment_AppBarLayout);
 
 
-
-
-
-
-
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-                Logger.i("mAppBarLayout",i+"mAppBarLayout"+appBarLayout.getTotalScrollRange());
+                Logger.i("mAppBarLayout", i + "mAppBarLayout" + appBarLayout.getTotalScrollRange());
 
 
+                //   tv_name.setAlpha(Math.abs(i)/appBarLayout.getTotalScrollRange());
 
-             //   tv_name.setAlpha(Math.abs(i)/appBarLayout.getTotalScrollRange());
+                ObjectAnimator animator = ObjectAnimator.ofFloat(tv_name, "alpha", start, Math.abs(i) / appBarLayout.getTotalScrollRange());
 
-               ObjectAnimator animator = ObjectAnimator.ofFloat(tv_name, "alpha",  start,Math.abs(i)/appBarLayout.getTotalScrollRange());
-
-              //  start = Math.abs(i)/appBarLayout.getTotalScrollRange();
+                //  start = Math.abs(i)/appBarLayout.getTotalScrollRange();
 
 //                // 表示的是:
 //                // 动画作用对象是mButton
 //                // 动画作用的对象的属性是透明度alpha
 //                // 动画效果是:常规 - 全透明 - 常规
                 animator.setDuration(1000);
-               animator.start();
+                animator.start();
 
 
-
-                tv_name.setTextColor(changeAlpha(getResources().getColor(R.color.white),Math.abs(i*1.0f)/appBarLayout.getTotalScrollRange()));
-
-
-
+                tv_name.setTextColor(changeAlpha(getResources().getColor(R.color.white), Math.abs(i * 1.0f) / appBarLayout.getTotalScrollRange()));
 
 
             }
         });
-
-
 
 
         txt_course_sub_name = (TextView) findViewById(R.id.txt_course_sub_name);
@@ -162,10 +151,6 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
         txtRelateCourseVideo = (TextView) findViewById(R.id.txt_relate_course_video);
         txtCheckAllVideo = (TextView) findViewById(R.id.txt_check_all_video);
         rvRelateVideo = (RecyclerView) findViewById(R.id.rv_relate_video);
-
-
-
-
 
 
         txt_share_image = (TextView) findViewById(R.id.txt_share_image);
@@ -210,7 +195,9 @@ public class CourseVideoDetailActivityNew extends BaseActivity implements View.O
     }
 
 
-    /** 根据百分比改变颜色透明度 */
+    /**
+     * 根据百分比改变颜色透明度
+     */
     public int changeAlpha(int color, float fraction) {
         int red = Color.red(color);
         int green = Color.green(color);

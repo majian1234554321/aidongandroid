@@ -33,6 +33,9 @@ public class Progress3DialogFragment extends DialogFragment {
     }
 
 
+
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -46,13 +49,14 @@ public class Progress3DialogFragment extends DialogFragment {
             WindowManager.LayoutParams params = win.getAttributes();
             params.gravity = Gravity.CENTER;
 
-
+           // params.alpha = R.style.progress3Dialog;
 
 
             params.width = WindowManager.LayoutParams.MATCH_PARENT;   //设置宽度充满屏幕
             params.height = WindowManager.LayoutParams.MATCH_PARENT;
 
             win.setAttributes(params);
+            //win.setWindowAnimations(R.style.progress3Dialog);
         }
 
 

@@ -160,7 +160,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
         initView();
         setListener();
-        DialogUtils.showDialog(this, "加载中...", false);
+     //   DialogUtils.showDialog(this, "加载中...", false);
         coursePresent.getCourseDetail(code);
 
         sharePopupWindow = new SharePopupWindow(this);
@@ -347,7 +347,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onGetCourseDetail(CourseDetailDataNew courseData) {
-        DialogUtils.dismissDialog();
+      //  DialogUtils.dismissDialog();
         if (courseData == null || courseData.getTimetable() == null) return;
         this.course = courseData.getTimetable();
         this.coupon_pack = courseData.getCoupon_pack();
@@ -606,7 +606,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DialogUtils.releaseDialog();
+       // DialogUtils.releaseDialog();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         RichText.clear(this);
         sharePopupWindow.release();
