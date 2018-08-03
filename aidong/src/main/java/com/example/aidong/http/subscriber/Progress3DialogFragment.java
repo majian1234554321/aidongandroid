@@ -24,7 +24,7 @@ public class Progress3DialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog3);
         View view = View.inflate(inflater.getContext(), R.layout.progress3dialogfragment, null);
 
         ImageView imageView = view.findViewById(R.id.loading);
@@ -39,7 +39,7 @@ public class Progress3DialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        Window win = getDialog().getWindow();
+      /*  Window win = getDialog().getWindow();
         // 一定要设置Background，如果不设置，window属性设置无效
         if (win != null) {
             win.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -52,12 +52,26 @@ public class Progress3DialogFragment extends DialogFragment {
            // params.alpha = R.style.progress3Dialog;
 
 
-            params.width = WindowManager.LayoutParams.MATCH_PARENT;   //设置宽度充满屏幕
-            params.height = WindowManager.LayoutParams.MATCH_PARENT;
+//            params.width = WindowManager.LayoutParams.MATCH_PARENT;   //设置宽度充满屏幕
+//            params.height = WindowManager.LayoutParams.MATCH_PARENT;
+
+            win.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//注意此处
+            params.width = (int) getResources().getDimension(R.dimen.x320);
+            params.height = (int) getResources().getDimension(R.dimen.x180);
+
 
             win.setAttributes(params);
             //win.setWindowAnimations(R.style.progress3Dialog);
-        }
+        }*/
+
+
+        Window window = getDialog().getWindow();
+        WindowManager.LayoutParams lp= window.getAttributes();
+
+        lp.dimAmount = 0;
+
+        lp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(lp);
 
 
     }

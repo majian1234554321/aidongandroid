@@ -85,7 +85,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     };
     private MineFragment mineFragment;
-    private HomeCourseFragment main_2;
 
     public static void start(Context context, int index) {
         Intent starter = new Intent(context, MainActivity.class);
@@ -142,7 +141,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         fm = getSupportFragmentManager();
         mFragments.add(new HomeFragment());
 //        mFragments.add(new VideoHomeFragment());
-        main_2 = new HomeCourseFragment();
+        HomeCourseFragment main_2 = new HomeCourseFragment();
         mFragments.add(main_2);
         mFragments.add(new StoreFragment());
 

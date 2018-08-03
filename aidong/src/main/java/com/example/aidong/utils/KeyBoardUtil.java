@@ -14,6 +14,20 @@ public class KeyBoardUtil {
 
     private static InputMethodManager imm;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * 打卡软键盘
      *
