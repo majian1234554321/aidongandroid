@@ -101,9 +101,11 @@
 
             <TextView
                 android:id="@+id/tv_name"
+                android:layout_alignParentTop="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:gravity="top"
                 android:text="11111"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -117,7 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:lineSpacingExtra="5dp"
+
+                android:lineSpacingExtra="3dp"
                 tools:text="10-20 15:30-16:12222222222222222222222222222222223"
                 android:textColor="@color/black"
                 android:textSize="12sp" />

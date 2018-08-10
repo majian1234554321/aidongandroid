@@ -134,7 +134,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         findViewById(R.id.layout_remark).setVisibility(View.GONE);
         confirmOrderCoursePresent = new ConfirmOrderCoursePresentImpl(this, this);
 
-        DialogUtils.showDialog(this, "", false);
+       // DialogUtils.showDialog(this, "", false);
         confirmOrderCoursePresent.getCourseAvaliableCoupons(course.getId());
 
         if (course.isMember()) {

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.aidong.R;
 import com.example.aidong .adapter.mine.OrderExpressAdapter;
 import com.example.aidong .adapter.mine.OrderSelfDeliveryAdapter;
+import com.example.aidong.adapter.mine.OrderSelfDeliveryAdapter2;
 import com.example.aidong .config.ConstantUrl;
 import com.example.aidong .entity.BaseBean;
 import com.example.aidong .entity.GoodsBean;
@@ -132,7 +133,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     private List<ParcelBean> selfDeliveryList = new ArrayList<>();
     private ArrayList<GoodsBean> goodsList = new ArrayList<>();
     private OrderExpressAdapter expressAdapter;
-    private OrderSelfDeliveryAdapter selfDeliveryAdapter;
+    private OrderSelfDeliveryAdapter2 selfDeliveryAdapter;
     private String orderId;
     private OrderPresentImpl orderPresent;
     private String payType;
@@ -212,7 +213,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         expressGoodsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         expressGoodsRecyclerView.setAdapter(expressAdapter);
 
-        selfDeliveryAdapter = new OrderSelfDeliveryAdapter(this);
+        selfDeliveryAdapter = new OrderSelfDeliveryAdapter2(this);
         selfDeliveryGoodsRecyclerView.setNestedScrollingEnabled(false);
         selfDeliveryGoodsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         selfDeliveryGoodsRecyclerView.setAdapter(selfDeliveryAdapter);

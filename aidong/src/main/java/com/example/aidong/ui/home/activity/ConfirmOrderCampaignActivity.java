@@ -162,7 +162,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
     private void initData() {
         findViewById(R.id.layout_remark).setVisibility(View.VISIBLE);
 
-        DialogUtils.showDialog(this, "", false);
+        //DialogUtils.showDialog(this, "", false);
         totalPrice = FormatUtil.parseInt(course.amount) * FormatUtil.parseDouble(course.getPrice());
         realPrice = totalPrice;
 
@@ -252,7 +252,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
                         }
                     }
 
-                    DialogUtils.showDialog(this, "", false);
+                  //  DialogUtils.showDialog(this, "", false);
 
                     campaignPresent.buyCampaign(course.skucode, couponId, integral,
                             payType, userCoach.getName(), userCoach.getMobile(), payListener, course.amount, edit_remark.getText().toString().trim());
@@ -269,7 +269,7 @@ public class ConfirmOrderCampaignActivity extends BaseActivity implements Appoin
 
     @Override
     public void setCampaignCouponResult(List<CouponBean> coupon) {
-        DialogUtils.dismissDialog();
+      //  DialogUtils.dismissDialog();
         this.usableCoupons = coupon;
         if (coupon == null || coupon.isEmpty()) {
             txtCoupon.setText("无可用");

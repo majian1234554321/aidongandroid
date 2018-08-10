@@ -15,25 +15,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.ConfirmOrderGoodsAdapter;
-import com.example.aidong .entity.ParcelBean;
-import com.example.aidong .ui.mine.activity.BarcodeActivity;
-import com.example.aidong .utils.DensityUtil;
-import com.example.aidong .utils.ImageRectUtils;
-import com.example.aidong .utils.QRCodeUtil;
-import com.example.aidong .widget.ExtendTextView;
+import com.example.aidong.adapter.home.ConfirmOrderGoodsAdapter;
+import com.example.aidong.entity.ParcelBean;
+import com.example.aidong.ui.mine.activity.BarcodeActivity;
+import com.example.aidong.utils.DensityUtil;
+import com.example.aidong.utils.ImageRectUtils;
+import com.example.aidong.utils.QRCodeUtil;
+import com.example.aidong.widget.ExtendTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.aidong .utils.Constant.DELIVERY_EXPRESS;
 import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS1;
 
 /**
  * 订单列表中自提包裹适配器
  * Created by song on 2016/9/8.
  */
-public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeliveryAdapter.CartHolder> {
+public class OrderSelfDeliveryAdapter2 extends RecyclerView.Adapter<OrderSelfDeliveryAdapter2.CartHolder> {
     private final int qrCodeWidth;
     private final int qrCodeHeight;
     private Context context;
@@ -48,7 +47,7 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
     private boolean isFood;
     private boolean isVirtual;
 
-    public OrderSelfDeliveryAdapter(Context context) {
+    public OrderSelfDeliveryAdapter2(Context context) {
         this.context = context;
         qrCodeWidth = DensityUtil.dp2px(context, 294);
         qrCodeHeight = DensityUtil.dp2px(context, 73);
@@ -83,7 +82,13 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
             holder.tv_delivery_time.setRightContent(bean.getPickUpDate());
         }
 
-        if (TextUtils.isEmpty(bean.getVerify_no())||UN_PAID.equals(bean.getVerify_status()) || CLOSE.equals(bean.getVerify_status())||REFUNDED.equals(bean.getVerify_status())) {
+        if (TextUtils.isEmpty(bean.getVerify_no())||
+                UN_PAID.equals(bean.getVerify_status()) ||
+                CLOSE.equals(bean.getVerify_status())||
+                REFUNDED.equals(bean.getVerify_status())
+
+
+                ) {
             holder.rlQrCode.setVisibility(View.GONE);
 
 
@@ -116,11 +121,11 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
         }
 
 
-        if (payStatus!=null&&(PAID.equals(payStatus)||FINISH.equals(payStatus))){
-            holder.rlQrCode.setVisibility(View.VISIBLE);
-        }else {
-            holder.rlQrCode.setVisibility(View.GONE);
-        }
+//        if (payStatus!=null&&(PAID.equals(payStatus)||FINISH.equals(payStatus))){
+//            holder.rlQrCode.setVisibility(View.VISIBLE);
+//        }else {
+//            holder.rlQrCode.setVisibility(View.GONE);
+//        }
 
 
         if (DELIVERY_EXPRESS1.equals(bean.getPickUpWay())) {
@@ -140,9 +145,22 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
             holder.rlQrCode.setVisibility(View.GONE);
             holder.tvDeliveryType.setVisibility(View.GONE);
         }else {
-            holder.tv_delivery_time.setVisibility(View.VISIBLE);
-            holder.rlQrCode.setVisibility(View.VISIBLE);
-            holder.tvDeliveryType.setVisibility(View.VISIBLE);
+
+
+//            if (DELIVERY_EXPRESS1.equals(bean.getPickUpWay())){
+//                holder.tv_delivery_time.setVisibility(View.GONE);
+//                holder.rlQrCode.setVisibility(View.GONE);
+//                holder.tvDeliveryType.setVisibility(View.GONE);
+//            }else {
+//                holder.tv_delivery_time.setVisibility(View.VISIBLE);
+//                holder.rlQrCode.setVisibility(View.VISIBLE);
+//                holder.tvDeliveryType.setVisibility(View.VISIBLE);
+//            }
+
+
+
+
+
         }
 
 
