@@ -9,8 +9,7 @@ import com.example.aidong.R
 import com.example.aidong.ui.activities.fragment.DetailsActivityH5Fragment
 import com.example.aidong.ui.activities.fragment.InvitationFragment
 import android.util.DisplayMetrics
-
-
+import com.example.aidong.ui.activities.fragment.SearchCoachFragment
 
 
 class DisplayActivity : BaseActivity() {
@@ -41,6 +40,12 @@ class DisplayActivity : BaseActivity() {
             "InvitationFragment" -> {
                 fragments = InvitationFragment.newInstance()
                 fragmentTransaction.replace(R.id.fragment, fragments as InvitationFragment)
+            }
+
+            "SearchCoachFragment" -> {
+                val keyword = intent.getStringExtra("keyword")
+                fragments = SearchCoachFragment.newInstance(keyword)
+                fragmentTransaction.replace(R.id.fragment, fragments as SearchCoachFragment)
             }
 
             else -> {

@@ -99,13 +99,7 @@ public class UniversalAdapter extends RecyclerView.Adapter<UniversalAdapter.Univ
     }
 
 
-    public void resetData( ){
 
-
-
-
-        notifyDataSetChanged();
-    }
 
     @Override
     public int getItemCount() {

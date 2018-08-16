@@ -11,17 +11,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.aidong.R;
-import com.example.aidong .entity.BannerBean;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.MainActivity;
-import com.example.aidong .ui.WebViewActivity;
-import com.example.aidong .ui.competition.activity.ContestHomeActivity;
-import com.example.aidong .ui.home.activity.ActivityCircleDetailActivity;
-import com.example.aidong .ui.home.activity.CourseListActivityNew;
-import com.example.aidong .ui.home.activity.GoodsDetailActivity;
-import com.example.aidong .ui.store.StoreDetailActivity;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.UiManager;
+import com.example.aidong.entity.BannerBean;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.MainActivity;
+import com.example.aidong.ui.WebViewActivity;
+import com.example.aidong.ui.competition.activity.ContestHomeActivity;
+import com.example.aidong.ui.home.activity.ActivityCircleDetailActivity;
+import com.example.aidong.ui.home.activity.CourseListActivityNew;
+import com.example.aidong.ui.home.activity.GoodsDetailActivity;
+import com.example.aidong.ui.store.StoreDetailActivity;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.UiManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,9 +31,9 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.example.aidong .utils.Constant.GOODS_FOODS;
-import static com.example.aidong .utils.Constant.GOODS_NUTRITION;
-import static com.example.aidong .utils.Constant.GOODS_TICKET;
+import static com.example.aidong.utils.Constant.GOODS_FOODS;
+import static com.example.aidong.utils.Constant.GOODS_NUTRITION;
+import static com.example.aidong.utils.Constant.GOODS_TICKET;
 
 /**
  * Created by user on 2017/5/5.
@@ -67,7 +67,7 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
         btn_count = (Button) findViewById(R.id.btn_count);
         btn_count.setOnClickListener(this);
         imgBg.setOnClickListener(this);
-       // handler.sendEmptyMessageDelayed(COUNT, DIVIDER);
+        // handler.sendEmptyMessageDelayed(COUNT, DIVIDER);
 
 
         tag = Observable.interval(1, 1, TimeUnit.SECONDS)
@@ -102,11 +102,10 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
     }
 
 
-
     @Override
     public void onClick(View view) {
 
-        if (tag!=null){
+        if (tag != null) {
             tag.unsubscribe();
         }
 
@@ -131,7 +130,7 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
     }
 
     private Intent getBannerIntent(BannerBean startingBanner) {
-        Intent intentBanner ;
+        Intent intentBanner;
         switch (startingBanner.getType()) {
             case "10":
                 intentBanner = new Intent(this, WebViewActivity.class);
@@ -175,12 +174,28 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
                 intentBanner.putExtra("goodsType", GOODS_TICKET);
                 break;
             case "28":
-                intentBanner = new Intent(this,ContestHomeActivity.class);
+                intentBanner = new Intent(this, ContestHomeActivity.class);
                 intentBanner.putExtra("contestId", startingBanner.getLink());
                 break;
 
+
+            case "27":
+
+
+                intentBanner = new Intent(this, GoodsDetailActivity.class);
+                intentBanner.putExtra("goodsId", startingBanner.getLink());
+                intentBanner.putExtra("goodsType", "drink");
+
+
+                break;
+
             default:
-                intentBanner = new Intent(this, CourseListActivityNew.class);
+
+
+                intentBanner = new Intent(this, GoodsDetailActivity.class);
+                intentBanner.putExtra("goodsId", startingBanner.getLink());
+                intentBanner.putExtra("goodsType", "product");
+
                 break;
         }
         return intentBanner;
@@ -189,7 +204,7 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (tag!=null){
+        if (tag != null) {
             tag.unsubscribe();
         }
     }

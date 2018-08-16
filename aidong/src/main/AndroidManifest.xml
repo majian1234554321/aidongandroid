@@ -778,6 +778,7 @@
 
         <activity
             android:name=".ui.DisplayActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.dragvideo.DragVideoActivity"

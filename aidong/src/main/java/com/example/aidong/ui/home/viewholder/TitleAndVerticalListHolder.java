@@ -36,7 +36,7 @@ public class TitleAndVerticalListHolder extends BaseRecyclerViewHolder<HomeBean>
     @Override
     public void onBindData(final HomeBean bean, int position) {
         //补丁:去除商品以竖向列表出现的形式
-        if(bean.getType().equals("nutrition") || bean.getType().equals("equipment")){
+        if(bean.getType()!=null &&(bean.getType().equals("nutrition") || bean.getType().equals("equipment"))){
             setLayoutVisibility(false);
         }else {
             if (bean.getItem() != null && !bean.getItem().isEmpty()) {

@@ -137,8 +137,17 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
             case GOODS_TICKET:
                 GoodsDetailActivity.start(this, id, GOODS_TICKET);
                 break;
+
+            case "drink":
+                GoodsDetailActivity.start(this,  id,"drink");
+                break;
+
+
             default:
                 Logger.e("TAG", "can not support this type,please check it");
+
+                GoodsDetailActivity.start(this,  id,"product");
+
                 break;
         }
     }
@@ -190,7 +199,13 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
             case "28":
                 ContestHomeActivity.start(this, bannerBean.getLink());
                 break;
+
+            case "27":
+                GoodsDetailActivity.start(this,  bannerBean.getLink(),"drink");
+                break;
+
             default:
+                GoodsDetailActivity.start(this,  bannerBean.getLink(),"product");
                 break;
         }
     }

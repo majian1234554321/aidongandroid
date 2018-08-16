@@ -29,40 +29,42 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.GoodsDetailCouponAdapter;
-import com.example.aidong .config.ConstantUrl;
-import com.example.aidong .entity.BaseBean;
-import com.example.aidong .entity.CouponBean;
-import com.example.aidong .entity.DeliveryBean;
-import com.example.aidong .entity.GoodsDetailBean;
-import com.example.aidong .entity.GoodsSkuBean;
-import com.example.aidong .http.subscriber.ProgressSubscriber;
-import com.example.aidong .module.share.SharePopupWindow;
-import com.example.aidong .ui.App;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.home.fragment.GoodsDetailFragment;
-import com.example.aidong .ui.home.fragment.GoodsProblemFragment;
-import com.example.aidong .ui.home.fragment.GoodsServiceFragment;
-import com.example.aidong .ui.home.view.GoodsSkuPopupWindow;
-import com.example.aidong .ui.mine.activity.CartActivity;
-import com.example.aidong .ui.mine.activity.account.LoginActivity;
-import com.example.aidong .ui.mvp.model.impl.CouponModelImpl;
-import com.example.aidong .ui.mvp.presenter.GoodsDetailPresent;
-import com.example.aidong .ui.mvp.presenter.impl.GoodsDetailPresentImpl;
-import com.example.aidong .ui.mvp.view.GoodsDetailActivityView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DensityUtil;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.KeyBoardUtil;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .utils.TransitionHelper;
-import com.example.aidong .widget.ObserveScrollView;
-import com.example.aidong .widget.SlideDetailsLayout;
-import com.example.aidong .widget.SwitcherLayout;
+import com.example.aidong.adapter.home.GoodsDetailCouponAdapter;
+import com.example.aidong.config.ConstantUrl;
+import com.example.aidong.entity.BaseBean;
+import com.example.aidong.entity.CouponBean;
+import com.example.aidong.entity.DeliveryBean;
+import com.example.aidong.entity.GoodsDetailBean;
+import com.example.aidong.entity.GoodsSkuBean;
+import com.example.aidong.http.subscriber.ProgressSubscriber;
+import com.example.aidong.module.share.SharePopupWindow;
+import com.example.aidong.ui.App;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.DisplayActivity;
+import com.example.aidong.ui.home.fragment.GoodsDetailFragment;
+import com.example.aidong.ui.home.fragment.GoodsProblemFragment;
+import com.example.aidong.ui.home.fragment.GoodsServiceFragment;
+import com.example.aidong.ui.home.view.GoodsSkuPopupWindow;
+import com.example.aidong.ui.mine.activity.CartActivity;
+import com.example.aidong.ui.mine.activity.account.LoginActivity;
+import com.example.aidong.ui.mvp.model.impl.CouponModelImpl;
+import com.example.aidong.ui.mvp.presenter.GoodsDetailPresent;
+import com.example.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
+import com.example.aidong.ui.mvp.view.GoodsDetailActivityView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DensityUtil;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.KeyBoardUtil;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.utils.TransitionHelper;
+import com.example.aidong.widget.ObserveScrollView;
+import com.example.aidong.widget.SlideDetailsLayout;
+import com.example.aidong.widget.SwitcherLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -77,13 +79,13 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.example.aidong.utils.Constant.DELIVERY_SELF;
-import static com.example.aidong .utils.Constant.EMPTY_STR;
-import static com.example.aidong .utils.Constant.GOODS_FOODS;
-import static com.example.aidong .utils.Constant.REQUEST_ADD_CART;
-import static com.example.aidong .utils.Constant.REQUEST_BUY_IMMEDIATELY;
-import static com.example.aidong .utils.Constant.REQUEST_CONFIRM;
-import static com.example.aidong .utils.Constant.REQUEST_SELECT_ADDRESS;
-import static com.example.aidong .utils.Constant.REQUEST_TO_CART;
+import static com.example.aidong.utils.Constant.EMPTY_STR;
+import static com.example.aidong.utils.Constant.GOODS_FOODS;
+import static com.example.aidong.utils.Constant.REQUEST_ADD_CART;
+import static com.example.aidong.utils.Constant.REQUEST_BUY_IMMEDIATELY;
+import static com.example.aidong.utils.Constant.REQUEST_CONFIRM;
+import static com.example.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
+import static com.example.aidong.utils.Constant.REQUEST_TO_CART;
 
 /**
  * 商品详情
@@ -106,7 +108,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tvMarketPrice;
     private TextView tvGoodsName;
 
-    private LinearLayout couponLayout,layout_i_dong_weal;
+    private LinearLayout couponLayout, layout_i_dong_weal;
     private RecyclerView couponView;
     private LinearLayout skuLayout;
     private TextView tvSelectSku;
@@ -220,18 +222,18 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void setGoodsDetailCoupon(List<CouponBean> coupons) {
-        if(bean==null){
+        if (bean == null) {
             bean = new GoodsDetailBean();
 
         }
         bean.coupon = coupons;
 
         if (coupons == null || coupons.isEmpty()) {
-            Logger.i("coupon","coupons = "+coupons);
+            Logger.i("coupon", "coupons = " + coupons);
             couponLayout.setVisibility(View.GONE);
 
         } else {
-            Logger.i("coupon","coupons = "+coupons.size());
+            Logger.i("coupon", "coupons = " + coupons.size());
             couponLayout.setVisibility(View.VISIBLE);
             couponAdapter.setData(bean.coupon);
         }
@@ -254,7 +256,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         recommendCodeLayout = (LinearLayout) findViewById(R.id.ll_code);
         tvRecommendCode = (TextView) findViewById(R.id.tv_recommend_code);
         addressLayout = (LinearLayout) findViewById(R.id.ll_address);
-        layout_i_dong_weal  = (LinearLayout) findViewById(R.id.layout_i_dong_weal);
+        layout_i_dong_weal = (LinearLayout) findViewById(R.id.layout_i_dong_weal);
         tvAddressInfo = (TextView) findViewById(R.id.tv_address_info);
         tvDeliveryInfo = (TextView) findViewById(R.id.tv_delivery_info);
         ivArrow = (ImageView) findViewById(R.id.iv_arrow);
@@ -319,7 +321,24 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.ll_code:
-                showRecommendCodeDialog();
+                // showRecommendCodeDialog();
+
+                // Toast.makeText(this, "12", Toast.LENGTH_SHORT).show();
+
+                Intent intentll_code = new Intent(this, DisplayActivity.class);
+
+
+                intentll_code.putExtra("TYPE", "SearchCoachFragment");
+
+
+                if (!TextUtils.isEmpty(tvRecommendCode.getText().toString().trim())) {
+                    intentll_code.putExtra("keyword", tvRecommendCode.getText().toString().trim());
+                }
+
+
+                startActivityForResult(intentll_code, 10086);
+
+
                 break;
             case R.id.ll_goods_sku:
                 if (isSellOut) {
@@ -367,7 +386,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void setGoodsDetail(GoodsDetailBean bean) {
-        List<CouponBean> coupons = this.bean ==null?null:this.bean.coupon;
+        List<CouponBean> coupons = this.bean == null ? null : this.bean.coupon;
         this.bean = bean;
         this.bean.coupon = coupons;
         bottomLayout.setVisibility(View.VISIBLE);
@@ -437,7 +456,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvAddCart.setVisibility(View.VISIBLE);
         }
 
-        if(bean.is_virtual){
+        if (bean.is_virtual) {
             addressLayout.setVisibility(View.GONE);
             layout_i_dong_weal.setVisibility(View.GONE);
         }
@@ -445,24 +464,24 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         initFragments();
 
 
-        if (bean.spec!=null&&bean.spec.item.size()==1){
+        if (bean.spec != null && bean.spec.item.size() == 1) {
             skuLayout.setVisibility(View.GONE);
             view.setVisibility(View.GONE);
-        }else {
+        } else {
             skuLayout.setVisibility(View.VISIBLE);
             view.setVisibility(View.VISIBLE);
         }
 
-     List<GoodsSkuBean>  list =   new ArrayList<GoodsSkuBean>();
+        List<GoodsSkuBean> list = new ArrayList<GoodsSkuBean>();
 
-        if(bean.spec!=null&&bean.spec.item!=null&&bean.spec.item.size()>1){
+        if (bean.spec != null && bean.spec.item != null && bean.spec.item.size() > 1) {
             for (int i = 0; i < bean.spec.item.size(); i++) {
-                if (bean.spec.item.get(i).getStock()>0) {
+                if (bean.spec.item.get(i).getStock() > 0) {
                     list.add(bean.spec.item.get(i));
                 }
             }
 
-            if (list.size()==1){
+            if (list.size() == 1) {
 
                 this.selectedSkuValues.addAll(list.get(0).value);
 
@@ -514,21 +533,21 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private void showRecommendCodeDialog() {
         View view = View.inflate(this, R.layout.dialog_input_code, null);
         final EditText etCode = (EditText) view.findViewById(R.id.et_code);
-        KeyBoardUtil.openKeyboard(etCode,this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
+        KeyBoardUtil.openKeyboard(etCode, this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
         builder.setMessage(getString(R.string.input_recommend_code))
                 .setCancelable(true)
                 .setView(view)
                 .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         tvRecommendCode.setText(etCode.getText());
-                        KeyBoardUtil.closeKeyboard(etCode,GoodsDetailActivity.this);
+                        KeyBoardUtil.closeKeyboard(etCode, GoodsDetailActivity.this);
                         dialog.dismiss();
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        KeyBoardUtil.closeKeyboard(etCode,GoodsDetailActivity.this);
+                        KeyBoardUtil.closeKeyboard(etCode, GoodsDetailActivity.this);
                         dialog.dismiss();
                     }
                 });
@@ -603,6 +622,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         } else if (requestCode == Constant.REQUEST_LOGIN) {
             goodsPresent.getGoodsDetail(goodsType, goodsId);
             goodsPresent.getGoodsDetailCoupon(goodsId);
+        } else if (requestCode == 10086) {
+            String value = data.getStringExtra("value");
+            //Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
+
+            tvRecommendCode.setText(value);
+
         }
     }
 
@@ -677,9 +702,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
         }
     }
-
-
-
 
 
 }
