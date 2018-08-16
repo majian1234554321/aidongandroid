@@ -23,7 +23,6 @@ class SearchCoachAdapter(var activity: Activity, var searchCoachModel: SearchCoa
 
         with(p0.itemView) {
 
-
             tv_id.text = searchCoachModel.data.user[p1].wx_no
             tv_name.text = searchCoachModel.data.user[p1].name
 

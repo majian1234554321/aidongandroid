@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS1;
+import static com.example.aidong.utils.Constant.DELIVERY_SELF1;
 
 /**
  * 订单列表中自提包裹适配器
@@ -82,50 +83,45 @@ public class OrderSelfDeliveryAdapter2 extends RecyclerView.Adapter<OrderSelfDel
             holder.tv_delivery_time.setRightContent(bean.getPickUpDate());
         }
 
-        if (TextUtils.isEmpty(bean.getVerify_no())||
-                UN_PAID.equals(bean.getVerify_status()) ||
-                CLOSE.equals(bean.getVerify_status())||
-                REFUNDED.equals(bean.getVerify_status())
 
-
-                ) {
-            holder.rlQrCode.setVisibility(View.GONE);
-
-
-        } else {
-            holder.rlQrCode.setVisibility(View.VISIBLE);
-
-            if (bean.isVerified()) {
-                holder.tvQrNum.setText(bean.getVerify_no());
-                holder.tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                holder.tvQrNum.setTextColor(Color.parseColor("#ebebeb"));
-                if (bean.getVerify_no() != null) {
-                    holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFFebebeb, bean.getVerify_no(),
-                            qrCodeWidth, qrCodeHeight, false));
-                }
-
+        if (payStatus != null && (PAID.equals(payStatus) || FINISH.equals(payStatus))) {
+            if (TextUtils.isEmpty(bean.getVerify_no()) ||  // 没有核销码不显示
+                    UN_PAID.equals(bean.getVerify_status()) ||
+                    CLOSE.equals(bean.getVerify_status()) ||
+                    REFUNDED.equals(bean.getVerify_status()) ||
+                    DELIVERY_EXPRESS1.equals(bean.getPickUpWay()) //自提不显示
+                    ) {
+                holder.rlQrCode.setVisibility(View.GONE);
             } else {
-                holder.tvQrNum.setText(bean.getVerify_no());
-                if (bean.getVerify_no() != null) {
-                    holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFF000000, bean.getVerify_no(),
-                            qrCodeWidth, qrCodeHeight, false));
-                }
-                holder.ivCode.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        BarcodeActivity.start(context, bean.getVerify_no(), ImageRectUtils.getDrawableBoundsInView(holder.ivCode));
+                holder.rlQrCode.setVisibility(View.VISIBLE);
+
+                if (bean.isVerified()) {
+                    holder.tvQrNum.setText(bean.getVerify_no());
+                    holder.tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.tvQrNum.setTextColor(Color.parseColor("#ebebeb"));
+                    if (bean.getVerify_no() != null) {
+                        holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFFebebeb, bean.getVerify_no(),
+                                qrCodeWidth, qrCodeHeight, false));
                     }
-                });
+
+                } else {
+                    holder.tvQrNum.setText(bean.getVerify_no());
+                    if (bean.getVerify_no() != null) {
+                        holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFF000000, bean.getVerify_no(),
+                                qrCodeWidth, qrCodeHeight, false));
+                    }
+                    holder.ivCode.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            BarcodeActivity.start(context, bean.getVerify_no(), ImageRectUtils.getDrawableBoundsInView(holder.ivCode));
+                        }
+                    });
+                }
+
             }
-
+        } else {
+            holder.rlQrCode.setVisibility(View.GONE);
         }
-
-
-//        if (payStatus!=null&&(PAID.equals(payStatus)||FINISH.equals(payStatus))){
-//            holder.rlQrCode.setVisibility(View.VISIBLE);
-//        }else {
-//            holder.rlQrCode.setVisibility(View.GONE);
-//        }
 
 
         if (DELIVERY_EXPRESS1.equals(bean.getPickUpWay())) {
@@ -140,11 +136,11 @@ public class OrderSelfDeliveryAdapter2 extends RecyclerView.Adapter<OrderSelfDel
         holder.rvShop.setAdapter(goodsAdapter);
         goodsAdapter.setData(bean.getItem());
 
-        if(isVirtual){
+        if (isVirtual) {
             holder.tv_delivery_time.setVisibility(View.GONE);
             holder.rlQrCode.setVisibility(View.GONE);
             holder.tvDeliveryType.setVisibility(View.GONE);
-        }else {
+        } else {
 
 
 //            if (DELIVERY_EXPRESS1.equals(bean.getPickUpWay())){
@@ -158,12 +154,7 @@ public class OrderSelfDeliveryAdapter2 extends RecyclerView.Adapter<OrderSelfDel
 //            }
 
 
-
-
-
         }
-
-
 
 
     }
@@ -201,7 +192,7 @@ public class OrderSelfDeliveryAdapter2 extends RecyclerView.Adapter<OrderSelfDel
             tvShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
             tvDeliveryType = (TextView) itemView.findViewById(R.id.tv_delivery_type);
             rvShop = (RecyclerView) itemView.findViewById(R.id.rv_shop);
-            layout_delivery_type = (LinearLayout)itemView.findViewById(R.id.layout_delivery_type);
+            layout_delivery_type = (LinearLayout) itemView.findViewById(R.id.layout_delivery_type);
         }
     }
 }

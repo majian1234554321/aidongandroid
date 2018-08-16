@@ -89,7 +89,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
                 } else {
 
 
-                    GoodsDetailActivity.start(context, bean.getProductId(), GOODS_FOODS);
+                    GoodsDetailActivity.start(context, bean.getProductId(), bean.getProductType());
                     //;
 
                 }
