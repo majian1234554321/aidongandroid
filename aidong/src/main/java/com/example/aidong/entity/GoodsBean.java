@@ -28,6 +28,27 @@ public class GoodsBean  implements Parcelable {
     protected String brand_name;
     public  String status;
 
+    public String TYPEVALUE;
+
+
+    public String discount;
+
+    public String is_coupon;
+
+    public boolean isSelect;
+
+
+    public String pinkUpType;
+
+    public String pinkUpId;
+    public String pinkUpName;
+    public String pinkUpAddress;
+
+    public int limit_amount;
+
+
+
+
     /******
      * 订单商品中需要用到的字段
      ******/
@@ -300,6 +321,8 @@ public class GoodsBean  implements Parcelable {
         dest.writeString(this.item);
         dest.writeByte(this.is_send ? (byte) 1 : (byte) 0);
         dest.writeInt(this.is_virtual?(byte) 1 : (byte) 0);
+
+        dest.writeString(this.discount);
     }
 
     protected GoodsBean(Parcel in) {
@@ -324,6 +347,8 @@ public class GoodsBean  implements Parcelable {
         this.item = in.readString();
         this.is_send = in.readByte() != 0;
         this.is_virtual = in.readByte() != 0;
+
+        this.discount  = in.readString();
     }
 
     public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {

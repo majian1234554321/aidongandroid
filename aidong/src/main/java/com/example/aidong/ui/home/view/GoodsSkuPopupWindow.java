@@ -497,6 +497,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         goodsBean.setProductId(detailBean.id);
         goodsBean.setProductType(goodsType);
 
+        goodsBean.discount = detailBean.discount;
         goodsBean.setName(tvGoodName.getText().toString().trim());
         goodsBean.setCode(line.code);
 //        goodsBean.setCover(detailBean.image.get(0));

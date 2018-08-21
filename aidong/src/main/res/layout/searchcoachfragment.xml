@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/rl0"
@@ -28,22 +28,51 @@
 
             <EditText
                 android:id="@+id/edit_comment"
-                android:textColor="@color/c3"
-                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:padding="4dp" />
+                android:drawableLeft="@drawable/icon_search_gray"
+                android:drawablePadding="8dp"
+                android:hint="搜索推荐码"
+                android:imeOptions="actionSearch"
+                android:padding="6dp"
+                android:singleLine="true"
+                android:textColor="@color/c3"
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl0"
+        android:padding="10dp"
+        android:text="搜索历史"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rl0"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv1" />
+
+    <TextView
+        android:id="@+id/tv_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyclerView"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="清空搜索历史"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

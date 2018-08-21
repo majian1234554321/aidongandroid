@@ -42,8 +42,8 @@
     <com.example.aidong.widget.ExtendTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:left_text="商品优惠:"
-        android:visibility="gone"
+        app:left_text="推荐优惠:"
+      android:id="@+id/tjyh"
         app:line_color="@color/transparent"/>
 
     <com.example.aidong.widget.ExtendTextView

@@ -23,36 +23,36 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.CoachAttentionAdapter;
-import com.example.aidong .adapter.home.HomeRecommendActivityAdapter;
-import com.example.aidong .adapter.home.HomeRecommendCourseAdapter;
-import com.example.aidong .entity.BannerBean;
-import com.example.aidong .entity.BaseBean;
-import com.example.aidong .entity.course.CourseBeanNew;
-import com.example.aidong .entity.data.HomeData;
+import com.example.aidong.adapter.CoachAttentionAdapter;
+import com.example.aidong.adapter.home.HomeRecommendActivityAdapter;
+import com.example.aidong.adapter.home.HomeRecommendCourseAdapter;
+import com.example.aidong.entity.BannerBean;
+import com.example.aidong.entity.BaseBean;
+import com.example.aidong.entity.course.CourseBeanNew;
+import com.example.aidong.entity.data.HomeData;
 
-import com.example.aidong .ui.BaseFragment;
+import com.example.aidong.ui.BaseFragment;
 import com.example.aidong.ui.DisplayActivity;
-import com.example.aidong .ui.MainActivity;
-import com.example.aidong .ui.course.CourseCircleDetailActivity;
-import com.example.aidong .ui.home.activity.CircleListActivity;
+import com.example.aidong.ui.MainActivity;
+import com.example.aidong.ui.course.CourseCircleDetailActivity;
+import com.example.aidong.ui.home.activity.CircleListActivity;
 
-import com.example.aidong .ui.mvp.presenter.impl.FollowPresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.HomeRecommendPresentImpl;
-import com.example.aidong .ui.mvp.view.FollowView;
-import com.example.aidong .ui.mvp.view.HomeRecommendView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.GlideLoader;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.SystemInfoUtils;
+import com.example.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.HomeRecommendPresentImpl;
+import com.example.aidong.ui.mvp.view.FollowView;
+import com.example.aidong.ui.mvp.view.HomeRecommendView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.GlideLoader;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.SystemInfoUtils;
 
-import com.example.aidong .widget.SwitcherLayout;
+import com.example.aidong.widget.SwitcherLayout;
 
-import com.example.aidong .widget.card.OverLayCardLayoutManager;
-import com.example.aidong .widget.card.RenRenCallback;
+import com.example.aidong.widget.card.OverLayCardLayoutManager;
+import com.example.aidong.widget.card.RenRenCallback;
 
 
-import com.example.aidong .widget.card.UniversalAdapter;
+import com.example.aidong.widget.card.UniversalAdapter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
@@ -75,8 +75,6 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
 
     private BGABanner banner;
-
-
 
 
     private LinearLayout llSelectionActivity;
@@ -155,7 +153,6 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         templist.addAll(courseBeanNews);
 
 
-
         Collections.reverse(templist);
 
         list.addAll(templist);
@@ -191,7 +188,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
 
                 mAdatper.notifyDataSetChanged();
-               // Collections.reverse(list);
+                // Collections.reverse(list);
 
             }
 
@@ -220,7 +217,6 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         mActivity_review.setNestedScrollingEnabled(false);
 
 
-
         callback = new RenRenCallback();
 
 
@@ -229,8 +225,6 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
 
         banner = (BGABanner) view.findViewById(R.id.banner);
-
-
 
 
         llSelectionActivity = (LinearLayout) view.findViewById(R.id.ll_selection_activity);
@@ -255,13 +249,13 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         banner.setDelegate(new BGABanner.Delegate() {
             @Override
             public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
-             //   ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
-                if ("23".equals(((BannerBean) model).getType())){
-                    Intent intent = new Intent(context,DisplayActivity.class);
-                    intent.putExtra("TYPE","DetailsActivityH5Fragment");
-                    intent.putExtra("id",((BannerBean) model).campaign_detail);
+                //   ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
+                if ("23".equals(((BannerBean) model).getType())) {
+                    Intent intent = new Intent(context, DisplayActivity.class);
+                    intent.putExtra("TYPE", "DetailsActivityH5Fragment");
+                    intent.putExtra("id", ((BannerBean) model).campaign_detail);
                     context.startActivity(intent);
-                }else{
+                } else {
                     ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
                 }
 
@@ -280,7 +274,6 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
         courseAdapter = new HomeRecommendCourseAdapter(getActivity());
         activityAdapter = new HomeRecommendActivityAdapter(getActivity());
         coachAdapter = new CoachAttentionAdapter(getActivity());
-
 
 
         rvActivity.setAdapter(activityAdapter);
@@ -411,7 +404,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 //    }
 
     @Override
-    public void onItemClick(String id, int position,View view ) {
+    public void onItemClick(String id, int position, View view) {
         itemClickedPosition = position;
 
         CourseCircleDetailActivity.startForResult(this, id, Constant.REQUEST_COURSE_DETAIL);
@@ -423,7 +416,6 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
 
 //        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, transitionView, OPTION_IMAGE);
 //        ActivityCompat.startActivity(activity, intent, options.toBundle());
-
 
 
     }
@@ -442,7 +434,7 @@ public class HomeRecommendFragment extends BaseFragment implements View.OnClickL
             switch (requestCode) {
                 case Constant.REQUEST_COURSE_DETAIL:
 
-                    if (homeData.getCourse() != null) {
+                    if (homeData != null && homeData.getCourse() != null) {
                         homeData.getCourse().get(itemClickedPosition).setFollowed(data.getBooleanExtra(Constant.FOLLOW, false));
                         Logger.i("follow", "onActivityResult follow = " + homeData.getCourse().get(itemClickedPosition).isFollowed());
                         courseAdapter.notifyItemChanged(itemClickedPosition);

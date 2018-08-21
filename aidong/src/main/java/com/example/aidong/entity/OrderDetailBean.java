@@ -24,6 +24,8 @@ public class OrderDetailBean {
     private String order_type;
     private boolean is_virtual;
 
+    public String discount_amount;
+
     public boolean is_virtual() {
         return is_virtual;
     }

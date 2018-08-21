@@ -11,7 +11,11 @@ data class Data(
 )
 
 data class User(
-    val id: Any,
-    val wx_no: String,
-    val name: String
-)
+        var id: Any,
+        val wx_no: String,
+        val name: String
+
+
+){
+
+}

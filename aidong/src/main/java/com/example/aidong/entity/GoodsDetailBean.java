@@ -16,6 +16,10 @@ public class GoodsDetailBean {
     public boolean is_virtual; //是否虚拟
 
 
+    public String discount;
+
+    public String recommend_coach;
+
     public String introduce;        //商品更多详情
     public String question;
     public String service;

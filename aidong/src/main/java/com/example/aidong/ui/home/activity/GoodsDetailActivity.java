@@ -274,6 +274,15 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvStockTip = (TextView) findViewById(R.id.tv_count_tip);
         tvSellOut = (TextView) findViewById(R.id.tv_sell_out);
 
+        ImageView iv_delete = findViewById(R.id.iv_delete);
+
+        iv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvRecommendCode.setText("");
+            }
+        });
+
         view = findViewById(R.id.lineline);
 
         topLayout.setBackgroundColor(Color.argb(0, 0, 0, 0));
@@ -321,9 +330,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.ll_code:
-                // showRecommendCodeDialog();
+                //   showRecommendCodeDialog();
 
-                // Toast.makeText(this, "12", Toast.LENGTH_SHORT).show();
 
                 Intent intentll_code = new Intent(this, DisplayActivity.class);
 
@@ -331,9 +339,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 intentll_code.putExtra("TYPE", "SearchCoachFragment");
 
 
-                if (!TextUtils.isEmpty(tvRecommendCode.getText().toString().trim())) {
-                    intentll_code.putExtra("keyword", tvRecommendCode.getText().toString().trim());
-                }
+//                if (!TextUtils.isEmpty(tvRecommendCode.getText().toString().trim())) {
+//                    intentll_code.putExtra("keyword", tvRecommendCode.getText().toString().trim());
+//                }
 
 
                 startActivityForResult(intentll_code, 10086);
@@ -390,6 +398,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         this.bean = bean;
         this.bean.coupon = coupons;
         bottomLayout.setVisibility(View.VISIBLE);
+
+
+        tvRecommendCode.setText(bean.recommend_coach);
+
         bannerUrls.addAll(bean.image);
         bannerLayout.setData(bannerUrls, null);
         tvTitle.setText(String.format(getString(R.string.rmb_price_double),
@@ -405,6 +417,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvMarketPrice.setVisibility(View.GONE);
         }
         tvGoodsName.setText(bean.name);
+
 
         for (GoodsSkuBean goodsSkuBean : bean.spec.item) {
             if (goodsSkuBean.getStock() != 0) {

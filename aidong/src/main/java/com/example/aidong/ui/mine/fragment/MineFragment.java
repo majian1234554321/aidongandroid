@@ -156,6 +156,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         iv.setOnClickListener(this);
 
 
+        btn_shop_car.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                UiManager.activityCheckLoginJump(getActivity(), CartActivity2.class);
+                return true;
+            }
+        });
+
+
 //        relativeLayout_yuyue = (LinearLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
 //        relativeLayout_dingdang = (LinearLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
 //        layout_appoint_course= (LinearLayout) rootView.findViewById(R.id.layout_appoint_course);

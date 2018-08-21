@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -14,36 +15,36 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aidong.R;
-import com.example.aidong .adapter.mine.OrderExpressAdapter;
-import com.example.aidong .adapter.mine.OrderSelfDeliveryAdapter;
+import com.example.aidong.adapter.mine.OrderExpressAdapter;
+import com.example.aidong.adapter.mine.OrderSelfDeliveryAdapter;
 import com.example.aidong.adapter.mine.OrderSelfDeliveryAdapter2;
-import com.example.aidong .config.ConstantUrl;
-import com.example.aidong .entity.BaseBean;
-import com.example.aidong .entity.GoodsBean;
-import com.example.aidong .entity.OrderDetailBean;
-import com.example.aidong .entity.ParcelBean;
-import com.example.aidong .module.pay.AliPay;
-import com.example.aidong .module.pay.PayInterface;
-import com.example.aidong .module.pay.SimplePayListener;
-import com.example.aidong .module.pay.WeiXinPay;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.mvp.presenter.OrderPresent;
-import com.example.aidong .ui.mvp.presenter.impl.OrderPresentImpl;
-import com.example.aidong .ui.mvp.view.OrderDetailActivityView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DateUtils;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.SystemInfoUtils;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .widget.CustomNestRadioGroup;
-import com.example.aidong .widget.ExtendTextView;
-import com.example.aidong .widget.SimpleTitleBar;
-import com.example.aidong .widget.SwitcherLayout;
-import com.example.aidong .widget.dialog.BaseDialog;
-import com.example.aidong .widget.dialog.ButtonCancelListener;
-import com.example.aidong .widget.dialog.ButtonOkListener;
-import com.example.aidong .widget.dialog.DialogDoubleButton;
+import com.example.aidong.config.ConstantUrl;
+import com.example.aidong.entity.BaseBean;
+import com.example.aidong.entity.GoodsBean;
+import com.example.aidong.entity.OrderDetailBean;
+import com.example.aidong.entity.ParcelBean;
+import com.example.aidong.module.pay.AliPay;
+import com.example.aidong.module.pay.PayInterface;
+import com.example.aidong.module.pay.SimplePayListener;
+import com.example.aidong.module.pay.WeiXinPay;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.mvp.presenter.OrderPresent;
+import com.example.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
+import com.example.aidong.ui.mvp.view.OrderDetailActivityView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DateUtils;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.SystemInfoUtils;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.widget.CustomNestRadioGroup;
+import com.example.aidong.widget.ExtendTextView;
+import com.example.aidong.widget.SimpleTitleBar;
+import com.example.aidong.widget.SwitcherLayout;
+import com.example.aidong.widget.dialog.BaseDialog;
+import com.example.aidong.widget.dialog.ButtonCancelListener;
+import com.example.aidong.widget.dialog.ButtonOkListener;
+import com.example.aidong.widget.dialog.DialogDoubleButton;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -54,11 +55,11 @@ import cn.iwgang.countdownview.CountdownView;
 
 import static com.example.aidong.R.id.ll_express_info;
 import static com.example.aidong.R.id.tv_delivery_time;
-import static com.example.aidong .ui.App.context;
+import static com.example.aidong.ui.App.context;
 
 import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS1;
-import static com.example.aidong .utils.Constant.PAY_ALI;
-import static com.example.aidong .utils.Constant.PAY_WEIXIN;
+import static com.example.aidong.utils.Constant.PAY_ALI;
+import static com.example.aidong.utils.Constant.PAY_WEIXIN;
 
 /**
  * 订单详情
@@ -105,7 +106,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     //订单信息
     private ExtendTextView tvTotalPrice;
     private ExtendTextView tvExpressPrice;
-    private ExtendTextView tvCouponPrice;
+    private ExtendTextView tvCouponPrice, tjyh;
     private ExtendTextView tvAiBi;
     private ExtendTextView tvAiDou;
     private ExtendTextView tvStartTime;
@@ -188,6 +189,9 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         tvExpressPrice = (ExtendTextView) findViewById(R.id.tv_express_price);
         tvCouponPrice = (ExtendTextView) findViewById(R.id.coupon_price);
+
+
+        tjyh = (ExtendTextView) findViewById(R.id.tjyh);
         tvAiBi = (ExtendTextView) findViewById(R.id.tv_aibi);
         tvAiDou = (ExtendTextView) findViewById(R.id.tv_aidou);
         tvStartTime = (ExtendTextView) findViewById(R.id.tv_start_time);
@@ -285,14 +289,14 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 rlExpress.setVisibility(View.GONE);
             }
 
-            Logger.i(TAG,"bean.is_food() = " +bean.is_food());
+            Logger.i(TAG, "bean.is_food() = " + bean.is_food());
             if (bean.is_food()) {
                 tv_send_the_meal_time.setVisibility(View.VISIBLE);
                 tv_send_the_meal_time.setRightContent(expressParcel.getPickUpDate() + " " + expressParcel.getPick_up_period());
-                Logger.i(TAG,"tv_send_the_meal_time VISIBLE" );
+                Logger.i(TAG, "tv_send_the_meal_time VISIBLE");
             } else {
                 tv_send_the_meal_time.setVisibility(View.GONE);
-                Logger.i(TAG,"tv_send_the_meal_time GONE" );
+                Logger.i(TAG, "tv_send_the_meal_time GONE");
             }
         } else {
             expressInfoLayout.setVisibility(View.GONE);
@@ -337,6 +341,16 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 FormatUtil.parseDouble(bean.getExpressPrice())));
         tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                 FormatUtil.parseDouble(bean.getCoupon())));
+
+
+        if (!TextUtils.isEmpty(bean.discount_amount))
+            tjyh.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
+                    FormatUtil.parseDouble(bean.discount_amount)));
+        else {
+            tjyh.setVisibility(View.GONE);
+        }
+
+
         tvAiBi.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                 FormatUtil.parseDouble(bean.getCoin())));
         tvAiDou.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
@@ -357,20 +371,20 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
             tvAfterSell.setVisibility(View.GONE);
         }
         tvConfirm.setVisibility(PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
-        tvReBuy.setVisibility(FINISH.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())||REFUNDED.equals(bean.getStatus())
+        tvReBuy.setVisibility(FINISH.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus()) || REFUNDED.equals(bean.getStatus())
                 ? View.VISIBLE : View.GONE);
 
         tvState.setText(bean.getStatus().equals(UN_PAID) ? getString(R.string.un_paid)
                 : bean.getStatus().equals(PAID) ? getString(R.string.paid)
                 : bean.getStatus().equals(FINISH) ? getString(R.string.order_finish)
-                :bean.getStatus().equals(REFUNDED)?getString(R.string.order_refunded)
+                : bean.getStatus().equals(REFUNDED) ? getString(R.string.order_refunded)
                 : getString(R.string.order_close));
 
 
-        tvState.setTextColor(bean.getStatus().equals(UN_PAID)? ContextCompat.getColor(this,R.color.main_red2):ContextCompat.getColor(this,R.color.main_black));
+        tvState.setTextColor(bean.getStatus().equals(UN_PAID) ? ContextCompat.getColor(this, R.color.main_red2) : ContextCompat.getColor(this, R.color.main_black));
 
 
-        if(bean.is_virtual()){
+        if (bean.is_virtual()) {
             expressInfoLayout.setVisibility(View.GONE);
             findViewById(R.id.txt_self_delivery_info).setVisibility(View.GONE);
             findViewById(R.id.line_black_self_delivery).setVisibility(View.GONE);
@@ -380,7 +394,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         }
     }
 
-    private IWXAPI  api;
+    private IWXAPI api;
 
     @Override
     public void onClick(View v) {

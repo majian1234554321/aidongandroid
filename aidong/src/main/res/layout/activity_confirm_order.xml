@@ -366,8 +366,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:line_color="@color/transparent"
-                android:visibility="gone"
-                app:left_text="商品优惠:" />
+                app:left_text="推荐优惠:" />
 
             <com.example.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"

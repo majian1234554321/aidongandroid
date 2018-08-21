@@ -19,41 +19,41 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.example.aidong.R;
-import com.example.aidong .adapter.home.ConfirmOrderShopAdapter;
-import com.example.aidong .config.ConstantUrl;
-import com.example.aidong .entity.AddressBean;
-import com.example.aidong .entity.CouponBean;
-import com.example.aidong .entity.GoodsBean;
-import com.example.aidong .entity.ShopBean;
-import com.example.aidong .module.pay.PayInterface;
-import com.example.aidong .module.pay.SimplePayListener;
-import com.example.aidong .ui.BaseActivity;
-import com.example.aidong .ui.mine.activity.AddAddressActivity;
-import com.example.aidong .ui.mine.activity.AppointmentMineActivityNew;
+import com.example.aidong.adapter.home.ConfirmOrderShopAdapter;
+import com.example.aidong.config.ConstantUrl;
+import com.example.aidong.entity.AddressBean;
+import com.example.aidong.entity.CouponBean;
+import com.example.aidong.entity.GoodsBean;
+import com.example.aidong.entity.ShopBean;
+import com.example.aidong.module.pay.PayInterface;
+import com.example.aidong.module.pay.SimplePayListener;
+import com.example.aidong.ui.BaseActivity;
+import com.example.aidong.ui.mine.activity.AddAddressActivity;
+import com.example.aidong.ui.mine.activity.AppointmentMineActivityNew;
 
-import com.example.aidong .ui.mine.activity.PaySuccessActivity;
-import com.example.aidong .ui.mine.activity.SelectAddressActivity;
-import com.example.aidong .ui.mine.activity.SelectCouponActivity;
-import com.example.aidong .ui.mine.activity.UpdateDeliveryInfoActivity;
-import com.example.aidong .ui.mine.fragment.CouponFragment;
-import com.example.aidong .ui.mvp.presenter.ConfirmOrderPresent;
-import com.example.aidong .ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
-import com.example.aidong .ui.mvp.presenter.impl.CouponPresentImpl;
-import com.example.aidong .ui.mvp.view.ConfirmOrderActivityView;
-import com.example.aidong .ui.mvp.view.CouponFragmentView;
-import com.example.aidong .utils.Constant;
-import com.example.aidong .utils.DateUtils;
-import com.example.aidong .utils.FormatUtil;
-import com.example.aidong .utils.Logger;
-import com.example.aidong .utils.SystemInfoUtils;
-import com.example.aidong .utils.ToastGlobal;
-import com.example.aidong .utils.constant.DeliveryType;
-import com.example.aidong .utils.constant.PayType;
-import com.example.aidong .utils.constant.SettlementType;
-import com.example.aidong .widget.CustomNestRadioGroup;
-import com.example.aidong .widget.ExtendTextView;
-import com.example.aidong .widget.SimpleTitleBar;
-import com.example.aidong .widget.SwitcherLayout;
+import com.example.aidong.ui.mine.activity.PaySuccessActivity;
+import com.example.aidong.ui.mine.activity.SelectAddressActivity;
+import com.example.aidong.ui.mine.activity.SelectCouponActivity;
+import com.example.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
+import com.example.aidong.ui.mine.fragment.CouponFragment;
+import com.example.aidong.ui.mvp.presenter.ConfirmOrderPresent;
+import com.example.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
+import com.example.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
+import com.example.aidong.ui.mvp.view.ConfirmOrderActivityView;
+import com.example.aidong.ui.mvp.view.CouponFragmentView;
+import com.example.aidong.utils.Constant;
+import com.example.aidong.utils.DateUtils;
+import com.example.aidong.utils.FormatUtil;
+import com.example.aidong.utils.Logger;
+import com.example.aidong.utils.SystemInfoUtils;
+import com.example.aidong.utils.ToastGlobal;
+import com.example.aidong.utils.constant.DeliveryType;
+import com.example.aidong.utils.constant.PayType;
+import com.example.aidong.utils.constant.SettlementType;
+import com.example.aidong.widget.CustomNestRadioGroup;
+import com.example.aidong.widget.ExtendTextView;
+import com.example.aidong.widget.SimpleTitleBar;
+import com.example.aidong.widget.SwitcherLayout;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -65,18 +65,18 @@ import java.util.Map;
 
 import static com.example.aidong.R.id.ll__receiving_time;
 import static com.example.aidong.R.id.txt_receving_time;
-import static com.example.aidong .ui.App.context;
+import static com.example.aidong.ui.App.context;
 
 
 import static com.example.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.example.aidong.utils.Constant.DELIVERY_SELF;
-import static com.example.aidong .utils.Constant.GOODS_FOODS;
-import static com.example.aidong .utils.Constant.PAY_ALI;
-import static com.example.aidong .utils.Constant.PAY_WEIXIN;
-import static com.example.aidong .utils.Constant.REQUEST_ADD_ADDRESS;
-import static com.example.aidong .utils.Constant.REQUEST_SELECT_ADDRESS;
-import static com.example.aidong .utils.Constant.REQUEST_SELECT_COUPON;
-import static com.example.aidong .utils.Constant.REQUEST_UPDATE_DELIVERY;
+import static com.example.aidong.utils.Constant.GOODS_FOODS;
+import static com.example.aidong.utils.Constant.PAY_ALI;
+import static com.example.aidong.utils.Constant.PAY_WEIXIN;
+import static com.example.aidong.utils.Constant.REQUEST_ADD_ADDRESS;
+import static com.example.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
+import static com.example.aidong.utils.Constant.REQUEST_SELECT_COUPON;
+import static com.example.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
 
 
 /**
@@ -148,7 +148,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
     @SettlementType
     private String settlementType;
-    private double totalGoodsPrice;
+    private double totalGoodsPrice,tjyh;
 
     private boolean needExpress = false;              //是否需要快递
     private boolean needSelfDelivery = false;         //是否需要自提
@@ -200,7 +200,8 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         }
     }
 
-    public String shopListType ;
+    public String shopListType;
+
     private void initVariable() {
         if (getIntent() == null) return;
         payType = PAY_ALI;
@@ -331,13 +332,47 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
         }
 
+
+
+
+
+        if (shopBeanList!=null&&shopBeanList.size()>0){
+            for (int i = 0; i < shopBeanList.size(); i++) {
+                for (int j = 0; j < shopBeanList.get(i).getItem().size(); j++) {
+                    tjyh += (FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).getPrice()) * (1 - FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).discount)))*FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).getAmount());
+                }
+            }
+        }
+
+
+
+
+        tvDiscountPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),tjyh) );
+
+
+        tvTotalGoodsPrice.setRightContent(
+                String.format(getString(R.string.rmb_price_double), totalGoodsPrice));
+
+
         tvTotalGoodsPrice.setRightContent(
                 String.format(getString(R.string.rmb_price_double), totalGoodsPrice));
         tvExpressPrice.setRightContent(
                 needExpress ? String.format(getString(R.string.rmb_price_double), expressPrice) : "¥ 0.00");
         double dPrice = needExpress ? expressPrice : 0d;
         double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
-        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
+
+
+
+       // tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice-tjyh));
+
+
+        if (totalGoodsPrice + dPrice - cPrice - tjyh < 0) {
+            tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), 0f));
+        } else {
+            tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice - tjyh));
+        }
+
+
 
 //        if (shopBean != null && shopBean.getItem() != null && !shopBean.getItem().isEmpty() &&
 //                (TextUtils.equals(GOODS_FOODS, shopBean.getItem().get(0).getType()) ||
@@ -562,11 +597,11 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 }
                 tvCoupon.setTextColor(ContextCompat.getColor(this, R.color.main_red2));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
-            }else {
-                if (!TextUtils.isEmpty(shopListType)&&!shopBeanList.isEmpty()&&!shopListType.equals(shopBeanList.get(0).getPickUp().getType())){//有优惠券但是快递的信息变化了
+            } else {
+                if (!TextUtils.isEmpty(shopListType) && !shopBeanList.isEmpty() && !shopListType.equals(shopBeanList.get(0).getPickUp().getType())) {//有优惠券但是快递的信息变化了
                     shopListType = shopBeanList.get(0).getPickUp().getType();
                     tvCoupon.setText(usableCoupons.size() + "张可用");
-                    couponPrice =null;
+                    couponPrice = null;
                     couponId = null;
                     selectedUserCouponId = null;
                 }
@@ -583,11 +618,15 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
         double dPrice = needExpress ? expressPrice : 0d;
         double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
-        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
+       // tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice-tjyh));
+
+        if (totalGoodsPrice + dPrice - cPrice - tjyh < 0) {
+            tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), 0f));
+        } else {
+            tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice - tjyh));
+        }
 
     }
-
-
 
 
     @Override
@@ -607,9 +646,9 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 Logger.i("coupon", "onActivityResult selectedUserCouponId = " + selectedUserCouponId);
                 couponId = couponBean.getId();
                 couponPrice = couponBean.getActual();
-                tvCoupon.setText(FormatUtil.parseDouble(couponPrice) > 0&& !TextUtils.isEmpty(couponId)
+                tvCoupon.setText(FormatUtil.parseDouble(couponPrice) > 0 && !TextUtils.isEmpty(couponId)
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getActual())) : usableCoupons.size() + "张可用" );
+                        FormatUtil.parseDouble(couponBean.getActual())) : usableCoupons.size() + "张可用");
 
 
                 rightContent = String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice));
@@ -617,15 +656,21 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 tvCouponPrice.setRightContent(rightContent);
                 double dPrice = needExpress ? expressPrice : 0;
                 double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
-                tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
+               // tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice-tjyh));
+
+
+
+                if (totalGoodsPrice + dPrice - cPrice - tjyh < 0) {
+                    tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), 0f));
+                } else {
+                    tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice - tjyh));
+                }
+
             } else if (requestCode == REQUEST_UPDATE_DELIVERY) {
                 shopBeanList = data.getParcelableArrayListExtra("shopList");
                 shopAdapter.setData(shopBeanList);
                 resetStatus();
                 setChangeViewInfo();
-
-
-
 
 
                 if (needExpress) {

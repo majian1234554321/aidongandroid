@@ -6,7 +6,7 @@ package com.example.aidong.config;
  */
 public class UrlConfig {
     public static final boolean debug = true;
-    public static final boolean isMi = false;
+    public static final boolean isMi = true;
 
     public static final boolean logo = true;
 

@@ -152,7 +152,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
 
     @SettlementType
     private String settlementType;
-    private double totalGoodsPrice;
+    private double totalGoodsPrice, tjyh;
 
     private boolean needExpress = false;              //是否需要快递
     private boolean needSelfDelivery = false;         //是否需要自提
@@ -323,13 +323,31 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             }
         }
 
+
+        for (int i = 0; i < shopBeanList.size(); i++) {
+            for (int j = 0; j < shopBeanList.get(i).getItem().size(); j++) {
+                tjyh += (FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).getPrice()) * (1 - FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).discount))) * FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).getAmount());
+            }
+        }
+
+
+        tvDiscountPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), tjyh));
+
+
         tvTotalGoodsPrice.setRightContent(
                 String.format(getString(R.string.rmb_price_double), totalGoodsPrice));
         tvExpressPrice.setRightContent(
                 needExpress ? String.format(getString(R.string.rmb_price_double), expressPrice) : "¥ 0.00");
         double dPrice = needExpress ? expressPrice : 0d;
         double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
-        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
+
+
+
+        if (totalGoodsPrice + dPrice - cPrice - tjyh < 0) {
+            tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), 0f));
+        } else {
+            tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice - tjyh));
+        }
 
 
         if (shopBeanList != null && !shopBeanList.isEmpty() && shopBeanList.get(0).getItem() != null &&
@@ -564,7 +582,15 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice)));
                 double dPrice = needExpress ? expressPrice : 0;
                 double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
-                tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
+
+
+                if (totalGoodsPrice + dPrice - cPrice - tjyh < 0) {
+                    tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), 0f));
+                } else {
+                    tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice - tjyh));
+                }
+
+
             } else if (requestCode == REQUEST_UPDATE_DELIVERY) {
                 shopBeanList = data.getParcelableArrayListExtra("shopList");
                 shopAdapter.setData(shopBeanList);

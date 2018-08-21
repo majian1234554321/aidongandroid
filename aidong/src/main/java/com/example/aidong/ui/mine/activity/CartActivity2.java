@@ -70,7 +70,7 @@ public class CartActivity2 extends BaseActivity implements CartActivityView, Vie
     private CartHeaderView2 cartHeaderView2;
 
     //再次购买
-    public static void start(Context context,List<String> reBuyIds) {
+    public static void start(Context context, List<String> reBuyIds) {
         Intent starter = new Intent(context, CartActivity2.class);
         starter.putStringArrayListExtra("reBuyIds", (ArrayList<String>) reBuyIds);
         context.startActivity(starter);
@@ -80,10 +80,10 @@ public class CartActivity2 extends BaseActivity implements CartActivityView, Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        recommendPresent = new RecommendPresentImpl(this,this);
-        if(getIntent() != null){
+        recommendPresent = new RecommendPresentImpl(this, this);
+        if (getIntent() != null) {
             ArrayList<String> reBuyIds = getIntent().getStringArrayListExtra("reBuyIds");
-            if(reBuyIds != null) {
+            if (reBuyIds != null) {
                 this.reBuyIds = reBuyIds;
             }
         }
@@ -97,14 +97,14 @@ public class CartActivity2 extends BaseActivity implements CartActivityView, Vie
     @Override
     protected void onResume() {
         super.onResume();
-       //
+        //
     }
 
-    private void initView(){
+    private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvEdit = (TextView) findViewById(R.id.tv_edit);
         refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
-        recommendView = (RecyclerView)findViewById(R.id.rv_recommend);
+        recommendView = (RecyclerView) findViewById(R.id.rv_recommend);
         bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         rbSelectAll = (CheckBox) findViewById(R.id.rb_select_all);
         bottomNormalLayout = (LinearLayout) findViewById(R.id.ll_bottom_normal);
@@ -120,40 +120,40 @@ public class CartActivity2 extends BaseActivity implements CartActivityView, Vie
                 recommendView.getAdapter(), manager.getSpanCount()));
         recommendView.setLayoutManager(manager);
         recommendView.addOnScrollListener(onScrollListener);
-        cartHeaderView2 = new CartHeaderView2(this,reBuyIds);
+        cartHeaderView2 = new CartHeaderView2(this, reBuyIds);
         RecyclerViewUtils.setHeaderView(recommendView, cartHeaderView2);
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(this);
         tvEdit.setOnClickListener(this);
         tvSettlement.setOnClickListener(this);
         tvDelete.setOnClickListener(this);
         rbSelectAll.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
-     //   cartHeaderView.setCartCallback(this);
+        //   cartHeaderView.setCartCallback(this);
     }
 
     @Override
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recommendView);
-      //  cartHeaderView.pullToRefreshCartData();
+        //  cartHeaderView.pullToRefreshCartData();
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (recommendList != null && recommendList.size() >= pageSize) {
-                recommendPresent.requestMoreRecommendData(recommendView,pageSize,currPage, RECOMMEND_CART);
+                recommendPresent.requestMoreRecommendData(recommendView, pageSize, currPage, RECOMMEND_CART);
             }
         }
     };
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
@@ -162,13 +162,13 @@ public class CartActivity2 extends BaseActivity implements CartActivityView, Vie
                 updateEditStatus();
                 break;
             case R.id.tv_settlement:
-             //   cartHeaderView.settlementSelectGoods();
+                //   cartHeaderView.settlementSelectGoods();
                 break;
             case R.id.tv_delete:
-              //  cartHeaderView.deleteSelectedGoods();
+                //  cartHeaderView.deleteSelectedGoods();
                 break;
             case R.id.rb_select_all:
-              //  cartHeaderView.changeAllGoodsStatus(rbSelectAll.isChecked());
+                //  cartHeaderView.changeAllGoodsStatus(rbSelectAll.isChecked());
                 break;
             default:
                 break;
@@ -177,7 +177,7 @@ public class CartActivity2 extends BaseActivity implements CartActivityView, Vie
 
     @Override
     public void updateRecommendGoods(List<GoodsBean> goodsBeanList) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             recommendList.clear();
             refreshLayout.setRefreshing(false);
         }
@@ -188,7 +188,7 @@ public class CartActivity2 extends BaseActivity implements CartActivityView, Vie
 
     @Override
     public void showEmptyRecommendView() {
-       // cartHeaderView.showRecommendText(false);
+        // cartHeaderView.showRecommendText(false);
     }
 
     @Override
@@ -199,19 +199,19 @@ public class CartActivity2 extends BaseActivity implements CartActivityView, Vie
     @Override
     public void onCartDataLoadFinish(boolean isCartEmpty) {
         refreshLayout.setRefreshing(false);
-        if(needLoadRecommendData) {
+        if (needLoadRecommendData) {
             needLoadRecommendData = false;
             bottomLayout.setVisibility(View.VISIBLE);
-          //  cartHeaderView.showRecommendText(!isEditing);
+            //  cartHeaderView.showRecommendText(!isEditing);
             recommendPresent.pullToRefreshRecommendData(RECOMMEND_CART);
         }
 
         isEditing = false;
         updateEditStatus();
 
-        if(!isCartEmpty){
+        if (!isCartEmpty) {
             tvEdit.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvEdit.setVisibility(View.GONE);
         }
     }
@@ -219,14 +219,14 @@ public class CartActivity2 extends BaseActivity implements CartActivityView, Vie
     @Override
     public void onBottomStatusChange(boolean allChecked, double totalPrice, int settlementCount) {
         rbSelectAll.setChecked(allChecked);
-        tvSettlement.setText(String.format(getString(R.string.settlement_count),settlementCount));
-        tvTotalPrice.setText(String.format(getString(R.string.rmb_price_double),totalPrice));
+        tvSettlement.setText(String.format(getString(R.string.settlement_count), settlementCount));
+        tvTotalPrice.setText(String.format(getString(R.string.rmb_price_double), totalPrice));
     }
 
 
-    private void updateEditStatus(){
+    private void updateEditStatus() {
         tvEdit.setText(isEditing ? R.string.finish : R.string.edit);
-        bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
+        bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE : View.GONE);
         bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
 //        cartHeaderView.showRecommendText(!isEditing);
 //        cartHeaderView.setEditingStatus(isEditing);
