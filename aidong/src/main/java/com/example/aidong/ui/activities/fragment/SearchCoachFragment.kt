@@ -33,24 +33,24 @@ import rx.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 
-class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachView {
+class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachView, SearchCoachAdapter.CallBackText {
 
 
     override fun showSuccessData(user: MutableList<User>, keyword: String?) {
         // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        recyclerView.adapter = SearchCoachAdapter(activity, user, keyword)
+        recyclerView.adapter = SearchCoachAdapter(activity, user, keyword, searchCoachPresent, this)
         tv1.visibility = View.GONE
         tv_clear.visibility = View.GONE
     }
 
     override fun showEmptyData() {
         // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        Toast.makeText(activity,"暂无相关数据",Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "暂无相关数据", Toast.LENGTH_SHORT).show()
     }
 
     override fun showErrorData() {
         // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        Toast.makeText(activity,"暂无相关数据",Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "暂无相关数据", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -62,11 +62,16 @@ class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachVie
 
             }
 
+
+            R.id.iv_clear -> {
+                edit_comment.setText("")
+
+            }
+
             R.id.tv_clear -> {
 
 
-
-                recyclerView.adapter = SearchCoachAdapter(activity, arrayListOf(), "")
+                recyclerView.adapter = SearchCoachAdapter(activity, arrayListOf(), "", searchCoachPresent, this)
                 //SearchCoachAdapter(activity, mutableListOf(), "-1").clearAll()
                 tv1.visibility = View.GONE
                 tv_clear.visibility = View.GONE
@@ -76,9 +81,9 @@ class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachVie
                 }
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(object :Subscriber<String>(){
+                        .subscribe(object : Subscriber<String>() {
                             override fun onNext(t: String?) {
-                                Log.i("TAG", "AAAAA")
+                                //  Log.i("TAG", "AAAAA")
                             }
 
                             override fun onCompleted() {
@@ -104,6 +109,8 @@ class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachVie
     }
 
 
+    lateinit var searchCoachPresent: SearchCoachPresent
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tv_cancel.setOnClickListener(this)
 
@@ -112,7 +119,7 @@ class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachVie
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
 
-        val searchCoachPresent = SearchCoachPresent(activity, this)
+        searchCoachPresent = SearchCoachPresent(activity, this)
 
 //        Observable.create(Observable.OnSubscribe<String> {
 //            edit_comment.addTextChangedListener(object : TextWatcher {
@@ -143,7 +150,7 @@ class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachVie
 
 
         tv_clear.setOnClickListener(this)
-
+        iv_clear.setOnClickListener(this)
 
         Observable.create(Observable.OnSubscribe<List<HistoricalModel>> {
 
@@ -168,12 +175,12 @@ class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachVie
 
                             t.forEach {
 
-                                val user = User("0", it.keyord, it.date)
+                                val user = User("0", it.keyword, it.date)
                                 list.add(user)
                             }
 
 
-                            recyclerView.adapter = SearchCoachAdapter(activity, list, keyword)
+                            recyclerView.adapter = SearchCoachAdapter(activity, list, keyword, searchCoachPresent, this@SearchCoachFragment)
                         } else {
                             tv_clear.visibility = View.GONE
                             tv1.visibility = View.GONE
@@ -182,16 +189,9 @@ class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachVie
 
                     }
 
-                    override fun onCompleted() {
-                        //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    override fun onCompleted() = Unit
 
-
-                    }
-
-                    override fun onError(e: Throwable?) {
-                        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                        Log.i("TAG", e.toString())
-                    }
+                    override fun onError(e: Throwable?) = Unit
 
                 })
 
@@ -201,13 +201,13 @@ class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachVie
 //        searchCoachPresent.searchDate(keyword)
 
 
-        edit_comment.setOnEditorActionListener { v, actionId, event ->
+        edit_comment.setOnEditorActionListener { _, actionId, _ ->
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
                 searchCoachPresent.searchDate(edit_comment.text.toString())
 
-                KeyBoardUtil.closeKeyboard(edit_comment,activity)
+                KeyBoardUtil.closeKeyboard(edit_comment, activity)
 
                 return@setOnEditorActionListener true
             }
@@ -234,6 +234,16 @@ class SearchCoachFragment : BaseFragment(), View.OnClickListener, SearchCoachVie
     override fun onDestroy() {
         super.onDestroy()
         DialogUtils.releaseDialog()
+    }
+
+
+    override fun setCallBackText(text: String?) {
+        if (text != null) {
+            with(edit_comment) {
+                setText(text)
+                setSelection(text.length)
+            }
+        }
     }
 
 }

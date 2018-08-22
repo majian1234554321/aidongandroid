@@ -190,9 +190,9 @@
             <ImageView
                 android:id="@+id/iv_delete"
                 android:layout_gravity="center_vertical"
-                android:layout_width="28dp"
+                android:layout_width="24dp"
                 android:src="@drawable/iv_delete"
-                android:layout_height="28dp" />
+                android:layout_height="24dp" />
 
         </LinearLayout>
 

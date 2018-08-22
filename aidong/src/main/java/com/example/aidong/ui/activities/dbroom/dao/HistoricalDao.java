@@ -14,7 +14,7 @@ import java.util.Observable;
 @Dao
 public interface HistoricalDao {
 
-    @Query("SELECT * FROM historicalmodel LIMIT 0,10")
+    @Query("SELECT * FROM historicalmodel ORDER BY keyword DESC   LIMIT 0,10")
     List<HistoricalModel> getAll();
 
 //    @Query("SELECT * FROM historicalmodel WHERE uid IN (:userIds)")

@@ -34,14 +34,27 @@ class SearchCoachPresent(var activity: Activity, var searchCoachView: SearchCoac
                         val element = HistoricalModel(keyword, " ")
 
                         if (list.isNotEmpty()) {
+
+
+                            val list2 = arrayListOf<String>()
+
+
                             list.forEach {
-                                if (!it.keyord.contains(keyword)) {
-                                    AppDataBase
-                                            .getInstance(activity)
-                                            .historicalDao
-                                            .insertAll(element)
-                                }
+
+                                list2.add(it.keyword)
                             }
+
+
+                            if (list2.isNotEmpty() && list2.contains(keyword)) {
+                                return@doOnSubscribe
+                            } else {
+                                AppDataBase
+                                        .getInstance(activity)
+                                        .historicalDao
+                                        .insertAll(element)
+                            }
+
+
                         } else {
                             AppDataBase
                                     .getInstance(activity)

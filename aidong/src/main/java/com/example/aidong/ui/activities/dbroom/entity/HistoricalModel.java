@@ -12,13 +12,13 @@ public class HistoricalModel {
     public int uid;
 
     @ColumnInfo(name = "keyword")
-    public String keyord;
+    public String keyword;
 
     @ColumnInfo(name = "date")
     public String date;
 
-    public HistoricalModel(String keyord, String date) {
-        this.keyord = keyord;
+    public HistoricalModel(String keyword, String date) {
+        this.keyword = keyword;
         this.date = date;
     }
 }

@@ -148,7 +148,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
     @SettlementType
     private String settlementType;
-    private double totalGoodsPrice,tjyh;
+    private double totalGoodsPrice, tjyh;
 
     private boolean needExpress = false;              //是否需要快递
     private boolean needSelfDelivery = false;         //是否需要自提
@@ -298,15 +298,34 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             }
             for (GoodsBean goodsBean : shopBean.getItem()) {
                 if (needSelfDelivery) {
-                    itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
-                            + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_" + shopBean.getPickUp().getInfo().getId());
+
+                    if (!TextUtils.isEmpty(goodsBean.getRecommendCode())){
+                        itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
+                                + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_" + shopBean.getPickUp().getInfo().getId() + "_" + goodsBean.getRecommendCode());
+                    }else {
+                        itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
+                                + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_" + shopBean.getPickUp().getInfo().getId() );
+                    }
+
+
 
                     goodsIdGymID.put(goodsBean.getCode(), shopBean.getPickUp().getInfo().getId());
                     Logger.i("coupon", "if (shopBean.getPickUp() != null goodsIdGymID.put = " + shopBean.getPickUp().getInfo().getId());
                 } else {
                     goodsIdGymID.put(goodsBean.getCode(), "0");
-                    itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
-                            + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_0");
+
+
+                    if (!TextUtils.isEmpty(goodsBean.getRecommendCode())){
+                        itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
+                                + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_0" + "_" + goodsBean.getRecommendCode());
+                    }else {
+                        itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
+                                + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_0");
+                    }
+
+
+
+
 
                     Logger.i("coupon", "if } else { goodsIdGymID.put = 0");
                 }
@@ -333,21 +352,17 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         }
 
 
-
-
-
-        if (shopBeanList!=null&&shopBeanList.size()>0){
+        if (shopBeanList != null && shopBeanList.size() > 0) {
             for (int i = 0; i < shopBeanList.size(); i++) {
                 for (int j = 0; j < shopBeanList.get(i).getItem().size(); j++) {
-                    tjyh += (FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).getPrice()) * (1 - FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).discount)))*FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).getAmount());
+                    if (!TextUtils.isEmpty(shopBeanList.get(i).getItem().get(j).getRecommendCode()))
+                        tjyh += (FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).getPrice()) * (1 - FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).discount))) * FormatUtil.parseDouble(shopBeanList.get(i).getItem().get(j).getAmount());
                 }
             }
         }
 
 
-
-
-        tvDiscountPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),tjyh) );
+        tvDiscountPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), tjyh));
 
 
         tvTotalGoodsPrice.setRightContent(
@@ -362,16 +377,21 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
 
 
+        // tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice-tjyh));
 
-       // tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice-tjyh));
 
-
-        if (totalGoodsPrice + dPrice - cPrice - tjyh < 0) {
+        if (totalGoodsPrice + dPrice - cPrice - tjyh <= 0) {
             tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), 0f));
+
+
+            if (tjyh > 0) {
+                tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double), totalGoodsPrice + dPrice - tjyh));
+                tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), totalGoodsPrice + dPrice - tjyh));
+            }
+
         } else {
             tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice - tjyh));
         }
-
 
 
 //        if (shopBean != null && shopBean.getItem() != null && !shopBean.getItem().isEmpty() &&
@@ -618,10 +638,16 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
         double dPrice = needExpress ? expressPrice : 0d;
         double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
-       // tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice-tjyh));
+        // tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice-tjyh));
 
-        if (totalGoodsPrice + dPrice - cPrice - tjyh < 0) {
+        if (totalGoodsPrice + dPrice - cPrice - tjyh <= 0) {
             tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), 0f));
+
+            if (tjyh > 0) {
+                tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double), totalGoodsPrice + dPrice - tjyh));
+                tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), totalGoodsPrice + dPrice - tjyh));
+            }
+
         } else {
             tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice - tjyh));
         }
@@ -656,12 +682,15 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 tvCouponPrice.setRightContent(rightContent);
                 double dPrice = needExpress ? expressPrice : 0;
                 double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
-               // tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice-tjyh));
+                // tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice-tjyh));
 
 
-
-                if (totalGoodsPrice + dPrice - cPrice - tjyh < 0) {
+                if (totalGoodsPrice + dPrice - cPrice - tjyh <= 0) {
                     tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), 0f));
+                    if (tjyh > 0) {
+                        tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double), totalGoodsPrice + dPrice - tjyh));
+                        tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), totalGoodsPrice + dPrice - tjyh));
+                    }
                 } else {
                     tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice - tjyh));
                 }

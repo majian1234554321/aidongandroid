@@ -165,6 +165,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     };
     private CouponModelImpl model;
     private View view;
+    private ImageView iv_delete;
 
     public static void start(Context context, String goodsId, String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
@@ -274,12 +275,15 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvStockTip = (TextView) findViewById(R.id.tv_count_tip);
         tvSellOut = (TextView) findViewById(R.id.tv_sell_out);
 
-        ImageView iv_delete = findViewById(R.id.iv_delete);
+        iv_delete = findViewById(R.id.iv_delete);
 
         iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tvRecommendCode.setText("");
+
+                iv_delete.setVisibility(View.GONE);
+
             }
         });
 
@@ -401,6 +405,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
 
         tvRecommendCode.setText(bean.recommend_coach);
+
+        if (!TextUtils.isEmpty(bean.recommend_coach)){
+            iv_delete.setVisibility(View.VISIBLE);
+        }else {
+            iv_delete.setVisibility(View.GONE);
+        }
 
         bannerUrls.addAll(bean.image);
         bannerLayout.setData(bannerUrls, null);
@@ -640,6 +650,14 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             //Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
 
             tvRecommendCode.setText(value);
+
+            if (!TextUtils.isEmpty(value)){
+                iv_delete.setVisibility(View.VISIBLE);
+            }else {
+                iv_delete.setVisibility(View.GONE);
+            }
+
+
 
         }
     }

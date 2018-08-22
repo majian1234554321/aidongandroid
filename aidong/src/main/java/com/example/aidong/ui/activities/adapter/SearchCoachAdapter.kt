@@ -13,11 +13,13 @@ import com.example.aidong.R
 import com.example.aidong.entity.SearchCoachModel
 import kotlinx.android.synthetic.main.searchcoachadapter.view.*
 import android.text.SpannableStringBuilder
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import com.example.aidong.entity.User
+import com.example.aidong.ui.activities.peresent.SearchCoachPresent
 
 
-class SearchCoachAdapter(var activity: Activity, var user: MutableList<User>, var keyWord: String?) : RecyclerView.Adapter<SearchCoachAdapter.ViewHolder>() {
+class SearchCoachAdapter(var activity: Activity, var user: MutableList<User>, var keyWord: String?, var searchCoachPresent: SearchCoachPresent, var callBackText: CallBackText) : RecyclerView.Adapter<SearchCoachAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 
@@ -51,19 +53,26 @@ class SearchCoachAdapter(var activity: Activity, var user: MutableList<User>, va
 
 
             setOnClickListener {
-                val intent = Intent()
-                intent.putExtra("value", tv_id.text.toString())
-                activity.setResult(Activity.RESULT_OK, intent)
-                activity.finish()
+
+
+                if (TextUtils.isEmpty(tv_name.text.toString().trim())) {
+                    callBackText.setCallBackText(user[p1].wx_no)
+                    searchCoachPresent.searchDate(user[p1].wx_no)
+                } else {
+                    val intent = Intent()
+                    intent.putExtra("value", tv_id.text.toString())
+                    activity.setResult(Activity.RESULT_OK, intent)
+                    activity.finish()
+                }
+
 
             }
         }
     }
 
-    fun clearAll() {
-        user.clear()
-        notifyDataSetChanged()
-    }
 
+    interface CallBackText {
+        fun setCallBackText(text: String?)
+    }
 
 }
