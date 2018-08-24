@@ -31,9 +31,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:drawableLeft="@drawable/icon_search_gray"
+
                 android:drawablePadding="8dp"
-                android:hint="搜索推荐码"
+                android:hint="请输入推荐码或推荐人工号"
                 android:imeOptions="actionSearch"
                 android:padding="6dp"
                 android:singleLine="true"

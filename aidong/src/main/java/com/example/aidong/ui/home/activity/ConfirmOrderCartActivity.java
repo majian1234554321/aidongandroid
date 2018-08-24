@@ -185,7 +185,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             present.getDefaultAddress(switcherLayout);
         }
 
-        present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
+       // present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
 
 //        CampaignPresentImpl  campaignPresent = new CampaignPresentImpl(this, this);
 //        campaignPresent.getCampaignAvailableCoupon(course.skucode, course.amount);
@@ -205,12 +205,10 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
 
         List<GoodsBean> goodsList = new ArrayList<>();
         for (ShopBean shopBean : shopBeanList) {
-            for (GoodsBean goodsBean : shopBean.getItem()) {
-                goodsList.add(goodsBean);
-//                if (shopBean.getPickUp() != null && shopBean.getPickUp().getInfo() != null && shopBean.getPickUp().getInfo().getId() != null) {
-//                    goodsIdGymID.put(goodsBean.getCode(), shopBean.getPickUp().getInfo().getId());
-//                }
-            }
+            //                if (shopBean.getPickUp() != null && shopBean.getPickUp().getInfo() != null && shopBean.getPickUp().getInfo().getId() != null) {
+            //                    goodsIdGymID.put(goodsBean.getCode(), shopBean.getPickUp().getInfo().getId());
+            //                }
+            goodsList.addAll(shopBean.getItem());
         }
         itemIds = new String[goodsList.size()];
 //        itemFromIdAmount = new String[goodsList.size()];
